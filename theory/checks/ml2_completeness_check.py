@@ -15,7 +15,7 @@ import numpy as np
 
 
 J = 1.271
-SIZES = (12, 16, 20)
+SIZES = (6, 10, 11, 12, 13, 14, 16, 18, 20, 22, 26)
 TOL = 3.0e-10
 
 
@@ -134,6 +134,65 @@ def pi_fiber_vectors(n_sites: int) -> list[tuple[str, float, np.ndarray]]:
     return rows
 
 
+def charge_created_vector(
+    n_sites: int,
+    soft: float,
+    hard: float,
+    basis: list[tuple[int, int]],
+) -> np.ndarray:
+    """Construct Q_soft|hard> directly from (R3)."""
+    return np.asarray(
+        [
+            (
+                np.exp(1j * (soft * x + hard * y))
+                + np.exp(1j * (hard * x + soft * y))
+            )
+            / np.sqrt(n_sites)
+            for x, y in basis
+        ]
+    )
+
+
+def singular_contact_vector(
+    n_sites: int, basis: list[tuple[int, int]]
+) -> np.ndarray:
+    """Construct the separately normalized singular vector (12)."""
+    vector = np.zeros(len(basis), dtype=complex)
+    index = {state: column for column, state in enumerate(basis)}
+    for x in range(n_sites):
+        pair = tuple(sorted((x, (x + 1) % n_sites)))
+        vector[index[pair]] += (-1) ** x / np.sqrt(n_sites)
+    return vector
+
+
+def coincident_zero_audit(
+    n_sites: int, basis: list[tuple[int, int]]
+) -> tuple[int, float]:
+    """Build each formal coincident D7 wave and count the zero vectors."""
+    zero_count = 0
+    maximum_error = 0.0
+    for root_number in range(n_sites):
+        momentum = (2 * root_number + 1) * np.pi / n_sites
+        z = np.exp(1j * momentum)
+        incoming_amplitude = 1.0
+        outgoing_amplitude = -(z * z - 2.0 * z + 1.0) / (
+            z * z - 2.0 * z + 1.0
+        )
+        coordinate_wave = np.asarray(
+            [
+                outgoing_amplitude * np.exp(1j * momentum * (x + y))
+                + incoming_amplitude * np.exp(1j * momentum * (y + x))
+                for x, y in basis
+            ]
+        )
+        periodic_error = abs(z**n_sites + 1.0)
+        wave_norm = np.linalg.norm(coordinate_wave)
+        maximum_error = max(maximum_error, periodic_error, wave_norm)
+        if periodic_error <= TOL and wave_norm <= TOL:
+            zero_count += 1
+    return zero_count, maximum_error
+
+
 def audit(n_sites: int) -> dict[str, float | int]:
     hamiltonian, basis = ring_hamiltonian(n_sites)
     candidates: list[np.ndarray] = []
@@ -146,7 +205,7 @@ def audit(n_sites: int) -> dict[str, float | int]:
         "pi_degenerate": 0,
     }
     secular_error = 0.0
-    coincident_error = 0.0
+    singular_overlap_error = 0.0
 
     for label in momentum_labels(n_sites):
         block, coupling = fiber_matrix(n_sites, label)
@@ -209,7 +268,11 @@ def audit(n_sites: int) -> dict[str, float | int]:
             f"projector={projector:.3e} spectrum={spectral:.3e} "
             f"secular={secular_error:.3e}"
         )
-    if counts["descendant"] != n_sites or counts["singular"] != 1:
+    expected_singular = 1 if n_sites % 2 == 0 else 0
+    if (
+        counts["descendant"] != n_sites
+        or counts["singular"] != expected_singular
+    ):
         fail(f"exceptional inventory mismatch N={n_sites}: {counts}")
     if sum(counts.values()) != dimension:
         fail(f"class count mismatch N={n_sites}: {counts}")
@@ -223,8 +286,16 @@ def audit(n_sites: int) -> dict[str, float | int]:
         )
     )
     length = n_sites // 2
-    expected_pi_degenerate = length - 2 if length % 2 == 0 else length - 3
-    expected_real = dimension - n_sites - expected_bound - 1 - expected_pi_degenerate
+    expected_pi_degenerate = 0
+    if n_sites % 2 == 0:
+        expected_pi_degenerate = length - 2 if length % 2 == 0 else length - 3
+    expected_real = (
+        dimension
+        - n_sites
+        - expected_bound
+        - expected_singular
+        - expected_pi_degenerate
+    )
     if (
         counts["bound"] != expected_bound
         or counts["pi_degenerate"] != expected_pi_degenerate
@@ -235,35 +306,58 @@ def audit(n_sites: int) -> dict[str, float | int]:
             f"expected real={expected_real}, bound={expected_bound}, "
             f"pi_degenerate={expected_pi_degenerate}"
         )
-    for root_number in range(n_sites):
-        momentum = (2 * root_number + 1) * np.pi / n_sites
-        coincident_error = max(
-            coincident_error,
-            abs(np.exp(1j * n_sites * momentum) + 1.0),
-            max(
-                (
-                    abs(
-                        -np.exp(1j * momentum * (x + y))
-                        + np.exp(1j * momentum * (x + y))
-                    )
-                    for x, y in basis
-                ),
-                default=0.0,
-            ),
+    coincident_zero_count, coincident_error = coincident_zero_audit(n_sites, basis)
+    if coincident_zero_count != n_sites:
+        fail(
+            f"coincident zero-vector count N={n_sites}: "
+            f"{coincident_zero_count} != {n_sites}"
         )
     if coincident_error > TOL:
         fail(f"coincident zero-vector check failed N={n_sites}: {coincident_error}")
+
+    if n_sites % 2 == 0:
+        singular = singular_contact_vector(n_sites, basis)
+        if abs(np.linalg.norm(singular) - 1.0) > TOL:
+            fail(f"singular normalization failed N={n_sites}")
+        half = n_sites // 2
+        for hard_label in range(1, half):
+            soft_label = half - hard_label
+            hard = 2.0 * np.pi * hard_label / n_sites
+            soft = 2.0 * np.pi * soft_label / n_sites
+            overlap = np.vdot(
+                singular, charge_created_vector(n_sites, soft, hard, basis)
+            )
+            expected = 2j * np.cos((hard - soft) / 2.0)
+            singular_overlap_error = max(
+                singular_overlap_error, abs(overlap - expected)
+            )
+
+            off_fiber_soft = 2.0 * np.pi * ((soft_label + 1) % n_sites) / n_sites
+            off_fiber_overlap = np.vdot(
+                singular,
+                charge_created_vector(n_sites, off_fiber_soft, hard, basis),
+            )
+            singular_overlap_error = max(
+                singular_overlap_error, abs(off_fiber_overlap)
+            )
+        if singular_overlap_error > TOL:
+            fail(
+                f"singular Q overlap failed N={n_sites}: "
+                f"{singular_overlap_error}"
+            )
 
     print(
         f"N={n_sites:2d} dim={dimension:3d} "
         f"real={counts['real']:3d} bound={counts['bound']:2d} "
         f"desc={counts['descendant']:2d} singular={counts['singular']} "
-        f"pi-deg={counts['pi_degenerate']:2d} coincident-zero={n_sites:2d}"
+        f"pi-deg={counts['pi_degenerate']:2d} "
+        f"coincident-zero={coincident_zero_count:2d}"
     )
     print(
         f"  spectrum={spectral:.3e} residual={residual:.3e} "
         f"orth={orthogonality:.3e} projector={projector:.3e} "
-        f"secular={secular_error:.3e} coincident={coincident_error:.3e}"
+        f"secular={secular_error:.3e} coincident={coincident_error:.3e} "
+        f"singular-overlap={singular_overlap_error:.3e}"
     )
     return {**counts, "dimension": dimension, "projector": projector}
 

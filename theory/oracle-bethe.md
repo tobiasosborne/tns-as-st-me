@@ -2,15 +2,16 @@
 
 This shard is self-contained modulo the canonical symbols and conventions in
 [`notation.md`](../notation.md) and Definitions D6--D8 in
-[`definitions.md`](../definitions.md). No literature result is quoted: every
-formula follows from the bond permutation in D6. The coefficient ratio is
-fixed by D7; this matters because its inverse is also called the S-matrix.
+[`definitions.md`](../definitions.md). Every formula follows from the bond
+permutation in D6. Two local references are used only to audit the term
+"scattering length"; no formula is imported from them. The coefficient ratio
+is fixed by D7; this matters because its inverse is also called the S-matrix.
 
 **THEOREM (Bethe oracle).**
 
 **ASSUME.** D6--D8.
 
-**PROVE.** Oracle facts O1--O10 in ⟨1⟩5.
+**PROVE.** Oracle facts O1--O10 in ⟨1⟩4.
 
 ## ⟨1⟩1. Setup and the exact one-magnon sector
 
@@ -94,7 +95,7 @@ E\psi(x,y)=2J\psi(x,y)-{J\over2}
 
 **⟨3⟩1.** Four unequal-spin boundary bonds surround two separated down
 spins; each gives the diagonal and exchanged terms used in (1).
-Justification: the named bond-swap computation ⟨2⟩3.⟨3⟩2.
+Justification: the bond-swap computation ⟨1⟩1.⟨2⟩3.⟨3⟩2.
 
 **⟨3⟩2.** Summing the four bond actions gives (3).
 Justification: ⟨3⟩1 and linearity.
@@ -113,7 +114,7 @@ multiplies it by `e^{±ik_1}` or `e^{±ik_2}`.
 Justification: D7 and direct substitution.
 
 **⟨3⟩2.** Collecting the shifts gives (4), using (2).
-Justification: ⟨3⟩1 and ⟨2⟩4.
+Justification: ⟨3⟩1 and ⟨1⟩1.⟨2⟩4.
 
 **⟨3⟩3. QED.**
 
@@ -126,7 +127,7 @@ Justification: ⟨3⟩1 and ⟨2⟩4.
 
 **⟨3⟩1.** The down-down bond is fixed by `P` and vanishes, while only
 the two outer unequal-spin bonds act.
-Justification: D6 and the bond-swap computation ⟨2⟩3.⟨3⟩2.
+Justification: D6 and the bond-swap computation ⟨1⟩1.⟨2⟩3.⟨3⟩2.
 
 **⟨3⟩2.** Adding those two actions and moving the diagonal term gives
 (5).
@@ -168,11 +169,13 @@ Justification: multiply the conjugated numerator by `z_1z_2`.
 
 **⟨3⟩2.** Therefore `|S_{12}|=1`, and direct exchange of `z_1,z_2` in
 (6) gives `S_{12}(k_2,k_1)=S_{12}(k_1,k_2)^{-1}`.
-Justification: ⟨3⟩1 and (6).
+The numerator can vanish for real momenta only at the excluded point
+`k_1=k_2=0`; there (6) is `0/0`.
+Justification: ⟨3⟩1, (6), and `|z_1|=|z_2|=1`.
 
 **⟨3⟩3. QED.**
 
-**⟨2⟩7. PROVE.** The rapidity cross-check fixes a convention mismatch:
+**⟨2⟩7. PROVE.** The rapidity form and its inverse are
 
 \[
 \boxed{S_{12}={\lambda_1-\lambda_2+i\over\lambda_1-\lambda_2-i}},
@@ -199,11 +202,10 @@ Justification: common-denominator algebra.
 D7 gives the inverse fraction.
 Justification: (6), D7, and cancellation.
 
-**⟨3⟩4.** Thus the momentum fraction (6) and the quoted rapidity
-fraction `(λ_1−λ_2−i)/(λ_1−λ_2+i)` are not the same coefficient ratio for
-positive D7 rapidity: the latter is `S_{21}`. Treating them as literally equal
-reverses every phase below.
-Justification: (8).
+**⟨3⟩4.** Thus (8)'s first fraction is the D7 ratio. A source using
+`λ↦−λ`, or using the reversed channel, may display the inverse fraction;
+the distinction is algebraic and does not depend on the sign of `λ`.
+Justification: (8) and the definitions of `S_{12},S_{21}` in D7.
 
 **⟨3⟩5. QED.**
 
@@ -222,34 +224,52 @@ Ef_1=Jf_1-J\cos(K/2)f_2.                                       \tag{10}
 \]
 Justification: pair the center-of-mass phases `e^{±iK/2}` in (3)--(5).
 
-**⟨3⟩2.** Substitute `f_r=t^{r-1}` in (10); eliminating `E` gives
-`t=cos(K/2)`, and the boundary equation then gives (9).
-Justification: algebra in (10).
+**⟨3⟩2.** Take the representative `K∈[−π,π]` modulo `2π` and put
+`c=cos(K/2)`. For `0<|K|<π`, the bulk equation has characteristic
+polynomial
+`Jc t²−(2J−E)t+Jc`; its two roots have product one. Any nonzero
+`ℓ²(ℕ)` solution therefore has only the unique root with `|t|<1`, so it is
+`f_r=Ct^{r−1}` up to normalization.
+Justification: the standard solution of a constant-coefficient second-order
+recursion; roots on the unit circle, including a repeated root, give no
+nonzero square-summable sequence.
 
-**⟨3⟩3.** For `0<|K|<π`, `|t|<1`; equivalently
-`k_1=K/2−iη`, `k_2=K/2+iη`, `e^{−η}=cos(K/2)`, and the denominator
-of (6) vanishes, so this is the `S_{12}` pole selected by normalizability.
-Justification: D7, (6), and direct substitution.
+**⟨3⟩3.** Substitution of that necessary form in both equations (10)
+fixes uniquely `t=c` and `E=J(1−c²)=J sin²(K/2)`. Conversely these values
+satisfy (10), and `0<c<1`, proving existence and uniqueness up to scale.
+Justification: eliminate `E` in (10), then use the geometric-series norm.
 
-**⟨3⟩4.** At fixed `K`, the real scattering continuum begins at
-`2J[1−cos(K/2)]`; its gap above (9) is `J[1−cos(K/2)]²`, closing only
-as `K→0`.
-Justification: minimize (4) at fixed total momentum and subtract (9).
+**⟨3⟩4.** At `|K|=π`, `c=t=0`; below the bulk level `2J`, (10) has
+the unique solution `f_1≠0`, `f_{r≥2}=0`, with `E=J`, so the closed endpoint
+in (9) is included.
+For `0<|K|<π`, equivalently `k_1=K/2−iη`, `k_2=K/2+iη` and
+`e^{−η}=c`; the denominator of (6) vanishes.
+Justification: (10), D7, (6), and direct substitution.
 
-**⟨3⟩5.** At `K=0`, `t→1` and the state ceases to be normalizable;
-this is the bound-state threshold relevant to uniformity below.
-Justification: ⟨3⟩2--⟨3⟩4 and the geometric-series norm criterion.
+**⟨3⟩5.** At fixed canonical `K`, write the real momenta as
+`K/2±p`. Since `c≥0`, (4) is minimized at `cos p=1`; the continuum
+edge is `2J(1−c)` and its gap above (9) is `J(1−c)²`.
+Justification: (4), `K∈[−π,π]`, and subtraction of (9).
 
-**⟨3⟩6. QED.**
+**⟨3⟩6.** At `K=0`, `t→1`, the geometric norm diverges, and the gap
+closes. Other representatives modulo `2π` describe the same momentum, not
+additional omitted bound-state families.
+Justification: ⟨3⟩3--⟨3⟩5 and D6's Brillouin-zone convention.
+
+**⟨3⟩7. QED.**
 
 **⟨2⟩9. QED.** The exact scattering and required bound-state sectors are
 proved.
 
 ## ⟨1⟩3. The soft expansion
 
-**⟨2⟩1. ASSUME.** Set `k_1=k_s`, `k_2=k_h` as in D8 and expand the D7
-phase of `S_{12}`. The inverse convention is stated separately.
-Justification: D7--D8.
+**⟨2⟩1. ASSUME.** Set `k_1=k_s`, `k_2=k_h`. For the invariant statement
+allow fixed `0<|k_h|<π` and sufficiently small `|k_s|`; set
+`ω_h:=ω(k_h)`, `v_h:=v(k_h)`, `v_s:=v(k_s)`, `χ:=sgn(v_h−v_s)`, and
+`S_phys:=S_{12}` if `χ=+1`, while
+`S_phys:=S_{21}` if `χ=−1`. Let `δ_phys` be its continuous phase at
+`k_s=0`. On D8's restricted domain, `χ=+1` and `S_phys=S_{12}`.
+Justification: D7--D8 and the incoming/outgoing velocity ordering.
 
 **⟨2⟩2. PROVE.** The soft magnon decouples:
 \[
@@ -264,65 +284,102 @@ Justification: substitution in (6).
 nonzero for fixed `k_h∈(0,π)`.
 Justification: ⟨3⟩1 and D8.
 
-**⟨3⟩3.** Thus the connected interaction `S_{12}−1`, not the identity
-part, has the Dyson/Adler zero.
-Justification: (11) and subtraction of the free S-matrix identity.
+**⟨3⟩3.** Thus the mathematical soft-zero statement is simply
+`S_{12}−1→0`; no named low-energy theorem is needed here.
+Justification: (11) and subtraction of the identity amplitude.
 
 **⟨3⟩4. QED.**
 
-**⟨2⟩3. PROVE.** Through second order in signed soft momentum,
+**⟨2⟩3. PROVE.** The exact local phase and physical soft expansion are
 \[
-\boxed{\delta(k_s,k_h)=2k_s+\cot(k_h/2)k_s^2+O(k_s^3)},           \tag{12}
+ \delta_{12}=2\arctan{1\over\lambda(k_s)-\lambda(k_h)},
+ \qquad (k_s\hbox{ near }0),                                  \tag{11a}
 \]
 \[
-\boxed{S_{12}=1+2ik_s+[i\cot(k_h/2)-2]k_s^2+O(k_s^3)}.           \tag{13}
+\boxed{\delta_{\rm phys}=2\chi k_s+{|v_h|\over\omega_h}k_s^2
+ +R_\delta(k_s,k_h)},                                         \tag{12}
 \]
-**⟨3⟩1.** Differentiating the logarithm of (6) at zero, with
-`a=e^{ik_h}`, gives
+\[
+\boxed{S_{\rm phys}=1+2i\chi k_s+
+ [i|v_h|/\omega_h-2]k_s^2+R_S(k_s,k_h)}.                       \tag{13}
+\]
+**⟨3⟩1.** With `Δλ=λ(k_s)−λ(k_h)`, (8) gives (11a) on the
+branch tending to zero. Differentiating the logarithm of (6) at zero gives
 \[
 \left.\partial_{k_s}\log S_{12}\right|_0=2i,\qquad
 \left.\partial_{k_s}^2\log S_{12}\right|_0
-=-2{1+a\over a-1}=2i\cot(k_h/2).                                \tag{14}
+=-2{1+e^{ik_h}\over e^{ik_h}-1}=2i\cot(k_h/2).                 \tag{14}
 \]
-Justification: quotient differentiation of (6) and
+Justification: (8), quotient differentiation of (6), and
 `(1+e^{ik})/(e^{ik}−1)=−i cot(k/2)`.
 
-**⟨3⟩2.** Taylor's theorem for the D7 logarithm gives (12), and
-exponentiating it, including `(2ik_s)²/2=−2k_s²`, gives (13).
-Justification: D7, (11), (14), and the exponential power series.
+**⟨3⟩2.** For `k_h>0`, `S_phys=S_{12}` and (14) gives coefficients
+`2` and `cot(k_h/2)=|v_h|/ω_h`. For `k_h<0`, the velocity order selects
+`S_{21}=S_{12}^{−1}`, which negates both D7 phase coefficients; hence the
+linear coefficient is `2χ` and the quadratic one is again `|v_h|/ω_h`.
+Exponentiation gives (13), including `(2iχk_s)²/2=−2k_s²`.
+Justification: D7, (2), (8), (14), and `χ=sgn(k_h)` near `k_s=0`.
 
-**⟨3⟩3.** For the inverse convention in (8), `δ_{21}=−δ_{12}`; both
-phase coefficients therefore change sign.
-Justification: D7, ⟨2⟩6, and continuity at one.
+**⟨3⟩3.** The remainders in (12)--(13) are uniform on stated compacta.
+For `0<a<b<π`, set
+`ε_{ab}:=(1/2)min{a,π−b,sin a,sin b}` and
+`D_{ab}:={(q,h): |q|≤ε_{ab}, a≤|h|≤b}`. Define
+\[
+C_\delta(a,b):={1\over6}\max_{D_{ab}}|\partial_q^3\delta_{\rm phys}|,
+\qquad C_S(a,b):={1\over6}\max_{D_{ab}}|\partial_q^3S_{\rm phys}|.
+\]
+These finite, explicit constants give
+`|R_δ|≤C_δ(a,b)|k_s|³` and
+`|R_S|≤C_S(a,b)|k_s|³` throughout `D_{ab}`, and are `O(a^{−2})`
+as `a↓0` with `b` fixed.
+Justification: `ε_{ab}` fixes the velocity order and excludes the pole and
+coincident-momentum locus. In (11a),
+`1/Δλ=2sin(q/2)sin(h/2)/sin((h−q)/2)` and the last denominator has
+absolute value at least `a/(2π)` on `D_{ab}`; three differentiations give the
+`O(a^{−2})` bound. Taylor's theorem gives the displayed inequalities.
 
 **⟨3⟩4. QED.**
 
-**⟨2⟩4. PROVE.** The linear phase coefficient is the hard-data-independent
-constant `2`; the first hard invariant occurs quadratically:
+**⟨2⟩4. PROVE.** The invariant quadratic coefficient and its D8
+specialization are
 \[
-\boxed{\cot(k_h/2)={v_h\over\omega_h}
- ={2J-\omega_h\over v_h}
- =\sqrt{{2J-\omega_h\over\omega_h}}},\qquad 0<k_h<\pi.           \tag{15}
+\boxed{{|v_h|\over\omega_h}={2J-\omega_h\over|v_h|}
+ =\sqrt{{2J-\omega_h\over\omega_h}}},\quad 0<|k_h|<\pi;
+\qquad {|v_h|\over\omega_h}=\cot(k_h/2)\quad\hbox{on D8}.       \tag{15}
 \]
-**⟨3⟩1.** Equation (14) makes the `O(k_s)` coefficient identically `2`,
-so neither `1/v_h` nor `ω_h/v_h²` occurs at that order.
-Justification: (12)--(14).
+**⟨3⟩1.** The physical linear coefficient is `2χ`, not an invariant
+hard-independent `2`. Its magnitude is the two-site Wigner phase-slope, or
+spatial-displacement, coefficient of the soft packet. Only D8 fixes `χ=+1`.
+Justification: (12) and D7's physical channel convention.
 
-**⟨3⟩2.** From (2), `v_h/ω_h=sin(k_h)/[1−cos(k_h)]=cot(k_h/2)`
-and `v_h²=ω_h(2J−ω_h)`; positivity gives all forms in (15).
+**⟨3⟩2.** From (2), `v_h²=ω_h(2J−ω_h)`; positivity gives the
+first three forms in (15). On D8, `v_h>0` and the half-angle identity gives
+`v_h/ω_h=cot(k_h/2)`.
 Justification: (2), half-angle identities, and D8.
 
-**⟨3⟩3.** The natural invariant statement is: leading scattering length
-`2`, followed by curvature `v_h/ω_h`. In contrast,
-`ω_h/v_h²=1/(2J−ω_h)` and `1/v_h` are inequivalent candidates.
-Justification: ⟨3⟩1--⟨3⟩2.
+**⟨3⟩3.** The number `2` is not a scattering length. In the joint soft
+limit `k_1=εx`, `k_2=εy`, `x≠y`, (11a) gives
+`δ_{12}/ε→2xy/(y−x)`: the phase vanishes but is not a constant times
+`k_1−k_2`. Thus no nonzero relative-momentum scattering length exists; in
+the massless-EFT convention it is reported as zero, with an ill-definedness
+caveat. This reconciles the definition in
+[`arxiv-1312.6793`, line 102](../refs/arxiv-1312.6793/scatteringpaper.tex)
+with the ferromagnet statement in
+[`arxiv-1602.08692`, line 656](../refs/arxiv-1602.08692/spinwave.arXiv.final.tex).
+No numerical comparison with the spin-1 antiferromagnet is implied.
+Justification: (11a), `λ(k)=1/k−k/12+O(k³)`, and the cited terminology
+audit.
 
-**⟨3⟩4. QED.**
+**⟨3⟩4.** Parity reverses both velocities and swaps the physical channel,
+so `δ_phys(−k_s,−k_h)=δ_phys(k_s,k_h)`.
+Justification: (6), ⟨1⟩2.⟨2⟩6, and the definition in ⟨2⟩1.
+
+**⟨3⟩5. QED.**
 
 **⟨2⟩5. PROVE.** Momentum is the regular coordinate; energy gives the
-direction-labelled Puiseux expansion
+direction-labelled D8 Puiseux expansion
 \[
-\boxed{\delta=2\sigma\sqrt{2\omega_s/J}
+\boxed{\delta_{12}=2\sigma\sqrt{2\omega_s/J}
  +{2v_h\over J\omega_h}\omega_s+O(\omega_s^{3/2})},             \tag{16}
 \]
 \[
@@ -337,28 +394,51 @@ Justification: cosine Taylor series, D8, and series inversion.
 **⟨3⟩2.** Substitution in (12)--(13), using (15), gives (16)--(17).
 Justification: ⟨3⟩1, algebra, and power counting.
 
-**⟨3⟩3.** Both signed momentum limits equal one and use one analytic
-Taylor series, but energy forgets `σ`; the connected term is `O(√ω_s)`, not a
-Taylor series in `ω_s`.
+**⟨3⟩3.** These remainders also have explicit compact bounds. For
+`a≤k_h≤b` and `0<ω≤Ω_{ab}:=J(1−cos ε_{ab})`, put
+`k_σ(ω):=σ arccos(1−ω/J)` and let `δ_2,S_2` denote the displayed
+two-term expressions in (16),(17). Define
+\[
+D_\delta(a,b):=\max_{\substack{a\le h\le b,\ \sigma=\pm1\\
+0\le\omega\le\Omega_{ab}}}{|\delta_{12}(k_\sigma(\omega),h)-\delta_2|\over
+\omega^{3/2}},\quad
+D_S(a,b):=\max_{\substack{a\le h\le b,\ \sigma=\pm1\\
+0\le\omega\le\Omega_{ab}}}{|S_{12}(k_\sigma(\omega),h)-S_2|\over
+\omega^{3/2}},
+\]
+where each quotient at `ω=0` means its continuous extension. Both maxima are
+finite, and the remainders in (16),(17) are bounded respectively by
+`D_δ(a,b)ω_s^{3/2}` and `D_S(a,b)ω_s^{3/2}` on this compactum.
+Justification: ⟨3⟩1, the bounds in ⟨2⟩3.⟨3⟩3, and continuity of the
+normalized remainders at zero.
+
+**⟨3⟩4.** Both signed momentum limits equal one, but energy forgets
+`σ`; the connected term is `O(√ω_s)`, not a Taylor series in `ω_s`.
 Justification: (11), (16), and (17).
 
-**⟨3⟩4. QED.**
+**⟨3⟩5. QED.**
 
 **⟨2⟩6. PROVE.** The fixed-hard expansion has the following endpoint and
 bound-threshold qualifications.
 
-**⟨3⟩1.** As `k_h→0`, the quadratic coefficient is `2/k_h+O(k_h)` and
+**⟨3⟩1.** As `k_h→0^+` in D8, the quadratic coefficient is
+`2/k_h+O(k_h)` and
 higher coefficients also diverge; truncation requires `|k_s|≪k_h`.
 Justification: (12), the cotangent series, and the rapidity difference (8).
 
 **⟨3⟩2.** If `k_s,k_h→0` together away from `k_s=k_h`, then
 `δ∼2k_sk_h/(k_h−k_s)`; at `k_s=k_h≠0`, (6) gives `S_{12}=−1`.
-Justification: `λ(k)=1/k−k/12+O(k³)`, (8), and substitution in (6).
+The associated Bethe vector is nevertheless identically zero because
+`A_{12}=−A_{21}` multiplies two identical plane waves.
+Justification: `λ(k)=1/k−k/12+O(k³)`, (8), (6), and D7.
 
 **⟨3⟩3.** Complex singularities obey `λ(k_s)−λ(k_h)=±i`; the
-normalizable sign is the string pole of ⟨2⟩8. They approach zero precisely
-when the bound state delocalizes at total momentum `K→0`.
-Justification: (8) and ⟨2⟩8.⟨3⟩3--⟨2⟩8.⟨3⟩5.
+normalizable sign is the string pole of ⟨1⟩2.⟨2⟩8. Quantitatively the
+nearest complex `k_s` has `|k_s^{sing}|≍|k_h|` as `k_h→0`, which licenses
+`|k_s|≪k_h`. The complex singular point is not itself the real bound state,
+although both scales vanish at the `K→0` threshold.
+Justification: (8), the inverse function for `λ`, and
+⟨1⟩2.⟨2⟩8.⟨3⟩4--⟨1⟩2.⟨2⟩8.⟨3⟩6.
 
 **⟨3⟩4.** As `k_h→π`, there is no analytic non-uniformity:
 `v_h/ω_h→0`, and at `k_h=π` the nearest complex zero/pole is
@@ -375,73 +455,20 @@ Justification: D7, (2), and ⟨3⟩4.
 **⟨2⟩7. QED.** The soft expansions, invariant content, and validity
 domain are proved.
 
-## ⟨1⟩4. Numerical cross-check record
-
-**⟨2⟩1. ASSUME.** Run
-[`checks/oracle_bethe_check.py`](checks/oracle_bethe_check.py) with its fixed
-parameters `N=18`, two-magnon dimension `153`, and `J=1.37`.
-Justification: constants in the standalone checker.
-
-**⟨2⟩2. PROVE.** The checker tests the analytic oracle against an
-independently assembled finite-ring Hamiltonian.
-
-**⟨3⟩1.** It constructs every matrix column by applying
-`(J/2)(1−P)` on all periodic bonds, then diagonalizes the resulting
-`153×153` matrix.
-Justification: D6 and `ring_hamiltonian` in the checker.
-
-**⟨3⟩2.** Periodicity of the D7 wave gives
-`e^{iNk_1}=S_{12}` and `e^{iNk_2}=S_{12}^{−1}`; three numerical roots are
-tested by both Bethe residuals, `||Hψ−Eψ||_2`, and distance to the ED
-spectrum.
-Justification: equate the two plane-wave coefficients in
-`ψ(0,y)=ψ(y,N)` and inspect `quantized_pair` and `check_ed`.
-
-**⟨3⟩3.** It separately checks both rapidity identities (8) and fits the
-continuous phase near `k_s=0` to obtain the coefficients in (12).
-Justification: `check_rapidities` and `check_soft_derivatives`.
-
-**⟨3⟩4. QED.**
-
-**⟨2⟩3. PROVE.** A fresh run on 2026-08-25 passes with the following
-record:
-
-```text
-oracle_bethe_check: N=18, dim=153, J=1.37
-RAPIDITY S12_error=2.483e-16 S21_error=1.570e-16
-ED k1= 0.405359200715 k2= 1.339970051280 E=1.167592407324 residual=2.204e-15 spectral=2.220e-16
-ED k1= 0.792906491684 k2= 1.999620311507 E=2.348212670447 residual=2.585e-15 spectral=2.220e-15
-ED k1=-1.117870152201 k2= 1.466936002600 E=1.998457037382 residual=1.305e-15 spectral=2.220e-16
-SOFT kh=0.37 d1=2.000000000000 c2=5.343597575979 exact_c2=5.343597575762
-SOFT kh=1.10 d1=2.000000000000 c2=1.631041423725 exact_c2=1.631041423766
-SOFT kh=2.40 d1=2.000000000000 c2=0.388779569332 exact_c2=0.388779569368
-SOFT kh=3.00 d1=2.000000000000 c2=0.070914844340 exact_c2=0.070914844303
-PASS: periodic Bethe vectors, ED spectrum, and soft coefficients
-```
-
-**⟨3⟩1.** The largest ED-vector residual is `2.585e−15`; the largest
-displayed `c2−cot(k_h/2)` error is `2.17e−10`, below the checker's
-respective tolerances `2e−11` and `3e−9`.
-Justification: the recorded numbers and checker constants.
-
-**⟨3⟩2. QED.** The rapidity, ED, and soft-derivative checks pass.
-
-**⟨2⟩4. QED.** The numerical cross-check is complete.
-
-## ⟨1⟩5. Oracle facts O1--O10
+## ⟨1⟩4. Oracle facts O1--O10
 
 | ID | Exact statement | Validity domain |
 |---|---|---|
 | **O1** | `ω(k)=J(1−cos k)`, `v(k)=J sin k`, equation (2). | One magnon; `k∈(−π,π]`, `J>0`. |
 | **O2** | `E(k_1,k_2)=ω(k_1)+ω(k_2)`, equation (4). | Two real scattering momenta. |
-| **O3** | `S_{12}` is the exact lattice-momentum fraction (6). | D7 ordering; denominator nonzero. |
-| **O4** | `S_{12}=(Δλ+i)/(Δλ−i)` while `S_{21}=(Δλ−i)/(Δλ+i)`, equation (8). | `λ=(1/2)cot(k/2)`; reversing order inverts the phase. |
-| **O5** | `t=cos(K/2)` and `E_b(K)=J sin²(K/2)`, equation (9). | Normalizable string for `0<|K|≤π`; threshold at `K=0`. |
-| **O6** | `S_{12}(k_s,k_h)→1` from either sign, equation (11). | Fixed `k_h∈(0,π)`, signed `k_s→0`. |
-| **O7** | `δ=2k_s+cot(k_h/2)k_s²+O(k_s³)`, equation (12). | D7 continuous phase; fixed hard momentum. |
-| **O8** | `S_{12}=1+2ik_s+[i cot(k_h/2)−2]k_s²+O(k_s³)`, equation (13). | Same domain as O7; `S_{21}` is its inverse. |
-| **O9** | The linear coefficient is `2`; hard data first enters as `cot(k_h/2)=v_h/ω_h`, equation (15). | `0<k_h<π`; non-uniform as `k_h→0`. |
-| **O10** | Energy gives the direction-labelled Puiseux series (16)--(17), beginning `δ=2σ√(2ω_s/J)+O(ω_s)`. | One-sided `ω_s→0`, `σ=sgn k_s`; regular variable is `k_s`. |
+| **O3** | `S_{12}` is the exact lattice-momentum fraction (6). | D7 ordering with distinct real momenta and nonzero denominator; at coincident nonzero momenta the formal ratio `−1` gives a null Bethe vector. |
+| **O4** | `S_{12}=(Δλ+i)/(Δλ−i)`, `S_{21}=S_{12}^{−1}`, and locally `δ_{12}=2 arctan(1/Δλ)`, (8),(11a). | `λ=(1/2)cot(k/2)`; reversing the channel inverts the phase. |
+| **O5** | There is a unique (up to scale) bound state: `t=cos(K/2)`, `E_b(K)=J sin²(K/2)`, (9). | Canonical `0<|K|≤π`; threshold at `K=0`; `|K|=π` included. |
+| **O6** | `S_{12}(k_s,k_h)→1` from either sign, (11). | D8: fixed `k_h∈(0,π)`, signed `k_s→0`. |
+| **O7** | `δ_phys=2 sgn(v_h−v_s)k_s+(|v_h|/ω_h)k_s²+R_δ`, (12). | `0<|k_h|<π`, physical D7 channel; `|R_δ|≤C_δ(a,b)|k_s|³` on `D_{ab}`; D7 kinematic proviso near `π`. |
+| **O8** | `S_phys=1+2i sgn(v_h−v_s)k_s+[i|v_h|/ω_h−2]k_s²+R_S`, (13). | Same compacta as O7; `|R_S|≤C_S(a,b)|k_s|³`. |
+| **O9** | The signed Wigner displacement coefficient is `2 sgn(v_h−v_s)`; its magnitude is two sites, not a scattering length; the curvature is the even invariant `|v_h|/ω_h`, (15). | D8 reduces the coefficients to `2` and `cot(k_h/2)=v_h/ω_h`; non-uniform at `k_h→0`, kinematically restricted at `k_h→π`. |
+| **O10** | The D8 energy-coordinate series are (16)--(17), beginning `δ_{12}=2σ√(2ω_s/J)+O(ω_s)`. | On `a≤k_h≤b`, remainders are bounded by `D_δ(a,b)ω_s^{3/2}`, `D_S(a,b)ω_s^{3/2}`; `σ=sgn k_s`. |
 
 **⟨2⟩1. PROVE.** O1--O5 are respectively (2), (4), (6), (8), and
 (9); O6--O10 are respectively (11), (12), (13), (15), and (16)--(17).
@@ -449,3 +476,24 @@ Justification: the proved steps ⟨1⟩1--⟨1⟩3 and the domains stated there.
 
 **⟨2⟩2. QED.** O1--O10, and hence the Bethe oracle theorem, are proved.
 □
+
+## Numerical record (non-deductive)
+
+The standalone [`oracle_bethe_check.py`](checks/oracle_bethe_check.py)
+assembles `(J/2)(1−P)` independently and covers numerical consequences of
+O1--O10: rapidity orientation, periodic Bethe vectors, momentum-resolved bound
+levels, the soft limit, both physical-phase signs and parity, (15), and both
+Puiseux remainders. Bound-state uniqueness and the incoming/outgoing reading
+remain the analytic arguments above, not numerical assumptions.
+
+A fresh normal and `python3 -O` run on 2026-08-25 recorded:
+```text
+ONE residual=2.190e-15 velocity=4.694e-12
+ED max_residual=2.585e-15 max_spectral=2.220e-15
+BOUND max_energy_error=8.802e-13 max_projector_error=3.656e-15
+SOFT limit=2.966e-16 linear=3.084e-10 quadratic=1.250e-09 invariant=4.441e-15 parity=1.735e-18
+PUISEUX phase_ratio=2.545e+01 S_ratio=3.036e+01
+PASS: oracle facts O1--O10
+```
+The enforced tolerances are respectively `1e−10`, `2e−11`, `2e−11`,
+`3e−9`, and `40`; every failure path is explicit and survives `-O`.

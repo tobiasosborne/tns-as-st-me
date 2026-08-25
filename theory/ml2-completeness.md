@@ -1,6 +1,6 @@
 # ML2: complete two-magnon resolution
 
-Status: **PROVER COMPLETE; L6 critic pending**.  No literature result is used.
+Status: **R1 MAJORS REPAIRED; L6 r2 critic pending**.  No literature result is used.
 The proof starts from D6,
 uses the D7 coefficient convention, and uses the local equations already proved
 in `oracle-bethe.md` ⟨1⟩2.  In particular, it does not assume Bethe
@@ -25,8 +25,9 @@ completeness.  A formal zero Bethe vector is never counted as a state.
    eigenfunctions, energies, Plancherel measures, and resolution of the
    identity are (15)--(20).
 3. Consequently the finite-volume expansion (R6) in
-   `soft-current-recon.md` is an unconditional Parseval expansion, and (R7)
-   is exactly its single-infinite-root descendant at `k_s=0`.
+   `soft-current-recon.md`, with the singular class and coefficient separated
+   as in (23)--(24), is unconditional; (R7) is its single-infinite-root
+   descendant at `k_s=0`.
 
 ## ⟨1⟩2. Momentum fibers on the finite ring
 
@@ -446,9 +447,9 @@ Justification: the Jacobians of (8), (18), and (19).
 ## ⟨1⟩6. Numerical certificate and consequence for the soft shard
 
 **⟨2⟩1. PROVE.** `theory/checks/ml2_completeness_check.py`, run normally and
-with `python3 -O`, gives the following physical inventory.  “Real” excludes
-the separately printed non-descendant degenerate `K=π` waves; “coincident”
-means formal zero vectors and is not part of the dimension.
+with `python3 -O` for `SIZES=(6,10,11,12,13,14,16,18,20,22,26)`, gives the
+following representative inventory.  “Real” excludes the separately printed
+non-descendant degenerate `K=π` waves; “coincident” zero vectors are excluded.
 
 \[
 \begin{array}{c|r|r|r|r|r|r|r}
@@ -460,15 +461,40 @@ N&\dim&\text{real}&\text{strings}&\text{desc.}&\text{sing.}&\pi\text{-deg.}&
 \end{array}                                                     \tag{22}
 \]
 
-Maximum spectral mismatch is `8.882e-15`; maximum eigenvector residual is
-`2.313e-14`; maximum projector Frobenius error is `2.126e-14`.
-Justification: the checker constructs (4), (12)--(13), independently
-constructs the full D6 coordinate Hamiltonian, and exits explicitly on every
-failure, including under optimized Python.
+Maximum spectral mismatch is `8.882e-15`, eigenvector residual `4.044e-14`,
+projector error `4.640e-14`, and singular-overlap error `6.280e-15`.
+Justification: the checker independently builds D6, actual coincident D7
+vectors, and (12)--(13), and exits explicitly on every failure.
 
-**⟨2⟩2. PROVE.** Equations (R5)--(R7) of `soft-current-recon.md` now use a
-proved complete family, with strings, descendants, and (for even `N`) the
-singular contact state included.
-Justification: finite completeness in ⟨1⟩4 and Parseval's identity.
+**⟨2⟩2. PROVE.** Let `\mathscr B_K^{D7}` contain the normalized real, string,
+and descendant states representable by D7, and set
+
+\[
+ \mathscr E_K=\mathscr B_K^{D7}\mathbin{\dot\cup}\mathscr X_K,\qquad
+ \mathscr X_K=\begin{cases}\{|\chi_\pi\rangle\},&2\mid N, K\equiv\pi,\\
+ \varnothing,&\text{otherwise}.\end{cases}                    \tag{23}
+\]
+
+Here `|χ_π⟩` has the separate unit normalization (12), not a D7 norm; on this
+branch choose the congruent representatives with `k_s+k_h=π`.  Then
+
+\[
+ Q_{k_s}|k_h\rangle_N=\sum_{B\in\mathscr B_K^{D7}}c_B^{(R5)}|B\rangle
+ +\mathbf1_{\mathscr X_K\ne\varnothing}\,
+ 2i\cos((k_h-k_s)/2)|\chi_\pi\rangle .                        \tag{24}
+\]
+
+**⟨3⟩1.** The `N` coefficients in (12) have modulus `N^{-1/2}`, so its norm
+is one; its compactified root has no finite D7 normalization.
+
+**⟨3⟩2.** Translation fibering makes the overlap zero unless
+`k_s+k_h≡π`.  In that case the `N-1` ordinary adjacent pairs each contribute
+`(e^{ik_h}+e^{ik_s})/N`; periodicity makes the wrap pair contribute the same.
+Thus the overlap is `e^{ik_h}+e^{ik_s}=2i cos((k_h-k_s)/2)`.
+
+**⟨3⟩3.** Completeness in ⟨1⟩4 and Parseval give (24); (R5) supplies exactly
+the first sum, while the second coefficient is the proved singular leaf.
+
+**⟨3⟩4. QED.**
 
 **⟨2⟩3. QED.** The finite and infinite statements of Theorem ML2 are proved.

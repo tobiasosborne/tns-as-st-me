@@ -1,0 +1,8 @@
+You are the prover in the L6 loop, revising ML2. Artifact: theory/ml2-completeness.md + theory/checks/ml2_completeness_check.py. Critic verdict: theory/verdicts/ml2-r1.md — FAIL(M1,M2,M3), with the mathematics otherwise verified independently at every N from 4 to 28 (read the full verdict; the critic also recorded one objection they raised and withdrew).
+
+Fix all three MAJORs:
+M1 — the completeness/expansion statement (R5-scope): your ⟨1⟩4.⟨2⟩2.⟨3⟩1 concedes the singular contact state has no finite (k₁,k₂), yet ⟨1⟩6.⟨2⟩2 claims (R5) includes it. Repair the statement so the expansion basis explicitly includes the singular state as its own class with its own normalization, and incorporate the critic's supplied closed form ⟨χ_π|Q_{k_s}|k_h⟩ = 2i cos((k_h−k_s)/2) (verify it yourself, then add it as a proved leaf with a checker test — it matters downstream: this matrix element enters the soft-current analysis in theory/soft-current-recon.md).
+M2 — replace the tautological "coincident zero" check (|−A+A|) with a real red-capable test (the critic proved amplitude 1→7 still passes; your new test must fail under that mutation — verify on a COPY under /tmp).
+M3 — coverage: SIZES must include N from all residues mod 4 and odd N (e.g. add 6,10,14,18,22,26 and at least one odd N); remove the hard-coded singular == 1 that makes odd N unrunnable; the L-odd and odd-N branches must be exercised (the critic found two surviving mutants there — kill them).
+
+Constraints as before: touch ONLY ml2-completeness.md and ml2_completeness_check.py (plus an appendix shard if the file exceeds 500 lines). Run the checker green (normal + python3 -O), confirm the mutations now go red. Print: per-objection fix bullets + the final inventory line for the new SIZES.

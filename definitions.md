@@ -350,9 +350,12 @@ is the relative-coordinate wave, `t` its geometric decay factor,
 `η:=−log|t|`, and `E_b(K)` its energy.
 
 **D8 (Bethe-oracle soft limit).** The hard momentum `k_h∈(0,π)` is held
-fixed while the signed soft momentum `k_s→0`; `ω_s:=ω(k_s)` and
-`σ:=sgn(k_s)` when a one-sided energy expansion is used.  A simultaneous
-limit of `k_h` and `k_s` is not included unless explicitly stated.
+fixed while the signed soft momentum `k_s→0`; `ω_h:=ω(k_h)`,
+`v_h:=v(k_h)`, `ω_s:=ω(k_s)`, `v_s:=v(k_s)`, and `σ:=sgn(k_s)` when a
+one-sided energy expansion is used.  Thus `v_h>v_s` for all sufficiently small
+`|k_s|`, so D7's `S_{12}` is the physical outgoing/incoming ratio on this
+restricted half-zone.  A simultaneous limit of `k_h` and `k_s`, or a hard
+momentum outside this half-zone, is not included unless explicitly stated.
 
 ---
 
