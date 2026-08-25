@@ -15,7 +15,8 @@ for run in d['runs']:
         continue
     res = run['result']; p = res.get('params', res)
     D, k = float(p.get('Delta', p.get('delta'))), float(p.get('k0'))
-    Rm = float(res['R'])
+    Rv = res.get('R', res.get('reflection'))
+    Rm = float(Rv if Rv is not None else res['observables']['R'])
     w, v = D - math.cos(k), math.sin(k)
     x = 1.0 / (16 * w * w * v * v)
     Rp = x / (1 + x)
