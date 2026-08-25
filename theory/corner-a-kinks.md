@@ -1,8 +1,10 @@
 # Corner A — the broken case: sectors, half-infinite strings, and kinks
 
-**Revision r2** (2026-08-25), after [`verdicts/corner-a-r1.md`](verdicts/corner-a-r1.md)
-= FAIL(WI,A1,A2,G0).  Disposition: [`corner-a-r1-response.md`](corner-a-r1-response.md).
-Numerics: [`checks/corner_a_check.py`](checks/corner_a_check.py) (ALL PASS).
+**Revision r3** (2026-08-25), after verdicts r1 = FAIL(WI,A1,A2,G0) and
+[`verdicts/corner-a-r2.md`](verdicts/corner-a-r2.md) = FAIL(A1,A2,G0,B3).
+Dispositions: [`corner-a-r1-response.md`](corner-a-r1-response.md),
+[`corner-a-r2-response.md`](corner-a-r2-response.md).
+Numerics: [`checks/corner_a_check.py`](checks/corner_a_check.py), C0--C11 (ALL PASS).
 
 Proof shard for claim **A2**.  Companion shards: [`corner-a.md`](corner-a.md)
 (Lemma IT, **WI**, **A1**), [`corner-a-goldstone.md`](corner-a-goldstone.md)
@@ -136,8 +138,12 @@ limit of a path of vector states of `H_{ω_α}` leaves the folium of `ω_α`.  T
 jump is invisible at every finite `|R|` and is created entirely by the
 surviving end.  *(r1 called this "the contact term"; that is a name, not a
 proved identity — see the header and corner-a-pitfalls.md Flag 3.)*
-(e) *(vacuum-pair classification — corrected)* `G_L × G_R` acts componentwise on
-`Ω_vac × Ω_vac`.  If `G` acts transitively on `Ω_vac` then
+(e) *(vacuum-pair classification — corrected; requires hypothesis (T))*
+`G_L × G_R` acts componentwise on `Ω_vac × Ω_vac`.  **Hypothesis (T):** `G` acts
+transitively on `Ω_vac`.  D2(a) does **not** imply (T) — the vacuum family may
+split into several `G`-orbits — so (T) is carried explicitly here and in the
+claims row; without it every statement below holds *per `G`-orbit* of vacua
+(r2 objection 5).  Under (T),
 `Ω_vac × Ω_vac ≅ (G/H_α) × (G/H_α)`, transitively, with stabiliser of `(α',β')`
 equal to `H_{α'} × H_{β'}`.  This is **not** `(G×G)/G_diag`.  The complete
 invariant **modulo the global (diagonal) symmetry** is the double coset
@@ -209,10 +215,12 @@ Justification: ⟨2⟩1, ⟨2⟩3, ⟨1⟩8(ii).
 **⟨3⟩1. QED.**
 
 **⟨2⟩5. PROVE (e).**
-**⟨3⟩1.** The componentwise action is well defined by D2(a); transitivity and
-the stabiliser `H_{α'}×H_{β'}` are orbit--stabiliser for `G` acting on
-`Ω_vac ≅ G/H_α` in each factor.  The stabiliser is **not** `G_diag`.
-Justification: D2(a), D9(d), orbit--stabiliser.
+**⟨3⟩1.** The componentwise action is well defined by D2(a).  Under (T),
+`Ω_vac ≅ G/H_α` and orbit--stabiliser in each factor gives transitivity with
+stabiliser `H_{α'}×H_{β'}`.  The stabiliser is **not** `G_diag`.  Without (T)
+the same argument applies within each `G`-orbit of `Ω_vac`, and pairs drawn
+from different orbits are never related by `G_L×G_R`.
+Justification: D2(a), D9(d) hypothesis (T), orbit--stabiliser.
 **⟨3⟩2.** Writing `α_L = g_L·α`, `α_R = g_R·α`, the quantity `g_L^{-1}g_R` is
 invariant under the diagonal `g_i ↦ hg_i`, and changes to
 `h_1^{-1}(g_L^{-1}g_R)h_2` under `g_L ↦ g_Lh_1`, `g_R ↦ g_Rh_2` (`h_i ∈ H_α`),

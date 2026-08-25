@@ -1,10 +1,12 @@
 # Corner A — the lattice asymptotic symmetry: Ward identity and charge algebra
 
-**Revision r2** (2026-08-25), after critic verdict
-[`verdicts/corner-a-r1.md`](verdicts/corner-a-r1.md) = FAIL(WI,A1,A2,G0).
-Per-objection disposition: [`corner-a-r1-response.md`](corner-a-r1-response.md).
-Numerical backing for every repair: [`checks/corner_a_check.py`](checks/corner_a_check.py)
-(ALL PASS, run 2026-08-25).
+**Revision r3** (2026-08-25), after critic verdicts
+[`verdicts/corner-a-r1.md`](verdicts/corner-a-r1.md) = FAIL(WI,A1,A2,G0) and
+[`verdicts/corner-a-r2.md`](verdicts/corner-a-r2.md) = FAIL(A1,A2,G0,B3).
+Dispositions: [`corner-a-r1-response.md`](corner-a-r1-response.md),
+[`corner-a-r2-response.md`](corner-a-r2-response.md).
+Numerical backing for every repair: [`checks/corner_a_check.py`](checks/corner_a_check.py),
+checks **C0--C11** (ALL PASS, run 2026-08-25).
 
 Proof shard for claims **WI** and **A1** of [`claims/CLAIMS.md`](../claims/CLAIMS.md),
 Companion shards (L2: 200--500 loc, one lemma-cluster per file):
@@ -198,8 +200,10 @@ The corrected statement below separates three levels — window vectors, states,
 GNS — and proves the first two.
 
 **ASSUME.** ⟨1⟩1--⟨1⟩3, the unbroken case `H_α = G`, and normal ordering
-(⟨1⟩2(iii)), so `θ_α ≡ 0`.  Notation `N_α`, `ρ_α`, `𝒜_eff`, `E_b^α`, `𝒲_{Λ,b}`
-from D4, D9(c).
+(⟨1⟩2(iii)), so `θ_α ≡ 0`.  Every statement mentioning `𝒲_{Λ,b}` or `𝒱_b`
+additionally assumes the window is **padded about `b`** (D4(a1)).  Notation
+`N_α`, `ρ_α`, `𝒜_eff`, `𝒲_{Λ,b}` from D4; `E_b^α`, `⋆` from D9(c), which is
+definition-only — A1 does **not** assume D9(c′), it proves it (r2 objection 7).
 
 **PROVE.**
 (a) *(charges live on one bond)* For finite `R` the right insertion is
@@ -207,22 +211,30 @@ invisible to observables to its left and the left insertion invisible to those
 to its right; hence the half-infinite operations of D3(c) exist **as maps on
 states**, with `1_{[x,∞)}g ⊳ ω_α = ω_α^{V_α(g)^{-1}@(x−1|x)}`, and the
 convergence is *exact* (eventually constant on each `𝔄_W`), not asymptotic.
-(b) *(non-implementability)* If `V_α(g) ∉ ℂ^×𝟙` then `(U_{[x,y]}(g)Ω_A)_y` is
+(b) *(non-implementability)* **If and only if** `V_α(g) ∉ ℂ^×𝟙`, then `(U_{[x,y]}(g)Ω_A)_y` is
 not Cauchy in `H_A`: the half-infinite symmetry is implemented on states but by
 no strongly convergent sequence of operators.
 (c) *(the endpoint bijection)* `ω_α^{M@b} = ω_α^{M'@b}` **iff** `M' ∈ ℂ^× M`.
 Hence `E_b^α ≅ PGL(χ)` canonically (D9(c)).
-(d) *(charge algebra — on window vectors, honestly)*
-  (d1) On the finite-dimensional space `𝒲_{Λ,b}`, `𝒱_b(h)𝒱_b(g) =
-       e^{iω_α(h,g)}𝒱_b(hg)`: a **linear representation of `𝔞_α = ℂ_{ω_α}[G]`**,
-       in which the multiplier acts nontrivially.
+(d) *(charge algebra — on padded window vectors, honestly)*
+  (d1) On a window **padded about `b`** (D4(a1): at least `n_0` sites each side,
+       `b_l,b_r ≠ 0`), the map `ι_{Λ,b} : M_χ(ℂ) → 𝒲_{Λ,b}` is injective, so
+       `𝒱_b(M) := ι ∘ L_M ∘ ι^{-1}` is a well-defined linear operator and
+       `𝒱_b(h)𝒱_b(g) = e^{iω_α(h,g)}𝒱_b(hg)`: a **linear representation of
+       `𝔞_α = ℂ_{ω_α}[G]`** in which the multiplier acts nontrivially.
+       *Padding is necessary, not cosmetic* — without it the kernel of `ι` need
+       not be left-invariant and `𝒱_b` is not an operator at all (⟨2⟩4.⟨3⟩0).
   (d2) The induced action on **states** kills the multiplier and is the genuine
        homomorphism `ρ_α : G → PGL(χ)`, `ker ρ_α = N_α`.
-  (d3) `[ω_α]` is the pullback under `ρ_α` of the class of
-       `1 → U(1) → U(χ) → PU(χ) → 1`, i.e. **the obstruction to lifting the
-       state-level asymptotic action (d2) to a linear action (d1)**.  This is
-       not a restatement of D4: `ρ_α` and its multiplier are produced by
-       Lemma IT from the fundamental theorem of MPS.
+  (d3) The window action (d1) **is** a lift of `ρ_α`, but a *projective* one,
+       with multiplier `ω_α`; such a lift exists for every `[ω_α]`, trivial or
+       not.  What `[ω_α]` obstructs is **removing the multiplier**: it is the
+       obstruction to lifting `ρ_α : G → PGL(χ)` to an *honest homomorphism*
+       `G → U(χ)`.  *(r2 objection 2: r2 said `[ω_α]` obstructs "lifting (d2) to
+       (d1)", which is false, since (d1) exists unconditionally.  Retracted.)*
+       This is not a restatement of D4 or D9: `ρ_α` and its multiplier are
+       produced by Lemma IT from the fundamental theorem of MPS, and D9(c) is
+       now definition-only (D9(c′) records these as *consequences*).
 (e) *(stabiliser and orbit, corrected)* The stabiliser of `ω_α` in `G_L × G_R`
 is `S_α = {(g_L,g_R) : g_Lg_R^{-1} ∈ N_α} ⊇ G_diag`, with equality **iff**
 `N_α = {e}`.  The orbit is in bijection with `G/N_α = 𝒜_eff`, a genuine group.
@@ -301,28 +313,61 @@ Justification: `‖Ψ_y−Ψ_{y'}‖² = 2−2Re ρ_{y'−y}` and ⟨3⟩1.
 insertion drops out by ⟨2⟩1.⟨3⟩3, so `ω_α^{V_α(g)^{-1}@(0|1)}(O) = ω_α(O)` for
 all such `O`.
 Justification: ⟨3⟩2, ⟨2⟩1.⟨3⟩3, (WI-state).
-**⟨3⟩4.** By (c), `V_α(g) ∈ ℂ^×𝟙`.  Contrapositive gives (b).
+**⟨3⟩4.** By (c), `V_α(g) ∈ ℂ^×𝟙`.  Contrapositive gives the forward direction.
 Justification: ⟨2⟩2.
-**⟨3⟩5. QED.**
+**⟨3⟩5.** (Converse, so that (b) is an *iff* — r2 objection 5.)  If
+`V_α(g) = c𝟙`, `|c| = 1`, then by WI the two boundary insertions are `c^{-1}𝟙`
+and `c𝟙`, whose product is `𝟙`; hence `U_{[x,y]}(ǔ_α(g))Ω_A = Ω_A` for every
+`y`, the sequence is constant, and the strings *do* stabilise.  So
+non-implementability holds **exactly when** `V_α(g)` is non-scalar.
+Justification: ⟨1⟩3 (WI), ⟨2⟩2.
+**⟨3⟩6. QED.**
 
-**⟨2⟩4. PROVE (d).** *(repairs r1 objections 4, 7, 8.)*
-**⟨3⟩1.** (d1) `𝒱_b(M)` is *left* multiplication of the bond insertion, so
-`𝒱_b(M)𝒱_b(M') = 𝒱_b(MM')`.  With the D4(a) choice `𝒱_b(g) := 𝒱_b(V_α(g))`
-(**not** `V_α(g)^{-1}`, which was r1's error and reverses the law) and
+**⟨2⟩4. PROVE (d).** *(repairs r1 objections 4, 7, 8 and r2 objections 1, 2.)*
+
+**⟨3⟩0.** *(well-definedness — the r2 gap).*  `𝒲_{Λ,b}` is a space of
+**physical vectors**, so a rule phrased on decorated representatives is an
+operator only if it preserves every linear relation among them.  For an
+**unpadded** window it does not.  Counterexample (critic's, independently
+verified): `A^0 = diag(1,2)`, `A^1 = X` — a legitimate D1 tensor (transfer
+spectrum `{4.303, 3, 1, 0.697}`, unique top eigenvalue, length-2 words of rank
+`4`) — with `u(g) = diag(1,−1)`, `V = Z`, `b_l = (\sqrt2,1)`, `b_r = (1,0)`,
+one site on each side of the bond, and
+`N = \begin{pmatrix}-\sqrt2&0\\1&0\end{pmatrix}`: then `ι(N) = 0` but
+`‖ι(ZN)‖_∞ = 4`, so `ker\,ι` is not invariant under `L_Z` and `𝒱_b(Z)` is not
+an operator on `𝒲_{Λ,b}`.  **On a padded window (D4(a1)) `ι` is injective**
+(D4(a2)): the coefficient `b_l^†P M Q b_r` is linear in `P` and in `Q`, each
+ranges over a spanning set of `M_χ(ℂ)` by D1(c), and `b_l,b_r ≠ 0`, so
+`v^†(M−M')w = 0` for all `v,w`, i.e. `M = M'`.  Padding restores
+`rank\,ι = χ² = 4` on the counterexample.
+Justification: D4(a1)--(a4); checks **C8**, **C8b**.  *(r2 objection 1,
+conceded; the r2 A1(d1) and its PROVED row were false as written.)*
+
+**⟨3⟩1.** (d1) With `ι` injective, `𝒱_b(M) := ι ∘ L_M ∘ ι^{-1}` is well defined
+and `𝒱_b(M)𝒱_b(M') = 𝒱_b(MM')`.  With the D4(a4) choice
+`𝒱_b(g) := 𝒱_b(V_α(g))` (**not** `V_α(g)^{-1}`, which reverses the law) and
 ⟨1⟩2(ii),
 `𝒱_b(h)𝒱_b(g) = 𝒱_b(V_α(h)V_α(g)) = e^{iω_α(h,g)}𝒱_b(V_α(hg)) = e^{iω_α(h,g)}𝒱_b(hg)`.
-`𝒲_{Λ,b}` is a genuine linear space and the phase acts on it.
-Justification: D4(a), ⟨1⟩2(ii).
-**⟨3⟩2.** (d2) By (c), states see `M` only modulo `ℂ^×`; so the induced map is
-`ρ_α(g) = [V_α(g)] ∈ PGL(χ)`, and ⟨3⟩1 gives
-`ρ_α(h)ρ_α(g) = ρ_α(hg)` — an honest homomorphism, with
-`ker ρ_α = N_α` by definition.
+`𝒲_{Λ,b}` is a genuine linear space, so the phase acts nontrivially on it.
+Justification: ⟨3⟩0, D4(a4), ⟨1⟩2(ii).
+
+**⟨3⟩2.** (d2) By (c), states see `M` only modulo `ℂ^×`; the induced map is
+`ρ_α(g) = [V_α(g)] ∈ PGL(χ)`, and ⟨3⟩1 gives `ρ_α(h)ρ_α(g) = ρ_α(hg)` — an
+honest homomorphism — with `ker ρ_α = N_α` by definition.  Note this is
+bond-independent and padding-independent: it is a statement about states.
 Justification: ⟨2⟩2, ⟨3⟩1, D4(b).
-**⟨3⟩3.** (d3) A lift of `ρ_α` to `U(χ)` is exactly a choice of `V_α(g)` with
-`ω_α ≡ 0`; by ⟨1⟩2(ii) the ambiguity is a coboundary, so the obstruction is
-precisely `[ω_α] ∈ H²(G,U(1))`, the pullback of the extension class of
+
+**⟨3⟩3.** (d3) A lift of `ρ_α` to `U(χ)` is a choice `g ↦ V_α(g)` with
+`V_α(h)V_α(g) = V_α(hg)` exactly, i.e. with `ω_α ≡ 0`.  By ⟨1⟩2(ii) the
+ambiguity in `V_α` is a phase, changing `ω_α` by a coboundary; so such a choice
+exists iff `[ω_α] = 0`, and `[ω_α] ∈ H²(G,U(1))` is precisely the obstruction —
+the pullback under `ρ_α` of the extension class of
 `1 → U(1) → U(χ) → PU(χ) → 1`.
-Justification: ⟨1⟩2(ii), ⟨3⟩1--⟨3⟩2.
+**It is *not* an obstruction to the existence of the window action ⟨3⟩1**,
+which exists for every `[ω_α]`: that action is a projective lift, and the
+multiplier is exactly what `[ω_α]` measures.
+Justification: ⟨1⟩2(ii), ⟨3⟩1--⟨3⟩2.  *(r2 objection 2, conceded.)*
+
 **⟨3⟩4.** Ground truth for the identification of `[ω_α]` with the SPT index:
 refs/arxiv-2011.12127, "it is perfectly fine if they transform according to
 projective representations, that is, representations up to a phase
@@ -426,14 +471,17 @@ campaign-level list and is referenced by all four Corner A shards.
 
 ---
 
-## Claim status produced by the Corner A shards (r2)
+## Claim status produced by the Corner A shards (r3)
 
 | claim | status | where |
 |---|---|---|
-| **WI** | **PROVED**, with the window hypothesis (W1) or (W2) — r1's "every `Λ ⊇ R`" is retracted (⟨1⟩3.⟨2⟩7); the state form carries no phase | this shard, ⟨1⟩3 |
-| **A1** | **PROVED** at the window-vector level (d1) and the state level (a),(b),(c),(d2),(d3),(e),(f),(g).  **Not** proved: the GNS/physical realisation — SKETCH and **load-bearing** for docs/framing.md's state-space charge algebra (⟨1⟩4.⟨2⟩9).  Completeness of `[ω_α]` cited, not proved | this shard, ⟨1⟩4 |
-| **G0** | **PROVED** for (a),(b),(d),(e); (c) **only in the D12 limits**.  The r1 soft-theorem/O7–O9 corollary is **RETRACTED** | [`corner-a-goldstone.md`](corner-a-goldstone.md), ⟨1⟩5--⟨1⟩7 |
-| **A2** | **PROVED** for (a)--(d),(f) per fixed `g ∉ H_α`, and for the corrected (e′) double-coset classification.  r1's (e) is **REFUTED**.  Continuum-`Ω_vac` uniformity is SKETCH and **load-bearing** for Corner B on M1 | [`corner-a-kinks.md`](corner-a-kinks.md), ⟨1⟩8--⟨1⟩10 |
+| **WI** | **PROVED**, with window hypothesis (W1) or (W2); the state form carries no phase | this shard, ⟨1⟩3 |
+| **A1** | **PROVED**: (a); (b) as an **iff** in `V_α(g)` non-scalar; (c); (d1) **on padded windows only**; (d2); (d3) in the corrected sense (`[ω_α]` obstructs *removing the multiplier*); (e),(f),(g).  **Not** proved: the GNS/edge realisation — SKETCH and **load-bearing** for docs/framing.md (⟨1⟩4.⟨2⟩9).  Completeness of `[ω_α]` cited, not proved | this shard, ⟨1⟩4 |
+| **G0** | **PROVED**: (a),(b),(d) for `ξ ∈ 𝔥_α` normal ordered; (c) as the corrected exact finite-window identity, with the clean form only in D12(b); (e) for any `ξ ∈ 𝔤` and finite-range `H`.  The r1 soft-theorem/O7–O9 corollary is **RETRACTED** | [`corner-a-goldstone.md`](corner-a-goldstone.md), ⟨1⟩5--⟨1⟩7 |
+| **A2** | **PROVED** for (a)--(d),(f) per fixed `g ∉ H_α`, and (e′) **under hypothesis (T)** (else per `G`-orbit).  r1's (e) is **REFUTED**.  Continuum-`Ω_vac` uniformity is SKETCH and **load-bearing** for Corner B on M1 | [`corner-a-kinks.md`](corner-a-kinks.md), ⟨1⟩8--⟨1⟩10 |
 
-Full per-objection disposition: [`corner-a-r1-response.md`](corner-a-r1-response.md).
-Numerical backing: [`checks/corner_a_check.py`](checks/corner_a_check.py), C0--C7.
+Two claims are carried as negative results: **`A2-orbit-r1` REFUTED** and
+**`G0-soft-r1` RETRACTED** (`claims/CLAIMS.md`).
+Per-objection dispositions: [`corner-a-r1-response.md`](corner-a-r1-response.md),
+[`corner-a-r2-response.md`](corner-a-r2-response.md).
+Numerical backing: [`checks/corner_a_check.py`](checks/corner_a_check.py), C0--C11.

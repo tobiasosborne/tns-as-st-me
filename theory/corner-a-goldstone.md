@@ -1,8 +1,10 @@
 # Corner A — summation by parts, the Goldstone tensor, and the kinematic factor
 
-**Revision r2** (2026-08-25), after [`verdicts/corner-a-r1.md`](verdicts/corner-a-r1.md)
-= FAIL(WI,A1,A2,G0).  Disposition: [`corner-a-r1-response.md`](corner-a-r1-response.md).
-Numerics: [`checks/corner_a_check.py`](checks/corner_a_check.py) (ALL PASS).
+**Revision r3** (2026-08-25), after verdicts r1 = FAIL(WI,A1,A2,G0) and
+[`verdicts/corner-a-r2.md`](verdicts/corner-a-r2.md) = FAIL(A1,A2,G0,B3).
+Dispositions: [`corner-a-r1-response.md`](corner-a-r1-response.md),
+[`corner-a-r2-response.md`](corner-a-r2-response.md).
+Numerics: [`checks/corner_a_check.py`](checks/corner_a_check.py), C0--C11 (ALL PASS).
 
 Proof shard for claim **G0**.  Companion shards:
 [`corner-a.md`](corner-a.md) (Lemma IT, **WI**, **A1**),
@@ -46,11 +48,19 @@ boundary vectors, `‖·‖ = 1.771` (check C3b; the r1 critic measured `0.591` 
 different boundary data).  r1's "`= 0` identically" is retracted.
 (iii) *(uniform bound)* `‖𝔅_Λ[f,X]‖ ≤ 2C_∂‖X‖\max(|f(a)|,|f(b)|)`, with `C_∂`
 of D1(e), uniformly in `Λ`.
-(iv) *(D12(a): decaying profiles)* If `f ∈ c_0(ℤ)` then `‖𝔅_Λ‖ → 0` in norm as
-`Λ ↗ ℤ`, so the identity holds exactly in the limit with no normalisation.
-(v) *(D12(b): plane waves)* For `f(n) = e^{ikn}`, `‖𝔅_Λ‖ = Θ(1)` while the bulk
-term is `Θ(|Λ|^{1/2})`; hence `‖ |Λ|^{-1/2}|Φ_k^Λ(𝒩_k(X))⟩ ‖ = O(|Λ|^{-1/2}) → 0`
-and the gauge identity holds in the δ-normalised topology, and only there.
+(iv) *(D12(a): vanishing remainder)* If `f ∈ c_0(ℤ)` then `‖𝔅_Λ‖ → 0` in norm
+as `Λ ↗ ℤ`.  This is a statement about the **remainder only**; it does not by
+itself make either side a convergent vector.  If moreover `f ∈ ℓ¹ ∩ BV`
+(D12(a′)) both sides are absolutely convergent sums of uniformly bounded window
+vectors and the identity is remainderless in the limit.  *(r2 asserted the
+stronger conclusion for all of `c_0`; since `c_0 ⊄ ℓ¹`, that was
+over-quantified — r2 objection 4.)*
+(v) *(D12(b): plane waves)* For `f(n) = e^{ikn}`, `‖𝔅_Λ‖ = O(1)` uniformly in
+`Λ` by (iii); hence `‖\,|Λ|^{-1/2}|Φ_k^Λ(𝒩_k(X))⟩\,‖ = O(|Λ|^{-1/2}) → 0` and
+the gauge identity holds in the δ-normalised topology.  **No claim is made
+about the growth of the bulk term**: r2's `Θ(|Λ|^{1/2})` is false — for `χ = 1`,
+`A_αX ∝ A_α` and the plane-wave sum is a bounded geometric sum (check **C10**).
+The `|Λ|^{-1/2}` conclusion needs only the upper bound (iii).
 (vi) *(ranks)* For `α=β`, `rank\,𝒩_k = χ²` for `k ≠ 0` and `rank\,𝒩_0 = χ²−1`:
 the rank **drops** by one as `k → 0`.
 
@@ -92,16 +102,22 @@ Justification: D1(e), D1(c).  **⟨3⟩1. QED.**
 **⟨2⟩4. PROVE (iv).** For `f ∈ c_0`, `max(|f(a)|,|f(b)|) → 0` as `a → −∞`,
 `b → +∞`; apply (iii).  Measured with the centred profile `(1+|n−c|)^{-3}`:
 `‖𝔅_Λ‖/‖bulk‖ = 3.4·10^{-1}, 5.7·10^{-2}, 8.5·10^{-3}, 1.2·10^{-3}` for
-`L = 4,8,16,32`, while `‖bulk‖` is constant to four digits.
-Justification: (iii), D12(a), check C4.  **⟨3⟩1. QED.**
+`L = 4,8,16,32` (check **C4**).  For the second clause: each window vector has
+norm `≤ C_∂‖X‖` (D1(e)), so `f ∈ ℓ¹` makes the left side and `Δf ∈ ℓ¹` makes
+the bulk sum absolutely convergent, uniformly in `Λ`.
+Justification: (iii), D1(e), D12(a),(a′), check C4.  **⟨3⟩1. QED.**
 
-**⟨2⟩5. PROVE (v).** For `f(n)=e^{ikn}`, `|f| ≡ 1`, so (iii) gives
-`‖𝔅_Λ‖ = O(1)` and it does not decay.  The bulk term is a momentum sum of
-`|Λ|` window vectors with `⟨Φ_k(B)|Φ_{k'}(B')⟩ = 2πδ(k−k')B^†N_kB'` (D5(a)),
-hence of norm `Θ(|Λ|^{1/2})` whenever `N_k` is nondegenerate on `X`.  Dividing
-by `|Λ|^{1/2}` gives the claim.  Measured: `‖𝔅_Λ‖ ∈ [1.31, 2.03]` versus
-`‖bulk‖ = 0.78, 1.19, 1.75, 2.51` for `L = 4,8,16,32`.
-Justification: (iii), D5(a), D12(b), check C5.  **⟨3⟩1. QED.**
+**⟨2⟩5. PROVE (v).** For `f(n) = e^{ikn}`, `|f| ≡ 1`, so (iii) gives
+`‖𝔅_Λ‖ ≤ 2C_∂‖X‖` uniformly in `Λ`; dividing by `|Λ|^{1/2}` gives the claim.
+Measured: `‖𝔅_Λ‖ ∈ [1.31, 2.03]` for `L = 4,…,32` (check **C5**).
+Justification: (iii), D12(b).
+**⟨3⟩1.** The r2 proof instead argued from a claimed bulk growth
+`Θ(|Λ|^{1/2})`.  That claim is **false**: for `χ = 1`, `A_αX ∝ A_α`, so the
+plane-wave bulk sum is `(Σ_{n=a}^{b}e^{ikn})·|ψ⟩`, of norm bounded by
+`2C_∂/|1−e^{ik}|` for every `Λ` (check **C10**).  The upper bound (iii) alone
+suffices and is what is used.
+Justification: check C10; r2 objection 4(b), conceded.
+**⟨3⟩2. QED.**
 
 **⟨2⟩6. PROVE (vi).**
 **⟨3⟩1.** Suppose `e^{ik}A^sX = XA^s` for all `s`, `X ≠ 0`.  Iterating,
@@ -143,11 +159,24 @@ fails is the **same-vacuum return** `g·α = α`, so `B_G(ξ)` is a tangent to t
 vacuum manifold rather than to the gauge orbit.
 (c) *(`k`-dependence, with the limit named)* For `ξ ∈ 𝔥_α`, normal ordered, and
 any `k`, `B_G(ξ) = 𝒩_k(X_α(ξ)) + (1−e^{ik})A_αX_α(ξ)`, hence on a finite window
-  `|Φ_k^Λ(B_G(ξ))⟩ = (1−e^{ik})Σ_{m=a}^{b−1}e^{ikm}|ψ;X_α(ξ)@m⟩ + 𝔅_Λ`,
-with `𝔅_Λ` the `Θ(1)` remainder of ⟨1⟩5.  The clean form
-`|Φ_k(B_G(ξ))⟩ = (1−e^{ik})|Φ_k(A_αX_α(ξ))⟩` holds **exactly for `c_0`
-profiles (D12(a))** and **only after `|Λ|^{-1/2}` normalisation for a plane
-wave (D12(b))** — *not* as a finite-window identity, as r1 claimed.
+`Λ = [a,b]` the **exact** identity is
+  `|Φ_k^Λ(B_G(ξ))⟩ = (1−e^{ik})Σ_{m=a}^{b} e^{ikm}|ψ;X@m⟩
+      + e^{ik(b+1)}|ψ;X@b⟩ − e^{ika}|ψ;X@(a−1)⟩`,
+equivalently, combining the two right-edge coefficients,
+  `|Φ_k^Λ(B_G(ξ))⟩ = (1−e^{ik})Σ_{m=a}^{b−1} e^{ikm}|ψ;X@m⟩
+      + e^{ikb}|ψ;X@b⟩ − e^{ika}|ψ;X@(a−1)⟩`,
+with `X := X_α(ξ)`.
+**r2 correction (objection 3, conceded).** r2 displayed the bulk sum truncated
+at `b−1` *while keeping the uncombined coefficient* `e^{ik(b+1)}`, thereby
+omitting `(1−e^{ik})e^{ikb}|ψ;X@b⟩`.  Independently measured discrepancy
+`0.4505862126399518`, exactly the norm of the omitted term; both corrected forms
+above agree with the left-hand side to `5.9·10^{-17}` (check **C9**).
+The clean form `|Φ_k(B_G(ξ))⟩ = (1−e^{ik})|Φ_k(A_αX_α(ξ))⟩` is recovered only
+in the D12(b) δ-normalised sense (the two edge terms are `O(1)`, hence
+`O(|Λ|^{-1/2})` after normalisation).  For a decaying profile the correct
+statement is the real-space SBP identity of ⟨1⟩5(i) with `f ∈ ℓ¹ ∩ BV`
+(D12(a′)), **not** this fixed-`k` equation — a plane wave is not in `c_0`
+(r2 objection 4).
 (d) *(lattice Noether / the bond potential)* Exactly, on the vacuum, with no
 limit and no boundary term,
 `q_x(ξ)▹ω_α = (𝒥_{x|x+1}(ξ) − 𝒥_{x−1|x}(ξ))▹ω_α` for `ξ ∈ 𝔥_α`, normal
@@ -197,13 +226,31 @@ all-up FM tensor with a broken `x`-rotation gives `B_G = (0,i/2)`,
 Justification: r1 critic's spot checks, objection 15.
 **⟨3⟩5. QED.**
 
-**⟨2⟩3. PROVE (c).** `𝒩_k(X) = (A_αX − XA_α) + (e^{ik}−1)A_αX`, so
-`B_G(ξ) = 𝒩_0(X_α(ξ)) = 𝒩_k(X_α(ξ)) − (e^{ik}−1)A_αX_α(ξ)`.  Confirmed
-exactly: `max_s‖B_G^s − 𝒩_k(K)^s − (1−e^{ik})A^sK‖ = 0` at `k = 0.37`.
-Applying `Σ_n e^{ikn}|ψ(·@n)⟩` and Lemma SBP(ii) replaces the `𝒩_k` term by the
-boundary remainder `𝔅_Λ` — **not** by zero.  The limits are ⟨1⟩5(iv),(v).
-Justification: ⟨2⟩1, ⟨1⟩5(i),(ii),(iv),(v), D12; r1 critic's spot check.
-**⟨3⟩1. QED.**
+**⟨2⟩3. PROVE (c).**
+**⟨3⟩1.** `𝒩_k(X) = (A_αX − XA_α) + (e^{ik}−1)A_αX`, so
+`B_G(ξ) = 𝒩_0(X) = 𝒩_k(X) − (e^{ik}−1)A_αX` with `X = X_α(ξ)`.  Confirmed
+exactly: `max_s‖B_G^s − 𝒩_k(X)^s − (1−e^{ik})A^sX‖ = 0` at `k = 0.37`.
+Justification: ⟨2⟩1; r1 critic's spot check.
+**⟨3⟩2.** Apply `Σ_{n∈Λ}e^{ikn}|ψ(·@n)⟩`.  By ⟨1⟩5.⟨2⟩1.⟨3⟩1, placing `A_α^sX`
+at site `n` is placing `X` on bond `n`, so
+`Φ_k^Λ(A_αX) = Σ_{m=a}^{b} e^{ikm}|ψ;X@m⟩` — the sum runs to **`b`**, not `b−1`.
+By ⟨1⟩5(ii), `Φ_k^Λ(𝒩_k(X)) = e^{ik(b+1)}|ψ;X@b⟩ − e^{ika}|ψ;X@(a−1)⟩`.
+Adding gives the first displayed identity.
+Justification: ⟨1⟩5(i),(ii).  *(r2 mismatched the two summation ranges; this
+step is where the omitted term was lost.)*
+**⟨3⟩3.** The second display follows from
+`(1−e^{ik})e^{ikb} + e^{ik(b+1)} = e^{ikb}`.
+Justification: algebra.
+**⟨3⟩4.** Verified: both displays agree with the left-hand side to
+`5.9·10^{-17}` and `3.9·10^{-17}`, while the r2 display is off by
+`0.4505862126399518`.
+Justification: check **C9**.
+**⟨3⟩5.** Limits: the two edge terms are bounded uniformly in `Λ` by
+⟨1⟩5(iii), so `|Λ|^{-1/2}` kills them (D12(b)); no bulk growth rate is claimed
+or needed.  For `f ∈ ℓ¹ ∩ BV` the real-space identity ⟨1⟩5(i) is remainderless
+in the limit (D12(a′)).
+Justification: ⟨1⟩5(iii),(iv),(v), D12.
+**⟨3⟩6. QED.**
 
 **⟨2⟩4. PROVE (d).** Acting with `q_x(ξ)` on the vacuum replaces `A_α` at site
 `x` by `B_G(ξ)` (D11(b)); by (a), normal ordered, this is
@@ -363,10 +410,10 @@ Only **O1** is rederived here (⟨2⟩3), and only in the one-magnon sector.
 | item | status | where |
 |---|---|---|
 | **G0(a)**, **G0(b)** — pure gauge at `k=0` **iff** `ξ` unbroken; broken case is failure of *same-vacuum return*, not of (IT) | **PROVED** | ⟨1⟩6.⟨2⟩1--⟨2⟩2 |
-| **G0(c)** — `\|Φ_k(B_G)⟩ = (1−e^{ik})\|Φ_k(A_αX_α(ξ))⟩` | **PROVED in the named limits only**: exactly for `c_0` profiles (D12(a)); after `\|Λ\|^{-1/2}` for plane waves (D12(b)).  **Retracted** as a finite-window identity | ⟨1⟩5, ⟨1⟩6.⟨2⟩3 |
+| **G0(c)** — exact finite-window identity with **both** edge terms: `(1−e^{ik})Σ_{m=a}^{b−1}e^{ikm}\|ψ;X@m⟩ + e^{ikb}\|ψ;X@b⟩ − e^{ika}\|ψ;X@(a−1)⟩` | **PROVED**.  The clean form `(1−e^{ik})\|Φ_k(A_αX_α(ξ))⟩` holds **only** in the D12(b) δ-normalised sense; for decaying profiles use the real-space SBP identity with `f ∈ ℓ¹∩BV` (D12(a′)).  r2's display, which dropped `(1−e^{ik})e^{ikb}\|ψ;X@b⟩`, is retracted | ⟨1⟩5, ⟨1⟩6.⟨2⟩3, check C9 |
 | **G0(d)** — lattice Noether: `q_x ▹ ω_α = (𝒥_{x\|x+1} − 𝒥_{x−1\|x}) ▹ ω_α` | **PROVED** (single site; no limit, no boundary term) | ⟨1⟩6.⟨2⟩4 |
 | **G0(e)** — `[H,Q[f;ξ]] = Σ_x(Δf)(x)\,j_{x\|x+1}(ξ)`, finite range, cut current | **PROVED** for the full finite-range class (r1 proved only nearest neighbour) | ⟨1⟩6.⟨2⟩5 |
 | G0(e) ⟹ Adler zero / universal soft coefficient / O7 / O9 | **RETRACTED** — see ⟨1⟩6.⟨2⟩7; open for Corner C | — |
-| supporting **Lemma SBP** — exact master identity *with* its two boundary terms | **PROVED** (replaces r1's false `\|Φ_k(𝒩_k(X))⟩ = 0`) | ⟨1⟩5 |
+| supporting **Lemma SBP** — exact master identity *with* its two boundary terms; (iv) remainder-vanishing for `c_0` and norm convergence for `ℓ¹∩BV`; (v) `‖𝔅_Λ‖ = O(1)` **upper bound only** | **PROVED** (replaces r1's false `\|Φ_k(𝒩_k(X))⟩ = 0`; r2's `Θ(\|Λ\|^{1/2})` bulk claim withdrawn, check C10) | ⟨1⟩5 |
 | supporting **Proposition FM** — type-B count `2→1`; `ω(k) = J(1−\cos k)` rederived from G0(e), matching oracle **O1** | **PROVED** | ⟨1⟩7 |
 | brief's mechanism ("the `k=0` magnon is pure gauge with `X=V'(0)`") | **CORRECTED** — true only for unbroken directions | ⟨1⟩6.⟨2⟩8 |

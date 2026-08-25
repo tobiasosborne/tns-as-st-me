@@ -18,12 +18,25 @@ Checks (each PASS/FAIL against a tolerance fixed here, not after the fact):
       exact for an arbitrary profile (r1 objection 13; replaces the false
       "Phi_k(N_k(X)) = 0" finite-window claim).
   C4  D12(a): for a decaying (c_0) profile the boundary remainder -> 0 in norm.
-  C5  D12(b): for a plane wave the remainder is Theta(1) while the bulk grows
-      like |Lambda|^{1/2}, so the identity holds only after |Lambda|^{-1/2}.
+  C5  D12(b): for a plane wave the boundary remainder stays bounded, so the
+      identity holds after |Lambda|^{-1/2} normalisation.  (No bulk growth rate
+      is claimed -- see C10.)
   C6  A1(c): omega^{M@b} = omega^{M'@b}  iff  M' in C^* M  (r1 objection 5:
       normalisation matters; phases and positive scalars are invisible).
   C7  D9(d): the double coset H\\G/H (relative angle) is the diagonal invariant
       of a vacuum pair, while g_L g_R^{-1} is NOT (r1 objection 11).
+  C8  r2 objection 1: the bond-matrix -> window-vector map has a kernel that is
+      NOT invariant under left multiplication when the window is under-padded,
+      so D4(a)'s action is ill defined there; padding both sides to n_0 sites
+      restores injectivity and hence well-definedness (D4(a) revision r3).
+  C9  r2 objection 3: G0(c)'s r2 finite-window display omitted the m=b bulk
+      term; the corrected and combined forms are exact (D12/G0(c) revision r3).
+  C10 r2 objection 4(b): for chi=1 the plane-wave bulk sum is a BOUNDED
+      geometric sum, so the r2 "Theta(|Lambda|^{1/2}) bulk" claim is false; the
+      delta-normalised conclusion needs only the boundary UPPER bound.
+  C11 r2 objection 8: the D1(e') mixed-tail window functional is positive,
+      via the CP contraction tr[L T R T^dagger] >= 0, not via a rank-one
+      boundary-vector purification.
 """
 import numpy as np
 
@@ -226,9 +239,15 @@ for L in (4, 8, 16, 32):
 report("C4  D12(a): c_0 profile -> boundary remainder vanishes in norm",
        ratios_c0[-1] < 1e-2 and ratios_c0[-1] < ratios_c0[0] / 100,
        f"ratio {ratios_c0[0]:.2e} -> {ratios_c0[-1]:.2e}")
-report("C5  D12(b): plane wave -> boundary Theta(1), bulk grows ~ sqrt(L)",
-       max(bdry_pw) < 5 and bulk_pw[-1] > 2.5 * bulk_pw[0] / 2.5,
-       f"bdry in [{min(bdry_pw):.2f},{max(bdry_pw):.2f}], bulk {bulk_pw[0]:.2f} -> {bulk_pw[-1]:.2f}")
+# NOTE (r3): the *only* thing D12(b) needs is that the boundary remainder is
+# bounded uniformly in |Lambda|; then |Lambda|^{-1/2}||remainder|| -> 0.  The r2
+# claim that the bulk is Theta(|Lambda|^{1/2}) is FALSE in general (see C10) and
+# is not tested or used.
+report("C5  D12(b): plane-wave boundary remainder is bounded uniformly in |Lambda| "
+       "(the only input the delta-normalised statement needs)",
+       max(bdry_pw) < 5,
+       f"bdry in [{min(bdry_pw):.2f},{max(bdry_pw):.2f}] over L=4..32 "
+       f"(bulk shown for information only: {bulk_pw[0]:.2f} -> {bulk_pw[-1]:.2f})")
 
 # C6 --------------------------------------------------------------------
 L = 9
@@ -269,6 +288,111 @@ report("C7  D9(d): relative angle (double coset) IS diagonal-invariant, "
        "g_L g_R^{-1} is NOT",
        abs(c1 - c2) < 1e-12 and noninv > 1e-3,
        f"|cos1-cos2|={abs(c1-c2):.1e}, |w - hwh^-1|={noninv:.4f}")
+
+# C8 --------------------------------------------------------------------
+A0 = np.diag([1, 2]).astype(complex)
+A1c = X.copy()
+ACX = [A0, A1c]
+blc = np.array([np.sqrt(2), 1], dtype=complex)
+brc = np.array([1, 0], dtype=complex)
+Ncx = np.array([[-np.sqrt(2), 0], [1, 0]], dtype=complex)
+
+
+def Fcx(M, wl, wr):
+    out = []
+    for sl in itertools.product(range(2), repeat=wl):
+        P = np.eye(2, dtype=complex)
+        for t in sl:
+            P = P @ ACX[t]
+        for sr in itertools.product(range(2), repeat=wr):
+            Q = np.eye(2, dtype=complex)
+            for t in sr:
+                Q = Q @ ACX[t]
+            out.append(blc.conj() @ P @ M @ Q @ brc)
+    return np.array(out)
+
+
+def rank_map(wl, wr):
+    basis = [np.array([[1, 0], [0, 0]]), np.array([[0, 1], [0, 0]]),
+             np.array([[0, 0], [1, 0]]), np.array([[0, 0], [0, 1]])]
+    return np.linalg.matrix_rank(np.array([Fcx(np.asarray(E1, dtype=complex), wl, wr)
+                                           for E1 in basis]))
+
+
+Ecx = sum(np.kron(a, a.conj()) for a in ACX)
+evc = np.sort(np.abs(np.linalg.eigvals(Ecx)))[::-1]
+legit = (evc[0] > evc[1] + 1e-9
+         and np.linalg.matrix_rank(np.array([(a @ b).flatten() for a in ACX for b in ACX])) == 4
+         and np.allclose(np.linalg.inv(Z) @ A0 @ Z, A0)
+         and np.allclose(np.linalg.inv(Z) @ A1c @ Z, -A1c))
+kern_broken = abs(Fcx(Ncx, 1, 1)).max() < 1e-12 and abs(Fcx(Z @ Ncx, 1, 1)).max() > 1
+report("C8  r2 obj 1: under-padded window -> ker not invariant, action ILL-DEFINED",
+       legit and kern_broken and rank_map(1, 1) < 4,
+       f"legit D1 tensor={legit} (lambda_E={evc[1]/evc[0]:.4f}), "
+       f"|F(N)|={abs(Fcx(Ncx,1,1)).max():.1e}, |F(ZN)|={abs(Fcx(Z@Ncx,1,1)).max():.1f}, "
+       f"rank(1|1)={rank_map(1,1)}")
+report("C8b r3 repair: padding both sides to n_0=2 sites restores injectivity",
+       rank_map(2, 2) == 4 and rank_map(2, 1) == 4,
+       f"rank(2|2)={rank_map(2,2)}, rank(2|1)={rank_map(2,1)}, rank(1|2)={rank_map(1,2)}")
+
+# C9 --------------------------------------------------------------------
+Lg, aa, bb = 4, 0, 3
+BG = [A[t] @ K - K @ A[t] for t in range(D)]
+lhs9 = np.zeros(D ** Lg, dtype=complex)
+for n in range(Lg):
+    tt = [A] * Lg
+    tt[n] = BG
+    lhs9 = lhs9 + np.exp(1j * k * n) * vec(tt)
+
+
+def Xat(m):
+    if m == aa - 1:
+        return vec([A] * Lg, Ml=K)
+    if m == bb:
+        return vec([A] * Lg, Mr=K)
+    return vec([A] * Lg, bondins={m: K})
+
+
+bdry9 = np.exp(1j * k * (bb + 1)) * Xat(bb) - np.exp(1j * k * aa) * Xat(aa - 1)
+r2form = (1 - np.exp(1j * k)) * sum(np.exp(1j * k * m) * Xat(m) for m in range(aa, bb)) + bdry9
+corrected = (1 - np.exp(1j * k)) * sum(np.exp(1j * k * m) * Xat(m) for m in range(aa, bb + 1)) + bdry9
+combined = ((1 - np.exp(1j * k)) * sum(np.exp(1j * k * m) * Xat(m) for m in range(aa, bb))
+            + np.exp(1j * k * bb) * Xat(bb) - np.exp(1j * k * aa) * Xat(aa - 1))
+miss = np.linalg.norm((1 - np.exp(1j * k)) * np.exp(1j * k * bb) * Xat(bb))
+report("C9  r2 obj 3: r2's G0(c) display omitted (1-e^{ik})e^{ikb}|X@b>; "
+       "corrected and combined forms are exact",
+       np.linalg.norm(lhs9 - r2form) > 0.4 and np.abs(lhs9 - corrected).max() < TOL_EXACT
+       and np.abs(lhs9 - combined).max() < TOL_EXACT,
+       f"r2 err={np.linalg.norm(lhs9-r2form):.10f}, missing term={miss:.10f}, "
+       f"corrected err={np.abs(lhs9-corrected).max():.2e}")
+
+# C10 -------------------------------------------------------------------
+geo = [abs(sum(np.exp(1j * k * n) for n in range(LL))) for LL in (4, 8, 16, 32, 64, 128)]
+report("C10 r2 obj 4(b): chi=1 plane-wave bulk sum is BOUNDED, not Theta(sqrt L)",
+       max(geo) < 2 / abs(1 - np.exp(1j * k)) + 1e-9,
+       f"|sum| = {[round(g,3) for g in geo]}, bound 2/|1-e^ik| = {2/abs(1-np.exp(1j*k)):.3f}")
+
+# C11 -------------------------------------------------------------------
+rngp = np.random.default_rng(11)
+Lp = np.array([[2.0, 0.3 + 0.1j], [0.3 - 0.1j, 1.0]], dtype=complex)   # l_alpha > 0
+Rp = np.array([[1.5, -0.2j], [0.2j, 0.8]], dtype=complex)              # r_beta  > 0
+Aa = [I2 / 2, X / 2, Y / 2, Z / 2]
+Ab = [np.linalg.inv(Z) @ m @ Z for m in Aa]      # a different (mixed) tail tensor
+wsz = 2
+words = []
+for sl in itertools.product(range(4), repeat=wsz):
+    P = np.eye(2, dtype=complex)
+    for t in sl[:1]:
+        P = P @ Aa[t]
+    for t in sl[1:]:
+        P = P @ Ab[t]
+    words.append(P)
+rho = np.array([[np.trace(Lp @ P @ Rp @ Q.conj().T) for Q in words] for P in words])
+evr = np.linalg.eigvalsh((rho + rho.conj().T) / 2)
+report("C11 r2 obj 8: mixed-tail window functional is positive via tr[L T R T^dag]",
+       np.abs(rho - rho.conj().T).max() < 1e-12 and evr.min() > -1e-12 and np.trace(rho).real > 0,
+       f"min eig = {evr.min():.3e}, hermiticity = {np.abs(rho-rho.conj().T).max():.1e}, "
+       f"trace = {np.trace(rho).real:.4f}")
 
 print()
 print("ALL PASS" if all(results) else "SOME CHECKS FAILED")

@@ -1,6 +1,7 @@
 # Corner A — §5: pitfalls, scope, and terminology discipline
 
-**Revision r2**, after [`verdicts/corner-a-r1.md`](verdicts/corner-a-r1.md).
+**Revision r3**, after verdicts [`corner-a-r1.md`](verdicts/corner-a-r1.md) and
+[`corner-a-r2.md`](verdicts/corner-a-r2.md).
 Campaign-level list, referenced by [`corner-a.md`](corner-a.md),
 [`corner-a-goldstone.md`](corner-a-goldstone.md), and
 [`corner-a-kinks.md`](corner-a-kinks.md).  Sharded out of `corner-a.md` under
@@ -186,3 +187,18 @@ exactly with `χ=1`, `V ≡ 1`, `θ ≡ 0`, and target `A_{g·α}`.  What fails 
 **same-vacuum return** `g·α = α`; that is why `B_G(ξ)` is not a same-vacuum
 tangent and the pure-gauge conclusion does not apply.  The corrected wording is
 used throughout r2 (corner-a-goldstone.md ⟨1⟩6(b), ⟨2⟩7).
+
+**Flag 6 — retracted content still cited downstream (r2 objection 6; input for
+the orchestrator's freeze reconciliation, NOT edited by this shard).**
+Two drafts outside Corner A's scope cite claims this package has retracted or
+refuted.  Listing them here so the reconciliation has an exact target; neither
+file is touched by the Corner A shards.
+
+| draft (read-only) | line(s) | retracted/refuted item cited | correct status |
+|---|---|---|---|
+| `theory/spt-scoping-draft.md` | 132 | calls `(e^{ik}−1)` an "exact lattice Adler zero" whose coefficient is established by G0, concluding every bulk soft amplitude vanishes linearly | **`G0-soft-r1` = RETRACTED**; regularity of `⟨out\|J_k\|in⟩`, LSZ reduction and a Ward identity for `J_0` are all absent (§5.2(iv)) |
+| `theory/spt-scoping-draft.md` | 236--252 | reads A1 as an action on an **edge Hilbert space** | A1 proves a padded-**window-vector** action (d1) and a **state**-level `PGL(χ)` action (d2) only; the GNS/edge-Hilbert-space realisation is the SKETCH box of corner-a.md ⟨1⟩4.⟨2⟩9 (Flag 4) |
+| `theory/corner-b-draft.md` | 39, 569, 594--597 | uses a fixed `𝒜`-orbit point and identifies memory with the `G_diag`-invariant label in `(G_L×G_R)/G_diag` | **`A2-orbit-r1` = REFUTED**; and in that draft's `χ=1` unbroken `U(1)` product-vacuum setting the repaired A1 gives `N_α = G`, so the endpoint-state orbit is a **single point** — the `𝒜 ≅ U(1)` reading cannot be imported from A1.  A separately defined charge-transfer torsor may be viable but is not this claim |
+
+These are drafts, so they do not bear on the Corner A theorems; they do show
+that the retractions have not yet propagated through the campaign DAG.

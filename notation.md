@@ -11,7 +11,7 @@
 | `V(g)` | virtual (projective) representation from the fundamental theorem | definitions.md D2 |
 | `[ω]` | class of V in H²(G,U(1)); the SPT index | definitions.md D2 |
 | `U_R(g)` | truncated symmetry string Π_{x∈R} u_x(g) on interval R | definitions.md D3 |
-| `𝒜` | lattice asymptotic symmetry group (G_L × G_R)/G_diag | definitions.md D4 |
+| `𝒜` | ~~lattice asymptotic symmetry group~~ **(SUPERSEDED r2/r3)** — the coset *space* `(G_L×G_R)/G_diag`; a **group** only for abelian `G`, and **never** the vacuum orbit unless `N_α = {e}`.  The object that acts is `𝒜_eff = G/N_α` (unbroken) or `(G/H_α)²` with double-coset invariant (broken).  Do not use `𝒜` as a classifying object | definitions.md D4(b), D9(d) |
 | `|Φ_k(B)⟩` | excitation-ansatz state Σ_x e^{ikx}(…A B A…) | definitions.md D5 |
 | `B ≃ B + e^{ik} A X − X A` | tangent-space gauge freedom (null directions) | definitions.md D5 |
 | `S(k; ·)` | soft factor in Conjecture S | claims/CLAIMS.md S |
@@ -50,7 +50,7 @@
 | `𝔉_c`, `𝔉_ec`, `𝔉_{ℓ¹}` | admissible profile classes: finite support / eventually constant / finite total variation | definitions.md D3 |
 | `U[f]`, `f ⊳ ϱ` | modulated symmetry operation; induced map on states (half-infinite limit) | definitions.md D3 |
 | `∂_-R`, `∂_+R` | left and right boundary bonds of an interval `R` | definitions.md D3 |
-| `𝒱_b(M)`, `𝒱_b(g)` | bond-insertion implementer on bond `b`; `𝒱_b(V_α(g)^{-1})` | definitions.md D4 |
+| `𝒱_b(M)`, `𝒱_b(g)` | bond-insertion implementer on bond `b`, defined on **padded** windows only (D4(a1)); `𝒱_b(g) := 𝒱_b(V_α(g))` — **the r2 inverse convention `V_α(g)^{-1}` is superseded**, it reverses the cocycle law | definitions.md D4(a) |
 | `G_L`, `G_R`, `G_diag` | left/right asymptotic copies of `G` and the diagonal (global) subgroup | definitions.md D4 |
 | `𝔞_α = ℂ_{ω_α}[H_α]` | asymptotic charge algebra (twisted group algebra) | definitions.md D4 |
 | `𝔮_b(ξ)`, `c_α(ξ,ζ)` | asymptotic charge on bond `b`; Lie-algebra central-extension cocycle | definitions.md D4 |
@@ -90,9 +90,15 @@ above.  The argument types never coincide.  All other symbols are unique.
 (Anchors are added as definitions.md grows; a symbol used anywhere without an
 entry here is a defect.)
 
-Revision r2 (2026-08-25): rows above the conventions block were appended after
-the r1 critic verdict; nothing was renumbered or deleted.  Two earlier rows are
-superseded rather than removed — `j_{x,x+1}` by the cut current `j_{m|m+1}`
-(D10(a)), and `𝒜` by `𝒜_eff` as the object that actually acts (D4(b)).  The
-superseded forms remain correct in their original restricted settings
+| `ι_{Λ,b}` | `M ↦` window vector with `M` inserted on bond `b`; injective **iff** the window is padded (D4(a1)--(a2)) | definitions.md D4(a) |
+| `⋆` | endpoint action on representatives, `g ⋆ M := V_α(g)M` (D9(c), definition only) | definitions.md D9(c) |
+| `(T)` | hypothesis "`G` acts transitively on `Ω_vac`"; required by the vacuum-pair classification | definitions.md D9(d) |
+| `ℓ¹ ∩ BV` | summable profiles of bounded variation — the class for norm-convergent wave-packet statements | definitions.md D12(a′) |
+
+Revision r2/r3 (2026-08-25): rows were appended after the r1 and r2 critic
+verdicts; nothing was renumbered or deleted.  **Three earlier rows are marked
+SUPERSEDED in place** rather than left to mislead (r2 objection 9): the
+`𝒱_b(V_α(g)^{-1})` inverse convention, the description of `𝒜` as a group, and
+`j_{x,x+1}` (superseded by the cut current `j_{m|m+1}`, D10(a)).  The
+superseded forms remain correct only in their original restricted settings
 (nearest-neighbour `H`; abelian `G` with faithful `ρ_α`).

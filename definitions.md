@@ -83,37 +83,31 @@ infinite environments; it is well defined by the `λ̃`-estimate of (c).  We wri
 tensor `A_α` on `(−∞,m]`, tensor `A_β` on `[m+1,∞)` (both injective, possibly
 `α = β`), plus finitely many further site/bond modifications.  This is **not** a
 decoration in the sense of (e) — it differs from any uniform tensor on a whole
-half-line — and it is defined instead by its finite-window restrictions: for
-`O ∈ 𝔄_W` put
-`ω_{α|β}^{(m)}[T](O) :=` the (e)-contraction over `W ∪ {m}` with left
-environment `l_α`, right environment `r_β`, and the modifications inserted.
-**Lemma (well-definedness).** These functionals are positive, normalised, and
-consistent under `W ⊆ W'`, hence define a unique state on `𝔄`; consistency and
-positivity follow because each is `⟨v|·|v⟩/⟨v|v⟩` for the finite-window vector
-`v` with the environments as boundary data, and enlarging `W` changes the
-boundary data by one application of `E_α` (resp. `E_β`), which fixes `l_α`
-(resp. `r_β`).  *(Added in r2; the r1 shards used such states without
-constructing them — corner-a-kinks.md ⟨1⟩9.)*
+half-line — and is defined instead by its finite-window restrictions.
 
-**(f) Register.** Every identity below is first an *exact algebraic identity
-between window vectors* at finite `Λ`, and only then a statement about states
-on `𝔄` obtained by an explicitly rated limit.  No manipulation of "the
-infinite-chain wave function" is performed.
+For a finite window `W ⊇ {m}` let `P_W(s)` be the ordered product of the window
+tensors (with the modifications inserted) for the physical index string `s`, and
+define the **unnormalised CP contraction**
+  `ϱ̃_W := Σ_{s,s'} tr[\, l_α\, P_W(s)\, r_β\, P_W(s')^† \,]\, |s⟩⟨s'|`,
+  `ω_{α|β}^{(m)}[T](O) := tr[ϱ̃_W O] / tr[ϱ̃_W]`  for `O ∈ 𝔄_W`.
 
-**Remark (why this setting).** Three alternatives were weighed: (i) finite
-periodic rings with `N → ∞`; (ii) finite open chains with boundary vectors;
-(iii) the infinite chain with the quasi-local algebra and GNS.  We choose
-(iii).  Rings hide exactly the object of study — the two spatial infinities and
-the boundary bonds that carry the asymptotic charge — and force kinks to appear
-in pairs (cf. arXiv:1810.07006, §on topological sectors).  Open chains keep the
-boundaries but make the boundary vectors physical parameters, so "asymptotic
-symmetry" would degenerate into a statement about an arbitrary choice.  The
-infinite chain with `𝔄` and weak-* limits gives (1) two genuine infinities,
-(2) a sharp notion of superselection sector (D9) in which the kink statement
-A2 has content, and (3) the disjointness of symmetry-broken vacua, which is the
-entire mechanism of Corner A.  Its only cost is that half-infinite symmetry
-strings are not elements of `𝔄`; this is a feature, not a bug — the failure of
-strong convergence is precisely the content of A1(c) and A2.
+**Lemma (well-definedness).** `ϱ̃_W ≥ 0`, `tr\,ϱ̃_W > 0`, and the functionals are
+consistent under `W ⊆ W'`; hence they define a unique state on `𝔄`.
+*Proof.* (Positivity.)  For `c ∈ ℂ^{d^{|W|}}` put `T := Σ_s c_s P_W(s)`.  Then
+`⟨c|ϱ̃_W|c⟩ = tr[l_α T r_β T^†] = tr[(l_α^{1/2}Tr_β^{1/2})(l_α^{1/2}Tr_β^{1/2})^†] ≥ 0`,
+using `l_α, r_β > 0` (D1(c)).  *(r3: this is the correct argument.  The r2 text
+said "each is `⟨v|·|v⟩` for the finite-window vector `v`", which is wrong — with
+full-rank matrix environments the restriction is a positive CP contraction, or a
+vector only after purifying the environments, not a rank-one boundary-vector
+window vector.  r2 objection 8, conceded.)*
+(Nondegeneracy.) `tr\,ϱ̃_W = tr[l_α\,𝔈_W(r_β)] > 0` with `𝔈_W` the window CP map,
+since `l_α, r_β > 0` and `𝔈_W` is faithful on positive definite inputs.
+(Consistency.) Enlarging `W` by one site on the left tail applies `𝔈_{A_α}^*` to
+`l_α`, which fixes it; on the right tail it applies `𝔈_{A_β}` to `r_β`, which
+fixes it (D1(c)).  ∎
+Verified numerically (Hermiticity `0`, `min eig = −1.4·10^{-16}`, `tr > 0`):
+check **C11**.  A2's weak-* limit supplies positivity independently, so this
+lemma is a convenience, not a load-bearing hypothesis.
 
 ---
 
@@ -212,18 +206,47 @@ implementer `V_α(g)^{-1}` with left multiplication, which reverses the
 composition law, and asserted a twisted-algebra action on states, where phases
 are invisible.  See corner-a.md ⟨1⟩4 and the r1 objections 3, 4, 7, 8.)*
 
-**(a) Bond implementers act on window vectors, not on states.** Let
-`𝒲_{Λ,b}` be the (finite-dimensional) linear space spanned by the window
-vectors `|ψ_Λ(A; b_l,b_r)⟩` decorated by a single insertion on bond `b ∈ Λ`.
-For `M ∈ GL(χ)` let `𝒱_b(M) : 𝒲_{Λ,b} → 𝒲_{Λ,b}` be **left** multiplication of
-the bond-`b` insertion by `M`.  Then `𝒱_b(M)𝒱_b(M') = 𝒱_b(MM')`, and scalars
-act by scalars.  Put
-  `𝒱_b(g) := 𝒱_b(V_α(g))`   (**not** `V_α(g)^{-1}`).
+**(a) Bond implementers act on *padded* window vectors.**
+*(r3: the r2 version declared `𝒱_b(M)` on an unpadded `𝒲_{Λ,b}`, where it is
+**not well defined** — see the counterexample recorded in (a3).)*
+
+**(a1) Padded windows.** `Λ = [a,b]` is *padded about the bond `b_0 = (m|m+1)`*
+if it contains at least `n_0` sites on each side of `b_0` (`n_0` from D1(c)),
+and the boundary vectors satisfy `b_l ≠ 0`, `b_r ≠ 0`.  For such `Λ` let
+`𝒲_{Λ,b_0}` be the linear span of the window vectors carrying one insertion on
+`b_0`, and let `ι_{Λ,b_0} : M_χ(ℂ) → 𝒲_{Λ,b_0}`, `M ↦ |ψ_Λ(A; b_l,b_r; M@b_0)⟩`.
+
+**(a2) Lemma (injectivity).** On a padded window, `ι_{Λ,b_0}` is **injective**.
+*Proof.* The coefficient of `|s⟩` is `b_l^† P(s) M Q(s) b_r` with `P`, `Q` the
+words to the left and right of `b_0`.  By D1(c) each of `P`, `Q` ranges over a
+spanning set of `M_χ(ℂ)`, and the coefficient is linear in each; since
+`b_l ≠ 0`, `{b_l^†P : P ∈ M_χ}` is all of `(ℂ^χ)^*`, and since `b_r ≠ 0`,
+`{Qb_r}` is all of `ℂ^χ`.  So `ι(M) = ι(M')` forces `v^†(M−M')w = 0` for all
+`v,w`, i.e. `M = M'`. ∎
+
+**(a3) Why padding is necessary (r2 objection 1, conceded).**  Without it the
+kernel of `ι` need not be invariant under left multiplication, so the rule
+"`ι(M) ↦ ι(NM)`" is ill defined.  Explicit injective, canonical-gaugeable,
+`ℤ₂`-symmetric counterexample (critic's, verified):
+`A^0 = diag(1,2)`, `A^1 = X`, `u(g) = diag(1,−1)`, `V = Z`,
+`b_l = (\sqrt2,1)`, `b_r = (1,0)`, one site on each side of the bond, and
+`N = \begin{pmatrix}-\sqrt2 & 0\\ 1 & 0\end{pmatrix}`.
+Then `ι(N) = 0` while `‖ι(ZN)‖_∞ = 4`.  Transfer spectrum
+`{4.303, 3, 1, 0.697}` — unique top eigenvalue, `λ_E = 0.697` after rescaling —
+and length-2 words of rank `4`, so this *is* a D1 tensor.  Padding both sides to
+`n_0 = 2` restores `rank\,ι = χ² = 4`.  Verified: checks **C8**, **C8b**.
+
+**(a4) The implementer.** On a padded window define, for `M ∈ GL(χ)`,
+  `𝒱_{b_0}(M) := ι_{Λ,b_0} ∘ L_M ∘ ι_{Λ,b_0}^{-1}`   on `ran\,ι_{Λ,b_0} = 𝒲_{Λ,b_0}`,
+where `L_M` is left multiplication on `M_χ(ℂ)`.  By (a2) this is well defined
+and linear, and `𝒱_{b_0}(M)𝒱_{b_0}(M') = 𝒱_{b_0}(MM')`; scalars act by scalars.
+Put
+  `𝒱_{b_0}(g) := 𝒱_{b_0}(V_α(g))`   (**not** `V_α(g)^{-1}`).
 With D2(c)'s convention `V_α(h)V_α(g) = e^{iω_α(h,g)}V_α(hg)` this gives
-  `𝒱_b(h)𝒱_b(g) = e^{iω_α(h,g)}\,𝒱_b(hg)`,
-a linear representation of the twisted group algebra on `𝒲_{Λ,b}`.  On
-**states** the phase is invisible (`ω^{cM@b} = ω^{M@b}`, D9(c)); the state-level
-action is (b).
+  `𝒱_{b_0}(h)𝒱_{b_0}(g) = e^{iω_α(h,g)}\,𝒱_{b_0}(hg)`,
+a linear representation of the twisted group algebra `𝔞_α` on `𝒲_{Λ,b_0}`, in
+which the multiplier acts nontrivially.  On **states** the multiplier is
+invisible (`ω^{cM@b} = ω^{M@b}`, A1(c)); the state-level action is (b).
 
 **(b) The kernel and the projective quotient.** Set
   `N_α := { g ∈ G : V_α(g) ∈ ℂ^× 𝟙 }`,
@@ -354,27 +377,37 @@ are disjoint (mutually non-normal); proved in corner-a-kinks.md ⟨1⟩8.  Hence
 "superselection sector" is used here in the precise sense: the label `(α,β)` is
 a classical observable at infinity, unchangeable by any element of `𝔄`.
 
-**(c) The endpoint torsor (replaces the vacuous r1 definition).**
+**(c) Endpoint space and endpoint action — DEFINITION ONLY.**
 *(r1 defined the `g`-twisted endpoint family as `{ω^{M@b} : M ∈ V_α(g)GL(χ)}`;
-since `V_α(g)` is invertible, `V_α(g)GL(χ) = GL(χ)` and every such family is
-the same set.  The `g`-dependence must live in the **action**, not in a coset
-of `GL(χ)`.  Corrected here.)*
+since `V_α(g)` is invertible that set is `GL(χ)` for every `g`, i.e. vacuous.
+r2 replaced it but stated A1's consequences inside the definition; r3 separates
+them — r2 objection 7.)*
 
-Fix a bond `b`.  The *endpoint space* is
-  `E_b^α := { ω_{A_α}^{M@b} : M ∈ GL(χ) }`.
-By A1(c), `ω^{M@b} = ω^{M'@b}` **iff** `M' ∈ ℂ^× M`; hence
-  `E_b^α ≅ PGL(χ)`   as a set, canonically, via `[M] ↦ ω^{M@b}`,
-and `E_b^α` is a torsor under `PGL(χ)` acting by left translation.  The
-asymptotic symmetry acts on it through
-  `g · ω^{M@b} := ω^{V_α(g)M @ b}`, i.e. by left translation by `ρ_α(g) ∈ PGL(χ)`,
-a genuine `G`-action with kernel `N_α`, so an effective and simply transitive
-action of `𝒜_eff = G/N_α` on the orbit `ρ_α(G) ⊆ E_b^α`.  The class `[ω_α]` is
-the pullback under `ρ_α` of the extension class of
-`1 → U(1) → U(χ) → PU(χ) → 1`: it is precisely the obstruction to lifting this
-state-level `G`-action to a linear `G`-action on the window vectors `𝒲_{Λ,b}`
-(D4(a)).  This is the non-vacuous content asserted by claim A1; sanity checks:
-`χ = 1` (or any `V_α ≡ scalar`) gives `N_α = G`, orbit a single point; AKLT with
-`G = ℤ₂×ℤ₂`, `V_α ∈ {𝟙,X,Z,XZ}` gives `N_α = {e}` and a 4-point orbit.
+Fix a bond `b`.  Define the *endpoint space*
+  `E_b^α := { ω_{A_α}^{M@b} : M ∈ GL(χ) }`
+and the *endpoint action* of `G` on representatives,
+  `g ⋆ M := V_α(g)\,M`.
+Nothing beyond this is definitional.  Whether `⋆` descends to `E_b^α`, and what
+its orbits are, are **theorems** proved in A1 and recorded as (c′) below.  D9(c)
+is therefore not a dependency of A1; A1 uses only the names `E_b^α`, `⋆`.
+
+**(c′) Corollaries of A1 (proved there, restated here for reference).**
+1. `ω^{M@b} = ω^{M'@b}` iff `M' ∈ ℂ^×M`  [A1(c)].  Hence `[M] ↦ ω^{M@b}` is a
+   canonical bijection `PGL(χ) → E_b^α`, and `E_b^α` is a `PGL(χ)`-torsor.
+2. `⋆` descends to `E_b^α` and acts there as left translation by
+   `ρ_α(g) = [V_α(g)] ∈ PGL(χ)`, a genuine `G`-action with kernel `N_α`; the
+   orbit of `ω_α` is `ρ_α(G) ≅ 𝒜_eff = G/N_α`, on which `𝒜_eff` acts simply
+   transitively  [A1(d2), A1(f)].
+3. **The role of `[ω_α]` (corrected phrasing, r2 objection 2).**  The lift of
+   `ρ_α : G → PGL(χ)` to the padded window space furnished by D4(a4) is a
+   **projective** action with multiplier `ω_α` — it exists always, including
+   when `[ω_α] ≠ 0`.  What `[ω_α]` obstructs is **removing the multiplier**,
+   i.e. lifting `ρ_α` to an *honest homomorphism* `G → U(χ)`.  Saying that
+   `[ω_α]` obstructs "lifting the state action to the window action" is wrong
+   and is retracted.
+Sanity checks: `χ = 1`, or any `V_α ≡` scalar, gives `N_α = G` and a **one-point**
+orbit; AKLT with `G = ℤ₂×ℤ₂` and `V_α ∈ {𝟙,X,Z,XZ}` gives `N_α = {e}` and a
+**four-point** orbit.
 
 When "`𝒜` relabels charge superselection sectors" is asserted, it is asserted
 about this torsor and about the `𝔞_α`-module structure of `ℂ^χ` — never about
@@ -386,8 +419,11 @@ about this torsor and about the `𝔞_α`-module structure of `ℂ^χ` — never
 nonabelian `G`: the componentwise stabiliser is `H_{α}×H_{β}`, not `G_diag`,
 and `g_Lg_R^{-1} ↦ h g_Lg_R^{-1} h^{-1}` under the diagonal action.)*
 
-`G_L × G_R` acts on `Ω_vac × Ω_vac` componentwise.  If `G` acts transitively on
-`Ω_vac` then `Ω_vac ≅ G/H_α` and
+`G_L × G_R` acts on `Ω_vac × Ω_vac` componentwise.  **Hypothesis (T):** `G` acts
+transitively on `Ω_vac`.  D2(a) does *not* imply (T) — the vacuum family may
+split into several `G`-orbits — so (T) must be carried explicitly wherever the
+classification below is used; without it, everything below holds *per orbit*
+(r2 objection 5).  Under (T), `Ω_vac ≅ G/H_α` and
   `Ω_vac × Ω_vac ≅ (G/H_α) × (G/H_α)`,
 transitively, with stabiliser of `(α,β)` equal to `H_α × H_β`.  This is **not**
 `(G×G)/G_diag`: for `G = SU(2)`, `H_α = U(1)` it is `S² × S²` (dimension 4),
@@ -460,30 +496,51 @@ ferromagnet realises `dim_ℝ 𝔪_α = 2 → 1` Goldstone mode (corner-a-goldst
 
 ---
 
-## D12 (limits in which the ansatz gauge identity holds)
+## D12 (limits in which the ansatz gauge remainder vanishes)
 
-Let `Λ_L := [−L,L]` and let `|Φ_f^{Λ}(B)⟩ := Σ_{n∈Λ} f(n)|ψ_Λ(…B@n…)⟩` be the
-finite-window ansatz vector with profile `f` (D5(a) is `f(n) = e^{ikn}`).  By
-Lemma SBP the gauge remainder is a sum of exactly two boundary window vectors,
-of norm `≤ 2C_∂‖X‖\,\max(|f(a)|,|f(b)|)` (D1(e)).  Two regimes are used, and
-every soft statement must name which:
+*(Rewritten in r3.  The r2 version over-quantified in three ways — r2
+objection 4 — all conceded: (i) it asserted that the identity "holds exactly"
+for every `f ∈ c_0`, but `c_0 ⊄ ℓ¹` and neither side need converge in norm
+(e.g. `f(n) = (1+|n|)^{-1/4}`); (ii) it asserted a universal
+`Θ(|Λ|^{1/2})` bulk growth, which is **false** — for `χ = 1`, `A_αX ∝ A_α`, so
+the plane-wave bulk sum is a bounded geometric sum (check **C10**); (iii) it
+attached a fixed-`k` formula to a `c_0` hypothesis, though a plane wave is not
+in `c_0`.  D12 now states only what is proved: a bound on the **remainder**.)*
 
-**(a) Decaying-profile (wave-packet) limit.** If `f ∈ c_0(ℤ)` — in particular
-for any `ℓ¹` wave packet `f = \hatφ` with `φ ∈ C_c^∞((−π,π])` — then the
-boundary remainder tends to `0` **in norm** as `Λ_L ↗ ℤ`, and the gauge
-identity holds exactly in the limit with no normalisation.  Measured decay
-(theory/checks/corner_a_check.py, centred profile `(1+|n−c|)^{-3}`):
-`‖bdry‖/‖bulk‖ = 3.4·10^{-1}, 5.7·10^{-2}, 8.5·10^{-3}, 1.2·10^{-3}` for
-`L = 4,8,16,32`.
+Let `Λ_L := [−L,L]` and `|Φ_f^{Λ}(B)⟩ := Σ_{n∈Λ} f(n)|ψ_Λ(…B@n…)⟩`.  Lemma SBP
+(corner-a-goldstone.md ⟨1⟩5) shows the gauge remainder is a sum of exactly two
+boundary window vectors and gives the **upper bound**
+  `‖𝔅_Λ[f,X]‖ ≤ 2C_∂‖X‖\,\max(|f(a)|,|f(b)|)`   (D1(e)).
+Everything below is a consequence of this bound alone.  Three regimes are used;
+every statement citing D12 must name which.
 
-**(b) Plane-wave (δ-normalised) limit.** For `f(n) = e^{ikn}` the remainder is
-`Θ(1)` while the bulk term is `Θ(|Λ|^{1/2})` (the ansatz is δ-normalised,
-`⟨Φ_k(B)|Φ_{k'}(B')⟩ = 2πδ(k−k')B^†N_kB'`).  The gauge identity therefore holds
-in the *normalised* topology
-  `‖ |Λ|^{-1/2}\,|Φ_k^{Λ}(𝒩_k(X))⟩ ‖ → 0`,   rate `O(|Λ|^{-1/2})`,
-equivalently as an identity of matrix elements per site,
-`lim_{Λ↗ℤ} |Λ|^{-1}⟨Φ_k^Λ(B')|O|Φ_k^Λ(𝒩_k(X))⟩ = 0` for every `O ∈ 𝔄_loc`.
-Measured (same check, `k = 0.37`): `‖bdry‖ = 1.92, 1.31, 2.03, 1.92` versus
-`‖bulk‖ = 0.78, 1.19, 1.75, 2.51` for `L = 4,8,16,32` — bounded versus growing.
+**(a) Vanishing remainder (decaying profiles).** If `f ∈ c_0(ℤ)` then
+`‖𝔅_Λ[f,X]‖ → 0` as `Λ_L ↗ ℤ`.  **This is a statement about the remainder
+only.**  It does *not* assert that either side of the SBP identity converges to
+a vector: for that one needs a summability class (see (a′)) *and* the split
+property of corner-a.md ⟨1⟩4.⟨2⟩9, which is SKETCH.  Measured decay with the
+centred profile `(1+|n−c|)^{-3}`: `‖𝔅_Λ‖/‖bulk‖ = 3.4·10^{-1}, 5.7·10^{-2},
+8.5·10^{-3}, 1.2·10^{-3}` for `L = 4,8,16,32` (check **C4**).
 
-Statements quoted "exactly" without naming (a) or (b) are defects.
+**(a′) Norm-convergent wave packets.** If in addition `f ∈ ℓ¹(ℤ)` **and**
+`Δf ∈ ℓ¹(ℤ)` (i.e. `f` is summable of bounded variation), then both sides of
+the SBP identity are absolutely convergent sums of window vectors of norm
+`≤ C_∂‖X‖`, uniformly in `Λ`; the identity then holds between the two limits at
+fixed `Λ` and remains remainderless as `Λ ↗ ℤ`.  A smooth compactly supported
+momentum packet `f = \hatφ`, `φ ∈ C_c^∞((−π,π])`, has rapidly decreasing `f`
+and so lies in `ℓ¹ ∩ BV`.  `𝔉_{ℓ¹}` of D3(a) is exactly the `BV` condition.
+**This class, not `c_0`, is the one to cite for wave-packet statements.**
+
+**(b) δ-normalised plane wave.** For `f(n) = e^{ikn}`, `|f| ≡ 1`, so the bound
+gives `‖𝔅_Λ‖ = O(1)`, **uniformly in `Λ`** — and that is all that is needed:
+  `‖\,|Λ|^{-1/2}\,𝔅_Λ\,‖ = O(|Λ|^{-1/2}) → 0`.
+No claim is made, or needed, about how the bulk term grows; the r2 assertion
+`‖bulk‖ = Θ(|Λ|^{1/2})` is withdrawn (check **C10**).  Equivalently, per site,
+`lim_{Λ↗ℤ} |Λ|^{-1}⟨Φ_k^Λ(B')|O|𝔅_Λ⟩ = 0` for every `O ∈ 𝔄_loc` and fixed `B'`.
+Measured: `‖𝔅_Λ‖ ∈ [1.31, 2.03]` for `L = 4,…,32` (check **C5**).
+
+**Type discipline.** A fixed-`k` identity may be quoted only with (b); a
+`c_0`/`ℓ¹` identity only with (a)/(a′), and then in the real-space SBP form or
+as a Fourier superposition of the fixed-`k` identities — never as a fixed-`k`
+equation with a `c_0` hypothesis.  Statements quoted "exactly" without naming a
+regime are defects.
