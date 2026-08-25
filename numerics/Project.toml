@@ -1,8 +1,14 @@
 name = "TriangleMPS"
 uuid = "7c1a5f3e-9b2d-4e8a-a1c6-3d9e2f4b8a01"
-authors = ["Tobias J. Osborne and Claude"]
 version = "0.1.0"
+authors = ["Tobias J. Osborne and Claude"]
 
 [deps]
-LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-Test = "8dfed614-e22c-5e08-85e1-98abc2c9d2c3"
+KrylovKit = "0b1a1467-8014-51b9-945f-bf0ae24f4b77"
+TensorKit = "07d1fe3e-3e46-537d-9eac-e9e13d0d4cec"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+KrylovKit = "0.10.4"
+TensorKit = "0.17.1"
+Test = "1.11.0"
