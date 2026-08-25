@@ -1,0 +1,82 @@
+% paper/supplement.tex
+% ============================================================================
+% END MATTER / SUPPLEMENT HOOK 2 (standalone). Compiles independently of
+% main.tex into its own PDF, as APS Supplemental Material conventionally is
+% -- NOT \input'd into the Letter. If TJO instead wants the End Matter
+% folded back into main.tex, use HOOK 1 there (the \appendix/\section*{End
+% Matter} block) and delete/ignore this file; both hooks are wired up so
+% the choice can be made later without restructuring.
+%
+% Content plan (fill in from theory/ shards -- L6b Lamport structure stays
+% intact here; do NOT flatten the numbered-step proofs when porting them
+% out of theory/*.md):
+%   S1. Full statement + Lamport-structured proof of the soft theorem
+%       (theory/corner-a-goldstone.md claim G0).
+%   S2. Corner A charge algebra in full: unbroken case (claim A1) and
+%       broken/kink case (claim A2), theory/corner-a.md, theory/corner-a-kinks.md.
+%   S3. Bethe-ansatz oracle computation (theory/oracle-bethe.md), full
+%       derivation (Fig. 2 of the Letter shows only the collapse plot).
+%   S4. MPS/numerics methodology and convergence data
+%       (numerics/, tests under numerics/test/) supporting Figs. 2-3.
+%   S5. SPT-index identification (CONDITIONAL, ties to Letter beat (vii) --
+%       include only if claim A1's completeness/normality gaps are closed).
+% ============================================================================
+\documentclass[aps,prl,superscriptaddress,longbibliography]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+\usepackage{braket}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\renewcommand{\vec}[1]{\ensuremath{\bm{#1}}}
+\newcommand{\ic}{\ensuremath{\mathrm{i}}}
+
+\begin{document}
+
+\title{Supplemental Material: An infrared triangle for quantum spin chains}
+% Keep this title in lockstep with whichever \title{...} candidate is
+% active in main.tex -- CONFIRM WITH TJO before submission.
+
+\author{Tobias J.~Osborne}
+\affiliation{Leibniz Universit\"{a}t Hannover, Institute of Theoretical Physics, Appelstrasse 2, D-30167 Hannover, Germany}
+
+\date{\today}
+
+\maketitle
+
+\section{S1. The soft theorem: full statement and proof}
+% DRAFT STUB -- port the Lamport ⟨1⟩1, ⟨1⟩2, ... structured proof of claim
+% G0 from theory/corner-a-goldstone.md here, linearized for a PRL SM
+% reader but keeping every numbered step and its justification (D-number /
+% claim id / named computation) per L6b.
+[DRAFT -- to be filled from theory/corner-a-goldstone.md.]
+
+\section{S2. Corner A: the asymptotic-symmetry charge algebra}
+% DRAFT STUB -- unbroken case (claim A1) + broken/kink case (claim A2),
+% ported from theory/corner-a.md and theory/corner-a-kinks.md.
+[DRAFT -- to be filled from theory/corner-a.md, theory/corner-a-kinks.md.]
+
+\section{S3. Bethe-ansatz oracle}
+% DRAFT STUB -- full derivation backing Fig. 2 of the Letter, ported from
+% theory/oracle-bethe.md.
+[DRAFT -- to be filled from theory/oracle-bethe.md.]
+
+\section{S4. MPS numerics methodology}
+% DRAFT STUB -- bond-dimension convergence, wavepacket construction,
+% real-time evolution scheme backing Figs. 2-3; summarize numerics/ and
+% point to numerics/test/ for the red-green TDD record (L1).
+[DRAFT -- to be filled from numerics/.]
+
+\section{S5. SPT index (conditional)}
+% DRAFT STUB -- CONDITIONAL on claim A1's remaining gaps (completeness of
+% [omega_alpha], normality of endpoint states) being closed; mirrors
+% Letter beat (vii). Delete this section if that beat is demoted to the
+% outlook instead.
+[DRAFT -- conditional, see main.tex beat (vii) comment.]
+
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,306 @@
+% paper/main.tex
+% ============================================================================
+% SCAFFOLD ONLY. Prose register target: refs/arxiv-1305.2176/paper_final.tex
+% (Haegeman, Michalakis, Nachtergaele, Osborne, Schuch, Verstraete, PRL 111,
+% 080401 (2013)) -- L9. That paper is revtex4-1[twocolumn,prl]; we use the
+% modern revtex4-2 equivalent per the task brief.
+%
+% STYLE NOTE (for whoever fills this in): 1305.2176 does NOT literally use
+% "\emph{Introduction---}"-style labelled lead-ins -- it is unlabelled flowing
+% prose with no \section commands at all, one \begin{theorem}/\end{theorem}
+% environment, and figures dropped inline where first discussed. We follow
+% its NO-\section discipline throughout the main text (see beats (i)-(vii)
+% below), but DO use "Lead-in.---" tags on each beat as a modern-PRL
+% navigational aid for the reader/writer; delete the tags if TJO prefers the
+% 1305.2176-strict unlabelled-paragraph look.
+% ============================================================================
+\documentclass[aps,prl,twocolumn,superscriptaddress,longbibliography]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+\usepackage{braket}
+\usepackage{color}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\renewcommand{\vec}[1]{\ensuremath{\bm{#1}}}
+\newcommand{\ic}{\ensuremath{\mathrm{i}}}
+
+\begin{document}
+
+% ----------------------------------------------------------------------------
+% TITLE -- three candidates. First is active; the other two are commented
+% out immediately below it. Swap the \title{...} line to change candidate.
+% CONFIRM WITH TJO before submission.
+% ----------------------------------------------------------------------------
+% Candidate 1 (active):
+\title{An infrared triangle for quantum spin chains}
+% Candidate 2:
+% \title{Soft theorems, asymptotic symmetries, and memory in quantum spin chains}
+% Candidate 3:
+% \title{The infrared triangle at finite lattice spacing}
+
+\author{Tobias J.~Osborne}
+\affiliation{Leibniz Universit\"{a}t Hannover, Institute of Theoretical Physics, Appelstrasse 2, D-30167 Hannover, Germany}
+% ^ Affiliation string reused verbatim from refs/arxiv-1103.2286/dispersionrelation_final.tex
+%   (Haegeman et al., "Variational matrix product ansatz for dispersion
+%   relations") and cross-checked against refs/arxiv-1312.6793/scatteringpaper.tex,
+%   which uses the same string with escaped-umlaut braces. L3: quoted, not
+%   invented -- note this is the English-language institute name as TJO
+%   himself renders it in his own papers, not the literal German
+%   "Institut f\"ur Theoretische Physik" suggested in the task brief.
+
+\begin{abstract}
+% PLACEHOLDER --- REWRITE
+% Tightened from docs/novelty-sweep.md \S5's recommended positioning
+% paragraph to <=600 characters (PRL's hard abstract limit). Rendered
+% plain-text length of the paragraph below (LaTeX markup stripped, math
+% read as plain symbols) measured at 573 characters -- verify again after
+% any edit; PRL will bounce the submission over 600.
+We prove that the infrared triangle of continuum field theory --
+soft theorem, asymptotic symmetry, memory effect -- closes exactly,
+at finite lattice spacing, in a 1D quantum spin chain. Using the
+matrix-product-state excitation ansatz we derive an Adler-zero-type
+soft theorem for magnons of the Heisenberg ferromagnet from symmetry
+intertwiners, realize $(G_L\times G_R)/G_{\mathrm{diag}}$ as virtual
+bond operators whose projective class is an SPT index, and obtain the
+magnon memory effect as a Ward identity. The three corners are
+provably equivalent, with no continuum limit invoked.
+\end{abstract}
+
+\maketitle
+
+% ============================================================================
+% BEAT (i): triangle intro + continuum antecedents.
+% Cite: continuum triangle framing (Strominger2017 lectures), Goldstone
+% extension (Hamada2017), fracton triangle (Perez2022, Perez2023), local/
+% no-null-infinity derivation (DeLuca2024), rigour counterpoint (Prabhu2022).
+% Land on the novelty claim from docs/novelty-sweep.md \S5: two disjoint
+% literatures (hep-th IR structure / cond-mat tensor networks), zero
+% cross-hits, no bridging paper -- this Letter is that bridge.
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (i): open on the infrared
+triangle as established for photons and gravitons at null infinity
+\cite{Strominger2017}, its extension to Goldstone bosons by Hamada and
+Sugishita \cite{Hamada2017}, canonical memory$\leftrightarrow$soft-edge
+work \cite{Strominger2014,DeLuca2024}, and the fracton triangle as the
+first extension beyond Lorentz symmetry \cite{Perez2022,Perez2023}.
+State the gap this Letter fills: no lattice/tensor-network statement of
+any corner exists, still less all three closing exactly
+(docs/novelty-sweep.md \S5). Flag the rigour counterpoint
+\cite{Prabhu2022} as a tension to be respected (L10), not papered over.]
+
+% ============================================================================
+% BEAT (ii): setup -- chain, symmetry, minimal MPS language.
+% Ground in notation.md / definitions.md (single source, L4) -- do NOT
+% redefine symbols here, only cite/instantiate them for a PRL reader.
+% Introduce: uniform MPS \ket{\Psi(A)}, gauge orbit, tangent-space excitation
+% ansatz \cite{Haegeman2011,Vanderstraeten2018}, the symmetry action and its
+% intertwiner (fundamental theorem of MPS symmetries)
+% \cite{PerezGarcia2008,Cirac2020}.
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (ii): one-dimensional spin
+chain, global on-site symmetry group $G$, translation-invariant uMPS
+ground state $\ket{\Psi(A)}$, minimal tangent-space excitation-ansatz
+language \cite{Haegeman2011,Vanderstraeten2018}. State the intertwiner
+form of the fundamental theorem of MPS symmetries
+\cite{PerezGarcia2008,Cirac2020} as the sole structural input -- no
+continuum limit, no perturbative $S$-matrix expansion.]
+
+% ============================================================================
+% BEAT (iii): Corner A statement -- the lattice asymptotic symmetry.
+% Ground truth: theory/corner-a.md, theory/corner-a-kinks.md,
+% theory/corner-a-goldstone.md (claims WI, A1, A2, G0 in claims/CLAIMS.md).
+% State (G_L x G_R)/G_diag realized as virtual bond operators; unbroken vs.
+% broken (kink) cases; projective class [omega_alpha] in H^2(H_alpha,U(1))
+% = SPT index (A1). Cite MPO-symmetry machinery \cite{Williamson2014,
+% GarreRubio2022} and the LSM/anomaly cluster as context \cite{Cheng2018,
+% Else2019} (novelty-sweep \S3 corner (ii)).
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (iii): state Corner A --
+the asymptotic symmetry group $(G_L\times G_R)/G_{\mathrm{diag}}$ acting
+as virtual bond operators on the two ends of a finite window; unbroken
+case (bond implementers form the twisted group algebra
+$\mathfrak{a}_\alpha=\mathbb{C}_{\omega_\alpha}[G]$) vs.\ broken case
+(half-infinite limit exists weak-* only, lands in a disjoint kink
+sector). The projective class $[\omega_\alpha]\in H^2(H_\alpha,U(1))$ is
+the SPT index -- an observable topological invariant of the ground
+state, per theory/corner-a.md claim A1. Cite the MPO-symmetry
+prior machinery \cite{Williamson2014,GarreRubio2022} and note the
+novelty: this technology has never before been read as an asymptotic
+symmetry / large-gauge-transformation statement.]
+
+% ============================================================================
+% BEAT (iv): the soft theorem -- MAIN THEOREM ENVIRONMENT.
+% Ground truth: theory/corner-a-goldstone.md claim G0 (PROVED, corrected
+% form): pure gauge at k=0 iff unbroken; universal soft prefactor
+% (e^{ik}-1), independent of H, xi, vacuum. Sharpens continuum type-B
+% Goldstone soft theorems (Brauner/Mojahed \cite{Mojahed2021,Mojahed2022})
+% into a statement with NO expansion parameter. State status honestly per
+% L9: every Letter statement traces to a PROVED claim or is flagged
+% CONJECTURE.
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (iv): state the soft
+theorem as a numbered \texttt{theorem} environment below. Main content:
+the commutator seed $[H,Q_k(\xi)]=(e^{\ic k}-1)J_k(\xi)$ with a
+hard-momentum-, hard-species-, and vacuum-independent prefactor
+(claim G0); this sharpens the continuum type-B Adler-zero theorems of
+\cite{Mojahed2021,Mojahed2022,Kampf2019} to an exact lattice statement.
+State the ferromagnet-is-type-B result (claim P3, theory/corner-a.md)
+as the worked example.]
+
+\begin{theorem}[Lattice soft magnon theorem -- DRAFT STATEMENT]
+% PROVED / CONJECTURE status to be stamped in per claims/CLAIMS.md claim
+% G0 before this is submitted; do not weaken or strengthen the hedge
+% without an L6 critic pass recorded in theory/corner-a-goldstone.md.
+Let $\xi$ generate a (possibly spontaneously broken) one-parameter
+subgroup of $G$ realized on the uMPS ground state $\ket{\Psi(A)}$, with
+Noether current mode $J_k(\xi)$ and charge mode $Q_k(\xi)$. Then
+\[
+  [H,\,Q_k(\xi)] \;=\; (e^{\ic k}-1)\,J_k(\xi),
+\]
+with prefactor $(e^{\ic k}-1)$ independent of $H$, of $\xi$, and of the
+choice of ground state in the folium. \emph{[STATEMENT DRAFT -- verify
+against theory/corner-a-goldstone.md claim G0 verbatim before use; this
+is a paraphrase, not a copy, and may have dropped a hypothesis.]}
+\end{theorem}
+
+% ============================================================================
+% BEAT (v): Bethe / numerics verification.
+% Ground truth: theory/oracle-bethe.md (analytic oracle) + numerics/
+% (Julia/TensorKit). North star per CLAUDE.md: "Bethe verification + MPS
+% numerics on a serious model illustrating the memory effect." This is
+% where Fig. 2 (soft-phase / Bethe collapse) is introduced.
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (v): verify the soft
+theorem against the exact Bethe-ansatz spectrum of the Heisenberg
+ferromagnet (theory/oracle-bethe.md) and against finite-bond-dimension
+MPS numerics (numerics/). Introduce Fig.~\ref{fig:soft-bethe} here.]
+
+\begin{figure}[t]
+\centering
+% Placeholder box -- no numerics/figure file exists yet. Replace with
+% \includegraphics[width=\columnwidth]{figures/fig2_soft_bethe.pdf} once
+% numerics/ produces the plot. Do NOT point this at a file under numerics/;
+% copy the rendered figure into paper/figures/ (hard conflict rule).
+\rule{0.9\columnwidth}{0.6\columnwidth}
+\caption{% DRAFT CAPTION
+Convergence of the lattice soft-magnon amplitude to the theorem's
+prediction $(e^{ik}-1)$ as the momentum $k\to 0$, computed two ways:
+exact Bethe-ansatz form factors for the Heisenberg ferromagnet (solid)
+and finite-bond-dimension MPS excitation-ansatz data at increasing $D$
+(points, extrapolated). The two independent methods collapse onto the
+theorem's prediction with no fitted parameter, and the residual scales
+as the MPS truncation error rather than as any power of $k$ -- evidence
+that the vanishing is exact at finite lattice spacing, not an artifact
+of a soft expansion.}
+\label{fig:soft-bethe}
+\end{figure}
+
+% ============================================================================
+% BEAT (vi): memory effect + XXZ experiment.
+% Ground truth: theory/corner-a-kinks.md (the string-endpoint / kink-cloud
+% object memory couples to), docs/framing.md ("Corner B's memory observable
+% should be identified with a bond/virtual ... "). Novelty-sweep \S3 corner
+% (iii): domain-wall-displacement precedent is classical micromagnetics
+% (Lan2021, Kim2014, Kim2017) or continuum EFT (Hamada2017) -- nothing
+% quantum-lattice, nothing framed as memory, until this Letter. This is
+% where Fig. 3 (memory experiment) is introduced.
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (vi): derive, as a Ward
+identity of the Corner A charge algebra, the permanent displacement a
+soft-magnon wavepacket imparts to a domain wall in the (e.g.\ XXZ)
+chain -- the lattice memory effect. Contrast with the classical
+micromagnetics precedent \cite{Lan2021,Kim2014,Kim2017} and the
+continuum pion-memory result \cite{Hamada2017}: here the displacement
+is a conservation law, not an asymptotic/adiabatic statement. Introduce
+Fig.~\ref{fig:memory} here.]
+
+\begin{figure}[t]
+\centering
+\rule{0.9\columnwidth}{0.6\columnwidth}
+\caption{% DRAFT CAPTION
+Domain-wall memory effect in the XXZ chain: a soft-magnon wavepacket
+(momentum $k\to 0$) scatters off a domain wall prepared in the broken
+phase, and the wall is left permanently displaced by an amount fixed,
+with no free parameter, by the Corner A charge algebra. Panel (a) shows
+the wall position before and after the scattering event from real-time
+MPS simulation; panel (b) shows the displacement collapsing onto the
+Ward-identity prediction across wavepacket width and incoming momentum,
+confirming the effect is a conservation law rather than a transient
+relaxation artifact.}
+\label{fig:memory}
+\end{figure}
+
+% ============================================================================
+% BEAT (vii): SPT twist (CONDITIONAL -- include only if theory/ delivers
+% claim A1's completeness/normality gaps closed; see claims/CLAIMS.md,
+% "completeness of [omega_alpha] cited not proved" caveat). If not closed
+% by the time this goes to submission, DEMOTE this beat to a forward
+% pointer in the outlook (beat viii) rather than a claimed result -- L9
+% no-overclaiming.
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (vii), CONDITIONAL: if
+claim A1's SPT-index identification is closed, state here that the
+memory-effect displacement and the ground state's SPT index
+$[\omega_\alpha]\in H^2(H_\alpha,U(1))$ are the same invariant -- a
+connection docs/novelty-sweep.md \S4 gap 6 identifies as absent from
+the anomaly/soft-limit literature \cite{Huang2015,Copetti2024}
+entirely. If not yet closed, DELETE this beat and fold the forward
+pointer into the outlook instead.]
+
+% ============================================================================
+% BEAT (viii): outlook.
+% ============================================================================
+\textit{Lead-in.---} [DRAFT -- narrative beat (viii): outlook --
+higher-dimensional PEPS generalization, non-abelian $G$, relation to the
+LSM/anomaly cluster \cite{Cheng2018,Else2019}, and the spin-nematic
+platform \cite{Chojnacki2023} as the nearest experimental realization
+(novelty-sweep \S4 gap 8 -- competitive risk).]
+
+% ----------------------------------------------------------------------------
+\begin{acknowledgments}
+% CONFIRM WITH TJO -- placeholder acknowledgment; verify Giulini
+% involvement/wording and add funding lines before submission.
+We thank D.~Giulini for discussions. % CONFIRM WITH TJO
+\end{acknowledgments}
+
+% ============================================================================
+% END MATTER HOOK 1: inline appendix in this file. revtex4-2 has no native
+% "\appendix*"/End-Matter macro (checked: absent from revtex4-2.cls), so the
+% modern-PRL End-Matter look is built by hand: \appendix followed by an
+% unnumbered \section*, placed after acknowledgments and before the
+% bibliography, still in twocolumn flow. Comment out this whole block if
+% the End Matter is to live in supplement.tex instead (HOOK 2, below).
+% ============================================================================
+\appendix
+\section*{End Matter}
+% DRAFT -- appendix stub. Full Lamport-structured proofs stay in theory/ per
+% L6b; this End Matter should contain only what a PRL reader needs without
+% leaving the Letter (e.g. the Lamport-proof skeleton of the soft theorem,
+% or the Bethe-ansatz oracle setup), NOT the full rigour.
+[DRAFT -- End Matter stub. Candidates: (a) condensed proof sketch of the
+Theorem above; (b) the Bethe-ansatz oracle computation
+(theory/oracle-bethe.md) in linearized form; (c) MPS excitation-ansatz
+conventions used in Figs.~\ref{fig:soft-bethe}--\ref{fig:memory}. Pick
+ONE per PRL End Matter convention (short), route the rest to
+supplement.tex.]
+
+% ============================================================================
+% END MATTER / SUPPLEMENT HOOK 2: separate file. Uncomment to pull in a
+% full Supplemental Material compiled from paper/supplement.tex (see that
+% file's own preamble -- it is a standalone compilable document, NOT
+% \input here, per APS convention of a separately-typeset SM PDF).
+% Makefile has a `supplement` target for it.
+% ----------------------------------------------------------------------------
+% \begin{footnotesize}
+% See Supplemental Material at [URL] for the full Lamport-structured
+% proofs, which includes Refs.~\cite{Haegeman2013,Vanderstraeten2013}.
+% \end{footnotesize}
+% ============================================================================
+
+\bibliography{refs}
+
+\end{document}
