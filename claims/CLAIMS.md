@@ -51,3 +51,5 @@ theory/corner-a-pitfalls.md.  Two drafts (`theory/spt-scoping-draft.md`,
 line references are tabulated in theory/corner-a-pitfalls.md Flag 6, as input
 for freeze reconciliation.  Round-2 critic residue and its disposition:
 theory/corner-a-r2-response.md.
+
+Corner A L6 loop: CONVERGED at r3 — PASS (theory/verdicts/corner-a-r3.md, 4 MINOR wording notes only). Rows WI/A1/A2/G0 statuses are final as stated.
