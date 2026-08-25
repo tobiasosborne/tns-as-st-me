@@ -20,7 +20,8 @@
 | OR1 | Oracle: Bethe two-magnon S-matrix expansion matches predicted universal coefficient | CONJECTURE | S2 | — | — |
 | OR2 | Oracle: Dyson k → 0 decoupling consistent with S | CONJECTURE | S | — | — |
 | N1 | Numerics: excitation-ansatz magnon amplitudes reproduce Bethe S(k) as k → 0 | CONJECTURE | S2 | — | — |
-| N2 | Numerics: wavepacket-through-kink δx matches Conjecture M (XXZ, Δ > 1) | CONJECTURE | M | — | — |
+| N2 | Numerics: wavepacket-through-kink δx matches Conjecture M (XXZ, Δ > 1) | CONJECTURE | M | — | numerics/results/memory-scan-1.json: δx = −2·T exact (0.004 sites); R ∝ 1/(Δk₀)², soft magnon → no memory; R·k₀² = 0.043(3) at Δ=2 |
+| M-quant | Memory quantization (empirical, to be proved): δx = −2·T(k₀) exactly, from S^z bookkeeping; soft zero δx → 0 as k₀ → 0 with T ~ (Δk₀)² scaling | CONJECTURE (numerically established) | A2, N2 | — | ditto; refutes "opaque barrier at large Δ" intuition (T → 1 as Δ → ∞) |
 
 Edges of the triangle: A ⇒ C is (G0, WI, A1) → S; C ⇒ B is S → M; B ⇒ A is B3.
 
