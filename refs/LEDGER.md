@@ -51,6 +51,15 @@ description. All 12/12 fetched OK; no id mismatches.
 | 1907.08204 | Topological theory of Lieb-Schultz-Mattis theorems in quantum spin systems | LSM-as-anomaly cluster |
 | 2310.10078 | Gravitational wave analogues in spin nematics and cold atoms | nearest platform claim (spin-2 analogue in a magnet) |
 
+## Batch 3 (fetched 2026-08-25)
+
+| arXiv id | verified title | role |
+|---|---|---|
+| 1203.0609 | Unified Description of Nambu--Goldstone Bosons without Lorentz Invariance | type-A/type-B counting (Watanabe–Murayama) |
+
+Still non-local (paywalled; TIB VPN via TJO if they become load-bearing):
+Dyson, Phys. Rev. 102, 1217 (1956); Nielsen–Chadha, Nucl. Phys. B 105, 445 (1976).
+
 Notes:
 - 1907.02474 title read from the supplement file; matches the brief.
 - Additional sources found by the novelty sweep get appended here when fetched.
