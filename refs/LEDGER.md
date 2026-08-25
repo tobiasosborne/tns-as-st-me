@@ -60,6 +60,27 @@ description. All 12/12 fetched OK; no id mismatches.
 Still non-local (paywalled; TIB VPN via TJO if they become load-bearing):
 Dyson, Phys. Rev. 102, 1217 (1956); Nielsen–Chadha, Nucl. Phys. B 105, 445 (1976).
 
+## Prose exemplars
+
+Fetched 2026-08-25 per TJO directive; stored in `refs/prose-exemplars/`. Not
+physics sources — the extraction base for `docs/prose-guide.md`. Identity below
+verified from each file's own header/masthead text (PDFs via `pdftotext`),
+5/5 OK. The three scanned PDFs carry OCR damage (split words `i s`, `h a s`;
+inline footnote digits); quotes in the prose guide repair that damage only.
+
+| file | verified identity (from the file's own text) | role |
+|---|---|---|
+| `prose-exemplars/watson-crick-1953.pdf` | masthead "No. 4356 April 25, 1953 NATURE 737"; "MOLECULAR STRUCTURE OF NUCLEIC ACIDS / A Structure for Deoxyribose Nucleic Acid"; signed J. D. WATSON, F. H. C. CRICK, Cavendish Laboratory | prose exemplar: understatement as authority; novelty claimed once; ~1100 words |
+| `prose-exemplars/einstein-1905-specrel-en.pdf` | "ON THE ELECTRODYNAMICS OF MOVING BODIES / By A. EINSTEIN / June 30, 1905"; colophon: fourmilab ed. (J. Walker) of the 1923 Methuen English translation of *Zur Elektrodynamik bewegter Körper*, Ann. Phys. 17:891 (1905) | prose exemplar: audacious result entered through humble observation; operational definitions |
+| `prose-exemplars/shannon-1948.pdf` | "Reprinted with corrections from The Bell System Technical Journal, Vol. 27, pp. 379–423, 623–656, July, October, 1948"; "A Mathematical Theory of Communication / By C. E. SHANNON" | prose exemplar: new field opened in plain declaratives; elementary examples before generality; proofs in appendices |
+| `prose-exemplars/bell-1964.pdf` | "Physics Vol. 1, No. 3, pp. 195—200, 1964"; "ON THE EINSTEIN PODOLSKY ROSEN PARADOX / J. S. BELL", Univ. of Wisconsin, received 4 November 1964 | prose exemplar: stakes in one page; minimal apparatus; candour about what is easy vs hard |
+| `prose-exemplars/darwin-origin.txt` | Gutenberg header "Title: On the Origin of Species By Means of Natural Selection / Author: Charles Darwin / eBook #1228"; ebook table identifies #1228 as the 1859 First Edition | prose exemplar: pre-emptive strongest objections; systematic hedging; cautious-optimism register |
+
+Note: `docs/prose-guide.md` is the derived artifact; every quote in it was
+re-checked against these files by page-indexed extraction (36/37 block quotes
+matched mechanically; the Watson–Crick "It has not escaped our notice…" sentence
+matches modulo two OCR character errors in the scan).
+
 Notes:
 - 1907.02474 title read from the supplement file; matches the brief.
 - Additional sources found by the novelty sweep get appended here when fetched.
