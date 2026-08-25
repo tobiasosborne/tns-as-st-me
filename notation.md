@@ -12,15 +12,15 @@
 | `[ω]` | class of V in H²(G,U(1)); the SPT index | definitions.md D2 |
 | `U_R(g)` | truncated symmetry string Π_{x∈R} u_x(g) on interval R | definitions.md D3 |
 | `𝒜` | ~~lattice asymptotic symmetry group~~ **(SUPERSEDED r2/r3)** — the coset *space* `(G_L×G_R)/G_diag`; a **group** only for abelian `G`, and **never** the vacuum orbit unless `N_α = {e}`.  The object that acts is `𝒜_eff = G/N_α` (unbroken) or `(G/H_α)²` with double-coset invariant (broken).  Do not use `𝒜` as a classifying object | definitions.md D4(b), D9(d) |
-| `|Φ_k(B)⟩` | excitation-ansatz state Σ_x e^{ikx}(…A B A…) | definitions.md D5 |
+| `\|Φ_k(B)⟩` | excitation-ansatz state Σ_x e^{ikx}(…A B A…) | definitions.md D5 |
 | `B ≃ B + e^{ik} A X − X A` | tangent-space gauge freedom (null directions) | definitions.md D5 |
-| `S(k; ·)` | soft factor in Conjecture S | claims/CLAIMS.md S |
-| `R(k)` | soft-theorem remainder, o(S(k)) in the stated norm | claims/CLAIMS.md S |
-| `δx` | kink collective-coordinate displacement (memory observable) | claims/CLAIMS.md M |
+| `S(k; ·)` | ~~soft factor in Conjecture S~~ **(SUPERSEDED at freeze 2026-08-26)** — the soft factor is written `𝖲` (D20(b)); bare `S` with momentum arguments is reserved for the Bethe amplitudes `S_{12}`, `S_{21}`, `S_phys` | definitions.md D20(b) |
+| `R(k)` | ~~soft-theorem remainder~~ **(SUPERSEDED at freeze 2026-08-26)** — soft-theorem remainders are **always subscripted** (`R_δ`, `R_S`, `R_{S2}`); bare `R(k)` with a momentum argument is the kink--magnon **reflection probability** `1 − T(k)` | definitions.md D15, D20 |
+| `δx` | kink collective-coordinate displacement (memory observable); the precise definition is the windowed bond charge `𝔛_W` of D13(a) | definitions.md D13(a) |
 | `H`, `h_{x,x+1}`, `J`, `P_{x,x+1}` | shifted isotropic spin-1/2 Heisenberg-ferromagnet Hamiltonian, bond term, positive exchange, and spin swap | definitions.md D6 |
 | `N` | number of sites when the chain is specialized to a periodic ring | definitions.md D6 |
-| `|Ω⟩`, `|x⟩`, `|x,y⟩` | all-up vacuum, one-down-spin basis, and ordered two-down-spin basis | definitions.md D6 |
-| `|k⟩_N` | normalized one-magnon momentum state on an `N`-site ring | definitions.md D6 |
+| `\|Ω⟩`, `\|x⟩`, `\|x,y⟩` | all-up vacuum, one-down-spin basis, and ordered two-down-spin basis | definitions.md D6 |
+| `\|k⟩_N` | normalized one-magnon momentum state on an `N`-site ring | definitions.md D6 |
 | `k`, `z(k)` | lattice momentum in `(−π,π]` and `exp(ik)` | definitions.md D6 |
 | `ω(k)`, `v(k)` | one-magnon energy and group velocity `dω/dk` | definitions.md D6 |
 | `λ(k)` | Heisenberg rapidity `(1/2) cot(k/2)` | definitions.md D7 |
@@ -75,17 +75,48 @@
 | `j_{m\|m+1}(ξ)` | **cut current** `−[H, Σ_{y≤m}q_y(ξ)]`, finite range; supersedes the nearest-neighbour `j_{x,x+1}` row above | definitions.md D10(a) |
 | `𝔅_Λ[f,X]` | gauge remainder: the two boundary window vectors left by summation by parts | definitions.md D12, corner-a-goldstone.md ⟨1⟩5 |
 | `(Δf)(m)` | forward difference `f(m+1) − f(m)` of a profile | corner-a-goldstone.md ⟨1⟩5 |
-| `c_0(ℤ)` | profiles vanishing at infinity; the class in which the gauge identity is exact | definitions.md D12(a) |
+| `c_0(ℤ)` | profiles vanishing at infinity; the class in which the **gauge remainder** `𝔅_Λ` vanishes in norm — **not** a class in which either side of the SBP identity converges (that needs `ℓ¹∩BV`, D12(a′), and the SKETCH split-property box).  *(Corrected at freeze; `corner-a-r3.md` residue 3.)* | definitions.md D12(a) |
 | `PGL(χ)`, `PU(χ)` | projective (unitary) group on the virtual space `ℂ^χ` | definitions.md D4(b) |
 
 Conventions: chain sites x ∈ ℤ; momenta k ∈ (−π, π]; ħ = 1; the
 Heisenberg FM uses the vacuum-energy shift fixed in D6; XXZ anisotropy
 Δ = J_z/J_⊥.
 
-Deliberate overload (one only, flagged): `ω` with a *momentum* argument, `ω(k)`,
-is the magnon dispersion (D6, frozen); `ω` with *two group* arguments,
-`ω_α(g,h)`, is the projective 2-cocycle (D2), whose class is the `[ω]` row
-above.  The argument types never coincide.  All other symbols are unique.
+**Deliberate overloads (flagged; L4 requires that each carry a disambiguation
+rule that can be applied mechanically).**
+
+1. `ω` with a *momentum* argument, `ω(k)`, is the magnon dispersion (D6, D16);
+   `ω` with *two group* arguments, `ω_α(g,h)`, is the projective 2-cocycle
+   (D2(c)), whose class is the `[ω]` row above.  Argument types never coincide.
+2. **`χ`** — bond dimension (D1(b)) *versus* `χ := sgn(v_h − v_s)` in the
+   oracle's soft expansion (`oracle-bethe.md` ⟨1⟩3.⟨2⟩1, frozen).  This is a
+   genuine collision: both are bare symbols.  **Rule:** `χ` means the bond
+   dimension **everywhere in this repo except inside `oracle-bethe.md` ⟨1⟩3**,
+   where it is local to the derivation of (12)--(13).  Outside that step the
+   sign is written `sgn(v_h − v_s)` in full — as O7, O8 and O9 already do — and
+   `TRIANGLE.md` and the paper use only the spelled-out form.  Do not import
+   `χ` as a sign into any other shard.
+3. **`T`** — a *decoration tuple* only inside `|ψ_Λ(T;·)⟩` and `ω_A[T]`
+   (D1(e)); the *transitivity hypothesis* only as the parenthesised `(T)`
+   (D9(d)); the kink--magnon *transmission probability* only with a momentum
+   argument, `T(k)` (D15).  No two of these share a syntactic position.
+4. **`R`** — a finite *interval* `R = [a,b]` (D3(b)); the *range* of `H` as
+   `R_h` (D10(a)); the *reflection probability* `R(k)` (D15).  Soft-theorem
+   remainders are always subscripted (`R_δ`, `R_S`, `R_{S2}`) and never bare.
+5. **`s`** — the *physical index* only as a tensor super/subscript or basis
+   label (`A^s`, `|s⟩`, `s_x`, D1(b)); the *site spin* only as a standalone
+   scalar with `d = 2s+1` (D13--D16).
+6. **`q`** — the *charge density* only with a site subscript and a `𝔤`
+   argument, `q_x(ξ)` (D10); the *XXZ deformation parameter* only bare,
+   `q = Δ − \sqrt{Δ^2−1}` (D16); a *relative momentum* only inside
+   `ml2-completeness.md` ⟨1⟩3--⟨1⟩5 and `oracle-bethe.md` ⟨1⟩3.⟨2⟩3.⟨3⟩3, where
+   it is local to those steps.
+7. **`X`** — `X_α(ξ)` and bare `X ∈ M_χ(ℂ)` are virtual/tangent matrices
+   (D2(e), D5(b)); `X = \cos q` is local to `ml2-completeness.md` ⟨1⟩3;
+   `X_1(t)` is the first-moment wall coordinate (D13(c)); `𝔛_W` (fraktur) is
+   the windowed wall-position observable (D13(a)) and is a *different glyph*.
+
+All other symbols are unique.
 
 (Anchors are added as definitions.md grows; a symbol used anywhere without an
 entry here is a defect.)
@@ -102,3 +133,81 @@ SUPERSEDED in place** rather than left to mislead (r2 objection 9): the
 `j_{x,x+1}` (superseded by the cut current `j_{m|m+1}`, D10(a)).  The
 superseded forms remain correct only in their original restricted settings
 (nearest-neighbour `H`; abelian `G` with faithful `ρ_α`).
+
+---
+
+## Rows appended at the freeze, 2026-08-26
+
+*Closes `verdicts/oracle-bethe-r2.md` residue 2 (the oracle's soft-expansion
+symbols) and covers definitions D13--D23.  Nothing was renumbered or deleted;
+two rows above are marked SUPERSEDED in place (`S(k;·)`, `R(k)`).*
+
+**Bethe-oracle soft-expansion residue (oracle-r2 MINOR 2).**
+
+| Symbol | Meaning | First fixed in |
+|---|---|---|
+| `ω_h`, `v_h` | hard-magnon energy `ω(k_h)` and group velocity `v(k_h)` | definitions.md D8 |
+| `v_s` | soft-magnon group velocity `v(k_s)` | definitions.md D8 |
+| `sgn(v_h−v_s)` | channel sign selecting the physical out/in ratio; written `χ` **only** inside `oracle-bethe.md` ⟨1⟩3 (see overload 2 above) | oracle-bethe.md ⟨1⟩3.⟨2⟩1 |
+| `S_phys` | the physical channel amplitude: `S_{12}` if `sgn(v_h−v_s)=+1`, else `S_{21}` | oracle-bethe.md ⟨1⟩3.⟨2⟩1 |
+| `δ_phys` | the continuous phase branch of `S_phys` vanishing at `k_s = 0` | oracle-bethe.md ⟨1⟩3.⟨2⟩1 |
+| `Δλ` | rapidity difference `λ(k_s) − λ(k_h)`; `S_{12} = (Δλ+i)/(Δλ−i)` | definitions.md D7, oracle-bethe.md (8) |
+| `R_δ`, `R_S` | remainders of the `δ_phys` and `S_phys` expansions, bounded by `C_δ(a,b)\|k_s\|³`, `C_S(a,b)\|k_s\|³` on `D_{ab}` | oracle-bethe.md ⟨1⟩3.⟨2⟩3 |
+| `C_δ(a,b)`, `C_S(a,b)`, `D_δ(a,b)`, `D_S(a,b)` | explicit Taylor--Lagrange remainder constants; `C = Θ(a^{-2})` as `a↓0` | oracle-bethe.md ⟨1⟩3.⟨2⟩3, ⟨2⟩5 |
+| `ε_{ab}`, `D_{ab}`, `Ω_{ab}` | the compactum on which O7--O10's remainders are uniform | oracle-bethe.md ⟨1⟩3.⟨2⟩3 |
+| `j^-_{x,x+1}`, `J^-_k`, `Q_k` (FM) | complexified broken-direction current and charge, `q_x = S^-_x` | soft-current-recon.md ⟨1⟩1 |
+| `\|C_K⟩` | adjacent-pair contact vector `Σ_x e^{iKx}\|x,x+1⟩` | soft-current-recon.md (R9) |
+| `\|χ_π⟩` | the singular (compactified-rapidity) `K=π` completion state, even `N` | ml2-completeness.md (12) |
+| `\mathscr B_K^{D7}`, `\mathscr X_K`, `\mathscr E_K` | the D7-representable fiber family, its singular completion, and their union | ml2-completeness.md (23) |
+| `ML1`--`ML6` | the six missing lemmas of the general soft theorem | soft-current-recon.md ⟨1⟩7 |
+
+**Corner B (memory), D13--D18.**
+
+| Symbol | Meaning | First fixed in |
+|---|---|---|
+| `s` | site spin, `d = 2s+1`; magnetisation jump across a wall is `2s` (overload 5) | definitions.md D13 |
+| `𝔛_W` | windowed wall-position observable, `∈ 𝔄_loc`; the frozen memory observable | definitions.md D13(a) |
+| `δx` | wall displacement `ϱ_{t_f}(𝔛_W) − ϱ_{t_i}(𝔛_W)` (supersedes the informal row above) | definitions.md D13(a) |
+| `D(x)`, `X_1(t)`, `V_±` | DC weight at site `x`; first-moment wall coordinate; its asymptotic velocities | definitions.md D13(b),(c) |
+| `N_T`, `N_R`, `N_W`, `⟨N_T⟩` | transmitted / reflected / in-window magnon number; packet average `∫\frac{dk}{2π}\|φ(k)\|²T(k)` | definitions.md D14 |
+| `t(k)`, `r(k)`, `T(k)`, `R(k)`, `δ_t(k)` | kink--magnon transmission/reflection amplitudes, probabilities, transmission phase | definitions.md D15 |
+| `h^{XXZ}`, `h^{\rm kink}`, `H_{\rm kink}` | easy-axis bond term, its kink-normalised form, and the summed Hamiltonian | definitions.md D16 |
+| `ω_{\rm gap}`, `k_*` | magnon gap `J(Δ−1)`; crossover momentum `1/(4(Δ−1))` | definitions.md D16 |
+| `q`, `x_0`, `φ`, `\|K(z)⟩` | XXZ deformation parameter `Δ−\sqrt{Δ²−1}`; kink centre; conjugate `U(1)` phase; exact kink product family (overload 6) | definitions.md D16 |
+| `𝒦^{(1)}_{αβ}` | the `ℓ¹` refinement of `𝒦_{αβ}` on which half-line charges converge | definitions.md D17 |
+| `(H-AD)` | hypothesis of asymptotic decomposition (asymptotic completeness of the kink+magnon sector) | definitions.md D18 |
+| `𝔮^L_c`, `𝔮^R_c` | half-line regularised charges `Σ_{x<c}(S^z_x−s_α)`, `Σ_{x>c}(S^z_x−s_β)` | definitions.md D17, claim B3 |
+| `σ_k`, `σ_x` | wave-packet momentum and spatial width | definitions.md D14 |
+
+**SPT, D19--D23.**
+
+| Symbol | Meaning | First fixed in |
+|---|---|---|
+| `𝖲` | the soft factor `lim_{k→0}F_f`, valued in `𝔞_α` (supersedes the `S(k;·)` row) | definitions.md D20(b) |
+| `F_f(ξ;β,α)`, `F_f(g;β,α)` | soft form factor (Lie / finite-group case); bulk (a1) or edge-twist (a2) | definitions.md D20(a) |
+| `H_{\rm edge}` | edge space carrying the uncontracted virtual index — **register caveat**: a Hilbert-space realisation needs the SKETCH split-property box, corner-a.md ⟨1⟩4.⟨2⟩9 | definitions.md D21(a) |
+| `d_ω` | minimal dimension of an `ω_α`-projective irrep of `G`; `d_ω>1 ⟺ [ω_α]≠0` | definitions.md D21(c) |
+| `m_L`, `Δm_L` | edge memory observable and its permanent shift | definitions.md D22 |
+| `𝒜KLT`, `TRIV` | the SPT comparison pair (`[ω]≠0` / `[ω]=0`), and `H(D)` the family joining them | definitions.md D23 |
+| `Ad(V_α(g))` | conjugation action `V(·)V^{-1}`; the `[ω]`-blind data of a closed contraction | corner-a.md ⟨1⟩4.⟨2⟩4 |
+
+**ML4 / ML5 / M-quant (added at the freeze with the summit shards).**
+
+| Symbol | Meaning | First fixed in |
+|---|---|---|
+| `I = [a,b] ⋐ (0,π)`, `ε_I` | the hard-momentum window and its soft radius (`h+k ∈ (0,π)`, `v(h)>v(k)`, `h+k ≠ π`) | ml4-ward-reduction.md ⟨1⟩1 |
+| `‖g‖_{I,N}`, `f_ε(k)=ε^{-1/2}f(k/ε)` | discrete hard-packet norm; rescaled soft packet | ml4-ward-reduction.md (1) |
+| `D_{n,N}`, `P_{n,N}`, `R_{n,N}` | `Q_0` restricted to `ℋ_{n,N}`; the orthogonal projection onto its range; the orthogonal current `(1−P_{n,N})J^-_0` | ml4-ward-reduction.md (2) |
+| `Γ_N(k)`, `𝒜_{⊥,N}(k;f,g)` | outgoing on-shell channel map, transported to the `k=0` fiber; the orthogonal contribution to the Ward-reduced numerator | ml4-ward-reduction.md (3), (12) |
+| **ML4-A** | the standalone cancellation lemma: `Γ(0)=U` (energy-shell channel matching) + `C¹` trace regularity ⟹ `‖b(k)Γ(k)^†R‖ ≤ C_bC_Γ‖J‖k²` | ml4-ward-reduction.md ⟨1⟩2 |
+| `J^z_0`, `S^±` | the `z`-current and global raising/lowering operators used in the exact Ward projection `P_{n,N}J^-_0 = \frac{2}{N-2n}Q_0J^z_0` on `ker S^+` | ml4-ward-reduction.md (8)--(11) |
+| `‖O‖_μ`, `M_1^O`, `M_2^O` | exponentially-quasi-local source norm; amputated one-hard and hard-plus-soft amplitudes | definitions.md D24(a),(b) |
+| `𝔠_h(O)` | the contact first jet; universality **iff** it vanishes (ML5-A) | definitions.md D24(c) |
+| `𝒮_W` | the Ward-covariant, no-contact source class on which universality holds | definitions.md D24(d) |
+| `D`, `O_η` | the four-site refuting source; `M_1` fixed, linear soft coefficient shifted | definitions.md D24(e) |
+| `χ(h,k)` | `sgn(v(h)−v(k))` — the *spelled-out* channel sign (see overload 2) | ml5-universality.md ⟨1⟩1 |
+| `W_±`, `ℋ_as`, `ℋ_b`, `ℋ_sc`, `P_L`, `P_T` | Møller wave operators; channel space; bound and scattering subspaces; reflected/transmitted channel projections | definitions.md D18, memory-quantization.md §2 |
+| `N_T` (operator), `ΔX` | the transmitted-channel projection `W_+P_TW_+^*`, and the displacement operator `0·P_L − (1/s)P_T` conjugated to `ℋ_sc` | memory-quantization.md (Mq.6), §4 |
+| `P_3`, `H_3 = P_3HP_3` | the `≤3`-domain-wall projection and the projected kink+magnon dynamics | memory-quantization.md §3 |
+| `m_0(z)` | the free half-line Jacobi Weyl function `[(z−E_c)²−J²]^{-1/2}` used in the Feshbach spectral analysis of `H_3` | memory-quantization.md ⟨1⟩3.⟨2⟩2 |
+| `ε_AD`, `ε_num` | the charge-decomposition defect and the numerical error in the finite-window memory budget (Mq.11) | memory-quantization.md §5 |

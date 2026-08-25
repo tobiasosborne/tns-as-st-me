@@ -1,6 +1,10 @@
 # ML2: complete two-magnon resolution
 
-Status: **R1 MAJORS REPAIRED; L6 r2 critic pending**.  No literature result is used.
+Status: **L6 loop CONVERGED — r2 critic PASS** ([`verdicts/ml2-r2.md`](verdicts/ml2-r2.md),
+10/10 mutants killed).  Residue m12 (three unjustified leaves in ⟨1⟩6.⟨2⟩2) and
+m14 (the wrap-pair sign flips) were swept at the 2026-08-26 freeze; m1--m11,
+m13, m15 and n6--n8 remain open and are tracked in `bd`.
+No literature result is used.
 The proof starts from D6,
 uses the D7 coefficient convention, and uses the local equations already proved
 in `oracle-bethe.md` ⟨1⟩2.  In particular, it does not assume Bethe
@@ -486,14 +490,32 @@ branch choose the congruent representatives with `k_s+k_h=π`.  Then
 
 **⟨3⟩1.** The `N` coefficients in (12) have modulus `N^{-1/2}`, so its norm
 is one; its compactified root has no finite D7 normalization.
+Justification: (12), which is a sum of `N` orthonormal adjacent-pair basis
+vectors `|\{x,x+1\}⟩` with coefficients `(-1)^xN^{-1/2}`, together with D6's
+statement that these are distinct basis kets; and D7, whose two-plane-wave
+formula is undefined at `z_1=∞, z_2=0`, so no D7 norm exists to compare with.
 
 **⟨3⟩2.** Translation fibering makes the overlap zero unless
 `k_s+k_h≡π`.  In that case the `N-1` ordinary adjacent pairs each contribute
-`(e^{ik_h}+e^{ik_s})/N`; periodicity makes the wrap pair contribute the same.
+`(e^{ik_h}+e^{ik_s})/N`; the wrap pair `\{N-1,0\}` contributes the *same* value,
+because **two** sign flips cancel: `(-1)^{N-1}=-1` (which needs `N` even, as
+(12) requires), and `e^{-ik_h}+e^{-ik_s}=\overline{e^{ik_h}+e^{ik_s}}
+=-(e^{ik_h}+e^{ik_s})` on the fiber (which needs `e^{ikN}=1`).
 Thus the overlap is `e^{ik_h}+e^{ik_s}=2i cos((k_h-k_s)/2)`.
+Justification: (R3) of `soft-current-recon.md` for the coordinate form of
+`Q_{k_s}|k_h⟩_N`; (12) for `|χ_π⟩`; translation covariance of both (Fourier
+orthogonality in the center coordinate); and ring periodicity `e^{ikN}=1` with
+`N` even for the two displayed sign flips.  *(The wrap-pair leaf named only the
+second flip before the 2026-08-26 freeze; `verdicts/ml2-r2.md` m14.)*
 
 **⟨3⟩3.** Completeness in ⟨1⟩4 and Parseval give (24); (R5) supplies exactly
 the first sum, while the second coefficient is the proved singular leaf.
+Justification: ⟨1⟩4.⟨2⟩3, whose inventory (14) sums to `N(N-1)/2 = dim`, hence
+is a complete orthonormal eigenbasis; Parseval in that basis; ⟨3⟩2 for the
+singular coefficient; and `soft-current-recon.md` ⟨1⟩2.⟨2⟩2, whose formula (R5)
+is valid for every `\mathscr B_K^{D7}` member (real pairs, strings, and — with
+the representative `(A_{12},A_{21})=(1/2,1/2)` — the `K=0` double descendant of
+⟨1⟩3.⟨2⟩6).
 
 **⟨3⟩4. QED.**
 

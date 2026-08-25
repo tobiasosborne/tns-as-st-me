@@ -6,6 +6,25 @@
 
 # Corner B (draft) — the memory corner
 
+**Status: DRAFT, pre-critic — reconciled against claims DAG @ freeze, 2026-08-26.**
+Four stale citations tabulated in [`corner-a-pitfalls.md`](corner-a-pitfalls.md)
+Flag 6 and in [`verdicts/oracle-bethe-r2.md`](verdicts/oracle-bethe-r2.md)
+residue 4 have been repaired in place, each marked `(Reconciled at freeze …)`:
+§0 item 4, §7 B3(i) and §7 B3(iv) no longer use a fixed `𝒜`-orbit point or the
+`G_diag`-invariant label of `𝒜 = (G_L×G_R)/G_diag` (both cited `A2-orbit-r1`,
+**REFUTED**; and in this shard's `χ=1` unbroken-`U(1)` setting A1 gives
+`N_α = G`, so the endpoint-state orbit is a single point); §5.3 and §10 now
+quote `O7` in its r2 form `δ_phys = 2 sgn(v_h−v_s)k_s + …`, with `2` flagged as
+the D8 specialisation.  `𝒜`-data has been replaced by "asymptotic data"
+throughout.  **Bd1--Bd7 were promoted to `definitions.md` D13--D18** at the
+freeze (the `Bd`-numbers are retained here for readability; the D-numbers are
+the single source, L4), and **Theorem M′ has been superseded by
+[`memory-quantization.md`](memory-quantization.md)**, which proves H-AD
+unconditionally for the `≤3`-wall projected dynamics (Kato--Rosenblum on a
+rank-two Fano perturbation) and leaves only the full-chain lift as a hypothesis
+(bd `tns-d51`).  Frozen statuses: [`theory/TRIANGLE.md`](TRIANGLE.md) §3 and
+`claims/CLAIMS.md`.
+
 ## 0. Summary of what this shard establishes
 
 The 1D lattice memory observable is the permanent displacement `δx` of a
@@ -36,7 +55,11 @@ This shard does four things.
 4. It states the `B ⇒ A` edge (claim **B3**) as a superselection statement:
    `δx` is the amount of `U(1)` charge the event transported between the two
    spatial infinities, i.e. the moment map of the residual translation torsor
-   inside a fixed `𝒜`-orbit point.
+   inside a fixed **vacuum pair** `(α,β)` — the label of D9(d), which under
+   hypothesis (T) is a point of `(G/H_α)×(G/H_α)` whose diagonal-invariant
+   content is the double coset in `H_α\G/H_α`.  *(Reconciled at freeze
+   2026-08-26: "inside a fixed `𝒜`-orbit point" cited `A2-orbit-r1`,
+   **REFUTED**.)*
 
 The headline honest finding is negative and important:
 
@@ -449,9 +472,15 @@ i.e. `O(Δ^{-2})`.  **It affects `T(k)`; it does not affect the memory law of
 `d\delta_t/dk` is the spatial shift of the **transmitted magnon** (a
 Wigner–Eisenbud delay converted to a displacement).  It is a smooth,
 non-quantised function of `k` and `Δ`.  It is *not* the wall displacement.
-The `dδ/dk = 2` reading of the magnon–magnon oracle (`O7`: `δ = 2k_s + …`) is
-the analogous magnon-side statement in M1.  §10 records the conjecture that
-these two `2`'s have a common origin; it is not proved here.
+The soft phase-slope reading of the magnon–magnon oracle is the analogous
+magnon-side statement in M1: **on D8's half-zone** (`k_h ∈ (0,π)`, so
+`sgn(v_h−v_s) = +1`) `O7` reduces to `δ_phys = 2k_s + (|v_h|/ω_h)k_s² + R_δ`,
+i.e. `dδ_phys/dk_s|_0 = 2`.  *(Reconciled at freeze 2026-08-26: `O7` was
+re-stated in oracle round r2 as `δ_phys = 2 sgn(v_h−v_s)k_s + …`, and the
+phrase "hard-independent linear coefficient" was removed; the `2` here is the
+D8 specialisation, not the general coefficient — `verdicts/oracle-bethe-r2.md`
+residue 4.)*  §10 records the conjecture that these two `2`'s have a common
+origin; it is not proved here.
 
 ---
 
@@ -553,7 +582,7 @@ particular its `k → 0` behaviour.  The `C ⇒ B` edge is therefore
 
 Equation (5.3) supplies the middle step *in the easy-axis projection*; what a
 genuine Corner-C theorem must supply is that the quadratic zero of `T` and its
-coefficient `16(Δ−1)²` are **universal** — functions of the kink's `𝒜`-data
+coefficient `16(Δ−1)²` are **universal** — functions of the kink's asymptotic data
 (vacuum pair, `U(1)` charge, gap) only, not of the microscopic `B`-tensor.
 That universality is *not* established here and is the real C ⇒ B obligation.
 
@@ -566,7 +595,10 @@ That universality is *not* established here and is the real C ⇒ B obligation.
 > both convergent on `𝒦^{(1)}_{αβ}` (Bd7).  Then:
 >
 > **(i) (Sector rigidity.)** For all `t`, `ϱ_t ∈ 𝒦_{αβ}` with the *same*
-> `(α,β)`.  No memory event can change the `𝒜`-orbit point.
+> `(α,β)`.  No memory event can change the **vacuum-pair label** of D9(d) —
+> under (T) a point of `(G/H_α)×(G/H_α)`, whose global-symmetry-invariant
+> content is the double coset in `H_α\G/H_α`.  *(Reconciled at freeze
+> 2026-08-26: "the `𝒜`-orbit point" cited `A2-orbit-r1`, **REFUTED**.)*
 > *Proof.* `ϱ_{t} = ϱ_{t_i}∘\mathrm{Ad}(e^{iHt})` with `e^{iHt}` implemented by
 > a quasi-local automorphism (Lieb–Robinson); D9(b) disjointness of `𝒦_{αβ}`
 > for distinct pairs is preserved by automorphisms of `𝔄`. ∎
@@ -583,25 +615,36 @@ That universality is *not* established here and is the real C ⇒ B obligation.
 > total magnetisation, conserved by (A1); Eq. (2.2) identifies each half-line
 > charge with a bond quantity via Proposition N. ∎
 >
-> **(iii) (Torsor statement.)** Within the fixed orbit point `(α,β)`, the
+> **(iii) (Torsor statement.)** Within the fixed vacuum pair `(α,β)`, the
 > kink states of definite charge form a **`ℤ`-torsor** under lattice
 > translation (K4: one state per magnetisation sector, all degenerate).  The
 > map `state ↦ 𝔮^R_c/2s` is the moment map of this `ℤ`-action.  Memory is
 > valued in that torsor: `δx ∈ ℤ` for a single-channel (post-selected) event,
 > and `δx ∈ \tfrac1s\,\mathrm{conv}(\{0,-1\})` for a superposed one.
 >
-> **(iv) (What measuring `δx` identifies.)** `δx` identifies the element of
-> `𝒜` by which the two half-infinite symmetry strings differ *before and
-> after*: with `G_L, G_R` the two asymptotic `U(1)` copies of D4(b),
-> `δx` is the relative `G_L × G_R` charge transfer, i.e. the `G_diag`-invariant
-> label of `𝒜 = (G_L×G_R)/G_{\rm diag} ≅ U(1)` (abelian, so `𝒜` is a group
-> here, D4(c)).  The `ℤ₂` label `(α,β)` is *not* changed (by (i)); it is
-> read off, not shifted.
+> **(iv) (What measuring `δx` identifies.)** Two data must be kept apart.
+> The **topological** datum is the vacuum-pair label of (i); it is *rigid*, and
+> is read off, not shifted.  What `δx` measures is the **`U(1)` charge
+> transported between the two spatial infinities** within that fixed label —
+> equivalently, by (ii)–(iii), the element of the `ℤ`-torsor of (iii) reached
+> by the event.
+>
+> *(Reconciled at freeze 2026-08-26.  This clause previously read "`δx`
+> identifies the element of `𝒜` by which the two half-infinite symmetry
+> strings differ … the `G_diag`-invariant label of `𝒜 = (G_L×G_R)/G_diag ≅
+> U(1)`".  That reading cited `A2-orbit-r1`, **REFUTED**, and additionally
+> over-reads A1: in this shard's `χ = 1`, unbroken-`U(1)`, product-vacuum
+> setting, A1(e)/D4(b) give `V_α ≡` scalar, hence `N_α = G` and an
+> endpoint-state orbit that is a **single point**, so no `𝒜 ≅ U(1)` labelling
+> can be imported from A1.  The charge-transfer torsor of (iii) is separately
+> defined here and is viable — but it is not that claim.)*
 
-**Status.** (i)–(iv) are **rigorous now**, modulo the existence statements
-already in Corner A (`A1`, `A2`) and the convergence supplied by Bd7.  This
-edge is bookkeeping and should be marked SKETCH → PROVED once Bd7 and R2 are
-merged.
+**Status.** (i) and (ii) are **rigorous now**, modulo the existence statements
+already in Corner A (`A1`, `A2`) and the convergence supplied by Bd7/D17.
+(iii) and (iv) remain **SKETCH**: (iii) is conditional on the
+thermodynamic-limit flatness of the kink band (interface item **R5**), and (iv)
+is a reading of (ii)–(iii) that has not been through an L6 loop.  The claim row
+**B3** therefore stays SKETCH at the freeze.
 
 ---
 
@@ -719,13 +762,14 @@ A clean, cheap falsification target for the whole framework.
 * `t(k)`, `T(k)`, `δ_t(k)` of (5.1)–(5.2): exact for the `≤3`-wall projection,
   `O(Δ^{-2})` leakage measured.  The Adler zero `T ∝ k²` (5.3) is a
   *computation*, not yet a theorem, and its universality — that `16(Δ−1)²`
-  depends only on `𝒜`-data — is the actual Corner-C obligation.
+  depends only on the kink's asymptotic data — is the actual Corner-C obligation.
 
 **What is conjecture.**
 * **H-AD** (asymptotic completeness).  Everything quantitative rests on it.
 * Lemma K4 in the thermodynamic limit (R5).
 * **Conjecture Bc (the two `2`'s).** The magnon–magnon oracle gives
-  `dδ/dk_s = 2` (`O7`), i.e. a soft Wigner shift of `2` sites off a hard
+  `dδ_phys/dk_s|_0 = 2 sgn(v_h−v_s)`, which **on D8** is `2` (`O7`; see the
+  freeze note in §5.3), i.e. a soft Wigner shift of `2` sites off a hard
   magnon; the kink memory quantum is `1/s = 2` sites.  Conjecture: both equal
   `|q_{\rm hard}|/s` with `q_{\rm hard}` the hard leg's `U(1)` charge relative
   to its vacuum, so that the *soft phase coefficient* and the *memory quantum*

@@ -387,15 +387,19 @@ Justification: ⟨2⟩3 and O1.
 **⟨2⟩4. QED.** □
 
 **⟨2⟩5. Remark (relation to oracle O7/O9 — r1 overclaim withdrawn).**
-r1 stated that O7's hard-independent linear coefficient `2` in
-`δ = 2k_s + \cot(k_h/2)k_s² + O(k_s³)` is "exactly the structure forced by"
-G0(e).  **It is not forced by anything proved here** (⟨1⟩6.⟨2⟩7).  The honest
+r1 stated that the linear coefficient `2` of O7 — which on D8's half-zone reads
+`δ_phys = 2k_s + \cot(k_h/2)k_s² + O(k_s³)` — is "exactly the structure forced
+by" G0(e).  *(Reconciled at the 2026-08-26 freeze: oracle round r2 restated O7
+as `δ_phys = 2 sgn(v_h−v_s)k_s + (|v_h|/ω_h)k_s² + R_δ` on `0<|k_h|<π`, and
+removed the phrase "hard-independent linear coefficient"; the `2` quoted here
+is the D8 specialisation.  `verdicts/oracle-bethe-r2.md` residue 4.)*  **It is not forced by anything proved here** (⟨1⟩6.⟨2⟩7).  The honest
 statement is a *consistency observation with a stated gap*:
 
 - G0(e) supplies a kinematic prefactor `(e^{ik_s}−1) = ik_s + O(k_s²)`.
 - **If** the current matrix element `⟨out|J_{k_s}|in⟩` between the hard legs is
   regular at `k_s = 0` and has a `k_s`-independent leading value, **then** the
-  linear coefficient of the connected phase is hard-independent, matching O9.
+  linear coefficient of the connected phase is hard-independent on D8's
+  half-zone, matching O9 there.
 - Neither hypothesis is established.  Establishing them — plus the LSZ
   reduction — is precisely Corner C's obligation.  Until then the agreement is
   a target, not a derivation, and O7/O9 remain oracle facts that Corner A does

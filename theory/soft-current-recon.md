@@ -373,7 +373,15 @@ the bare difference factor `(e^{ik_s}-1)` and not yet as an abstract theorem.
 ## ⟨1⟩5. Bethe-oracle and numerical verification
 
 **⟨2⟩1. PROVE.** Equations (R17)--(R18) agree with frozen oracle facts
-O7--O9, including the D7 sign and the hard-independent linear coefficient.
+O7--O9 on D8's half-zone, including the D7 sign and the value `2` of the
+linear coefficient there.
+*(Reconciled at the 2026-08-26 freeze: O7/O9 were re-stated in oracle round r2
+as `δ_phys = 2 sgn(v_h−v_s)k_s + (|v_h|/ω_h)k_s² + R_δ`, and the phrase
+"hard-independent linear coefficient" was removed — the coefficient is
+`2 sgn(v_h−v_s)`, which reduces to `2` **on D8**, where `sgn(v_h−v_s) = +1`.
+`verdicts/oracle-bethe-r2.md` residue 4.  ⟨1⟩4.⟨2⟩3's own derivation is
+unaffected: it works on D8 throughout and derives the cancellation of hard
+dependence there.)*
 
 **⟨3⟩1.** Compare (R17) with oracle equation (13) and (R18) with
 oracle equation (12); the coefficients coincide term by term.

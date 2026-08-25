@@ -1,13 +1,24 @@
 <!-- ROLE: single-source numbered definitions (L4). Theory shards and the paper
      reference D-numbers; nothing is redefined elsewhere.
-     Status: D1-D5 and D9-D11 written 2026-08-25 (Corner A, P1); frozen after the
-     L6 critic loop passes. D6-D8 belong to the Bethe oracle and are FROZEN --
-     do not edit them. -->
+     Status: D1-D5 and D9-D12 written 2026-08-25 (Corner A, P1), FROZEN at the
+     2026-08-26 freeze after the Corner A L6 loop converged (corner-a-r3.md PASS).
+     D6-D7 belong to the Bethe oracle and are FROZEN -- do not edit them.
+     D8 is FROZEN-AS-AMENDED: it was amended in oracle round r2 (2026-08-25) by
+     the purely additive naming of `omega_h, v_h, v_s` and the remark that
+     `v_h > v_s` for small `|k_s|`; the amendment breaks no consumer
+     (verdicts/oracle-bethe-r2.md, residue 3). No further edits without
+     reopening the oracle L6 loop.
+     D13-D18 (Corner B) and D19-D23 (SPT) were appended at the 2026-08-26 freeze
+     from theory/corner-b-draft.md (Bd1-Bd7) and theory/spt-scoping-draft.md
+     (Sd1-Sd10); D24 (soft-factor universality class) from
+     theory/ml5-universality.md. Nothing was renumbered. -->
 
 # Definitions
 
 Reading order: D1 fixes the setting and all limit conventions; D2--D5 and
-D9--D11 build on it. D6--D8 are self-contained (Bethe oracle).
+D9--D12 build on it. D6--D8 are self-contained (Bethe oracle). D13--D18 are the
+Corner B (memory) definitions; D19--D23 are the SPT definitions; D24 fixes the
+universality class of the soft factor.
 
 ---
 
@@ -547,3 +558,295 @@ Measured: `‖𝔅_Λ‖ ∈ [1.31, 2.03]` for `L = 4,…,32` (check **C5**).
 as a Fourier superposition of the fixed-`k` identities — never as a fixed-`k`
 equation with a `c_0` hypothesis.  Statements quoted "exactly" without naming a
 regime are defects.
+
+---
+
+# Corner B (memory) — D13--D18
+
+*Promoted at the 2026-08-26 freeze from `theory/corner-b-draft.md` §2--§4
+(there numbered `Bd1`--`Bd7`).  The draft's numbering is retained in
+parentheses so its prose stays readable; the D-numbers here are the single
+source (L4).  `s` denotes the site spin (`d = 2s+1`), so the magnetisation jump
+across a wall is `2s`; `s = 1/2` in every concrete statement.*
+
+## D13 (memory observables: windowed wall position, and its two dresses)
+
+**(a) Windowed wall-position observable — the frozen definition (`Bd3`).**
+For a finite window `W = [a,b] ⊂ ℤ` in a chain with `S^z`-vacuum densities
+`s_α = +s` at `−∞` and `s_β = −s` at `+∞`, put
+
+  `𝔛_W := a − 1 + \frac{1}{2s}\sum_{x=a}^{b}(S^z_x + s) ∈ 𝔄_loc`,
+
+normalised so that `𝔛_W = m` on a sharp wall at bond `(m|m+1)` with no other
+content in `W`.  The *spatial memory* of an event running from `t_i` to `t_f`
+is `δx := ϱ_{t_f}(𝔛_W) − ϱ_{t_i}(𝔛_W)`.
+
+`𝔛_W ∈ 𝔄_loc` unconditionally, so `δx` exists on all of `𝔄^*` and at finite
+`N`, with no asymptotic hypothesis and no order-of-limits clause.  For `δx` to
+*mean* a wall displacement one needs additionally
+(i) the packet outside `W` at `t ∈ {t_i,t_f}` up to `ε`, and
+(ii) `b − a ≫ ξ_c` (D1(c)), whence an `O(e^{-(b-a)/ξ_c})` core-tail error.
+**This is the definition the campaign freezes**; (b) and (c) are corollary
+characterisations, not competing definitions.
+
+**(b) Spectral dress (`Bd2`).** With `m_x(t) := ϱ_t(S^z_x)` and DC weight
+`D(x) := \lim_{ω→0}\int dt\,e^{iωt}\dot m_x(t) = m_x(+∞) − m_x(−∞)`,
+`δx^{\rm spec} := \frac{1}{2s}\sum_{x∈W}D(x)`.  Identically equal to (a) — the
+same observable in a Fourier dress — and requires `\dot m_x ∈ L¹(dt)` for each
+`x ∈ W`.  The `ω→0` limit must be taken at fixed `x` and fixed `W`, *after* the
+thermodynamic limit; interchanging `ω→0` with `|W|→∞` destroys it.
+
+**(c) Dynamical dress (`Bd1`), and its trap.** With the first-moment wall
+coordinate
+`X_1(t) := \sum_{x>0}\frac{ϱ_t(S^z_x)+s}{2s} − \sum_{x≤0}\frac{s-ϱ_t(S^z_x)}{2s}`
+(convergent on D17) and `V_± := \lim_{t→±∞}\dot X_1(t)`,
+`δx^{\rm dyn} := \lim_{t→+∞}[X_1(t) − V_+t] − \lim_{t→−∞}[X_1(t) − V_-t]`.
+Requires the thermodynamic limit *before* `t → ±∞`, and is meaningless on a
+ring.  **Trap:** `X_1` is the regularised total magnetisation, which is exactly
+conserved, so `δx^{\rm dyn} ≡ 0` unless the asymptotic leg charges (D14) are
+first subtracted — i.e. unless (H-AD), D18, is invoked.  (a) performs that
+subtraction geometrically, by windowing, and needs no such hypothesis.
+
+## D14 (asymptotic leg content: transmitted and reflected magnon number)
+
+*(`Bd4`.)*  For `ϱ ∈ 𝒦^{(1)}_{αβ}` (D17) and a window `W = [a,b]`,
+
+  `N_R := \frac{1}{2s}\sum_{x<a}(s − ϱ(S^z_x))`,
+  `N_T := \frac{1}{2s}\sum_{x>b}(ϱ(S^z_x) + s)`,
+
+both convergent on `𝒦^{(1)}`.  For a one-magnon initial state
+`N_R + N_T + N_W = 1`, with `N_W` the weight inside `W`.  For a packet `φ`,
+`⟨N_T⟩ = \int_{-π}^{π}\frac{dk}{2π}|φ(k)|²T(k)` — a *packet average* of `T`
+(D15), **not** `T(⟨k⟩)`; the difference is `\tfrac12 T''(⟨k⟩)σ_k^2` and is
+largest exactly in the soft region.
+
+## D15 (kink--magnon scattering data)
+
+*(`Bd5`.)*  In `𝒦_{↑↓}` with one magnon present, the stationary scattering
+solutions at magnon momentum `k ∈ (0,π)` define `r(k)`, `t(k)` by the
+asymptotics: an incoming `↓`-magnon of momentum `k` in the `↑` region goes to
+`r(k)·`(`↓`-magnon, momentum `−k`, `↑` region) `+ t(k)·`(`↑`-magnon, momentum
+`k`, `↓` region).  Put `T(k) := |t(k)|²`, `R(k) := |r(k)|²` (so `T + R = 1`),
+and let `δ_t(k) := \arg t(k)` be the *kink--magnon transmission phase*, fixed
+continuous with `δ_t → 0` at the point where `t → 1`.
+`dδ_t/dk` is the spatial (Wigner--Eisenbud) shift of the **transmitted
+magnon**; it is a smooth, non-quantised function of `k` and `Δ`, and it is
+**not** the wall displacement D13(a).
+
+## D16 (easy-axis XXZ kink model and its conventions)
+
+*(`Bd6`, together with the draft's §1.1--§1.2.)*  Fix `J > 0` and `Δ > 1`,
+and let
+
+  `h^{XXZ}_{x,x+1} := −J[S^x_xS^x_{x+1} + S^y_xS^y_{x+1} + Δ(S^z_xS^z_{x+1} − \tfrac14)]`,
+  `ω(k) = J(Δ − \cos k)`, `v(k) = J\sin k`, `ω_{\rm gap} = J(Δ−1)`.
+
+`Δ` is the same anisotropy as `notation.md`'s `Δ = J_z/J_⊥` (the two
+conventions agree; this fixes the draft's interface item R9).  At `Δ = 1` this
+reduces to D6/O1.  Every "soft" statement in this model is a low-frequency
+expansion *about the gap*.  `G = U(1) ⋊ ℤ₂` with `U(1)` generated by `S^z`
+(unbroken) and `ℤ₂` the `π`-rotation about `S^x` (broken); `Ω_vac = {↑,↓}`,
+both exact injective product vacua with `χ = 1`.
+
+**Kink normalisation.**
+`h^{\rm kink}_{x,x+1} := h^{XXZ}_{x,x+1} + \tfrac{J}{2}\sqrt{Δ^2−1}(S^z_x − S^z_{x+1})`,
+`H_{\rm kink} := \sum_x h^{\rm kink}_{x,x+1}`.  The added field is a telescoping
+boundary term: `H_{\rm kink}` and `H_{XXZ}` generate the **same** derivation on
+`𝔄`, so every dynamical statement is a statement about the pure XXZ chain and
+`H_{\rm kink}` serves only to normalise the kink to zero energy.
+
+**Kink coordinates.** `q := Δ − \sqrt{Δ^2−1} ∈ (0,1)`, equivalently
+`Δ = (q + q^{-1})/2`; the exact zero-energy product family is
+`|K(z)⟩ = ⊗_{n∈ℤ}(|↑⟩_n + z\,q^{\,n}|↓⟩_n)`, and writing `z = q^{-x_0}e^{iφ}`
+exhibits the conjugate pair `(x_0, φ)`: `x_0 ∈ ℝ` the kink centre and `φ` the
+residual `U(1)` phase.  Crossover momentum `k_* := 1/(4(Δ−1))`.
+
+## D17 (the `ℓ¹` kink class)
+
+*(`Bd7`.)*  `𝒦^{(1)}_{αβ} ⊂ 𝒦_{αβ}` (D9(a)) is the set of `ϱ ∈ 𝒦_{αβ}` with
+
+  `\sum_{x<0}|ϱ(S^z_x) − s_α| + \sum_{x>0}|ϱ(S^z_x) − s_β| < ∞`,
+
+and, whenever the first moment of D13(c) is used, additionally
+`\sum_x |x|\,|ϱ(S^z_x) − s_{α/β}| < ∞`.  D9(a) requires only weak-\*
+convergence to the vacua, which is too weak for the half-infinite charge to
+exist; `𝒦^{(1)}` is the function-space refinement (docs/framing.md §3) on which
+D13(c) and D14 converge.  `𝒦^{(1)}` is preserved by the dynamics on finite time
+intervals (Lieb--Robinson) and is **not** preserved by the `k → 0` limit — a
+plane-wave magnon is not `ℓ¹`.  **Every soft statement about memory must fix
+the packet first and take `k → 0` afterwards; the two limits do not commute.**
+
+## D18 (hypothesis (H-AD): asymptotic decomposition)
+
+*(`Bd`-level hypothesis, isolated so that everything conditional on it is
+visible.)*  A family `ϱ_t ∈ 𝒦^{(1)}_{αβ}` satisfies **(H-AD)** with data
+`(t_i, t_f, W = [a,b], ε)` iff, up to `‖·‖`-error `ε`, both `ϱ_{t_i}` and
+`ϱ_{t_f}` are convex combinations of product configurations
+
+  (kink localised in `W`) `⊗` (free magnon content supported outside `W`),
+
+each magnon carrying `U(1)` charge `−1` relative to `α` if it sits to the left
+of `W` and `+1` relative to `β` if it sits to the right of `W`.
+
+(H-AD) is asymptotic completeness for the kink-plus-one-magnon sector of the
+easy-axis XXZ chain, `Δ > 1`.  It is **not proved** anywhere in this repo.  It
+is plausible (gapped magnon, exactly flat kink band, exact one-magnon states)
+and it is the single place where the memory quantisation law can fail.  Any
+statement conditional on it must say so.
+
+---
+
+# SPT (Corner A ⊗ Corner C at an endpoint) — D19--D23
+
+*Promoted at the 2026-08-26 freeze from `theory/spt-scoping-draft.md`
+(there numbered `Sd1`--`Sd10`).  These definitions are frozen; the **claims**
+built on them (SPT-B/E/T/D/M) remain at draft status — see
+`theory/TRIANGLE.md` §6 and `claims/CLAIMS.md`.*
+
+## D19 (the soft variable in a gapped chain)
+
+*(`Sd5`.)*  The *soft variable* is the lattice momentum `k`, equivalently the
+inverse width `1/L` of a modulated profile `f(x/L) ∈ 𝔉_ec` (D3(a)); and
+**"soft" means zero momentum transfer**, i.e. the emitted quantum's vertex
+degenerates to the conserved charge (D10(c)).  It does **not** mean zero
+frequency: above a gap no on-shell one-particle state has `ω → 0`, and the
+`k → 0` magnon of a Haldane chain sits at the *top* of its band.  The two
+rejected candidates are recorded so they are not re-proposed: `κ := k − π → 0`
+(the band bottom) reaches the minimum frequency but the `k = π` operator is not
+a symmetry generator, so it supports no Ward identity; and a genuinely
+zero-*frequency* object in a gapped chain is not a particle at all — it is the
+DC/memory observable of D13.  `HANDOFF_MPS_SOFT_THEOREM.md` §5.4's "soft =
+low-frequency about the gap" is imprecise; the brief is historical and is not
+edited, and this entry is the correction.
+
+## D20 (soft form factor and soft factor)
+
+**(a) Soft form factor (`Sd6`).**  With no massless pole there is no LSZ
+residue to extract, so the amplitude *is* the form factor.  For `ξ ∈ 𝔤` (or,
+for finite `G`, `g ∈ G`), an admissible profile `f` (D3(a)) and states
+`|α⟩, |β⟩`:
+
+  `F_f(ξ;β,α) := ⟨β|\,Q[f;ξ]\,|α⟩`   (Lie case, D10(c)),
+  `F_f(g;β,α) := ⟨β|\,U[f·g]\,|α⟩`    (finite case, D3(b),(c)).
+
+*(a1) bulk* soft amplitude: `f ∈ 𝔉_c`, or a wave packet with
+`f(−∞) = f(+∞)`, all legs bulk magnon legs (D5(a) on `A_α`, D5(b) null
+directions quotiented out).
+*(a2) edge/twist* soft amplitude: `f ∈ 𝔉_ec` with **net jump**
+`f(−∞) ≠ f(+∞)`, at least one leg an edge or twist leg (D21).
+
+**(b) Soft factor and its value group (`Sd7`).**  `𝖲 := \lim_{k→0} F_f` in the
+sense of (a).  Its *type* is the content: `𝖲` is an element of the twisted
+group algebra `𝔞_α = ℂ_{ω_α}[G]` (D4(d)) represented on the legs' virtual
+data, and the `[ω]`-content of a soft theorem is by definition the class of
+that twisted group algebra.
+
+## D21 (edge leg, twist leg, edge space, and `d_ω`)
+
+**(a) Edge leg and edge space (`Sd3`).**  The *half-infinite chain* `x ≥ 0`
+carries one uncontracted virtual index.  Its low-energy space is
+`H_{\rm edge} ⊗ (\hbox{bulk Fock})`, where `H_{\rm edge}` carries that index
+with the `G`-action `V_α(g)` of D2(b).  An *edge leg* is a state in
+`H_{\rm edge}`.
+**Register caveat (mandatory).**  A1(d1) proves a **padded-window-vector**
+action and A1(d2) a **state**-level `PGL(χ)` action; that `𝔞_α` acts on a
+genuine edge *Hilbert space* is the SKETCH box of `corner-a.md` ⟨1⟩4.⟨2⟩9 (the
+split property), which is **not proved**.  `H_{\rm edge}` is therefore a
+definition awaiting that box; every claim using it inherits its status.
+
+**(b) Twist leg (`Sd4`).**  A *`g`-twist at bond `b`* is the state
+`1_{[b,∞)}·g ⊳ ω_α` of D3(c) — by A1(a) the vacuum decorated by the single bond
+insertion `V_α(g)^{-1}@b`.  It is a localised excitation of the `G`-symmetric
+Hamiltonian and a string-endpoint state in the sense of A1(c).
+
+**(c) `d_ω`.**  `d_ω :=` the minimal dimension of an `ω_α`-projective irrep of
+`G`.  `d_ω > 1 ⟺ [ω_α] ≠ 0`; for `G = D₂`, `d_ω = 2` when `[ω] ≠ 0` and
+`d_ω = 1` when `[ω] = 0`.
+
+## D22 (edge memory observable)
+
+*(`Sd10`.)*  `m_L := \sum_x w(x)\,ϱ(S^z_x)` with `w` an exponentially decaying
+left-edge window, evaluated before and after a magnon wave packet reflects off
+the edge; the *edge memory* is `Δm_L := m_L(t_f) − m_L(t_i)`.  This is the
+half-infinite-chain analogue of D13(a): D13 windows a wall, D22 windows an
+open edge.
+
+## D23 (the SPT comparison pair)
+
+*(`Sd1`.)*  Fix `d = 3` (spin 1) and `G = D₂ = \{e,R_x,R_y,R_z\}`,
+`R_a := e^{iπS^a}`, with `H²(D₂,U(1)) = ℤ₂`.  Two members of D1/D2 (injective,
+`G`-covariant, `H_α = G`, `Ω_vac = \{α\}`, i.e. unbroken with a unique gapped
+ground state), used throughout as the falsification pair:
+
+* **`𝒜KLT`** (`[ω] ≠ 0`): `χ = 2`, `A^0 = σ_z/\sqrt3`, `A^{±1} = \sqrt{2/3}σ_±`;
+  for `u = e^{iπS^z}` the fundamental theorem gives `V = σ_z` and string order
+  `−4/9` (`refs/arxiv-0802.0447`, "Example 1: AKLT state"), and by `SU(2)`
+  covariance `u = e^{iπS^x}` gives `V = σ_x`, so
+  `V(R_x)V(R_z) = −V(R_z)V(R_x)` and `[ω] ≠ 0`.
+* **`TRIV`** (`[ω] = 0`): any injective spin-1 MPS with the same `G`, `χ = 2`,
+  and `V` a *linear* `D₂`-representation; the physical representative is the
+  large-`D` phase, `|ψ⟩ ≈ ⊗_x|m=0⟩`, `V ≡ 𝟙`.
+
+Both have on-site, non-anomalous `G` (MPO bond dimension 1), a unique ground
+state, and a gapped triplet magnon.  The one-parameter family joining them is
+`H(D) = \sum_i S_i·S_{i+1} + D\sum_i (S^z_i)^2` with `D = 0` (Haldane) and
+`D = 3` (large-`D`), transition at `D_c ≈ 1`.
+
+---
+
+# The universality class of the soft factor — D24
+
+*Promoted at the 2026-08-26 freeze from `theory/ml5-universality.md` ⟨1⟩1--⟨1⟩3.
+Conjecture S-general is frozen **with this class as part of its statement**:
+outside it, universality is FALSE by an explicit counterexample (ibid. ⟨1⟩4).*
+
+## D24 (hard sources, the contact first jet, and the no-contact class `𝒮_W`)
+
+**(a) Source class.**  A *local source* is an element of `𝔄_loc`.  An
+*exponentially quasi-local source* is a norm-convergent sum `O = Σ_X O_X` with
+`‖O‖_μ := Σ_X e^{μ\,diam(X)}‖O_X‖ < ∞` for some `μ > 0`.  Local sources have
+finite `‖·‖_μ`.
+
+**(b) Amputated amplitudes.**  For a source `O`, `M_1^O(h)` is its amputated
+one-hard amplitude and `M_2^O(k,h)` its connected hard-plus-soft amplitude in
+the physical channel; both are linear in `O`, and both are measured as
+multipliers in `L²(I,dh)` for a fixed hard window `I = [a,b] ⋐ (0,π)`.
+Remainders are measured in `‖R_{S2}(k)‖_{L²(I)} ≤ C_I|k|²‖M_1^O‖_{L²(I)}`, or,
+for `f_ε(k) = ε^{-1/2}f(k/ε)`, as `O(ε²)` in the product packet norm.  Plane
+waves are generalised kernels inside `C_c^∞` packets (D3(a), D12(a′)).
+
+**(c) The contact first jet.**  With `χ(h,k) := sgn(v(h) − v(k))`,
+
+  `𝔠_h(O) := ∂_k M_2^O(k,h)|_{k=0} − 2i\,χ(h,0)\,M_1^O(h)`.
+
+**Criterion (ML5-A, PROVED).**  On a linear source class with `M_1^O ∈ L²(I)`
+and `M_2^O(k,·)` `C²` at `k=0` as an `L²(I)`-valued map with locally uniform
+second-derivative bound, the factorisation
+`M_2^O(k,h) = 2iχ k M_1^O(h) + O_{L²(I)}(k²)` is process-independent **if and
+only if** `𝔠_h(O) = 0` in `L²(I)` for every source in the class.
+
+**(d) The Ward-covariant no-contact class `𝒮_W`.**  `𝒮_W` is the class of
+sources satisfying all four of:
+1. *Ward covariance* — the descendant current residue factorises as
+   `2i v_h M_1^O(h)`;
+2. *kinematic LSZ normalisation* — the external flux factor `L(k,h)` is
+   process independent, uniformly `C¹`, and `L(0,h) = −iχ/v_h`;
+3. *reduced-channel regularity* — the orthogonal current channel is
+   ML4-admissible, hence `O_{L²(I)}(k²)` (ML4-A);
+4. **no direct soft contact** — the amputated source commutator/contact term is
+   bounded by `C_I|k|²‖M_1^O‖_{L²(I)}`.
+
+Hypothesis 4 is exactly the extra content beyond ML4, and by (c) it is
+*necessary*, not cosmetic.  **`𝒮_W` is nonempty (symmetry-generated
+external-leg insertions) but has not been shown to contain a nontrivial
+microscopic class of physical hard sources** — that is the open half of ML5.
+
+**(e) The refuting source (a stated feature of the frozen conjecture).**  On
+four consecutive sites let
+`D := S^-_0S^-_1 − S^-_1S^-_2 + S^-_2S^-_3 − S^-_0S^-_3` and
+`O_η := S^-_0 + ηD`.  Every `O_η` is local.  `M_1^{O_η}` is independent of `η`,
+while `M_2^{O_η}(k,h) = η\{2i(1−e^{-3ih})k + O_I(k²)\}`, so `𝔠_h(ηD) =
+2iη(1−e^{-3ih}) ≠ 0` on any `h`-packet supported where `1 − e^{-3ih} ≠ 0`.
+**Universality over unrestricted local sources is therefore FALSE.**
+(`ml5-universality.md` ⟨1⟩4; checker `theory/checks/ml4_check.py`, soft zero
+`3.14·10^{-16}`, coefficient error `9.96·10^{-6}`.)

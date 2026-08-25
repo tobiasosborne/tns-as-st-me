@@ -1,5 +1,19 @@
 # SPT scoping draft — can the projective class `[ω]` modify a lattice soft theorem?
 
+**Status: DRAFT, pre-critic — reconciled against claims DAG @ freeze,
+2026-08-26.**  Three stale citations flagged in
+[`corner-a-pitfalls.md`](corner-a-pitfalls.md) Flag 6 have been repaired in
+place, each marked `(Reconciled at freeze …)`: ⟨1⟩2.⟨2⟩3 no longer calls
+`(e^{ik}−1)` an "exact lattice Adler zero" (that cited `G0-soft-r1`,
+**RETRACTED**); ⟨1⟩4.⟨2⟩2(a) no longer reads A1 as an action on an edge Hilbert
+space (A1 gives a padded-window-vector action and a state-level `PGL(χ)` action
+only; the edge realisation is the SKETCH box corner-a.md ⟨1⟩4.⟨2⟩9); and the
+headline form, verdict item 2, and test **T2** are re-phrased accordingly.
+Sd1--Sd10 were promoted to `definitions.md` **D19--D23** at the freeze; the
+`Sd`-numbers are retained in this shard for readability, and the D-numbers are
+the single source (L4).  The claim statuses live in
+[`theory/TRIANGLE.md`](TRIANGLE.md) §5 and `claims/CLAIMS.md`.
+
 Scoping study for claim **SPT** of [`claims/CLAIMS.md`](../claims/CLAIMS.md)
 (status CONJECTURE), i.e. §5.4 of `HANDOFF_MPS_SOFT_THEOREM.md`.
 
@@ -129,10 +143,26 @@ the profile itself.** Everything follows.
 **⟨2⟩3 (bulk).** For `f(x) = e^{ikx}` (wave-packet sense, D3(a)),
 `Δf = (e^{ik} − 1) e^{ikx}`, so
 `Q_k(ξ) ▹ ω_α = −(e^{ik} − 1) Σ_x e^{ikx} 𝒥_x(ξ) ▹ ω_α`.
-The prefactor `(e^{ik} − 1) = ik + O(k²)` is the **exact lattice Adler zero**,
-with the `H`-, `ξ`- and leg-independent coefficient already recorded in G0.
-Every bulk soft amplitude therefore vanishes linearly in `k`, and its
-coefficient is a *closed* contraction of `A`'s, `B`'s and one `X_α(ξ)`.
+The prefactor `(e^{ik} − 1) = ik + O(k²)` is a **kinematic** factor coming from
+the profile alone.  *(Reconciled at freeze 2026-08-26.  This step previously
+called it "the exact lattice Adler zero" with a leg-independent coefficient
+"already recorded in G0", and concluded that every bulk soft amplitude vanishes
+linearly in `k`.  That reading cited claim `G0-soft-r1`, which is **RETRACTED**:
+`(e^{ik}−1)` implies no Adler zero, no universality, and does not rederive
+O7/O9 — in a matrix element the identity gives only
+`⟨out|[H,Q_k]|in⟩ = (e^{ik}−1)⟨out|J_k|in⟩`, so if `⟨out|J_k|in⟩ = C_hard+O(k)`
+hard data enters at `O(k)`, and if it has a `1/k` singularity there is no zero
+at all.  See corner-a-goldstone.md ⟨1⟩6.⟨2⟩7 and corner-a-pitfalls.md §5.2(iv);
+supplying regularity of `⟨out|J_k|in⟩`, an LSZ reduction and a Ward identity for
+`J_0` is Corner C's obligation, ML3--ML5 of theory/TRIANGLE.md §2.4.)*
+
+**What survives, and is all that ⟨1⟩5 actually needs.**  For a bulk profile the
+insertions are **paired**: every `V_α(g)` is contracted against a
+`V_α(g)^{-1}`, so the amplitude and every coefficient of its `k`-expansion are
+functions of `Ad(V_α)` alone, and its coefficient is a *closed* contraction of
+`A`'s, `B`'s and one `X_α(ξ)`.  SPT-B is a statement about **`[ω]`-independence
+of the coefficients**, not about their vanishing, and it does not depend on the
+retracted Adler-zero reading.
 
 **⟨2⟩4 (edge / twist).** For `f = 1_{[0,∞)}` (`∈ 𝔉_ec`, state statements only,
 D3(c)), `Δf = δ_{x,−1}` and the sum collapses to the **single unpaired bond
@@ -237,21 +267,36 @@ identity (WI) is **exact**, so there is no anomaly term at all to begin with.
 **PROVE**
 (a) the soft factor is `V_α(g)` acting on `H_edge`, so
     `S(g)S(h) = e^{iω_α(g,h)} S(gh)` — the soft-charge algebra is the twisted
-    group algebra `𝔞_α = ℂ_{ω_α}[G]` (this is A1, re-read as a statement about
-    soft factors);
+    group algebra `𝔞_α = ℂ_{ω_α}[G]`.
+    *(Reconciled at freeze 2026-08-26.  This clause previously read "(this is
+    A1, re-read as a statement about soft factors)".  **It is not.**  A1(d1)
+    proves a twisted-algebra action on **padded window vectors** (D4(a1)) and
+    A1(d2) a **state**-level `PGL(χ)` action with kernel `N_α`; on states the
+    multiplier is invisible.  That `𝔞_α` acts on an edge **Hilbert space** is
+    the SKETCH box corner-a.md ⟨1⟩4.⟨2⟩9 (split property / normality), which is
+    **not proved** — see corner-a-pitfalls.md Flag 4 and definitions.md D21(a).
+    (a) therefore inherits that box's status and may not be quoted as a
+    corollary of A1.)*
 (b) `dim H_edge ≥ d_ω`, and `d_ω > 1 ⟺ [ω_α] ≠ 0`;
 (c) `lim_{k→0} F^edge(k) = ⟨e′| 𝔮_edge(ξ) |e⟩`, the matrix element of the
-    asymptotic charge on the edge multiplet — **nonzero**, i.e. the bulk Adler
-    zero of SPT-B is *lifted at the edge*, with residue the edge charge;
+    asymptotic charge on the edge multiplet — **nonzero**, i.e. an unpaired
+    endpoint insertion survives the `k → 0` limit where a bulk profile leaves
+    only paired ones, with residue the edge charge.  *(Reconciled at freeze:
+    previously phrased as "the bulk Adler zero of SPT-B is lifted at the edge".
+    SPT-B is a `[ω]`-independence statement, not a vanishing statement, and the
+    bulk Adler zero it was leaning on is the RETRACTED `G0-soft-r1`.)*
 (d) the residue lies in the `[ω]`-shifted charge lattice: for `𝔄KLT` with the
     residual `U(1)` (rotations about `z`) the edge charge is **half-integral**
     (`S^z_edge = ±1/2`) while every bulk excitation carries integral charge;
     for `TRIV` the edge charge is integral.
 
-> **Headline form.** *The lattice Adler zero is exact in the bulk and is lifted
-> at a boundary or a symmetry twist, with residue the asymptotic charge of the
-> endpoint; that residue is valued in the `[ω]`-twisted charge lattice and is a
-> bulk topological invariant.*
+> **Headline form** *(reconciled at freeze 2026-08-26: "the lattice Adler zero
+> is exact in the bulk" is withdrawn — it cited the RETRACTED `G0-soft-r1`).*
+> *In the bulk every symmetry insertion is paired and the soft amplitude is
+> `Ad(V_α)`-valued, hence `[ω]`-blind; at a boundary or a symmetry twist a
+> single insertion is unpaired and survives the `k → 0` limit, with residue the
+> asymptotic charge of the endpoint; that residue is valued in the
+> `[ω]`-twisted charge lattice and is a bulk topological invariant.*
 
 *Confidence in truth 0.85. Confidence that it is new enough to headline 0.50*
 — see §7.
@@ -363,7 +408,7 @@ formed, and `V_α` acts on `H_edge` directly — whence A1's `ℂ_{ω_α}[G]`.
 |---|---|---|---|---|
 | **T0** | edge charge: polarise the right edge with a weak field, measure `m_L = Σ_x w(x)⟨S^z_x⟩` | `\|m_L\| → 1/2` (half-integral) | `\|m_L\| → 0` (integral) | pass iff `\|m_L\|_{D=0} ∈ [0.45,0.5]` and `\|m_L\|_{D=3} < 0.05` at `L=48` |
 | **T1** | edge soft form factor `F⁺(k) = ⟨G_b\| Σ_x w(x)e^{ikx}S⁺_x \|G_a⟩` on the quasi-degenerate edge multiplet, `k = 0, 2π/L, 4π/L, 8π/L` | `\|F⁺(0)\| = O(1)`, off-diagonal in the edge doublet | `\|F⁺(0)\| = O(e^{−L/ξ})` | pass iff `\|F⁺(0)\|_{D=0} > 0.9` and `< 0.05` at `D=3` |
-| **T2** | *control*: bulk soft amplitude on a periodic chain, excitation ansatz | `F(k)/(e^{ik}−1)` bounded and smooth as `k→0`; same functional form at `D=0` and `D=3` | identical | pass iff the Adler zero is order `k` (not `k⁰`, not `k²`) in **both**, confirming SPT-B |
+| **T2** | *control*: bulk soft amplitude on a periodic chain, excitation ansatz | `F(k)/(e^{ik}−1)` bounded and smooth as `k→0`; same functional form at `D=0` and `D=3` | identical | pass iff `F(k)/(e^{ik}−1)` has the **same** `k→0` limit at `D=0` and `D=3`, confirming SPT-B.  *(Reconciled at freeze: the criterion was "the Adler zero is order `k`", which presupposed the RETRACTED `G0-soft-r1`.  SPT-B is a `[ω]`-independence test, so the discriminator is model-to-model **agreement**, not the power of `k`.)* |
 | **T3** | *payoff*: TDVP wave packet, `k₀ ≈ π ± 0.3`, width ≈ 10 sites, incident on the left edge; measure `Δm_L` | nonzero edge-flip channel, `Δm_L` persistent | `Δm_L → 0` up to `e^{−L/ξ}` | pass iff `\|Δm_L\|_{D=0} > 10 × \|Δm_L\|_{D=3}` |
 
 **Zero-cost pre-check (minutes, exact, no DMRG).** Do T1/T2 analytically at the
@@ -446,9 +491,14 @@ modification is weaker than §5.4 of the brief assumes.**
    amplitude. *Confidence 0.90.* Provable in one page (⟨1⟩5); the only real
    risk is obligation `N3`.
 2. **Edge/twist: genuine modification, of the *type* of the soft factor.**
-   The Adler zero is lifted, the residue is the endpoint charge, the endpoint
-   charge lives in the `[ω]`-twisted lattice/algebra, and the resulting
-   multiplet structure is a bulk invariant. *Confidence 0.85.*
+   An unpaired endpoint insertion survives the `k → 0` limit, the residue is
+   the endpoint charge, that charge lives in the `[ω]`-twisted
+   lattice/algebra, and the resulting multiplet structure is a bulk invariant.
+   *Confidence 0.85.*  *(Reconciled at freeze: "the Adler zero is lifted" is
+   withdrawn as a premise — the bulk zero it contrasted against was the
+   RETRACTED `G0-soft-r1`.  Whether a genuine bulk Adler zero exists is Corner
+   C's ML3--ML5 question, not this shard's.  The **contrast** — paired versus
+   unpaired insertions — is unaffected and is the real content.)*
 3. **But: no `[ω]` in any soft-expansion coefficient**, at any order, anywhere
    (⟨1⟩3.⟨2⟩2) — the Lie-algebra shadow of `[ω]` vanishes for every Haldane-
    protecting group. *Confidence 0.90.* This is the piece that must be
@@ -456,9 +506,10 @@ modification is weaker than §5.4 of the brief assumes.**
 4. **Novelty risk, not truth risk.** Items 1–2 are true; the danger is a
    referee reading item 2 as "SPT edges carry projective representations,
    restated in soft language". The load-bearing new content is the
-   *combination*: (bulk no-go) + (Adler zero lifted only at endpoints, with
-   topologically quantised residue) + (SPT-M: protected magnon memory at an SPT
-   edge). *Confidence that this suffices for the headline: 0.50.* If SPT-M
+   *combination*: (bulk no-go) + (an unpaired endpoint insertion surviving
+   `k → 0`, with topologically quantised residue) + (SPT-M: protected magnon
+   memory at an SPT edge). *Confidence that this suffices for the headline:
+   0.50.* If SPT-M
    fails, the SPT section should be demoted to a corollary of corner A rather
    than the headline, and the paper's headline reverts to the M1 triangle.
 

@@ -486,7 +486,13 @@ levels, the soft limit, both physical-phase signs and parity, (15), and both
 Puiseux remainders. Bound-state uniqueness and the incoming/outgoing reading
 remain the analytic arguments above, not numerical assumptions.
 
-A fresh normal and `python3 -O` run on 2026-08-25 recorded:
+**Summary of a fresh normal and `python3 -O` run, 2026-08-25** — this block is
+a hand-**aggregated summary**, not verbatim script output: the per-root `ED`
+lines and the per-`K` `BOUND` lines are collapsed into their maxima, and the
+header, the `RAPIDITY` line and `remainder_ratio` are omitted.  Every number
+below is a correct maximum over a real passing run; for the verbatim transcript,
+run the checker.  *(Amended at the 2026-08-26 freeze; `verdicts/oracle-bethe-r2.md`
+residue 1.)*
 ```text
 ONE residual=2.190e-15 velocity=4.694e-12
 ED max_residual=2.585e-15 max_spectral=2.220e-15
@@ -495,5 +501,12 @@ SOFT limit=2.966e-16 linear=3.084e-10 quadratic=1.250e-09 invariant=4.441e-15 pa
 PUISEUX phase_ratio=2.545e+01 S_ratio=3.036e+01
 PASS: oracle facts O1--O10
 ```
-The enforced tolerances are respectively `1e−10`, `2e−11`, `2e−11`,
-`3e−9`, and `40`; every failure path is explicit and survives `-O`.
+**Enforced tolerances, corrected.**  `BETHE_TOL = 2e−11` governs the `ONE`
+residual, the (omitted) `RAPIDITY` errors, and `limit`, `invariant`, `parity`
+on the `SOFT` line, as well as the `ED` and `BOUND` quantities; `1e−10` governs
+the `ONE` velocity only; `DERIVATIVE_TOL = 3e−9` governs `linear` and
+`quadratic` only; the omitted `remainder_ratio` is checked against a hardcoded
+`1.0e2`; and `PUISSEUX_TOL = 4.0e1` governs both `PUISEUX` ratios.  The last two
+are calibrated to the sampled set `k_h ∈ {0.37,1.10,2.40,3.00}`, `|k_s| ≤ 0.016`,
+not derived from `C_δ(a,b)`/`D_δ(a,b)` (r2 residue 5).  Every failure path is
+explicit and survives `-O`.
