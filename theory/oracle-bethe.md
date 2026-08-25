@@ -374,3 +374,78 @@ Justification: D7, (2), and ⟨3⟩4.
 
 **⟨2⟩7. QED.** The soft expansions, invariant content, and validity
 domain are proved.
+
+## ⟨1⟩4. Numerical cross-check record
+
+**⟨2⟩1. ASSUME.** Run
+[`checks/oracle_bethe_check.py`](checks/oracle_bethe_check.py) with its fixed
+parameters `N=18`, two-magnon dimension `153`, and `J=1.37`.
+Justification: constants in the standalone checker.
+
+**⟨2⟩2. PROVE.** The checker tests the analytic oracle against an
+independently assembled finite-ring Hamiltonian.
+
+**⟨3⟩1.** It constructs every matrix column by applying
+`(J/2)(1−P)` on all periodic bonds, then diagonalizes the resulting
+`153×153` matrix.
+Justification: D6 and `ring_hamiltonian` in the checker.
+
+**⟨3⟩2.** Periodicity of the D7 wave gives
+`e^{iNk_1}=S_{12}` and `e^{iNk_2}=S_{12}^{−1}`; three numerical roots are
+tested by both Bethe residuals, `||Hψ−Eψ||_2`, and distance to the ED
+spectrum.
+Justification: equate the two plane-wave coefficients in
+`ψ(0,y)=ψ(y,N)` and inspect `quantized_pair` and `check_ed`.
+
+**⟨3⟩3.** It separately checks both rapidity identities (8) and fits the
+continuous phase near `k_s=0` to obtain the coefficients in (12).
+Justification: `check_rapidities` and `check_soft_derivatives`.
+
+**⟨3⟩4. QED.**
+
+**⟨2⟩3. PROVE.** A fresh run on 2026-08-25 passes with the following
+record:
+
+```text
+oracle_bethe_check: N=18, dim=153, J=1.37
+RAPIDITY S12_error=2.483e-16 S21_error=1.570e-16
+ED k1= 0.405359200715 k2= 1.339970051280 E=1.167592407324 residual=2.204e-15 spectral=2.220e-16
+ED k1= 0.792906491684 k2= 1.999620311507 E=2.348212670447 residual=2.585e-15 spectral=2.220e-15
+ED k1=-1.117870152201 k2= 1.466936002600 E=1.998457037382 residual=1.305e-15 spectral=2.220e-16
+SOFT kh=0.37 d1=2.000000000000 c2=5.343597575979 exact_c2=5.343597575762
+SOFT kh=1.10 d1=2.000000000000 c2=1.631041423725 exact_c2=1.631041423766
+SOFT kh=2.40 d1=2.000000000000 c2=0.388779569332 exact_c2=0.388779569368
+SOFT kh=3.00 d1=2.000000000000 c2=0.070914844340 exact_c2=0.070914844303
+PASS: periodic Bethe vectors, ED spectrum, and soft coefficients
+```
+
+**⟨3⟩1.** The largest ED-vector residual is `2.585e−15`; the largest
+displayed `c2−cot(k_h/2)` error is `2.17e−10`, below the checker's
+respective tolerances `2e−11` and `3e−9`.
+Justification: the recorded numbers and checker constants.
+
+**⟨3⟩2. QED.** The rapidity, ED, and soft-derivative checks pass.
+
+**⟨2⟩4. QED.** The numerical cross-check is complete.
+
+## ⟨1⟩5. Oracle facts O1--O10
+
+| ID | Exact statement | Validity domain |
+|---|---|---|
+| **O1** | `ω(k)=J(1−cos k)`, `v(k)=J sin k`, equation (2). | One magnon; `k∈(−π,π]`, `J>0`. |
+| **O2** | `E(k_1,k_2)=ω(k_1)+ω(k_2)`, equation (4). | Two real scattering momenta. |
+| **O3** | `S_{12}` is the exact lattice-momentum fraction (6). | D7 ordering; denominator nonzero. |
+| **O4** | `S_{12}=(Δλ+i)/(Δλ−i)` while `S_{21}=(Δλ−i)/(Δλ+i)`, equation (8). | `λ=(1/2)cot(k/2)`; reversing order inverts the phase. |
+| **O5** | `t=cos(K/2)` and `E_b(K)=J sin²(K/2)`, equation (9). | Normalizable string for `0<|K|≤π`; threshold at `K=0`. |
+| **O6** | `S_{12}(k_s,k_h)→1` from either sign, equation (11). | Fixed `k_h∈(0,π)`, signed `k_s→0`. |
+| **O7** | `δ=2k_s+cot(k_h/2)k_s²+O(k_s³)`, equation (12). | D7 continuous phase; fixed hard momentum. |
+| **O8** | `S_{12}=1+2ik_s+[i cot(k_h/2)−2]k_s²+O(k_s³)`, equation (13). | Same domain as O7; `S_{21}` is its inverse. |
+| **O9** | The linear coefficient is `2`; hard data first enters as `cot(k_h/2)=v_h/ω_h`, equation (15). | `0<k_h<π`; non-uniform as `k_h→0`. |
+| **O10** | Energy gives the direction-labelled Puiseux series (16)--(17), beginning `δ=2σ√(2ω_s/J)+O(ω_s)`. | One-sided `ω_s→0`, `σ=sgn k_s`; regular variable is `k_s`. |
+
+**⟨2⟩1. PROVE.** O1--O5 are respectively (2), (4), (6), (8), and
+(9); O6--O10 are respectively (11), (12), (13), (15), and (16)--(17).
+Justification: the proved steps ⟨1⟩1--⟨1⟩3 and the domains stated there.
+
+**⟨2⟩2. QED.** O1--O10, and hence the Bethe oracle theorem, are proved.
+□
