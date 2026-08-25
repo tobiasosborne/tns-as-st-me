@@ -43,8 +43,12 @@ serious model illustrating the memory effect**.
   definition (D-number), a prior claim id, or a named computation. The paper's
   appendices may linearize, but the repo proof shard is the ground truth and
   stays structured.
-- **L7 — Model policy.** No Fable subagents. Opus for cognition-heavy work;
-  Sonnet for search/mechanical; codex for proofs.
+- **L7 — Model policy.** No Fable subagents, with ONE exception (TJO directive
+  2026-08-25): the final paper writeup (P4 prose) is done by a Fable subagent
+  that must FIRST read docs/prose-guide.md and the 1305.2176 style target.
+  Required register: good simple communication, no arrogant tone, cautious
+  scientific optimism. Otherwise: Opus for cognition-heavy work; Sonnet for
+  search/mechanical; codex for proofs.
 - **L8 — Cross-session state → bd** (prefix `tns-`). Insights → HANDOFF.md.
 - **L9 — The paper is the product.** apsrev4-2, 4 pages main text, prose in
   the register of arXiv:1305.2176; exactly 3 main-text figures that tell the
