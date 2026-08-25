@@ -1,0 +1,8 @@
+name = "TriangleMPS"
+uuid = "7c1a5f3e-9b2d-4e8a-a1c6-3d9e2f4b8a01"
+authors = ["Tobias J. Osborne and Claude"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Test = "8dfed614-e22c-5e08-85e1-98abc2c9d2c3"
