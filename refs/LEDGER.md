@@ -22,6 +22,35 @@ description. All 12/12 fetched OK; no id mismatches.
 | 2012.07243 | Collisions of false-vacuum bubble walls in a quantum spin chain | (tarball) | kink-collision MPS methodology (PRX Quantum 3, 020316) |
 | 2504.10577 | Soft Theorems and Spontaneous Symmetry Breaking | (single tex) | Adler zeros / soft theorems for broken symmetries (continuum) |
 
+## Batch 2 — sweep-surfaced must-cites (fetched 2026-08-25, 24/24 OK, titles verified)
+
+| arXiv id | verified title | role |
+|---|---|---|
+| 1709.05018 | Soft pion theorem, asymptotic symmetry and new memory effect | THE direct continuum antecedent (Hamada–Sugishita) |
+| 1411.5745 | Gravitational Memory, BMS Supertranslations and Soft Theorems | canonical memory↔soft edge (Strominger–Zhiboedov) |
+| 2310.16683 | Fracton infrared triangle | first triangle beyond Lorentz (competitive landscape) |
+| 2203.02817 | Asymptotic symmetries and soft charges of fractons | precursor to fracton triangle |
+| 2203.14334 | Infrared Finite Scattering Theory in QFT and Quantum Gravity | rigour counterpoint (Prabhu–Satishchandran–Wald) |
+| 2412.01910 | Gravitational memory and soft theorems: The local perspective | local (no null infinity) derivation — closest continuum template |
+| 2107.05401 | Spin wave driven domain wall motion in easy-plane ferromagnets: a particle perspective | closest phenomenological precedent for corner B (Lan–Xiao) |
+| 1406.6051 | Propulsion of a domain wall in an antiferromagnet by magnons | adjacent (steady-state driving, not memory) |
+| 1712.06578 | Magnon-induced non-Markovian friction of a domain wall in a ferromagnet | adjacent (friction observable) |
+| 2306.15351 | Domain wall dynamics in classical spin chains: free propagation, subdiffusive spreading, and soliton emission | background |
+| 2108.03189 | On-Shell Recursion Relations for Nonrelativistic Effective Field Theories | continuum type-B Adler zeros (Mojahed–Brauner) |
+| 2201.01393 | Nonrelativistic effective field theories with enhanced symmetries and soft behavior | ditto |
+| 2008.12078 | Exceptional nonrelativistic effective field theories with enhanced symmetries | ditto |
+| 2301.11363 | Soft Phonon Theorems | closest published condensed-matter Goldstone soft theorem |
+| 1910.04766 | New Soft Theorems for Goldstone Boson Amplitudes | template if lattice soft limit is corrected, not vanishing |
+| 1509.07840 | Soft theorems from anomalous symmetries | anomaly-modified soft limits (continuum) |
+| 1602.08692 | Effective field theory and the scattering process for magnons in the ferromagnet, antiferromagnet, and ferrimagnet | magnon EFT, vanishing FM scattering length |
+| 1412.5604 | Matrix product operators for symmetry-protected topological phases | core corner-A prior machinery (Williamson et al.) |
+| 2203.12563 | Classifying phases protected by matrix product operator symmetries using matrix product states | MPO-symmetry classification |
+| 2405.00439 | Fractional domain wall statistics in spin chains with anomalous symmetries | closest MPS treatment of domain walls + anomaly |
+| 2403.04835 | Non-Invertible Symmetries, Anomalies and Scattering Amplitudes | anomaly constrains S-matrix (crossing, 1+1d) |
+| 1804.10122 | Fermionic Lieb-Schultz-Mattis Theorems and Weak Symmetry-Protected Phases | LSM-as-anomaly cluster |
+| 1907.08204 | Topological theory of Lieb-Schultz-Mattis theorems in quantum spin systems | LSM-as-anomaly cluster |
+| 2310.10078 | Gravitational wave analogues in spin nematics and cold atoms | nearest platform claim (spin-2 analogue in a magnet) |
+
 Notes:
 - 1907.02474 title read from the supplement file; matches the brief.
 - Additional sources found by the novelty sweep get appended here when fetched.
