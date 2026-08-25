@@ -1,3 +1,4 @@
+refs/prose-exemplars/
 refs/arxiv-*/
 !refs/LEDGER.md
 numerics/Manifest.toml
