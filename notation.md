@@ -17,9 +17,23 @@
 | `S(k; ·)` | soft factor in Conjecture S | claims/CLAIMS.md S |
 | `R(k)` | soft-theorem remainder, o(S(k)) in the stated norm | claims/CLAIMS.md S |
 | `δx` | kink collective-coordinate displacement (memory observable) | claims/CLAIMS.md M |
+| `H`, `h_{x,x+1}`, `J`, `P_{x,x+1}` | shifted isotropic spin-1/2 Heisenberg-ferromagnet Hamiltonian, bond term, positive exchange, and spin swap | definitions.md D6 |
+| `N` | number of sites when the chain is specialized to a periodic ring | definitions.md D6 |
+| `|Ω⟩`, `|x⟩`, `|x,y⟩` | all-up vacuum, one-down-spin basis, and ordered two-down-spin basis | definitions.md D6 |
+| `|k⟩_N` | normalized one-magnon momentum state on an `N`-site ring | definitions.md D6 |
+| `k`, `z(k)` | lattice momentum in `(−π,π]` and `exp(ik)` | definitions.md D6 |
+| `ω(k)`, `v(k)` | one-magnon energy and group velocity `dω/dk` | definitions.md D6 |
+| `λ(k)` | Heisenberg rapidity `(1/2) cot(k/2)` | definitions.md D7 |
+| `ψ(x,y)`, `A_{12}`, `A_{21}` | ordered-coordinate two-magnon wave and its Bethe coefficients | definitions.md D7 |
+| `S_{12}`, `S_{21}` | coefficient ratios `A_{12}/A_{21}` and its inverse | definitions.md D7 |
+| `E(k_1,k_2)` | two-magnon scattering energy | definitions.md D7 |
+| `δ(k_1,k_2)` | continuous phase branch of `S_{12}=exp(iδ)` fixed at a stated base point | definitions.md D7 |
+| `K`, `r`, `f_r`, `t`, `η`, `E_b(K)` | bound-pair total momentum, separation, relative wave, decay data, and energy | definitions.md D7 |
+| `k_s`, `k_h`, `ω_s`, `σ` | signed soft momentum, fixed hard momentum, soft energy, and soft-direction sign | definitions.md D8 |
 
-Conventions: chain sites x ∈ ℤ; momenta k ∈ (−π, π]; ħ = 1; Heisenberg FM
-H = −J Σ_x S_x·S_{x+1}, J > 0; XXZ anisotropy Δ = J_z/J_⊥.
+Conventions: chain sites x ∈ ℤ; momenta k ∈ (−π, π]; ħ = 1; the
+Heisenberg FM uses the vacuum-energy shift fixed in D6; XXZ anisotropy
+Δ = J_z/J_⊥.
 
 (Anchors are added as definitions.md grows; a symbol used anywhere without an
 entry here is a defect.)
