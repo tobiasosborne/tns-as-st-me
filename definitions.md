@@ -34,7 +34,13 @@ has spectral radius `1`, the eigenvalue `1` is the unique eigenvalue of modulus
 `A^s ↦ Y^{-1} A^s Y` with `Y` unitary commuting with `r`, together with an
 overall phase.  We write
 `λ_E := max{ |μ| : μ ∈ spec(E), μ ≠ 1 } < 1`
-for the *transfer gap*; `ξ_c := −1/log λ_E` is the correlation length.
+for the *transfer gap*; `ξ_c := −1/log λ_E` is the correlation length.  Since
+`E` may have Jordan blocks at modulus `λ_E`, the honest decay statement is:
+**for every `λ̃ ∈ (λ_E,1)` there is `C_λ̃ < ∞` with
+`‖E^m − P‖ ≤ C_λ̃ λ̃^m` for all `m ≥ 0`**, where `P(Y) = tr(Y) r` is the
+spectral projection onto the fixed point.  A bare `O(λ_E^m)` is *false* in
+general (it needs the polynomial prefactor `m^{p}`, `p` = block size − 1);
+every rate below is quoted in the `λ̃` form.
 Injectivity is equivalent to: there is `n_0` with
 `span{ A^{s_1}⋯A^{s_{n}} : s_1…s_{n} } = M_χ(ℂ)` for all `n ≥ n_0`.
 
@@ -48,17 +54,46 @@ translation invariant, and exponentially clustering with rate `λ_E`.  We write
 
 **(e) Window vectors and decorations.** For a finite window `Λ = [a,b]`, a
 *decoration* is a tuple `T = (T_a,…,T_b)` of tensors `T_x = (T_x^s)`, together
-with *bond insertions* `M_{x|x+1} ∈ GL(χ)` on a finite set of bonds, and
+with *bond insertions* `M_{x|x+1} ∈ GL(χ)` on any subset of the `|Λ|+1` bonds
+`(a−1|a), (a|a+1), …, (b|b+1)` — **including the two edge bonds** — and
 boundary vectors `b_l, b_r ∈ ℂ^χ`.  The *window vector* is
 
-  `|ψ_Λ(T; b_l, b_r)⟩ := Σ_{s_a…s_b} ⟨b_l| T_a^{s_a} M_{a|a+1} T_{a+1}^{s_{a+1}} ⋯ T_b^{s_b} |b_r⟩ |s_a…s_b⟩`.
+  `|ψ_Λ(T; b_l, b_r)⟩ := Σ_{s_a…s_b} ⟨b_l| M_{a−1|a} T_a^{s_a} M_{a|a+1} ⋯ T_b^{s_b} M_{b|b+1} |b_r⟩ |s_a…s_b⟩`,
+
+absent factors being `𝟙`.  An edge insertion is equivalently a redefinition of
+the boundary vector (`b_l ↦ M_{a−1|a}^† b_l`, `b_r ↦ M_{b|b+1} b_r`); it is
+included so that identities whose insertions land on `∂Λ` are statements about
+the same window rather than about a larger one.  *(This clause was added in
+revision r2: the r1 window vector had interior bonds only, which made the r1
+statement of WI false for `Λ = R`; see corner-a.md ⟨1⟩3.⟨2⟩7.)*
+
+There is a constant `C_∂ = C_∂(A,b_l,b_r) < ∞` with
+`‖ |ψ_Λ(T;b_l,b_r)⟩ ‖ ≤ C_∂ ∏_M ‖M‖` for every `Λ` and every decoration
+differing from `A` on boundedly many sites — uniform in `|Λ|`, because the
+contraction is `(b_l⊗\bar b_l| E^{|Λ|} |b_r⊗\bar b_r)`-type and `E^m` is
+power-bounded by (c).
 
 A *decorated state* `ω_A[T]` is the state on `𝔄` obtained from a decoration
 that differs from the uniform `A` only on finitely many sites and bonds, by the
 prescription of (d) with the modified string and with `l, r` as the two
-infinite environments; it is well defined because `E^n(Y) → tr(Y) r`
-exponentially with rate `λ_E`, uniformly for `‖Y‖ ≤ 1`.  We write
+infinite environments; it is well defined by the `λ̃`-estimate of (c).  We write
 `ω_A^{M@b}` for the state decorated by a single bond insertion `M` on bond `b`.
+
+**(e′) Two-sided (half-line) decorations.** A *two-sided decoration* carries
+tensor `A_α` on `(−∞,m]`, tensor `A_β` on `[m+1,∞)` (both injective, possibly
+`α = β`), plus finitely many further site/bond modifications.  This is **not** a
+decoration in the sense of (e) — it differs from any uniform tensor on a whole
+half-line — and it is defined instead by its finite-window restrictions: for
+`O ∈ 𝔄_W` put
+`ω_{α|β}^{(m)}[T](O) :=` the (e)-contraction over `W ∪ {m}` with left
+environment `l_α`, right environment `r_β`, and the modifications inserted.
+**Lemma (well-definedness).** These functionals are positive, normalised, and
+consistent under `W ⊆ W'`, hence define a unique state on `𝔄`; consistency and
+positivity follow because each is `⟨v|·|v⟩/⟨v|v⟩` for the finite-window vector
+`v` with the environments as boundary data, and enlarging `W` changes the
+boundary data by one application of `E_α` (resp. `E_β`), which fixes `l_α`
+(resp. `r_β`).  *(Added in r2; the r1 shards used such states without
+constructing them — corner-a-kinks.md ⟨1⟩9.)*
 
 **(f) Register.** Every identity below is first an *exact algebraic identity
 between window vectors* at finite `Λ`, and only then a statement about states
@@ -169,45 +204,61 @@ The canonical case is `f = 1_{[x,∞)}·g`, written `U_{[x,∞)}(g)`.
 
 ---
 
-## D4 (lattice asymptotic symmetry `𝒜`; charge algebra)
+## D4 (bond implementers; effective asymptotic symmetry; charge algebra)
 
 Fix a bond `b`, a vacuum label `α`, and work in the unbroken case `H_α = G`
-(the broken case is D9/A2).
+(the broken case is D9/A2).  *(Rewritten in r2: the r1 version used the
+implementer `V_α(g)^{-1}` with left multiplication, which reverses the
+composition law, and asserted a twisted-algebra action on states, where phases
+are invisible.  See corner-a.md ⟨1⟩4 and the r1 objections 3, 4, 7, 8.)*
 
-**(a) Bond implementers.** For `M ∈ GL(χ)` let `𝒱_b(M)` denote the operation
-"insert `M` on bond `b`" on decorated states (D1(e)):
-`ω_A[T] ↦ ω_A[T with M_b ↦ M · M_b]`.  Write `𝒱_b(g) := 𝒱_b(V_α(g)^{-1})`.
+**(a) Bond implementers act on window vectors, not on states.** Let
+`𝒲_{Λ,b}` be the (finite-dimensional) linear space spanned by the window
+vectors `|ψ_Λ(A; b_l,b_r)⟩` decorated by a single insertion on bond `b ∈ Λ`.
+For `M ∈ GL(χ)` let `𝒱_b(M) : 𝒲_{Λ,b} → 𝒲_{Λ,b}` be **left** multiplication of
+the bond-`b` insertion by `M`.  Then `𝒱_b(M)𝒱_b(M') = 𝒱_b(MM')`, and scalars
+act by scalars.  Put
+  `𝒱_b(g) := 𝒱_b(V_α(g))`   (**not** `V_α(g)^{-1}`).
+With D2(c)'s convention `V_α(h)V_α(g) = e^{iω_α(h,g)}V_α(hg)` this gives
+  `𝒱_b(h)𝒱_b(g) = e^{iω_α(h,g)}\,𝒱_b(hg)`,
+a linear representation of the twisted group algebra on `𝒲_{Λ,b}`.  On
+**states** the phase is invisible (`ω^{cM@b} = ω^{M@b}`, D9(c)); the state-level
+action is (b).
 
-**(b) The two asymptotic copies.** `G_L` and `G_R` denote the two copies of `G`
-acting through half-infinite strings on `(−∞,b]` and `[b+1,∞)` respectively
-(D3(c)).  By WI (corner-a.md ⟨1⟩3) the left string leaves `V_α(g_L)` on bond
-`b` (it is the `∂_+R` insertion of `R = [x',b]`, `x' → −∞`) and the right string
-leaves `V_α(g_R)^{-1}` on bond `b` (the `∂_-R` insertion of `R = [b+1,y]`,
-`y → +∞`).  Their composite is `𝒱_b(V_α(g_L)V_α(g_R)^{-1})`, which is trivial
-for `g_L = g_R`, consistently with the global symmetry `U_ℤ(g)` fixing `ω_α`.
-`G_diag ⊂ G_L × G_R` is the diagonal subgroup, realised by `U_ℤ(g)`.
+**(b) The kernel and the projective quotient.** Set
+  `N_α := { g ∈ G : V_α(g) ∈ ℂ^× 𝟙 }`,
+a normal subgroup of `G` (preimage of the centre under a projective
+representation).  The induced map on states is the group homomorphism
+  `ρ_α : G → PGL(χ)`,  `ρ_α(g) := [V_α(g)]`,
+which is *not* projective — the cocycle is quotiented away — with
+`ker ρ_α = N_α`.  The **effective asymptotic symmetry group** is
+  `𝒜_eff := G/N_α ≅ ρ_α(G) ⊆ PGL(χ)`.
+This is a genuine group.  The r1 object `𝒜 = (G_L×G_R)/G_diag` is *not* the
+orbit unless `N_α = {e}`, and is a group only for abelian `G`; it is retained
+only as a name for the coset space and is never used as a classifying object.
 
-**(c) The asymptotic symmetry space.** `𝒜 := (G_L × G_R)/G_diag`, the quotient
-*set* of the left coset space, with the residual `G_L × G_R`-action
-`(g_L,g_R)·[a] = [g_L a g_R^{-1}]` under the bijection
-`(G×G)/G_diag ≅ G`, `[(g_L,g_R)] ↦ g_L g_R^{-1}`.
-**`𝒜` is a group iff `G` is abelian** (`G_diag` is normal in `G × G` iff `G` is
-abelian); in general it is a homogeneous `G_L×G_R`-space.  We say
-"asymptotic symmetry *group*" only when `G` is abelian, and otherwise speak of
-the asymptotic symmetry *space* and of the `G_L × G_R` charge algebra.
+**(c) The two asymptotic copies.** `G_L`, `G_R` act through half-infinite
+strings on `(−∞,b]` and `[b+1,∞)`.  By WI (corner-a.md ⟨1⟩3) the left string
+leaves `V_α(g_L)` on bond `b` and the right string leaves `V_α(g_R)^{-1}`, so
+the composite residue is `V_α(g_L)V_α(g_R)^{-1}`, trivial on states iff
+`g_Lg_R^{-1} ∈ N_α`.  `G_diag ⊆ S_α := {(g_L,g_R) : g_Lg_R^{-1} ∈ N_α}`, the
+true stabiliser; `S_α = G_diag` iff `N_α = {e}`.
 
-**(d) Charge algebra.** The *asymptotic charge algebra at `α`* is the twisted
-group algebra `𝔞_α := ℂ_{ω_α}[H_α]`, i.e. the algebra with basis `{ v_g }_{g∈H_α}`
-and product `v_h v_g = e^{i ω_α(h,g)} v_{hg}`.  Its defining representation on
-the virtual space `ℂ^χ` is `v_g ↦ V_α(g)`.  For a Lie group, with (S) of D2(e),
-the *asymptotic charges* are `𝔮_b(ξ) := 𝒱_b`-generator of `X_α(ξ)`, and they
-obey
-  `[𝔮_b(ξ), 𝔮_b(ζ)] = 𝔮_b([ξ,ζ]) + c_α(ξ,ζ) · 𝟙`,
-with `c_α` the Lie-algebra 2-cocycle obtained from `ω_α`; `[c_α] ∈ H²(𝔥_α, ℝ)`
-is the *central extension* of the charge algebra and is the infinitesimal
-shadow of `[ω_α]`.
-
----
+**(d) Charge algebra (a name, not a theorem).** `𝔞_α := ℂ_{ω_α}[H_α]` is the
+twisted group algebra with basis `{v_g}` and product `v_h v_g = e^{iω_α(h,g)}v_{hg}`.
+D4 *defines* it; the content — that `g ↦ V_α(g)` is a `*`-representation of it,
+and that `ρ_α` is the induced state-level action — is proved in A1(d), from
+Lemma IT.  For a Lie group, with (S) of D2(e), the *asymptotic charges* are
+`𝔮_b(ξ) := X_α(ξ)` acting by left multiplication on the bond insertion, and
+  `[𝔮_b(ξ), 𝔮_b(ζ)] = 𝔮_b([ξ,ζ]) + c_α(ξ,ζ)\,𝟙`.
+**Caveat (r2).** `c_α ∈ H²(𝔥_α,ℝ)` is only the *local infinitesimal image* of
+`[ω_α]` and generally loses it: for `𝔥_α` compact semisimple, `H²(𝔥_α,ℝ) = 0`
+(Whitehead's second lemma), so `c_α ≡ 0` while `[ω_α]` may be a nontrivial
+torsion class (AKLT: `[ω] ≠ 0` in `H²(SO(3),U(1)) = ℤ₂`, yet the spin-½ edge
+generators obey the ordinary `su(2)` bracket).  **The lattice SPT anomaly is a
+group-cohomological multiplier, not a Lie-algebra central charge** — a genuine
+disanalogy with the continuum "central extension of the charge algebra" of
+docs/framing.md §2, and it must be stated as such.
 
 ## D5 (excitation ansatz; kink sectors; null directions)
 
@@ -228,13 +279,23 @@ On the infinite chain these are δ-normalised generalised vectors:
 
 **(b) Null directions.** For `X ∈ M_χ` set
   `𝒩_k^{αβ}(X) := e^{ik} A_α X − X A_β`,  i.e. `𝒩_k(X)^s = e^{ik} A_α^s X − X A_β^s`.
-Then `|Φ_k(𝒩_k(X); A_α, A_β)⟩ = 0` identically (exact telescoping;
-corner-a-goldstone.md ⟨1⟩5).  This is the *gauge freedom* `B ≃ B + e^{ik} A X − X A` of the brief;
-ground truth refs/arxiv-1103.2286: "the choice `B^s = e^{iκ} A^s X − X Ã^s`
-results in `|Φ_κ(B)⟩ = 0`", and refs/arxiv-1810.07006 Eq. (eq:gaugeexcitations)
-`B → B + Y A_R − e^{ip} A_L Y` (the same map with `Y = −X`).
-The rank of `X ↦ 𝒩_k(X)` is `χ²` for `k ≠ 0` and `χ² − 1` for `k = 0, α = β`
-(corner-a-goldstone.md ⟨1⟩5); the missing direction is `A_α` itself.
+This is the *gauge freedom* `B ≃ B + e^{ik}AX − XA` of the brief; ground truth
+refs/arxiv-1103.2286: "the choice `B^s = e^{iκ}A^sX − X Ã^s` results in
+`|Φ_κ(B)⟩ = 0`", and refs/arxiv-1810.07006 Eq. (eq:gaugeexcitations)
+`B → B + Y A_R − e^{ip}A_L Y` (the same map with `Y = −X`).
+
+**Warning (r2).** `|Φ_k(𝒩_k(X))⟩ = 0` is **false as a finite-window identity**.
+On `Λ = [a,b]` the reindexing leaves exactly two boundary terms,
+  `e^{ik(b+1)}|ψ_Λ; X@(b|b+1)⟩ − e^{ika}|ψ_Λ; X@(a−1|a)⟩`,
+which do not vanish for generic `b_l,b_r` (measured: `‖·‖ = 1.77` for the
+`χ=2` Pauli tensor at `k = 0.37`; the r1 critic measured `0.591` with different
+boundary vectors).  The vanishing statement holds only in the limits specified
+in **D12**.  The r1 shards asserted the exact identity in the D1(f) register
+and were wrong; see corner-a-goldstone.md ⟨1⟩5 (Lemma SBP) for the exact
+identity with its boundary terms.
+
+The rank of `X ↦ 𝒩_k(X)` is `χ²` for `k ≠ 0` and `χ² − 1` for `k = 0, α = β`;
+i.e. the rank **drops** by one as `k → 0` (corner-a-goldstone.md ⟨1⟩5).
 
 ---
 
@@ -293,22 +354,54 @@ are disjoint (mutually non-normal); proved in corner-a-kinks.md ⟨1⟩8.  Hence
 "superselection sector" is used here in the precise sense: the label `(α,β)` is
 a classical observable at infinity, unchangeable by any element of `𝔄`.
 
-**(c) Twisted (endpoint) sectors.** In the unbroken case `H_α = G` the label is
-always `(α,α)`, and the sector carries no information.  The nontrivial data are
-then the *`g`-twisted endpoint sectors*: for `g ∈ G` the family of states
-`{ ω_{A_α}^{M@b} : M ∈ V_α(g)·GL(χ) }`, which is a module over the charge
-algebra `𝔞_α` of D4(d).  When "`𝒜` relabels charge superselection sectors" is
-asserted (claim A1) it is asserted about these endpoint sectors and about the
-`𝔞_α`-module structure of `ℂ^χ`, never about `𝒦_{αβ}`, which is trivial in the
-unbroken case.
+**(c) The endpoint torsor (replaces the vacuous r1 definition).**
+*(r1 defined the `g`-twisted endpoint family as `{ω^{M@b} : M ∈ V_α(g)GL(χ)}`;
+since `V_α(g)` is invertible, `V_α(g)GL(χ) = GL(χ)` and every such family is
+the same set.  The `g`-dependence must live in the **action**, not in a coset
+of `GL(χ)`.  Corrected here.)*
 
-**(d) `𝒜`-orbit.** `G_L × G_R` acts on the label set `Ω_vac × Ω_vac` by
-`(g_L,g_R)·(α,β) := (g_L·α, g_R·β)`.  If `G` acts transitively on `Ω_vac` this
-action is transitive with stabiliser `H_α × H_β`; the *relative twist*
-`[g_L g_R^{-1}] ∈ 𝒜` is the `G_diag`-invariant content, and `𝒜 ≅ Ω_vac` as a
-`G`-set when `Ω_vac ≅ G/H_α` with `H_α` normal.
+Fix a bond `b`.  The *endpoint space* is
+  `E_b^α := { ω_{A_α}^{M@b} : M ∈ GL(χ) }`.
+By A1(c), `ω^{M@b} = ω^{M'@b}` **iff** `M' ∈ ℂ^× M`; hence
+  `E_b^α ≅ PGL(χ)`   as a set, canonically, via `[M] ↦ ω^{M@b}`,
+and `E_b^α` is a torsor under `PGL(χ)` acting by left translation.  The
+asymptotic symmetry acts on it through
+  `g · ω^{M@b} := ω^{V_α(g)M @ b}`, i.e. by left translation by `ρ_α(g) ∈ PGL(χ)`,
+a genuine `G`-action with kernel `N_α`, so an effective and simply transitive
+action of `𝒜_eff = G/N_α` on the orbit `ρ_α(G) ⊆ E_b^α`.  The class `[ω_α]` is
+the pullback under `ρ_α` of the extension class of
+`1 → U(1) → U(χ) → PU(χ) → 1`: it is precisely the obstruction to lifting this
+state-level `G`-action to a linear `G`-action on the window vectors `𝒲_{Λ,b}`
+(D4(a)).  This is the non-vacuous content asserted by claim A1; sanity checks:
+`χ = 1` (or any `V_α ≡ scalar`) gives `N_α = G`, orbit a single point; AKLT with
+`G = ℤ₂×ℤ₂`, `V_α ∈ {𝟙,X,Z,XZ}` gives `N_α = {e}` and a 4-point orbit.
 
----
+When "`𝒜` relabels charge superselection sectors" is asserted, it is asserted
+about this torsor and about the `𝔞_α`-module structure of `ℂ^χ` — never about
+`𝒦_{αβ}`, which is trivial in the unbroken case.
+
+**(d) Vacuum-pair classification (corrected).**
+*(r1 asserted that the `𝒜`-orbit is the set of vacuum pairs and that
+`[g_Lg_R^{-1}] ∈ 𝒜` is the `G_diag`-invariant label.  Both are false for
+nonabelian `G`: the componentwise stabiliser is `H_{α}×H_{β}`, not `G_diag`,
+and `g_Lg_R^{-1} ↦ h g_Lg_R^{-1} h^{-1}` under the diagonal action.)*
+
+`G_L × G_R` acts on `Ω_vac × Ω_vac` componentwise.  If `G` acts transitively on
+`Ω_vac` then `Ω_vac ≅ G/H_α` and
+  `Ω_vac × Ω_vac ≅ (G/H_α) × (G/H_α)`,
+transitively, with stabiliser of `(α,β)` equal to `H_α × H_β`.  This is **not**
+`(G×G)/G_diag`: for `G = SU(2)`, `H_α = U(1)` it is `S² × S²` (dimension 4),
+whereas `(G×G)/G_diag ≅ SU(2)` has dimension 3.
+
+The complete invariant of a vacuum pair **modulo the global (diagonal)
+symmetry** is the *double coset*
+  `𝔡(α_L,α_R) := H_α\, g_L^{-1} g_R\, H_α ∈ H_α \backslash G / H_α`,
+where `α_L = g_L·α`, `α_R = g_R·α`.  It is well defined (changing
+`g_L ↦ g_Lh_1`, `g_R ↦ g_Rh_2` conjugates within the double coset) and
+diagonal-invariant (`g_i ↦ hg_i` cancels).  For `G = SU(2)`, `H_α = U(1)` it is
+the relative polar angle, `cos θ = \hat n_L · \hat n_R ∈ [−1,1]` — verified
+numerically in theory/checks/corner_a_check.py, together with the failure of
+`g_Lg_R^{-1}` to be diagonal-invariant.
 
 ## D10 (lattice Noether pair: charge density, current, modulated charge)
 
@@ -318,13 +411,22 @@ Hamiltonian (the definition extends verbatim to finite range `R_h`), let
 (anti-Hermitian on `ℂ^d`), with `q_x(ξ)` its copy at site `x`.  Assume `H` is
 `G`-invariant on-site: `[h_{x,x+1}, q_x(ξ) + q_{x+1}(ξ)] = 0`.
 
-**(a) Current.** `j_{x,x+1}(ξ) := −[h_{x,x+1}, q_x(ξ)] = [h_{x,x+1}, q_{x+1}(ξ)]`.
+**(a) Cut current.** For *finite range* `R_h` (each `h_x` supported in
+`[x, x+R_h−1]`) and `G`-invariance `[h_x, Σ_{y∈supp h_x} q_y(ξ)] = 0`, define the
+current across the bond `(m|m+1)` as
+  `j_{m|m+1}(ξ) := −[H, Σ_{y ≤ m} q_y(ξ)] = −Σ_x [h_x, Σ_{y≤m} q_y(ξ)]`.
+The sum over `x` is finite — at most `R_h` terms, those whose support straddles
+the cut — because `[h_x, Σ_{y≤m}q_y] = 0` when `supp h_x` lies wholly on one
+side.  Hence `j_{m|m+1}(ξ) ∈ 𝔄_loc`.  For the nearest-neighbour case `R_h = 2`
+this reduces to `j_{x|x+1}(ξ) = −[h_{x,x+1}, q_x(ξ)] = [h_{x,x+1}, q_{x+1}(ξ)]`.
+*(r2: the r1 definition was the nearest-neighbour formula while (H4) quantified
+over finite range — objection 19.)*
 
-**(b) Continuity equation.** `[H, q_x(ξ)] = j_{x-1,x}(ξ) − j_{x,x+1}(ξ)`
+**(b) Continuity equation.** `[H, q_x(ξ)] = j_{x−1|x}(ξ) − j_{x|x+1}(ξ)`
 (proved in corner-a-goldstone.md ⟨1⟩6); this is the exact lattice conservation law.
 
 **(c) Modulated charge and current.** For `f ∈ 𝔉_c(ξ)`,
-`Q[f;ξ] := Σ_x f(x) q_x(ξ) ∈ 𝔄_loc` and `J[f;ξ] := Σ_x f(x) j_{x,x+1}(ξ)`.
+`Q[f;ξ] := Σ_x f(x) q_x(ξ) ∈ 𝔄_loc` and `J[f;ξ] := Σ_x f(x) j_{x|x+1}(ξ)`.
 For `f(x) = e^{ikx}` we write `Q_k(ξ)`, `J_k(ξ)`, understood in the
 wave-packet sense of D3(a).
 
@@ -355,3 +457,33 @@ and D10(c): replacing `A_α` by `B_G(ξ)` at site `n` is exactly the action of
 `dim_ℂ span_ℂ{ B_G(ξ) : ξ ∈ 𝔪_α } mod 𝒩_0(·)`, which may be strictly smaller
 than `dim_ℝ 𝔪_α`.  The deficiency is the *type-B* phenomenon; the isotropic
 ferromagnet realises `dim_ℝ 𝔪_α = 2 → 1` Goldstone mode (corner-a-goldstone.md ⟨1⟩7).
+
+---
+
+## D12 (limits in which the ansatz gauge identity holds)
+
+Let `Λ_L := [−L,L]` and let `|Φ_f^{Λ}(B)⟩ := Σ_{n∈Λ} f(n)|ψ_Λ(…B@n…)⟩` be the
+finite-window ansatz vector with profile `f` (D5(a) is `f(n) = e^{ikn}`).  By
+Lemma SBP the gauge remainder is a sum of exactly two boundary window vectors,
+of norm `≤ 2C_∂‖X‖\,\max(|f(a)|,|f(b)|)` (D1(e)).  Two regimes are used, and
+every soft statement must name which:
+
+**(a) Decaying-profile (wave-packet) limit.** If `f ∈ c_0(ℤ)` — in particular
+for any `ℓ¹` wave packet `f = \hatφ` with `φ ∈ C_c^∞((−π,π])` — then the
+boundary remainder tends to `0` **in norm** as `Λ_L ↗ ℤ`, and the gauge
+identity holds exactly in the limit with no normalisation.  Measured decay
+(theory/checks/corner_a_check.py, centred profile `(1+|n−c|)^{-3}`):
+`‖bdry‖/‖bulk‖ = 3.4·10^{-1}, 5.7·10^{-2}, 8.5·10^{-3}, 1.2·10^{-3}` for
+`L = 4,8,16,32`.
+
+**(b) Plane-wave (δ-normalised) limit.** For `f(n) = e^{ikn}` the remainder is
+`Θ(1)` while the bulk term is `Θ(|Λ|^{1/2})` (the ansatz is δ-normalised,
+`⟨Φ_k(B)|Φ_{k'}(B')⟩ = 2πδ(k−k')B^†N_kB'`).  The gauge identity therefore holds
+in the *normalised* topology
+  `‖ |Λ|^{-1/2}\,|Φ_k^{Λ}(𝒩_k(X))⟩ ‖ → 0`,   rate `O(|Λ|^{-1/2})`,
+equivalently as an identity of matrix elements per site,
+`lim_{Λ↗ℤ} |Λ|^{-1}⟨Φ_k^Λ(B')|O|Φ_k^Λ(𝒩_k(X))⟩ = 0` for every `O ∈ 𝔄_loc`.
+Measured (same check, `k = 0.37`): `‖bdry‖ = 1.92, 1.31, 2.03, 1.92` versus
+`‖bulk‖ = 0.78, 1.19, 1.75, 2.51` for `L = 4,8,16,32` — bounded versus growing.
+
+Statements quoted "exactly" without naming (a) or (b) are defects.

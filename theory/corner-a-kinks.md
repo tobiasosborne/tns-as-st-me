@@ -1,19 +1,34 @@
 # Corner A — the broken case: sectors, half-infinite strings, and kinks
 
-Proof shard for claim **A2** of [`claims/CLAIMS.md`](../claims/CLAIMS.md).
-Companion shards: [`corner-a.md`](corner-a.md) (setting, Lemma IT, **WI**,
-**A1**, pitfalls §5) and [`corner-a-goldstone.md`](corner-a-goldstone.md)
-(Lemma N, **G0**).  Definitions D1--D5, D9--D11 of
-[`definitions.md`](../definitions.md); symbols in
-[`notation.md`](../notation.md).  Steps ⟨1⟩1--⟨1⟩7 live in the companion
-shards; numbering continues from there.  Structure per L6b.
+**Revision r2** (2026-08-25), after [`verdicts/corner-a-r1.md`](verdicts/corner-a-r1.md)
+= FAIL(WI,A1,A2,G0).  Disposition: [`corner-a-r1-response.md`](corner-a-r1-response.md).
+Numerics: [`checks/corner_a_check.py`](checks/corner_a_check.py) (ALL PASS).
 
-Slogan to be made precise: **a kink is the contact term of a broken truncated
-symmetry.**  The precise content is ⟨1⟩9(d): the finite truncated symmetry
-never leaves the vacuum sector, its half-infinite limit exists only in the
-weak-* topology, and that limit is a kink state disjoint from the vacuum
-sector.  The sector change is invisible at every finite `|R|` and appears
-exactly in the limit.
+Proof shard for claim **A2**.  Companion shards: [`corner-a.md`](corner-a.md)
+(Lemma IT, **WI**, **A1**), [`corner-a-goldstone.md`](corner-a-goldstone.md)
+(Lemma SBP, **G0**), [`corner-a-pitfalls.md`](corner-a-pitfalls.md) (§5).
+Definitions D1--D5, D9--D12 of [`definitions.md`](../definitions.md); symbols in
+[`notation.md`](../notation.md).  Steps ⟨1⟩1--⟨1⟩7 live in the companion
+shards; numbering continues.  Structure per L6b.
+
+**Two r1 claims are retracted here.**
+1. **A2(e) was false.** r1 said the `𝒜`-orbit is the set of vacuum pairs and
+   that `[g_Lg_R^{-1}] ∈ 𝒜 = (G_L×G_R)/G_diag` is the diagonal-invariant label.
+   The pair space is `(G/H_α)×(G/H_α)` — for M1, `S²×S²` (dim 4) versus
+   `SU(2)` (dim 3) — and `g_Lg_R^{-1} ↦ hg_Lg_R^{-1}h^{-1}` under the diagonal
+   action, so it is not invariant (check C7).  The correct complete invariant is
+   the **double coset** in `H_α\backslash G/H_α`; ⟨1⟩9(e) is restated.
+2. **"A kink is the contact term of a broken truncated symmetry" is a slogan,
+   not a theorem.**  No contact term is defined anywhere in this repo, no
+   distributional Ward identity is written, and no matrix element is shown to
+   be supported at coincident insertions.  The phrase is demoted to a mnemonic
+   (corner-a-pitfalls.md Flag 3) and does not appear in any PROVED row.
+
+What is proved is a **sector jump**: the finite truncated symmetry never leaves
+the vacuum sector; its half-infinite limit exists in the weak-* topology only,
+with an explicit rate; and that limit is a kink state disjoint from the vacuum
+folium.  The jump is invisible at every finite `|R|` and appears exactly in the
+limit.
 
 ---
 
@@ -100,27 +115,36 @@ fast.  Nothing here needs the split property or normality of endpoint states
 `A_α` outside `R`, `A_β` inside `R`, `V_α(g)^{-1}` on `∂_-R` and `V_α(g)` on
 `∂_+R` — a kink at `∂_-R` and an antikink at `∂_+R`, of total topological
 charge zero.
-(b) *(the half-infinite limit exists, weak-* only)* For `O ∈ 𝔄_W` and
-`y > max W`,
-  `|ω_α(U_{[x,y]}(g)^† O\, U_{[x,y]}(g)) − ϱ_x^{(g)}(O)| ≤ C\,‖O‖\,λ_E^{\,y−max W}`,
-where `ϱ_x^{(g)}` is the decorated state with `A_α` on `(−∞,x−1]`,
-`V_α(g)^{-1}` on bond `(x−1|x)`, and `A_β` on `[x,∞)`.  Hence
-`1_{[x,∞)}g ⊳ ω_α = ϱ_x^{(g)}` in the weak-* topology of D3(c), with an
-explicit exponential rate.  The convergence is **not** in norm on `𝔄^*`, and
-the operators `U_{[x,y]}(g)` have **no** strong limit on `H_{ω_α}` (a fortiori:
-by (d) the limit state is not even normal).
+(b) *(the half-infinite limit exists, weak-* only)* For `O ∈ 𝔄_W`, `w := max W`
+and `y > w`, and for **every** `λ̃ ∈ (λ_E,1)` there is `C_λ̃ < ∞` with
+  `|ω_α(U_{[x,y]}(g)^† O\, U_{[x,y]}(g)) − ϱ_x^{(g)}(O)| ≤ C_λ̃\,‖O‖\,λ̃^{\,y−w}`,
+where `ϱ_x^{(g)}` is the **two-sided decorated state** of D1(e′) with `A_α` on
+`(−∞,x−1]`, `V_α(g)^{-1}` on bond `(x−1|x)`, and `A_β` on `[x,∞)`.  Hence
+`1_{[x,∞)}g ⊳ ω_α = ϱ_x^{(g)}` in the weak-* topology of D3(c).
+**Two r1 corrections:** the rate is `λ̃`, not `λ_E` — a bare `λ_E^{y−w}` is
+false when `E` has a Jordan block at modulus `λ_E`; and `ϱ_x^{(g)}` is *not* a
+D1(e) decorated state (it differs from any uniform tensor on a half-line), so
+it is constructed by D1(e′), which supplies positivity, normalisation and
+consistency, rather than imported.
+The convergence is **not** in norm on `𝔄^*`, and the operators `U_{[x,y]}(g)`
+have **no** strong limit on `H_{ω_α}` (a fortiori: by (d) the limit state is
+not even normal).
 (c) *(the limit is a kink)* `ϱ_x^{(g)} ∈ 𝒦_{αβ}`.
-(d) *(the contact term)* By (a) every finite-`R` state is normal with respect to
+(d) *(the sector jump)* By (a) every finite-`R` state is normal with respect to
 `ω_α`; by (c) and ⟨1⟩8(ii) the limit is disjoint from `ω_α`.  Thus the weak-*
 limit of a path of vector states of `H_{ω_α}` leaves the folium of `ω_α`.  The
-sector jump is the **contact term** of the truncated symmetry: it is invisible
-at every finite `|R|` and is created entirely by the surviving end.
-(e) *(the `𝒜`-orbit is the set of vacuum pairs)* `G_L × G_R` acts on
-`Ω_vac × Ω_vac` by `(g_L,g_R)·(α',β') = (g_L·α', g_R·β')`; if `G` acts
-transitively on `Ω_vac` the action is transitive with stabiliser
-`H_{α'} × H_{β'}`, so the orbit of `(α,α)` is *all* pairs.  The `G_diag`-invariant
-content is the relative twist `[g_Lg_R^{-1}] ∈ 𝒜 = (G_L×G_R)/G_diag`, and
-`𝒜` is a group iff `G` is abelian (D4(c), corner-a.md ⟨1⟩4(e)).
+jump is invisible at every finite `|R|` and is created entirely by the
+surviving end.  *(r1 called this "the contact term"; that is a name, not a
+proved identity — see the header and corner-a-pitfalls.md Flag 3.)*
+(e) *(vacuum-pair classification — corrected)* `G_L × G_R` acts componentwise on
+`Ω_vac × Ω_vac`.  If `G` acts transitively on `Ω_vac` then
+`Ω_vac × Ω_vac ≅ (G/H_α) × (G/H_α)`, transitively, with stabiliser of `(α',β')`
+equal to `H_{α'} × H_{β'}`.  This is **not** `(G×G)/G_diag`.  The complete
+invariant **modulo the global (diagonal) symmetry** is the double coset
+  `𝔡(α_L,α_R) = H_α\, g_L^{-1}g_R\, H_α ∈ H_α \backslash G / H_α`   (D9(d)),
+which for `G = SU(2)`, `H_α = U(1)` is the relative angle
+`\cos θ = \hat n_L·\hat n_R`.  The r1 label `[g_Lg_R^{-1}] ∈ 𝒜` is **not**
+diagonal-invariant and is withdrawn.
 (f) *(inverse direction)* Every kink sector `𝒦_{αβ}` with `β ∈ G·α` is reached
 this way: choose `g` with `g·α = β`.
 
@@ -137,28 +161,40 @@ Justification: ⟨1⟩3.⟨2⟩4--⟨2⟩5, ⟨1⟩8(iii), D9(a).
 **⟨3⟩1.** By WI, `ω_α ∘ Ad(U_{[x,y]}(g)^†)` is the decorated state with `A_α`
 outside `[x,y]`, `A_β` inside, `V_α(g)^{-1}` on `(x−1|x)` and `V_α(g)` on
 `(y|y+1)`.
-Justification: ⟨1⟩3.⟨2⟩5.
+Justification: corner-a.md ⟨1⟩3 (WI-state).
 
-**⟨3⟩2.** For `O ∈ 𝔄_W` with `y > max W =: w`, the two states
-`ω_α∘Ad(U_{[x,y]}^†)` and `ϱ_x^{(g)}` have identical decorations on
-`(−∞, w]`; they differ only in the environment to the right of site `w`, which
-is `E_β^{\,y−w}(V_α(g)\,r_α\,V_α(g)^†)` for the first and `r_β` for the second.
-Justification: ⟨3⟩1, D1(d), D1(e).
+**⟨3⟩2.** `ϱ_x^{(g)}` exists as a state: it is the two-sided decoration of
+D1(e′), whose finite-window restrictions are positive, normalised and
+consistent.  *(r1 used it before constructing it — objection 10.)*
+Justification: D1(e′).
 
-**⟨3⟩3.** By D1(c), `E_β^{\,m}(Y) = tr(Y)\,r_β + O(λ_E^{\,m}‖Y‖)` and
-`tr(V_α(g)r_αV_α(g)^†) = tr(r_α) = 1`, so the two environments differ by
-`O(λ_E^{\,y−w})`.  Since the remaining contraction is a completely bounded map
-of norm `≤ ‖O‖` times a constant fixed by `A_α, A_β, V_α(g)`, the stated bound
-follows.
-Justification: D1(c), D1(e), and boundedness of the window contraction.
+**⟨3⟩3.** For `O ∈ 𝔄_W` with `y > w := max W`, the two states carry identical
+decorations on `(−∞,w]`; they differ only in the environment right of site `w`,
+which is `E_β^{\,y−w}(V_α(g)r_αV_α(g)^†)` for the first and `r_β` for the
+second.
+Justification: ⟨3⟩1, D1(d), D1(e), D1(e′).
 
-**⟨3⟩4.** The bound is uniform over `O ∈ 𝔄_W` for each fixed `W`, so the limit
-is weak-*; it is *not* uniform over all of `𝔄_loc` (the constant depends on `W`
-through `w`), so it is not a norm limit in `𝔄^*` — and it cannot be, since by
-(c)/(d) the limit is not in the folium of `ω_α` while every approximant is.
-Justification: ⟨3⟩3, ⟨2⟩3, ⟨1⟩8(ii).
+**⟨3⟩4.** `tr(V_α(g)r_αV_α(g)^†) = tr(r_α) = 1`, and by D1(c), for every
+`λ̃ ∈ (λ_E,1)` there is `C_λ̃` with `‖E_β^m(Y) − tr(Y)r_β‖ ≤ C_λ̃λ̃^m‖Y‖`.  The
+remaining window contraction is bounded by `const·‖O‖`.  This gives the stated
+bound.
+Justification: D1(c) in its `λ̃` form, D1(e).  *(A bare `O(λ_E^m)` would be
+false for a defective subleading eigenvalue — objection 10.)*
 
-**⟨3⟩5. QED.**
+**⟨3⟩5.** The transfer gaps agree along the orbit: by (IT),
+`A_{g·α}^s = e^{-iθ_α(g)}V_α(g)(𝒰(g)A_α)^sV_α(g)^{-1}`, and unitarity of `u(g)`
+gives `Σ_s(𝒰(g)A_α)^sW(𝒰(g)A_α)^{s†} = E_α(W)`; hence
+`E_β = Ad_{V_α(g)} ∘ E_α ∘ Ad_{V_α(g)^{-1}}`, a similarity, so
+`spec(E_β) = spec(E_α)` and `λ_{E_β} = λ_{E_α} = λ_E`.
+Justification: D2(b), unitarity of `u(g)`.  *(r1 left this leaf implicit.)*
+
+**⟨3⟩6.** The bound is uniform over `O ∈ 𝔄_W` for each fixed `W` but its
+constant depends on `W` through `w`; so the limit is weak-*, not a norm limit
+in `𝔄^*` — and it cannot be one, since by (c)/(d) the limit is outside the
+folium of `ω_α` while every approximant is inside it.
+Justification: ⟨3⟩4, ⟨2⟩3, ⟨1⟩8(ii).
+
+**⟨3⟩7. QED.**
 
 **⟨2⟩3. PROVE (c).** `ϱ_x^{(g)}` is a decorated MPS state with tensor `A_α` on
 `(−∞,x−1]` and `A_β` on `[x,∞)`; by ⟨1⟩8(iii) its asymptotic labels are `α` at
@@ -172,15 +208,24 @@ Justification: ⟨1⟩8(iii), D9(a).
 Justification: ⟨2⟩1, ⟨2⟩3, ⟨1⟩8(ii).
 **⟨3⟩1. QED.**
 
-**⟨2⟩5. PROVE (e).** The action is well defined by D2(a); transitivity and the
-stabiliser are the orbit--stabiliser statement for `G` acting on `Ω_vac`
-componentwise.  `G_diag` maps `(α',β') ↦ (g·α', g·β')`, which is a different
-pair but a physically equivalent configuration (it is the global symmetry);
-therefore the label modulo `G_diag` is the relative twist, and the coset space
-`𝒜` is exactly the set of these.  Normality of `G_diag` in `G×G` holds iff `G`
-is abelian (corner-a.md ⟨1⟩4.⟨2⟩5.⟨3⟩4).
-Justification: D2(a), D9(d), D4(c), corner-a.md ⟨1⟩4(e).
-**⟨3⟩1. QED.**
+**⟨2⟩5. PROVE (e).**
+**⟨3⟩1.** The componentwise action is well defined by D2(a); transitivity and
+the stabiliser `H_{α'}×H_{β'}` are orbit--stabiliser for `G` acting on
+`Ω_vac ≅ G/H_α` in each factor.  The stabiliser is **not** `G_diag`.
+Justification: D2(a), D9(d), orbit--stabiliser.
+**⟨3⟩2.** Writing `α_L = g_L·α`, `α_R = g_R·α`, the quantity `g_L^{-1}g_R` is
+invariant under the diagonal `g_i ↦ hg_i`, and changes to
+`h_1^{-1}(g_L^{-1}g_R)h_2` under `g_L ↦ g_Lh_1`, `g_R ↦ g_Rh_2` (`h_i ∈ H_α`),
+i.e. it is well defined and complete precisely as a double coset in
+`H_α\backslash G/H_α`.
+Justification: D9(d), direct computation.
+**⟨3⟩3.** By contrast `g_Lg_R^{-1}` transforms as `hg_Lg_R^{-1}h^{-1}` under
+the diagonal action and is therefore **not** invariant; and `(G×G)/G_diag ≅ G`
+has the wrong dimension for `Ω_vac×Ω_vac` whenever `H_α ≠ {e}` (M1: `3` versus
+`4`).  Verified numerically: the relative angle is invariant to `1.4·10^{-16}`
+while `‖g_Lg_R^{-1} − h g_Lg_R^{-1} h^{-1}‖ = 1.364`.
+Justification: check C7; r1 objection 11.
+**⟨3⟩4. QED.**
 
 **⟨2⟩6. PROVE (f).** Immediate from (b)--(c) with a chosen `g`.
 Justification: ⟨2⟩2, ⟨2⟩3.  **⟨3⟩1. QED.**
@@ -193,8 +238,8 @@ exist?").**
 | object | finite `R` | half-infinite limit |
 |---|---|---|
 | operator `U_R(g)` | in `𝔄_loc`, unitary | **does not exist** in `𝔄`; no strong limit on `H_{ω_α}` (unbroken case: corner-a.md ⟨1⟩4(b); broken case: a fortiori, by (d)) |
-| state `ω_α∘Ad(U_R^†)` | vector state in `H_{ω_α}` | **exists in weak-\***, rate `λ_E^{\,y−w}` on each `𝔄_W` (b) |
-| sector label `(α_L,α_R)` | `(α,α)` | `(α,g·α)` — jumps only in the limit (d) |
+| state `ω_α∘Ad(U_R^†)` | vector state in `H_{ω_α}` | **exists in weak-\***, rate `λ̃^{\,y−w}` for any `λ̃ ∈ (λ_E,1)` on each `𝔄_W` (b) |
+| sector label `(α_L,α_R)` | `(α,α)` | `(α,g·α)` — jumps only in the limit (d); classified by the double coset (e) |
 | norm distance in `𝔄^*` | — | **does not converge**: approximants are normal, limit is not |
 
 ---
@@ -223,9 +268,9 @@ observable must be paired with (docs/framing.md §4: memory lives in the bond
 data).
 Justification: D6, ⟨1⟩9, corner-a-goldstone.md ⟨1⟩7.
 
-**⟨2⟩3. SKETCH (uniformity over a continuous vacuum manifold).**
+**⟨2⟩3. SKETCH (uniformity over a continuous vacuum manifold) — LOAD-BEARING.**
 
-> **BOXED — what is missing.** For `Ω_vac` a continuum (M1), A2 produces an
+> **BOXED — what is missing, and what it is load-bearing for.** For `Ω_vac` a continuum (M1), A2 produces an
 > *uncountable* family of mutually disjoint sectors `𝒦_{α,g·α}`, hence a
 > non-separable direct-sum representation, and the separating observable of
 > ⟨1⟩8(ii) degrades as `g → e`: there is no `ε > 0` with
@@ -258,10 +303,14 @@ convention by working with kink pairs.
 
 ---
 
-## Claim status produced by this shard
+## Claim status produced by this shard (r2)
 
-| claim | status | where |
+| item | status | where |
 |---|---|---|
-| **A2** | **PROVED**, parts (a)--(f), for each fixed `g ∉ H_α`, including the exact topology in which the half-infinite limit exists and the exponential rate | ⟨1⟩9 |
-| **A2**, uniformity over a continuous `Ω_vac` | **SKETCH** (boxed) | ⟨1⟩10.⟨2⟩3 |
-| supporting **Lemma D** (sector disjointness) | **PROVED** | ⟨1⟩8 |
+| **A2(a)**, **(c)**, **(d)**, **(f)** — finite `R` stays in `𝒦_{αα}`; the weak-* half-string limit is a kink state in `𝒦_{α,g·α}`, disjoint from the vacuum folium (sector jump) | **PROVED**, for each fixed `g ∉ H_α` | ⟨1⟩9.⟨2⟩1, ⟨2⟩3, ⟨2⟩4, ⟨2⟩6 |
+| **A2(b)** — existence of the weak-* limit with rate `λ̃^{y−w}`, `λ̃ ∈ (λ_E,1)`, limit object constructed by D1(e′) | **PROVED** (r1's `λ_E^{y−w}` rate and its undeclared limit object are retracted) | ⟨1⟩9.⟨2⟩2 |
+| **A2(e)** — r1 form (`𝒜`-orbit = vacuum pairs; label `[g_Lg_R^{-1}]`) | **REFUTED** | ⟨1⟩9.⟨2⟩5.⟨3⟩3, check C7 |
+| **A2(e′)** — pair space `(G/H_α)×(G/H_α)`; complete diagonal invariant = double coset in `H_α\backslash G/H_α` | **PROVED** (replacement) | ⟨1⟩9.⟨2⟩5 |
+| "kink = contact term of a broken truncated symmetry" | **NOT A CLAIM** — mnemonic only; demoted to corner-a-pitfalls.md Flag 3 | — |
+| A2 uniformity over a continuous `Ω_vac` (M1) | **SKETCH, load-bearing** for Corner B on M1 | ⟨1⟩10.⟨2⟩3 |
+| supporting **Lemma D** (sector disjointness) | **PROVED** — survived the r1 attack unchanged (objection 9) | ⟨1⟩8 |

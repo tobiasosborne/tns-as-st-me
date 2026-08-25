@@ -62,6 +62,21 @@
 | `Q[f;ξ]`, `J[f;ξ]`, `Q_k`, `J_k` | modulated charge and current; plane-wave (wave-packet) versions | definitions.md D10 |
 | `𝒥_b(ξ)` | bond current potential — insertion of `X_α(ξ)` on bond `b` | definitions.md D10 |
 | `B_G(ξ)` | Goldstone tensor `d/dε[𝒰(e^{εξ})A_α]` | definitions.md D11 |
+| `λ̃` | any rate in `(λ_E,1)`; honest transfer-decay bound `‖E^m−P‖ ≤ C_λ̃ λ̃^m` (Jordan-safe) | definitions.md D1(c) |
+| `C_∂` | uniform bound on window-vector norms, independent of `\|Λ\|` | definitions.md D1(e) |
+| `ω_{α\|β}^{(m)}[T]` | two-sided (half-line) decorated state: `A_α` on `(−∞,m]`, `A_β` on `[m+1,∞)` | definitions.md D1(e′) |
+| `𝒲_{Λ,b}` | linear space of window vectors carrying one insertion on bond `b` | definitions.md D4(a) |
+| `N_α` | `{g : V_α(g) ∈ ℂ^×𝟙}`, the kernel of the state-level asymptotic action | definitions.md D4(b) |
+| `ρ_α` | homomorphism `G → PGL(χ)`, `g ↦ [V_α(g)]`; `ker ρ_α = N_α` | definitions.md D4(b) |
+| `𝒜_eff` | effective asymptotic symmetry **group** `G/N_α ≅ ρ_α(G) ⊆ PGL(χ)` | definitions.md D4(b) |
+| `S_α` | true stabiliser `{(g_L,g_R) : g_Lg_R^{-1} ∈ N_α} ⊇ G_diag` | definitions.md D4(c) |
+| `E_b^α` | endpoint space `{ω_{A_α}^{M@b}}`, a `PGL(χ)`-torsor | definitions.md D9(c) |
+| `𝔡(α_L,α_R)` | double-coset label `H_α g_L^{-1}g_R H_α ∈ H_α\G/H_α`; complete diagonal invariant of a vacuum pair | definitions.md D9(d) |
+| `j_{m\|m+1}(ξ)` | **cut current** `−[H, Σ_{y≤m}q_y(ξ)]`, finite range; supersedes the nearest-neighbour `j_{x,x+1}` row above | definitions.md D10(a) |
+| `𝔅_Λ[f,X]` | gauge remainder: the two boundary window vectors left by summation by parts | definitions.md D12, corner-a-goldstone.md ⟨1⟩5 |
+| `(Δf)(m)` | forward difference `f(m+1) − f(m)` of a profile | corner-a-goldstone.md ⟨1⟩5 |
+| `c_0(ℤ)` | profiles vanishing at infinity; the class in which the gauge identity is exact | definitions.md D12(a) |
+| `PGL(χ)`, `PU(χ)` | projective (unitary) group on the virtual space `ℂ^χ` | definitions.md D4(b) |
 
 Conventions: chain sites x ∈ ℤ; momenta k ∈ (−π, π]; ħ = 1; the
 Heisenberg FM uses the vacuum-energy shift fixed in D6; XXZ anisotropy
@@ -74,3 +89,10 @@ above.  The argument types never coincide.  All other symbols are unique.
 
 (Anchors are added as definitions.md grows; a symbol used anywhere without an
 entry here is a defect.)
+
+Revision r2 (2026-08-25): rows above the conventions block were appended after
+the r1 critic verdict; nothing was renumbered or deleted.  Two earlier rows are
+superseded rather than removed — `j_{x,x+1}` by the cut current `j_{m|m+1}`
+(D10(a)), and `𝒜` by `𝒜_eff` as the object that actually acts (D4(b)).  The
+superseded forms remain correct in their original restricted settings
+(nearest-neighbour `H`; abelian `G` with faithful `ρ_α`).
