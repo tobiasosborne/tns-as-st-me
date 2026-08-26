@@ -195,6 +195,8 @@ two rows above are marked SUPERSEDED in place (`S(k;·)`, `R(k)`).*
 |---|---|---|
 | `S`, `H_S` | site spin `S∈{1/2,1,3/2,…}` (uppercase local alias of D13's `s`) and the shifted isotropic spin-`S` ferromagnet | theory/spin-s-twomagnon.md Statement |
 | `ω_S(k)`, `v_S(k)` | spin-`S` one-magnon dispersion `2JS(1−cos k)` and group velocity `2JS sin k` | theory/spin-s-twomagnon.md Statement |
+| `zeta` | local momentum product `z_1z_2` (renamed from bare `P`, which is reserved for the spin swap/product comparator) | theory/spin-s-twomagnon.md ⟨1⟩2 |
+| `d(x)` | double-occupancy amplitude on the normalized doubly occupied occupation vector at `x` (`S≥1` only) | theory/spin-s-twomagnon.md ⟨1⟩1.⟨2⟩1 |
 | `a`, `b`, `μ` | contact polynomials `1+z_1z_2`, `z_1+z_2`, and `(2S−1)a+b` | theory/spin-s-twomagnon.md Statement |
 | `g`, `ρ`, `Σ`, `W` | local contact variables `√[S(2S−1)]`, double-occupancy coefficient, `A+B`, and `Az_2+Bz_1` | theory/spin-s-twomagnon.md ⟨1⟩1--⟨1⟩2 |
 | `q_rel`, `c_K`, `n` | relative half-momentum, `cos(K/2)`, and the independent closed-form numerator with `S_{12}=n/(−conj n)` | theory/spin-s-twomagnon.md ⟨1⟩3 |

@@ -128,8 +128,9 @@ For the pole audit, the denominator is the quadratic
 
 `D(x,y)=-Sy x^2+(Sy^2-S-y^2+y)x+Sy+y^2-y`.
 
-Its complex zeros are the bound-channel poles.  None intrudes at the soft
-base because `D(1,y)=S(y^2-1)`, and on every compact hard subset away from
+Its complex zeros are candidate S-matrix poles; the normalizable-sheet subset
+contains the bound-channel poles.  None intrudes at the soft base because
+`D(1,y)=S(y^2-1)`, and on every compact hard subset away from
 `0,+/-pi` continuity supplies a common pole-free soft neighborhood.  The
 real regular domain also excludes `D=0` explicitly; together with the
 unitarity identity this leaves no real on-shell pole.  At `S=1/2` numerator
@@ -217,7 +218,7 @@ does not erase the tests.
 double channel, and proportionate evidence for all symbolic claims it says
 it checks.
 
-## 6. MINOR — the shard violates two explicit notation-table rules
+## 6. MINOR — the shard violates explicit notation-table rules
 
 **Exact steps:** Statement (T.3), ⟨1⟩2.⟨2⟩1, and
 ⟨1⟩4.⟨2⟩2; compare `notation.md` overload rule 2 and its spin-`S` table.
@@ -229,11 +230,15 @@ spell out `sgn(v_h-v_s)`.  The target instead defines and repeatedly uses bare
 `P:=z_1z_2` in ⟨1⟩2 even though the symbol table reserves `P` for the spin
 swap/product comparator and adds no spin-`S` overload row for this momentum
 product.  The new table rows cover `a,b,mu,g,rho,Sigma,W,q_rel,c_K,n` but not
-this `P` (nor the local double amplitude `d(x)`).
+this `P` (nor the local double amplitude `d(x)`).  In addition,
+⟨1⟩1.⟨2⟩1 calls `d(x)` “the normalized doubly occupied state” although the
+subsequent equations use it as the scalar amplitude multiplying that
+normalized state.
 
 **Fix demand:** spell out `sgn(v_h-v_s)` throughout the shard; rename the
 momentum product, preferably to a non-colliding local symbol, and add any
-remaining spin-`S` local symbols required by L4 to the table.  This is an
+remaining spin-`S` local symbols required by L4 to the table.  Call `d(x)` the
+double-occupancy amplitude on the normalized occupation vector.  This is an
 editorial notation repair and is not a prerequisite for the mathematical
 promotion.
 

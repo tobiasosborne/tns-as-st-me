@@ -32,10 +32,10 @@ For the soft statement set `k_1=k_s`, `k_2=k_h`, hold
 `omega_S(k):=2JS(1-cos k)`, `v_S(k):=2JS sin k`,
 `v_h:=v_S(k_h)`, `v_s:=v_S(k_s)`,
 
-`chi:=sgn(v_S(k_h)-v_S(k_s))`, and select the physical out/in ratio by
+and select the physical out/in ratio by
 
-`S_phys:=S_{12}` if `chi=+1`, while `S_phys:=S_{21}=S_{12}^{-1}` if
-`chi=-1`.  Let `delta_phys` be the unique continuous real phase of `S_phys`
+`S_phys:=S_{12}` if `sgn(v_h-v_s)=+1`, while `S_phys:=S_{21}=S_{12}^{-1}` if
+`sgn(v_h-v_s)=-1` (the sign spelled out per notation.md overload rule 2).  Let `delta_phys` be the unique continuous real phase of `S_phys`
 with `delta_phys(0,k_h)=0`.
 
 **PROVE.**  The two-magnon eigenvalue equation itself fixes
@@ -45,8 +45,8 @@ with `delta_phys(0,k_h)=0`.
 For real momenta in (T.1), `|S_{12}|=1` and
 `S_{12}(k_2,k_1)=S_{12}(k_1,k_2)^{-1}`.  Moreover,
 
-`delta_phys(k_s,k_h) = [chi/S] k_s + O(k_s^2)`,
-`S_phys(k_s,k_h) = 1 + i[chi/S] k_s + O(k_s^2)`,               (T.3)
+`delta_phys(k_s,k_h) = [sgn(v_h-v_s)/S] k_s + O(k_s^2)`,
+`S_phys(k_s,k_h) = 1 + i[sgn(v_h-v_s)/S] k_s + O(k_s^2)`,               (T.3)
 
 locally uniformly when `k_h` stays in a compact subset of
 `{k:0<|k|<pi}` on which the physical channel is fixed.  In particular,
@@ -62,8 +62,8 @@ exactly `1/S`.  At `S=1/2`, (T.2) is the frozen D7/oracle ratio and (T.4) is
 
 **⟨2⟩1. ASSUME.**  Use the normalized occupation basis
 `n_x:=S-S_x^z in {0,...,2S}`.  In the two-magnon sector write `psi(x,y)` for
-`x<y`; when `S>=1`, write `d(x)` for the normalized doubly occupied state at
-`x`.
+`x<y`; when `S>=1`, write `d(x)` for the double-occupancy amplitude multiplying the
+normalized doubly occupied occupation vector at `x`.
 
 Justification: the spin-`S` ladder representation and D7's ordered chamber.
 
@@ -137,8 +137,8 @@ Justification: (1), **SS-C2**, and the normalized occupation basis.
 `Psi(x,y):=A z_1^x z_2^y+B z_2^x z_1^y`                      (6)
 
 on all of `Z^2`, but identify the physical separated wave with `Psi` only in
-the chamber `x<y`.  Put `P:=z_1z_2`, `Sigma:=A+B`,
-`W:=A z_2+B z_1`, and, for `S>=1`, take `d(x)=rho P^x`.
+the chamber `x<y`.  Put `zeta:=z_1z_2`, `Sigma:=A+B`,
+`W:=A z_2+B z_1`, and, for `S>=1`, take `d(x)=rho zeta^x`.
 
 Justification: this is a trial solution to be checked directly in (3)--(5),
 not an assumed consequence of integrability.
@@ -169,10 +169,10 @@ Justification: direct substitution in (3), named residual computation
 `rho=sqrt[(2S-1)/S] W/b`.                                     (8)
 
 **⟨3⟩1.**  The two adjacent values in (5) sum to
-`P^{x-1}aW`.  From (7), `E-4JS=-JS(ab/P)`.
+`zeta^{x-1}aW`.  From (7), `E-4JS=-JS(ab/zeta)`.
 
 Justification: (6)--(7) and the identities
-`a=1+P`, `ab/P=z_1+z_1^{-1}+z_2+z_2^{-1}`.
+`a=1+zeta`, `ab/zeta=z_1+z_1^{-1}+z_2+z_2^{-1}`.
 
 **⟨3⟩2.**  Substitution in (5), followed by cancellation of the nonzero
 `a,b` from (T.1), gives `S b rho=gW`; since `g/S=sqrt[(2S-1)/S]`, this is
@@ -194,7 +194,7 @@ It also holds at `S=1/2`, where it reduces to `2W=aSigma` on (T.1).
 `W=SaSigma-g a rho`.                                          (10)
 
 Justification: (3)--(7); the artificial diagonal free values are
-`Psi(x,x)+Psi(x+1,x+1)=P^x aSigma` and are used only in this subtraction.
+`Psi(x,x)+Psi(x+1,x+1)=zeta^x aSigma` and are used only in this subtraction.
 
 **⟨3⟩2.**  For `S>=1`, insert (8) and `g^2=S(2S-1)` into (10), then multiply
 by `b`, obtaining (9).
@@ -308,15 +308,15 @@ Justification: D7's phase convention, ⟨1⟩3.⟨2⟩2, and (15).
 **⟨2⟩2. PROVE.**  The physical phase satisfies (T.3)--(T.4).
 
 **⟨3⟩1.**  Because `v_S(k_h)!=0`, the sign
-`chi=sgn(v_S(k_h)-v_S(k_s))` is constant for all sufficiently small
-`|k_s|`.  D7's velocity ordering chooses `S_{12}` for `chi=+1` and its
-inverse for `chi=-1`.
+`sgn(v_h-v_s)` (with `v_h=v_S(k_h)`, `v_s=v_S(k_s)`) is constant for all
+sufficiently small `|k_s|`.  D7's velocity ordering chooses `S_{12}` for
+sign `+1` and its inverse for sign `-1`.
 
 Justification: the displayed velocity in the theorem, D7, and the channel
 construction in `oracle-bethe.md` ⟨1⟩3.⟨2⟩1.
 
 **⟨3⟩2.**  Inversion negates the continuous phase.  Multiplying ⟨2⟩1's
-derivative by `chi` gives (T.4), and Taylor expansion of the analytic regular
+derivative by `sgn(v_h-v_s)` gives (T.4), and Taylor expansion of the analytic regular
 ratio gives both statements in (T.3).
 
 Justification: ⟨2⟩1, D7, and the analytic quotient (T.2) near (13).

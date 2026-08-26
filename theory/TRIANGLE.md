@@ -217,7 +217,7 @@ residual `1.56·10^{-14}`, quadratic-phase fit error `2.17·10^{-10}`), `oracle_
 `ml2_completeness_check.py`, and the numerics-side fm-displacement-scan (`numerics/docs/fm-twomagnon-notes.md`: the
 leading D8 coefficient `2` reproduced to `0.2%`).
 
-**Generalized by S2-2body-S — SKETCH pending its dedicated L6 critic.**  For
+**Generalized by S2-2body-S — PROVED per spin-s-r1.md.**  For
 `H_S=−JΣ_x(S_x·S_{x+1}−S²)` and every half-integral site spin, direct
 substitution into the separated, double-occupancy, and adjacent two-magnon
 equations gives
@@ -545,7 +545,7 @@ classifying datum.  *Shard:* `corner-b-draft.md` §7.
 | O1--O10 | PROVED | oracle-bethe.md | oracle_bethe_check.py |
 | ML2 | PROVED | ml2-completeness.md | ml2_completeness_check.py |
 | S2-2body | PROVED | soft-current-recon.md + oracle-bethe.md; corpus-r2 adjudication | soft_current_recon_check.py + oracle + ML2 checks |
-| S2-2body-S (exact spin-`S` ratio and `sgn(v_h−v_s)/S` slope) | SKETCH (critic pending) | spin-s-twomagnon.md | spin_s_slope_check.py (`--red`) |
+| S2-2body-S (exact spin-`S` ratio and `sgn(v_h−v_s)/S` slope) | PROVED (spin-s-r1.md) | spin-s-twomagnon.md | spin_s_slope_check.py (`--red`) |
 | S-general (repaired D24 class; live obligations in §2.4) | CONJECTURE | §2.4 | — |
 | ML4-A + exact Ward projection | PROVED | ml4-ward-reduction.md ⟨1⟩2--⟨1⟩3; corpus-r2 adjudication | ml4_check.py |
 | ML4 fixed-volume off-shell interpolation; on-shell infinite-volume result open | SKETCH | ml4-ward-reduction.md ⟨1⟩4--⟨1⟩5; HOLD N3 | ml4_check.py incl. ML4-Q1 |
