@@ -1,6 +1,8 @@
 # Soft-current reconnaissance for the Heisenberg ferromagnet
 
-Status: prover reconnaissance for **S2**.  This shard uses D6--D8 and D10,
+Status: the narrow **S2-2body** multiplier/phase expansion is **PROVED per
+`verdicts/corpus-r2.md` adjudication**.  The process-independent S-general
+extension remains CONJECTURE with the open ML obligations below.  This shard uses D6--D8 and D10,
 the exact identity in `corner-a-goldstone.md` ⟨1⟩6(e), and objection 18 of
 `verdicts/corner-a-r1.md`.  It does not modify or assume the conclusions of
 `oracle-bethe.md`: its boxed equations (1)--(17) are used only in ⟨1⟩5 as an
@@ -505,4 +507,5 @@ exactly as in D8/O7.
    descendant Ward reduction, but a nonzero orthogonal contact piece remains.
 3. The mismatch (R8) and contact equation derive `2`, (R17)--(R19), without
    the closed Bethe solution.  Thus `2` is **FM-derived and Bethe-verified**;
-   a process-independent soft theorem remains conditional on ML3--ML5.
+   this is the PROVED S2-2body row.  A process-independent soft theorem remains
+   conditional on ML3--ML5.

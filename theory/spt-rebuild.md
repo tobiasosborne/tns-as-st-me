@@ -1,12 +1,14 @@
 # SPT rebuild — bulk soft rigidity and quantised endpoint residue
 
-**Status (2026-08-26): proposer artifact, pre-critic.**  This file replaces the
-failed scope of `spt-scoping-draft.md` without editing it.  A complete Lamport
-proof is given for the registered transfer-matrix statements.  Per L5/L6, the
-merge proposals keep the rebuilt rows at **SKETCH** until an independent critic
-passes this artifact.  Statements about a physical half-chain Hilbert space are
-conditional on **(H-split)**; scattering and nonzero memory remain explicitly
-conjectural.
+**Status (2026-08-26): repaired after critic r2; parent SPT rows remain SKETCH
+awaiting focused critic r3.**  This file replaces the failed scope of
+`spt-scoping-draft.md` without editing it.  The exact closed-multiplier lemma
+`SPT-B-mult` and exact AKLT-family contraction `SPT-E-AKLT` are **PROVED per
+`verdicts/corpus-r2.md` adjudication**.  The broader registered statements
+remain SKETCH while N1--N6 repairs are rechecked.  Statements about a physical
+half-chain Hilbert space are conditional on **(H-split)**; physical ordered
+endpoint products also require **(H-dress)**; scattering and nonzero memory
+remain explicitly conjectural.
 
 The sharp result is not pointwise bulk blindness.  That is false.  The result is
 the following rigidity dichotomy.
@@ -72,9 +74,12 @@ in this lane.  **Justification:** `definitions.md` D1--D12; claims WI/A1/G0.
    action from a slant product.  This is prior art for endpoint compensation,
    not a proof of the one-dimensional statements below.
 
-**⟨2⟩4.** Whitehead's lemma is used only for the narrow statement that the
-`so(3)` Lie bracket has no central extension.  It is never used to erase the
-dimension, Casimir, weights, or integrability class of a representation.
+**⟨2⟩4.** Whitehead's lemma is used only for the narrow statement that an
+infinitesimal central cocycle for compact semisimple `𝔤` is cohomologically
+trivial and can be gauged away.  It need not vanish in every phase section.
+We use the phase convention in which that coboundary has been removed whenever
+the ordinary bracket is displayed.  This never erases the dimension, Casimir,
+weights, or integrability class of a representation.
 **Justification:** D4(d) caveat; critic S3.
 
 ---
@@ -157,6 +162,15 @@ deciding computation.  The inverse square root is on `ran Γ_2`; injectivity
 makes it well defined.  For the `χ=1` `O(2)` product comparator,
 `h_P=I-|zz⟩⟨zz|` and `h_{∂,P}=0`, so the half-chain edge is uniquely trivial.
 
+For the dynamical conjecture below we use no unnamed extra interaction.  Fix
+
+`H_{A,+}^{dyn}:=H_{A,+}=h_{mag-edge}+Σ_{x≥1}P^{(S=2)}_{x,x+1}`,              **(2.5a)**
+
+with the explicit boundary-magnon coupling
+`h_{mag-edge}:=P^{(S=2)}_{0,1}
+=\tfrac16(\mathbf S_0·\mathbf S_1+2)(\mathbf S_0·\mathbf S_1+1)`.
+Thus `SPT-M'-dyn` refers only to this open AKLT parent Hamiltonian.
+
 ### ⟨2⟩2. `Sd2'` — fixed boundary transfer register
 
 Let `C` be a left-canonical injective tensor with right fixed point `r>0`.
@@ -167,10 +181,11 @@ matrix-valued boundary contraction
 `E_C:=ℂ^χ`,                                                     **(2.6)**
 
 where `E_O` is the D1(d) transfer contraction through those `n` sites.
-Thus `𝒞_C^{(n)}(I)=I_{E_C}`.  This is an operator in the *fixed finite Hilbert
-register* `E_C` before any scalar matrix element or limit is taken.  It is
-unconditional finite-dimensional transfer algebra; it is not yet asserted to
-be an operator on the physical GNS Hilbert space.
+Thus `𝒞_C^{(n)}(I)=I_{E_C}`.  This is an operator in the fixed finite
+**Schmidt/edge register** `E_C` before any scalar matrix element or limit is
+taken.  It is unconditional finite-dimensional transfer algebra; it is not
+the padded-window matrix module and is not yet asserted to be an operator on
+the physical GNS Hilbert space.
 
 For a finite chain of length `N`, use the same formula with the actual right
 boundary density and write `𝒞_{C,N}`.  At fixed support,
@@ -217,11 +232,15 @@ For fixed finite-dimensional normalized channel registers
 
 The embeddings include all tangent-space gauge fixing and Gram normalization;
 their covariance and nonvanishing smallest Gram eigenvalue are hypotheses of a
-multi-leg application, not consequences of D5.
+multi-leg application, not consequences of D5.  Along a tensor path, the
+external tensors, channel embeddings, gauge fixes, Gram normalizations, and
+any differentiated profiles are required to be continuous in the path
+parameter, respectively `C^p` for an order-`p` coefficient.
 
-On the fixed edge register put
+Since D10's `Q[f;ξ]` is anti-Hermitian, put
+`Q^H[f;ξ]:=-iQ[f;ξ]`.  On the fixed edge register define the Hermitian residue
 
-`ℜ_{C,L}(ξ):=𝒞_C(Q[f_L^{edge};ξ])∈End(E_C)`,
+`ℜ_{C,L}(ξ):=𝒞_C(Q^H[f_L^{edge};ξ])∈End(E_C)`,
 `𝕊_{C,L}^{comp}(g):=` the normalized decorated contraction of
 `Ǔ_{C,[0,L-1]}(g)` with `V_C(g)^{-1}` inserted on the remote cut
 `(L-1|L)`, viewed on the dual left-edge register.                       **(2.9)**
@@ -250,22 +269,33 @@ matrix elements.
 
 Finite-window contractions use operator norm on the finite registers.
 Thermodynamic limits are uniform on compact tensor paths with a common
-`λ̃<1` transfer bound.  A soft coefficient of order `p` exists only if the
-`L→∞` limit in (2.8) is uniform through `p` derivatives (hypothesis
-**H-soft-p**).  Scattering amplitudes additionally require the appropriate
-wave operators and asymptotic completeness; transfer continuity alone does not
-supply LSZ or current regularity.
+`λ̃<1` transfer bound and continuous external tensors, channel embeddings,
+gauge fixes, Gram normalizations, and profiles.  A soft coefficient of order
+`p` exists only if those data are `C^p` and the `L→∞` limit in (2.8) is uniform
+through `p` derivatives (hypothesis **H-soft-p**).  Scattering amplitudes
+additionally require the appropriate wave operators and asymptotic
+completeness; transfer continuity alone does not supply LSZ or current
+regularity.
 
 ### ⟨2⟩7. `Sd7'` — projective endpoint module and (H-split)
 
-The unconditional endpoint object is the transfer register `E_C` of (2.6), or
-equivalently A1(d1)'s padded-window module.  It carries `V_C(g)` with multiplier
-`ω_C`.  Let `d_ω` be the minimal dimension of an `ω`-projective irrep.
+The unconditional Schmidt/edge object is the transfer register `E_C=ℂ^χ` of
+(2.6), carrying `V_C(g)` with multiplier `ω_C`.  It is not A1(d1)'s
+padded-window matrix module.  Padded-window injectivity gives instead
+
+`𝓜_χ(C):=𝒲_{Λ,b}≅M_χ(ℂ)≅E_C⊗E_C^*`.                           **(2.10a)**
+
+Under left multiplication, `V_C(g)` acts on the first factor and the dual
+factor is a spectator.  Thus `𝓜_χ(C)` is exactly `χ` copies of the `E_C`
+projective action.  Let `d_ω` be the minimal dimension of an
+`ω`-projective irrep.
 
 **(H-split).**  The half-chain ground/low-energy subspace admits a normal split
-realisation and an isometry `J_C:E_C→H_{edge}` intertwining `V_C(g)` with the
-physical half-chain symmetry, such that registered local contractions converge
-to the corresponding compressed physical operators.  This is exactly the
+realisation and an isometry `J_C:E_C→H_{edge}` intertwining the Schmidt/edge
+action `V_C(g)` with the physical half-chain symmetry, such that registered
+local contractions converge to the corresponding compressed physical
+operators.  This hypothesis concerns `E_C`, not all `χ²` padded-window
+matrices.  It is exactly the
 missing normality/infinite-volume Schmidt step in
 `corner-a.md` ⟨1⟩4.⟨2⟩9.  Every statement about `H_edge` or scattering carries
 (H-split) explicitly.  No registered transfer statement needs it.
@@ -283,12 +313,23 @@ group normalisation fixes a class-invariant central character
 
 `exp(2πiq_ω(ξ))=ν_ω(z_ξ)`.                                      **(2.11)**
 
-The Hermitian endpoint charge `Q_edge(ξ):=-iX_C(ξ)` has weights in
-`q_ω(ξ)+ℤ`.  For `SO(3)`, the two lifts give `q_ω=1/2` and `0`.  In the explicit
-`O(2)` comparison, the disconnected reflection pins the same two offsets:
-AKLT has `V(2π)=-I` and `q_ω=1/2`, while the large-`D` product has
-`V(2π)=I` and `q_ω=0`.  The offset is absolute only after the full global group
-and the `2π` loop are fixed; `U(1)` alone does not protect it.
+This raw offset depends on the lift phase.  Define
+`X_C^∘(ξ):=X_C(ξ)-tr(rX_C(ξ))I`,
+`\bar q_C(ξ):=-i tr(rX_C(ξ))`, and
+`q_{ω,C}^∘(ξ):=q_ω(ξ)-\bar q_C(ξ) mod ℤ`.  The Hermitian registered endpoint
+charge
+
+`Q_edge(ξ):=-iX_C^∘(ξ)`                                      **(2.11a)**
+
+has weights in `q_{ω,C}^∘(ξ)+ℤ`.  Rephasing
+`V(exp(εξ))↦e^{iaε}V(exp(εξ))` shifts both `q_ω` and `\bar q_C` by `a` and
+leaves (2.11a) and its centered offset invariant.  In the centered phase
+convention `tr(rX_C)=0`, the raw and centered offsets agree.  For `SO(3)`, the
+two lifts then give `1/2` and `0`.  In the explicit `O(2)` comparison, the
+disconnected reflection pins the same two centered offsets: AKLT has
+`V(2π)=-I`, while the large-`D` product has `V(2π)=I`.  The offset is absolute
+only after the full global group and the `2π` loop are fixed; `U(1)` alone does
+not protect it.
 
 ### ⟨2⟩9. `Sd9'` — twist endpoints and compensation
 
@@ -328,7 +369,10 @@ that a particular reflection matrix element is forced to be nonzero.
   covariant under the same on-site `G`, with a common transfer bound
   `sup_t λ_E(t)<λ̃<1`.
 * (B2) Every external leg is in a fixed normalized bulk register, with no
-  string endpoint; Gram matrices stay uniformly positive.
+  string endpoint; Gram matrices stay uniformly positive.  The external
+  tensors, channel embeddings, tangent-space gauge fixes, Gram
+  normalizations, and profiles are continuous in `t`; for an order-`p`
+  coefficient they and every differentiated profile are `C^p` in `t`.
 * (B3) Profiles are the bulk packets of `Sd3'`, or any finite-support/no-net-jump
   profiles.  If a soft coefficient is asserted, (H-soft-p) is assumed.
 
@@ -347,6 +391,11 @@ separately shown to be locally constant on every symmetric injective component.
 The multiplier cancellation alone does **not** provide that proof.  Bulk
 numbers may distinguish inequivalent `Ad(V)` representation types and may
 correlate with `[ω]` through deformable non-universal data.
+
+**L5 split.**  Clause (i), including ⟨2⟩1 below, is the standalone claim
+**SPT-B-mult — PROVED per `corpus-r2.md` adjudication**.  The parent claim
+SPT-B' now consists of clauses (ii)--(iii), uses the repaired path hypotheses,
+and remains **SKETCH awaiting critic r3**.
 
 ### ⟨2⟩1. PROVE (i): the only universal bulk no-go
 
@@ -374,16 +423,18 @@ identity quoted from `refs/arxiv-2405.00439/MPU-DW.tex`.
 
 **⟨3⟩5. QED.**  A bulk cocycle representative and a bulk projective
 multiplication anomaly are absent.  This proves (i), but says nothing about the
-isomorphism type of the honest representation `Ad(V)`.
+isomorphism type of the honest representation `Ad(V)`.  This is claim
+SPT-B-mult.  □
 
 ### ⟨2⟩2. PROVE (ii): transfer continuity
 
 **⟨3⟩1.** At finite `N,L`, an unnormalised contraction is polynomial in the
-entries of `A(t)`, its conjugate, the external tensors, and the fixed profile.
+entries of `A(t)`, its conjugate, the external tensors, embeddings, gauge-fixed
+representatives, and profiles, all continuous (respectively `C^p`) by (B2).
 **Justification:** D1(b),(d),(e); definitions (2.8)--(2.10).
 
 **⟨3⟩2.** Normalisation multiplies by inverse square roots of finite Gram
-matrices.  These are continuous (respectively `C^p`) while their smallest
+matrices.  These are continuous (respectively `C^p`) by (B2), while their smallest
 eigenvalue is bounded away from zero by (B2).  **Justification:** continuous
 functional calculus on positive matrices; (B2).
 
@@ -442,7 +493,8 @@ promoted merely because it is written using `Ad(V)`.  A separately proved
 locally constant representation invariant remains possible; (i) only excludes
 a closed-bulk projective multiplier.  **Justification:** ⟨3⟩1--⟨3⟩3.
 
-**⟨3⟩5. QED.**  This proves (iii), hence SPT-B'.  □
+**⟨3⟩5. QED.**  This proves (iii), hence the repaired parent SPT-B'.  Its L5
+status remains SKETCH awaiting critic r3.  □
 
 **Scope boundary.**  SPT-B' neither asserts equality of AKLT and TRIV bulk
 amplitudes nor says that complete bulk tomography cannot identify the phase.
@@ -462,15 +514,18 @@ path with discrete `H²(G,U(1))`.
 
 **PROVE.**
 
-(i) In the fixed transfer register, the **compensated** endpoint group residue
-is (up to the fixed left/right convention) `𝕊_C(g)=V_C(g)`, and the Lie residue is
-`ℜ_C(ξ)=Q_edge(ξ)=-iX_C(ξ)`.  Scalar edge form factors are its matrix elements.
+(i) In the fixed Schmidt/edge register and the declared dual-left orientation,
+the **compensated** endpoint group residue is `𝕊_C(g)=V_C(g)`.  With D10's
+anti-Hermitian convention, the registered Lie residue is the compression of
+the Hermitian partial charge `Q^H=-iQ` and equals the centered operator
+`ℜ_C(ξ)=Q_edge(ξ)=-iX_C^∘(ξ)`.  Scalar edge form factors are its matrix
+elements.
 
 (ii) Every irreducible summand of the endpoint is `ω_C`-projective, hence a
 protected summand has dimension at least `d_ω`; if `[ω_C]≠0` then `d_ω>1`.
 
-(iii) Under `Sd8'`, `spec Q_edge(ξ)⊂q_ω(ξ)+ℤ`.  The offset and projective module
-are constant under the stated symmetric gapped deformation.
+(iii) Under `Sd8'`, `spec Q_edge(ξ)⊂q_{ω,C}^∘(ξ)+ℤ`.  The centered offset and
+projective module are constant under the stated symmetric gapped deformation.
 
 (iv) For (2.1), including AKLT, the finite-window result is exactly
 
@@ -493,11 +548,15 @@ than `V_C(g)^{-1}`.  No such conclusion is asserted for the uncompensated
 string overlap.  **Justification:** ⟨3⟩1; definition (2.9); D4(a4).
 
 **⟨3⟩3.** For the Lie residue the derivative at the identity is taken at every
-fixed `L` first, producing the physical partial charge
-`Q[f_L^{edge};ξ]`; only then is `L→∞` taken.  Differentiating WI at fixed `L`
-and using the transfer bound leaves `X_C(ξ)` at the edge, so the Hermitian
-residue is `-iX_C(ξ)`.  This derivative-before-window order need not commute
-with taking an uncompensated finite `g` string to infinite length.
+fixed `L` first.  D10 produces the anti-Hermitian partial charge
+`Q[f_L^{edge};ξ]`, so the registered observable is its Hermitian version
+`Q^H[f_L^{edge};ξ]=-iQ[f_L^{edge};ξ]`; only then is `L→∞` taken.
+Differentiating WI in the declared dual-left orientation and applying the
+normalised compression gives
+`-i[X_C(ξ)-tr(rX_C(ξ))I]=-iX_C^∘(ξ)`.  The subtraction is forced by
+`𝒞_C(I)=I` and makes the result invariant under
+`V(exp(εξ))↦e^{iaε}V(exp(εξ))`.  This derivative-before-window order need not
+commute with taking an uncompensated finite `g` string to infinite length.
 **Justification:** D2(e), D10(c), G0(d), (S), `Sd3'`, and D1(c).
 
 **⟨3⟩4.** Equation (2.10) now gives scalar form factors as ordinary matrix
@@ -509,9 +568,10 @@ operators.  **Justification:** `Sd7'`.
 
 ### ⟨2⟩2. PROVE (ii): module dimension
 
-**⟨3⟩1.** Endpoint multiplication is
+**⟨3⟩1.** Endpoint multiplication on `E_C` is
 `V(h)V(g)=e^{iω(h,g)}V(hg)`.  Hence every invariant irreducible block is an
-`ω`-projective irrep.  **Justification:** D2(c); A1(d1) on padded windows; ⟨2⟩1.
+`ω`-projective irrep.  On the distinct padded-window module this action occurs
+with multiplicity `χ` by (2.10a).  **Justification:** D2(c); `Sd7'`; ⟨2⟩1.
 
 **⟨3⟩2.** By definition its dimension is at least `d_ω`.  If a projective irrep
 were one-dimensional, its scalar multiplier would be the coboundary of that
@@ -524,15 +584,19 @@ chosen nonzero transition amplitude.
 
 ### ⟨2⟩3. PROVE (iii): shifted weights and rigidity
 
-**⟨3⟩1.** On a `Q_edge(ξ)` eigenvector of weight `q`, the lifted `2π` loop acts
-as `e^{2πiq}`.  The same loop is the central element `z_ξ`, which acts as
-`ν_ω(z_ξ)`.  Thus `q-q_ω(ξ)∈ℤ`.  **Justification:** definition (2.11) and the
-spectral theorem in finite dimension.
+**⟨3⟩1.** In a fixed full-group lift, an eigenvalue `q_raw` of `-iX_C` obeys
+`q_raw-q_ω(ξ)∈ℤ` because the lifted `2π` loop acts both as `e^{2πiq_raw}` and
+as `ν_ω(z_ξ)`.  Centering subtracts `\bar q_C` from every eigenvalue, so an
+eigenvalue `q` of `Q_edge` obeys
+`q-q_{ω,C}^∘(ξ)∈ℤ`.  **Justification:** (2.11)--(2.11a) and the
+finite-dimensional spectral theorem.
 
-**⟨3⟩2.** A1(g) makes `[ω]`, hence `ν_ω` and `q_ω mod ℤ`, constant along the
-symmetric injective path.  Eigenvalues can move only within their shifted
-integer sectors unless levels are added or removed in symmetry-compatible
-blocks.  **Justification:** A1(g); (2.11).
+**⟨3⟩2.** A1(g) makes `[ω]` constant along the symmetric injective path; the
+full-group lift fixes `ν_ω`, while the centered combination
+`q_{ω,C}^∘=q_ω-\bar q_C` is phase-gauge invariant.  Eigenvalues can move only
+within their centered shifted integer sectors unless levels are added or
+removed in symmetry-compatible blocks.  **Justification:** A1(g);
+(2.11)--(2.11a).
 
 **⟨3⟩3.** For `SO(3)`, the nontrivial lift to `SU(2)` sends the nontrivial
 central element to `-1`, so `q_ω=1/2 mod ℤ`; the trivial lift sends it to `+1`,
@@ -560,7 +624,9 @@ eigenvalues tend to `±1/2`.  At `b=0.7` the same limit holds although (3.2)
 has changed.  The product tensor has `S_x^z|z⟩=0` at every site and hence zero
 residue.  **Justification:** (4.1); `Sd1'`; named computation **S-C4**.
 
-**⟨3⟩4. QED.**  This proves (iv), hence SPT-E' in the registered sense.  □
+**⟨3⟩4. QED.**  This proves (iv).  The exact formula (4.1) is the standalone
+claim **SPT-E-AKLT — PROVED per `corpus-r2.md` adjudication**.  The broader
+parent SPT-E' remains **SKETCH awaiting critic r3** after the N1/N4 repairs.  □
 
 **What remains conditional.**  The operator on a *physical* half-chain edge
 space is conditional on (H-split).  A nonzero magnon-to-edge transition matrix
@@ -604,8 +670,10 @@ matrix element is physical only when its dressing has nonzero transfer overlap.
 `refs/arxiv-0802.0447/StringOrder-v10.tex`; the two-boundary structure quoted
 from `refs/arxiv-1412.5604/SPT.tex`.
 
-**⟨3⟩4. QED.**  SPT-T' is proved in the registered two-endpoint form.  The old
-unqualified general-group one-endpoint formula is withdrawn.  □
+**⟨3⟩4. QED.**  This completes the registered two-endpoint derivation.  The
+old unqualified general-group one-endpoint formula is withdrawn; the L5 row
+remains SKETCH awaiting critic r3 verification of the repaired endpoint
+orientation and physical-hypothesis lockstep.  □
 
 ### ⟨2⟩2. THEOREM SPT-D' (ordered double endpoint-soft limit)
 
@@ -621,8 +689,10 @@ retaining the fixed endpoint register.  For a physical edge operator assume
 The invariant information is the projective module (or relative endpoint
 composition), not a gauge-invariant phase of one scalar matrix element.  For a
 compact semisimple Lie group, differentiating (5.3) near the identity yields
-the ordinary Lie bracket with no central term; the torsion class survives only
-in finite/large transformations and global integrability data.
+an infinitesimal central cocycle that is cohomologically trivial and can be
+gauged away.  In the phase convention where that coboundary is removed, the
+ordinary Lie bracket is displayed.  The torsion class survives in finite/large
+transformations and global integrability data.
 
 **⟨3⟩1.** Each single endpoint-soft limit is `V_C(·)` by SPT-E'(i).
 **Justification:** ⟨1⟩4.⟨2⟩1.
@@ -634,12 +704,16 @@ multiplication law.  **Justification:** D2(c).
 two-endpoint observable; the class/module is invariant.  **Justification:**
 Lemma IT(ii), `corner-a.md` ⟨1⟩2.
 
-**⟨3⟩4.** Whitehead's lemma removes only an infinitesimal central term; it does
-not identify half-integer and integer modules.  **Justification:** D4(d)
-caveat; SPT-E'(iii).
+**⟨3⟩4.** Whitehead's lemma says the infinitesimal central cocycle is a
+coboundary.  A phase-section change gauges it away; it need not be zero in
+every section, and the chosen zero-cocycle convention does not identify
+half-integer and integer modules.  **Justification:** D4(d) caveat;
+SPT-E'(iii).
 
-**⟨3⟩5. QED.**  This proves SPT-D' in the ordered registered sense.  It is not
-the continuum double-soft scattering theorem of arXiv:1509.07840.  □
+**⟨3⟩5. QED.**  This completes the repaired ordered-register derivation.
+SPT-D' remains SKETCH awaiting critic r3; every physical consumer carries both
+(H-split) and (H-dress).  It is not the continuum double-soft scattering
+theorem of arXiv:1509.07840.  □
 
 ---
 
@@ -655,7 +729,7 @@ and asymptotic channels with definite bulk and edge charges.
 `ΔQ_edge=-(Q_bulk,out-Q_bulk,in)`.                               **(6.1)**
 
 Consequently the channel spectrum lies in
-`(q_ω+ℤ)-(q_ω+ℤ)=ℤ` (or the corresponding finite set after restricting the edge
+`(q_{ω,C}^∘+ℤ)-(q_{ω,C}^∘+ℤ)=ℤ` (or the corresponding finite set after restricting the edge
 multiplet).  For the AKLT doublet it is contained in `{-1,0,+1}`.  Expectations
 are convex combinations and need not be integers.
 
@@ -666,21 +740,24 @@ spaces.  **Justification:** `Sd10'`.
 **Justification:** the assumed `U(1)` symmetry; exact charge bookkeeping, the
 same mechanism as M-quant but with edge charge replacing wall position.
 
-**⟨3⟩3.** SPT-E'(iii) puts edge eigenvalues in `q_ω+ℤ`; taking differences
+**⟨3⟩3.** SPT-E'(iii) puts edge eigenvalues in `q_{ω,C}^∘+ℤ`; taking differences
 gives the stated channel lattice.  **Justification:** ⟨1⟩4.⟨2⟩3.
 
-**⟨3⟩4. QED.**  The bookkeeping theorem is conditional exactly where M-quant
-is conditional on its asymptotic decomposition.  □
+**⟨3⟩4. QED.**  The bookkeeping derivation is conditional exactly where
+M-quant is conditional on its asymptotic decomposition.  Its L5 row remains
+SKETCH awaiting critic r3 because the centered physical SPT-E' charge input is
+still a parent HOLD.  □
 
 ### ⟨2⟩2. What “protected edge magnon memory” can honestly mean
 
-**PROVED in the registered/H-split setting:** a nontrivial `[ω]` protects the
+**SKETCH pending r3 in the registered/H-split setting:** a nontrivial `[ω]` protects the
 existence of a projective edge module and hence a memory *capacity* of dimension
 at least `d_ω`; symmetric local edge terms cannot replace it by a unique
 symmetric state.  **Justification:** SPT-E'(ii); Schur's lemma.
 
-**CONJECTURE SPT-M'-dyn:** for the specified AKLT parent Hamiltonian and an
-explicit boundary-magnon coupling, at least one symmetry-allowed edge-changing
+**CONJECTURE SPT-M'-dyn:** for the specific D23/(2.5a) open AKLT parent
+Hamiltonian `H_{A,+}^{dyn}` with boundary coupling
+`h_{mag-edge}=P^{(S=2)}_{0,1}`, at least one symmetry-allowed edge-changing
 reflection matrix element is nonzero on an open momentum interval, and the
 post-selected memory obeys (6.1).  The exact missing step is a half-chain
 scattering calculation establishing (H-AD-edge), the on-shell reflection
@@ -710,10 +787,13 @@ The exact stage is implemented in
 ```text
 python3 -O theory/checks/spt_rebuild_check.py
 python3 -O theory/checks/spt_rebuild_check.py --red
+python3 -O theory/checks/spt_rebuild_check.py --red-gauge
 ```
 
 The green command must exit `0`; the red mutant reverses the edge-residue sign
-and must exit nonzero.  Tolerances were fixed in the checker before execution:
+and must exit nonzero.  The gauge mutant uses an uncentered virtual generator
+after the nontrivial rephasing `V(exp εξ)↦e^{0.37iε}V(exp εξ)` and must also
+exit nonzero.  Tolerances were fixed in the checker before execution:
 `2×10^{-12}` for exact algebra and `2×10^{-7}` for the `k=10^{-3}` limit.
 
 Exact tensors and quantities:
@@ -732,6 +812,9 @@ Exact tensors and quantities:
    `Ad(V)`, the closed scalar `Tr Ad(V(R_x))`, and the compensated `R_z`
    endpoint contraction.  The checker also verifies that the uncompensated
    AKLT string overlap decays rather than being mistaken for `V(R_z)`.
+7. **U(1) phase gauge and type:** the D10 partial charge is anti-Hermitian,
+   `-iQ` reproduces the Hermitian compression, centering removes a phase slope
+   `a=0.37`, and the uncentered prediction differs by exactly `0.37I`.
 
 ### ⟨2⟩2. Numerical record (run now)
 
@@ -748,9 +831,11 @@ bulk C: 0.125000000000 -> 0.240196078431
 packet L=2048, kappa=1.3: 0.125000135674, 0.240196105387
 edge: max finite-window formula error=1.665e-16;
       limit error=2.220e-16; |q_edge|=0.500000000000
+U(1) phase gauge: centered error=2.220e-16; uncentered defect=0.370000000000
 compensated AKLT Rz endpoint: exact Z through L=8;
 uncompensated norm at L=8: (1/3)^8 = 1.5241579e-4
 red mutant: FAIL, finite-window edge-residue error=1.333e+00
+red-gauge mutant: FAIL, phase-gauge endpoint error=3.700e-01
 ```
 
 ### ⟨2⟩3. Pass/fail matrix and claim disposition
@@ -762,6 +847,7 @@ red mutant: FAIL, finite-window edge-residue error=1.333e+00
 | **S-C3 bulk deformation** | Fourier-kernel and direct `L=2048,κ=1.3` packet coefficients each within `2e-7` of (3.2), and endpoint values differ by `>0.1` | pass | failure falsifies formula (3.2)/the displayed example; success confirms this bulk coefficient is non-topological and supports SPT-B' |
 | **S-C4 edge residue** | (4.1) error `<2e-12`; at `L=64`, `||ℜ+Z/2||∞<2e-12` for both path points | pass | failure falsifies SPT-E'(iv); success proves the exact registered AKLT residue, but not a scattering amplitude |
 | **S-C5 module/boundary** | Pauli anticommutator, physical parent/boundary commutators, `[K_T,V_T(g)]`, and compensated endpoint errors `<2e-12`; uncompensated `L=8` norm `<2e-3` | pass | failure invalidates projective/linear boundary assignments or endpoint compensation; success confirms the fixed registered/boundary inputs |
+| **S-C6 Hermiticity/phase gauge** | D10 partial charge anti-Hermitian; `-iQ` Hermitian; centered prediction error `<2e-12`; uncentered `a=0.37` mutant exits nonzero | pass | failure invalidates the N1 repair; success detects the phase-gauge dependence that S-C4 previously missed |
 
 ### ⟨2⟩4. Dynamical follow-on (still `tns-cpq`, not silently counted as done)
 
@@ -788,7 +874,14 @@ accidental boundary memory and refutes any revived “trivial implies zero” cl
 
 ---
 
-## ⟨1⟩8. Merge proposals (exact text; not applied in this lane)
+## ⟨1⟩8. Historical r2 merge snapshot — SUPERSEDED, non-normative
+
+The quoted proposal below records what was merged before critic r2.  It is not
+an active definition, claim row, or TRIANGLE surface; `definitions.md`,
+`claims/CLAIMS.md`, and `theory/TRIANGLE.md` are the single sources after the
+N1--N6 repair.
+
+<!-- BEGIN SUPERSEDED R2 MERGE SNAPSHOT
 
 ### ⟨2⟩1. Replacement text for D19--D23
 
@@ -838,8 +931,8 @@ carry the required wave-operator/asymptotic-completeness hypotheses.
 
 ## D21 (endpoint module, shifted charge lattice, and physical-edge hypothesis)
 
-The unconditional endpoint object is `E_C` (equivalently A1(d1)'s padded-window
-module), carrying the projective action `V_C(g)` with multiplier `ω_C`.
+The Schmidt/edge register is `E_C`; A1(d1)'s distinct padded-window module is
+`E_C⊗E_C^*`, carrying `χ` copies under left multiplication.
 `d_ω` is the minimal dimension of an `ω`-projective irrep.  A nontrivial class
 has `d_ω>1` because a one-dimensional multiplier is a coboundary.
 
@@ -855,7 +948,7 @@ with the full group and the physical vacuum charge fixes a class-invariant
 central character `ν_ω:Z→U(1)`.  If the lifted `2π` path of a
 circle generator `ξ` ends at `z_ξ∈Z`, define
 `e^{2πiq_ω(ξ)}=ν_ω(z_ξ)`.  Then the Hermitian endpoint charge
-`Q_edge(ξ)=-iX_C(ξ)` has spectrum in `q_ω(ξ)+ℤ`.  For `SO(3)`, the two classes
+`Q_edge(ξ)=-iX_C^∘(ξ)` has spectrum in `q_{ω,C}^∘(ξ)+ℤ`.  For `SO(3)`, the two classes
 give `q_ω=1/2` and `0 mod ℤ`.  For the explicit `O(2)` pair, reflection pins the
 same alternatives: AKLT has `V(2π)=-I`, the large-`D` product `V(2π)=I`.  The
 full global group and loop are part of this statement; `U(1)` alone does not
@@ -914,9 +1007,9 @@ comparator, `h_P=I-|zz⟩⟨zz|` and `h_{∂,P}=0`.
 | SPT-B-r1 | Old claim that `Ad(V)`-only closed contractions are pointwise `[ω]`-blind | **REFUTED**: Pauli-projective `Ad` has four distinct `D₂` characters, scalar-trivial `Ad` has four trivial copies; closed `Tr Ad(R_x)=0` vs `4` | — | disproved in theory/spt-rebuild.md ⟨1⟩3.⟨2⟩3 | spt_rebuild_check.py S-C2 |
 | SPT-nogo | Old all-orders claim that `[ω]` cannot appear in any coefficient, including an edge residue | **REFUTED** (Whitehead removes only a Lie central term; edge weights/dimension remain) | — | theory/spt-rebuild.md ⟨1⟩4 | S-C4 |
 | SPT-B' | Closed-bulk multiplier no-go and rigidity: paired on-site endpoint multipliers cancel exactly; normalized bulk coefficients are continuous under common-gap symmetric injective paths and are topological only if separately proved locally constant; class-correlated `Ad(V)` data are allowed | **SKETCH** (complete proposer proof; L6 critic pending) | WI, A1(g), D19-D23 | theory/spt-rebuild.md ⟨1⟩3 | spt_rebuild_check.py S-C2,S-C3 |
-| SPT-E' | Registered half-chain residue is `V(g)` / `Q_edge=-iX`; endpoint modules have dimension `≥d_ω` and charge weights in `q_ω+ℤ`; AKLT-family residue is exactly `-½[1-(2b²-1)^L]Z→-Z/2`, while the `O(2)` trivial product residue is `0` | **SKETCH** in transfer register (complete proposer proof; L6 pending); **CONJECTURE conditional on H-split** as a physical edge-Hilbert statement | A1(d1,g), D19-D23 | theory/spt-rebuild.md ⟨1⟩4 | spt_rebuild_check.py S-C4,S-C5 |
+| SPT-E' | Registered half-chain residue is `V(g)` / centered `Q_edge=-iX_C^∘`; endpoint modules have dimension `≥d_ω` and centered charge weights; AKLT-family residue is exact | SKETCH | D19-D23 | theory/spt-rebuild.md ⟨1⟩4 | spt_rebuild_check.py S-C4,S-C6 |
 | SPT-T' | At a registered twist endpoint, `V(h)V(g)V(h)^{-1}` is proportional to `V(hgh^{-1})`; for commuting `g,h` the phase is `e^{i[ω(h,g)-ω(g,h)]}`; the second endpoint compensates, so the observable is relative and requires H-dress | **SKETCH** registered (L6 pending); physical observable conditional on H-split/H-dress | SPT-E', WI, D22 | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩1 | — |
-| SPT-D' | Ordered endpoint-soft operators satisfy `𝕊(h)𝕊(g)=e^{iω(h,g)}𝕊(hg)` in the fixed register; for semisimple Lie groups the infinitesimal bracket has no central term, while the global module remains projective | **SKETCH** registered (L6 pending); physical edge statement conditional on H-split | SPT-E', D22 | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩2 | S-C5 |
+| SPT-D' | Ordered endpoint-soft operators satisfy `𝕊(h)𝕊(g)=e^{iω(h,g)}𝕊(hg)`; the semisimple infinitesimal cocycle is cohomologically trivial and gauged away in a stated phase convention | SKETCH | SPT-E', D22, H-split, H-dress | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩2 | S-C5 |
 | SPT-M' | Given H-split and H-AD-edge, channel charge bookkeeping is `ΔQ_edge=-(Q_bulk,out-Q_bulk,in)` and channel outcomes are quantised; `[ω]` protects memory capacity/module, not a nonzero amplitude | **SKETCH conditional theorem** (L6 pending) | SPT-E', D22, M-quant bookkeeping | theory/spt-rebuild.md ⟨1⟩6.⟨2⟩1 | dynamical follow-on tns-cpq |
 | SPT-M'-dyn | For the specified AKLT parent/boundary coupling, an edge-changing magnon reflection amplitude is nonzero on an open momentum interval and leaves the post-selected charge memory of SPT-M' | **CONJECTURE**; missing half-chain wave operators, on-shell reflection matrix, and nonvanishing proof | SPT-M', H-AD-edge | theory/spt-rebuild.md ⟨1⟩6.⟨2⟩2 | tns-cpq follow-on |
 ```
@@ -948,7 +1041,7 @@ content.  A physical edge-Hilbert interpretation carries hypothesis H-split.
 | id | rebuilt statement | honest status |
 |---|---|---|
 | SPT-B' | Closed-bulk endpoint multipliers cancel exactly; coefficients are continuous/deformable and may retain class-correlated `Ad(V)` data | SKETCH, complete proposer proof; L6 pending |
-| SPT-E' | Registered residue is the endpoint charge in an `ω`-projective module, `dim≥d_ω`, `spec Q_edge⊂q_ω+ℤ`; AKLT residue `±1/2`, trivial `O(2)` product residue `0` | SKETCH registered; physical edge statement conditional on H-split |
+| SPT-E' | Centered registered endpoint charge in the Schmidt/edge module, `dim≥d_ω`, `spec Q_edge⊂q_{ω,C}^∘+ℤ`; AKLT residue `±1/2`, trivial product `0` | SKETCH; physical statement conditional on H-split |
 | SPT-T' | For commuting `g,h`, one twist endpoint carries the slant/commutator phase `e^{i[ω(h,g)-ω(g,h)]}` and the other compensates; measurable only relatively with dressed endpoints | SKETCH registered; H-split/H-dress physically |
 | SPT-D' | Ordered endpoint-soft products realise the cocycle globally; no semisimple Lie central term is claimed | SKETCH registered; H-split physically |
 | SPT-M' | Conditional channel bookkeeping quantises edge-charge changes and the projective module protects memory capacity; topology does not force a nonzero reflection amplitude | SKETCH given H-split/H-AD-edge; nonzero AKLT channel CONJECTURE |
@@ -968,6 +1061,8 @@ two-endpoint response, or a quantised edge residue—not an anomalous closed-bul
 commutator phase.
 ```
 
+END SUPERSEDED R2 MERGE SNAPSHOT -->
+
 ---
 
 ## ⟨1⟩9. Self-audit against the r1 adversary
@@ -976,12 +1071,12 @@ commutator phase.
 |---|---|
 | **S1 (FATAL, type/limit)** | `Sd2'` fixes `E_C=ℂ^χ`; (2.8)--(2.9) define operator-valued insertions first; (2.10) defines scalars later. `Sd3'` fixes `f_{L,κ}^{bulk}`, `f_L^{edge}`, and the exact order `N→∞`, normalization/scattering, then `L→∞`. |
 | **S2 (FATAL, `Ad` inference)** | Conceded and made a theorem boundary. SPT-B'(i) proves only multiplier/rephasing cancellation. SPT-B'(iii) explicitly computes the `D₂` decompositions `(1,1,1,1)` versus `(4,0,0,0)` and closed scalars `0` versus `4`. Pointwise blindness is REFUTED. |
-| **S3 (FATAL, Whitehead/T8)** | Whitehead is confined to “no Lie central term.” SPT-E' proves that global module dimension and weights survive and that the zeroth edge coefficient is half-integral for AKLT. The old all-orders no-go is REFUTED. |
+| **S3 (FATAL, Whitehead/T8)** | Whitehead is confined to “the infinitesimal central cocycle is cohomologically trivial and can be gauged away,” in a stated phase convention. Global module dimension and centered weights survive. The old all-orders no-go is REFUTED. |
 | **S4 (FATAL, non-executable test)** | (2.1)--(2.5) give exact AKLT, exact normalized injective `χ=2` TRIV, fixed points, parent and boundary Hamiltonians. §7 names scalar numbers and a priori tolerances; the green and red runs are recorded. |
 | **S5 (finite/Lie conflation)** | `G_f=D₂` is used only for finite endpoint/module tests; the explicit Lie-charge comparison uses `O(2)`, under which both AKLT and the `χ=1` large-`D` product are symmetric. The impossibility of a trivial `SO(3)`-linear injective `χ=2` spin-one tensor is stated, and the product is explicitly not called `SO(3)`-symmetric. |
 | **S6 (protection versus amplitude)** | SPT-E' protects module/degeneracy only. SPT-M' separates exact conditional charge bookkeeping from SPT-M'-dyn, whose nonzero reflection amplitude is CONJECTURE. Trivial accidental memory is allowed. |
 | **S7 (slant scope)** | SPT-T' gives the correct general conjugation (5.1), restricts the ratio (5.2) to commuting elements, fixes the cocycle convention, and makes two-endpoint compensation plus H-dress explicit. |
-| **S8 (theorem language with gaps)** | Every assumption is in the theorem headers. Registered proofs are complete but merge status remains SKETCH until L6. H-split and dynamical scattering are never promoted. |
+| **S8 (theorem language with gaps)** | Every assumption is in the theorem headers. Parent registered rows remain SKETCH awaiting r3; only the r2-adjudicated narrow splits are promoted. H-split and dynamical scattering are never silently promoted. |
 | **T8 (edge coefficient contradiction)** | The bulk no-go is now about projective multiplication/topological interpretation, not all coefficient data. The edge residue is explicitly allowed—and proved—to be a quantised zeroth coefficient. |
 | **T9 (deciding computation not decisive)** | The new computation no longer compares words. It tests exact normalized scalars, representation multiplicities, finite-window residue eigenvalues, and two points of a fixed-class path. Each failure is mapped to a specific row; endpoint algebra is not misreported as scattering or memory. |
 

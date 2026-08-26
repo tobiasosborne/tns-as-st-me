@@ -2,45 +2,37 @@
 
 # HANDOFF — live state
 
-Updated: 2026-08-26, end of session 1 (paused on TJO instruction after the
-freeze landed). Read order gate: CLAUDE.md → HANDOFF_MPS_SOFT_THEOREM.md (the
+Updated: 2026-08-26, after the corpus-r2 proposer repair. Read order gate:
+CLAUDE.md → HANDOFF_MPS_SOFT_THEOREM.md (the
 brief) → this file → theory/TRIANGLE.md (the frozen framework, D2).
 
 ## Where we are — one paragraph
 
-The campaign went scaffold → refs → novelty sweep → three adversarial L6 loops
-(oracle, Corner A, ML2), ALL CONVERGED (PASS verdicts in theory/verdicts/),
-→ the FREEZE (theory/TRIANGLE.md, 2026-08-26). Proved and frozen: the general
-MPS theorems (WI, A1 charge algebra/torsor with [ω] central extension, A2
-sector-jump with double-coset classification, G0 dichotomy); Theorem S2-2body
-(soft phase δ_phys = 2·sgn(v_h−v_s)k_s + (|v_h|/ω_h)k_s², the 2 derived from
-the current/contact equation, integrability-free hypotheses, Bethe as oracle
-only); ML2 completeness; ML4 at n=1 (orthogonal-current O(k_s²) suppression);
-ML5 refuted for unrestricted sources (explicit counterexample O_η) and PROVED
-on the no-contact Ward-covariant class 𝒮_W — necessary and sufficient;
-Theorem M-quant for the projected kink dynamics (H-AD proved via
-Kato–Rosenblum on the Fano/Jacobi reduction; δx = −⟨N_T⟩/s, spec(ΔX) ⊂
-{−1/s, 0}); the analytic t(k) verified against independent numerics at 1–6%
-over Δ ∈ [1.5,12]; the memory soft zero T = 16(Δ−1)²k². The brief's original
-Conjecture M (δx = DC limit of soft factor) is REFUTED — the memory quantum is
-a charge, not a phase. Headline candidate: Conjecture Bc ("the two 2's" =
-|q|/s) with a spin-1 falsifier. SPT dichotomy (bulk [ω]-cancellation, edge
-detection via representation type only) is drafted, critic pending. Paper v1
-(Fable-authored, prose-guide-primed) exists with three real figures and
-compiles at PRL shape.
+Critic `theory/verdicts/corpus-r2.md` adjudicated the summit corpus and the r2
+proposer repair is now applied.  Fifteen narrow items are PROVED: S2-2body,
+ML4-A, the exact Ward projection, ML5-A/B, M-flux, K1--K3, B3, Mq-AD3
+conditional on Mq-E, M-quant conditional on D18, the Fano formula/zero
+conditional on Mq-E for the displayed graph, closed SPT multiplier
+cancellation, and the exact AKLT-family contraction.  The fixed-ring ML4
+formulas are explicitly off-shell; the on-shell infinite-volume result remains
+open.  SPT N1--N6 are repaired using a Hermitian centered endpoint charge,
+continuous external path data, distinct Schmidt and padded-window modules,
+correct Whitehead phrasing, H-dress lockstep, and a specific open AKLT parent
+Hamiltonian.  Parent SPT rows remain SKETCH awaiting focused critic r3.
+Corner-C `𝖲` has definition D25.  The brief's original Conjecture M remains
+REFUTED; universality of the Fano zero/coefficient remains CONJECTURE.
 
 ## State of the artifacts
 
-- theory/TRIANGLE.md — FROZEN framework; changes require reopening the
-  relevant L6 loop (rule in its §7 and the CLAIMS.md footer).
-- claims/CLAIMS.md — the DAG, quantifier-exact, all rows current.
-- All 7 checkers in theory/checks/ PASS under `python3 -O` (rerun before
+- theory/TRIANGLE.md and claims/CLAIMS.md — synchronized to corpus-r2; parent
+  SPT rows await critic r3.
+- All 8 checkers in theory/checks/ PASS under `python3 -O` (rerun before
   trusting anything: `for f in theory/checks/*.py; do python3 -O $f; done`).
+- Red guards fail as intended: M-quant sign, ML4 uniformity, SPT edge sign,
+  and the new uncentered U(1) phase gauge.
 - Converged loops: oracle (r2 PASS), Corner A (r3 PASS), ML2 (r2 PASS).
-  NOT yet critic-reviewed: ml4-ward-reduction.md, ml5-universality.md,
-  memory-quantization.md, TRIANGLE.md itself, corner-b-draft.md,
-  spt-rebuild.md (rebuilt 2026-08-26, SKETCH pending critic r2; it supersedes
-  spt-scoping-draft.md — tracked: tns-0xi, tns-gk4).
+  Corpus-r2 promotions are applied; the repaired parent SPT package still
+  needs focused critic r3 (tracked by tns-gk4).
 - paper/ — v1 draft + figures (all generated from equations + committed JSONs
   via paper/figures/make_figures.py). Known: needs v2 (tns-2ze) absorbing the
   freeze, the generality directive, and the ML5 no-contact form; TJO must

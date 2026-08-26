@@ -1,20 +1,23 @@
-# ML4 — Ward/LSZ reduction on the soft energy shell
+# ML4 — Ward/LSZ reduction and the finite-volume analytic interpolation
 
-Status: **SKETCH — under repair after `verdicts/mquant-ml45-r1.md` objection 1.**
-The abstract cancellation lemma and the exact finite-sector Ward projection
-survive the r1 attack, and the FM trace has a second soft zero at every fixed
-finite volume.  The formerly claimed volume-uniform bound is **retracted**:
-the legal joint scaling `k=Θ(1/N)` makes its constant diverge.  The surviving
-statement is fixed-volume, or the ordered limit `k→0` before `N→∞`.  A
-packet-smeared infinite-volume trace estimate is future work (bd `tns-7ut`).
+Status: the abstract cancellation lemma ML4-A and exact finite-sector Ward
+projection (8)--(11) are **PROVED per `verdicts/corpus-r2.md` adjudication**.
+The FM formulas (15)--(17) are only an **off-shell analytic interpolation** at
+fixed periodic `N`: nonzero ring momenta are discrete, so `k→0` at fixed `N`
+is not an on-shell ring limit.  The formerly claimed volume-uniform bound is
+**retracted**: the first physical sequence `k=2π/N` makes its constant diverge.
+A packet-smeared infinite-volume on-shell trace estimate is future work (bd
+`tns-7ut`).
 The two-hard/three-magnon channel remains open for the independent reason
 recorded in ⟨1⟩5.  No closed-form S-matrix is used below.
 
 This shard uses D3, D6--D8, D10, D12(a′), `soft-current-recon.md` (R1),
 (R13)--(R15), and the complete two-magnon spectral resolution (15)--(21) of
-`ml2-completeness.md`.  “Orthogonal” always means the finite-ring descendant
-projection followed by its on-shell packet limit; it does **not** mean that the
-zero-momentum descendant is an infinite-volume Hilbert vector.
+`ml2-completeness.md`.  “Orthogonal” means the finite-ring descendant
+projection, intended eventually for a genuine infinite-volume on-shell packet
+limit; (15)--(17) themselves use only the off-shell interpolation.  It does
+**not** mean that the zero-momentum descendant is an infinite-volume Hilbert
+vector.
 
 ## ⟨1⟩1. Register, packet class, and the quantity reduced
 
@@ -46,16 +49,19 @@ subspace**, not merely to one momentum vector.  For one hard magnon, momentum
 conservation makes this equivalent fiber by fiber to orthogonality to
 `Q_0|h⟩_N`.
 
-Let `Γ_N(k)` be an outgoing on-shell channel after parallel transport of its
-total-momentum fiber to the `k=0` fiber.  The orthogonal contribution to the
-Ward-reduced connected numerator is
+Let `Γ_N(k)` be the analytic interpolation obtained by parallel-transporting
+the coordinate scattering formula from total momentum `h+k` to the `k=0`
+fiber.  At fixed periodic `N` it is a physical ring channel only when all
+momenta satisfy the periodic quantisation conditions; it is otherwise an
+off-shell analytic vector.  The corresponding interpolated orthogonal
+contribution to the Ward-reduced connected numerator is
 
 \[
  \mathcal A_{\perp,N}(k;f,g)
   :=(e^{ik}-1)\langle \Gamma_N(k)f,R_{n,N}g\rangle .           \tag{3}
 \]
 
-An **ML4-admissible LSZ amputation at fixed `N`** may multiply (3), on either
+An **ML4-admissible analytic amputation at fixed `N`** may multiply (3), on either
 side, by operator families bounded and `C¹` for `|k|≤ε_I`.  This excludes a
 new `1/k` pole in the reduced (`1-P`) channel at that volume.  No
 volume-uniform constant is included in this definition; an infinite-volume
@@ -145,9 +151,11 @@ pair
  \quad+\quad C^1\text{ on-shell trace regularity}.}           \tag{7}
 \]
 
-Energy conservation and multiplicity one imply the first property in the FM
-two-body channel.  The sign `sgn(v_h-v_s)` only chooses which continuous wave
-is called outgoing; it supplies no zero.
+Energy conservation and multiplicity one imply the first property in a genuine
+FM two-body channel.  In the fixed-ring application below, however, (7) is
+used only for the off-shell analytic interpolation.  The sign
+`sgn(v_h-v_s)` only chooses which continuous wave is called outgoing; it
+supplies no zero.
 
 ## ⟨1⟩3. The exact `SU(2)` Ward projection in every finite sector
 
@@ -219,7 +227,7 @@ Equation (11) is exactly (R15), upgraded from one momentum vector to the
 whole hard packet space.  The complementary vector remains nonzero.  Thus the
 Ward identity computes the leading projection but does not establish (5).
 
-## ⟨1⟩4. FM one-hard channel: ML2 supplies (7)
+## ⟨1⟩4. FM one-hard coordinate branch: off-shell analytic interpolation
 
 For `h∈I`, let `k` be signed and put `K=h+k`, `q=(h-k)/2`.  In the transported
 center gauge define on `0≤x<y<N`
@@ -232,11 +240,14 @@ center gauge define on `0≤x<y<N`
 where `s(k,h)` is the solution analytic at zero of the single contact
 equation (R16).  Formula (12) only identifies neighboring total-momentum
 fibers; undoing the transport replaces `h` in the center phase by `K` and
-gives the ML2 generalized scattering wave.  The channel map used in (3) is
+gives the infinite-volume ML2 generalized scattering wave.  At fixed periodic
+`N`, continuous nonzero `k` generally violates the ring boundary condition;
+thus (12) is the declared off-shell analytic interpolation, not an on-shell
+ring state.  The channel map used in (3) is
 the normalized `Γ_N(k)|h⟩:=B_N(k,h)/sqrt(N-2)`; the unnormalized `B_N` is
 retained below because its trace estimate is stronger.
 
-**⟨2⟩1. PROVE (soft-shell matching and simplicity).** Uniformly for `h∈I`,
+**⟨2⟩1. PROVE (zero-soft matching and analytic simplicity).** Uniformly for `h∈I`,
 
 \[
  B_N(0,h)=Q_0|h\rangle_N,\qquad
@@ -244,8 +255,10 @@ retained below because its trace estimate is stronger.
  \qquad s(0,h)=1,                                             \tag{13}
 \]
 
-and the energy-conserving ML2 scattering shell through (13) is a unique `C¹`
-branch.  The ML2 bound band and singular class do not meet it.
+and the infinite-volume energy-conserving ML2 coordinate branch through (13)
+is a unique `C¹` branch.  At fixed ring size its continuous parameter is the
+off-shell interpolation just declared.  The ML2 bound band and singular class
+do not meet the branch.
 
 **⟨3⟩1.** At `k=0`, (R16) has the unique solution `s=1` because
 `e^{ih}-1≠0`; substituting in (12) gives
@@ -271,14 +284,14 @@ Justification: ML2 (19), O1, ML2 (12), ML2 (24), and the assumptions in
 
 **⟨3⟩5. QED.**
 
-**⟨2⟩2. PROVE (fixed-volume trace regularity).** Let
+**⟨2⟩2. PROVE (fixed-volume off-shell trace regularity).** Let
 
 \[
  r_N(h):=(1-P_{1,N})J^-_0|h\rangle_N .                        \tag{14}
 \]
 
 For every fixed `N` there is `C_{I,N}<∞` such that for allowed ring momenta
-`h∈I` and sufficiently small `|k|`,
+`h∈I` and sufficiently small real interpolation parameter `|k|`,
 
 \[
  |\langle B_N(k,h),r_N(h)\rangle|\le C_{I,N}|k| .             \tag{15}
@@ -341,7 +354,7 @@ Justification: ⟨3⟩2, `k_N=2π/N`, and the normalization below (12).
 finite-ring transported trace.
 Justification: ⟨3⟩3.  **⟨3⟩5. QED.**
 
-**⟨2⟩4. PROVE (surviving fixed-volume/ordered-limit ML4).** For arbitrary
+**⟨2⟩4. PROVE (surviving fixed-volume off-shell interpolation).** For arbitrary
 incoming and outgoing hard packets `g,f∈C_c^∞(I)` and every fixed `N`, the
 orthogonal contribution (3) obeys
 
@@ -354,8 +367,8 @@ Its normalized soft-packet norm is `O_N(ε²)`.  In particular,
 
 `lim_{N→∞} lim_{k→0} 𝒜_{⊥,N}(k;f,g)/k = 0`,
 
-where the soft limit is taken first.  No statement about the reversed or
-joint limit is made.
+where the inner limit is the off-shell analytic limit, not a physical on-shell
+ring limit.  No statement about the reversed or joint limit is made.
 
 **⟨3⟩1.** At fixed `N`, equations (13)--(15) are the trace-norm hypotheses of
 ML4-A, while
@@ -371,14 +384,15 @@ The subsequent `N→∞` limit of this zero sequence is zero.
 Justification: (17) and the stated order of limits.
 
 **⟨3⟩4.** Apply ML4-A (6) at fixed `N` for the soft packet statement.  Bounded
-`C¹` fixed-volume LSZ amputators preserve the estimate by
+`C¹` fixed-volume analytic amputators preserve the estimate by
 ⟨1⟩1.⟨2⟩1.
 Justification: (6) and (17).
 
 **⟨3⟩5. QED.** □
 
-This is a fixed-volume result for arbitrary packet samples, plus the displayed
-ordered limit.  It is **not** a packet-smeared infinite-volume trace theorem.
+This is a fixed-volume analytic-interpolation result for arbitrary packet
+samples, plus the displayed formal ordered limit.  It is **not** an on-shell
+fixed-ring theorem and is **not** a packet-smeared infinite-volume trace theorem.
 Obtaining the latter requires new control of the `kN=Θ(1)` regime; ML2
 completeness alone does not supply it.
 
@@ -471,18 +485,20 @@ Justification: inspection and the recorded optimized-mode run of
 
 ## ⟨1⟩7. ML4 verdict
 
-1. **SKETCH pending r2:** exact sector Ward projection (8)--(11), including
-   arbitrary one-hard packets and all finite-ring ML2 two-hard states; this
-   algebra survived the r1 recomputation.
-2. **SKETCH pending r2:** the standalone cancellation lemma ML4-A.  The property that
+1. **PROVED per `corpus-r2.md` adjudication:** exact sector Ward projection
+   (8)--(11), including arbitrary one-hard packets and all finite-ring ML2
+   two-hard states.
+2. **PROVED per `corpus-r2.md` adjudication:** the standalone cancellation lemma ML4-A.  The property that
    kills the orthogonal `O(k)` contribution is energy-shell descendant
    matching plus `C¹` trace regularity; the Ward identity computes the
    descendant residue, and the velocity sign merely labels the physical
    branch.
-3. **SKETCH pending r2:** for one hard FM magnon and arbitrary smooth compact
-   hard packet samples, (17) holds at each fixed volume, with
-   `O_N(ε²)` remainder and the stated `k→0`-before-`N→∞` limit.  The former
-   volume-uniform claim is retracted by ML4-Q1.
+3. **SKETCH / HOLD per `corpus-r2.md`:** for one hard FM magnon and arbitrary
+   smooth compact hard packet samples, (15)--(17) hold only for the off-shell
+   analytic interpolation at each fixed volume.  A fixed periodic ring has no
+   nonzero on-shell `k→0` sequence; the first physical joint sequence also
+   refutes uniformity by ML4-Q1.  The missing on-shell infinite-volume result
+   is bd `tns-7ut`.
 4. **CONJECTURE / future work:** a packet-smeared infinite-volume trace bound
    controlling `k=Θ(1/N)` (bd `tns-7ut`).
 5. **CONJECTURE / future work:** two hard magnons followed by a genuine three-magnon channel,

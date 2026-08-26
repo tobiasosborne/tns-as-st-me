@@ -7,8 +7,9 @@ the deformability of a bulk soft-charge coefficient inside one non-trivial SPT
 phase, and the simultaneous rigidity of the AKLT edge-charge residue.
 
 Run ``python3 -O theory/checks/spt_rebuild_check.py``.  The ``--red`` mutant
-reverses the predicted edge charge and must fail.  No Python ``assert`` is
-used, so optimization cannot disable a check.
+reverses the predicted edge charge and must fail.  The ``--red-gauge`` mutant
+uses an uncentered rephased U(1) virtual generator and must also fail.  No
+Python ``assert`` is used, so optimization cannot disable a check.
 """
 
 from __future__ import annotations
@@ -315,6 +316,56 @@ def check_edge_residue(red: bool) -> tuple[float, float, float]:
     return max_formula_error, max_limit_error, float(np.max(np.abs(final_eigenvalues)))
 
 
+def check_phase_gauge_centering(red_gauge: bool) -> tuple[float, float]:
+    """The Hermitian partial charge sees the centered, not raw, U(1) lift."""
+    tensors = aklt_tensor(1.0 / np.sqrt(3.0))
+    measured = edge_charge_operator(tensors, 64)
+
+    # D10's infinitesimal physical charge is anti-Hermitian; multiplying by
+    # -i gives the Hermitian compression used by D20.
+    antihermitian_partial = 1j * measured
+    require(
+        np.linalg.norm(
+            antihermitian_partial.conj().T + antihermitian_partial,
+            ord=np.inf,
+        )
+        < TOL_EXACT,
+        "D10 partial charge was not anti-Hermitian",
+    )
+    require(
+        np.linalg.norm(-1j * antihermitian_partial - measured, ord=np.inf)
+        < TOL_EXACT,
+        "-iQ did not reproduce the Hermitian registered charge",
+    )
+
+    right = I2 / 2.0
+    base_generator = -0.5j * Z
+    phase_slope = 0.37
+    rephased_generator = base_generator + 1j * phase_slope * I2
+    centered_generator = rephased_generator - np.trace(
+        right @ rephased_generator
+    ) * I2
+    centered_prediction = -1j * centered_generator
+    uncentered_prediction = -1j * rephased_generator
+    uncentered_defect = float(
+        np.linalg.norm(uncentered_prediction - centered_prediction, ord=np.inf)
+    )
+    require(
+        uncentered_defect > 0.3,
+        "U(1) phase-gauge mutation was too small to test centering",
+    )
+
+    predicted = uncentered_prediction if red_gauge else centered_prediction
+    error = float(np.linalg.norm(measured - predicted, ord=np.inf))
+    require(
+        error < TOL_EXACT,
+        "phase-gauge endpoint error {:.3e}; the uncentered convention is invalid".format(
+            error
+        ),
+    )
+    return error, uncentered_defect
+
+
 def check_projective_and_boundary_register() -> tuple[float, float]:
     projective_commutator = np.linalg.norm(X @ Z + Z @ X, ord=np.inf)
     triv_virtual = [I2, Z, I2, Z]
@@ -412,6 +463,11 @@ def main() -> None:
     parser.add_argument(
         "--red", action="store_true", help="reverse the edge-residue sign; must fail"
     )
+    parser.add_argument(
+        "--red-gauge",
+        action="store_true",
+        help="use the uncentered rephased U(1) generator; must fail",
+    )
     args = parser.parse_args()
 
     eigenvalues, rank, canonical, covariance = check_triv_tensor()
@@ -427,6 +483,7 @@ def main() -> None:
     )
     c0, c1, n0, n1, p0, p1 = check_bulk_deformability()
     edge_formula, edge_limit, edge_abs = check_edge_residue(args.red)
+    gauge_error, uncentered_defect = check_phase_gauge_centering(args.red_gauge)
     projective_residue, boundary_residue = check_projective_and_boundary_register()
 
     print("SPT rebuild exact-check certificate")
@@ -461,6 +518,11 @@ def main() -> None:
     print(
         "edge: finite formula={:.3e}, limit={:.3e}, |q_edge|={:.12f}".format(
             edge_formula, edge_limit, edge_abs
+        )
+    )
+    print(
+        "U(1) phase gauge: centered error={:.3e}, uncentered defect={:.3e}".format(
+            gauge_error, uncentered_defect
         )
     )
     print(

@@ -11,10 +11,13 @@
      D13-D18 (Corner B) and D19-D23 (SPT) were appended at the 2026-08-26 freeze
      from theory/corner-b-draft.md (Bd1-Bd7) and theory/spt-scoping-draft.md
      (Sd1-Sd10); D24 (soft-factor universality class) from
-     theory/ml5-universality.md. Nothing was renumbered.
+     theory/ml5-universality.md; D25 restores the Corner-C soft multiplier's
+     numbered home after corpus-r2 N8/tns-ce2. Nothing earlier was renumbered.
      D19-D23 were then REBUILT 2026-08-26 from theory/spt-rebuild.md <1>8.<2>1
      (there Sd1'-Sd10') after the r1 verdict triangle-r1.md S1-S8; the SPT
-     claims built on them are SKETCH pending critic r2. Numbering unchanged;
+     parent claims built on them remain SKETCH after critic r2 repairs,
+     awaiting critic r3; the narrow SPT-B-mult and SPT-E-AKLT splits are
+     PROVED per corpus-r2. Numbering unchanged;
      theory/spt-scoping-draft.md is superseded history. -->
 
 # Definitions
@@ -22,7 +25,7 @@
 Reading order: D1 fixes the setting and all limit conventions; D2--D5 and
 D9--D12 build on it. D6--D8 are self-contained (Bethe oracle). D13--D18 are the
 Corner B (memory) definitions; D19--D23 are the SPT definitions; D24 fixes the
-universality class of the soft factor.
+universality class and D25 names the Corner-C soft multiplier.
 
 ---
 
@@ -289,11 +292,14 @@ and that `ρ_α` is the induced state-level action — is proved in A1(d), from
 Lemma IT.  For a Lie group, with (S) of D2(e), the *asymptotic charges* are
 `𝔮_b(ξ) := X_α(ξ)` acting by left multiplication on the bond insertion, and
   `[𝔮_b(ξ), 𝔮_b(ζ)] = 𝔮_b([ξ,ζ]) + c_α(ξ,ζ)\,𝟙`.
-**Caveat (r2).** `c_α ∈ H²(𝔥_α,ℝ)` is only the *local infinitesimal image* of
-`[ω_α]` and generally loses it: for `𝔥_α` compact semisimple, `H²(𝔥_α,ℝ) = 0`
-(Whitehead's second lemma), so `c_α ≡ 0` while `[ω_α]` may be a nontrivial
-torsion class (AKLT: `[ω] ≠ 0` in `H²(SO(3),U(1)) = ℤ₂`, yet the spin-½ edge
-generators obey the ordinary `su(2)` bracket).  **The lattice SPT anomaly is a
+**Caveat (r2, repaired after corpus-r2 N5).** `c_α` is only the *local
+infinitesimal image* of `[ω_α]` and generally loses it: for `𝔥_α` compact
+semisimple, Whitehead's second lemma says that its Lie-algebra cohomology class
+in `H²(𝔥_α,ℝ)` is trivial.  Thus the displayed central cocycle is a coboundary
+and can be gauged away by choosing a phase section; it need not vanish in every
+local section.  The global class `[ω_α]` may nevertheless be nontrivial torsion
+(AKLT: `H²(SO(3),U(1))=ℤ₂`, while a suitable phase convention gives the
+ordinary `su(2)` bracket for the spin-½ edge generators).  **The lattice SPT anomaly is a
 group-cohomological multiplier, not a Lie-algebra central charge** — a genuine
 disanalogy with the continuum "central extension of the charge algebra" of
 docs/framing.md §2, and it must be stated as such.
@@ -736,10 +742,11 @@ does not vanish.  AD3 uses local decay without discarding this coherence.
 
 # SPT soft rigidity and endpoint residue — D19--D23
 
-*Rebuilt 2026-08-26 in `theory/spt-rebuild.md` ⟨1⟩8.⟨2⟩1 (there `Sd1'`--`Sd10'`),
+*Rebuilt 2026-08-26 in `theory/spt-rebuild.md` (there `Sd1'`--`Sd10'`),
 replacing the `spt-scoping-draft.md` promotion of `Sd1`--`Sd10` after the r1
-verdict `triangle-r1.md` S1--S8.  Annotation carried by the **claims** built on
-them: **rebuilt 2026-08-26 in `theory/spt-rebuild.md`; SKETCH pending critic r2**.
+verdict `triangle-r1.md` S1--S8, and repaired after `corpus-r2.md` N1--N6.
+The parent SPT claims remain SKETCH awaiting critic r3; the two narrow splits
+are PROVED per corpus-r2.
 See `theory/TRIANGLE.md` §5 and `claims/CLAIMS.md`.*
 
 ## D19 (soft profiles, fixed registers, and limit order)
@@ -748,9 +755,10 @@ Let `C` be a D1 injective left-canonical tensor with right fixed point `r>0`.
 For an operator `O` on the first `n` sites of a half-chain define its normalized
 boundary transfer compression
 `𝒞_C^{(n)}(O):=r^{-1/2}E_O(r)r^{-1/2}∈End(E_C)`, `E_C:=ℂ^χ`; hence
-`𝒞_C^{(n)}(I)=I`.  This fixed finite-dimensional transfer register is defined
-before scalar matrix elements or limits.  Its identification with a physical
-edge Hilbert space is hypothesis (H-split) of D21.
+`𝒞_C^{(n)}(I)=I`.  This fixed finite-dimensional **Schmidt/edge register** is
+defined before scalar matrix elements or limits.  It is not the padded-window
+matrix module `𝓜_χ(C)` of D21.  Its identification with a physical edge
+Hilbert space is hypothesis (H-split) of D21.
 
 Fix `φ(y)=c_φe^{-1/(1-y²)}` for `|y|<1` and zero otherwise, with
 `∫|φ|²=1`.  The bulk family is
@@ -769,8 +777,15 @@ not an infinitesimal group or momentum-soft limit.
 For fixed normalized finite-dimensional bulk channel registers and embeddings
 `W_{in/out}^{N,L}`, define
 `𝔉_{N,L}^{bulk}(ξ)=(W_out^{N,L})†Q[f_{L,κ}^{bulk};ξ]W_in^{N,L}`.
-On the edge transfer register define
-`ℜ_{C,L}(ξ)=𝒞_C(Q[f_L^{edge};ξ])` and
+Along a tensor path, every external tensor, channel embedding, tangent-space
+gauge fix, Gram normalization, and differentiated profile entering this
+formula is required to be continuous in the path parameter, or `C^p` when a
+coefficient through order `p` is asserted.
+
+D10 uses the anti-Hermitian charge convention.  Define the Hermitian
+modulated charge `Q^{H}[f;ξ]:=-iQ[f;ξ]` and, on the edge transfer register,
+define
+`ℜ_{C,L}(ξ)=𝒞_C(Q^{H}[f_L^{edge};ξ])` and
 `𝕊_{C,L}^{comp}(g)` as the decorated contraction of
 `Ǔ_{C,[0,L-1]}(g)` with `V_C(g)^{-1}` on the remote cut, viewed on the dual
 left-edge register.  The compensation cancels the far WI endpoint; an
@@ -785,26 +800,45 @@ carry the required wave-operator/asymptotic-completeness hypotheses.
 
 ## D21 (endpoint module, shifted charge lattice, and physical-edge hypothesis)
 
-The unconditional endpoint object is `E_C` (equivalently A1(d1)'s padded-window
-module), carrying the projective action `V_C(g)` with multiplier `ω_C`.
+The unconditional Schmidt/edge register is `E_C=ℂ^χ`, carrying the projective
+action `V_C(g)` with multiplier `ω_C`.  It is distinct from A1(d1)'s
+padded-window matrix module
+`𝓜_χ(C):=𝒲_{Λ,b}≅M_χ(ℂ)≅E_C⊗E_C^*`.
+Under A1(d1)'s left multiplication, `V_C(g)` acts on the first tensor factor
+and the dual factor is a spectator, so `𝓜_χ(C)` is exactly `χ` copies of the
+`E_C` projective module.  This multiplicity distinction does not change the
+lower bound below.
 `d_ω` is the minimal dimension of an `ω`-projective irrep.  A nontrivial class
 has `d_ω>1` because a one-dimensional multiplier is a coboundary.
 
 **(H-split):** the half-chain ground/low-energy subspace has a normal split
-realisation and an isometry `J_C:E_C→H_edge` intertwining `V_C` with the
-physical half-chain symmetry, and registered local contractions converge to
-the corresponding compressed physical operators.  This is the explicit
-hypothesis replacing the SKETCH box `corner-a.md` ⟨1⟩4.⟨2⟩9.
+realisation and an isometry `J_C:E_C→H_edge` intertwining the **Schmidt/edge
+register** action `V_C` with the physical half-chain symmetry, and registered
+local contractions converge to the corresponding compressed physical
+operators.  H-split is not a statement about all `χ²` padded-window matrices.
+This is the explicit hypothesis replacing the SKETCH box `corner-a.md`
+⟨1⟩4.⟨2⟩9.
 
 If the identity component of compact `G` contains a circle, let the universal
 cover of that component have kernel `Z`.  Assume a lift normalised compatibly
 with the full group and the physical vacuum charge fixes a class-invariant
 central character `ν_ω:Z→U(1)`.  If the lifted `2π` path of a
-circle generator `ξ` ends at `z_ξ∈Z`, define
-`e^{2πiq_ω(ξ)}=ν_ω(z_ξ)`.  Then the Hermitian endpoint charge
-`Q_edge(ξ)=-iX_C(ξ)` has spectrum in `q_ω(ξ)+ℤ`.  For `SO(3)`, the two classes
-give `q_ω=1/2` and `0 mod ℤ`.  For the explicit `O(2)` pair, reflection pins the
-same alternatives: AKLT has `V(2π)=-I`, the large-`D` product `V(2π)=I`.  The
+circle generator `ξ` ends at `z_ξ∈Z`, define the raw lift offset by
+`e^{2πiq_ω(ξ)}=ν_ω(z_ξ)`.  Put
+`X_C^∘(ξ):=X_C(ξ)-tr(rX_C(ξ))I`,
+`\bar q_C(ξ):=-i tr(rX_C(ξ))`, and
+`q_{ω,C}^∘(ξ):=q_ω(ξ)-\bar q_C(ξ) mod ℤ`.  The Hermitian registered endpoint
+charge is
+
+`Q_edge(ξ):=-iX_C^∘(ξ)`,
+
+and `spec Q_edge(ξ)⊂q_{ω,C}^∘(ξ)+ℤ`.  Under the phase-gauge change
+`V_C(exp(εξ))↦e^{iaε}V_C(exp(εξ))`, both `q_ω` and `\bar q_C` shift by `a`,
+while `X_C^∘`, `Q_edge`, and `q_{ω,C}^∘` are unchanged.  In the centered phase
+gauge `tr(rX_C)=0`, the centered and raw offsets coincide.  For `SO(3)`, that
+gauge gives the two offsets `1/2` and `0 mod ℤ`.  For the explicit `O(2)` pair,
+reflection pins the same alternatives: AKLT has `V(2π)=-I` and centered offset
+`1/2`, while the large-`D` product has `V(2π)=I` and centered offset `0`.  The
 full global group and loop are part of this statement; `U(1)` alone does not
 protect the offset.
 
@@ -854,13 +888,23 @@ For AKLT, `h_C=P^(S=2)` and `h_{∂,A}=0`.  For `T=T_1`,
 the one-dimensional trivial-character edge.  For the `χ=1` `O(2)` product
 comparator, `h_P=I-|zz⟩⟨zz|` and `h_{∂,P}=0`.
 
+The model used by `SPT-M'-dyn` is narrowed to the Hamiltonian already supplied
+here, with no additional unspecified boundary term:
+`H_{A,+}^{dyn}:=H_{A,+}=h_{mag-edge}+Σ_{x≥1}P^{(S=2)}_{x,x+1}`.  Its exact
+boundary-magnon coupling is the first parent bond
+`h_{mag-edge}:=P^{(S=2)}_{0,1}
+=\tfrac16(\mathbf S_0·\mathbf S_1+2)(\mathbf S_0·\mathbf S_1+1)`.
+Thus the conjectured reflection matrix is the one for this specific open AKLT
+half-chain, not for an unnamed extra coupling.
+
 ---
 
 # The universality class of the soft factor — D24
 
 *Promoted at the 2026-08-26 freeze from `theory/ml5-universality.md`
 ⟨1⟩1--⟨1⟩3 and repaired after the r1 verdict.  D24 fixes the source class;
-the claims built on it are pre-r2.  Outside the class, unrestricted
+ML5-A/B were promoted per corpus-r2 while microscopic membership remains open.
+Outside the class, unrestricted
 universality is refuted by the explicit counterexample in (e).*
 
 ## D24 (hard sources, the contact first jet, and the no-contact class `𝒮_W`)
@@ -938,3 +982,22 @@ It is local and has `M_1^{V_int}=0`, `∂_kM_2^{V_int}(0,h)=0`, but
 `M_2^{V_int}(0,h)=3/4−(1/2)e^{-ih}+(3/4)e^{-2ih}−(1/2)e^{-3ih}`.  Thus a
 zero first jet does not replace D24(c)'s zero-intercept condition (named
 computation ML5-I1 in `theory/checks/ml4_check.py`).
+
+---
+
+## D25 (Corner-C soft multiplier `𝖲`)
+
+In claim `S-general`,
+`𝖲(k_s;{q_i,v_i})` denotes the proposed Corner-C soft multiplier in
+
+`M_{n+1}(k_s;p_1,…,p_n)=𝖲(k_s;{q_i,v_i})M_n(p_1,…,p_n)+R_{S2}(k_s)`.
+
+Its arguments are the asymptotic leg charges and velocities (and, for kink
+legs, the vacuum-pair and collective-coordinate data stated in
+`TRIANGLE.md` §2.4).  “Universal” means independent of the microscopic hard
+tensors within the Ward-covariant no-contact class `𝒮_W` of D24(d).  The
+conjectured behavior is `𝖲→0`, leading order linear in `k_s`, with
+`R_{S2}=o(𝖲)` in the D24(b) packet norm.  This definition names the object and
+does not strengthen its status: existence, factorisation, and universality
+remain `S-general` (CONJECTURE).  It is distinct from the SPT endpoint operator
+`𝕊_C` and from the Bethe amplitudes `S_{12}`, `S_{21}`, and `S_phys`.

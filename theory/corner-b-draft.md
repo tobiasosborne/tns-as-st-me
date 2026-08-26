@@ -4,8 +4,8 @@
 
 # Corner B (draft) — the memory corner
 
-**Status: SKETCH — under repair after `verdicts/triangle-r1.md` B1--B9;
-positive promotion awaits r2.**
+**Status: repaired after `verdicts/corpus-r2.md`; adjudicated promotions
+applied.**
 Four stale citations tabulated in [`corner-a-pitfalls.md`](corner-a-pitfalls.md)
 Flag 6 and in [`verdicts/oracle-bethe-r2.md`](verdicts/oracle-bethe-r2.md)
 residue 4 have been repaired in place, each marked `(Reconciled at freeze …)`:
@@ -50,7 +50,7 @@ This shard does four things.
    with transmission amplitude
    `t(k) = [1 + i J²/(4ω(k)v(k))]^{-1}`, hence `T(k)=|t|²` and a **memory
    Adler zero** `δx(k) ≈ −(2/s)\,·8(Δ−1)²k²` as `k→0`.
-4. It records the `B ⇒ A` edge (claim **B3**) at SKETCH status.  The surviving
+4. It records the `B ⇒ A` edge (claim **B3**) at PROVED status.  The surviving
    event statement is `2s·δx+(q_out-q_in)=0`, with explicit leg subtraction;
    `δx` is the amount of `U(1)` charge the event transported between the two
    spatial infinities, i.e. the moment map of the residual translation torsor
@@ -81,7 +81,7 @@ gap of D16.  D16 is the sole definition; this shard derives consequences.
 
 ### 1.2 Consequences for the D16 kink Hamiltonian and product family
 
-**K1 (frustration-freeness; SKETCH pending r2).  ASSUME** D16.  **PROVE**
+**K1 (frustration-freeness; PROVED per corpus-r2 adjudication).  ASSUME** D16.  **PROVE**
 `h^{\rm kink}_{x,x+1} ⪰ 0`, with
 `spec = {0,0,0,JΔ}`; its kernel is
 `span{|↑↑⟩, |↓↓⟩, |↑↓⟩+q^{-1}|↓↑⟩}`, with `q` fixed in D16.
@@ -97,7 +97,7 @@ spectrum and kernel are the ones stated.
 
 **⟨1⟩3. QED.** □
 
-**K2 (exact kink product states; SKETCH pending r2).  ASSUME** D16 and K1.
+**K2 (exact kink product states; PROVED per corpus-r2 adjudication).  ASSUME** D16 and K1.
 **PROVE** that every D16 vector `|K(z)⟩`, `z∈ℂ\{0}`, lies in the kernel of
 every `h^{\rm kink}_{x,x+1}`.
 
@@ -108,7 +108,7 @@ two-site factor lies in K1's kernel.
 **⟨1⟩2.** Therefore every bond term annihilates the product vector.
 *Justification:* ⟨1⟩1 and D16's product construction.  **⟨1⟩3. QED.** □
 
-**K3 (boundary-field invisibility; SKETCH pending r2).  ASSUME** D16.
+**K3 (boundary-field invisibility; PROVED per corpus-r2 adjudication).  ASSUME** D16.
 **PROVE** that `H_{\rm kink}` and `H_{\rm XXZ}` generate the same derivation
 on `𝔄`.
 
@@ -390,7 +390,8 @@ origin; it is not proved here.
 
 ### Statement
 
-> **M′ (conditional lattice memory implication; SKETCH pending r2).**
+> **M′ (conditional lattice memory implication; PROVED conditional on D18 per
+> corpus-r2 adjudication).**
 >
 > **ASSUME.**
 > (A1) D16's spin-`1/2` easy-axis XXZ dynamics, with conserved `U(1)` charge;
@@ -458,11 +459,11 @@ about one-time `Var(𝔛_W)` without a sharp initial state/two-time protocol.
 
 | ingredient | status |
 |---|---|
-| ⟨1⟩1, ⟨1⟩2 (flux form, Eq. 2.2) | **SKETCH pending r2** — the exact physical-current calculation survived r1. |
-| ⟨1⟩3 (window ⇒ wall position) | **SKETCH pending r2**, with the D1(c) `C_{λ̃}λ̃^{d_W}` error. |
-| ⟨1⟩4 (charge bookkeeping) | **SKETCH pending r2**, conditional on D18. |
+| ⟨1⟩1, ⟨1⟩2 (flux form, Eq. 2.2) | **PROVED per corpus-r2 adjudication.** |
+| ⟨1⟩3 (window ⇒ wall position) | **PROVED conditional on D18**, with the D1(c) `C_{λ̃}λ̃^{d_W}` error. |
+| ⟨1⟩4 (charge bookkeeping) | **PROVED conditional on D18 per corpus-r2 adjudication.** |
 | **H-AD** | **CONJECTURE** for the full XXZ chain.  D18 is the sole definition. |
-| `T(k)` from (5.1) | **SKETCH**, exact for the Fano graph conditional on Mq-E; `O(Δ^{-2})` leakage measured beyond the projection. |
+| `T(k)` from (5.1) | **PROVED conditional on Mq-E for the displayed Fano graph per corpus-r2 adjudication**; `O(Δ^{-2})` leakage measured beyond the projection. |
 | `δx = ` DC limit of the *soft factor* | **REFUTED as stated** (see §10). |
 
 ### What the soft theorem is actually needed for
@@ -490,7 +491,8 @@ That universality is *not* established here and is the real C ⇒ B obligation.
 
 ## 7. The `B ⇒ A` edge (claim **B3**)
 
-**CLAIM B3 (SKETCH pending r2).**  Assume a translation-invariant finite-range
+**CLAIM B3 (PROVED per corpus-r2 adjudication, with N9 density leaf below).**
+Assume a translation-invariant finite-range
 dynamics whose two asymptotic vacua are stationary, a state initially in
 `𝒦_{αβ}` (D9(a)), and, for the event-specific charge statement, D18 with a
 window `W=[a,b]`.  Then the intended surviving clauses are:
@@ -507,9 +509,10 @@ gives `-2`.
 **⟨1⟩1. PROVE (sector rigidity at finite time).**
 
 **⟨2⟩1.**  Let `α_t` be the finite-range Heisenberg automorphism.  For every
-local `O` and fixed `t`, the Lieb--Robinson estimate approximates
-`α_t(τ_n(O))` in norm by an observable supported in a fixed-radius enlargement
-of `supp τ_n(O)`, with an error tending to zero as that enlargement grows.
+local pair `D,O`, fixed `t`, and `ε>0`, Lieb--Robinson quasi-locality supplies
+local observables `D_ε,O_ε`, independent of `n`, such that
+`||α_t(D)-D_ε||<ε` and `||α_t(O)-O_ε||<ε`.  Translation covariance then gives
+`||α_t(τ_n(O))-τ_n(O_ε)||<ε`.
 *Justification:* named Lieb--Robinson quasi-locality theorem for D10(a)'s
 finite-range dynamics.
 
@@ -518,10 +521,17 @@ finite-range dynamics.
 `ω_{α/β}(α_t(O))=ω_{α/β}(O)`.
 *Justification:* the assumptions of B3 and D9(a)'s vacuum functionals.
 
-**⟨2⟩3.**  Insert the approximant of ⟨2⟩1 into both factorised limits of
-D9(a).  Taking `n→∓∞`, then removing the Lieb--Robinson approximation error,
-reproduces the same left/right functionals `ω_α,ω_β`.
-*Justification:* D9(a), ⟨2⟩1, and ⟨2⟩2.
+**⟨2⟩3.**  Apply D9(a) to the local pair `D_ε,O_ε`.  The state norm and
+submultiplicativity give the explicit two-factor estimate
+
+`|ϱ(α_t(D)α_t(τ_n(O)))-ϱ(D_ετ_n(O_ε))|
+ ≤ ε||O||+(||D||+ε)ε`,
+
+with analogous one-factor bounds for `ϱ(α_t(D))` and
+`ω_{α/β}(α_t(O))`.  First taking `n→∓∞` in the local factorised limit and then
+`ε↓0`, using stationarity from ⟨2⟩2, reproduces the same left/right
+functionals `ω_α,ω_β`.
+*Justification:* D9(a), norm density/quasi-locality, ⟨2⟩1, and ⟨2⟩2.
 
 **⟨2⟩4.**  Hence `ϱ_t∈𝒦_{αβ}` for every finite `t`; the argument fixes the
 labels rather than merely preserving disjointness.
@@ -553,8 +563,8 @@ transmission has `(q_in,q_out)=(-1,+1)` and therefore `δx=-1/s`.
 
 **⟨1⟩3. QED.** □
 
-**Honest residue.**  The proof above is newly repaired and remains `SKETCH`
-until r2.  The proposed `ℤ`-torsor/unique-flat-kink statement depends on
+**Honest residue.**  The proof above is PROVED per corpus-r2 adjudication after
+the N9 density leaf was supplied.  The proposed `ℤ`-torsor/unique-flat-kink statement depends on
 Conjecture K4/R5 and is therefore a `CONJECTURE`, not a B3 consequence.  The
 vacuum-pair label of D9(d) is rigid under ⟨1⟩1 and is read off, not shifted;
 `δx` records the leg-charge transfer of ⟨1⟩2 within that fixed label.  It is
@@ -568,7 +578,7 @@ virtual bond data.
 | id | requirement | needed for |
 |---|---|---|
 | **R1** | Optional future theorem extending D10(d)'s virtual potential to a broken kink sector.  It is **not** used by Mq-flux or repaired B3. | future virtual/bond interpretation only |
-| **R2** | D17 now supplies the `ℓ¹` refinement; B3 ⟨1⟩1 states the finite-time Lieb--Robinson label argument. | repaired, pending r2 |
+| **R2** | D17 now supplies the `ℓ¹` refinement; B3 ⟨1⟩1 states the finite-time Lieb--Robinson label argument. | PROVED per corpus-r2 after N9 density sweep |
 | **R3** | Optional future kink-sector half-line implementation theorem.  Raw half-line charge is **not** used as memory. | future virtual interpretation only |
 | **R4** | Prove D18 for the full spin-`1/2` XXZ chain and prove the projected all-volume enumeration/isomorphism Mq-E before invoking the Fano spectral argument. | M′, Mq-AD3; bd `tns-d51` |
 | **R5** | A thermodynamic-limit proof of Conjecture K4 (one zero-energy kink state per magnetisation sector; exact flatness). | torsor/no-drift conjectures |
@@ -667,9 +677,9 @@ the D16/projected scope is spin `1/2`.
 
 ---
 
-## 10. Honest post-r1 status and open items
+## 10. Honest post-r2 status and open items
 
-**SKETCH pending r2.**
+**PROVED per corpus-r2, with the displayed conditions.**
 * The physical-current flux/DC calculation, Eq. (2.2), is exact algebraically;
   no virtual/bond-potential reading is attached.
 * D13(b) and D13(a) are the same finite-window expectation difference;
@@ -678,8 +688,8 @@ the D16/projected scope is spin `1/2`.
   expectation is not integer-quantised.
 * B3 consists only of the repaired finite-time label argument and
   `2s·δx+(q_out-q_in)=0`; the false half-line formula is retracted.
-* K1--K3 are derivations in this shard but remain SKETCH until the r2 package
-  verdict.
+* K1--K3 and B3 are PROVED; M′ is PROVED conditional on D18; the Fano formula
+  and soft zero are PROVED conditional on Mq-E for the displayed graph.
 
 **SKETCH calculations/evidence.**
 * `t(k)`, `T(k)`, `δ_t(k)` of (5.1)–(5.2) are exact for the displayed Fano
@@ -712,8 +722,8 @@ the D16/projected scope is spin `1/2`.
   (b) `δx` is insensitive to `δ_t(k)` entirely — a purely transmitting wall
   with `δ_t ≡ 0` still displaces by exactly `−1/s`.  The surviving true
   statement is Eq. (2.2) + conditional M′: *memory is the DC weight of the
-  **boundary current**, and the soft data enter only through `T(k)`*.  This is
-  the stable candidate statement pending r2.
+  **boundary current**, and the soft data enter only through `T(k)`*.  M-flux
+  and conditional M-quant are PROVED per corpus-r2.
 
 **Relation to prior art (novelty-sweep rows 2, 8).**
 Lan–Xiao (arXiv:2107.05401) obtain, for a continuum easy-*plane* ferromagnet,

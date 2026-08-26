@@ -5,10 +5,10 @@
 
 ## 0. Statement and honest status
 
-**Status: SKETCH — under repair after
-`verdicts/mquant-ml45-r1.md` objections 4--10.**  The exact flux identity and
-the conditional charge arithmetic survived r1.  Positive promotion awaits an
-r2 verdict.  In particular, the projected Fano result below is conditional on
+**Status:** M-flux is **PROVED**, M-quant is **PROVED conditional on D18**,
+Mq-AD3 is **PROVED conditional on Mq-E**, and the displayed Fano formula/soft
+zero is **PROVED conditional on Mq-E for the displayed graph**, all per
+`verdicts/corpus-r2.md` adjudication.  In particular, the projected result is conditional on
 the stated all-volume sector enumeration/unitary isomorphism; the repository
 currently contains only a finite `N=14` enumeration.
 
@@ -41,9 +41,8 @@ This algebraic implication does not establish the required channels for a
 higher-spin XXZ chain or for general `(G, injective MPS, finite-range H)`.
 That generality gap is tracked as bd `tns-zw2` and is not attempted here.
 
-The finite-`N`, finite-time flux/DC lemma (§1) is mathematically exact, but its
-campaign status is `SKETCH` until r2.  D18 is assumed for the unprojected
-chain.  Section 3 verifies its spectral consequences **only if** the sector
+The finite-`N`, finite-time flux/DC lemma (§1) is PROVED per corpus-r2.  D18 is
+assumed for the unprojected chain.  Section 3 verifies its spectral consequences **only if** the sector
 reduction hypothesis Mq-E is supplied.  The measured `O(Δ^{-2})` leakage into
 `≥5`-wall configurations is evidence for a controlled lift, not a
 uniform-in-time scattering estimate.  No result below uses the refuted
@@ -128,8 +127,8 @@ the operator `N_T` and the displacement variance below retain that coherence.
 
 ## 3. Conditional H-AD verification for the `≤3`-wall graph
 
-**Mq-AD3 (conditional projected spectral reduction; SKETCH pending
-r2).**  For spin `1/2`, let `P_3` project the fixed-`S^z`
+**Mq-AD3 (PROVED conditional on Mq-E per corpus-r2 adjudication).**  For spin
+`1/2`, let `P_3` project the fixed-`S^z`
 kink-plus-one-magnon space onto configurations with one or three domain walls
 and retain the connected component containing the incoming magnon.
 

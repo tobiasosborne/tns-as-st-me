@@ -14,7 +14,7 @@
 | `𝒜` | ~~lattice asymptotic symmetry group~~ **(SUPERSEDED r2/r3)** — the coset *space* `(G_L×G_R)/G_diag`; a **group** only for abelian `G`, and **never** the vacuum orbit unless `N_α = {e}`.  The object that acts is `𝒜_eff = G/N_α` (unbroken) or `(G/H_α)²` with double-coset invariant (broken).  Do not use `𝒜` as a classifying object | definitions.md D4(b), D9(d) |
 | `\|Φ_k(B)⟩` | excitation-ansatz state Σ_x e^{ikx}(…A B A…) | definitions.md D5 |
 | `B ≃ B + e^{ik} A X − X A` | tangent-space gauge freedom (null directions) | definitions.md D5 |
-| `S(k; ·)` | ~~soft factor in Conjecture S~~ **(SUPERSEDED at freeze 2026-08-26)** — the soft factor is written `𝖲`; bare `S` with momentum arguments is reserved for the Bethe amplitudes `S_{12}`, `S_{21}`, `S_phys` | TRIANGLE.md §2.4 (the D20(b) pointer lapsed with the 2026-08-26 SPT rebuild) |
+| `S(k; ·)` | ~~soft factor in Conjecture S~~ **(SUPERSEDED at freeze 2026-08-26)** — the Corner-C soft factor is written `𝖲`; bare `S` with momentum arguments is reserved for the Bethe amplitudes `S_{12}`, `S_{21}`, `S_phys` | definitions.md D25 |
 | `R(k)` | ~~soft-theorem remainder~~ **(SUPERSEDED at freeze 2026-08-26)** — soft-theorem remainders are **always subscripted** (`R_δ`, `R_S`, `R_{S2}`); bare `R(k)` with a momentum argument is the kink--magnon **reflection probability** `1 − T(k)` | definitions.md D15 (the D20 pointer lapsed with the 2026-08-26 SPT rebuild) |
 | `δx` | kink collective-coordinate displacement (memory observable); the precise definition is the windowed bond charge `𝔛_W` of D13(a) | definitions.md D13(a) |
 | `H`, `h_{x,x+1}`, `J`, `P_{x,x+1}` | shifted isotropic spin-1/2 Heisenberg-ferromagnet Hamiltonian, bond term, positive exchange, and spin swap | definitions.md D6 |
@@ -121,9 +121,13 @@ rules below only record how the rebuilt text already uses each symbol, and are
 part of what critic r2 should check.*
 
 8. **`E`** — the transfer map and its contractions carry an *operator or
-   tensor-content* subscript, `E`, `E_O`, `E_b` (D1(b),(d), D19); the fixed
-   endpoint **register space** `E_C := ℂ^χ` carries a *tensor-label* subscript
-   and appears only in the positions `End(E_C)`, `→ E_C` (D19).
+   tensor-content* subscript, `E`, `E_O`, or `E_b` for the transfer map of the
+   tensor `A_b` (D1(b),(d), D19, D23).  The bound-pair energy is always the
+   function `E_b(K)`, with its momentum argument displayed (D7); bare `E_b`
+   occurs only in the local SPT transfer calculation.  The fixed endpoint
+   **Schmidt/edge register space** `E_C := ℂ^χ` carries a tensor-label
+   subscript and appears only in register positions such as `End(E_C)`,
+   `→E_C`, or `E_C⊗E_C^*` (D19, D21).
 9. **`X`, `Y`, `Z`** (extends 7) — bare `X, Y, Z` are the Pauli matrices
    inside the explicit D23 comparison tensors and the contractions built from
    them (`A_b^x = a_bX`, `V_T = (I,Z,I,Z)`, `ℜ_{A_b,L}(S^z) → −Z/2`); the
@@ -132,8 +136,10 @@ part of what critic r2 should check.*
     cocycle-class subscript `ω` (D21); the charge density keeps its site
     subscript `q_x(ξ)` (D10).
 11. **`r`** — bare `r` is the right fixed point of the transfer map (D1(c),
-    D19, D23); the kink--magnon reflection *amplitude* always carries a
-    momentum argument, `r(k)` (D15).
+    D19, D23), except inside D7's ordered-coordinate bound-pair paragraph and
+    its direct ML2/oracle descendants, where the explicitly local declaration
+    `r:=y−x` makes it the integer relative separation.  The kink--magnon
+    reflection *amplitude* always carries a momentum argument, `r(k)` (D15).
 12. **`T`** (extends 3) — with physical superscripts and a family parameter,
     `T_t`, `T_t^x`, `T^z`, it is the D23 injective `χ=2` trivial comparison
     tensor (`TRIV₂`); no other reading of `T` takes that position.
@@ -207,20 +213,23 @@ SUPERSEDED in place rather than deleted).*
 
 | Symbol | Meaning | First fixed in |
 |---|---|---|
-| `𝒞_C^{(n)}`, `E_C` | normalized boundary transfer compression `r^{-1/2}E_O(r)r^{-1/2}`, and the fixed finite endpoint register `ℂ^χ` it acts on | definitions.md D19 |
+| `𝒞_C^{(n)}`, `E_C` | normalized boundary transfer compression `r^{-1/2}E_O(r)r^{-1/2}`, and the fixed finite Schmidt/edge register `ℂ^χ` it acts on | definitions.md D19 |
+| `𝓜_χ(C)` | padded-window matrix module `M_χ(ℂ)≅E_C⊗E_C^*`; under left multiplication it is `χ` copies of the `E_C` projective action | definitions.md D21 |
 | `f_{L,κ}^{bulk}`, `f_L^{edge}`, `g_L^{edge}`, `ǔ_C(g)` | bulk packet, edge profile, finite-group endpoint profile, and the normal-ordered on-site operator `e^{-iθ_C(g)}u(g)` | definitions.md D19 |
 | `𝔉_{N,L}^{bulk}(ξ)` | operator-valued bulk soft insertion between the fixed channel registers | definitions.md D20 |
-| `ℜ_{C,L}(ξ)`, `𝕊_{C,L}^{comp}(g)`; `ℜ_C`, `𝕊_C` | registered edge (Lie) residue and compensated endpoint group residue, and their operator-norm limits | definitions.md D20 |
+| `Q^{H}[f;ξ]`, `X_C^∘(ξ)` | Hermitian modulated charge `-iQ[f;ξ]`, and the phase-gauge-invariant centered virtual generator `X_C-tr(rX_C)I` | definitions.md D20--D21 |
+| `ℜ_{C,L}(ξ)`, `𝕊_{C,L}^{comp}(g)`; `ℜ_C`, `𝕊_C` | registered Hermitian edge (Lie) residue and compensated endpoint group residue, and their operator-norm limits | definitions.md D20 |
 | `F_{C,L}^{edge}(e',e;ξ)` | scalar edge form factor — a matrix element of `ℜ_{C,L}`, never itself algebra-valued | definitions.md D20 |
 | `(H-soft-p)` | uniformity of the soft limit through `p` derivatives, required before a coefficient of order `p` exists | definitions.md D20 |
 | `H_{\rm edge}`, `J_C`, **(H-split)** | physical half-chain edge space, the intertwining isometry `E_C → H_edge`, and the hypothesis that supplies them — **register caveat**: this is still the SKETCH split-property box, corner-a.md ⟨1⟩4.⟨2⟩9 | definitions.md D21 |
 | `d_ω` | minimal dimension of an `ω`-projective irrep of `G`; a nontrivial class has `d_ω>1` | definitions.md D21 |
-| `ν_ω`, `q_ω(ξ)`, `Q_edge(ξ)` | class-invariant central character, the charge-lattice offset `e^{2πiq_ω(ξ)}=ν_ω(z_ξ)`, and the Hermitian endpoint charge `-iX_C(ξ)` with spectrum in `q_ω(ξ)+ℤ` | definitions.md D21 |
+| `ν_ω`, `q_ω(ξ)`, `q_{ω,C}^∘(ξ)`, `Q_edge(ξ)` | central character, the lift-dependent raw offset, the gauge-invariant centered offset, and the Hermitian centered endpoint charge `-iX_C^∘(ξ)` with spectrum in `q_{ω,C}^∘(ξ)+ℤ` | definitions.md D21 |
 | `ΔQ_edge`, **(H-dress)**, **(H-AD-edge)** | edge memory operator `W_+^†Q_edgeW_+ - W_-^†Q_edgeW_-`, and the dressed-endpoint / asymptotic-decomposition hypotheses it requires | definitions.md D22 |
 | `A_b`, `T_t`, `P` | the symmetric AKLT path (`A^a=σ_a/√3` at `b=1/√3`), the injective `χ=2` `D₂`-trivial tensor, and the `χ=1` `O(2)` product comparator | definitions.md D23 |
 | `Γ_2^C`, `W_2^C`, `h_C`, `h_{∂,C}`, `H_{C,+}` | length-two range map, its isometry, the parent bond term, the boundary term, and the half-chain parent Hamiltonian | definitions.md D23 |
 | `Ad(V_α(g))` | conjugation action `V(·)V^{-1}`; it carries no projective multiplier, but is **not** `[ω]`-blind as a representation (SPT-B'(iii)) | corner-a.md ⟨1⟩4.⟨2⟩4; theory/spt-rebuild.md ⟨1⟩3.⟨2⟩3 |
-| `𝖲` (SPT sense), `F_f(ξ;β,α)`, `F_f(g;β,α)`, `m_L`, `Δm_L` | **(SUPERSEDED by the 2026-08-26 rebuild)** the pre-rebuild SPT soft factor, soft form factor, and edge memory observable; the rebuilt objects are `𝕊_C`/`ℜ_C`, `F_{C,L}^{edge}`, and `ΔQ_edge`.  `𝖲(k_s;{q_i,v_i})` in the **Corner-C** sense (claim `S-general`) is a different object and is unaffected | definitions.md D20--D22 (rebuilt); Corner-C `𝖲`: TRIANGLE.md §2.4 |
+| `𝖲` (SPT sense), `F_f(ξ;β,α)`, `F_f(g;β,α)`, `m_L`, `Δm_L` | **(SUPERSEDED by the 2026-08-26 rebuild)** the pre-rebuild SPT soft factor, soft form factor, and edge memory observable; the rebuilt objects are `𝕊_C`/`ℜ_C`, `F_{C,L}^{edge}`, and `ΔQ_edge`.  `𝖲(k_s;{q_i,v_i})` in the **Corner-C** sense (claim `S-general`) is a different object and is unaffected | definitions.md D20--D22 (rebuilt); Corner-C `𝖲`: definitions.md D25 |
+| `𝖲(k_s;{q_i,v_i})` | Corner-C proposed soft multiplier on the D24(d) class `𝒮_W`; existence and universality remain claim `S-general` (CONJECTURE) | definitions.md D25 |
 
 **ML4 / ML5 / M-quant (added at the freeze with the summit shards).**
 

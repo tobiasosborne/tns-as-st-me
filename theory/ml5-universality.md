@@ -2,12 +2,12 @@
 
 Status: **REFUTED** for unrestricted process independence.  A four-site local
 source leaves the one-hard amplitude unchanged and changes the linear
-hard-plus-soft coefficient.  The repaired conditional result is **SKETCH —
-under repair after `verdicts/mquant-ml45-r1.md` objections 2--3**: ML5-A now
+hard-plus-soft coefficient.  The repaired conditional results ML5-A and ML5-B
+are **PROVED per `verdicts/corpus-r2.md` adjudication**: ML5-A
 requires both a zero soft intercept and a zero contact first jet with an
 explicit second-derivative norm, and ML5-B explicitly assumes an exhaustive
 normed LSZ decomposition.  Deriving these hypotheses for a nontrivial
-microscopic source class is future work (bd `tns-axg`).
+microscopic source class remains CONJECTURE/future work (bd `tns-axg`).
 
 This shard uses ML4-A and the FM Ward residue (11) of
 `ml4-ward-reduction.md`, D6--D8, and the local contact equation (R16) of
@@ -127,8 +127,8 @@ single FM external leg.
 
 ## ⟨1⟩3. Conditional Ward/Wigner universality theorem
 
-**ML5-B (conditional one-external-leg implication; SKETCH pending
-r2).**
+**ML5-B (conditional one-external-leg implication; PROVED per corpus-r2
+adjudication).**
 
 **ASSUME.** In addition to ⟨1⟩1, let a source class `𝒮_W` satisfy:
 
@@ -319,9 +319,9 @@ Justification: inspection of the checker.  **⟨3⟩4. QED.** □
 
 1. **REFUTED:** universality over all local or exponentially quasi-local
    sources.  The explicit counterexample is (7), with coefficient (10).
-2. **SKETCH pending r2:** ML5-A, the necessary-and-sufficient
+2. **PROVED per `corpus-r2.md` adjudication:** ML5-A, the necessary-and-sufficient
    zero-intercept-and-zero-first-jet criterion with the explicit `K_O` norm.
-3. **SKETCH pending r2:** ML5-B.  Under the exhaustive normed LSZ
+3. **PROVED per `corpus-r2.md` adjudication (conditional implication):** ML5-B.  Under the exhaustive normed LSZ
    decomposition, Ward residue plus external flux kinematics gives the signed
    Wigner coefficient `2χ`; reduced-channel regularity and the no-contact
    hypothesis bound every remaining term.
