@@ -321,9 +321,17 @@ def check_phase_gauge_centering(red_gauge: bool) -> tuple[float, float]:
     tensors = aklt_tensor(1.0 / np.sqrt(3.0))
     measured = edge_charge_operator(tensors, 64)
 
-    # D10's infinitesimal physical charge is anti-Hermitian; multiplying by
-    # -i gives the Hermitian compression used by D20.
-    antihermitian_partial = 1j * measured
+    # Build D10's partial charge independently from its anti-Hermitian one-site
+    # generator -i S^z.  The declared dual-left register reverses the endpoint
+    # Lie-algebra orientation relative to this bulk insertion.
+    spin_z = np.array([[0, -1j, 0], [1j, 0, 0], [0, 0, 0]], dtype=complex)
+    right = I2 / 2.0
+    term = inserted_transfer(tensors, -1j * spin_z, right)
+    accumulated = np.zeros((2, 2), dtype=complex)
+    for _ in range(64):
+        accumulated += term
+        term = transfer_apply(tensors, term)
+    antihermitian_partial = -2.0 * accumulated
     require(
         np.linalg.norm(
             antihermitian_partial.conj().T + antihermitian_partial,
@@ -333,12 +341,16 @@ def check_phase_gauge_centering(red_gauge: bool) -> tuple[float, float]:
         "D10 partial charge was not anti-Hermitian",
     )
     require(
+        np.linalg.norm(antihermitian_partial - 1j * measured, ord=np.inf)
+        < TOL_EXACT,
+        "D10 partial-charge compression did not equal i times the measured charge",
+    )
+    require(
         np.linalg.norm(-1j * antihermitian_partial - measured, ord=np.inf)
         < TOL_EXACT,
         "-iQ did not reproduce the Hermitian registered charge",
     )
 
-    right = I2 / 2.0
     base_generator = -0.5j * Z
     phase_slope = 0.37
     rephased_generator = base_generator + 1j * phase_slope * I2

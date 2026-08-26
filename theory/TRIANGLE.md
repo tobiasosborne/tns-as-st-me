@@ -1,6 +1,6 @@
 <!-- ROLE: D2 of HANDOFF_MPS_SOFT_THEOREM.md §4 — the campaign framework.
-     Post-corpus-r2 repair: adjudicated promotions are applied; parent SPT
-     rows remain SKETCH awaiting focused critic r3. -->
+     Post-corpus-r3 repair: adjudicated promotions and final narrow fixes are
+     applied. -->
 
 # TRIANGLE.md — the 1D lattice infrared triangle
 
@@ -8,8 +8,9 @@ Definitions are `definitions.md` D1--D25 and symbols are `notation.md`.
 **Authoritative L5 statuses:** `PROVED`, `SKETCH`, `CONJECTURE`, `REFUTED`.
 Empirical, conditional, under-review, and future-work descriptions are prose
 qualifiers, not extra status values.  `PROVED` requires an L6 promotion.  The
-promotions below are exactly those in `verdicts/corpus-r2.md`; every HOLD
-remains at its prior status with the named missing step recorded.
+promotions below are exactly those in `verdicts/corpus-r2.md` and
+`verdicts/corpus-r3.md`; every HOLD remains at its prior status with the named
+missing step recorded.
 
 **Two standing TJO directives.**  *Generality*: Corner A is general.  The
 present memory shard proves only conditional charge arithmetic and studies the
@@ -391,11 +392,12 @@ is numerology and must be dropped from the paper.**  *Shard:* `corner-b-draft.md
 
 ## §5. SPT soft rigidity — bulk deformability versus endpoint quantisation
 
-Rebuilt shard: `theory/spt-rebuild.md`; definitions D19--D23.  After the r2
-repairs, the parent SPT rows remain SKETCH awaiting focused critic r3.  The
-narrow closed-multiplier cancellation and exact AKLT-family contraction are
-PROVED per `corpus-r2.md`.  The old pointwise bulk-blindness theorem and the
-all-orders edge no-go are REFUTED.
+Rebuilt shard: `theory/spt-rebuild.md`; definitions D19--D23.  Corpus r3
+promotes SPT-B', registered SPT-T'/SPT-D', and the scoped SPT-M' conditional
+implication.  SPT-E' is repaired, awaiting r4, and remains SKETCH.  The narrow
+closed-multiplier cancellation and equation-(4.1) AKLT-family contraction
+remain PROVED per `corpus-r2.md`.  The old pointwise bulk-blindness theorem and
+the all-orders edge no-go are REFUTED.
 
 **Dichotomy.**  A closed on-site bulk string has two virtual endpoints.  Their
 projective multipliers cancel, so no projective multiplication anomaly can be
@@ -419,12 +421,12 @@ content.  A physical edge-Hilbert interpretation carries hypothesis H-split.
 | id | rebuilt statement | honest status |
 |---|---|---|
 | SPT-B-mult | Closed-bulk endpoint multipliers cancel exactly under ordered multiplication and lift rephasing | PROVED per corpus-r2 adjudication |
-| SPT-B' | With external tensors, embeddings, gauge fixes, Gram normalizations, and differentiated profiles continuous/`C^p`, coefficients are continuous/deformable and may retain class-correlated `Ad(V)` data | SKETCH; N2 repaired, awaiting critic r3 |
-| SPT-E-AKLT | Hermitian AKLT-family residue is exactly `-½[1-(2b²-1)^L]Z→-Z/2`; trivial `O(2)` product residue is `0` | PROVED per corpus-r2 adjudication |
-| SPT-E' | Centered registered charge in the `ω`-projective Schmidt/edge register, `dim≥d_ω`, `spec Q_edge⊂q_{ω,C}^∘+ℤ`; padded module has `χ` copies | SKETCH; N1/N4 repaired, physical statement conditional on H-split, awaiting r3 |
-| SPT-T' | For commuting `g,h`, one twist endpoint carries the slant/commutator phase and the other compensates | SKETCH; physical statement conditional on H-split/H-dress; endpoint-convention repair awaits r3 |
-| SPT-D' | Ordered endpoint-soft products realise the cocycle globally; the infinitesimal central cocycle is cohomologically trivial and gauged away in the stated phase convention | SKETCH; physical statement conditional on H-split/H-dress; N5/N6 repair awaits r3 |
-| SPT-M' | Conditional channel bookkeeping quantises edge-charge changes and the projective module protects memory capacity; topology does not force a nonzero amplitude | SKETCH given H-split/H-AD-edge; centered-charge input awaits r3 |
+| SPT-B' | Under the common-gap path and continuous/`C^p` external data, normalized finite/thermodynamic/soft coefficients are continuous (with H-soft-p for derivatives) and become topological only after a separate local-constancy proof; class-correlated `Ad(V)` data are allowed | PROVED per corpus-r3 adjudication |
+| SPT-E-AKLT | Equation (4.1) gives the Hermitian AKLT-family residue exactly as `-½[1-(2b²-1)^L]Z`, with AKLT-family limit `-Z/2` | PROVED per corpus-r2 adjudication |
+| SPT-E' | At a fixed tensor, the centered registered charge in the `ω`-projective Schmidt/edge register is lift-gauge invariant, `dim≥d_ω`, and `spec Q_edge⊂q_{ω,C}^∘+ℤ`; padded module has `χ` copies | SKETCH; repaired, awaiting r4; physical statement conditional on H-split; no deformation constancy claimed |
+| SPT-T' | In the registered endpoint, (5.1) follows by eliminating `V(hg)` and (5.2) follows for commuting `g,h`; the second endpoint compensates | PROVED; physical observable conditional on H-split/H-dress |
+| SPT-D' | Ordered registered endpoint products realise the cocycle; for compact semisimple Lie algebra the infinitesimal cocycle is a coboundary removed only in the stated phase section | PROVED; physical edge use conditional on H-split/H-dress |
+| SPT-M' | Given H-split, H-AD-edge, charge conservation, and definite channel charges, `ΔQ_edge=-(Q_bulk,out-Q_bulk,in)` and fixed-system channel differences are integral; only fixed-tensor congruence is used, and protection is capacity/module protection, not nonzero amplitude | PROVED as a conditional implication |
 | SPT-M'-dyn | Nonzero edge-changing reflection for D23's exact open AKLT parent `H_{A,+}^{dyn}` with boundary coupling `P^{(S=2)}_{0,1}` | CONJECTURE; half-chain wave operators, H-AD-edge, on-shell matrix, and nonvanishing missing |
 
 **Exact deciding computation.** `spt_rebuild_check.py` fixes all tensors and
@@ -529,12 +531,12 @@ classifying datum.  *Shard:* `corner-b-draft.md` §7.
 | Conjecture M (brief's literal form) | REFUTED | corner-b-draft.md §10 | — |
 | Bc ("the two 2s"; spin-1 falsifier) | CONJECTURE | §4 | not yet computed |
 | SPT-B-mult closed multiplier cancellation | PROVED | spt-rebuild.md ⟨1⟩3.⟨2⟩1; corpus-r2 adjudication | spt_rebuild_check.py S-C2 |
-| SPT-B' coefficient continuity/deformability with continuous/`C^p` external data | SKETCH | spt-rebuild.md ⟨1⟩3; HOLD awaiting r3 | spt_rebuild_check.py S-C2, S-C3 |
-| SPT-E-AKLT exact Hermitian centered contraction | PROVED | spt-rebuild.md ⟨1⟩4.⟨2⟩4; corpus-r2 adjudication | spt_rebuild_check.py S-C4 |
-| SPT-E' centered endpoint residue and shifted charge lattice; physical edge statement conditional on H-split | SKETCH | spt-rebuild.md ⟨1⟩4; HOLD awaiting r3 | spt_rebuild_check.py S-C4, S-C5, phase-gauge red |
-| SPT-T' registered twist endpoint/slant phase; physical observable conditional on H-split/H-dress | SKETCH | spt-rebuild.md ⟨1⟩5.⟨2⟩1; HOLD awaiting r3 | — |
-| SPT-D' ordered endpoint-soft products; physical edge statement conditional on H-split/H-dress | SKETCH | spt-rebuild.md ⟨1⟩5.⟨2⟩2; HOLD awaiting r3 | spt_rebuild_check.py S-C5 |
-| SPT-M' conditional channel bookkeeping given H-split/H-AD-edge | SKETCH | spt-rebuild.md ⟨1⟩6.⟨2⟩1; HOLD awaiting r3 | dynamical follow-on tns-cpq |
+| SPT-B' coefficient continuity/deformability with continuous/`C^p` external data | PROVED | spt-rebuild.md ⟨1⟩3; corpus-r3 adjudication | spt_rebuild_check.py S-C2, S-C3 |
+| SPT-E-AKLT equation (4.1) and its AKLT-family limit | PROVED | spt-rebuild.md ⟨1⟩4.⟨2⟩4; corpus-r2 adjudication | spt_rebuild_check.py S-C4 |
+| SPT-E' fixed-tensor centered endpoint congruence; physical edge statement conditional on H-split | SKETCH | spt-rebuild.md ⟨1⟩4; repaired, awaiting r4 | spt_rebuild_check.py S-C4, S-C5, phase-gauge red |
+| SPT-T' registered twist endpoint/slant phase; physical observable conditional on H-split/H-dress | PROVED | spt-rebuild.md ⟨1⟩5.⟨2⟩1; corpus-r3 adjudication | — |
+| SPT-D' ordered endpoint-soft products; physical edge statement conditional on H-split/H-dress | PROVED | spt-rebuild.md ⟨1⟩5.⟨2⟩2; corpus-r3 adjudication | spt_rebuild_check.py S-C5 |
+| SPT-M' conditional implication given H-split/H-AD-edge, charge conservation, and definite channel charges | PROVED | spt-rebuild.md ⟨1⟩6.⟨2⟩1; corpus-r3 adjudication | dynamical follow-on tns-cpq |
 | SPT-M'-dyn nonzero reflection for D23's exact open AKLT parent | CONJECTURE | spt-rebuild.md ⟨1⟩6.⟨2⟩2; missing wave operators/on-shell matrix/nonvanishing | tns-cpq follow-on |
 | SPT-B-r1 pointwise bulk `[ω]`-blindness | REFUTED | spt-rebuild.md ⟨1⟩3.⟨2⟩3 | spt_rebuild_check.py S-C2 |
 | SPT-nogo all-orders/all-registers form | REFUTED | spt-rebuild.md ⟨1⟩4 | spt_rebuild_check.py S-C4 |
@@ -542,8 +544,9 @@ classifying datum.  *Shard:* `corner-b-draft.md` §7.
 | C ⇒ B | SKETCH | §6.2 | flux/empirical checks only |
 | B ⇒ A (B3 proved; reconstruction step open) | SKETCH | §6.3; HOLD per corpus-r2 | — |
 
-**Freeze rule.**  The corpus-r2 promotions are frozen exactly as recorded
-above.  Parent SPT rows stay SKETCH until focused critic r3; no unlisted claim
-is promoted.  SPT content lives only in `theory/spt-rebuild.md`, with
-`definitions.md` D19--D23, `claims/CLAIMS.md`, and §5 in lockstep;
-`theory/spt-scoping-draft.md` is superseded history.
+**Freeze rule.**  The corpus-r2 and corpus-r3 promotions are frozen exactly as
+recorded above.  SPT-E' is repaired, awaiting r4, and remains SKETCH; no
+unlisted claim is promoted.  SPT content lives only in
+`theory/spt-rebuild.md`, with `definitions.md` D19--D23,
+`claims/CLAIMS.md`, and §5 in lockstep; `theory/spt-scoping-draft.md` is
+superseded history.

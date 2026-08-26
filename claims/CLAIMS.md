@@ -2,21 +2,21 @@
      the L6 proposer/critic loop converges; verdict files live in theory/.
      Authoritative L5 statuses: PROVED | SKETCH | CONJECTURE | REFUTED.
      Empirical, conditional, under-review, and future-work qualifiers belong
-     in prose, never as additional status values.  Corpus-r2 promotions are
-     applied; parent SPT rows remain SKETCH awaiting focused critic r3. -->
+     in prose, never as additional status values.  Corpus-r3 promotions and
+     the final narrow repairs are applied. -->
 
 # Claims DAG
 
 **SPT status annotation only.**  The SPT rows were rebuilt 2026-08-26 in
-`theory/spt-rebuild.md` and repaired after `corpus-r2.md`; the parent rows stay
-SKETCH awaiting focused critic r3.  The narrow `SPT-B-mult` and
-`SPT-E-AKLT` splits are PROVED per the r2 adjudication.  The old rows
-SPT-B/E/T/D/M are superseded by
-SPT-B'/-E'/-T'/-D'/-M' and SPT-M'-dyn; the withdrawn pointwise bulk-blindness
-claim is recorded as REFUTED under `SPT-B-r1`, and the all-orders/all-registers
-form of SPT-nogo stays REFUTED.  `definitions.md` D19--D23 were rebuilt in
-lockstep from the same merge proposal.  This annotation does not demote the
-wanted SPT program.
+`theory/spt-rebuild.md`.  Corpus r3 promotes SPT-B', registered SPT-T' and
+SPT-D', and the exactly scoped SPT-M' conditional implication to PROVED.
+SPT-E' is repaired but remains SKETCH awaiting critic r4; `SPT-B-mult` and the
+equation-(4.1) `SPT-E-AKLT` split remain PROVED per r2.  The old rows
+SPT-B/E/T/D/M are superseded by SPT-B'/-E'/-T'/-D'/-M' and SPT-M'-dyn; the
+withdrawn pointwise bulk-blindness claim is recorded as REFUTED under
+`SPT-B-r1`, and the all-orders/all-registers form of SPT-nogo stays REFUTED.
+`definitions.md` D19--D23 were rebuilt in lockstep from the same merge
+proposal.  This annotation does not demote the wanted SPT program.
 
 | id | statement (short) | status | depends on | proved in | tested in |
 |---|---|---|---|---|---|
@@ -45,12 +45,12 @@ wanted SPT program.
 | SPT-B-r1 | Old claim that `Ad(V)`-only closed contractions are pointwise `[ω]`-blind; Pauli-projective and scalar-trivial adjoint characters disprove it. | REFUTED | — | disproved in theory/spt-rebuild.md ⟨1⟩3.⟨2⟩3 | spt_rebuild_check.py S-C2 |
 | SPT-nogo | Old all-orders claim that `[ω]` cannot appear in any coefficient, including an edge residue; Whitehead trivialises only the infinitesimal cocycle class, while global edge weights/dimension remain. | REFUTED | — | theory/spt-rebuild.md ⟨1⟩4 | S-C4 |
 | SPT-B-mult | For ordered closed on-site symmetry insertions, the endpoint action is `V(g)⊗\bar V(g)` and the projective multipliers cancel exactly; the closed register is invariant under rephasing the lift. | PROVED | WI, D2, D19--D20 | theory/spt-rebuild.md ⟨1⟩3.⟨2⟩1; PROVED per corpus-r2.md adjudication | spt_rebuild_check.py S-C2 |
-| SPT-B' | Under a common-gap symmetric injective tensor path, with external tensors, channel embeddings, gauge fixes, Gram normalizations, and differentiated profiles continuous (respectively `C^p`), normalized bulk coefficients are continuous and topological only if separately proved locally constant; class-correlated `Ad(V)` data are allowed.  HOLD: N2 is repaired, but focused critic r3 verification is still missing. | SKETCH | SPT-B-mult, A1(g), D19--D23 | theory/spt-rebuild.md ⟨1⟩3.⟨2⟩2--⟨2⟩3; HOLD per corpus-r2.md | spt_rebuild_check.py S-C2,S-C3 |
-| SPT-E-AKLT | For the anisotropic AKLT family, the Hermitian registered partial-charge compression is exactly `ℜ_{A_b,L}(S^z)=-½[1-(2b²-1)^L]Z→-Z/2`; the `O(2)` trivial product residue is `0`. | PROVED | D19--D21, D23 | theory/spt-rebuild.md ⟨1⟩4.⟨2⟩4; PROVED per corpus-r2.md adjudication | spt_rebuild_check.py S-C4 |
-| SPT-E' | In the fixed Schmidt/edge register `E_C`, the compensated group residue is `V(g)` and the Hermitian Lie residue is the centered, phase-gauge-invariant `Q_edge=-iX_C^∘`, with `spec Q_edge⊂q_{ω,C}^∘+ℤ` and irreducible dimension `≥d_ω`.  The padded module is `𝓜_χ(C)≅E_C⊗E_C^*`, i.e. `χ` copies.  A physical edge statement is conditional on H-split.  HOLD: N1/N4 are repaired, but focused critic r3 verification is still missing. | SKETCH | D19--D23, SPT-E-AKLT | theory/spt-rebuild.md ⟨1⟩4; HOLD per corpus-r2.md | spt_rebuild_check.py S-C4,S-C5, phase-gauge red |
-| SPT-T' | At a registered twist endpoint, `V(h)V(g)V(h)^{-1}` is proportional to `V(hgh^{-1})`; for commuting `g,h` the phase is `e^{i[ω(h,g)-ω(g,h)]}` and the second endpoint compensates.  A physical observable is conditional on H-split and H-dress.  HOLD: the repaired endpoint convention/hypothesis lockstep awaits critic r3. | SKETCH | SPT-E', WI, D22 | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩1; HOLD per corpus-r2.md | — |
-| SPT-D' | Ordered registered endpoint-soft operators satisfy `𝕊(h)𝕊(g)=e^{iω(h,g)}𝕊(hg)`; for semisimple Lie groups the infinitesimal central cocycle is cohomologically trivial and is gauged away in the stated phase convention, while the global module remains projective.  Every physical edge statement is conditional on H-split and H-dress.  HOLD: N5/N6 repairs await critic r3. | SKETCH | SPT-E', D22, H-split, H-dress | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩2; HOLD per corpus-r2.md | S-C5 |
-| SPT-M' | Given H-split and H-AD-edge, channel charge bookkeeping is `ΔQ_edge=-(Q_bulk,out-Q_bulk,in)` and channel outcomes are quantised; `[ω]` protects memory capacity/module, not a nonzero amplitude.  HOLD: the centered SPT-E' charge input is repaired but awaits critic r3. | SKETCH | SPT-E', D22, M-quant bookkeeping | theory/spt-rebuild.md ⟨1⟩6.⟨2⟩1; HOLD per corpus-r2.md | dynamical follow-on tns-cpq |
+| SPT-B' | Under the common-gap path and the newly continuous/`C^p` external data, normalized finite/thermodynamic/soft coefficients are continuous (with H-soft-p for derivative limits) and become topological only after a separate local-constancy proof; class-correlated `Ad(V)` data are allowed. | PROVED | SPT-B-mult, A1(g), D19--D23 | theory/spt-rebuild.md ⟨1⟩3.⟨2⟩2--⟨2⟩3; PROVED per corpus-r3.md adjudication | spt_rebuild_check.py S-C2,S-C3 |
+| SPT-E-AKLT | For the anisotropic AKLT family, equation (4.1) gives the Hermitian registered partial-charge compression exactly as `ℜ_{A_b,L}(S^z)=-½[1-(2b²-1)^L]Z`, with AKLT-family limit `-Z/2`. | PROVED | D19--D21, D23 | theory/spt-rebuild.md ⟨1⟩4.⟨2⟩4; PROVED per corpus-r2.md adjudication | spt_rebuild_check.py S-C4 |
+| SPT-E' | In the fixed Schmidt/edge register `E_C`, the compensated group residue is `V(g)` and the Hermitian Lie residue is the centered, phase-gauge-invariant `Q_edge=-iX_C^∘`, with the fixed-tensor congruence `spec Q_edge⊂q_{ω,C}^∘+ℤ` and irreducible dimension `≥d_ω`.  The padded module is `𝓜_χ(C)≅E_C⊗E_C^*`, i.e. `χ` copies.  A physical edge statement is conditional on H-split.  REPAIRED, AWAITING R4: no deformation constancy of the centered offset is claimed, and this row is not promoted this round. | SKETCH | D19--D23, SPT-E-AKLT | theory/spt-rebuild.md ⟨1⟩4; repaired, awaiting r4 | spt_rebuild_check.py S-C4,S-C5, phase-gauge red |
+| SPT-T' | In the registered endpoint, (5.1) follows by eliminating `V(hg)` and (5.2) follows for commuting `g,h`; the second endpoint compensates.  A physical observable remains conditional on H-split and H-dress. | PROVED | SPT-E', WI, D22 | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩1; PROVED per corpus-r3.md adjudication | — |
+| SPT-D' | Ordered registered endpoint products realise the cocycle; for compact semisimple Lie algebra the infinitesimal cocycle is a coboundary and is removed only in the stated phase section.  Physical edge use remains conditional on H-split and H-dress. | PROVED | SPT-E', D22, H-split, H-dress | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩2; PROVED per corpus-r3.md adjudication | S-C5 |
+| SPT-M' | Given H-split, H-AD-edge, charge conservation, and definite channel charges, `ΔQ_edge=-(Q_bulk,out-Q_bulk,in)` and fixed-system channel differences are integral.  This uses only the valid fixed-tensor congruence, not deformation constancy of the centered offset.  Protection is capacity/module protection, not nonzero amplitude. | PROVED | SPT-E', D22, M-quant bookkeeping | theory/spt-rebuild.md ⟨1⟩6.⟨2⟩1; PROVED per corpus-r3.md adjudication as a conditional implication | dynamical follow-on tns-cpq |
 | SPT-M'-dyn | For D23's specific `H_{A,+}^{dyn}=Σ_{x≥0}P^{(S=2)}_{x,x+1}`, with boundary-magnon coupling `P^{(S=2)}_{0,1}`, an edge-changing magnon reflection amplitude is nonzero on an open momentum interval and leaves the post-selected charge memory of SPT-M'.  HOLD: half-chain wave operators, H-AD-edge, the on-shell reflection matrix, and nonvanishing remain missing. | CONJECTURE | SPT-M', H-AD-edge, D23 | theory/spt-rebuild.md ⟨1⟩6.⟨2⟩2; HOLD per corpus-r2.md | tns-cpq follow-on |
 | OR1 | Oracle cross-check: (R17)--(R18) coincide term by term with passed oracle O7/O8 on D8's half-zone.  This proves the equality of the two formulas, not process universality. | PROVED | S2-2body, O7, O8 | theory/soft-current-recon.md ⟨1⟩5.⟨2⟩1 | oracle_bethe_check.py, soft_current_recon_check.py |
 | OR2 | Oracle fact O6: `S_{12}(k_s,k_h)→1` from either sign, a plain limit weaker than an Adler-zero theorem. | PROVED | O6 | theory/oracle-bethe.md ⟨1⟩3.⟨2⟩2 | oracle_bethe_check.py (`limit = 2.966e-16`) |
@@ -121,8 +121,9 @@ MINOR 2 (notation rows added), MINOR 3 (definitions.md header: D6--D7 FROZEN, D8
 MINOR 4 (sibling shards re-worded to quote O7/O9 in their r2 form); ML2 m12 and m14 (Justification lines
 supplied for the three ⟨1⟩6.⟨2⟩2 leaves, both wrap-pair sign flips named).
 
-**Post-r2 rule.**  Promotions are exactly those adjudicated in
-`theory/verdicts/corpus-r2.md`.  The parent SPT rows remain SKETCH awaiting
-focused critic r3; only the narrow `SPT-B-mult` and `SPT-E-AKLT` splits are
-PROVED.  D19--D23 are repaired in lockstep and
+**Post-r3 rule.**  Promotions are exactly those adjudicated in
+`theory/verdicts/corpus-r3.md`: SPT-B', registered SPT-T'/SPT-D', and the
+scoped SPT-M' conditional implication are PROVED.  SPT-E' is repaired,
+awaiting r4, and remains SKETCH; `SPT-B-mult` and equation-(4.1)
+`SPT-E-AKLT` retain their r2 PROVED status.  D19--D23 remain in lockstep and
 `theory/spt-scoping-draft.md` remains superseded.

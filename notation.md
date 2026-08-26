@@ -238,7 +238,7 @@ SUPERSEDED in place rather than deleted).*
 | `I = [a,b] ⋐ (0,π)`, `ε_I` | the hard-momentum window and its soft radius (`h+k ∈ (0,π)`, `v(h)>v(k)`, `h+k ≠ π`) | ml4-ward-reduction.md ⟨1⟩1 |
 | `‖g‖_{I,N}`, `f_ε(k)=ε^{-1/2}f(k/ε)` | discrete hard-packet norm; rescaled soft packet | ml4-ward-reduction.md (1) |
 | `D_{n,N}`, `P_{n,N}`, `R_{n,N}` | `Q_0` restricted to `ℋ_{n,N}`; the orthogonal projection onto its range; the orthogonal current `(1−P_{n,N})J^-_0` | ml4-ward-reduction.md (2) |
-| `Γ_N(k)`, `𝒜_{⊥,N}(k;f,g)` | outgoing on-shell channel map, transported to the `k=0` fiber; the orthogonal contribution to the Ward-reduced numerator | ml4-ward-reduction.md (3), (12) |
+| `Γ_N(k)`, `𝒜_{⊥,N}(k;f,g)` | off-shell analytic interpolation at fixed periodic `N`, transported to the `k=0` fiber; the orthogonal contribution to the Ward-reduced numerator | ml4-ward-reduction.md (3), (12) |
 | **ML4-A** | the standalone cancellation lemma: `Γ(0)=U` (energy-shell channel matching) + `C¹` trace regularity ⟹ `‖b(k)Γ(k)^†R‖ ≤ C_bC_Γ‖J‖k²` | ml4-ward-reduction.md ⟨1⟩2 |
 | `J^z_0`, `S^±` | the `z`-current and global raising/lowering operators used in the exact Ward projection `P_{n,N}J^-_0 = \frac{2}{N-2n}Q_0J^z_0` on `ker S^+` | ml4-ward-reduction.md (8)--(11) |
 | `‖O‖_μ`, `M_1^O`, `M_2^O` | exponentially-quasi-local source norm; amputated one-hard and hard-plus-soft amplitudes | definitions.md D24(a),(b) |

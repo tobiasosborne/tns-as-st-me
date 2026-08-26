@@ -51,14 +51,7 @@ This shard does four things.
    `t(k) = [1 + i J²/(4ω(k)v(k))]^{-1}`, hence `T(k)=|t|²` and a **memory
    Adler zero** `δx(k) ≈ −(2/s)\,·8(Δ−1)²k²` as `k→0`.
 4. It records the `B ⇒ A` edge (claim **B3**) at PROVED status.  The surviving
-   event statement is `2s·δx+(q_out-q_in)=0`, with explicit leg subtraction;
-   `δx` is the amount of `U(1)` charge the event transported between the two
-   spatial infinities, i.e. the moment map of the residual translation torsor
-   inside a fixed **vacuum pair** `(α,β)` — the label of D9(d), which under
-   hypothesis (T) is a point of `(G/H_α)×(G/H_α)` whose diagonal-invariant
-   content is the double coset in `H_α\G/H_α`.  *(Reconciled at freeze
-   2026-08-26: "inside a fixed `𝒜`-orbit point" cited `A2-orbit-r1`,
-   **REFUTED**.)*
+   event statement is `2s·δx+(q_out-q_in)=0`, with explicit leg subtraction.
 
 The headline honest finding is negative and important:
 
@@ -692,10 +685,9 @@ the D16/projected scope is spin `1/2`.
   and soft zero are PROVED conditional on Mq-E for the displayed graph.
 
 **SKETCH calculations/evidence.**
-* `t(k)`, `T(k)`, `δ_t(k)` of (5.1)–(5.2) are exact for the displayed Fano
-  graph conditional on Mq-E; `O(Δ^{-2})` leakage is measured beyond the
-  projection.  The zero `T∝k²` and especially its universality are not
-  promoted.
+* The measured `O(Δ^{-2})` leakage beyond the displayed Fano projection is
+  supporting evidence only.  Full-chain accuracy remains SKETCH, and
+  universality of the quadratic zero and its coefficient remains CONJECTURE.
 
 **What is conjecture.**
 * **H-AD** for the full chain (D18) and the all-volume projected reduction
