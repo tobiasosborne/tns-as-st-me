@@ -98,6 +98,36 @@ with open(os.path.join(REPO, "numerics/results/fm-displacement-scan.json")) as f
     FM = json.load(f)["summary"]
 with open(os.path.join(REPO, "numerics/results/memory-scan-1.json")) as f:
     MEM = json.load(f)["runs"]
+with open(os.path.join(REPO, "numerics/results/spin1-bc-falsifier.json")) as f:
+    BC1 = json.load(f)
+with open(os.path.join(REPO, "numerics/results/spin1-bc-crosscheck.json")) as f:
+    BC2 = json.load(f)
+
+
+def bc_slope_points():
+    """Soft phase slope vs 1/s: every A_ring_summary extrapolation in the
+    committed falsifier JSON (ansatz-free ring spectra, all k_h targets)."""
+    return [(1.0 / r["S"], r["slope_extrapolated"])
+            for r in BC1["A_ring_summary"]]
+
+
+def bc_memory_points():
+    """Memory quantum -dx/N_T vs 1/s.  Selection rule fixed in advance: all
+    committed rows passing the packet-quality gate stated inside the JSONs
+    themselves (falsifier: k0 >= 1.2; cross-check: the k1.5 rows), physical
+    runs only (no truncation/convergence controls; integrated-magnetisation
+    estimator dx2 throughout)."""
+    pts = []
+    for r in BC1["B_runs"]:
+        lab = r["label"]
+        if ("-k1.2" in lab or "-k1.8" in lab) and not lab.startswith(("s1-trunc", "s05-trunc")):
+            s = r["result"]["params"]["spin"]
+            pts.append((1.0 / s, -r["result"]["ratio_dx2_over_T"]))
+    for r in BC2["B_runs"]:
+        if "-k1.5" in r["label"]:
+            s = r["s"]
+            pts.append((1.0 / s, -r["dx2_over_T"]))
+    return pts
 
 
 def mem_rows(prefix):
@@ -274,6 +304,28 @@ def fig3():
     ax.text(0.02, 0.88, "(c)", transform=ax.transAxes, fontsize=8, color=INK)
     ax.legend(frameon=False, loc="lower right", fontsize=6.5,
               handletextpad=0.1, borderaxespad=0.2, labelspacing=0.25)
+
+    # inset: the spin-s falsifier — soft slope and memory quantum vs 1/s,
+    # both from the committed Bc JSONs, against the single line y = 1/s
+    axi = ax.inset_axes([0.145, 0.56, 0.40, 0.40])
+    ss = np.linspace(0.0, 2.25, 10)
+    axi.plot(ss, ss, color=INK, lw=0.7, zorder=1)
+    sx, sy = zip(*bc_slope_points())
+    axi.plot(sx, sy, "o", ms=2.6, color=BLUE, mew=0, zorder=3,
+             label=r"$d\delta/dk_s$")
+    mx, my = zip(*bc_memory_points())
+    axi.plot(mx, my, "s", ms=2.8, mfc="none", mec=ORANGE, mew=0.8, zorder=4,
+             label=r"$-\delta x/\langle N_T\rangle$")
+    axi.set_xlim(0, 2.25); axi.set_ylim(0, 2.25)
+    axi.set_xticks([0, 1, 2]); axi.set_yticks([0, 1, 2])
+    axi.tick_params(labelsize=5.5, width=0.5, length=1.8)
+    for sp in axi.spines.values():
+        sp.set_linewidth(0.5); sp.set_color(INK2)
+    axi.set_xlabel(r"$1/s$", fontsize=6, labelpad=0.5)
+    axi.text(1.18, 0.62, r"$s=\frac{1}{2},1,\frac{3}{2},2$", fontsize=5.5,
+             color=INK2)
+    axi.legend(frameon=False, loc="upper left", fontsize=5.5,
+               handletextpad=0.1, borderaxespad=0.1, labelspacing=0.2)
     save(fig, "fig3")
 
 

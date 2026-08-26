@@ -1,11 +1,13 @@
 % paper/supplement.tex
 % ============================================================================
-% END MATTER / SUPPLEMENT HOOK 2 (standalone). Compiles independently of
-% main.tex into its own PDF, as APS Supplemental Material conventionally is
-% -- NOT \input'd into the Letter. If TJO instead wants the End Matter
-% folded back into main.tex, use HOOK 1 there (the \appendix/\section*{End
-% Matter} block) and delete/ignore this file; both hooks are wired up so
-% the choice can be made later without restructuring.
+% STATUS AFTER v2 (2026-08-26): main.tex now carries the linearized rigorous
+% arguments as Appendixes A-E (per the v2 brief: "appendices carry the
+% linearized rigorous arguments"), so this standalone-supplement hook is
+% currently INACTIVE. Keep it only if TJO later wants a long-form SM with the
+% full Lamport-structured proofs ported from theory/; otherwise delete.
+% ----------------------------------------------------------------------------
+% Original hook description: standalone SM, compiles independently of
+% main.tex into its own PDF -- NOT \input'd into the Letter.
 %
 % Content plan (fill in from theory/ shards -- L6b Lamport structure stays
 % intact here; do NOT flatten the numbered-step proofs when porting them
