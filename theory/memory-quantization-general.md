@@ -316,12 +316,45 @@ active implication Mq-AD3 supplies D18 for the displayed `≤3`-wall Fano graph;
 then (G.1) recovers the projected corollary.  For the full XXZ chain, D18 is
 still an explicit hypothesis.  Nothing here upgrades Mq-E or full-chain D18.
 
-The SU(2) ferromagnetic family broken to `U(1)` and a torus such as
-`U(1)^2` also satisfy the group-theoretic arithmetic after a direction and
-charges are fixed.  The checker exercises both examples.  It does not prove
-their H-AD-G hypotheses; for the continuous SU(2) vacuum orbit, A2's result is
-only pointwise in the chosen pair because the active S-A2 uniformity box is
-still SKETCH.
+The SU(2) ferromagnetic family broken to `U(1)` gives another compatible
+example.  A compatible rank-two example needs a nonabelian ambient group:
+take
+
+\[
+ G=(U(1)^2)\rtimes\mathbb Z_2,qquad
+ r:(z_1,z_2)\longmapsto(z_1^{-1},z_2),
+\]
+
+and on `\mathbb C^2` set
+
+\[
+ Q_1=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+ Q_2=2I,\quad
+ u(\theta,\phi)=e^{i\theta Q_1}e^{i\phi Q_2},\quad
+ u(g)=r=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+
+Thus `r^\dagger Q_1r=-Q_1`, `[r,Q_2]=0`, and
+`r u(\theta,\phi)r=u(-\theta,\phi)`, so these matrices represent the stated
+semidirect action.  Choose the product-MPS rays
+`\alpha=[(1,0)^T]` and `\beta=g\cdot\alpha=[(0,1)^T]`.  The same selected
+torus stabilises both rays because
+`u(\theta,\phi)(1,0)^T=e^{i(\theta+2\phi)}(1,0)^T` and
+`u(\theta,\phi)(0,1)^T=e^{i(-\theta+2\phi)}(0,1)^T`.  Its vacuum-density
+vectors are `(1,2)` and `(-1,2)`: the selected `Q_1` direction has
+`(+s,-s)` with `s=1`, while `Q_2` is preserved as a spectator.  With
+`q_{\rm in}=(-1,2)` and `q_{\rm out}=(1,2)`, componentwise conservation is
+`(2,0)\,\delta x+(2,0)=0`, hence `\delta x=-1` and zero spectator change.
+
+**Remark.** A bare abelian ambient group, or a selected central factor, is
+excluded: `\operatorname{Ad}_{g^{-1}}\xi=\xi` would make covariance give
+`\omega_\beta(Q_1)=\omega_\alpha(Q_1)`, so one orbit cannot have the required
+opposite vacuum densities.
+
+The checker constructs both compatible examples and verifies this
+representation and arithmetic.  It does not prove their H-AD-G hypotheses;
+for the continuous SU(2) vacuum orbit, A2's result is only pointwise in the
+chosen pair because the active S-A2 uniformity box is still SKETCH.
 
 ---
 
@@ -373,8 +406,11 @@ python3 -O theory/checks/mquant_general_check.py --red  # deliberately FAILS
 ```
 
 Named computation **MqG-check C1** performs the symbolic general-`s` charge
-subtraction.  **C2** checks the fixed-pair `SU(2)→U(1)` arithmetic and a
-two-component torus charge, including conservation of the spectator
-component.  **C3** substitutes the frozen spin-`1/2` XXZ values and the soft
-coefficient already present in M-quant.  The checker tests arithmetic only:
-it does not construct MPS tensors, wave operators, or a proof of H-AD-G.
+subtraction, guards that `s` remains a positive free symbol, and evaluates it
+at `s=1` and `s=3/2`.  **C2** checks the fixed-pair `SU(2)→U(1)` arithmetic
+and constructs the two-dimensional `(U(1)^2)\rtimes\mathbb Z_2`
+representation above, including conservation of the spectator component.
+**C3** substitutes the frozen spin-`1/2` XXZ values and the soft coefficient
+already present in M-quant.  The checker tests representation and arithmetic
+only: it does not construct MPS tensors, wave operators, or a proof of
+H-AD-G.

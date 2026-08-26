@@ -3,7 +3,8 @@
 
 The checks are exact SymPy identities and remain active under ``python3 -O``.
 They cover the general charge subtraction, an SU(2) vacuum pair with unbroken
-U(1), a rank-two abelian factor, and the frozen spin-1/2 XXZ values.
+U(1), a rank-two torus normalised by a Weyl element, and the frozen spin-1/2
+XXZ values.
 
 ``--red`` changes the transmitted primitive charge from +1 to -1 while the
 theorem target remains ``-1/s``.  The general-law check must then exit 1.
@@ -15,6 +16,7 @@ from __future__ import annotations
 import argparse
 import sys
 
+import numpy as np
 import sympy as sp
 
 
@@ -72,6 +74,31 @@ def check_general_arithmetic(red: bool) -> tuple[sp.Expr, sp.Expr, sp.Expr]:
         "two-channel variance law",
     )
 
+    for sample_s in (sp.Integer(1), sp.Rational(3, 2)):
+        exact_zero(
+            dx_transmitted.subs(s, sample_s) + 1 / sample_s,
+            f"C1 transmitted quantum at s={sample_s}",
+        )
+        exact_zero(
+            mean.subs(s, sample_s) + transmission / sample_s,
+            f"C1 expectation law at s={sample_s}",
+        )
+        exact_zero(
+            variance.subs(s, sample_s)
+            - transmission * (1 - transmission) / sample_s**2,
+            f"C1 variance law at s={sample_s}",
+        )
+
+    for expression, name in (
+        (dx_transmitted, "transmitted quantum"),
+        (mean, "two-channel mean"),
+        (variance, "two-channel variance"),
+    ):
+        require(
+            s in expression.free_symbols,
+            f"C1 lost its symbolic positive-s domain in the {name}",
+        )
+
     m_initial, cut = sp.symbols("m_initial cut", integer=True)
     total_in = 2 * s * (m_initial - cut) + q_in
     total_transmitted = (
@@ -116,17 +143,66 @@ def check_su2_broken_to_u1() -> sp.Expr:
     return dx
 
 
-def check_rank_two_abelian_factor() -> tuple[sp.Expr, sp.Expr]:
-    """T^2=U(1)xU(1): first component moves the wall; second is spectator."""
-    s = sp.symbols("s", positive=True, finite=True, nonzero=True)
-    q_in = sp.Matrix([-1, 2])
-    q_out = sp.Matrix([1, 2])
-    vacuum_jump = sp.Matrix([2 * s, 0])
+def check_rank_two_semidirect_product() -> tuple[sp.Expr, sp.Expr]:
+    """(U(1)^2) semidirect Z_2: a Weyl element reverses Q1 only."""
+    q1 = np.diag([1.0, -1.0]).astype(complex)
+    q2 = 2.0 * np.eye(2, dtype=complex)
+    r = np.array([[0.0, 1.0], [1.0, 0.0]], dtype=complex)
+    alpha = np.array([1.0, 0.0], dtype=complex)
+    beta = r @ alpha
+
+    theta, phi = 0.37, -0.61
+    u = np.diag(
+        [np.exp(1j * (theta + 2 * phi)), np.exp(1j * (-theta + 2 * phi))]
+    )
+    u_weyl = np.diag(
+        [np.exp(1j * (-theta + 2 * phi)), np.exp(1j * (theta + 2 * phi))]
+    )
+
+    require(np.allclose(u.conj().T @ u, np.eye(2)), "torus matrix is not unitary")
+    require(np.allclose(r.conj().T @ r, np.eye(2)), "Weyl element is not unitary")
+    require(
+        np.allclose(r.conj().T @ q1 @ r, -q1),
+        "Weyl element does not reverse Q1",
+    )
+    require(np.allclose(r @ q2 - q2 @ r, 0.0), "Weyl element does not preserve Q2")
+    require(
+        np.allclose(r @ u @ r, u_weyl),
+        "matrices do not represent the torus-inverting semidirect action",
+    )
+    require(
+        np.allclose(beta, np.array([0.0, 1.0])),
+        "Weyl element does not map alpha to beta",
+    )
+    require(
+        np.allclose(u @ alpha, u[0, 0] * alpha)
+        and np.allclose(u @ beta, u[1, 1] * beta),
+        "the represented torus does not stabilise both vacuum rays",
+    )
+
+    rho_alpha_np = np.array(
+        [np.vdot(alpha, q1 @ alpha).real, np.vdot(alpha, q2 @ alpha).real]
+    )
+    rho_beta_np = np.array(
+        [np.vdot(beta, q1 @ beta).real, np.vdot(beta, q2 @ beta).real]
+    )
+    require(np.allclose(rho_alpha_np, [1.0, 2.0]), "alpha has wrong torus densities")
+    require(np.allclose(rho_beta_np, [-1.0, 2.0]), "beta has wrong torus densities")
+
+    rho_alpha = sp.Matrix([sp.Integer(round(value)) for value in rho_alpha_np])
+    rho_beta = sp.Matrix([sp.Integer(round(value)) for value in rho_beta_np])
+    q_in = rho_beta
+    q_out = rho_alpha
+    vacuum_jump = rho_alpha - rho_beta
+    s = rho_alpha[0]
     dx = displacement(s, q_in[0], q_out[0])
 
     residue = sp.simplify(vacuum_jump * dx + (q_out - q_in))
-    require(residue == sp.zeros(2, 1), f"T^2 vector conservation residue={residue}")
-    exact_zero(dx + 1 / s, "T^2 selected-component quantum")
+    require(
+        residue == sp.zeros(2, 1),
+        f"(U(1)^2) semidirect Z_2 vector conservation residue={residue}",
+    )
+    exact_zero(dx + 1 / s, "semidirect-product selected-component quantum")
     return dx, sp.simplify(q_out[1] - q_in[1])
 
 
@@ -166,7 +242,7 @@ def main() -> None:
     window_residue = check_window_calibration()
     reflected, transmitted, mean = check_general_arithmetic(args.red)
     su2_dx = check_su2_broken_to_u1()
-    torus_dx, spectator_change = check_rank_two_abelian_factor()
+    torus_dx, spectator_change = check_rank_two_semidirect_product()
     xxz_reflected, xxz_transmitted, xxz_mean, xxz_variance = check_xxz_instantiation()
 
     print("WINDOW D13 calibration residue=%s" % window_residue)
@@ -176,7 +252,7 @@ def main() -> None:
     )
     print("SU2->U1 s=1/2 transmitted=%s" % su2_dx)
     print(
-        "TORUS U1xU1 transmitted=%s spectator_delta=%s"
+        "(U1xU1)rtimesZ2 transmitted=%s spectator_delta=%s"
         % (torus_dx, spectator_change)
     )
     print(
