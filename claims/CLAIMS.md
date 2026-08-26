@@ -122,9 +122,10 @@ MINOR 2 (notation rows added), MINOR 3 (definitions.md header: D6--D7 FROZEN, D8
 MINOR 4 (sibling shards re-worded to quote O7/O9 in their r2 form); ML2 m12 and m14 (Justification lines
 supplied for the three ⟨1⟩6.⟨2⟩2 leaves, both wrap-pair sign flips named).
 
-**Post-r3 rule.**  Promotions are exactly those adjudicated in
-`theory/verdicts/corpus-r3.md`: SPT-B', registered SPT-T'/SPT-D', and the
-scoped SPT-M' conditional implication are PROVED.  SPT-E' is repaired,
-awaiting r4, and remains SKETCH; `SPT-B-mult` and equation-(4.1)
-`SPT-E-AKLT` retain their r2 PROVED status.  D19--D23 remain in lockstep and
+**Post-r4 rule.**  Promotions are exactly those adjudicated in
+`theory/verdicts/corpus-r3.md` and `corpus-r4.md` (PASS, fixed point):
+SPT-B', registered SPT-T'/SPT-D', the scoped SPT-M' conditional implication,
+and SPT-E' are PROVED; `SPT-B-mult` and equation-(4.1) `SPT-E-AKLT` retain
+their r2 PROVED status.  M-quant-G is PROVED (conditional) per
+`mquant-g-r2.md`.  D19--D23 remain in lockstep and
 `theory/spt-scoping-draft.md` remains superseded.
