@@ -326,7 +326,7 @@ The algebraic statement is
 `2s·δx+(q_out−q_in)=0`, under D18's explicitly stated vacuum jump, channel
 charges, and local decay.  It is independent of scattering phase once those
 channels exist.  This is not a higher-spin channel theorem and not the general
-MPS memory theorem.  **Generalized by M-quant-G (SKETCH; no status transfer),**
+MPS memory theorem.  **Generalized by M-quant-G (PROVED conditional on H-AD-G, per mquant-g-r2.md),**
 `memory-quantization-general.md`: for compact `G`, arbitrary finite-`χ`
 injective MPS vacua, a common unbroken circle direction, finite-range
 `G`-invariant `H`, a D17 kink packet, D13(a)'s charge-density jump `2s`, and
@@ -534,7 +534,7 @@ classifying datum.  *Shard:* `corner-b-draft.md` §7.
 | B3 finite-time label rigidity + leg-charge bookkeeping | PROVED | corner-b-draft.md §7; corpus-r2 adjudication with N9 sweep | — |
 | Mq-AD3 conditional on Mq-E | PROVED | memory-quantization.md §3; corpus-r2 adjudication | Mq-E itself untested |
 | M-quant conditional on D18 | PROVED | memory-quantization.md; corpus-r2 adjudication | mquant_check.py is flux/empirical only |
-| M-quant-G conditional on H-AD-G (= D18 with fixed channel charges) | SKETCH | memory-quantization-general.md | mquant_general_check.py arithmetic only; `--red` charge mutation |
+| M-quant-G conditional on H-AD-G (= D18 with fixed channel charges) | **PROVED** (conditional, mquant-g-r2.md) | memory-quantization-general.md | mquant_general_check.py arithmetic only; `--red` charge mutation |
 | Fano `t,T,δ_t` and soft zero, conditional on Mq-E for displayed graph | PROVED | corner-b-draft.md §5; corpus-r2 adjudication | crosscheck is empirical full-chain evidence only |
 | Conjecture M (brief's literal form) | REFUTED | corner-b-draft.md §10 | — |
 | Bc ("the two 2s"; spin-1 falsifier) | CONJECTURE | §4 | not yet computed |
