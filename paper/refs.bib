@@ -3,15 +3,20 @@
 % a year), author lists extracted from the \author blocks in refs/arxiv-<id>/
 % per law L3 (ground truth is local TeX). Titles are the LEDGER-verified titles
 % (refs/LEDGER.md). Journal fields are included ONLY where LEDGER.md states a
-% published reference; all other entries are eprint-only.
+% published reference; all other entries are eprint-only. The BibTeX
+% "empty journal" warnings for eprint-only entries are deliberate and
+% accepted: those postings have no journal to cite under L3.
 %
 % primaryClass fields are NOT sourced from the local TeX bodies (arXiv category
 % tags are metadata, not present in the manuscript source) -- they are a
 % best-effort topical inference and should be spot-checked against the arXiv
 % abstract pages before submission.
 %
-% Three entries below (Dyson1956, WatanabeMurayama2012, NielsenChadha1976) have
-% NO local source under refs/ and are marked accordingly per the task brief.
+% One entry below (NielsenChadha1976) has NO local source under refs/; it is
+% not cited by main.tex and is retained only as a marked stub.
+% WatanabeMurayama2012 was verified against refs/arxiv-1203.0609 (L3),
+% 2026-08-26. The former Dyson1956 entry (no local source) was removed
+% together with its citations, per the paper-v2-r1 verdict (objection 15).
 
 %============================================================
 % Batch 1
@@ -115,7 +120,7 @@
 
 @article{Cirac2020,
   author  = {Cirac, J. Ignacio and P{\'e}rez-Garc{\'i}a, David and Schuch, Norbert and Verstraete, Frank},
-  title   = {Matrix Product States and Projected Entangled Pair States: Concepts, Symmetries, Theorems},
+  title   = {Matrix Product States and Projected Entangled Pair States: Concepts, Symmetries, and Theorems},
   journal = {},
   year    = {2020},
   eprint  = {2011.12127},
@@ -321,7 +326,7 @@
 
 @article{Williamson2014,
   author  = {Williamson, Dominic J. and Bultinck, Nick and Mari{\"e}n, Michael and {\c S}ahino{\u g}lu, Mehmet B. and Haegeman, Jutho and Verstraete, Frank},
-  title   = {Matrix product operators for symmetry-protected topological phases},
+  title   = {Matrix product operators for symmetry-protected topological phases: Gauging and edge theories},
   journal = {},
   year    = {2014},
   eprint  = {1412.5604},
@@ -390,20 +395,8 @@
 }
 
 %============================================================
-% Requested extras -- NOT under refs/, no local TeX to verify against L3.
+% Requested extras.
 %============================================================
-
-% Pre-arXiv, no local source under refs/ (refs/LEDGER.md: paywalled). The
-% bibliographic record below is cited but nothing is quoted from it; verify
-% against a scan before submission (L3).
-@article{Dyson1956,
-  author  = {Dyson, Freeman J.},
-  title   = {General Theory of Spin-Wave Interactions},
-  journal = {Phys. Rev.},
-  volume  = {102},
-  pages   = {1217},
-  year    = {1956},
-}
 
 % Title verified against refs/arxiv-1203.0609/revision3.tex (L3), 2026-08-26.
 @article{WatanabeMurayama2012,

@@ -111,22 +111,35 @@ def bc_slope_points():
             for r in BC1["A_ring_summary"]]
 
 
+TRAPPED_GATE = 1.0e-2  # documented asymptotic-quality gate
+                       # (numerics/docs/spin1-twomagnon-notes.md, (B) table)
+
+
 def bc_memory_points():
-    """Memory quantum -dx/N_T vs 1/s.  Selection rule fixed in advance: all
-    committed rows passing the packet-quality gate stated inside the JSONs
-    themselves (falsifier: k0 >= 1.2; cross-check: the k1.5 rows), physical
-    runs only (no truncation/convergence controls; integrated-magnetisation
-    estimator dx2 throughout)."""
+    """Memory quantum -dx/N_T vs 1/s.  Selection rule, applied mechanically:
+    every committed *physical* wavepacket run (the (spin, Delta, k0) grids of
+    both JSONs; convergence/truncation/preparation controls excluded by their
+    label prefixes) with trapped weight below the documented asymptotic-quality
+    gate trapped < 1e-2 (numerics/docs/spin1-twomagnon-notes.md).  No momentum
+    label enters the selection.  Integrated-magnetisation estimator dx2
+    throughout."""
     pts = []
     for r in BC1["B_runs"]:
         lab = r["label"]
-        if ("-k1.2" in lab or "-k1.8" in lab) and not lab.startswith(("s1-trunc", "s05-trunc")):
-            s = r["result"]["params"]["spin"]
-            pts.append((1.0 / s, -r["result"]["ratio_dx2_over_T"]))
+        res = r["result"]
+        if not lab.startswith(("s1-D", "s05-D", "s15-D")):
+            continue                      # physical grid rows only
+        if abs(res["trapped"]) >= TRAPPED_GATE:
+            continue
+        s = res["params"]["spin"]
+        pts.append((1.0 / s, -res["ratio_dx2_over_T"]))
     for r in BC2["B_runs"]:
-        if "-k1.5" in r["label"]:
-            s = r["s"]
-            pts.append((1.0 / s, -r["dx2_over_T"]))
+        lab = r["label"]
+        if not lab.startswith(("main-", "control-Shalf")):
+            continue                      # physical grid rows only
+        if abs(r["trapped"]) >= TRAPPED_GATE:
+            continue
+        pts.append((1.0 / r["s"], -r["dx2_over_T"]))
     return pts
 
 

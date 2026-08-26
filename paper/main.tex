@@ -1,6 +1,8 @@
 % paper/main.tex
-% v2 — Fable, 2026-08-26 — post-audit rewrite (bd tns-2ze); statuses as of
-% claims/CLAIMS.md @ the corpus-r4 fixed point (theory/verdicts/corpus-r4.md).
+% v2.1 — Fable, 2026-08-26 — L6 repair pass over v2 (bd tns-2ze/tns-o9o):
+% every objection of theory/verdicts/paper-v2-r1.md addressed; statuses as of
+% claims/CLAIMS.md @ the post-r4 state incl. the S2-2body-S promotion
+% (theory/verdicts/spin-s-r1.md PASS).
 % ============================================================================
 % Prose register target: refs/arxiv-1305.2176/paper_final.tex (PRL 111, 080401).
 % Prose rules: docs/prose-guide.md (binding).
@@ -16,9 +18,18 @@
 \usepackage{bm}
 \usepackage{braket}
 \usepackage{color}
+\usepackage{url}\urlstyle{tt}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
+
+% Mechanics: silence loose-line warnings from unbreakable repository paths
+% and let the three tall single-column floats be placed (verdict r1, obj. 18).
+\setlength{\emergencystretch}{3em}
+\hbadness=3000
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.5}
 
 \newcommand{\ic}{\ensuremath{\mathrm{i}}}
 \newcommand{\ec}{\ensuremath{\mathrm{e}}}
@@ -32,31 +43,59 @@
 
 \begin{abstract}
 The infrared triangle of gauge theory---soft theorem, asymptotic symmetry,
-memory effect---is formulated and proved for quantum spin chains. A
-truncated symmetry acts only at its endpoints, generating a charge algebra
-whose central extension is the topological index. A soft magnon decouples
-with a universal phase slope; granted a scattering hypothesis, a
-transmitted magnon drags a domain wall by a quantized charge step. The
-continuum rule that memory is the zero-frequency soft factor fails: the
-soft factor is a phase, the memory a charge. Bethe and matrix-product
-numerics verify each claim.
+memory effect---is transplanted to quantum spin chains. Proved: a truncated
+symmetry acts only at its endpoints, generating a charge algebra whose
+central extension is the topological index; a soft magnon leaves two-body
+scattering with a universal phase slope; and, granted a scattering
+hypothesis, a quantized wall displacement per transmitted magnon. The edges
+of the triangle remain conjectures. The continuum rule that memory is the
+zero-frequency soft factor fails: the soft factor is a phase, the memory a
+charge.
 \end{abstract}
 
 \maketitle
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.93\columnwidth]{figures/fig1.pdf}
+\caption{%
+The infrared triangle at finite lattice spacing. Corner $\mathcal{A}$
+(asymptotic symmetry, proved): a symmetry applied to a region of an MPS
+collapses to two bond operators $V(g)^{-1},V(g)$ at the region's ends; on windows padded about a bond these generate the charge
+algebra $\mathbb{C}_\omega[G]$, whose central extension $[\omega]$ is the
+SPT index. Corner $\mathcal{C}$ (soft theorem, proved for two-body
+scattering): a soft magnon of the spin-$\frac12$ ferromagnet exits with
+phase slope $2$, i.e.\ displaced by two sites ($1/s$ at site spin $s$).
+Corner $\mathcal{B}$ (memory, proved conditional on the scattering
+hypothesis H-AD-G: complete kink--magnon wave operators, one reflected
+and one transmitted channel of definite
+charges $\mp1$): a transmitted magnon
+displaces the wall by exactly $-1/s$ sites, a reflected one by zero. No
+edge is a theorem:
+$\mathcal{A}\!\Rightarrow\!\mathcal{C}$ holds in the
+two-body sector, conjectural beyond (Conjecture~S);
+$\mathcal{C}\!\Rightarrow\!\mathcal{B}$ passes soft data to memory only
+through the transmission probability;
+$\mathcal{B}\!\Rightarrow\!\mathcal{A}$ is charge bookkeeping within a
+fixed kink sector.}
+\label{fig:triangle}
+\end{figure}
+
 A ferromagnetic spin chain contains two objects that can be pictured without
 formalism: the \emph{magnon}, a single overturned spin spreading as a wave,
 and the \emph{domain wall}, the boundary between a region of up spins and a
-region of down spins. This Letter concerns what each does when the magnon's
-momentum is taken small, and the symmetry bookkeeping that controls both.
+region of down spins. This Letter concerns what each does as the
+magnon's momentum is taken small, and the bookkeeping that controls
+both.
 The whole result in one sentence: on the lattice, a soft magnon leaves
 two-body scattering with a universal phase slope; the symmetry behind this
 acts at the ends of the chain as a concrete algebra of operators on
-matrix-product bond space; a magnon that crosses a domain wall displaces it
-by a quantized charge step---and the continuum rule that identifies the
-memory with the zero-frequency limit of the soft factor is \emph{false}
-here, because the lattice triangle closes through charge transport, not
-phase accumulation.
+matrix-product bond space; granted the scattering hypothesis H-AD-G
+stated below, a magnon that crosses a domain wall
+displaces it by a quantized charge step---and the continuum rule that
+identifies the memory with the zero-frequency limit of the soft factor is
+\emph{false} here: what survives, and is proved, is a current-flux identity
+and charge bookkeeping---charge transport, not phase accumulation.
 
 In continuum field theory, soft theorems, asymptotic symmetries, and memory
 effects form the \emph{infrared triangle}, three faces of one Ward identity,
@@ -64,18 +103,17 @@ established for photons and gravitons at null infinity
 \cite{Strominger2017,Strominger2014}. Hamada and Sugishita extended the
 triangle to Goldstone bosons of a broken global symmetry \cite{Hamada2017};
 scalar and fracton versions followed
-\cite{Campiglia2017,Perez2022,Perez2023}, together with local derivations
-that avoid null infinity \cite{DeLuca2024} and a careful account of infrared
-finiteness \cite{Prabhu2022}. Each corner separately has a condensed-matter
-ancestor: Dyson showed in 1956 that ferromagnetic magnons decouple at long
-wavelength \cite{Dyson1956}; Adler zeros of nonrelativistic Goldstone
-theories are by now systematic
+\cite{Campiglia2017,Perez2022,Perez2023}, with local derivations
+avoiding null infinity \cite{DeLuca2024} and a careful account of
+infrared finiteness \cite{Prabhu2022}. Each corner separately has a condensed-matter
+ancestor: soft-magnon decoupling and the Adler zeros of nonrelativistic
+Goldstone theories are by now systematic
 \cite{WatanabeMurayama2012,Mojahed2021,Cheung2023,Gongyo2016}; and Lan and
 Xiao described magnon-driven domain-wall displacement as a two-body
 collision \cite{Lan2021,Kim2014}. What has been missing is a lattice
-statement, at finite spacing, with no continuum limit. We supply one,
-prove what we can, label the rest conjecture, and report one refutation as
-a central result.
+statement at finite spacing, with no continuum limit; we supply one,
+prove what we can, label the rest conjecture, and report one refutation
+as a central result.
 
 \emph{Setting.---}An infinite chain of finite-dimensional sites; a compact
 symmetry group $G$ acting on-site by $u(g)$; a finite-range $G$-invariant
@@ -99,60 +137,54 @@ per site, cancels the $V$'s pairwise through the interior, and the whole
 operation collapses to two bond insertions, $V(g)^{-1}$ on the bond entering
 $R$ and $V(g)$ on the bond leaving it (Fig.~\ref{fig:triangle}). Everything
 a truncated symmetry does, it does at its two ends. Sending an end to
-infinity turns this into an asymptotic-symmetry statement, and three facts
-hold (Appendix~A). (i)~On states, a half-infinite symmetry string acts
+infinity makes this an asymptotic-symmetry statement; three facts hold
+(Appendix~A). (i)~On states, a half-infinite symmetry string acts
 \emph{exactly} as a single bond insertion; as an operator sequence it
-converges strongly if and only if $V(g)$ is a phase. Whenever the symmetry
-acts nontrivially on the bond space there is no strongly convergent
-implementer at all---the lattice counterpart of a large gauge
-transformation. (ii)~On finite windows padded around the distinguished
+converges strongly if and only if $V(g)$ is a phase---otherwise there is
+no strongly convergent implementer at all, the lattice counterpart of a
+large gauge transformation. (ii)~On finite windows padded around the distinguished
 bond, the insertions compose as the twisted group algebra
 $\mathbb{C}_{\omega}[G]$: the SPT class is precisely the central extension
-of the asymptotic charge algebra---a group-cohomological multiplier, not a
-Lie-algebra central charge, since for semisimple symmetries the
-infinitesimal cocycle gauges away while the torsion class survives. Whether these window states extend
-to normal states of the physical half-infinite algebra is an open
-split-property question, hypothesis H-split below; no statement in this
-Letter uses it silently. (iii)~If the symmetry is broken, the half-infinite
-string leaves the vacuum sector: for every finite region the state is
-locally a vacuum, and only the limit---in expectation values, never in
-norm---lands in a \emph{domain-wall} (kink) sector. Kinks are what broken
-asymptotic symmetries create. When $G$ acts transitively on the vacua, the
-kink sectors are labelled by ordered vacuum pairs, and the invariant
-surviving the global symmetry is a double coset in
-$H_\alpha\backslash G/H_\alpha$, with $H_\alpha$ the unbroken subgroup.
+of the asymptotic charge algebra---a group-cohomological multiplier, not
+a Lie-algebra central charge (Appendix~D). Whether these window states extend to normal states of the physical
+half-infinite algebra is open---hypothesis H-split; no statement below
+uses it silently. (iii)~If the symmetry is broken, the half-infinite
+string leaves the vacuum sector: every finite truncation remains in the
+vacuum folium (it carries a kink--antikink pair at its two ends), and only
+the limit---in expectation values, never in norm---lands in a
+\emph{domain-wall} (kink) sector. Kinks are what broken
+asymptotic symmetries create. When $G$ acts transitively on the vacua,
+kink sectors are labelled by ordered vacuum pairs, with double-coset
+invariant in $H_\alpha\backslash G/H_\alpha$ ($H_\alpha$ the unbroken
+subgroup).
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig1.pdf}
+\includegraphics[width=\columnwidth]{figures/fig2.pdf}
 \caption{%
-The infrared triangle at finite lattice spacing. Corner $\mathcal{A}$
-(asymptotic symmetry, proved): a symmetry applied to a region of a matrix
-product state collapses to two bond operators $V(g)^{-1},V(g)$ at the
-region's ends; on windows padded about a bond these generate the charge
-algebra $\mathbb{C}_\omega[G]$, whose central extension $[\omega]$ is the
-SPT index. Corner $\mathcal{C}$ (soft theorem, proved for two-body
-scattering): a soft magnon of the ferromagnet exits with phase slope $2$,
-i.e.\ displaced by two sites. Corner $\mathcal{B}$ (memory, proved
-conditional on the scattering hypothesis H-AD): a transmitted magnon
-displaces the wall by exactly $-1/s$ sites, a reflected one by zero. The
-edge labels name the mechanisms; their present status is uneven and stated
-honestly in the text: $\mathcal{A}\!\Rightarrow\!\mathcal{C}$ holds in the
-two-body sector and is conjectural beyond it,
-$\mathcal{C}\!\Rightarrow\!\mathcal{B}$ passes soft data to memory only
-through the transmission probability, and
-$\mathcal{B}\!\Rightarrow\!\mathcal{A}$ is charge bookkeeping within a
-fixed kink sector.}
-\label{fig:triangle}
+The soft magnon theorem and its verification. (a)~The exact two-magnon
+phase of the Heisenberg ferromagnet with its universal part removed:
+$\delta(k_s,k_h)-2k_s$ vanishes quadratically for every hard momentum
+$k_h$---the hard leg enters only at order $k_s^2$, with coefficient
+$v_h/\omega_h$, Eq.~\eqref{eq:soft}. (b)~The displacement reading: the soft
+packet's exit displacement $-\partial\delta/\partial k_s$ for all $k_h$
+(curves, exact) passes through $-2$ sites at $k_s=0$. Circles: real-time
+wavepacket measurements, which reproduce the universal coefficient $2$ to
+$0.2\%$. The gray curve ($k_h=0.4$) shows the non-uniformity of the
+expansion as $k_h\to0$; the universal $-2$ survives it. Every soft
+magnon leaves a two-site footprint, whatever magnon it scatters
+off---within two-body scattering; beyond is Conjecture~S, unproved.}
+\label{fig:soft-bethe}
 \end{figure}
 
-A dividend of the same telescoping is a lattice Noether identity: on the
-vacuum, the physical charge density equals the divergence of a purely
-virtual bond quantity, and for any finite-range invariant $H$ the deformed
-charge $Q_k$ obeys the exact continuity equation
-$[H,Q_k]=(\ec^{\ic k}-1)J_k$. One warning, learned the hard way: the
-kinematic factor $\ec^{\ic k}-1$ is a property of the profile, not a soft
-factor. The soft theorem has to be earned from the current.
+The same telescoping yields a lattice Noether identity: on the
+vacuum, for a normal-ordered \emph{unbroken} generator, the physical charge
+density equals the divergence of a purely virtual bond quantity;
+separately, for \emph{any} generator and any finite-range invariant $H$ the
+deformed charge $Q_k$ obeys the exact continuity equation
+$[H,Q_k]=(\ec^{\ic k}-1)J_k$. The kinematic factor $\ec^{\ic k}-1$ is a
+property of the profile, not a soft factor; the soft theorem must be
+earned from the current.
 
 \emph{The soft theorem.---}Fix the concrete model: the spin-$\frac12$
 Heisenberg ferromagnet
@@ -174,10 +206,11 @@ For $k_h$ in a compact subset of $(0,\pi)$ and signed $k_s\to0$,
 uniformly, with $v_h=v(k_h)$, $\omega_h=\omega(k_h)$.
 \end{theorem}
 
-The zeroth order, $S_{12}\to1$, is Dyson's decoupling \cite{Dyson1956}. The
-content is the next two orders. The linear coefficient is the pure number
+The zeroth order, $S_{12}\to1$, is soft-magnon decoupling (a
+zero-momentum magnon is a symmetry rotation of the vacuum); the content
+is the next two orders. The linear coefficient is the pure number
 $2$, up to the sign that records which particle is faster: independent of
-the hard momentum, of the coupling, of everything. Hard data enters first
+the hard momentum and of the coupling on the stated compact domain. Hard data enters first
 at second order, through the single even invariant $|v_h|/\omega_h$. And
 the $2$ is not a scattering length---the ferromagnet's scattering length
 vanishes \cite{Gongyo2016}---it is a \emph{displacement}: the soft packet
@@ -190,45 +223,27 @@ the residue $\braket{k_h|Q_0^{\dagger}J^-_0|k_h}=2\ic\,v_h$ is charge times
 velocity, the lattice image of the continuum soft-current analysis
 \cite{Hamada2017,Mojahed2021}. Bethe integrability enters only as an
 oracle: the closed-form expansion reproduces Eq.~\eqref{eq:soft} term by
-term, and a completeness theorem for the two-magnon sector---proved by
-direct diagonalization, not assumed---makes the expansion unconditional.
+term, and a directly diagonalized two-magnon completeness theorem---not
+assumed---makes the expansion unconditional.
 Exact diagonalization confirms the form factors to $2\times10^{-14}$ and
 the two coefficients to $3\times10^{-10}$; real-time wavepacket collisions
 reproduce the displacement reading, the coefficient $2$ to $0.2\%$.
 
-How far beyond two bodies does this reach? Here is the strongest objection
-we know, at full strength: universality \emph{fails} for unrestricted local
-sources. There is an explicit four-site operator $O_\eta$ that creates the
-same one-magnon state yet shifts the linear soft coefficient by
-$2\ic\eta(1-\ec^{-3\ic k_h})$---a counterexample, not a technicality
-(Appendix~B). What survives is a conditional statement: on the class of
-Ward-covariant, no-contact sources the soft factor is universal, and we
-conjecture---Conjecture~S---that for $n$-particle scattering on any
-injective MPS vacuum in this class,
-$M_{n+1}=2\ic k_s M_n+o(k_s)$ in wavepacket norm. The two-body case is
-Theorem~\ref{thm:soft}; process independence beyond it rests on three
-unproved lemmas (wave operators, uniform form-factor regularity, and the
-soft-limit interchange), stated precisely in Appendix~B.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figures/fig2.pdf}
-\caption{%
-The soft magnon theorem and its verification. (a)~The exact two-magnon
-phase of the Heisenberg ferromagnet with its universal part removed:
-$\delta(k_s,k_h)-2k_s$ vanishes quadratically for every hard momentum
-$k_h$---the hard leg enters only at order $k_s^2$, with coefficient
-$v_h/\omega_h$, Eq.~\eqref{eq:soft}; exact diagonalization confirms both
-coefficients to $3\times10^{-10}$. (b)~The displacement reading: the soft
-packet's exit displacement $-\partial\delta/\partial k_s$ for all $k_h$
-(curves, exact) passes through $-2$ sites at $k_s=0$. Circles: real-time
-wavepacket measurements, which reproduce the universal coefficient $2$ to
-$0.2\%$. The gray curve ($k_h=0.4$) shows the non-uniformity of the
-expansion as $k_h\to0$; the universal $-2$ survives it. Every soft magnon
-leaves a two-site footprint, whatever magnon it scatters off---for what it
-takes to drop the last qualifier, see the text.}
-\label{fig:soft-bethe}
-\end{figure}
+How far beyond two bodies does this reach? The strongest objection we
+know, at full strength: universality \emph{fails} for unrestricted local
+sources---an explicit four-site operator $O_\eta$ creates the same
+one-magnon state yet shifts the linear soft coefficient by
+$2\ic\eta(1-\ec^{-3\ic k_h})$ (Appendix~B). What survives is a conjecture on a restricted class. We
+conjecture---Conjecture~S---that for $n$-particle scattering on an
+injective MPS vacuum, with sources in the five-condition Ward-covariant
+no-contact class $\mathcal{S}_W$ of Appendix~B,
+$M_{n+1}=\mathsf{S}(k_s)\,M_n+o(k_s)$ in wavepacket norm, the multiplier
+$\mathsf{S}$ depending only on the legs' asymptotic charges and
+velocities, linear at leading order. Theorem~\ref{thm:soft}
+is its proved two-body instance, $\mathsf{S}=2\ic k_s$. All else is
+open---wave operators, form-factor regularity, the soft-limit
+interchange, two or more hard legs, membership of any microscopic source
+in $\mathcal{S}_W$; Appendix~B states the complete list.
 
 \emph{Memory.---}Memory needs a wall, so change the model minimally: the
 easy-axis XXZ ferromagnet, anisotropy $\Delta>1$, with two product vacua
@@ -238,19 +253,24 @@ from a window $W$ around it,
 $\mathfrak{X}_W=\mathrm{const}+\frac{1}{2s}\sum_{x\in W}S^z_x$. Its change
 over the event is an exact operator identity, no hypotheses: the
 time-integrated $U(1)$ current through the two boundary bonds of $W$, i.e.\
-the zero-frequency weight of the physical boundary current. Memory is the
-DC component of a current at the edge of the observation window---the
-lattice image of the continuum statement that memory sits in the field at
+the zero-frequency weight of the physical boundary current---the lattice
+image of the continuum statement that memory sits in the field at
 the boundary \cite{Strominger2014,DeLuca2024}. Charge bookkeeping then
 gives the memory law, in the general register.
 
 \begin{theorem}[memory law]\label{thm:memory}
 Let $G$ be compact, $\{A_\alpha\}$ a covariant family of injective MPS
-vacua of any bond dimension, $H$ finite range and $G$-invariant, and fix a
+vacua of any bond dimension, $H$ finite range and $G$-invariant; fix a
 kink sector between two vacua carrying charge density $\pm s$ along a
-common unbroken $U(1)$. Assume the scattering hypothesis H-AD (Appendix~C):
-wave operators exist for the kink-magnon event, with one reflected and one
-transmitted channel of definite relative charges $\mp1$, and local decay.
+common unbroken $U(1)$, and let the incoming state be one fixed
+normalizable kink-magnon wavepacket in that sector (no plane wave).
+Assume the scattering hypothesis H-AD-G (Appendix~C) for this packet: wave
+operators exist and are complete on its sector; the outgoing space carries
+exactly one reflected and one transmitted channel, of charges
+$q_{\rm in}=q_L=-1$ and $q_T=+1$ relative to their supporting vacua,
+and no further propagating channel; the packet has no bound-state
+component; local observables decay on the moving legs; and the limits are
+taken in the order infinite volume, then time, then observation window.
 Then the wall-displacement operator is
 \begin{equation}
 \Delta X\;=\;-\frac{1}{s}\,N_T,\qquad
@@ -264,17 +284,17 @@ $\mathrm{spec}(\Delta X)\subseteq\{-1/s,0\}$ with Bernoulli variance.
 
 The displacement is quantized by charge conservation alone: it does not
 depend on momentum, anisotropy, packet shape, or any scattering phase;
-those enter only through $\braket{N_T}$. The proof is bookkeeping---a
-transmission changes the separated leg charge by $2$, and the wall must
-absorb it at $2s$ per site---but one hypothesis is structural: the two
-vacua must carry \emph{opposite} charge density along the same unbroken
-direction, which forces the broken element to invert that direction, as
-the spin flip does in XXZ; a bare abelian symmetry cannot produce such a
-kink pair. H-AD itself we prove only for the dominant domain-wall sector
+those enter only through $\braket{N_T}$. The proof is charge bookkeeping
+(Appendix~C). One hypothesis is structural: the two vacua must carry
+\emph{opposite} charge density along one unbroken direction; the spin
+flip supplies this in XXZ, and a bare abelian symmetry cannot. H-AD-G itself we prove only for the dominant domain-wall sector
 of the XXZ chain, conditional on an explicitly stated sector-reduction
 hypothesis; for the full chain it remains an assumption (Appendix~C).
 Sparse-sector numerics on chains of $160$ sites confirm
-$\delta x=-2\braket{N_T}$ at $s=\frac12$ to $0.004$ sites.
+$\delta x=-2\braket{N_T}$ at $s=\frac12$ to $0.064$ sites across the
+momentum scan (worst for the slowest packets, trapped weight
+${\approx}4\times10^{-3}$), and to $0.005$ sites on the nine rows with
+trapped weight below $10^{-6}$.
 
 In the reduced sector the kink-magnon problem is a side-coupled (Fano)
 level, giving the closed form
@@ -288,8 +308,7 @@ T(k)=16(\Delta-1)^{2}k^{2}+O(k^{4}),
 \end{equation}
 so a soft magnon is totally reflected and leaves no memory: the memory
 effect has an Adler zero of its own. Whether the zero's coefficient is
-universal---a function of the kink's asymptotic data alone---we have not
-established; that remains a conjecture.
+universal we have not established; that remains a conjecture.
 
 Now the refutation. The continuum triangle suggests a dictionary: memory
 $=$ DC limit of the soft factor, summed over the event. That statement is
@@ -299,64 +318,73 @@ does, and a purely transmitting wall with identically zero phase shift
 still displaces by exactly $-1/s$. The soft factor is a
 phase; the memory quantum is a charge. What survives---and is proved---is
 the pair above: memory is the DC weight of the boundary current, and soft
-data reaches it only through the transmission probability. We regard this
-not as a failure of the triangle but as its lattice sharpening: the third
-corner closes through charge transport, not phase accumulation.
+data reaches it only through the transmission probability: charge
+transport, not phase accumulation.
 
-The remaining edge closes at the level of bookkeeping, and only there:
-under finite-range dynamics the vacuum-pair label of the kink sector is
+The remaining edge is bookkeeping, and only that: under finite-range
+dynamics the vacuum-pair label of the kink sector is
 rigid at finite times, and the displacement obeys
 $2s\,\delta x+(q_{\rm out}-q_{\rm in})=0$ within that fixed sector. That
 the memory \emph{reconstructs} the asymptotic transformation which acted
 remains open.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figures/fig3.pdf}
-\caption{%
-The quantized memory effect in the XXZ chain ($\Delta>1$).
-(a)~Space--time record of one event ($\Delta=3$, $k_0=1.2$, $N=160$):
-flipped-spin density as a magnon wavepacket crosses the wall. Inset: the
-wall position, which steps back by two sites during the collision and stays
-there---the permanent record. Across the scan the displacement obeys
-$\delta x=-2\braket{N_T}$ to $0.004$ sites. (b)~Displacement versus
-momentum: filled symbols $\delta x$, open symbols $-2$ times the measured
-transmission, curves the parameter-free Fano prediction. (c)~The measured reflection collapses onto
-$R=[1+(4\omega v/J^{2})^{2}]^{-1}$ across $\Delta\in[1.5,12]$,
-$k_0\in[0.4,1.8]$, to $0.9$--$5.8\%$; as $k_0\to0$ transmission vanishes
-quadratically, Eq.~\eqref{eq:softzero}: a soft magnon leaves no memory.
-Inset: the spin-$s$ falsifier of Conjecture~B. Soft phase slope (filled,
-rings up to $480$ sites) and memory quantum $-\delta x/\braket{N_T}$
-(open, wavepacket runs) against the single line $1/s$, for
-$s=\frac12,1,\frac32,2$ (memory: $s\le\frac32$). Both follow the charge
-datum, not the constant $2$.}
-\label{fig:memory}
-\end{figure}
-
 \emph{One invariant, read out twice.---}Two $2$'s appear above: the soft
 phase slope of Theorem~\ref{thm:soft} and the spin-$\frac12$ memory quantum
 $1/s$ of Theorem~\ref{thm:memory}. We conjecture---Conjecture~B---that both
 equal $|q_{\rm hard}|/s$, the hard particle's $U(1)$ charge in units of
-the vacuum spin density: one asymptotic-charge datum read out as a phase
-in corner $\mathcal{C}$ and as a displacement in corner $\mathcal{B}$.
+the vacuum spin density.
 The conjecture was built to fail at $s\neq\frac12$, where the candidate
 laws $1/s$ and the constant $2$ separate; it survived
 (Fig.~\ref{fig:memory}c, inset). Two independent implementations measured
 the phase slope $=1/s$ across $s\in\{\frac12,1,\frac32,2\}$ and the memory
 quantum $=-1/s$ across $s\in\{\frac12,1,\frac32\}$, within pre-registered
-$8\%$ bands (measured deviations $\le1\%$ at clean kinematics); an exact
-two-magnon contact computation gives the slope $1/s$ in closed form, with
-all hard dependence cancelling. The $|q_{\rm hard}|$ factor is untested:
-every leg so far carries $|q|=1$, and a charge-$2$ bound-state projectile
-is the next falsifier.
+$8\%$ bands (every gated run within $2.7\%$, and within $1\%$ at the
+cleanest kinematics). An exact two-magnon computation now proves the
+slope half:
+$\partial\delta/\partial k_s|_0=\mathrm{sgn}(v_h-v_s)/s$ in closed form,
+hard dependence cancelling (Appendix~B)---the unit-charge two-body slope
+only. The memory half remains
+conditional on H-AD-G; the $|q_{\rm hard}|$ factor is untested---every
+leg so far carries $|q|=1$---and a charge-$2$ bound-state projectile is
+the next falsifier.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.92\columnwidth]{figures/fig3.pdf}
+\caption{%
+The quantized memory effect in the XXZ chain ($\Delta>1$).
+(a)~Space--time record of one event ($\Delta=3$, $k_0=1.2$, $N=160$):
+flipped-spin density as a magnon wavepacket crosses the wall. Inset: the
+wall position steps back by two sites and stays---the permanent record.
+Across the plotted scan $\delta x=-2\braket{N_T}$ ($\braket{N_T}$:
+transmitted weight) holds to $0.064$ sites (worst: slowest packets,
+trapped weight ${\approx}4\times10^{-3}$); on the nine rows with trapped
+weight $<10^{-6}$, to $0.002$ sites.
+(b)~Displacement versus momentum: filled $\delta x$, open $-2T$, curves
+the parameter-free Fano prediction. (c)~Measured reflection against
+$R=[1+(4\omega v/J^{2})^{2}]^{-1}$, $\omega=J(\Delta-\cos k)$,
+$v=J\sin k$: collapse over $\Delta\in[1.5,12]$, $k_0\in[0.4,1.8]$ to
+$0.9$--$5.8\%$; as $k_0\to0$ transmission vanishes quadratically,
+Eq.~\eqref{eq:softzero}: a soft magnon leaves no memory.
+Inset: the spin-$s$ falsifier of Conjecture~B---soft phase slope (filled,
+rings up to $480$ sites) and memory quantum $-\delta x/\braket{N_T}$
+(open: every physical wavepacket run with trapped weight $<10^{-2}$, the
+record's quality gate; controls excluded) against the line $1/s$, for
+$s=\frac12,1,\frac32,2$ (memory: $s\le\frac32$). Both are consistent with
+$1/s$, excluding the constant $2$; that both measure one charge datum
+$|q_{\rm hard}|/s$ is Conjecture~B.}
+\label{fig:memory}
+\end{figure}
 
 \emph{Where the SPT index lives.---}Corner $\mathcal{A}$ made $[\omega]$
 the central extension of the soft charge algebra; does it show up in soft
-amplitudes? The answer is a rigidity dichotomy, and it is proved
-(Appendix~D). In the \emph{bulk}, a closed symmetry insertion has two
+amplitudes? The answer, proved in Appendix~D, is a rigidity dichotomy.
+In the \emph{bulk}, a closed symmetry insertion has two
 endpoints whose projective multipliers cancel exactly, and every normalized
-soft coefficient is a continuous function along symmetric gapped
-deformation paths: nothing bulk is a topological invariant without a
+bulk coefficient is continuous along common-gap symmetric
+deformation paths with continuously varying external data (soft-limit
+coefficients need in addition the uniformity hypothesis H-soft-$p$,
+Appendix~D): nothing bulk is a topological invariant without a
 separate local-constancy proof. Along a symmetric path through the AKLT
 phase, a natural bulk soft-charge coefficient moves from $0.125$ to
 $0.240$ with the SPT class fixed.
@@ -368,8 +396,10 @@ $\omega$-projective representation. For the AKLT half-chain the residue is
 exactly $-\frac{1}{2}[1-(2b^2-1)^L]\,Z\to-Z/2$ along the entire path:
 eigenvalues $\pm\frac12$, rigid, while the bulk coefficient drifts. The
 topological data of soft physics concentrates at the boundary. Physical
-edge statements carry the hypothesis H-split above, and charge bookkeeping
-then quantizes edge-memory outcomes exactly as in Theorem~\ref{thm:memory}:
+edge statements carry the hypothesis H-split above; granted in addition an
+edge-resolved scattering hypothesis H-AD-edge, charge conservation, and
+definite channel charges, charge bookkeeping
+quantizes edge-memory outcomes exactly as in Theorem~\ref{thm:memory}:
 what is protected is the memory's \emph{capacity}---a projective multiplet
 no symmetric perturbation can split---not any particular amplitude. That an AKLT boundary magnon
 actually writes to it, we state as a conjecture with a definite
@@ -377,15 +407,13 @@ Hamiltonian and a pre-registered test (Appendix~D).
 
 \emph{Outlook.---}The topological data of the chain thus concentrates in
 a boundary soft algebra, $\mathbb{C}_\omega[G]$ at the ends, in structural
-parallel to the celestial program's discovery of symmetry towers at the
-boundary of spacetime \cite{Strominger2017}. The symplectic origin of this
-charge algebra---the moment-map geometry of the MPS manifold behind the
-bond operators---is deferred to forthcoming work. The asymmetry of our
-opening has meanwhile dissolved: the wall is a broken asymptotic symmetry
-made visible, and the magnon's soft phase and the wall's memory measure
-one conserved charge crossing an observer. The infrared structure of gauge
-theory and gravity, long tied to null infinity, fits on a chain of spins,
-where every step of it can be checked.
+parallel to the celestial program's symmetry towers at the boundary of
+spacetime \cite{Strominger2017}; its symplectic origin is
+deferred to forthcoming work. The wall is a broken asymptotic symmetry
+made visible, and---if Conjecture~B holds---the magnon's soft phase and
+the wall's memory read out one conserved charge crossing an observer. The
+infrared structure of gauge theory and gravity, long tied to null
+infinity, fits on a chain of spins.
 
 \begin{acknowledgments}
 We thank D.~Giulini for discussions. % CONFIRM WITH TJO before submission
@@ -395,13 +423,15 @@ We thank D.~Giulini for discussions. % CONFIRM WITH TJO before submission
 
 \section{Corner A: the asymptotic charge algebra}\label{app:cornerA}
 
-Ground truth: repository shards \texttt{theory/corner-a.md},
-\texttt{corner-a-kinks.md}, \texttt{corner-a-goldstone.md} (claim rows WI,
+\begingroup\raggedright
+Ground truth: repository shards \path{theory/corner-a.md},
+\path{corner-a-kinks.md}, \path{corner-a-goldstone.md} (claim rows WI,
 A1, A2, G0, all PROVED through the adversarial verification loop recorded
 there); numerical certificates in Appendix~E. Throughout, $\alpha$ labels
 vacua, $H_\alpha=\{g:g\cdot\alpha=\alpha\}$ the unbroken subgroup, and
 phases are normal-ordered so that the extensive phase of the truncated
 symmetry is removed.
+\par\endgroup
 
 \emph{Truncated symmetry (WI).} For a finite region $R=[a,b]$ and any
 $g\in G$, exactly and with no limit,
@@ -449,9 +479,11 @@ $g$-uniform statement when the vacuum manifold is continuous.
 
 \emph{Currents (G0).} For any generator $\xi$ and finite-range invariant
 $H$: $[H,q_x(\xi)]=j_{x-1|x}(\xi)-j_{x|x+1}(\xi)$ with the local cut
-current, and in wavepacket form $[H,Q_k]=(\ec^{\ic k}-1)J_k$. On the
-vacuum, the charge density acts as the lattice divergence of a virtual bond
-quantity---the potential is the fundamental object, as a theorem. The
+current, and in wavepacket form $[H,Q_k]=(\ec^{\ic k}-1)J_k$. Separately,
+for a normal-ordered \emph{unbroken} generator $\xi\in\mathfrak{h}_\alpha$
+only: on the vacuum, the charge density acts as the lattice divergence of a
+virtual bond quantity---the potential is the fundamental object, as a
+theorem. The
 finite-window Fourier identity carries two $\Theta(1)$ boundary terms; the
 clean $(1-\ec^{\ic k})$ form holds only in the stated $\delta$-normalized
 sense. The kinematic factor supplies no soft theorem (a withdrawn overclaim
@@ -460,12 +492,16 @@ is recorded as a refuted row in the claims ledger).
 \section{Corner C: the two-body soft theorem and its limits}
 \label{app:soft}
 
-Ground truth: \texttt{theory/soft-current-recon.md} (row S2-2body, PROVED),
-\texttt{theory/oracle-bethe.md} (oracle facts O1--O10, verification role
-only), \texttt{theory/ml2-completeness.md} (row ML2, PROVED),
-\texttt{theory/ml4-ward-reduction.md} and
-\texttt{theory/ml5-universality.md} (rows ML4-A, ML4-Ward, ML5-A/B PROVED
+\begingroup\raggedright
+Ground truth: \path{theory/soft-current-recon.md} (row S2-2body, PROVED),
+\path{theory/oracle-bethe.md} (oracle facts O1--O10, verification role
+only), \path{theory/ml2-completeness.md} (row ML2, PROVED),
+\path{theory/spin-s-twomagnon.md} (row S2-2body-S, PROVED through its
+adversarial verification round),
+\path{theory/ml4-ward-reduction.md} and
+\path{theory/ml5-universality.md} (rows ML4-A, ML4-Ward, ML5-A/B PROVED
 as conditional implications; ML5 unrestricted REFUTED).
+\par\endgroup
 
 \emph{Derivation of Theorem~\ref{thm:soft}.} The exact current of the
 model is $j^-_{x,x+1}=\frac{J}{2}(S^-_{x+1}-S^-_x)P_{x,x+1}$. A two-magnon
@@ -498,33 +534,48 @@ shifts the linear soft coefficient of the induced two-body amplitude by
 $2\ic\eta(1-\ec^{-3\ic k_h})$. Unrestricted process independence is
 therefore refuted. The repaired statement (proved as a conditional
 implication) holds on the source class $\mathcal{S}_W$ defined by five
-conditions---vanishing soft intercept and first contact jet, second-derivative
-norm control, an exhaustive LSZ decomposition, and reduced-channel
-matching---and Conjecture~S asserts universality on exactly this class.
+conditions---an exhaustive normed LSZ decomposition, Ward covariance of
+the descendant current residue, a process-independent $C^1$ kinematic LSZ
+normalization, reduced-channel regularity with relative norm control, and
+no direct soft contact---and Conjecture~S, in the form
+$M_{n+1}=\mathsf{S}(k_s)M_n+o(k_s)$ with $\mathsf{S}$ a function of the
+asymptotic leg charges and velocities only, asserts universality on
+exactly this class.
 Open, and stated as such: infinite-volume wave operators (ML1), uniform
 form-factor regularity including the $k=\Theta(1/N)$ regime (ML3), the
-$n\ge2$-hard channel (ML4 beyond one hard leg; the fixed-volume formulas
+packet-smeared infinite-volume one-hard-leg estimate and the
+$n\ge2$-hard channel (ML4; the fixed-volume formulas
 are an off-shell interpolation whose naive volume-uniform reading is
-refuted), microscopic membership in $\mathcal{S}_W$, and the limit-order
+refuted), the exhaustive LSZ decomposition itself, nonemptiness of and
+microscopic membership in $\mathcal{S}_W$, and the limit-order
 control (ML6).
 
-\emph{Spin-$s$ slope.} For the spin-$s$ ferromagnet the same contact
-algebra (non-symmetrized free extension plus a double-occupancy channel)
-gives the closed-form two-magnon amplitude with soft phase slope $1/s$,
-hard dependence again cancelling; two independent derivations agree to
-$10^{-15}$. This exact computation is the analytic half of the
-Conjecture~B falsifier; it has not yet passed through the verification
-loop and is counted as evidence, not theorem.
+\emph{Spin-$s$ slope (theorem).} For the ferromagnet
+$H_S=-J\sum_x(\mathbf{S}_x\!\cdot\!\mathbf{S}_{x+1}-S^2)$ at every site
+spin $S$, the separated, adjacent, and (for $S\ge1$) double-occupancy
+equations directly determine the closed-form regular two-magnon amplitude,
+with no
+integrability or completeness assumption; for each fixed $0<|k_h|<\pi$ the
+physical phase has
+$\partial_{k_s}\delta_{\rm phys}|_0=\mathrm{sgn}(v_h-v_s)/S$, locally
+uniformly on compact hard subsets with fixed channel (row S2-2body-S,
+PROVED). The scope is exact: this proves the unit-charge two-body slope
+only---not endpoint or equal-velocity limits, not spin-$S$ Bethe
+completeness, not Conjecture~S, not the memory half, not the
+$|q_{\rm hard}|>1$ factor, and not Conjecture~B.
 
 \section{Corner B: flux identity, memory law, Fano reduction}
 \label{app:memory}
 
-Ground truth: \texttt{theory/memory-quantization.md} (rows M-flux PROVED;
-M-quant PROVED conditional on the hypothesis D18 $=$ H-AD; Mq-AD3 PROVED
+\begingroup\raggedright
+Ground truth: \path{theory/memory-quantization.md} (rows M-flux PROVED;
+M-quant PROVED conditional on the hypothesis D18, the scattering content
+of H-AD-G; Mq-AD3 PROVED
 conditional on the sector-reduction hypothesis Mq-E),
-\texttt{theory/memory-quantization-general.md} (row M-quant-G, PROVED as a
-conditional implication), \texttt{theory/corner-b-draft.md} (rows K1--K3,
+\path{theory/memory-quantization-general.md} (row M-quant-G, PROVED as a
+conditional implication), \path{theory/corner-b-draft.md} (rows K1--K3,
 B3 PROVED; K4 CONJECTURE; row M REFUTED).
+\par\endgroup
 
 \emph{Flux identity (exact).} For any state, any window $W=[a,b]$, and any
 finite times, $\frac{d}{dt}\mathfrak{X}_W$ equals $\frac{1}{2s}$ times the
@@ -535,10 +586,12 @@ spectral, or asymptotic hypothesis enters. (An earlier reading of this
 identity through virtual bond data was deleted during verification; the
 current here is physical.)
 
-\emph{Hypothesis H-AD.} Wave operators $W_\pm$ exist for the selected
-kink-magnon vector and are complete on its sector; the outgoing space
-splits into reflected and transmitted channels with definite relative
-charges $q_{\rm in}=q_L=-1$, $q_T=+1$; local observables decay on the
+\emph{Hypothesis H-AD-G.} For one fixed normalizable kink-magnon
+wavepacket, wave operators $W_\pm$ exist and are complete on its sector;
+the outgoing space
+splits into exactly one reflected and one transmitted channel with definite
+charges $q_{\rm in}=q_L=-1$, $q_T=+1$, and no further propagating channel;
+the packet has no bound-state component; local observables decay on the
 moving legs; and limits are taken in the stated order (infinite volume,
 then time, then window). For Theorem~\ref{thm:memory} in the general
 register these charges, the density jump $2s$, and summable charge
@@ -552,7 +605,7 @@ the broken element commutes with the unbroken direction
 ($\mathrm{Ad}_{g^{-1}}\xi=\xi$, as for any abelian $G$) the two vacua carry
 \emph{equal} densities and no such kink pair exists; the required inversion
 is supplied by a Weyl-type element, as the spin flip in XXZ. Nothing in compactness, injectivity, or finite range implies
-H-AD itself; it is proved here only where stated next.
+H-AD-G itself; it is proved here only where stated next.
 
 \emph{Sector reduction and the Fano level.} In the XXZ chain at $s=\frac12$
 the incoming component with at most three domain walls, under the
@@ -560,12 +613,13 @@ enumeration hypothesis Mq-E (verified explicitly at $N=14$; all-volume form
 open), is unitarily a two-sided tight-binding chain with one side-coupled
 level---the flat kink state, whose bondwise annihilation by the exact kink
 Hamiltonian is proved. Kato--Rosenblum and a Feshbach analysis then give
-H-AD for this reduced dynamics: trace-class perturbation, complete wave
+H-AD-G's scattering clauses for this reduced dynamics: trace-class
+perturbation, complete wave
 operators, no singular-continuous spectrum. Eliminating the side level
 yields $t(k)=[1+\ic J^2/4\omega v]^{-1}$ and Eq.~\eqref{eq:softzero}.
 Leakage of the full chain out of the reduced sector is measured at
 $O(\Delta^{-2})$ (probabilities $0.10/0.03/0.008$ at $\Delta=2/4/8$); it
-affects $T(k)$, not the conservation laws. Full-chain H-AD and the
+affects $T(k)$, not the conservation laws. Full-chain H-AD-G and the
 universality of the soft-zero coefficient remain open and are tracked as
 such in the claims ledger.
 
@@ -586,7 +640,7 @@ remains a conjecture with finite-volume evidence.
 
 \section{The SPT rigidity dichotomy}\label{app:spt}
 
-Ground truth: \texttt{theory/spt-rebuild.md} (rows SPT-B-mult, SPT-B$'$,
+Ground truth: \path{theory/spt-rebuild.md} (rows SPT-B-mult, SPT-B$'$,
 SPT-E-AKLT, SPT-E$'$, SPT-T$'$, SPT-D$'$, SPT-M$'$ all PROVED with the
 hypotheses below explicit; SPT-M$'$-dyn CONJECTURE; the earlier pointwise
 bulk-blindness claim and the all-orders edge no-go both REFUTED and
@@ -598,7 +652,10 @@ no closed-bulk amplitude carries a projective anomaly. This does not make
 bulk data blind to the phase---adjoint representation content
 distinguishes Pauli-projective from scalar conjugation---but it is
 deformable: along any common-gap symmetric path with continuous external
-data, every normalized bulk coefficient is continuous. On the anisotropic
+data (tensors, channel embeddings, gauge fixes, normalizations), every
+normalized bulk coefficient is continuous; a coefficient reached through a
+soft limit, or through $p$ derivatives, requires in addition $C^p$
+external data and the uniformity hypothesis H-soft-$p$ of the shard. On the anisotropic
 AKLT family ($A^x_b\!\propto\!X$, $A^y_b\!\propto\!Y$, $A^z_b\!\propto\!Z$)
 the soft-charge coefficient is $C_{\rm bulk}(b)=b^2/4(1-b^2)$:
 $\tfrac18$ at the AKLT point, $0.2402$ at $b=0.7$, same phase, same
@@ -616,7 +673,8 @@ independent of $b$; the trivial comparison tensor gives $0$. The
 half/integer offset is pinned by the global group ($O(2)$ here, or the
 $SU(2)$ cover); a bare $U(1)$ does not protect it.
 
-\emph{Edge memory.} Given H-split, an edge-resolved H-AD, charge
+\emph{Edge memory.} Given H-split, the edge-resolved scattering
+hypothesis H-AD-edge, charge
 conservation, and definite channel charges,
 $\Delta Q_{\rm edge}=-(Q_{\rm bulk,out}-Q_{\rm bulk,in})$, with channel
 outcomes in $\mathbb{Z}$ (for the AKLT doublet, in $\{-1,0,1\}$)---the
@@ -632,28 +690,36 @@ theorems.
 
 \section{Numerical certificates}\label{app:numerics}
 
-Every theorem above carries an independent machine-checked certificate
-under \texttt{theory/checks/} (nine checkers, all passing, each with
-documented failing ``red'' mutations), and the quantitative claims of the
+\begingroup\raggedright
+The theorems above carry independent machine-checked certificates
+under \path{theory/checks/} (ten checkers, all passing; five of
+them---the Ward-reduction/universality, flux/memory-scan, general-memory,
+spin-$S$ slope, and SPT checkers---carry documented failing ``red''
+mutation modes), and the quantitative claims of the
 text trace to committed data files: exact-diagonalization form-factor
 residuals $\le1.6\times10^{-14}$ and coefficient fits to
-$2.2\times10^{-10}$ (\texttt{soft\_current\_recon\_check.py}); two-magnon
+$2.2\times10^{-10}$ (\path{soft_current_recon_check.py}); two-magnon
 completeness on rings up to $26$ sites
-(\texttt{ml2\_completeness\_check.py}); the flux identity to
-$3.4\times10^{-16}$ (\texttt{mquant\_check.py}); the wavepacket memory scan
-(\texttt{memory-scan-1.json}: $N=160$, sparse kink-sector propagation,
-trapped weight $<10^{-6}$, $|\delta x+2\langle N_T\rangle|\le0.004$ sites);
+(\path{ml2_completeness_check.py}); the flux identity to
+$3.4\times10^{-16}$ (\path{mquant_check.py}); the wavepacket memory scan
+(\path{memory-scan-1.json}: $N=160$, sparse kink-sector propagation;
+$|\delta x+2\langle N_T\rangle|\le0.064$ sites across the full momentum
+scan, dominated by the slowest packets with trapped weight
+${\approx}4\times10^{-3}$, and $\le0.005$ sites for both estimators on the
+nine rows with trapped weight $<10^{-6}$);
 the Fano cross-check ($0.9$--$5.8\%$ over
 $\Delta\in\{1.5,2,3,6,12\}$, pre-registered $8\%$ criterion); the spin-$s$
 falsifier and its independent cross-check
-(\texttt{spin1-bc-falsifier.json}, \texttt{spin1-bc-crosscheck.json}:
+(\path{spin1-bc-falsifier.json}, \path{spin1-bc-crosscheck.json}:
 ansatz-free ring spectra to $N=480$ plus real-time collisions, slope
 deviations from $1/s$ below $0.5\%$ extrapolated; wavepacket memory ratios
-within $1\%$ at clean kinematics); and the SPT deciding computation
-(\texttt{spt\_rebuild\_check.py}: bulk coefficient and edge residue to
+within $2.7\%$ under the trapped-weight gate $<10^{-2}$, within $1\%$ at
+the cleanest kinematics); and the SPT deciding computation
+(\path{spt_rebuild_check.py}: bulk coefficient and edge residue to
 stated tolerances, sign and phase-gauge mutants failing). Figures 1--3 are
 generated from these committed files by
-\texttt{paper/figures/make\_figures.py}; no number is hand-entered.
+\path{paper/figures/make_figures.py}; no number is hand-entered.
+\par\endgroup
 
 \bibliography{refs}
 
