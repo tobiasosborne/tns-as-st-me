@@ -269,3 +269,13 @@ Recommended before the shard feeds the paper: sweep m1--m15, prioritising **m5**
 (the singular-continuous-spectrum leaf), **m12** (the three unjustified new
 leaves), and **m11** (the descendant's D7 representative, on which (24) now
 silently depends).
+
+---
+
+Residue sweep 2026-08-26 (`bd tns-peh`): items m1--m11, m13, m15 and n7--n8
+swept in `ml2-completeness.md` (m12 and m14 had already been swept at the
+2026-08-26 freeze); items escalated: none — no item needed a substantive
+change, and no step's mathematics was altered.  Item **n6 not swept**: it is a
+cosmetic rewrite inside `ml2_completeness_check.py`, outside the sweep's file
+lane, and stays open in `bd`.  Checker re-run after the sweep: `PASS`, exit 0,
+normal and `python3 -O`, byte-identical output.

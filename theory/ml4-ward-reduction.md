@@ -1,10 +1,14 @@
 # ML4 — Ward/LSZ reduction on the soft energy shell
 
-Status: **PROVED for the one-hard-magnon FM channel in the packet norm stated
-below; PROVED as an abstract channel lemma; OPEN for two hard magnons followed
-by a three-magnon final channel.**  The last gap is not a Bethe calculation: it
-is the absence of a three-body wave operator and a multiplicity-controlled
-soft energy shell.  No closed-form S-matrix is used in a proof below.
+Status: **SKETCH — under repair after `verdicts/mquant-ml45-r1.md` objection 1.**
+The abstract cancellation lemma and the exact finite-sector Ward projection
+survive the r1 attack, and the FM trace has a second soft zero at every fixed
+finite volume.  The formerly claimed volume-uniform bound is **retracted**:
+the legal joint scaling `k=Θ(1/N)` makes its constant diverge.  The surviving
+statement is fixed-volume, or the ordered limit `k→0` before `N→∞`.  A
+packet-smeared infinite-volume trace estimate is future work (bd `tns-7ut`).
+The two-hard/three-magnon channel remains open for the independent reason
+recorded in ⟨1⟩5.  No closed-form S-matrix is used below.
 
 This shard uses D3, D6--D8, D10, D12(a′), `soft-current-recon.md` (R1),
 (R13)--(R15), and the complete two-magnon spectral resolution (15)--(21) of
@@ -51,10 +55,11 @@ Ward-reduced connected numerator is
   :=(e^{ik}-1)\langle \Gamma_N(k)f,R_{n,N}g\rangle .           \tag{3}
 \]
 
-An **ML4-admissible LSZ amputation** may multiply (3), on either side, by
-operator families uniformly bounded and `C¹` for `|k|≤ε_I`.  This excludes a
-new `1/k` pole in the reduced (`1-P`) channel.  It includes the ML2 spectral
-trace against compact smooth outgoing packets.
+An **ML4-admissible LSZ amputation at fixed `N`** may multiply (3), on either
+side, by operator families bounded and `C¹` for `|k|≤ε_I`.  This excludes a
+new `1/k` pole in the reduced (`1-P`) channel at that volume.  No
+volume-uniform constant is included in this definition; an infinite-volume
+use must assume its own packet-trace bound.
 
 **⟨2⟩1. PROVE.** The classes in (1) obey the function-space discipline of D3
 and D12, and (3) has a norm meaning before any plane-wave limit.
@@ -266,30 +271,30 @@ Justification: ML2 (19), O1, ML2 (12), ML2 (24), and the assumptions in
 
 **⟨3⟩5. QED.**
 
-**⟨2⟩2. PROVE (uniform trace regularity).** Let
+**⟨2⟩2. PROVE (fixed-volume trace regularity).** Let
 
 \[
  r_N(h):=(1-P_{1,N})J^-_0|h\rangle_N .                        \tag{14}
 \]
 
-There is `C_I<∞`, independent of `N`, such that for allowed ring momenta
-`h∈I` and `|k|≤ε_I`,
+For every fixed `N` there is `C_{I,N}<∞` such that for allowed ring momenta
+`h∈I` and sufficiently small `|k|`,
 
 \[
- |\langle B_N(k,h),r_N(h)\rangle|\le C_I|k| .                 \tag{15}
+ |\langle B_N(k,h),r_N(h)\rangle|\le C_{I,N}|k| .             \tag{15}
 \]
 
 **⟨3⟩1.** The left side vanishes at `k=0` by (13) and the definition of the
 orthogonal projection in (14).
 Justification: (2), (13), and (14).
 
-**⟨3⟩2.** The implicit solution of (R16) has a uniformly bounded first
-derivative because its denominator at zero is `e^{ih}-1`, whose modulus is at
-least `2sin(a/2)`.
-Justification: the analytic implicit-function theorem and `h∈I`.
+**⟨3⟩2.** At fixed `N`, the implicit solution of (R16) and every coordinate of
+`B_N(k,h)` are analytic near `k=0` because `e^{ih}-1≠0` for `h∈I`.
+Justification: the analytic implicit-function theorem, (12), and `h∈I`.
 
 **⟨3⟩3.** Differentiating the finite coordinate pairing reduces it to the
-geometric sums `Σe^{ihr}` and `Σr e^{ihr}`.  For a ring momentum `h≠0`,
+finite geometric sums `Σe^{ihr}` and `Σr e^{ihr}`.  For a ring momentum
+`h≠0`,
 
 \[
  \left|\sum_{r=1}^{M}e^{ihr}\right|\le {2\over|1-e^{ih}|},\quad
@@ -297,58 +302,85 @@ geometric sums `Σe^{ihr}` and `Σr e^{ihr}`.  For a ring momentum `h≠0`,
  \le {M\over|1-e^{ih}|}+{2\over|1-e^{ih}|^2}.                \tag{16}
 \]
 
-The contact part of (R13) carries `N^{-1/2}` on both vectors; its `N` terms
-and the one seam term are therefore `O_I(1)`.  The descendant subtraction in
-(11) carries `(N-2)^{-1}`; the possible `O_I(N)` term in the second sum of
-(16) is therefore also `O_I(1)`.
-Justification: differentiate a finite geometric series, (R13), and (11).
+These bounds prove finiteness at each `N`; they do **not** give the formerly
+claimed volume-uniform derivative after the transported relative-coordinate
+phase is varied on separations of order `N`.
+Justification: differentiation of a finite geometric series, (12)--(14), and
+the explicit `N` dependence in (16).
 
-**⟨3⟩4.** Thus
-`sup_{N,h,k}|∂_k⟨B_N(k,h),r_N(h)⟩|<∞`; integrate from zero and use ⟨3⟩1 to
-obtain (15).
+**⟨3⟩4.** The derivative is continuous on a compact sufficiently small
+`k`-interval at fixed `N`; call its maximum `C_{I,N}`.  Integrating from zero
+and using ⟨3⟩1 gives (15).
 Justification: ⟨3⟩1--⟨3⟩3 and the fundamental theorem of calculus.
 
 **⟨3⟩5. QED.**
 
-**⟨2⟩3. PROVE (ML4 for one hard magnon).** For arbitrary incoming and
-outgoing hard packets `g,f∈C_c^∞(I)`, the orthogonal contribution (3) obeys
+**⟨2⟩3. PROVE (the retracted uniform statement has an explicit
+countersequence).**  Put `h=2π/5`, take ring sizes divisible by five, set
+`k_N=2π/N`, and write
+`F_N(k):=⟨B_N(k,h),(1-P_{1,N})J^-_0|h⟩_N⟩`.
+
+**⟨3⟩1.**  The low-frequency relative-coordinate sum obeys
+
+`lim_{N→∞} N^{-1}⟨B_N(c/N,h),B_N(0,h)⟩ = 8[1−cos(c/2)]/c²`.
+
+At `c=2π` this is `4/π²`, rather than the `c=0` value `1`.
+Justification: exact summation of the two finite geometric series in (12),
+named computation **ML4-Q1** in `checks/ml4_check.py`.
+
+**⟨3⟩2.**  The contact term changes by `o(1)` while the descendant subtraction
+is fixed by (11), hence
+`lim_{N→∞}|F_N(2π/N)| = 2|v(h)|(1−4/π²) > 0`.
+Justification: (11)--(14), ⟨3⟩1, and named computation **ML4-Q1**.
+
+**⟨3⟩3.**  Consequently `|F_N(k_N)|/|k_N|` grows linearly in `N`, while
+`|(e^{ik_N}−1)F_N(k_N)|/(sqrt(N−2)k_N²)` grows as `sqrt(N)`.
+Justification: ⟨3⟩2, `k_N=2π/N`, and the normalization below (12).
+
+**⟨3⟩4.**  Thus no `N`-independent version of (15) or (17) holds on this
+finite-ring transported trace.
+Justification: ⟨3⟩3.  **⟨3⟩5. QED.**
+
+**⟨2⟩4. PROVE (surviving fixed-volume/ordered-limit ML4).** For arbitrary
+incoming and outgoing hard packets `g,f∈C_c^∞(I)` and every fixed `N`, the
+orthogonal contribution (3) obeys
 
 \[
  |\mathcal A_{\perp,N}(k;f,g)|
- \le C'_I|k|^2\|f\|_{I,N}\|g\|_{I,N},                        \tag{17}
+ \le C'_{I,N}|k|^2\|f\|_{I,N}\|g\|_{I,N}.                    \tag{17}
 \]
 
-uniformly in `N`; it has the same bound after `N→∞`, and its normalized soft
-packet norm is `O(ε²)`.
+Its normalized soft-packet norm is `O_N(ε²)`.  In particular,
 
-**⟨3⟩1.** Equations (13)--(15) are the trace-norm hypotheses of ML4-A, while
+`lim_{N→∞} lim_{k→0} 𝒜_{⊥,N}(k;f,g)/k = 0`,
+
+where the soft limit is taken first.  No statement about the reversed or
+joint limit is made.
+
+**⟨3⟩1.** At fixed `N`, equations (13)--(15) are the trace-norm hypotheses of
+ML4-A, while
 `|e^{ik}-1|≤|k|`.
 Justification: ⟨2⟩1--⟨2⟩2 and the sine bound.
 
-**⟨3⟩2.** Apply ML4-A fiberwise and use Cauchy--Schwarz in the discrete hard
-packet norm to get (17).
+**⟨3⟩2.** Apply ML4-A fiberwise and use Cauchy--Schwarz in the finite discrete
+hard-packet norm to get (17), with constant `C'_{I,N}`.
 Justification: ML4-A (5) and (1).
 
-**⟨3⟩3.** The finite sums in ⟨2⟩2 are Riemann sums plus endpoint geometric
-terms.  After smooth hard smearing the endpoint terms vanish by the
-Riemann--Lebesgue lemma, while (15) dominates the sums.  Hence the packet
-limit `N→∞` exists; ML2 (20)--(21) identifies it with the complete scattering
-spectral trace.  General ML2 outgoing packets contribute only through this
-unique real shell: the bound band is separated and the singular class is
-absent by ⟨2⟩1.
-Justification: finite geometric summation, dominated convergence, Fourier
-Riemann sums, ML2 completeness, and energy conservation in the LSZ trace.
+**⟨3⟩3.** Divide (17) by `|k|` and take `k→0` at fixed `N`; the result is zero.
+The subsequent `N→∞` limit of this zero sequence is zero.
+Justification: (17) and the stated order of limits.
 
-**⟨3⟩4.** Apply ML4-A (6) for the soft packet statement.  Bounded `C¹` LSZ
-amputators preserve the estimate by ⟨1⟩1.⟨2⟩1.
+**⟨3⟩4.** Apply ML4-A (6) at fixed `N` for the soft packet statement.  Bounded
+`C¹` fixed-volume LSZ amputators preserve the estimate by
+⟨1⟩1.⟨2⟩1.
 Justification: (6) and (17).
 
 **⟨3⟩5. QED.** □
 
-This is the requested two-body generalization from momentum eigenvectors to
-arbitrary wave-packet-smeared in/out states resolved by the ML2-complete basis.
-It uses the local two-body contact equation only to prove regularity and
-matching, never the closed Bethe ratio.
+This is a fixed-volume result for arbitrary packet samples, plus the displayed
+ordered limit.  It is **not** a packet-smeared infinite-volume trace theorem.
+Obtaining the latter requires new control of the `kN=Θ(1)` regime; ML2
+completeness alone does not supply it.
 
 ## ⟨1⟩5. Two hard magnons: exact Ward part and the remaining obstruction
 
@@ -408,40 +440,51 @@ Justification: comparison with ML4-A.
 **⟨3⟩3.** Apply ML4-A (5)--(6).
 Justification: Lemma ML4-A.  **⟨3⟩4. QED.**
 
-The conditional result is rigorous; establishing its channel hypotheses is
-**OPEN**.  If “`n=2`” counts the final hard-plus-soft two-magnon sector rather
+The conditional implication is algebraic; establishing its channel hypotheses
+is a **CONJECTURE/future-work item**.  If “`n=2`” counts the final hard-plus-soft two-magnon sector rather
 than two hard input magnons, it is already the proved theorem ⟨1⟩4.
 
 ## ⟨1⟩6. Numerical certificate
 
 **⟨2⟩1. PROVE.** `theory/checks/ml4_check.py` passes normally and under
-`python3 -O` for `N=12,14,16,18,20`.
+`python3 -O` for the fixed-volume Taylor probes `N=12,14,16,18,20`, and runs
+the joint-scaling probe `k=2π/N` for `N=40,80,120,160`.
 
 **⟨3⟩1.** The checker assembles `Q_0`, `J^-_0`, and `J^z_0` directly from
 `(J/2)(1-P)`, solves the one contact equation for (12), and tests (11)--(15).
 Justification: inspection of the checker.
 
-**⟨3⟩2.** The fitted exponent of the raw orthogonal trace is
+**⟨3⟩2.** The fixed-volume fitted exponent of the raw orthogonal trace is
 `0.99700--0.99988`; after multiplication by `e^{ik}-1` it is
 `1.99700--1.99988`.  Omitting the projection is the built-in red mutation and
 returns exponent `0.99991--0.99997`, so the test detects the claimed defect.
 Maximum Ward/projection residuals are `8.899e-16` and `3.473e-15`.
 Justification: the recorded optimized-mode run.
 
-**⟨3⟩3. QED.** □
+**⟨3⟩3.**  Named computation **ML4-Q1** verifies that the normalized
+`k=2π/N` ratio grows rather than remaining bounded.  Its `--red-uniform`
+mutation reinstates the retracted uniform claim and exits nonzero.
+Justification: inspection and the recorded optimized-mode run of
+`checks/ml4_check.py`.
+
+**⟨3⟩4. QED.** □
 
 ## ⟨1⟩7. ML4 verdict
 
-1. **PROVED:** exact sector Ward projection (8)--(11), including arbitrary
-   one-hard packets and all finite-ring ML2 two-hard states.
-2. **PROVED:** the standalone cancellation lemma ML4-A.  The property that
+1. **SKETCH pending r2:** exact sector Ward projection (8)--(11), including
+   arbitrary one-hard packets and all finite-ring ML2 two-hard states; this
+   algebra survived the r1 recomputation.
+2. **SKETCH pending r2:** the standalone cancellation lemma ML4-A.  The property that
    kills the orthogonal `O(k)` contribution is energy-shell descendant
    matching plus `C¹` trace regularity; the Ward identity computes the
    descendant residue, and the velocity sign merely labels the physical
    branch.
-3. **PROVED:** for one hard FM magnon and arbitrary smooth compact hard in/out
-   packets, the ML2-complete two-body channel gives (17), uniformly in volume,
-   with `O(ε²)` soft-packet remainder.
-4. **OPEN:** two hard magnons followed by a genuine three-magnon channel,
+3. **SKETCH pending r2:** for one hard FM magnon and arbitrary smooth compact
+   hard packet samples, (17) holds at each fixed volume, with
+   `O_N(ε²)` remainder and the stated `k→0`-before-`N→∞` limit.  The former
+   volume-uniform claim is retracted by ML4-Q1.
+4. **CONJECTURE / future work:** a packet-smeared infinite-volume trace bound
+   controlling `k=Θ(1/N)` (bd `tns-7ut`).
+5. **CONJECTURE / future work:** two hard magnons followed by a genuine three-magnon channel,
    because ML2 is input completeness, not three-body channel completeness.
    The exact missing statement is EXPLORATION ML4-3.

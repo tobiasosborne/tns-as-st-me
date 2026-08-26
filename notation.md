@@ -175,7 +175,7 @@ two rows above are marked SUPERSEDED in place (`S(k;·)`, `R(k)`).*
 | `ω_{\rm gap}`, `k_*` | magnon gap `J(Δ−1)`; crossover momentum `1/(4(Δ−1))` | definitions.md D16 |
 | `q`, `x_0`, `φ`, `\|K(z)⟩` | XXZ deformation parameter `Δ−\sqrt{Δ²−1}`; kink centre; conjugate `U(1)` phase; exact kink product family (overload 6) | definitions.md D16 |
 | `𝒦^{(1)}_{αβ}` | the `ℓ¹` refinement of `𝒦_{αβ}` on which half-line charges converge | definitions.md D17 |
-| `(H-AD)` | hypothesis of asymptotic decomposition (asymptotic completeness of the kink+magnon sector) | definitions.md D18 |
+| `(H-AD)` | coherent wave-operator/channel/local-decay hypothesis AD1--AD4 for the selected kink+magnon sector; the former norm-mixture reading is superseded | definitions.md D18 |
 | `𝔮^L_c`, `𝔮^R_c` | half-line regularised charges `Σ_{x<c}(S^z_x−s_α)`, `Σ_{x>c}(S^z_x−s_β)` | definitions.md D17, claim B3 |
 | `σ_k`, `σ_x` | wave-packet momentum and spatial width | definitions.md D14 |
 
@@ -202,9 +202,10 @@ two rows above are marked SUPERSEDED in place (`S(k;·)`, `R(k)`).*
 | **ML4-A** | the standalone cancellation lemma: `Γ(0)=U` (energy-shell channel matching) + `C¹` trace regularity ⟹ `‖b(k)Γ(k)^†R‖ ≤ C_bC_Γ‖J‖k²` | ml4-ward-reduction.md ⟨1⟩2 |
 | `J^z_0`, `S^±` | the `z`-current and global raising/lowering operators used in the exact Ward projection `P_{n,N}J^-_0 = \frac{2}{N-2n}Q_0J^z_0` on `ker S^+` | ml4-ward-reduction.md (8)--(11) |
 | `‖O‖_μ`, `M_1^O`, `M_2^O` | exponentially-quasi-local source norm; amputated one-hard and hard-plus-soft amplitudes | definitions.md D24(a),(b) |
-| `𝔠_h(O)` | the contact first jet; universality **iff** it vanishes (ML5-A) | definitions.md D24(c) |
-| `𝒮_W` | the Ward-covariant, no-contact source class on which universality holds | definitions.md D24(d) |
+| `𝔠_h(O)` | the contact first jet; ML5-A requires both `M_2^O(0)=0` and `𝔠_h(O)=0`, with the D24(c) second-derivative norm control | definitions.md D24(c) |
+| `𝒮_W` | the five-condition Ward/LSZ/no-contact source class in the repaired conditional ML5-B implication | definitions.md D24(d) |
 | `D`, `O_η` | the four-site refuting source; `M_1` fixed, linear soft coefficient shifted | definitions.md D24(e) |
+| `V_int` | four-site ML5-A intercept counterexample: `M_1=0`, zero first jet, nonzero `M_2(0)` | definitions.md D24(e) |
 | `χ(h,k)` | `sgn(v(h)−v(k))` — the *spelled-out* channel sign (see overload 2) | ml5-universality.md ⟨1⟩1 |
 | `W_±`, `ℋ_as`, `ℋ_b`, `ℋ_sc`, `P_L`, `P_T` | Møller wave operators; channel space; bound and scattering subspaces; reflected/transmitted channel projections | definitions.md D18, memory-quantization.md §2 |
 | `N_T` (operator), `ΔX` | the transmitted-channel projection `W_+P_TW_+^*`, and the displacement operator `0·P_L − (1/s)P_T` conjugated to `ℋ_sc` | memory-quantization.md (Mq.6), §4 |

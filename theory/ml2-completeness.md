@@ -3,7 +3,10 @@
 Status: **L6 loop CONVERGED — r2 critic PASS** ([`verdicts/ml2-r2.md`](verdicts/ml2-r2.md),
 10/10 mutants killed).  Residue m12 (three unjustified leaves in ⟨1⟩6.⟨2⟩2) and
 m14 (the wrap-pair sign flips) were swept at the 2026-08-26 freeze; m1--m11,
-m13, m15 and n6--n8 remain open and are tracked in `bd`.
+m13, m15 and n7--n8 were swept in the 2026-08-26 residue sweep (`bd tns-peh`;
+closing note in `verdicts/ml2-r2.md`).  Only n6 remains open — a cosmetic
+rewrite inside `checks/ml2_completeness_check.py`, tracked in `bd`.  Neither
+sweep changed the mathematics of any step.
 No literature result is used.
 The proof starts from D6,
 uses the D7 coefficient convention, and uses the local equations already proved
@@ -19,7 +22,8 @@ completeness.  A formal zero Bethe vector is never counted as a state.
 **PROVE.**
 
 1. On the `N`-site ring, every nonzero two-magnon Bethe vector is one of the
-   real-pair, complex-pair, or descendant vectors classified in ⟨1⟩3.  For
+   real-pair, complex-pair, or descendant vectors classified in ⟨1⟩3--⟨1⟩4
+   (⟨1⟩3 assumes `c_m>0`; the `K=π` fiber is classified in ⟨1⟩4.⟨2⟩2).  For
    even `N` the singular completion supplies one further vector.  The
    coincident solutions listed in ⟨1⟩4 are zero vectors and supply none.
    The physical vectors number exactly `N(N-1)/2` and can be normalized to an
@@ -27,7 +31,10 @@ completeness.  A formal zero Bethe vector is never counted as a state.
 2. On the infinite chain, the two-magnon Hilbert space is the orthogonal sum
    of the D7 scattering representation and one bound-magnon band.  The
    eigenfunctions, energies, Plancherel measures, and resolution of the
-   identity are (15)--(20).
+   identity are (15)--(21).  This is a generalized-eigenfunction (Plancherel)
+   statement: it does *not* construct the Møller operators `W_±` and does not
+   prove asymptotic completeness in the scattering-theoretic sense, which is
+   ML1 (`soft-current-recon.md` ⟨1⟩7) and is open.
 3. Consequently the finite-volume expansion (R6) in
    `soft-current-recon.md`, with the singular class and coefficient separated
    as in (23)--(24), is unconditional; (R7) is its single-infinite-root
@@ -128,7 +135,11 @@ and
  F_{L+1}(X)-F_{L-1}(X),&N=2L,\ m\ \text{even}.
  \end{cases}                                                   \tag{6}
 \]
-Justification: definitions local to this proof.
+Justification: `F_r` and `P_m` are new symbols with no entry elsewhere in the
+repo; the relative momentum `q` and `X=\cos q` are the local overloads already
+registered in `notation.md` (deliberate overloads 6 and 7).  `q` is used in
+⟨1⟩3--⟨1⟩5 and `X` in ⟨1⟩3--⟨1⟩4 (the evaluations of (6) at `X=±1` in
+⟨1⟩4.⟨2⟩1.⟨3⟩2); neither carries any other meaning in this shard.
 
 **⟨2⟩2. PROVE.** The `d_m` roots of `P_m` are real and simple, and the
 map
@@ -182,8 +193,12 @@ Justification: impose `f_1=cf_0` and solve for `S_{12}`.
 
 **⟨3⟩3.** The remaining periodic equation is the far boundary condition in
 ⟨2⟩2, hence `P_m(cos q)=0`; conversely that condition reconstructs both
-Bethe equations.  The choices `q` and `-q` only exchange the roots.
-Justification: (3), (6), and (8)--(9).
+Bethe equations at every root **except** the single root `X=1` of `P_0`
+(`m=0`, `c=1`, where (11) gives `P_0(1)=0`): there `q=0`, and what is
+reconstructed is the *coincident* pair `k_1=k_2=0`, which the hypothesis of
+⟨2⟩3 excludes.  That one root is not lost — it is re-added, as a state, by
+⟨2⟩6.⟨3⟩2.  The choices `q` and `-q` only exchange the roots.
+Justification: (3), (6), (8)--(9), and (11) at `c=1` for the excepted root.
 
 **⟨3⟩4. QED.**
 
@@ -205,8 +220,11 @@ Justification: the min--max principle for a rank-one perturbation.
 
 **⟨3⟩3.** If `X>1`, choose `q=iη`, `η>0`, in (8).  The roots are the
 conjugate pair `K_m/2∓iη`, and (9) is the two exponential branches required
-by periodicity.  It tends to the D7 bound wave as `N→∞`.
-Justification: (8)--(9) and `cos(iη)=cosh η>1`.
+by periodicity.  It tends to the D7 bound wave as `N→∞`.  The symbol `η` is
+D7's `η=-\log|t|` only in that limit: on the ring (9) carries *both* branches
+`e^{∓ηr}`, so no single geometric decay factor `t` exists at finite `N`.  In
+the limit `t=c` and `X=\cosh η=(c+c^{-1})/2` (⟨1⟩5.⟨2⟩3, (19)).
+Justification: (8)--(9), `cos(iη)=cosh η>1`, and D7 for `t`, `η`.
 
 **⟨3⟩4. QED.**
 
@@ -257,9 +275,13 @@ far boundary condition.  Its energy is
 Justification: the cosine recurrence, D6, and `oracle-bethe.md` (2), (6).
 
 **⟨3⟩2.** At `m=0`, the constant coordinate vector has energy zero and is
-the normalized vector `binom(N,2)^{-1/2}Σ_{x<y}|x,y⟩`.
+the normalized vector `binom(N,2)^{-1/2}Σ_{x<y}|x,y⟩`.  Its D7 representative
+is `k_1=k_2=0` with `(A_{12},A_{21})=(1/2,1/2)`, which reproduces exactly that
+constant wave; the choice is not forced by D7, because at `k_1=k_2=0` the
+contact equation degenerates to `0=0` (⟨1⟩4.⟨2⟩1.⟨3⟩2) and `S_{12}=A_{12}/A_{21}`
+is `0/0` there.  This is the representative (24) uses (⟨1⟩6.⟨2⟩2.⟨3⟩3).
 Justification: every D6 swap fixes it and direct expansion of
-`(S^-_{tot})²|Ω⟩`.
+`(S^-_{tot})²|Ω⟩`; D7 for the two-plane-wave form at `k_1=k_2=0`.
 
 **⟨3⟩3.** Global `SU(2)` lowering commutes with `H`, proving the stated
 multiplet interpretation and agreeing with (R7).
@@ -315,9 +337,43 @@ periodicity.
  \end{cases}                                                   \tag{13}
 \]
 
-The `q=π/2` member is the `(0,π)` descendant.
-Justification: set `c=0` in (5)--(6), use
-`F_r=-sin((r-1)q)/sin q`, and use finite sine/cosine orthogonality.
+The `q=π/2` member is the `(0,π)` descendant.  This is the one place in the
+shard where orthogonality is not handed over by the spectral theorem — the
+level `E=2J` is `(d_m-1)`-fold degenerate — so it is proved here.
+
+**⟨4⟩1.** At `c=0` the matrix (4) is `diag(1,2,\ldots,2)` in both endpoint
+cases occurring here (`N=2L`, `m` odd or even: the off-diagonals `-c` and
+`-\sqrt2c` both vanish), so a vector is an `E=2J` eigenvector precisely
+when its first coordinate vanishes.  Setting `c=0` in (5) gives
+`F_r=-\sin((r-1)q)/\sin q`, whence `f_1=0`; and the far boundary condition of
+(6) reads `\cos((L-1)q)=0` for even `L` and `\sin((L-1)q)=0` for odd `L`,
+which is the list (13) once the values with `f\equiv0` are dropped.
+Justification: (4)--(6) at `c=0`, ⟨1⟩2.⟨2⟩3, and ⟨1⟩3.⟨2⟩2.⟨3⟩2 for the three
+far boundary conditions.
+
+**⟨4⟩2.** Put `s=r-1` and `M=L-1`, so each member of (13) is proportional to
+`(\sin(sq_j))_s`.  For odd `L` (Dirichlet endpoint, `s=0,\ldots,M-1`,
+`q_j=jπ/M`) this is the DST-I family and
+`Σ_{s=0}^{M-1}\sin(sq_j)\sin(sq_{j'})=(M/2)δ_{jj'}`.  For even `L` the last
+coordinate is the normalized `f_L/\sqrt2` of ⟨1⟩2.⟨2⟩3.⟨3⟩2 and
+`q_j=(j+1/2)π/M`, so `\sin(Mq_j)=(-1)^j` and the Gram entry is
+`Σ_{s=0}^{M-1}\sin(sq_j)\sin(sq_{j'})+\tfrac12(-1)^{j+j'}=(M/2)δ_{jj'}`.
+Justification: product-to-sum turns each Gram entry into
+`\tfrac12[Σ_{s=0}^{M-1}\cos(sπd/M)-Σ_{s=0}^{M-1}\cos(sπe/M)]`, and that sum
+is `M` for `d≡0`, `1` for `d` odd, `0` for `d` even and `≢0 \bmod 2M`.  For
+odd `L`, `d=j-j'` and `e=j+j'` have the same parity and the two terms cancel
+off the diagonal; for even `L`, `d=j-j'` and `e=j+j'+1` have opposite parity
+and leave `∓1/2`, which is exactly what the `\sqrt2`-weighted last coordinate
+cancels.
+
+**⟨4⟩3.** Hence (13) is an orthogonal family, and it is orthogonal to (12)
+because the two belong to different eigenvalues of the Hermitian (4).  The
+`q=π/2` member exists in both lists — `j=(L-2)/2` for even `L`, `j=(L-1)/2`
+for odd `L`, an integer in range in each case — and is the `(0,π)` descendant
+of ⟨1⟩3.⟨2⟩6.⟨3⟩1.
+Justification: ⟨4⟩1--⟨4⟩2, ⟨1⟩3.⟨2⟩6.⟨3⟩1, and the spectral theorem.
+
+**⟨4⟩4. QED.**
 
 **⟨3⟩3.** Thus this fiber has dimension `L` when `L` is even and `L-1`
 when `L` is odd: one singular vector, one descendant, and respectively
@@ -354,13 +410,22 @@ Justification: the finite-dimensional spectral theorem.
 ## ⟨1⟩5. Infinite-chain spectral resolution and measures
 
 **⟨2⟩1. ASSUME.** Identify the chamber with `(x,r)∈Z×N`, `r=y-x`, and
-define the unitary center Fourier transform
+define the unitary center Fourier transform `{\cal U}_c` (the subscript is
+what keeps it distinct from `U[f]` of D3 and `𝒰(g)` of D2; `notation.md`)
 
 \[
- ({\cal U}\psi)(K,r)={1\over\sqrt{2\pi}}\sum_{x\in\mathbb Z}
+ ({\cal U}_c\psi)(K,r)={1\over\sqrt{2\pi}}\sum_{x\in\mathbb Z}
  e^{-iK(x+r/2)}\psi(x,x+r),\qquad -\pi<K\le\pi .               \tag{15}
 \]
-Justification: D6 and the Fourier Plancherel theorem on `ℓ²(Z)`.
+
+The window `-π<K≤π` is a fixed fundamental domain, not a circle: the phase
+`e^{-iK(x+r/2)}` is anti-periodic in `K` for odd `r`.  Nothing below is
+affected except where `K` is differentiated or taken to `±π`, i.e. the
+bound-band Jacobian of ⟨2⟩4.⟨3⟩3.
+Justification: D6 and the Fourier Plancherel theorem on `ℓ²(Z)`.  No domain
+question arises: `H` commutes with `S^z_{tot}`, so the two-magnon sector is
+invariant, and the quadratic-form estimate of ⟨1⟩3.⟨2⟩4.⟨3⟩1, applied to the
+fiber operator (16) below, gives `0≤H≤4J` on it.
 
 **⟨2⟩2. PROVE.** With `c=cos(K/2)`, the fiber is the half-line Jacobi
 operator
@@ -369,7 +434,19 @@ operator
  (h_Kf)_1=Jf_1-Jcf_2,\qquad
  (h_Kf)_r=2Jf_r-Jc(f_{r-1}+f_{r+1})\quad(r\ge2).               \tag{16}
 \]
-Justification: the D6 bond computation in `oracle-bethe.md` (10) and (15).
+
+**⟨3⟩1.** `{\cal U}_c` is unitary from the chamber `ℓ²` onto
+`\int^\oplus dK\,ℓ²(\mathbb N)` and carries `H` into a direct integral over
+`K`, because `H` commutes with translation.
+Justification: (15) and D6.
+
+**⟨3⟩2.** In a fiber, the two D6 equations of `oracle-bethe.md` (10) — the
+`r=1` contact equation and the `r≥2` interior recurrence — become the two
+lines of (16); the `r=1` line differs from the interior one only by the
+absent `r=0` neighbour.
+Justification: `oracle-bethe.md` (10) and the phase convention of (15).
+
+**⟨3⟩3. QED.**
 
 **⟨2⟩3. PROVE.** The delta-normalized D7 scattering waves and normalized
 bound fibers are
@@ -389,8 +466,16 @@ bound fibers are
  \sqrt{1-c^2}\,c^{r-1},\qquad E_b(K)=J(1-c^2)=J\sin^2(K/2).  \tag{19}
 \]
 
-The bound vector is present for almost every `K≠0`; at `K=0` it becomes the
-nonnormalizable threshold resonance.
+Here `S(K,q)` is D7's amplitude `S_{12}` written in the fiber variables (8),
+and `E(K,q)` is D7's `E(k_1,k_2)` in the same variables; `notation.md`
+reserves bare `S` with momentum arguments for exactly these Bethe amplitudes.
+
+The bound vector is present for **every** `K≠0`, since `c=\cos(K/2)<1`
+strictly on `(-π,π]\setminus\{0\}` and hence `c^{r-1}∈ℓ²`; at `K=0` it becomes
+the nonnormalizable threshold resonance.  In D7's bound-state notation
+`t=c` and `η=-\log c` for `0<c<1`, so `X=\cosh η=(c+c^{-1})/2`.  At `K=π`,
+(19) degenerates to `f_r=δ_{r1}` with `E_b=J`: the infinite-chain counterpart
+of the finite-ring singular state (12), which has the same energy.
 
 **⟨3⟩1.** Substitution in (16) gives (18); the `r=1` equation gives the
 D7 ratio in (18).  Substitution of `c^{r-1}` gives (19), whose squared
@@ -414,8 +499,26 @@ an absolutely convergent geometric series for `0<c<1`.
 **⟨3⟩3.** Abel-summing the same geometric series gives
 `Σ_r overline{w_q(r)}w_{q'}(r)=2πδ(q-q')`,
 `Σ_r c^{r-1}w_q(r)=0`, and `Σ_r(1-c²)c^{2r-2}=1`.
+The first is not a formal manipulation of a divergent series: with
+`Σ_{r≥1}e^{irα}=πδ(α)-\tfrac12+\tfrac i2\cot(α/2)`, the four cross terms
+produce two delta terms at `α=±(q-q')` — the `α=±(q+q')` deltas are absent
+because `q+q'∈(0,2π)` — **and** the regular remainder
+
+\[
+ -\tfrac12(1+\bar S)(1+S')
+ +\tfrac i2\Big[\cot\tfrac{q'-q}2\,(\bar SS'-1)
+ +\cot\tfrac{q+q'}2\,(S'-\bar S)\Big],\qquad
+ \bar S=\overline{S(K,q)},\ S'=S(K,q'),
+\]
+
+which vanishes identically.  Substituting `S=(c-z^{-1})/(z-c)` with
+`z=e^{iq}`, `z'=e^{iq'}` and `\cot(θ/2)=i(e^{iθ}+1)/(e^{iθ}-1)` turns the
+display into a rational function of `(z,z',c)` that simplifies to `0`; the
+cancellation is what makes the two surviving delta terms add to `2πδ(q-q')`.
 Thus (20) is both the isometry and onto identity for the fiber transform.
-Justification: `Σ_{r≥1}ρ^r e^{irα}` followed by `ρ↑1`, and (18).
+Justification: `Σ_{r≥1}ρ^r e^{irα}` followed by `ρ↑1`; (18); and the displayed
+cancellation — elementary algebra in `(z,z',c)`, confirmed independently in
+`verdicts/ml2-r1.md` C2/m6.
 
 **⟨3⟩4. QED.**
 
@@ -434,10 +537,31 @@ multiplication by `E_b(K)`.
 **⟨3⟩1.** Combine Fourier Plancherel (15) with the fiber identity (20).
 Justification: Tonelli's theorem for the nonnegative norm integrals.
 
-**⟨3⟩2.** Hence the scattering spectrum is absolutely continuous, the
-full-chain bound eigenvalue becomes a bound-magnon band, and there is no
-remaining spectral subspace.
-Justification: (18)--(21) and unitarity of the spectral transform.
+**⟨3⟩2.** Hence the spectrum on this sector is purely absolutely continuous —
+no point part and no singular continuous part — the full-chain bound
+eigenvalue becomes a bound-magnon band, and there is no remaining spectral
+subspace.
+
+**⟨4⟩1.** By (21), `H` is unitarily equivalent to multiplication by `E(K,q)`
+on `L²(dK\,dq)` and by `E_b(K)` on `L²(dK)`; the spectral measure of a vector
+is therefore the pushforward of an absolutely continuous measure under `E`,
+respectively `E_b`.
+Justification: (21) and the spectral theorem for multiplication operators.
+
+**⟨4⟩2.** Such a pushforward is absolutely continuous whenever the `C¹` map
+has nonvanishing gradient off a Lebesgue-null set.  Here
+`∂_KE=J\sin(K/2)\cos q` and `∂_qE=2Jc\sin q` vanish simultaneously on
+`(-π,π]×(0,π)` only at the single point `(K,q)=(π,π/2)` (for `q∈(0,π)`,
+`∂_qE=0` forces `c=0`, i.e. `K=π`, and then `∂_KE=0` forces `q=π/2`); and
+`dE_b/dK=J\sin(K/2)\cos(K/2)` vanishes only at `K∈\{0,±π\}`.  Both exceptional
+sets are null.
+Justification: differentiation of (18)--(19), and the coarea formula —
+equivalently the two changes of variable `dq=dE/(2Jc\sin q)` and
+`dK=dE_b/\sqrt{E_b(J-E_b)}` recorded in ⟨3⟩3, which does not depend on this
+step.
+
+**⟨4⟩3. QED.**  Every spectral measure on the sector is absolutely
+continuous, so `σ_{pp}=σ_{sc}=∅` there.
 
 **⟨3⟩3.** If the factors `1/(2π)` and `1/√(2π)` are removed from (17) and
 (19), the measures are respectively `dK dq/(2π)²` and `dK/(2π)`.  Also
@@ -450,10 +574,16 @@ Justification: the Jacobians of (8), (18), and (19).
 
 ## ⟨1⟩6. Numerical certificate and consequence for the soft shard
 
-**⟨2⟩1. PROVE.** `theory/checks/ml2_completeness_check.py`, run normally and
+**⟨2⟩1. REMARK — numerical certificate, outside the proof tree.**  The
+inventory (14) is *established* by ⟨1⟩3--⟨1⟩4; what follows corroborates it
+and is a named computation, not a step of the proof.
+`theory/checks/ml2_completeness_check.py`, run normally and
 with `python3 -O` for `SIZES=(6,10,11,12,13,14,16,18,20,22,26)`, gives the
 following representative inventory.  “Real” excludes the separately printed
-non-descendant degenerate `K=π` waves; “coincident” zero vectors are excluded.
+non-descendant degenerate `K=π` waves, whereas (14)'s “other real-pair
+states” absorbs them — at `N=12`, `66=45+8+12+1` under (14) and
+`66=41+8+12+1+4` under (22), and the two tables must not be read against each
+other without this flag; “coincident” zero vectors are excluded.
 
 \[
 \begin{array}{c|r|r|r|r|r|r|r}
@@ -466,7 +596,9 @@ N&\dim&\text{real}&\text{strings}&\text{desc.}&\text{sing.}&\pi\text{-deg.}&
 \]
 
 Maximum spectral mismatch is `8.882e-15`, eigenvector residual `4.044e-14`,
-projector error `4.640e-14`, and singular-overlap error `6.280e-15`.
+projector error `4.640e-14`, and singular-overlap error `6.280e-15`.  All four
+are maxima over the whole eleven-size run, not over the three rows of (22):
+the first is attained at `N=16` and `N=22`, the other three at `N=26`.
 Justification: the checker independently builds D6, actual coincident D7
 vectors, and (12)--(13), and exits explicitly on every failure.
 
@@ -487,6 +619,11 @@ branch choose the congruent representatives with `k_s+k_h=π`.  Then
  +\mathbf1_{\mathscr X_K\ne\varnothing}\,
  2i\cos((k_h-k_s)/2)|\chi_\pi\rangle .                        \tag{24}
 \]
+
+Equivalently: `\mathscr E_K` of (23) is an orthonormal basis of the fiber
+(⟨1⟩4.⟨2⟩3), and (24) is the Parseval expansion of `Q_{k_s}|k_h\rangle_N` in
+it, split into its `\mathscr B_K^{D7}` part and its one `\mathscr X_K`
+component.
 
 **⟨3⟩1.** The `N` coefficients in (12) have modulus `N^{-1/2}`, so its norm
 is one; its compactified root has no finite D7 normalization.
@@ -519,4 +656,13 @@ the representative `(A_{12},A_{21})=(1/2,1/2)` — the `K=0` double descendant o
 
 **⟨3⟩4. QED.**
 
-**⟨2⟩3. QED.** The finite and infinite statements of Theorem ML2 are proved.
+**⟨2⟩3. QED.** ⟨1⟩6.⟨2⟩2 delivers the consequence announced in ⟨1⟩1 PROVE-3.
+
+## ⟨1⟩7. QED
+
+PROVE-1 is ⟨1⟩3.⟨2⟩2--⟨2⟩6 together with ⟨1⟩4, the count and the orthonormal
+eigenbasis being ⟨1⟩4.⟨2⟩3.  PROVE-2 is ⟨1⟩5: eigenfunctions and energies
+(17)--(19), Plancherel measures ⟨1⟩5.⟨2⟩4.⟨3⟩3, resolution of the identity
+(21).  PROVE-3 is ⟨1⟩6.⟨2⟩2, whose (24) rests on ⟨1⟩4.⟨2⟩3 and on (R5) of
+`soft-current-recon.md` ⟨1⟩2.⟨2⟩2, with (R7) the `k_s=0` specialization
+supplied by the descendant of ⟨1⟩3.⟨2⟩6.  Theorem ML2 is proved.

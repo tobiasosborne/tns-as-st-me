@@ -1,12 +1,11 @@
-<!-- ROLE: DRAFT theory shard for Corner B (memory). STANDALONE. Proposes
-     definitions Bd1-Bd7 for the orchestrator to merge into definitions.md;
-     it does NOT edit definitions.md, notation.md, claims/CLAIMS.md.
-     Author: Corner-B agent, 2026-08-25. Status: DRAFT, pre-critic.
-     Every symbol not in notation.md is flagged NEW in section 1.4. -->
+<!-- ROLE: Corner-B theory shard, repaired after L6 r1 FAIL.
+     Definitions live only in definitions.md D13--D18; Bd labels below are
+     historical cross-references, not active definitions. -->
 
 # Corner B (draft) — the memory corner
 
-**Status: DRAFT, pre-critic — reconciled against claims DAG @ freeze, 2026-08-26.**
+**Status: SKETCH — under repair after `verdicts/triangle-r1.md` B1--B9;
+positive promotion awaits r2.**
 Four stale citations tabulated in [`corner-a-pitfalls.md`](corner-a-pitfalls.md)
 Flag 6 and in [`verdicts/oracle-bethe-r2.md`](verdicts/oracle-bethe-r2.md)
 residue 4 have been repaired in place, each marked `(Reconciled at freeze …)`:
@@ -16,14 +15,14 @@ residue 4 have been repaired in place, each marked `(Reconciled at freeze …)`:
 `N_α = G`, so the endpoint-state orbit is a single point); §5.3 and §10 now
 quote `O7` in its r2 form `δ_phys = 2 sgn(v_h−v_s)k_s + …`, with `2` flagged as
 the D8 specialisation.  `𝒜`-data has been replaced by "asymptotic data"
-throughout.  **Bd1--Bd7 were promoted to `definitions.md` D13--D18** at the
-freeze (the `Bd`-numbers are retained here for readability; the D-numbers are
-the single source, L4), and **Theorem M′ has been superseded by
-[`memory-quantization.md`](memory-quantization.md)**, which proves H-AD
-unconditionally for the `≤3`-wall projected dynamics (Kato--Rosenblum on a
-rank-two Fano perturbation) and leaves only the full-chain lift as a hypothesis
-(bd `tns-d51`).  Frozen statuses: [`theory/TRIANGLE.md`](TRIANGLE.md) §3 and
-`claims/CLAIMS.md`.
+throughout.  **D13--D18 are the sole definitions (L4).**  The old `Bd` labels
+remain only to identify historical passages.  D18 now means the coherent
+AD1--AD4 wave-operator/local-decay hypothesis; its former norm-mixture form is
+superseded by the coherent-superposition counterexample recorded there.
+[`memory-quantization.md`](memory-quantization.md) gives the current Lamport
+argument.  Its projected Fano reduction is conditional on the all-volume
+enumeration/isomorphism Mq-E, and the full-chain lift remains open (bd
+`tns-d51`).
 
 ## 0. Summary of what this shard establishes
 
@@ -31,11 +30,9 @@ The 1D lattice memory observable is the permanent displacement `δx` of a
 domain wall (kink) left behind by a magnon wavepacket that has traversed it.
 This shard does four things.
 
-1. It gives three candidate sharp definitions of `δx` (**Bd1** dynamical,
-   **Bd2** spectral, **Bd3** spatial/virtual), each with an explicit domain and
-   an explicit order of limits, and settles which coincide and which do not.
-2. It proves — modulo one clearly isolated hypothesis (asymptotic
-   decomposition, **H-AD**) — the **memory law**
+1. It compares the three D13 representations of `δx` (dynamical, spectral,
+   and windowed spatial), with explicit domains and limit orders.
+2. It derives — conditional on D18 — the charge-bookkeeping law
 
    \[
    \boxed{\;\delta x \;=\; -\,\frac{1}{s}\,\langle N_T\rangle\;}
@@ -43,16 +40,18 @@ This shard does four things.
    \]
 
    where `N_T` is the transmitted magnon number.  The memory is
-   **integer-quantised**: a single magnon moves the wall by exactly `-1/s`
-   lattice sites if it transmits and by exactly `0` if it reflects.  The
+   **channel-quantised with spectrum `{0,-1/s}`**: a single magnon moves the
+   wall by `-1/s` lattice sites if it transmits and by `0` if it reflects.
+   The expectation `-⟨N_T⟩/s` is continuous.  The
    coefficient is fixed by `U(1)` charge conservation alone: it does not
    depend on `k`, on `Δ`, on the packet shape, or on any scattering phase.
-3. It solves the lattice kink–magnon scattering problem exactly in the
-   easy-axis (large-`Δ`) projection, obtaining a single-channel Fano problem
+3. Conditional on the all-volume sector reduction Mq-E, it reduces the
+   spin-`1/2` `≤3`-wall kink–magnon problem to a single-channel Fano graph
    with transmission amplitude
    `t(k) = [1 + i J²/(4ω(k)v(k))]^{-1}`, hence `T(k)=|t|²` and a **memory
    Adler zero** `δx(k) ≈ −(2/s)\,·8(Δ−1)²k²` as `k→0`.
-4. It states the `B ⇒ A` edge (claim **B3**) as a superselection statement:
+4. It records the `B ⇒ A` edge (claim **B3**) at SKETCH status.  The surviving
+   event statement is `2s·δx+(q_out-q_in)=0`, with explicit leg subtraction;
    `δx` is the amount of `U(1)` charge the event transported between the two
    spatial infinities, i.e. the moment map of the residual translation torsor
    inside a fixed **vacuum pair** `(α,β)` — the label of D9(d), which under
@@ -77,194 +76,108 @@ The headline honest finding is negative and important:
 
 ### 1.1 Model (M2)
 
-Throughout, `Λ = ℤ`, `d = 2s+1`, and for the concrete statements `s = 1/2`.
-Fix `J > 0`, `Δ > 1`, and let
+Use the spin-`1/2`, `J>0`, `Δ>1` XXZ model, symmetry, vacua, dispersion, and
+gap of D16.  D16 is the sole definition; this shard derives consequences.
 
-\[
-h^{\mathrm{XXZ}}_{x,x+1} := -J\Big[S^x_xS^x_{x+1}+S^y_xS^y_{x+1}
-   +\Delta\big(S^z_xS^z_{x+1}-\tfrac14\big)\Big].
-\]
+### 1.2 Consequences for the D16 kink Hamiltonian and product family
 
-`G = U(1) ⋊ ℤ₂`, with `U(1)` generated by `S^z` (unbroken) and `ℤ₂` the
-`π`-rotation about `S^x` (spontaneously broken).  `Ω_vac = {↑,↓}`, the two
-product vacua, exact and injective with `χ = 1`.  Magnon dispersion on either
-vacuum (exact, one-magnon sector):
-
-\[
-\omega(k)=J(\Delta-\cos k),\qquad v(k)=\omega'(k)=J\sin k ,\qquad
-\omega_{\rm gap}=J(\Delta-1).
-\]
-
-At `Δ = 1` this reduces to `D6`/`O1`.  All "soft" statements in M2 are
-low-frequency expansions *about the gap*, per §5.1 of the brief.
-
-### 1.2 The kink Hamiltonian and the exact kink family (derived here)
-
-Put
-
-\[
-h^{\rm kink}_{x,x+1} := h^{\mathrm{XXZ}}_{x,x+1}
-   +\tfrac{J}{2}\sqrt{\Delta^2-1}\,\big(S^z_x-S^z_{x+1}\big),
-\qquad
-H_{\rm kink}:=\sum_x h^{\rm kink}_{x,x+1}.
-\]
-
-**Lemma K1 (frustration-freeness).** `h^{\rm kink}_{x,x+1} ⪰ 0`, with
+**K1 (frustration-freeness; SKETCH pending r2).  ASSUME** D16.  **PROVE**
+`h^{\rm kink}_{x,x+1} ⪰ 0`, with
 `spec = {0,0,0,JΔ}`; its kernel is
-`span{|↑↑⟩, |↓↓⟩, |↑↓⟩+q^{-1}|↓↑⟩}` with
+`span{|↑↑⟩, |↓↓⟩, |↑↓⟩+q^{-1}|↓↑⟩}`, with `q` fixed in D16.
 
-\[
-q:=\Delta-\sqrt{\Delta^2-1}\in(0,1),\qquad \Delta=\tfrac12(q+q^{-1}).
-\]
-
-*Proof.* In the basis `(|↑↓⟩,|↓↑⟩)` the block is
+**⟨1⟩1.** In the basis `(|↑↓⟩,|↓↑⟩)` the nontrivial block is
 `[[Δ/2+C, −1/2],[−1/2, Δ/2−C]]` with `C=\tfrac12\sqrt{Δ²−1}`; its determinant
-is `Δ²/4 − C² − 1/4 = 0` and its trace is `Δ > 0`.  The `|↑↑⟩,|↓↓⟩` diagonal
-entries vanish identically. ∎
+is zero and its trace is `Δ>0`.
+*Justification:* D16 and named two-site computation **K1-2x2**.
 
-**Lemma K2 (exact kink product states).** For every `z ∈ ℂ\{0}` the product
-vector `|K(z)⟩ := ⊗_{n∈ℤ}(|↑⟩_n + z\,q^{\,n}|↓⟩_n)` lies in the kernel of every
-`h^{\rm kink}_{x,x+1}`.  Writing `z = q^{-x_0}e^{iφ}` exhibits `(x_0, φ)` as a
-conjugate pair: `x_0 ∈ ℝ` the kink centre, `φ` the residual `U(1)` phase.
+**⟨1⟩2.** The other two basis vectors have zero diagonal entries; hence the
+spectrum and kernel are the ones stated.
+*Justification:* D16, ⟨1⟩1, and direct diagonalisation of **K1-2x2**.
 
-*Proof.* Immediate from K1 with `a = zq^{n}`, `b = zq^{n+1} = qa`. Verified
-numerically to `‖h v‖ ≤ 1.2·10^{-11}` for `Δ ∈ {1.5,2,4,8}`. ∎
+**⟨1⟩3. QED.** □
 
-**Lemma K3 (the boundary field is invisible to the dynamics).**
-`H_{\rm kink}` and `H_{\rm XXZ}` generate the *same* derivation on `𝔄`: for
+**K2 (exact kink product states; SKETCH pending r2).  ASSUME** D16 and K1.
+**PROVE** that every D16 vector `|K(z)⟩`, `z∈ℂ\{0}`, lies in the kernel of
+every `h^{\rm kink}_{x,x+1}`.
+
+**⟨1⟩1.** Neighboring down-spin coefficients obey `b=zq^{n+1}=qa`, so each
+two-site factor lies in K1's kernel.
+*Justification:* D16 and claim K1.
+
+**⟨1⟩2.** Therefore every bond term annihilates the product vector.
+*Justification:* ⟨1⟩1 and D16's product construction.  **⟨1⟩3. QED.** □
+
+**K3 (boundary-field invisibility; SKETCH pending r2).  ASSUME** D16.
+**PROVE** that `H_{\rm kink}` and `H_{\rm XXZ}` generate the same derivation
+on `𝔄`.
+
+**⟨1⟩1.** For
 `O ∈ 𝔄_Λ`, `Σ_x [S^z_x − S^z_{x+1}, O]` telescopes to
 `[S^z_{-M} − S^z_{M+1}, O] = 0` for any `M` with `Λ ⊂ (−M, M)`.  The field term
 shifts the energy of each superselection sector by the constant
 `\tfrac{J}{2}\sqrt{Δ²−1}\,(s_α − s_β)` and nothing else.
+*Justification:* D10(a)'s finite-support register and D16's telescoping field.
+
+**⟨1⟩2. QED.** □
 
 *Consequence.* Every dynamical statement below is a statement about the pure
 XXZ chain; `H_{\rm kink}` is used only to *normalise* the kink to zero energy
-and thereby to expose the flat band of Lemma K4.
+and thereby to motivate the flat-band Conjecture K4.
 
-**Lemma K4 (the kink band is exactly flat; the position is locked to the
-charge).** Let `𝒮_M` be the sector of fixed regularised magnetisation `M`
+**Conjecture K4 (thermodynamic flatness/uniqueness; not a theorem).** Let
+`𝒮_M` be the sector of fixed regularised magnetisation `M`
 inside `𝒦_{↑↓}`.  Then `𝒮_M` contains exactly one zero-energy state of
 `H_{\rm kink}`, and these states are degenerate across all `M`.  Hence the
 kink has *no* dispersion, *no* effective mass, and *no* recoil velocity: its
 translation modulus is rigidly locked to the conserved `U(1)` charge.
 
-*Evidence.* Frustration-freeness (K1) gives `E ≥ 0`; K2 gives states of energy
+*Finite-volume evidence only.* Frustration-freeness (K1) gives `E ≥ 0`; K2 gives states of energy
 `0`; uniqueness per sector verified by exact diagonalisation on `N = 12`,
 `Δ = 3`, every `m = 0,…,12`: `E₀ = 0` to `10^{-13}`, `E₁ = 2.03407417` in every
 sector (magnon gap `J(Δ−1)=2` plus finite-`N` boundary shift).  A proof of
 uniqueness in the thermodynamic limit is an interface requirement (**R5**).
+No no-recoil, unique-torsor, or all-`Δ` dynamical statement may cite K4 as
+proved.
 
 **Remark (why this matters).** On the lattice, translation is not a symmetry
 *within* a magnetisation sector — translating a kink changes `S^z_{\rm reg}`.
 Momentum conservation for the wall is therefore traded for charge
-conservation. This is the structural reason the lattice memory is quantised
-and the continuum (Lan–Xiao, arXiv:2107.05401) memory is not: there the wall
+conservation.  Under D18, this gives channel-quantised displacement.  The
+continuum (Lan–Xiao, arXiv:2107.05401) memory differs: there the wall
 is inertial, its modulus is not locked to any charge, and the displacement
 `ΔX = −Gm/v₀²` is a continuous function of packet intensity.
 
-### 1.3 Function-space discipline (Giulini)
+### 1.3 Function-space discipline (Giulini; active source D17)
 
-`𝒦_{αβ}` of D9(a) requires only weak-\* convergence to the vacua; that is too
-weak for the half-infinite charge to exist.  We work in the `ℓ¹` subclass.
-
-> **Bd7 (the `ℓ¹` kink class).** `𝒦^{(1)}_{αβ} ⊂ 𝒦_{αβ}` is the set of
-> `ϱ ∈ 𝒦_{αβ}` with
-> `Σ_{x<0}|ϱ(S^z_x) − s_α| + Σ_{x>0}|ϱ(S^z_x) − s_β| < ∞`
-> and, for the second moment used in Bd1,
-> `Σ_x |x|\,|ϱ(S^z_x) − s_{α/β}| < ∞`.
+`𝒦_{αβ}` is D9(a); its `ℓ¹` refinement and first-moment clause are D17.
 
 `𝒦^{(1)}` is preserved by the dynamics on finite time intervals
 (Lieb–Robinson).  It is *not* preserved by the `k → 0` limit: a plane-wave
 magnon is not `ℓ¹`.  Every soft statement below must therefore fix the packet
 first and take `k → 0` afterwards; the two limits do not commute (§9, P7).
 
-### 1.4 New symbols proposed by this shard
+### 1.4 Historical symbol crosswalk (active source: notation.md)
 
-| symbol | meaning | proposed home |
+| symbol | meaning | active source |
 |---|---|---|
-| `q` | XXZ deformation parameter `Δ−√(Δ²−1)` | Bd6 |
-| `x_0`, `φ` | kink centre and conjugate `U(1)` phase | Bd6 |
-| `𝔛_W` | windowed wall-position observable (Bd3) | Bd3 |
-| `N_T`, `N_R` | transmitted / reflected magnon number (Bd4) | Bd4 |
-| `t(k)`, `r(k)`, `T(k)`, `δ_t(k)` | kink–magnon transmission/reflection data | Bd5 |
-| `𝒦^{(1)}_{αβ}` | `ℓ¹` kink class | Bd7 |
+| `q` | XXZ deformation parameter `Δ−√(Δ²−1)` | D16 |
+| `x_0`, `φ` | kink centre and conjugate `U(1)` phase | D16 |
+| `𝔛_W` | windowed wall-position observable | D13(a) |
+| `N_T`, `N_R` | transmitted / reflected magnon number | D14 |
+| `t(k)`, `r(k)`, `T(k)`, `δ_t(k)` | kink–magnon transmission/reflection data | D15 |
+| `𝒦^{(1)}_{αβ}` | `ℓ¹` kink class | D17 |
 
 ---
 
-## 2. Three candidate definitions of the memory observable
+## 2. D13 memory representations and the exact flux identity
 
-All three are stated for a state `ϱ_t` in `𝒦^{(1)}_{↑↓}` prepared at `t = t_i`
-as (kink at `m_i`) ⊗ (magnon wavepacket `φ` far to the left), evolved by
-`H_{\rm XXZ}`.  `s` is the site spin; `2s` is the magnetisation jump across the
-wall.
+D13(a)--(c) are the sole definitions.  D13(a) is the finite-window local
+observable, D13(b) its spectral/DC dress, and D13(c) the first-moment dress
+whose leg content must be subtracted using D18.  Their domains and orders of
+limits are not restated here.
 
-### Bd1 — dynamical (asymptotic trajectory intercept)
-
-> **Bd1.** For `ϱ_t ∈ 𝒦^{(1)}_{↑↓}` define the *first-moment wall coordinate*
-> \[
-> X_1(t):=\sum_{x> 0}\frac{\varrho_t(S^z_x)+s}{2s}
->        -\sum_{x\le 0}\frac{s-\varrho_t(S^z_x)}{2s},
-> \]
-> normalised so that `X_1 = m` on a sharp kink at bond `m`,
-> convergent on `𝒦^{(1)}`.  Suppose the limits
-> `V_\pm := \lim_{t\to\pm\infty} \dot X_1(t)` exist.  The *dynamical memory* is
-> the difference of the two asymptotic intercepts,
-> \[
-> \delta x^{\rm dyn}:=\lim_{t\to+\infty}\big[X_1(t)-V_+t\big]
->                    -\lim_{t\to-\infty}\big[X_1(t)-V_-t\big].
-> \]
-> **Domain and limits.** Requires (i) `ϱ_t ∈ 𝒦^{(1)}` for all `t`;
-> (ii) existence of `V_±` (guaranteed by K4 with `V_± = 0`, *not* guaranteed if
-> `U(1)` is broken); (iii) thermodynamic limit *before* `t → ±∞`.  On a finite
-> ring `X_1` is not defined at all (no two infinities); on a finite open chain
-> of `N` sites the limits must be replaced by evaluation at times
-> `t` with `Jt ≪ N/ v_{\max}`, `v_{\max}=J`.
-
-`X_1` is *not* the total magnetisation: the magnon content contributes to it.
-Bd1 as stated therefore measures wall-plus-legs unless the legs are removed;
-see §3.
-
-### Bd2 — spectral (DC weight of the local order-parameter time series)
-
-> **Bd2.** For each site `x` let `m_x(t) := ϱ_t(S^z_x)` and let
-> `\tilde m_x(ω) := ∫ dt\, e^{iωt}\dot m_x(t)`.  The *DC weight at `x`* is
-> `D(x) := \lim_{ω\to 0}\tilde m_x(ω) = m_x(+∞) − m_x(−∞)`.
-> The *spectral memory* is
-> \[
-> \delta x^{\rm spec}:=\frac{1}{2s}\sum_{x\in W}D(x),
-> \]
-> for a window `W = [a,b]` containing the wall core.
-> **Domain and limits.** Requires `\dot m_x ∈ L¹(dt)` for each `x` (true on
-> `𝒦^{(1)}` for finite `W` once the packet has left `W`; *false* uniformly in
-> `x` if the packet never leaves).  The `ω → 0` limit must be taken at fixed
-> `x` and fixed window, *after* the thermodynamic limit.  Interchanging
-> `ω → 0` with `|W| → ∞` destroys the statement: the transmitted magnon
-> contributes a non-decaying tail.
-
-Bd2 is the literal lattice transcription of "memory = zero-frequency
-weight of the radiation field", with `S^z_x` playing the role of the boundary
-news.  Its single-site version `D(x)` is a *coarse* observable: for a sharp
-wall `D(x) = −2s` for the `|δx|` sites the wall swept and `0` elsewhere.
-
-### Bd3 — spatial / virtual (windowed asymptotic bond charge) — **RECOMMENDED**
-
-> **Bd3.** Fix a window `W = [a,b] ⊂ ℤ` with `b − a ≫ ξ_c` containing the wall
-> core.  Define the *windowed wall-position observable*
-> \[
-> \mathfrak{X}_W:=a-1+\frac{1}{2s}\sum_{x=a}^{b}\big(S^z_x+s\big)\ \in\ 𝔄_{loc},
-> \]
-> and the *spatial memory* `δx^{\rm sp} := ϱ_{t_f}(𝔛_W) − ϱ_{t_i}(𝔛_W)`.
-> **Domain and limits.** `𝔛_W ∈ 𝔄_loc` is a bona fide local observable, so no
-> convergence hypothesis is needed for it to *exist*: Bd3 is defined on all of
-> `𝔄^*`.  For it to *mean* "wall position" one needs
-> (i) `ϱ_{t}|_{∂W}` equal to the vacuum values up to `ε` at `t ∈ {t_i,t_f}`
-> (the packet is outside `W`);
-> (ii) `b − a ≫ ξ_c = −1/\log λ_E` (the kink core fits, tails `O(e^{-(b-a)/ξ_c)})`;
-> (iii) no restriction on the order of `t`- and `N`-limits: Bd3 is a *finite*
-> quantity at finite `N`, which is exactly why it is the numerically robust
-> definition.
-
-**Why Bd3 is the Giulini-correct one.** By the continuity equation D10(b),
+**Why D13(a) is the selected observable.** By the continuity equation D10(b),
 \[
 \frac{d}{dt}\,\varrho_t(\mathfrak X_W)
  =\frac{1}{2s}\Big[\varrho_t\big(j_{a-1|a}\big)-\varrho_t\big(j_{b|b+1}\big)\Big],
@@ -277,14 +190,13 @@ so `𝔛_W` changes *only* through the two **boundary bonds**, and
 =\frac{1}{2s}\Big[\tilde\jmath_{a-1|a}(0)-\tilde\jmath_{b|b+1}(0)\Big].
 \tag{2.2}
 \]
-The memory is the **DC component of the boundary current**.  By Proposition N
-(D10(d)) the current is a lattice divergence of the *bond potential* `𝒥_b`,
-so (2.2) says: the memory is a difference of virtual/bond data evaluated at
-the two ends of the window.  This is precisely the framing.md statement "the
-potential is the fundamental object; memory lives in the bond data", now a
-theorem rather than an analogy.  In the unbroken-`U(1)` case at hand the bond
-potential is the abelian charge `𝔮_b` of D4(d), and (2.2) reads
-`δx = (𝔮_{a-1|a} − 𝔮_{b|b+1})`-flux — an asymptotic-charge statement.
+The memory is exactly the **DC component of the physical boundary current**.
+Nothing in D10(d) identifies that current with the virtual bond potential
+`𝒥_b`: D10(d) instead writes the *vacuum charge density* as a difference of
+virtual insertions, in a different register.  The former claim that (2.2) is
+a difference of virtual/bond data is withdrawn.  Extending the virtual
+potential reading to a kink-sector dynamical theorem remains future work and
+is not part of Mq-flux.
 
 ---
 
@@ -294,100 +206,89 @@ Write `P` for the equilibrium kink profile, `σ_k` for the packet momentum
 width, `σ_x ≈ 1/σ_k` for its spatial width, `L := b − a`, `ξ_c` the kink width
 `≈ 1/\log(1/q)`.
 
-**(a) Bd2 = Bd3 identically.**  `Σ_{x∈W}D(x) = ϱ_{t_f}(2s\,𝔛_W) −
+**(a) D13(b) = D13(a) identically.**  `Σ_{x∈W}D(x) = ϱ_{t_f}(2s\,𝔛_W) −
 ϱ_{t_i}(2s\,𝔛_W)` by definition; the only content is the sum rule.  They are
-the same observable in two Fourier dresses.  Bd2 is preferable for reporting
-(it is what a "news function" plot shows); Bd3 is preferable for proving.
+the same observable in two Fourier dresses.  D13(b) is useful for reporting;
+D13(a) is useful for proving.
 
-**(b) Bd1 = Bd3 + (leg content) − (drift).**  Explicitly,
+**(b) D13(c) = D13(a) + (leg content) − (drift).**  Explicitly,
 \[
 X_1(t)
- =\underbrace{x_{\rm wall}(t)}_{\text{Bd3 in the }L\to\infty\text{ limit}}
+ =\underbrace{x_{\rm wall}(t)}_{\text{D13(a) in the }L\to\infty\text{ limit}}
  +\underbrace{\frac{1}{2s}\sum_{\rm legs}q_{\rm leg}(t)}_{\text{magnon charge}},
 \qquad q_{\rm leg}=-1\ (\text{left}),\ +1\ (\text{right}),
 \]
 because `X_1` is the `W → ℤ` regularisation of `𝔛_W` and *is* the regularised
 total magnetisation, which is **exactly conserved**.  Consequently:
 
-* If one defines Bd1 with all legs included, `δx^{\rm dyn} ≡ 0` — the naive
+* If one uses D13(c) with all legs included, `δx^{\rm dyn} ≡ 0` — the naive
   "asymptotic trajectory of the magnetisation centroid" has *no* memory at
   all.  This is a trap and must be said out loud.
-* Bd1 becomes equal to Bd3 only after subtracting the asymptotic leg charges,
-  i.e. only after invoking **H-AD** (§6).  Bd3 does the subtraction
+* D13(c) becomes equal to D13(a) only after subtracting the asymptotic leg charges,
+  i.e. only after invoking **H-AD** (§6).  D13(a) does the subtraction
   geometrically (by windowing) and needs no such hypothesis.
 
-**(c) Finite `N`.** Bd3 is exact at finite `N` provided `W` is interior.  Bd1
-and Bd2 require `N → ∞` first (`X_1` and `D(x)` involve `t → ±∞`), and on a
+**(c) Finite `N`.** D13(a) is exact at finite `N` provided `W` is interior.  D13(c)
+and D13(b) require `N → ∞` first (`X_1` and `D(x)` involve `t → ±∞`), and on a
 ring they are meaningless (D1 Remark).
 
-**(d) Finite wavepacket width.** All three definitions return
+**(d) Finite wavepacket width.** Under D18, all three representations return
 `−⟨N_T⟩/s` with `⟨N_T⟩ = ∫dk\,|φ(k)|²T(k)` — a *packet average of `T`*, not
 `T(⟨k⟩)`.  The systematic error of reading `T(⟨k⟩)` off `δx` is
 `\tfrac12 T''(\langle k\rangle)\sigma_k^2`, which is largest exactly in the
-soft region where `T` bends (§9, P3).  Bd3 additionally has an `O(e^{-L/ξ_c})`
-tail error and an `O(ε)` error from residual packet weight inside `W`.
+soft region where `T` bends (§9, P3).  D13(a) additionally has a
+`C_{λ̃}λ̃^{d_W}` tail error for every `λ̃∈(λ_E,1)` and an `O(ε)` error from
+residual packet weight inside `W`.
 
-**(e) Drift.** With `U(1)` intact, K4 gives `V_± = 0` and there is no drift
-term in Bd1.  If `U(1)` is broken (transverse field, easy-plane anisotropy,
+**(e) Drift.** Conjecture K4 would give `V_± = 0`; this has not been proved in
+the thermodynamic dynamics.  If `U(1)` is broken (transverse field, easy-plane anisotropy,
 DMI), the wall acquires a finite mass, `V_+ ≠ 0` whenever there is reflection,
 and Bd1's intercept becomes ambiguous by `O(V_+ · T_{\rm obs})`.  In that
-regime Bd3 also ceases to be quantised and the Lan–Xiao mechanism
+regime D13(a) also ceases to be quantised and the Lan–Xiao mechanism
 (`ΔX ∝ −Gm/v_0²`, continuous in the magnon number) takes over.  **The
 dichotomy "charge-locked ⇒ quantised memory / charge-free ⇒ continuous
 memory" is the sharpest physical content of this shard.**
 
-**(f) Distributional content.** Bd3 is an expectation value of an operator
-whose spectrum on the out-state is `{m_i, m_i − 1/s}`.  The out-state is a
-*coherent superposition* of the two channels, so the wall position is
-entangled with the magnon channel:
+**(f) Distributional content.** Under D18, the asymptotic two-channel
+*displacement operator* is `ΔX=-(1/s)N_T`.  The out-state is a coherent
+superposition, so
 \[
-\varrho_{t_f}(\mathfrak X_W)=m_i-\tfrac1s\langle N_T\rangle,\qquad
-\mathrm{Var}_{\varrho_{t_f}}(\mathfrak X_W)=\tfrac1{s^2}\,T(1-T)
+\langle\Delta X\rangle=-\tfrac1s\langle N_T\rangle,\qquad
+\mathrm{Var}(\Delta X)=\tfrac1{s^2}\,\langle N_T\rangle(1-\langle N_T\rangle)
 \;\;(=4T R \text{ at } s=\tfrac12).
 \]
-Bd1, phrased as "the trajectory", presupposes one classical worldline and is
+Identifying this with the one-time `Var(𝔛_W)` additionally requires a sharp
+initial wall and a two-time measurement convention; neither is implicit.
+D13(c), phrased as "the trajectory", presupposes one classical worldline and is
 only meaningful post-selected on a channel.  The variance is the observable
-that distinguishes a genuine *quantised* memory from a smooth displacement,
+that distinguishes channel quantisation from a smooth displacement,
 and it is measurable (§9, P4).
 
-**Recommendation: freeze Bd3.**  Reasons: it is an element of `𝔄_loc` (exists
+**D13(a) remains the selected observable.**  It is an element of `𝔄_loc` (exists
 without any asymptotic hypothesis); it is finite-`N` and finite-`t`
-computable; it is manifestly a boundary/bond quantity by (2.2); Bd2 is its
-Fourier transform and Bd1 reduces to it under H-AD.  Bd1 and Bd2 should be
-retained as **corollary characterisations**, not as competing definitions.
+computable; (2.2) makes it a physical-boundary-current quantity.  D13(b) is
+its Fourier dress and D13(c) reduces to it after D18 leg subtraction.
 
 ---
 
-## 4. Definitions proposed for merge into `definitions.md`
+## 4. Historical definition crosswalk (do not cite the `Bd` labels)
 
-For the orchestrator.  `Bd1`–`Bd3` and `Bd7` are stated verbatim above.
-
-> **Bd4 (asymptotic leg content).** For a state `ϱ` in `𝒦^{(1)}_{↑↓}` and a
-> window `W = [a,b]`, the *reflected* and *transmitted magnon numbers* are
-> `N_R := \frac{1}{2s}\sum_{x<a}\big(s-ϱ(S^z_x)\big)` and
-> `N_T := \frac{1}{2s}\sum_{x>b}\big(ϱ(S^z_x)+s\big)`,
-> both convergent on `𝒦^{(1)}`.  For a one-magnon initial state
-> `N_R + N_T + N_W = 1` with `N_W` the weight inside `W`.
-
-> **Bd5 (kink–magnon scattering data).** In the sector `𝒦_{↑↓}` with one
-> magnon, the stationary scattering solutions at magnon momentum
-> `k ∈ (0,π)` define `r(k), t(k)` by the asymptotics
-> "incoming ↓-magnon at momentum `k` in the `↑` region → `r(k)`·(↓-magnon,
-> momentum `−k`, `↑` region) + `t(k)`·(↑-magnon, momentum `k`, `↓` region)".
-> `T(k) := |t(k)|²`, `R(k) := |r(k)|²`, `T + R = 1`, and
-> `δ_t(k) := \arg t(k)` is the *kink–magnon transmission phase*, fixed to be
-> continuous with `δ_t → 0` at the point where `t → 1`.
-
-> **Bd6 (XXZ kink conventions).** `q := Δ − √(Δ²−1)`, `Δ = (q+q^{-1})/2`;
-> `h^{\rm kink}` and `H_{\rm kink}` as in §1.2; kink coordinates `(x_0, φ)` via
-> `z = q^{-x_0}e^{iφ}` as in Lemma K2.
+| historical label | sole active source |
+|---|---|
+| Bd1--Bd3 | D13 |
+| Bd4 | D14 |
+| Bd5 | D15 |
+| Bd6 | D16 |
+| Bd7 | D17 |
+| former norm-mixture H-AD | superseded; use D18(AD1--AD4) |
 
 ---
 
 ## 5. The kink–magnon scattering problem in the XXZ chain
 
-This is the input the memory law needs, and it is where the dynamics lives.
-It is solved exactly here in the easy-axis projection.
+This is the dynamical model computation.  The Fano solution is exact **if**
+the all-volume sector enumeration/isomorphism Mq-E of
+`memory-quantization.md` §3 holds.
 
 ### 5.1 The sector and its graph
 
@@ -397,7 +298,7 @@ domain-wall positions.  The XY term flips the wall indicators at bonds `n−1`
 and `n+1` simultaneously, so it either creates two walls, destroys two, or
 moves one wall by two sites.  Consequently:
 
-**Lemma S1 (sector graph).** Within the `≤3`-wall manifold, the connected
+**Finite-enumeration hypothesis S1 (not an all-volume lemma).** Within the `≤3`-wall manifold, the connected
 component containing a single magnon consists of
 (i) *left channel*: magnon (a single ↓) at `x ≤ m − 1`, wall at bond `m`;
 (ii) *right channel*: hole (a single ↑) at `y ≥ m − 1`, wall at bond `m − 2`;
@@ -407,20 +308,20 @@ a single bond and lying `J_z = JΔ` below.
 All on-site (Ising) energies in (i)–(iii) equal `3JΔ/2`; every hopping matrix
 element equals `−J/2`.
 
-*Evidence.* Direct enumeration, `N = 14`, wall at bond `6`, `≤3` walls:
+*Evidence only.* Direct enumeration, `N = 14`, wall at bond `6`, `≤3` walls:
 component of size `12` = 5 magnon states + 6 hole states + 1 kink state; degree
 histogram `{1:3, 2:8, 3:1}`; the single degree-3 vertex is the junction; the
 degree-1 vertex with one wall is the pure kink.  Configurations with a
 down-*block* of length `≥ 2` sit in disconnected components (they move only
 through 5-wall intermediates).
 
-**The `−2` is already visible in Lemma S1**: the wall sits at bond `m` in the
+**The `−2` is visible in this finite enumeration**: the wall sits at bond `m` in the
 incoming channel and at bond `m − 2` in the outgoing channel, with no free
 parameter.
 
-### 5.2 Exact solution: a side-coupled (Fano) level
+### 5.2 Conditional Fano solution on the Mq-E graph
 
-By S1 the effective one-body problem is a *uniform* tight-binding chain
+Assuming Mq-E, the effective one-body problem is a *uniform* tight-binding chain
 (hopping `−J/2`, uniform on-site energy) with a single **side-coupled level**
 — the pure kink — attached at the junction with amplitude `−J/2` and detuning
 `ω(k) = J(Δ − \cos k)`.  Eliminating the side level gives an energy-dependent
@@ -451,7 +352,7 @@ T(k)=\Big[1+\Big(\frac{J^2}{4\omega(k)v(k)}\Big)^{2}\Big]^{-1}\;}
 * *Soft limit `k → 0` at fixed `Δ`:* `v → 0`, `ω → J(Δ−1)`, hence
   \[
   \boxed{\,T(k)=16(\Delta-1)^2k^2+O(k^4),\qquad
-  R(k)=1-16(\Delta-1)^2k^2\,}
+  R(k)=1-16(\Delta-1)^2k^2+O(k^4)\,}
   \tag{5.3}
   \]
   — **total reflection of a soft magnon**, with a quadratic zero.  Equivalently
@@ -459,9 +360,10 @@ T(k)=\Big[1+\Big(\frac{J^2}{4\omega(k)v(k)}\Big)^{2}\Big]^{-1}\;}
   `T ≈ 32(Δ−1)^2(ω−ω_{\rm gap})/J`: *linear in the excess energy above the gap*.
   The crossover momentum is `k_* = 1/(4(Δ−1))`.
 
-**Scope.** (5.1)–(5.3) are *exact for the `≤3`-wall projection of `H_{\rm XXZ}`*
-and therefore exact for `H_{\rm XXZ}` up to the leakage into `≥5`-wall
-configurations.  That leakage is measured (full-sector ED, `N = 22`,
+**Scope.** (5.1)–(5.3) are exact for the displayed Fano graph, conditional on
+Mq-E identifying that graph with the all-volume incoming component.  Even
+after Mq-E, they are not exact for the unprojected `H_{\rm XXZ}` because of
+leakage into `≥5`-wall configurations.  That leakage is measured (full-sector ED, `N = 22`,
 `k = π/2`, `σ = 2.6`, `0 ≤ Jt ≤ 13`) to be `P(≥5\text{ walls}) ≈`
 `8·10^{-3}` at `Δ = 8`, `3·10^{-2}` at `Δ = 4`, `1·10^{-1}` at `Δ = 2`,
 i.e. `O(Δ^{-2})`.  **It affects `T(k)`; it does not affect the memory law of
@@ -488,26 +390,22 @@ origin; it is not proved here.
 
 ### Statement
 
-> **THEOREM M′ (lattice memory law).**
+> **M′ (conditional lattice memory implication; SKETCH pending r2).**
 >
 > **ASSUME.**
-> (A1) D1, D2 with `G ⊇ U(1)` generated by `S^z_x`, `[H, S^z_{\rm reg}] = 0`;
-> `Ω_vac = {α,β}` with `S^z`-densities `s_α = +s`, `s_β = −s`.
-> (A2) `ϱ_{t}` is a one-parameter family in `𝒦^{(1)}_{αβ}` (Bd7) solving the
-> Heisenberg equations of `H_{\rm XXZ}`.
-> (A3) **H-AD (asymptotic decomposition).** There are times `t_i < t_f` and a
-> window `W = [a,b]` such that, up to `‖·‖` error `ε`, `ϱ_{t_i}` and `ϱ_{t_f}`
-> are convex combinations of product configurations "(kink localised in `W`)
-> ⊗ (free magnon content supported outside `W`)", each magnon carrying charge
-> `−1` relative to `α` if it sits left of `W` and `+1` relative to `β` if it
-> sits right of `W`.
-> (A4) The window satisfies `b − a ≫ ξ_c`.
+> (A1) D16's spin-`1/2` easy-axis XXZ dynamics, with conserved `U(1)` charge;
+> `Ω_vac = {α,β}` with densities `s_α=+s`, `s_β=-s` (`s=1/2` here).
+> (A2) `ϱ_t` lies in `𝒦^{(1)}_{αβ}` (D17) and is the selected scattering
+> vector of D18.
+> (A3) **(H-AD)** in the coherent AD1--AD4 sense of D18, with incoming charge
+> `q_in=-1`, reflected charge `q_out=-1`, and transmitted charge `q_out=+1`.
+> (A4) The kink core is padded from both window edges by distance `d_W`.
 >
 > **PROVE.**
 > \[
 > \delta x^{\rm sp}
 > =\varrho_{t_f}(\mathfrak X_W)-\varrho_{t_i}(\mathfrak X_W)
-> =-\frac{1}{s}\,\langle N_T\rangle+O(\varepsilon)+O(e^{-(b-a)/\xi_c}),
+> =-\frac{1}{s}\,\langle N_T\rangle+O(C_{\tilde\lambda}\tilde\lambda^{d_W}),
 > \qquad
 > \langle N_T\rangle=\int_{-\pi}^{\pi}\!\frac{dk}{2\pi}\,|\varphi(k)|^2\,T(k).
 > \]
@@ -516,7 +414,7 @@ origin; it is not proved here.
 
 **⟨1⟩1.** `𝔛_W ∈ 𝔄_loc` and
 `\dot{\mathfrak X}_W = \tfrac{1}{2s}(j_{a-1|a}-j_{b|b+1})`.
-*Justification:* Bd3, D10(a)–(b) with `ξ = ` the `U(1)` generator; the bulk
+*Justification:* D13(a), D10(a)–(b) with `ξ = ` the `U(1)` generator; the bulk
 terms of `Σ_{x∈W}\dot S^z_x` telescope.
 
 **⟨1⟩2.** Hence `2s\,\delta x^{\rm sp} = Q_W(t_f) − Q_W(t_i)`, with
@@ -524,11 +422,12 @@ terms of `Σ_{x∈W}\dot S^z_x` telescope.
 Eq. (2.2).
 *Justification:* ⟨1⟩1 and the fundamental theorem of calculus.
 
-**⟨1⟩3.** Under H-AD, `Q_W(t) = 2s\,x_{\rm wall}(t) + \text{const}(W)` at
-`t ∈ {t_i,t_f}` up to `O(ε) + O(e^{-(b-a)/ξ_c})`.
+**⟨1⟩3.** Under D18(AD3), `Q_W(t) = 2s\,x_{\rm wall}(t) + \text{const}(W)` at
+the separated in/out limits up to `C_{λ̃}λ̃^{d_W}` for every
+`λ̃∈(λ_E,1)`.
 *Justification:* for a configuration with the wall at bond `m` and no magnon
 in `W`, `Σ_{x=a}^{b}(S^z_x+s) = 2s(m−a+1)`; kink-core dressing contributes the
-exponential tail by D1(e).
+Jordan-safe transfer tail by D1(c) and D13(a).
 
 **⟨1⟩4. PROVE.** Charge bookkeeping over the event.
 > **⟨2⟩1.** `S^z_{\rm reg}` is exactly conserved.
@@ -536,22 +435,22 @@ exponential tail by D1(e).
 > (D10(b)) and the sum telescopes on `𝒦^{(1)}`.
 > **⟨2⟩2.** In the *in* state the total is
 > `2s\,m_i + q_{\rm in}` with `q_{\rm in} = −1` (one magnon on the `α` vacuum).
-> *Justification:* H-AD and Bd4.
+> *Justification:* D18(AD3) and D14.
 > **⟨2⟩3.** In the *out* state the total is `2s\,m_{\rm out} + q_{\rm out}`
 > with `q_{\rm out} = +1` on the transmitted branch and `−1` on the reflected
 > branch.
-> *Justification:* H-AD; a magnon on the `β = ↓` vacuum has `ΔS^z = +1`.
+> *Justification:* D18(AD3); a magnon on the `β = ↓` vacuum has `ΔS^z = +1`.
 > **⟨2⟩4.** Equating: on the transmitted branch
 > `m_{\rm out} − m_i = −2/(2s) = −1/s`; on the reflected branch `0`.
 > *Justification:* ⟨2⟩1–⟨2⟩3.
 > **⟨2⟩5. QED.**
 
-**⟨1⟩5.** Taking the convex combination of ⟨1⟩4 over the branches with weights
-`T(k), R(k)` and integrating against `|φ(k)|²` gives
-`δx^{\rm sp} = −⟨N_T⟩/s`, and the same combination gives
-`\mathrm{Var}(𝔛_W) = s^{-2}\langle N_T\rangle(1−\langle N_T\rangle)` for a
-momentum-sharp packet.
-*Justification:* ⟨1⟩3, ⟨1⟩4 and linearity of `ϱ ↦ ϱ(𝔛_W)`.
+**⟨1⟩5.** D18(AD2) packages the channel weights into the projection
+`N_T`; conjugating the branch displacements gives
+`ΔX=-(1/s)N_T`, hence `δx=-⟨N_T⟩/s` and
+`Var(ΔX)=s^{-2}⟨N_T⟩(1-⟨N_T⟩)`.
+*Justification:* ⟨1⟩3--⟨1⟩4, D18(AD2), and `N_T²=N_T`.  This is not a claim
+about one-time `Var(𝔛_W)` without a sharp initial state/two-time protocol.
 
 **⟨1⟩6. QED.**
 
@@ -559,16 +458,17 @@ momentum-sharp packet.
 
 | ingredient | status |
 |---|---|
-| ⟨1⟩1, ⟨1⟩2 (flux form, Eq. 2.2) | **PROVED** — it is the exact lattice continuity equation. No hypotheses beyond `𝔛_W ∈ 𝔄_loc`. |
-| ⟨1⟩3 (window ⇒ wall position) | **PROVED** given (A4), with the stated exponential error. |
-| ⟨1⟩4 (charge bookkeeping) | **PROVED** given H-AD. |
-| **H-AD** | **HYPOTHESIS.** This is asymptotic completeness for the kink + one-magnon sector of XXZ, `Δ > 1`. Not proved here; plausible (gapped magnon, flat kink band, exact one-magnon states) but a genuine gap. **This is the one place the theorem can fail.** |
-| `T(k)` from (5.1) | **COMPUTED**, exact in the `≤3`-wall projection, `O(Δ^{-2})` leakage measured. Not a soft theorem, a Schrödinger problem. |
+| ⟨1⟩1, ⟨1⟩2 (flux form, Eq. 2.2) | **SKETCH pending r2** — the exact physical-current calculation survived r1. |
+| ⟨1⟩3 (window ⇒ wall position) | **SKETCH pending r2**, with the D1(c) `C_{λ̃}λ̃^{d_W}` error. |
+| ⟨1⟩4 (charge bookkeeping) | **SKETCH pending r2**, conditional on D18. |
+| **H-AD** | **CONJECTURE** for the full XXZ chain.  D18 is the sole definition. |
+| `T(k)` from (5.1) | **SKETCH**, exact for the Fano graph conditional on Mq-E; `O(Δ^{-2})` leakage measured beyond the projection. |
 | `δx = ` DC limit of the *soft factor* | **REFUTED as stated** (see §10). |
 
 ### What the soft theorem is actually needed for
 
-Theorem M′ fixes the *quantum* of memory with no scattering input at all.
+The conditional M′ implication fixes the channel displacement with no
+scattering-phase input.
 The soft data enter in exactly one place: the value of `T(k)`, and in
 particular its `k → 0` behaviour.  The `C ⇒ B` edge is therefore
 
@@ -590,61 +490,76 @@ That universality is *not* established here and is the real C ⇒ B obligation.
 
 ## 7. The `B ⇒ A` edge (claim **B3**)
 
-> **PROPOSITION B3.** Let `ϱ_t` be as in Theorem M′ and let
-> `𝔮^{L}_{c} := Σ_{x<c}(S^z_x − s_α)`, `𝔮^{R}_{c} := Σ_{x>c}(S^z_x − s_β)`,
-> both convergent on `𝒦^{(1)}_{αβ}` (Bd7).  Then:
->
-> **(i) (Sector rigidity.)** For all `t`, `ϱ_t ∈ 𝒦_{αβ}` with the *same*
-> `(α,β)`.  No memory event can change the **vacuum-pair label** of D9(d) —
-> under (T) a point of `(G/H_α)×(G/H_α)`, whose global-symmetry-invariant
-> content is the double coset in `H_α\G/H_α`.  *(Reconciled at freeze
-> 2026-08-26: "the `𝒜`-orbit point" cited `A2-orbit-r1`, **REFUTED**.)*
-> *Proof.* `ϱ_{t} = ϱ_{t_i}∘\mathrm{Ad}(e^{iHt})` with `e^{iHt}` implemented by
-> a quasi-local automorphism (Lieb–Robinson); D9(b) disjointness of `𝒦_{αβ}`
-> for distinct pairs is preserved by automorphisms of `𝔄`. ∎
->
-> **(ii) (Memory = transported asymptotic charge.)**
-> \[
-> \delta x=\frac{1}{2s}\Big[\varrho_{t_f}(\mathfrak q^{R}_{c})
-> -\varrho_{t_i}(\mathfrak q^{R}_{c})\Big]
-> =-\frac{1}{2s}\Big[\varrho_{t_f}(\mathfrak q^{L}_{c})
-> -\varrho_{t_i}(\mathfrak q^{L}_{c})\Big]
-> \]
-> for any cut `c` outside the support of the leg content at `t_i,t_f`.
-> *Proof.* `𝔮^L_c + 𝔮^R_c + (S^z_c − \tfrac12(s_α+s_β))` is the regularised
-> total magnetisation, conserved by (A1); Eq. (2.2) identifies each half-line
-> charge with a bond quantity via Proposition N. ∎
->
-> **(iii) (Torsor statement.)** Within the fixed vacuum pair `(α,β)`, the
-> kink states of definite charge form a **`ℤ`-torsor** under lattice
-> translation (K4: one state per magnetisation sector, all degenerate).  The
-> map `state ↦ 𝔮^R_c/2s` is the moment map of this `ℤ`-action.  Memory is
-> valued in that torsor: `δx ∈ ℤ` for a single-channel (post-selected) event,
-> and `δx ∈ \tfrac1s\,\mathrm{conv}(\{0,-1\})` for a superposed one.
->
-> **(iv) (What measuring `δx` identifies.)** Two data must be kept apart.
-> The **topological** datum is the vacuum-pair label of (i); it is *rigid*, and
-> is read off, not shifted.  What `δx` measures is the **`U(1)` charge
-> transported between the two spatial infinities** within that fixed label —
-> equivalently, by (ii)–(iii), the element of the `ℤ`-torsor of (iii) reached
-> by the event.
->
-> *(Reconciled at freeze 2026-08-26.  This clause previously read "`δx`
-> identifies the element of `𝒜` by which the two half-infinite symmetry
-> strings differ … the `G_diag`-invariant label of `𝒜 = (G_L×G_R)/G_diag ≅
-> U(1)`".  That reading cited `A2-orbit-r1`, **REFUTED**, and additionally
-> over-reads A1: in this shard's `χ = 1`, unbroken-`U(1)`, product-vacuum
-> setting, A1(e)/D4(b) give `V_α ≡` scalar, hence `N_α = G` and an
-> endpoint-state orbit that is a **single point**, so no `𝒜 ≅ U(1)` labelling
-> can be imported from A1.  The charge-transfer torsor of (iii) is separately
-> defined here and is viable — but it is not that claim.)*
+**CLAIM B3 (SKETCH pending r2).**  Assume a translation-invariant finite-range
+dynamics whose two asymptotic vacua are stationary, a state initially in
+`𝒦_{αβ}` (D9(a)), and, for the event-specific charge statement, D18 with a
+window `W=[a,b]`.  Then the intended surviving clauses are:
 
-**Status.** (i) and (ii) are **rigorous now**, modulo the existence statements
-already in Corner A (`A1`, `A2`) and the convergence supplied by Bd7/D17.
-(iii) and (iv) remain **SKETCH**: (iii) is conditional on the
-thermodynamic-limit flatness of the kink band (interface item **R5**), and (iv)
-is a reading of (ii)–(iii) that has not been through an L6 loop.  The claim row
-**B3** therefore stays SKETCH at the freeze.
+1. finite-time dynamics fixes the vacuum-pair label `(α,β)`; and
+2. after subtracting the kink charge and fixing the cut geometry, total-charge
+   conservation gives `2s·δx+(q_out-q_in)=0`.
+
+The former raw half-line formula
+`δx=(2s)^{-1}Δ𝔮_c^R=-(2s)^{-1}Δ𝔮_c^L` is **REFUTED**.  In the transmitted
+spin-`1/2` channel it predicts `+1` (or `-1`) while D18 charge bookkeeping
+gives `-2`.
+
+**⟨1⟩1. PROVE (sector rigidity at finite time).**
+
+**⟨2⟩1.**  Let `α_t` be the finite-range Heisenberg automorphism.  For every
+local `O` and fixed `t`, the Lieb--Robinson estimate approximates
+`α_t(τ_n(O))` in norm by an observable supported in a fixed-radius enlargement
+of `supp τ_n(O)`, with an error tending to zero as that enlargement grows.
+*Justification:* named Lieb--Robinson quasi-locality theorem for D10(a)'s
+finite-range dynamics.
+
+**⟨2⟩2.**  Translation covariance gives
+`α_t(τ_n(O))=τ_n(α_t(O))`, and stationarity of the vacua gives
+`ω_{α/β}(α_t(O))=ω_{α/β}(O)`.
+*Justification:* the assumptions of B3 and D9(a)'s vacuum functionals.
+
+**⟨2⟩3.**  Insert the approximant of ⟨2⟩1 into both factorised limits of
+D9(a).  Taking `n→∓∞`, then removing the Lieb--Robinson approximation error,
+reproduces the same left/right functionals `ω_α,ω_β`.
+*Justification:* D9(a), ⟨2⟩1, and ⟨2⟩2.
+
+**⟨2⟩4.**  Hence `ϱ_t∈𝒦_{αβ}` for every finite `t`; the argument fixes the
+labels rather than merely preserving disjointness.
+*Justification:* D9(a) and ⟨2⟩3.  **⟨2⟩5. QED.**
+
+**⟨1⟩2. PROVE (event-specific charge bookkeeping with explicit cut).**
+
+**⟨2⟩1.**  Fix `c∈W` and take the D18 in/out limits with the kink localised
+in `W` and every propagating leg outside `W`.  Define `q_in,q_out` as the
+charges of those separated legs relative to the vacuum on which each leg
+sits.  These are **leg-subtracted** charges, not raw half-line charges.
+*Justification:* D18(AD3)--(AD4) and D14.
+
+**⟨2⟩2.**  A kink at coordinate `m` contributes `2s(m-c)` to the regularised
+total charge, so the in/out totals are
+`2s(m_i-c)+q_in` and `2s(m_f-c)+q_out`.
+*Justification:* D13(a) and the direct charge sum in M-quant ⟨1⟩2.
+
+**⟨2⟩3.**  D10(b) conserves the regularised total charge.  Subtracting the two
+expressions in ⟨2⟩2 gives
+
+`2s·δx+(q_out-q_in)=0`.
+
+*Justification:* D10(b), D13(a), and ⟨2⟩2.
+
+**⟨2⟩4.**  Reflection has `q_out=q_in=-1` and therefore `δx=0`;
+transmission has `(q_in,q_out)=(-1,+1)` and therefore `δx=-1/s`.
+*Justification:* D18(AD3) and ⟨2⟩3.  **⟨2⟩5. QED.**
+
+**⟨1⟩3. QED.** □
+
+**Honest residue.**  The proof above is newly repaired and remains `SKETCH`
+until r2.  The proposed `ℤ`-torsor/unique-flat-kink statement depends on
+Conjecture K4/R5 and is therefore a `CONJECTURE`, not a B3 consequence.  The
+vacuum-pair label of D9(d) is rigid under ⟨1⟩1 and is read off, not shifted;
+`δx` records the leg-charge transfer of ⟨1⟩2 within that fixed label.  It is
+not an element of the refuted `A2-orbit-r1` object and is not identified with
+virtual bond data.
 
 ---
 
@@ -652,15 +567,15 @@ is a reading of (ii)–(iii) that has not been through an L6 loop.  The claim ro
 
 | id | requirement | needed for |
 |---|---|---|
-| **R1** | Extend D10(d) (`𝒥_b`, Proposition N) to the **broken/kink case** `α ≠ β`, so that the half-infinite `U(1)` charge on a kink state is a bond quantity. Currently D10(d) is stated only for `H_α = G`. | Eq. (2.2), B3(ii) |
-| **R2** | Merge **Bd7** (`𝒦^{(1)}_{αβ}`) into D9 as an `ℓ¹` refinement, with a lemma that `𝒦^{(1)}` is stable under the Heisenberg dynamics for finite times (Lieb–Robinson). | Bd1, Bd4, B3 |
-| **R3** | State `A1` for the unbroken subgroup `H_α = U(1)` *inside a kink sector*: existence and uniqueness of the half-infinite charge implementing `G_R` on `𝒦^{(1)}_{αβ}`. | B3(iv) |
-| **R4** | **H-AD**: asymptotic completeness of the kink + one-magnon sector of easy-axis XXZ. Either a proof (Haag–Ruelle-type, using the magnon gap `J(Δ−1)` and Lemma K4) or an explicit statement that Theorem M′ is conditional on it. | Theorem M′ |
-| **R5** | A thermodynamic-limit proof of Lemma K4 (one zero-energy kink state per magnetisation sector; exact flatness). Frustration-freeness K1 + K2 should make this a standard argument. | K4, no-drift, Bd1 well-posedness |
-| **R6** | The kink-sector excitation ansatz D5(a) at `α ≠ β` connected to Bd3: express `ϱ(𝔛_W)` in terms of the mixed transfer matrix so that `δx` is computable from `B`-tensors, not only from `⟨S^z_x⟩`. | MPS-native formulation; the Giulini "memory in the bond data" claim at `χ > 1` |
+| **R1** | Optional future theorem extending D10(d)'s virtual potential to a broken kink sector.  It is **not** used by Mq-flux or repaired B3. | future virtual/bond interpretation only |
+| **R2** | D17 now supplies the `ℓ¹` refinement; B3 ⟨1⟩1 states the finite-time Lieb--Robinson label argument. | repaired, pending r2 |
+| **R3** | Optional future kink-sector half-line implementation theorem.  Raw half-line charge is **not** used as memory. | future virtual interpretation only |
+| **R4** | Prove D18 for the full spin-`1/2` XXZ chain and prove the projected all-volume enumeration/isomorphism Mq-E before invoking the Fano spectral argument. | M′, Mq-AD3; bd `tns-d51` |
+| **R5** | A thermodynamic-limit proof of Conjecture K4 (one zero-energy kink state per magnetisation sector; exact flatness). | torsor/no-drift conjectures |
+| **R6** | Connect D5(a)'s kink ansatz to D13(a) through mixed-transfer contractions.  This would make `δx` MPS-native but would still not identify physical current with `𝒥_b`. | MPS-native formulation |
 | **R7** | A (WI)-form identity for `U_{[c,∞)}(e^{iθS^z})` acting on a kink state: what the half-infinite `U(1)` string does to `(x_0,φ)` of Lemma K2. Expected: it shifts `φ`, not `x_0` — which is why the *soft* (`k=0`) magnon produces no displacement. | The `k→0` end of §6, P7 |
 | **R8** | A definition of lattice momentum for the kink+magnon state and of "recoil", to state P5 sharply. Note translation is not a symmetry within a magnetisation sector (§1.2 Remark), so this needs care. | P5 |
-| **R9** | Fix, in `definitions.md`, whether `Δ` denotes `J_z/J_⊥` (notation.md) or the coefficient in `h^{XXZ}` above. They agree in the convention used here; state it once. | all of §5 |
+| **R9** | D16 fixes the `Δ=J_z/J_⊥` convention. | repaired |
 
 ---
 
@@ -669,8 +584,10 @@ is a reading of (ii)–(iii) that has not been through an L6 loop.  The claim ro
 Conventions: `H_{\rm XXZ}` of §1.1 with `J = 1`, `Δ > 1`, `s = 1/2`; initial
 state = kink at bond `m_i` plus a Gaussian magnon packet
 `φ_x ∝ e^{ik_0x}e^{-(x-x_0)^2/σ^2}` (the arXiv:2012.07243 convention), `k_0 ∈
-(0,π)`, launched from the `↑` side.  Window `W = [m_i − L, m_i + L]`,
-`L ≥ 6ξ_c`.  Observables: `𝔛_W` (Bd3), `N_T`, `N_R` (Bd4).  All tolerances are
+(0,π)`, launched from the `↑` side.  Window `W = [m_i − L, m_i + L]` with
+core-to-edge padding `d_W` chosen so the D1(c) bound
+`C_{λ̃}λ̃^{d_W}` is below tolerance.  Observables: `𝔛_W` (D13(a)), `N_T`,
+`N_R` (D14).  All tolerances are
 for converged MPS (`χ` chosen so the truncation error per step `< 10^{-10}`).
 
 **P1 — the ratio test (SHARPEST).**
@@ -682,8 +599,8 @@ for converged MPS (`χ` chosen so the truncation error per step `< 10^{-10}`).
 must equal `−2` to `1·10^{-3}` once `N_W(t_f) < 10^{-4}` (packet clear of the
 window).  A deviation larger than that at converged `χ` falsifies H-AD or the
 identification of the leg charges — not the continuity equation.
-*Reference values (exact `≤3`-wall dynamics, `N = 2200`, `σ = 40`, packet
-travelling `620` sites):*
+*Reference values from the finite Fano-graph simulation (the Mq-E graph model,
+`N=2200`, `σ=40`, packet travelling `620` sites):*
 
 | `Δ` | `k_0` | `N_T` | `δx` | `δx/(-2N_T)` |
 |---|---|---|---|---|
@@ -709,7 +626,7 @@ excess energy above the gap*.
 `Δ = 2`.  Do **not** compare to `T(k_0)` unless `σ_k^2 T''(k_0) ≪ T(k_0)`;
 in the soft region the packet average is the leading systematic.
 
-**P4 — quantisation (the discriminating test).** The final magnetisation
+**P4 — channel quantisation (the discriminating test).** The final magnetisation
 profile must be a **two-component mixture**, not a rigid shift:
 \[
 \varrho_{t_f}(S^z_x)\;=\;T\,P(x-m_i+1/s)\;+\;(1-T)\,P(x-m_i)\;+\;O(\varepsilon),
@@ -718,16 +635,18 @@ profile must be a **two-component mixture**, not a rigid shift:
 \tanh[(x_0-n)\log(1/q)]` at `χ=1`).  Fit the two-component model and a
 one-component rigid-shift model; the two-component fit must win with residual
 ratio `> 5` whenever `0.2 < T < 0.8` (achievable at `Δ = 2`, `k_0 ≈ 0.25`).
-Equivalently `Var(𝔛_W) = 4T(1−T)` to `2 %`.  *Reference:* the exact-projection
+Equivalently a two-time displacement measurement with a sharp initial wall
+should give `Var(ΔX) = 4T(1−T)` to `2 %`; this is not an unconditional
+one-time `Var(𝔛_W)` identity.  *Reference:* the finite projected computation
 run gives `Var = 0.9998` vs `4TR = 0.9998` at `Δ = 2, k_0 = 0.25`.
 **This is the test that separates a quantised lattice memory from the
 continuous Lan–Xiao displacement.**
 
-**P5 — no drift.** After the packet has left `W`,
+**P5 — conjectural no-drift test (depends on K4/R5).** After the packet has left `W`,
 `|d\varrho_t(𝔛_W)/dt| < 10^{-4}` per unit `Jt` for `Jt` up to the
-Lieb–Robinson horizon.  The wall does not recoil, at any `k_0`, at any `Δ>1`,
-even when `R ≈ 1`.  (Contrast: continuum easy-plane walls acquire a velocity.)
-A measured drift `∝ R k_0` falsifies Lemma K4 / R5.
+Lieb–Robinson horizon.  The conjectured outcome is no recoil even when
+`R≈1`; this is a numerical target, not a theorem quantified over all
+`k_0,Δ`.  A measured drift `∝Rk_0` falsifies Conjecture K4/R5.
 
 **P6 — the flux identity (code check).**
 `ϱ_{t_f}(𝔛_W) − ϱ_{t_i}(𝔛_W) = \tfrac{1}{2s}\int dt\,[ϱ_t(j_{a-1|a}) −
@@ -739,34 +658,39 @@ the current operator before trusting anything else.
 but `lim_{σ→∞} δx` at fixed small `k_0` is `−1/s·T(k_0)` and is *not* `0`.
 Numerically: at fixed `k_0 = 0.1`, `|δx|` must be independent of `σ` (to `5 %`)
 for `σ ≫ 1/k_0`; while at fixed `σ`, `|δx| → 0` as `k_0 → 0`.  Verifying both
-branches pins the non-commutativity that Bd7 predicts.
+branches pins the non-commutativity that D17 predicts.
 
-**P8 — spin-`s` generalisation (if the code supports `s = 1`).**
+**P8 — conjectural higher-spin charge bookkeeping (if the code supports `s = 1`).**
 `δx/N_T = −1/s = −1` for the spin-1 easy-axis chain.  Tolerance `2 %`.
-A clean, cheap falsification target for the whole framework.
+A clean falsification target for the unproved higher-spin channel extension;
+the D16/projected scope is spin `1/2`.
 
 ---
 
-## 10. Honest status and open items
+## 10. Honest post-r1 status and open items
 
-**What is proved.**
-* The flux/DC form of the memory, Eq. (2.2) — exact, no hypotheses.
-* `Bd2 ≡ Bd3`; `Bd1 = Bd3` + leg content, with the trap that the *unsubtracted*
-  Bd1 vanishes identically.
-* Theorem M′ (`δx = −N_T/s`, integer-quantised) **given H-AD**.
-* Proposition B3 (i)–(iv), the `B ⇒ A` edge.
-* Lemmas K1–K3 (frustration-freeness, exact kink product family,
-  boundary-field invisibility) — derived here, not quoted.
+**SKETCH pending r2.**
+* The physical-current flux/DC calculation, Eq. (2.2), is exact algebraically;
+  no virtual/bond-potential reading is attached.
+* D13(b) and D13(a) are the same finite-window expectation difference;
+  unsubtracted D13(c) includes the leg charge and has the recorded trap.
+* M′ is a conditional D18 implication with channel spectrum `{0,-1/s}`; its
+  expectation is not integer-quantised.
+* B3 consists only of the repaired finite-time label argument and
+  `2s·δx+(q_out-q_in)=0`; the false half-line formula is retracted.
+* K1--K3 are derivations in this shard but remain SKETCH until the r2 package
+  verdict.
 
-**What is computed but not proved universal.**
-* `t(k)`, `T(k)`, `δ_t(k)` of (5.1)–(5.2): exact for the `≤3`-wall projection,
-  `O(Δ^{-2})` leakage measured.  The Adler zero `T ∝ k²` (5.3) is a
-  *computation*, not yet a theorem, and its universality — that `16(Δ−1)²`
-  depends only on the kink's asymptotic data — is the actual Corner-C obligation.
+**SKETCH calculations/evidence.**
+* `t(k)`, `T(k)`, `δ_t(k)` of (5.1)–(5.2) are exact for the displayed Fano
+  graph conditional on Mq-E; `O(Δ^{-2})` leakage is measured beyond the
+  projection.  The zero `T∝k²` and especially its universality are not
+  promoted.
 
 **What is conjecture.**
-* **H-AD** (asymptotic completeness).  Everything quantitative rests on it.
-* Lemma K4 in the thermodynamic limit (R5).
+* **H-AD** for the full chain (D18) and the all-volume projected reduction
+  Mq-E.
+* Conjecture K4 in the thermodynamic limit (R5).
 * **Conjecture Bc (the two `2`'s).** The magnon–magnon oracle gives
   `dδ_phys/dk_s|_0 = 2 sgn(v_h−v_s)`, which **on D8** is `2` (`O7`; see the
   freeze note in §5.3), i.e. a soft Wigner shift of `2` sites off a hard
@@ -783,14 +707,13 @@ A clean, cheap falsification target for the whole framework.
   limit of the soft factor `S` summed over the event; the lattice
   Braginsky–Thorne relation") is **false in M2 as literally stated**.  The
   soft factor is a phase; the memory quantum is a charge.  Two independent
-  reasons: (a) `δx = −N_T/s` holds with the *same* coefficient for every `k`,
-  `Δ`, and packet, whereas any soft-factor expression varies with them;
+  reasons: (a) conditional charge bookkeeping fixes the same coefficient for
+  every `k`, `Δ`, and packet once D18's channels exist, whereas any soft-factor expression varies with them;
   (b) `δx` is insensitive to `δ_t(k)` entirely — a purely transmitting wall
   with `δ_t ≡ 0` still displaces by exactly `−1/s`.  The surviving true
-  statement is Eq. (2.2) + Theorem M′: *memory is the DC weight of the
+  statement is Eq. (2.2) + conditional M′: *memory is the DC weight of the
   **boundary current**, and the soft data enter only through `T(k)`*.  This is
-  a strictly stronger and cleaner result than the conjecture it replaces, and
-  it is the version the paper should carry.
+  the stable candidate statement pending r2.
 
 **Relation to prior art (novelty-sweep rows 2, 8).**
 Lan–Xiao (arXiv:2107.05401) obtain, for a continuum easy-*plane* ferromagnet,
@@ -799,20 +722,21 @@ Lan–Xiao (arXiv:2107.05401) obtain, for a continuum easy-*plane* ferromagnet,
 continuous: their spin wave is linearly polarised and carries **no angular
 momentum**, and their wall is inertial, so no conservation law constrains the
 answer.  The present easy-*axis* lattice result is the opposite regime: the
-magnon carries `ΔS^z = ∓1`, the wall's modulus is locked to `S^z` (K4), and the
-displacement is `−1/s` per transmitted quantum — **quantised, `k`-independent
-and phase-independent**.  Kim–Tserkovnyak–Tchernyshyov (arXiv:1406.6051)
+magnon carries `ΔS^z = ∓1`; conditional on D18, charge bookkeeping gives the
+channel displacement `−1/s`, independent of `k` and phase.  Conjecture K4 is
+the separate unproved flatness/locking statement.  Kim–Tserkovnyak–Tchernyshyov (arXiv:1406.6051)
 report that magnons pass a *static* wall with no force; that is consistent
 with P5 (no recoil) and orthogonal to P1 (charge-transfer displacement).
-The contribution to claim is therefore: *the wall displacement is a
-conservation law, is quantised, and its magnitude is controlled by a
-transmission probability with an Adler zero* — not the displacement itself.
+The post-r1 candidate is therefore: *channel displacement follows from charge
+conservation, while its expectation is controlled by a transmission
+probability*; universality of the computed Fano soft zero remains open.
 
 **Scratch cross-checks recorded (not repo artifacts).**
 `K1/K2`: `max‖h^{kink}v‖ ≤ 1.2·10^{-11}` for `Δ∈{1.5,2,4,8}`.
 `K4`: `N=12`, `Δ=3`, every `m`: `E₀=0` (`10^{-13}`), unique, `E₁=2.03407417`.
 `S1`: `N=14` enumeration, component size `12`, degrees `{1:3,2:8,3:1}`.
-`M′/P1/P4`: exact `≤3`-wall dynamics, `N=2200`, `σ=40`; `δx/(−2N_T)=1.000000`
+`M′/P1/P4`: finite Fano-graph computation, `N=2200`, `σ=40`;
+`δx/(−2N_T)=1.000000`
 and `Var = 4TR` to 4 digits across `Δ∈{2,4,8}`, `k∈[0.15,2.4]`.
 `(5.1)`: `P_T` vs `T_{\rm Fano}` agree to `≤3·10^{-3}`, residual dominated by
 packet averaging.

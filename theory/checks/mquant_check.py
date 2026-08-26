@@ -186,7 +186,7 @@ def check_scan() -> tuple[int, float, float, float, float]:
             continue
         residual_x1 = abs(result["dx1"] + 2.0 * result["transmission"])
         residual_x2 = abs(result["dx2"] + 2.0 * result["transmission"])
-        # X2 is the integrated-magnetisation proxy for Bd3.  The committed
+        # X2 is the integrated-magnetisation proxy for D13(a).  The committed
         # X1-X2 spread is the scan's own geometry/estimator systematic.
         budget = (
             result["dx_estimator_spread"]

@@ -1,21 +1,21 @@
-<!-- ROLE: D2 of HANDOFF_MPS_SOFT_THEOREM.md §4 — the campaign's framework document.
-     FROZEN 2026-08-26, after the three foundation L6 loops converged (oracle-bethe-r2.md,
-     corner-a-r3.md, ml2-r2.md — all PASS) and the ML4/ML5/M-quant summit landed.
-     Every statement is copied from a converged artifact; nothing is invented here.
-     Changing a frozen statement requires reopening the relevant L6 loop. -->
+<!-- ROLE: D2 of HANDOFF_MPS_SOFT_THEOREM.md §4 — the campaign framework.
+     Post-r1 repair: only the Corner-A, oracle, and ML2 foundation packages
+     have PASS verdicts.  Summit and Corner-B rows are pre-r2 SKETCHes. -->
 
 # TRIANGLE.md — the 1D lattice infrared triangle
 
-**Freeze 2026-08-26.**  Definitions are `definitions.md` D1--D24 and are never restated here; symbols are `notation.md`.
-Every item carries an L5 status, its shard, and the executable check that guards it.  **Status labels:** `PROVED` —
-complete argument in a shard that passed its L6 loop; `SKETCH` — argument with a named gap; `CONJECTURE` — no argument;
-`REFUTED`/`RETRACTED` — carried as negative results so they are not rediscovered.  A statement conditional on a named
-hypothesis is `PROVED given H`, never `PROVED`.
+Definitions are `definitions.md` D1--D24 and symbols are `notation.md`.
+**Authoritative L5 statuses:** `PROVED`, `SKETCH`, `CONJECTURE`, `REFUTED`.
+Empirical, conditional, under-review, and future-work descriptions are prose
+qualifiers, not extra status values.  `PROVED` requires a PASS verdict.  Rows
+attacked by `mquant-ml45-r1.md` or `triangle-r1.md` are at most `SKETCH` until
+r2 passes.  Only the passed foundation rows remain frozen.
 
-**Two standing TJO directives.**  *Generality* (bd `tns-9tt`): Corner A and the memory law are stated in their general
-`(G, injective MPS, finite-range H)` form; M1 (isotropic Heisenberg FM, D6) and M2 (easy-axis XXZ, D16) are
-*instantiations and oracles*, not the register of the theorems.  Generality is withheld in one place only — universality
-of the soft coefficient, which after the ML4/ML5 summit is frozen *relative to the source class* `𝒮_W` (D24(d), §2.4).
+**Two standing TJO directives.**  *Generality*: Corner A is general.  The
+present memory shard proves only conditional charge arithmetic and studies the
+spin-`1/2` D16 model; the general `(G, injective MPS, finite-range H)` memory
+theorem is a known gap tracked by bd `tns-zw2`, not asserted here.
+Universality of the soft coefficient is scoped to `𝒮_W` (D24(d)).
 *Integrability* (bd `tns-e50`): no theorem hypothesis mentions integrability.  Bethe is **verification only**:
 `oracle-bethe.md` supplies O1--O10 as an oracle the derivations must match, and `ml2-completeness.md` proves two-body
 completeness from the D6 swap algebra by direct Jacobi diagonalisation, not from assumed completeness.
@@ -31,7 +31,7 @@ completeness from the D6 swap algebra by direct Jacobi diagonalisation, not from
 | **(T)** | `G` acts transitively on `Ω_vac`.  **Not implied by (H2)** — without it every classification holds *per `G`-orbit* | D9(d) |
 | **(W1)/(W2)** | WI window hypothesis: `Λ ⊇ R` with D1(e) edge-bond insertions, **or** `Λ ⊇ [a−1,b+1]` | D1(e) |
 | **padded** | `≥ n_0` sites each side of the bond, `b_l,b_r ≠ 0`: a **sufficient**, tensor-independent hypothesis for injectivity of `ι_{Λ,b}` — not necessary for every particular tensor (`corner-a-r3.md` residue 1) | D4(a1) |
-| **(H-AD)** | asymptotic decomposition of the kink+magnon state at `t_i,t_f` (asymptotic completeness of that sector).  Unproved; isolated | D18 |
+| **(H-AD)** | coherent AD1--AD4 wave-operator/channel/local-decay hypothesis.  The old norm-mixture reading is superseded | D18 |
 
 **Normal ordering.**  `ǔ_α(g) := e^{−iθ_α(g)}u(g)` is a unitary rep of `H_α` satisfying (IT) with phase `1` (D2(d)).
 Statements labelled *normal ordered* are false without it: the WI phase `e^{i|R|θ_α(g)}` is extensive in `|R|`.
@@ -133,7 +133,7 @@ superselection sectors in Conjecture S.  M1 is the magnon model; M2 is the kink 
 (⟨1⟩7) — for M1: `H_α = U(1)`, `[ω_α] = 0`, the type-B count `2 → 1`, and `ω(k) = J(1−cos k)` **rederived from G0(e)**,
 matching oracle **O1**. *Shard:* `corner-a-goldstone.md`.  *Checks:* C3, C3b, C4, C5, C9, C10.
 
-**Negative row `G0-soft-r1` — RETRACTED.**  `(e^{ik}−1)` is a *kinematic* factor from the profile alone.  It is **not** a
+**Negative row `G0-soft-r1` — REFUTED (withdrawn overclaim).**  `(e^{ik}−1)` is a *kinematic* factor from the profile alone.  It is **not** a
 soft factor: no Adler zero, no universality, no rederivation of O7/O9.  In a matrix element the identity says only
 `⟨out|[H,Q_k]|in⟩ = (e^{ik}−1)⟨out|J_k|in⟩`; if `⟨out|J_k|in⟩ = C_hard + O(k)` then hard data enters at `O(k)`, and if it
 has a `1/k` singularity there is no zero at all.  The factor is convention-dependent (`e^{−ikx}` gives `e^{−ik}−1`).
@@ -165,7 +165,11 @@ formal zero Bethe vector is never counted as a state — which is what makes the
 `tns-e50`. *Shard:* `ml2-completeness.md`.  *Verdict:* `ml2-r2.md` PASS (10/10 mutants killed). *Checker:*
 `ml2_completeness_check.py`, `SIZES = (6,10,11,12,13,14,16,18,20,22,26)`.
 
-### 2.3 THEOREM S2-2body (two-body soft theorem, M1) — **PROVED, FROZEN**
+### 2.3 S2-2body (two-body soft expansion, M1) — **SKETCH, UNDER REPAIR**
+
+`triangle-r1.md` T1 found that `soft-current-recon.md` had no dedicated PASS
+verdict.  The passed oracle and ML2 inputs remain valid, but this composite
+row is pre-r2 and is not frozen.
 
 **ASSUME.**  (i) D6: the isotropic spin-1/2 Heisenberg ferromagnet `H = Σ_x (J/2)(1−P_{x,x+1})`, `J>0`, on `ℤ` or on an
 `N`-site ring with `N>3`. (ii) D7's ordered-coordinate convention and channel reading.  (iii) A hard momentum `k_h` with
@@ -195,20 +199,20 @@ single ordered-branch factor `(1−S_{12})|P_{12}⟩` (R8), and **ML2 makes the 
 
 **Bethe's role: strictly verification.**  (R17)--(R18) match O7/O8 term by term; two checkers enforce them numerically.
 
-**SCOPE — read before quoting.**  What is proved is the **exact two-body soft expansion of the physical scattering
+**SCOPE — read before quoting.**  The shard derives the **exact two-body soft expansion of the physical scattering
 multiplier**, with its remainder bounds, and the derivation of the coefficient `2` from the local current/contact
 structure of M1.  It is **not** by itself a process-independent, symmetry-derived soft theorem: that additionally needs
-ML3 (still OPEN), ML4 (PROVED at one hard magnon, §2.5) and membership in `𝒮_W` (D24(d)), outside which universality is
+ML3, repaired ML4 (§2.5), and membership in `𝒮_W` (D24(d)), outside which universality is
 FALSE.  `soft-current-recon.md` ⟨1⟩6 boxes the corresponding conditional statement — `M_2 = 𝖲(k_s)M_1 + R_{S2}` with
 `𝖲(k_s) = 2ik_s` and `‖R_{S2}(k_s,·)‖_{L²(I)} ≤ C_I|k_s|²‖M_1‖_{L²(I)}`, hence `o(|k_s|)` in hard-wave-packet norm — as
-**EXPLORATION**, conditional on wave operators (ML1) and the amputation convention.  **That box is not frozen; the
-expansion above is.**  *Shards:* `soft-current-recon.md` ⟨1⟩1--⟨1⟩5 (derivation) + `oracle-bethe.md`
+**SKETCH**, conditional on wave operators (ML1) and the amputation convention.  **Neither positive row is frozen before
+r2.**  *Shards:* `soft-current-recon.md` ⟨1⟩1--⟨1⟩5 (derivation) + `oracle-bethe.md`
 ⟨1⟩3 (verification) + `ml2-completeness.md` (completeness).  *Checkers:* `soft_current_recon_check.py` (max form-factor
 residual `1.56·10^{-14}`, quadratic-phase fit error `2.17·10^{-10}`), `oracle_bethe_check.py`,
 `ml2_completeness_check.py`, and the numerics-side fm-displacement-scan (`numerics/docs/fm-twomagnon-notes.md`: the
 leading D8 coefficient `2` reproduced to `0.2%`).
 
-### 2.4 CONJECTURE S-general (`n`-leg lattice soft theorem) — **CONJECTURE, FROZEN**
+### 2.4 S-general (`n`-leg lattice soft theorem) — **CONJECTURE**
 
 Let `|Φ⟩` be an `n`-particle excitation-ansatz scattering state whose legs carry asymptotic data `{q_i, v_i}` (charge
 relative to their vacuum, group velocity) — for kink legs additionally the vacuum pair `(α,β)` of A2(e) and the
@@ -221,11 +225,11 @@ with `𝖲` **universal** — a function of the legs' asymptotic data alone, ind
 obeying the Adler zero `𝖲 → 0` as `k_s → 0` with leading term linear in `k_s`, and `R_{S2} = o(𝖲)` in that norm. At `n =
 1` in M1, `𝖲(k_s) = 2ik_s` by §2.3.
 
-**The universality class is part of the frozen statement.**  Universality over *unrestricted* local sources is **FALSE**:
+**The universality class is part of the conjecture.**  Universality over *unrestricted* local sources is **REFUTED**:
 `ml5-universality.md` ⟨1⟩4 exhibits a four-site local `D` such that `O_η = S^-_0 + ηD` leaves `M_1` untouched while
 shifting the linear soft coefficient by `2iη(1−e^{-3ih})` (D24(e); checked, `ml4_check.py`).  What is frozen is therefore:
-**`𝖲` is universal on the Ward-covariant, no-contact class `𝒮_W` of D24(d), and by ML5-A that class is sharp** —
-universality holds **iff** the amputated contact term has zero first jet, `𝔠_h(O) = 0` (D24(c)).  The counterexample is a
+**`𝖲` is conjectured universal on the Ward-covariant, no-contact class `𝒮_W` of D24(d)**.  Repaired ML5-A requires both
+`M_2^O(0)=0` and `𝔠_h(O)=0`, with D24(c)'s second-derivative norm control.  The counterexample is a
 *stated feature* of the conjecture: it is what makes hypothesis 4 of `𝒮_W` necessary rather than cosmetic.
 
 **Status CONJECTURE.**  Corner A does not supply this edge (§6.1).  Its **exact** outstanding obligations are the six
@@ -234,41 +238,43 @@ S-general that is not derivable from what those rows say is PROVED.
 
 | id | obligation | difficulty | status |
 |---|---|---|---|
-| **ML1** | Two-magnon wave operators and channel norm: construct the infinite-chain one- and two-magnon scattering spaces and prove existence and isometry of the incoming/outgoing maps on packets supported away from equal velocities and the endpoints.  *Plan:* fiber by total momentum; each relative-coordinate fiber is a half-line Jacobi operator with one boundary defect; explicit spectral measure or Cook estimates; isolate the single bound eigenvalue. | MEDIUM | **OPEN** |
+| **ML1** | Two-magnon wave operators and channel norm: construct the infinite-chain one- and two-magnon scattering spaces and prove existence and isometry of the incoming/outgoing maps on packets supported away from equal velocities and the endpoints.  *Plan:* fiber by total momentum; each relative-coordinate fiber is a half-line Jacobi operator with one boundary defect; explicit spectral measure or Cook estimates; isolate the single bound eigenvalue. | MEDIUM | **CONJECTURE** |
 | **ML2** | Complete charge-created resolution: the family used in (R6) contains every regular scattering root, the two-string, and all `SU(2)` descendants, with no missing exceptional finite-ring vector. | MEDIUM | **PROVED** (`ml2-completeness.md`; verdict `ml2-r2.md`) |
-| **ML3** | Uniform current-form-factor regularity: upgrade the finite-volume regularity after (R15) to a bound uniform in volume and in `k_s→0` after wave-packet smearing; show the delta/principal-value pieces in (R5) are distributional normalisation effects and that **no physical `1/k_s` current pole survives**. | MEDIUM--HIGH | **OPEN** |
-| **ML4** | Ward/LSZ external-leg reduction: show that the descendant piece (R15), and **only** that piece, supplies the leading on-shell connected amplitude, while the orthogonal contact vector contributes `O(k_s²)`. | HIGH | **PROVED for one hard magnon** (`ml4-ward-reduction.md`; see §2.5).  **OPEN** for two hard magnons into a genuine three-magnon channel — `EXPLORATION ML4-3`, bd `tns-axg` |
-| **ML5** | Process-independent factorization: specify the class of quasi-local hard sources for which `M_1` and `M_2` are related by the same external-leg factor, with no source-dependent contact term at order `k_s`. | HIGH | **REFUTED for unrestricted local sources** (counterexample D24(e)) **and PROVED conditionally** on `𝒮_W` (D24(d), Theorem ML5-B), with ML5-A giving the sharp iff.  **OPEN:** deriving `𝒮_W`-membership for a nontrivial microscopic source class — bd `tns-axg` |
-| **ML6** | Finite/infinite and bound-channel remainder: control the order of `N→∞`, packet width `→0`, and `k_s→0`, and prove that the bound state and off-shell coefficients in (R5) do not contaminate the leading real scattering channel.  Non-uniformity as `k_h→0` is excluded exactly as in D8/O7. | MEDIUM | **OPEN** |
+| **ML3** | Packet-smeared infinite-volume regularity, including the `k=Θ(1/N)` regime exposed by r1; exclude a physical `1/k_s` pole. | MEDIUM--HIGH | **CONJECTURE** |
+| **ML4** | Fixed-volume/ordered-limit Ward reduction is repaired; volume-uniform one-hard and two-hard/three-body statements remain future work. | HIGH | **SKETCH** |
+| **ML5** | Unrestricted universality is refuted.  Repaired conditional ML5-A/B require zero intercept, zero first jet, explicit norm control, and an exhaustive LSZ decomposition; microscopic membership is future work. | HIGH | **REFUTED** |
+| **ML6** | Control finite/infinite, packet-width, soft, bound, and off-shell limit orders. | MEDIUM | **CONJECTURE** |
 
-### 2.5 THEOREM ML4 (Ward/LSZ reduction) and THEOREM ML5-B (conditional universality)
+### 2.5 ML4 and ML5-B repairs — **SKETCH pending r2**
 
-**Lemma ML4-A — PROVED, and it is the decisive mechanism.**  Let `U : ℋ → 𝒦` be an isometry, `P = UU^†`, `Γ : (−ε,ε) →
+**Lemma ML4-A — SKETCH pending r2; algebra survived r1.**  Let `U : ℋ → 𝒦` be an isometry, `P = UU^†`, `Γ : (−ε,ε) →
 B(ℋ,𝒦)` with `Γ(0) = U` and `sup‖∂_kΓ(k)‖ ≤ C_Γ`, `R = (1−P)J`, and `b ∈ C¹` with `b(0)=0`, `|b(k)| ≤ C_b|k|`. Then
 `‖b(k)Γ(k)^†R‖ ≤ C_bC_Γ‖J‖\,k²`, and `O(ε²)` in the rescaled soft-packet norm. **The Ward identity is *not* what kills the
 orthogonal `O(k)` term** — it computes `P J`.  What kills it is the pair *(energy-shell channel matching `Γ(0)=U`) + (`C¹`
 on-shell trace regularity)*; the sign `sgn(v_h−v_s)` merely labels which continuous wave is called outgoing and supplies
 no zero.
 
-**Exact Ward projection in every finite sector — PROVED.**  On `ℋ_{n,N}`, `D_{n,N}^†J^-_0 = 2J^z_0 + J^-_0S^+`; on
+**Exact Ward projection in every finite sector — SKETCH pending r2; algebra survived r1.**  On `ℋ_{n,N}`, `D_{n,N}^†J^-_0 = 2J^z_0 + J^-_0S^+`; on
 `ker S^+` (`n < N/2`), `D_{n,N}^†D_{n,N} = (N−2n)𝟙` and `P_{n,N}J^-_0 = \frac{2}{N−2n}Q_0J^z_0`.  For one hard magnon
 this gives `P_{1,N}J^-_0|h⟩_N = \frac{2iv(h)}{N−2}Q_0|h⟩_N` — equation (R15), upgraded from one momentum vector to the
 whole hard packet space.  The complementary vector remains nonzero, which is precisely why ML4-A is needed.
 
-**ML4 for one hard magnon — PROVED.**  For `h ∈ I ⋐ (0,π)` and arbitrary `f,g ∈ C_c^∞(I)`, ML2's complete two-body
-resolution supplies both ML4-A hypotheses (`B_N(0,h) = Q_0|h⟩_N`; a unique `C¹` energy-shell branch by the
-implicit-function theorem with `∂_qE = v(h)` bounded below; the bound band separated by `J sin²(a/2)`; the singular `K=π`
-class excluded), whence `|𝒜_{⊥,N}(k;f,g)| ≤ C'_I k²‖f‖_{I,N}‖g‖_{I,N}` **uniformly in `N`**, surviving `N→∞`, with
-`O(ε²)` soft remainder.  *Checker:* `ml4_check.py`, `N = 12…20`: fitted amplitude exponent `1.99700--1.99988`; the
-built-in red mutation (omit the projection) returns `0.9999`; max Ward/projection residuals `8.9e-16`, `3.5e-15`.
-**OPEN (bd `tns-axg`):** two hard magnons into a genuine three-magnon channel — ML2 is *input* completeness, not
-three-body *channel* completeness, and a degenerate open channel could contribute at `O(k)`.
+**ML4 for one hard magnon — repaired SKETCH.**  At each fixed `N`,
+`|𝒜_{⊥,N}(k;f,g)|≤C'_{I,N}k²‖f‖_{I,N}‖g‖_{I,N}`, so
+`lim_{N→∞}lim_{k→0}𝒜_{⊥,N}/k=0`.  The old `N`-uniform constant is REFUTED:
+for `h=2π/5`, `k=2π/N`, the normalized amplitude divided by `k²` grows as
+`√N`.  `ml4_check.py` now includes named probe ML4-Q1 and a failing
+`--red-uniform` mutation.  A genuinely packet-smeared infinite-volume bound
+is future work bd `tns-7ut`; the two-hard/three-magnon channel remains future
+work bd `tns-axg`.
 
-**Theorem ML5-B — PROVED conditionally.**  Every `O ∈ 𝒮_W` (D24(d)) obeys `M_2^O(k,h) = 2iχ k\,M_1^O(h) + O_{L²(I)}(k²)`,
-with `χ = sgn(v_h−v_s)`: the descendant external leg contributes `(e^{ik}−1)L(k,h)[2iv_hM_1^O(h)] = 2iχ k M_1^O + O(k²)`,
-ML4-A removes the orthogonal current, and hypothesis 4 removes the only remaining process-dependent first jet.  The
-coefficient is the **signed two-site Wigner displacement**.  Charge algebra plus kinematics fixes the descendant term but
-does **not** prove hypothesis 4 — that is the open half (`EXPLORATION ML5-W`).
+**ML5-B — repaired conditional SKETCH.**  The implication now explicitly
+assumes the exhaustive `L²(I)` LSZ decomposition into descendant,
+orthogonal-current, and direct-contact terms, plus the other four D24(d)
+conditions.  Repaired ML5-A requires `M_2^O(0)=0` and `𝔠_h(O)=0`, with
+`K_O=(1/2)sup‖∂_k²M_2^O‖` controlling the remainder; a relative bound also
+requires `K_O≤C_I‖M_1^O‖`.  `V_int` (D24(e)) is the red guard against the old
+first-jet-only criterion.  Microscopic membership remains future work.
 
 ---
 
@@ -278,7 +284,7 @@ Shards `memory-quantization.md` and `corner-b-draft.md` (the latter reconciled a
 definitions D13--D18; checkers `mquant_check.py`, `crosscheck_corner_b_tk.py`; numerics
 `numerics/results/memory-scan-1.json`, `numerics/docs/kink-sector-notes.md`.
 
-### 3.1 Proposition M-flux (the flux / DC identity) — **PROVED, unconditional**
+### 3.1 M-flux (the flux / DC identity) — **SKETCH pending r2**
 
 *Assume (H4) with `G ⊇ U(1)` generated by `S^z`, and `W = [a,b]` finite.*  `𝔛_W ∈ 𝔄_loc` (D13(a)) and, by the exact
 continuity equation D10(b),
@@ -286,48 +292,47 @@ continuity equation D10(b),
   `d/dt ϱ_t(𝔛_W) = (1/2s)[ ϱ_t(j_{a−1|a}) − ϱ_t(j_{b|b+1}) ]`,
   `δx = (1/2s)∫_{t_i}^{t_f} dt [ ϱ_t(j_{a−1|a}) − ϱ_t(j_{b|b+1}) ] = (1/2s)[ ȷ̃_{a−1|a}(0) − ȷ̃_{b|b+1}(0) ]`.
 
-**The memory is the DC component of the boundary current**; by G0(d) that current is a lattice divergence of the bond
-potential `𝒥_b`, so memory is a difference of virtual/bond data at the two ends of the window — `docs/framing.md` §4's
-"memory lives in the bond data" as a theorem rather than an analogy.  No hypothesis beyond `𝔛_W ∈ 𝔄_loc`.  `Bd2 ≡ Bd3`
-(D13(b)) is the same statement in a Fourier dress. *Guard:* numerics prediction **P6** — must hold to `10^{-6}` for *any*
+The mathematical identity is exactly the DC component of the **physical
+boundary current**.  G0(d) does not make that current a divergence of the
+virtual bond potential `𝒥_b`; the former virtual/bond-data reading is
+deleted.  D13(b) is the Fourier dress.  Campaign status remains SKETCH until
+r2 despite the identity surviving r1. *Guard:* numerics prediction **P6** — must hold to `10^{-6}` for *any*
 `W` and *any* times; a failure is a bug, not physics.
 
-### 3.2 Theorem M-quant (memory quantisation) — **THEOREM for the projected dynamics; PROVED given (H-AD) for the full chain**
+### 3.2 M-quant (conditional memory bookkeeping) — **SKETCH pending r2**
 
-*Assume:* (A1) D1, D2 with `G ⊇ U(1)` generated by `S^z_x`, `[H,S^z_reg] = 0`, `Ω_vac = {α,β}` with densities `s_α = +s`,
-`s_β = −s`; (A2) `ϱ_t` a one-parameter family in `𝒦^{(1)}_{αβ}` (D17) solving the Heisenberg equations of `H_XXZ` (D16);
-(A3) **(H-AD)** with data `(t_i,t_f,W,ε)` (D18); (A4) `b − a ≫ ξ_c`.
+*Concrete scope:* D16's spin-`1/2` easy-axis XXZ model, a selected D18
+scattering vector in `𝒦^{(1)}_{↑↓}` (D17), and the D13(a) core-to-edge padding
+`d_W`.  For every `λ̃∈(λ_E,1)` the tail error is
+`C_{λ̃}λ̃^{d_W}`.
 
-**PROVE.**  `δx = −(1/s)·⟨N_T⟩` up to `O(ε)` and `O(e^{-(b−a)/ξ_c})`, with `⟨N_T⟩ = ∫ (dk/2π) |φ(k)|² T(k)` (D14). Per
+**Conditional implication.**  `δx = −(1/s)·⟨N_T⟩`, with `s=1/2` and
+`⟨N_T⟩=∫(dk/2π)|φ(k)|²T(k)` (D14). Per
 channel: a single magnon moves the wall by **exactly** `−1/s` sites if it transmits and by **exactly** `0` if it reflects;
-for a superposed event `Var(𝔛_W) = s^{-2}⟨N_T⟩(1−⟨N_T⟩)` (`= 4T(1−T)` at `s = 1/2`).
+for a superposed event
+`Var(ΔX)=s^{-2}⟨N_T⟩(1−⟨N_T⟩)`.  This is not `Var(𝔛_W)` without a sharp
+initial wall and two-time protocol.
 
-**The coefficient is fixed by `U(1)` charge conservation alone**: it does not depend on `k`, on `Δ`, on the packet shape,
-or on any scattering phase.  The structural reason: on the lattice translation is *not* a symmetry within a magnetisation
-sector — translating a kink changes `S^z_reg` — so momentum conservation for the wall is traded for charge conservation.
-The kink band is exactly flat (frustration-freeness plus the exact product family of D16), so the wall has no effective
-mass, no dispersion, and **no recoil**.
+The algebraic statement is
+`2s·δx+(q_out−q_in)=0`, under D18's explicitly stated vacuum jump, channel
+charges, and local decay.  It is independent of scattering phase once those
+channels exist.  This is not a higher-spin channel theorem and not the general
+MPS memory theorem; the latter is tracked by bd `tns-zw2`.
 
-**(H-AD) is PROVED for the projected dynamics.**  `memory-quantization.md` §3 proves H-AD *unconditionally* for `H_3 =
-P_3HP_3`, the `≤3`-domain-wall projection: by the domain-wall enumeration S1 that Hamiltonian is `H_0 = [E_c −
-(J/2)(T+T^*)] ⊕ E_d` plus a **rank-≤2, trace-class** junction coupling `−(J/2)(|0⟩⟨d| + |d⟩⟨0|)`, so **Kato--Rosenblum**
-gives wave operators `W_±` with `Ran W_± = ℋ_ac(H_3)`; a Feshbach/Weyl-function computation with `m_0(z) = [(z−E_c)² −
-J²]^{-1/2}` shows the denominator `z − E_d − (J²/4)m_0(z)` has no real zero inside the band and finitely many isolated
-zeros outside, so there is **no singular-continuous spectrum** and `ℋ = ℋ_b ⊕ Ran W_±` with `dim ℋ_b < ∞`; stationary
-phase gives AD3's local decay.  `N_T` is thereby an honest *operator* `W_+P_TW_+^*`, so `ΔX = −(1/s)N_T` with `spec(ΔX) ⊆
-{−1/s, 0}` — **the channel outcomes, not every expectation value, are quantised.**
+**Projected spectral scope.**  The Kato--Rosenblum/Feshbach argument is sound
+for the displayed Fano operator, but identifying the incoming `≤3`-wall
+component with that operator is now explicit hypothesis Mq-E.  The repository
+has one `N=14` enumeration, not an all-volume proof.  Thus projected H-AD is
+conditional on Mq-E; full-chain D18 additionally requires control of
+`P_3H(1-P_3)≠0` (bd `tns-d51`).
 
-**What is still a hypothesis.**  `P_3H(1−P_3) ≠ 0`: five-wall and higher configurations are real.  Lifting H-AD to the
-full chain needs a uniform-in-time scattering estimate (Feshbach/Mourre over all open channels); the measured `O(Δ^{-2})`
-leakage (`≈ 0.10, 0.03, 0.008` at `Δ = 2,4,8`) is evidence, **not** that estimate — bd `tns-d51`.  §3.1 and the charge
-arithmetic use no hypothesis at all.  *Shards:* `memory-quantization.md`; `corner-b-draft.md` §6 (Theorem M′).
-*Checker:* `mquant_check.py` — independent frozen-boundary construction, operator residue `0`, finite-time residue
-`3.37·10^{-16}`; on the nine clean scan rows `max|δx_1+2T| = 0.004330`, `max|δx_2+2T| = 0.001233`, inside the scan's own
-budget `0.005563`.  *Guards:* numerics P1, P4, P5, P8; exact-projection runs give `δx/(−2N_T) = 1.0000000`, `Δ = 8,4,2`.
+*Checker scope:* `mquant_check.py` tests M-flux and an empirical spin-`1/2`
+scan only.  It does not construct wave operators, prove Mq-E, exclude
+singular-continuous spectrum, or test `spec(ΔX)`.
 
-### 3.3 Proposition t(k) — **COMPUTED, exact in the ≤3-wall projection**
+### 3.3 Fano `t(k)` — **SKETCH, conditional on Mq-E**
 
-In that projection the kink+magnon sector reduces exactly to a uniform tight-binding chain with a single **side-coupled
+Under Mq-E the kink+magnon component reduces to a uniform tight-binding chain with a single **side-coupled
 level** (the pure kink) attached at a junction — a Fano problem.  Eliminating the side level gives the junction potential
 `U(k) = J²/(4ω(k))` and
 
@@ -340,9 +345,9 @@ verification:* `crosscheck_corner_b_tk.py` compares `R(k;Δ) = x/(1+x)`, `x = J�
 sparse-sector scan `numerics/results/memory-scan-1.json` on all `main-*`/`Dscan-*` runs, pass criterion fixed in advance
 at 8%.  **Measured agreement 0.9%--5.8% (ratios 1.009--1.058) across `Δ ∈ {1.5,2,3,6,12}`, `k_0 ∈ [0.4,1.8]` — all pass.**
 
-### 3.4 The soft memory zero — **COMPUTED; universality OPEN**
+### 3.4 The soft memory zero — **SKETCH; universality CONJECTURE**
 
-As `k → 0` at fixed `Δ > 1`: `v → 0`, `ω → J(Δ−1)`, hence `T(k) = 16(Δ−1)²k² + O(k⁴)`, `R(k) = 1 − 16(Δ−1)²k²` — **total
+On the Fano graph, as `k → 0` at fixed `Δ > 1`: `v → 0`, `ω → J(Δ−1)`, hence `T(k) = 16(Δ−1)²k² + O(k⁴)`, `R(k) = 1 − 16(Δ−1)²k² + O(k⁴)` — **total
 reflection of a soft magnon, with a quadratic zero** — and by §3.2, `δx(k) = −(1/s)T(k)`.  In the frequency variable
 `T ≈ 32(Δ−1)²(ω−ω_gap)/J`, *linear in the excess energy above the gap*; crossover momentum `k_* = 1/(4(Δ−1))`.  **Not
 established:** that the quadratic zero and its coefficient `16(Δ−1)²` are **universal**, i.e. functions of the kink's
@@ -352,20 +357,20 @@ asymptotic data (vacuum pair, `U(1)` charge, gap) and not of the microscopic `B`
 ### 3.5 Conjecture M of the brief — **REFUTED as literally stated**
 
 "`δx` equals the zero-frequency limit of the soft factor summed over the event" is **false in the easy-axis XXZ chain**.
-Two independent reasons: (a) `δx = −⟨N_T⟩/s` holds with the *same* coefficient for every `k`, `Δ` and packet, whereas any
+Two independent reasons: (a) conditional charge bookkeeping fixes the same coefficient once D18's channels exist, whereas any
 soft-factor expression varies with them; (b) `δx` is insensitive to `δ_t(k)` entirely — a purely transmitting wall with
 `δ_t ≡ 0` still displaces by exactly `−1/s`.  **The soft factor is a phase; the memory quantum is a charge.**  The
-surviving — and strictly stronger — statement is §3.1 + §3.2: *memory is the DC weight of the boundary current, and the
+surviving candidate is §3.1 + §3.2: *memory is the DC weight of the boundary current, and the
 soft data enter only through `T(k)`.*
 
 ---
 
-## §4. Conjecture Bc — "the two `2`s" — **CONJECTURE, FROZEN**
+## §4. Conjecture Bc — "the two `2`s" — **CONJECTURE**
 
-Two independent `2`s appear.  (i) In M1, the soft Wigner phase-slope coefficient of Theorem S2-2body: on D8,
+Two independent `2`s appear.  (i) In M1, the soft Wigner phase-slope coefficient of S2-2body: on D8,
 `dδ_phys/dk_s|_0 = 2 sgn(v_h−v_s) = 2`, a two-site spatial shift of the soft packet off a hard magnon.  (O9 is emphatic
 that this is a **phase slope, not a scattering length**: the FM's relative-momentum scattering length is zero, since
-`δ_{12}/ε → 2xy/(y−x)` in the joint soft limit.)  (ii) In M2, the memory quantum of Theorem M-quant: `1/s = 2` sites.
+`δ_{12}/ε → 2xy/(y−x)` in the joint soft limit.)  (ii) In M2, the conditional memory channel quantum: `1/s = 2` sites.
 
 **Conjecture Bc.**  Both equal `|q_hard|/s`, with `q_hard` the hard leg's `U(1)` charge relative to its vacuum — i.e.
 *the soft phase coefficient and the memory quantum are the same asymptotic-charge datum*.  **Falsifier, cheapest
@@ -375,18 +380,21 @@ is numerology and must be dropped from the paper.**  *Shard:* `corner-b-draft.md
 
 ---
 
-## §5. The SPT dichotomy — **DRAFT status, not frozen**
+## §5. The SPT dichotomy — **SKETCH, UNDER REBUILD**
 
 Scoping shard `spt-scoping-draft.md` (reconciled at freeze); definitions D19--D23. **Nothing in this section has been
-through an L6 loop.**  It is recorded at honest draft status, with the draft's own confidences, because it is what the
-deciding computation must decide.
+through a passing L6 loop.  Status annotation only: **UNDER REBUILD — r1 verdict
+`triangle-r1.md` S1--S8; rebuild in `theory/spt-rebuild.md` (in progress).**
+The SPT results remain wanted for the paper; this is a pre-r2 marker, not a
+retraction of the program.  D19--D23 are unchanged.
 
 **The mechanism, in one line.**  By G0(d), `Q[f;ξ] ▹ ω_α = −Σ_x (Δf)(x) 𝒥_{x|x+1}(ξ) ▹ ω_α + boundary` — *the soft factor
 is weighted by the total variation of the profile, never by the profile itself*.  A bulk profile (`f(−∞)=f(+∞)`) gives
 paired insertions; a net-jump profile (`f = 1_{[0,∞)}`) collapses to a **single unpaired** bond insertion, which is
 exactly where `𝔞_α = ℂ_{ω_α}[G]` is seen — a *dichotomy*, not a uniform modification.
 
-**No-go to concede up front (draft confidence 0.90).**  Every coefficient of the `k`-expansion of a soft amplitude is
+**All-orders/all-registers SPT-nogo — REFUTED (withdrawn pending the rebuilt
+scoped statement).**  The withdrawn argument asserted that every coefficient of the `k`-expansion of a soft amplitude is
 built from finitely many derivatives of `V` at the identity, i.e. from `𝔥_α` data; and for every Haldane-protecting group
 the Lie-algebra shadow of `[ω]` vanishes (`H²(so(3),ℝ) = 0`; `D₂`, `ℤ₂×ℤ₂` have no Lie algebra).  Therefore **`[ω]`
 cannot appear in any coefficient of the soft expansion, at any order, at an edge or in the bulk.**
@@ -398,6 +406,10 @@ cannot appear in any coefficient of the soft expansion, at any order, at an edge
 | **SPT-T** | *(twist)* The soft factor for an `h`-rotation at a `g`-twist endpoint is `V(h)V(g)V(h)^{-1} = [ω(h,g)/ω(g,h)] V(g)` — the **slant product** of `[ω]`, the 1D `H²` shadow of the 2D `H³` monodromy-defect statement of refs/arxiv-1412.5604. | **CONJECTURE** (0.75).  Risk: on an infinite chain the slant phase at one endpoint is compensated at the other, so the observable is necessarily the *relative* charge of the two endpoints (a string-order statement). |
 | **SPT-D** | *(double soft)* The continuum pattern inverts: single-soft *coefficients* are unmodified, and the cocycle lives in the **ordered double-soft limit** at an edge, `𝖲(g)𝖲(h) = e^{iω(g,h)}𝖲(gh)`. | **CONJECTURE** (0.60).  The gauge-invariant residue is again a degeneracy statement, not a measurable phase. |
 | **SPT-M** | *(edge memory — the payoff)* For `[ω]≠0` the reflection matrix has a nonzero edge-label-changing channel at all momenta including `k→0`, so `Δm_L` (D22) is a protected, quantised, permanent shift; for `[ω]=0` every such channel is gappable by a symmetric boundary perturbation and `Δm_L → 0`. | **CONJECTURE** (0.55).  Protection of the *channel* is solid; **quantisation of `Δm_L` is not argued.** |
+
+**Status annotation for T9:** the deciding-computation design below is
+**UNDER REBUILD** in `theory/spt-rebuild.md`; r1 T9's substantive redesign is
+deferred to that lane.
 
 **A closed route, recorded so it is not reattempted.**  For on-site `G`, refs/arxiv-2405.00439 states
 `(U^{[i₂,j₂]})†(U^{[i₁,j₁]})† U^{[i₂,j₂]} U^{[i₁,j₁]} = 𝟙`; our `G` **is** on-site, so **no commutator of truncated
@@ -415,86 +427,87 @@ publishable statement is the clean no-go SPT-B.  Either outcome is a result.
 
 ## §6. The three edges
 
-### 6.1 A ⇒ C (asymptotic symmetry ⇒ soft theorem) — **OPEN**
+### 6.1 A ⇒ C (asymptotic symmetry ⇒ soft theorem) — **CONJECTURE**
 
 **Not supplied by Corner A.**  This is the campaign's core proof obligation and it is not discharged. Corner A supplies
 G0(e) — an exact operator continuity equation in `𝔄_loc`, true of the *true* model whatever its ground state, needing no
 MPS at all — and, in M1 only, the Ward residue (R14)/(R15).  It supplies **no** Adler zero, **no** universality and **no**
-rederivation of O7/O9 (the RETRACTED row, §1.5). **Closed at the freeze:** the LSZ/Ward reduction for one hard magnon —
-ML4 (§2.5), whose decisive content is Lemma ML4-A: the orthogonal current is `O(k²)` because the zero-soft channel
-*matches* the descendant range and the on-shell trace is `C¹`, **not** because of the Ward identity itself.  **Also
-settled, negatively:** process independence over unrestricted local sources is **REFUTED** by the four-site source `O_η`
+rederivation of O7/O9 (the REFUTED row, §1.5).  Fixed-volume ML4's decisive
+mechanism is matching plus `C¹` regularity, but r1 refutes its former
+volume-uniform application.  **Settled negatively:** process independence over unrestricted local sources is **REFUTED** by the four-site source `O_η`
 of D24(e), which leaves `M_1` fixed and shifts the linear soft coefficient — so any A ⇒ C statement must carry a
-source-class hypothesis, and `𝒮_W` (D24(d)) is the sharp one (ML5-A). **Still missing:** regularity of `⟨out|J_k|in⟩`
-uniform in volume and in `k_s→0` (ML3); ML4 for two hard magnons into a three-magnon channel (`ML4-3`, bd `tns-axg`);
-`𝒮_W`-membership for a nontrivial microscopic source class (bd `tns-axg`); remainder control in a stated norm (ML1, ML6).
-**Proved along this edge:** Theorem S2-2body (§2.3) and Theorem ML5-B (§2.5); and, from G0(e), oracle **O1** in the
-one-magnon sector only.
+source-class hypothesis. **Live obligations:** ML1; ML3 including a
+packet-smeared infinite-volume estimate that controls `k=Θ(1/N)`; ML4 for two
+hard magnons into a three-magnon channel; repaired ML5-B's exhaustive LSZ
+decomposition; microscopic `𝒮_W` membership; and ML6 remainder/limit control.
+No `n=1` process-independent edge is currently closed.  Only G0(e)'s oracle
+O1 consequence is PROVED along this edge.
 
-### 6.2 C ⇒ B (soft theorem ⇒ memory) — **PARTLY PROVED**
+### 6.2 C ⇒ B (soft theorem ⇒ memory) — **SKETCH**
 
 Not the shape the brief conjectured (§3.5).  Its true shape is: Corner C (soft behaviour of `t(k)`) ⟶ `T(k) → 0` as `k→0`
-(memory Adler zero) ⟶ `δx(k) = −T(k)/s` (Theorem M-quant). **Proved:** the right-hand implication — §3.1 unconditionally,
-and §3.2 *unconditionally for the projected dynamics*, where Kato--Rosenblum applied to the rank-two Fano perturbation
-supplies H-AD outright; for the full chain it stays conditional on H-AD (bd `tns-d51`). **Computed:** the middle step in
-the `≤3`-wall projection, §3.4, where the soft zero is unconditional for `H_3`. **Open:** that the quadratic zero of `T`
+(memory Adler zero) ⟶ `δx(k) = −T(k)/s` (conditional M-quant).  The physical
+flux identity and D18 charge bookkeeping survived r1 but await r2.  The Fano
+middle step is conditional on Mq-E, and the full chain on D18 (bd `tns-d51`).
+The quadratic zero of `T`
 and its coefficient are *universal* functions of the kink's asymptotic data.  The ML5 counterexample (D24(e)) is a warning
 here too: universality is a statement *relative to a source class*, and that class must be named.
 
-### 6.3 B ⇒ A (memory ⇒ asymptotic symmetry) — **SKETCH (claim B3)**
+### 6.3 B ⇒ A (memory ⇒ asymptotic symmetry) — **SKETCH (repaired B3)**
 
-**(i) Sector rigidity — PROVED.**  For all `t`, `ϱ_t ∈ 𝒦_{αβ}` with the *same* pair `(α,β)`: `e^{iHt}` is a quasi-local
-automorphism (Lieb--Robinson) and D9(b) disjointness is preserved by automorphisms of `𝔄`.  **No memory event can change
-the vacuum-pair label**; it is read off, not shifted.
+**(i) Finite-time label rigidity — SKETCH pending r2.**  Under stationary
+vacua, translation covariance, and finite-range Lieb--Robinson dynamics, the
+factorised D9(a) boundary conditions remain `ω_α,ω_β`.  This fixes the labels;
+mere preservation of disjointness was insufficient.
 
-**(ii) Memory = transported asymptotic charge — PROVED given D17.** `δx = (1/2s)[ϱ_{t_f}(𝔮^R_c) − ϱ_{t_i}(𝔮^R_c)] =
-−(1/2s)[ϱ_{t_f}(𝔮^L_c) − ϱ_{t_i}(𝔮^L_c)]` for any cut `c` outside the support of the leg content at `t_i,t_f`, since
-`𝔮^L_c + 𝔮^R_c + (S^z_c − (s_α+s_β)/2)` is the conserved regularised magnetisation.
+**(ii) Charge bookkeeping — SKETCH pending r2.**  Fix `c∈W`, take D18's
+separated in/out limits, and subtract the kink charge from each asymptotic
+leg.  Conservation gives exactly
 
-**(iii) Torsor — SKETCH.**  Within a fixed pair `(α,β)` the kink states of definite charge form a **`ℤ`-torsor** under
-lattice translation, and `state ↦ 𝔮^R_c/2s` is the moment map of that `ℤ`-action.  Memory is valued in that torsor: `δx ∈
-ℤ` post-selected on a channel, and in `(1/s)·conv{0,−1}` for a superposed event. (Conditional on thermodynamic-limit
-flatness of the kink band, draft item R5.)
+`2s·δx+(q_out−q_in)=0`.
 
-**(iv) What measuring `δx` identifies — SKETCH, corrected at freeze.**  The **topological** content is the vacuum-pair
-label of D9(d): under (T), a point of `(G/H_α)×(G/H_α)`, whose global-symmetry-invariant content is the double coset in
-`H_α\G/H_α`.  That label is *rigid* by (i).  What `δx` measures is the **charge transferred between the two spatial
-infinities** within the fixed label — a separate `U(1)` datum.  *(The earlier reading — memory valued in the `𝒜`-orbit of
-vacua, `δx` the `G_diag`-invariant label of `𝒜 = (G_L×G_R)/G_diag` — cited `A2-orbit-r1` and is withdrawn; and in this
-model's `χ=1` unbroken-`U(1)` product-vacuum setting A1 gives `N_α = G`, so the endpoint-state orbit is a **single
-point**.  The charge-transfer torsor of (iii) is viable, but it is not that claim.)*  *Shard:* `corner-b-draft.md` §7.
+The old half-line formula is REFUTED by sign and factor two.  Reflection gives
+`δx=0`; transmission gives `δx=-1/s`.
+
+**Residue.**  The thermodynamic `ℤ`-torsor/unique-flat-kink statement remains
+a CONJECTURE (K4/R5).  The D9(d) vacuum-pair label is read off and not shifted;
+`δx` records leg-charge transport inside it.  Neither virtual bond data nor
+the refuted `A2-orbit-r1` object is used.  *Shard:* `corner-b-draft.md` §7.
 
 ---
 
-## §7. Freeze index
+## §7. Status index
 
 | item | status | shard | checker |
 |---|---|---|---|
 | Lemma IT, WI | PROVED | corner-a.md ⟨1⟩2--⟨1⟩3 | corner_a_check.py C0--C2b |
-| A1 (a)--(g) | PROVED (padded windows for (d1)) | corner-a.md ⟨1⟩4 | C6, C8, C8b |
-| S-A1 (GNS/edge realisation) | SKETCH, load-bearing | corner-a.md ⟨1⟩4.⟨2⟩9 | — |
+| A1 (a)--(g), padded windows for (d1) | PROVED | corner-a.md ⟨1⟩4 | C6, C8, C8b |
+| S-A1 (GNS/edge realisation; load-bearing) | SKETCH | corner-a.md ⟨1⟩4.⟨2⟩9 | — |
 | A2 (a)--(f); (e) under (T) | PROVED | corner-a-kinks.md ⟨1⟩8--⟨1⟩9 | C7, C11 |
-| S-A2 (continuum-`Ω_vac` uniformity) | SKETCH, load-bearing | corner-a-kinks.md ⟨1⟩10.⟨2⟩3 | — |
+| S-A2 (continuum-`Ω_vac` uniformity; load-bearing) | SKETCH | corner-a-kinks.md ⟨1⟩10.⟨2⟩3 | — |
 | G0 (a)--(e); Lemma SBP; Prop FM | PROVED | corner-a-goldstone.md ⟨1⟩5--⟨1⟩7 | C3--C5, C9, C10 |
-| A2-orbit-r1 / G0-soft-r1 | REFUTED / RETRACTED | §1.4, §1.5 | C7 / — |
+| A2-orbit-r1 / G0-soft-r1 (second withdrawn) | REFUTED | §1.4, §1.5 | C7 / — |
 | O1--O10 | PROVED | oracle-bethe.md | oracle_bethe_check.py |
 | ML2 | PROVED | ml2-completeness.md | ml2_completeness_check.py |
-| **S2-2body** | **PROVED, FROZEN** | soft-current-recon.md + oracle-bethe.md | soft_current_recon_check.py + 2 others + fm-displacement-scan |
-| **S-general** | **CONJECTURE, FROZEN** on the class `𝒮_W` (D24(d)); FALSE without it; obligations ML1, ML3, ML6 | §2.4 | — |
-| ML4-A + exact Ward projection | PROVED | ml4-ward-reduction.md ⟨1⟩2--⟨1⟩3 | ml4_check.py |
-| **ML4** | **PROVED** (one hard magnon, all `C_c^∞(I)` packets, uniform in `N`); **OPEN** for `n≥2` hard into a 3-magnon channel (`tns-axg`) | ml4-ward-reduction.md ⟨1⟩4--⟨1⟩5 | ml4_check.py (exponent 1.997--1.9999; red mutant 0.9999) |
-| **ML5** | **REFUTED** unrestricted (counterexample D24(e)); **PROVED** conditionally on `𝒮_W` (ML5-B), with ML5-A the sharp iff; `𝒮_W`-membership OPEN (`tns-axg`) | ml5-universality.md | ml4_check.py (coefficient error `9.96·10^{-6}`) |
-| M-flux | PROVED | corner-b-draft.md §2, §6 | numerics P6 |
-| **M-quant** | **THEOREM** for the projected dynamics `H_3` (H-AD proved there via Kato--Rosenblum + Feshbach); **PROVED given (H-AD)** for the full chain (`tns-d51`) | memory-quantization.md | mquant_check.py; numerics P1, P4, P5, P8 |
-| t(k), T(k), δ_t(k) | COMPUTED (≤3-wall exact; `O(Δ^{-2})` leakage measured) | corner-b-draft.md §5 | crosscheck_corner_b_tk.py (0.9--5.8%) |
-| soft memory zero `T = 16(Δ−1)²k²` | COMPUTED; universality OPEN | corner-b-draft.md §5.2 | numerics P2 |
+| S2-2body (under repair; r1 T1) | SKETCH | soft-current-recon.md + oracle-bethe.md | soft_current_recon_check.py + oracle + ML2 checks |
+| S-general (repaired D24 class; live obligations in §2.4) | CONJECTURE | §2.4 | — |
+| ML4-A + exact Ward projection (survived r1; pending r2) | SKETCH | ml4-ward-reduction.md ⟨1⟩2--⟨1⟩3 | ml4_check.py |
+| ML4 fixed-volume/ordered limit; uniform claim refuted | SKETCH | ml4-ward-reduction.md ⟨1⟩4--⟨1⟩5 | ml4_check.py incl. ML4-Q1 |
+| ML5 unrestricted universality | REFUTED | ml5-universality.md | ml4_check.py O_eta |
+| ML5-A/B repaired conditional implications (pending r2) | SKETCH | ml5-universality.md | ml4_check.py ML5-I1 |
+| M-flux physical-current identity (pending r2) | SKETCH | memory-quantization.md §1 | mquant_check.py flux only |
+| M-quant conditional on D18; projected spectral part also on Mq-E | SKETCH | memory-quantization.md | mquant_check.py is flux/empirical only |
+| Fano `t,T,δ_t` and soft zero, conditional on Mq-E | SKETCH | corner-b-draft.md §5 | crosscheck is empirical only |
 | Conjecture M (brief's literal form) | REFUTED | corner-b-draft.md §10 | — |
-| **Bc** ("the two 2s") | **CONJECTURE, FROZEN**; spin-1 falsifier | §4 | not yet computed |
-| SPT-B | SKETCH (draft); obligations N1--N3 | spt-scoping-draft.md ⟨1⟩5 | not yet run |
-| SPT-E / -T / -D / -M | CONJECTURE (draft) | spt-scoping-draft.md ⟨1⟩4 | not yet run |
-| A ⇒ C | OPEN; closed at `n=1` (S2-2body + ML4 + ML5-B); unrestricted universality REFUTED | §6.1 | ml4_check.py |
-| C ⇒ B | PROVED for `H_3`; PROVED given (H-AD) for the full chain; universality of `T`'s zero OPEN | §6.2 | mquant_check.py |
-| B ⇒ A (B3) | (i),(ii) PROVED; (iii),(iv) SKETCH | §6.3 | — |
+| Bc ("the two 2s"; spin-1 falsifier) | CONJECTURE | §4 | not yet computed |
+| SPT-B — UNDER REBUILD in `theory/spt-rebuild.md` | SKETCH | spt-scoping-draft.md ⟨1⟩5 | not yet run |
+| SPT-E/-T/-D/-M — UNDER REBUILD in `theory/spt-rebuild.md` | CONJECTURE | spt-scoping-draft.md ⟨1⟩4 | not yet run |
+| SPT-nogo all-orders/all-registers form withdrawn pending rebuild | REFUTED | spt-scoping-draft.md | — |
+| A ⇒ C | CONJECTURE | §6.1 | fixed-volume/negative probes only |
+| C ⇒ B | SKETCH | §6.2 | flux/empirical checks only |
+| B ⇒ A (repaired B3) | SKETCH | §6.3 | — |
 
-**Freeze rule.**  Changing any statement above requires reopening the relevant L6 loop and recording a new verdict next
-to the artifact; `claims/CLAIMS.md` carries the same rule in its footer.
+**Freeze rule.**  Only rows backed by PASS verdicts (Corner A, oracle, ML2)
+are frozen.  Summit, memory, B3, and SPT rows are pre-r2 and may not be
+promoted above the status shown.  SPT content is rebuilt only in
+`theory/spt-rebuild.md`; D19--D23 remain unchanged.

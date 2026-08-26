@@ -17,6 +17,7 @@ import numpy as np
 
 J = 1.37
 SIZES = (12, 14, 16, 18, 20)
+SCALED_SIZES = (40, 80, 120, 160)
 SOFT_STEPS = 2.0e-5 * 2.0 ** np.arange(5)
 ALGEBRA_TOL = 8.0e-11
 EXPONENT_TOL = 1.5e-2
@@ -147,6 +148,47 @@ def source_counterexample_form_factor(soft: float, hard: float) -> complex:
     )
 
 
+def intercept_counterexample_form_factor(soft: float, hard: float) -> complex:
+    """Four-site ML5-A counterexample with zero first jet, nonzero intercept."""
+    outgoing_bra = np.conjugate(contact_ratio(soft, hard))
+    terms = (
+        (0, 2, 9.0 / 4.0),
+        (0, 3, -3.0 / 2.0),
+        (1, 2, -3.0 / 2.0),
+        (1, 3, 1.0),
+    )
+    return sum(
+        coefficient
+        * (
+            outgoing_bra * np.exp(-1j * (soft * x + hard * y))
+            + np.exp(-1j * (hard * x + soft * y))
+        )
+        for x, y, coefficient in terms
+    )
+
+
+def lowering_current_state(n_sites: int, hard: float) -> tuple[list[tuple[int, int]], np.ndarray]:
+    """Apply J^-_0 to one momentum state without allocating its full matrix."""
+    basis = list(itertools.combinations(range(n_sites), 2))
+    index = {pair: row for row, pair in enumerate(basis)}
+    hard_state = one_magnon(n_sites, hard)
+    result = np.zeros(len(basis), dtype=complex)
+    for hard_site, amplitude in enumerate(hard_state):
+        for x in range(n_sites):
+            y = (x + 1) % n_sites
+            if hard_site == x:
+                swapped_site = y
+            elif hard_site == y:
+                swapped_site = x
+            else:
+                swapped_site = hard_site
+            if swapped_site != y:
+                result[index[tuple(sorted((swapped_site, y)))]] += (J / 2.0) * amplitude
+            if swapped_site != x:
+                result[index[tuple(sorted((swapped_site, x)))]] -= (J / 2.0) * amplitude
+    return basis, result
+
+
 def audit_size(n_sites: int) -> tuple[float, float, float, float, float]:
     basis = list(itertools.combinations(range(n_sites), 2))
     index = {pair: row for row, pair in enumerate(basis)}
@@ -266,7 +308,75 @@ def audit_counterexample() -> tuple[float, float]:
     return max_zero, max_coefficient_error
 
 
+def audit_intercept_counterexample() -> tuple[float, float]:
+    """Guard the repaired ML5-A condition M2(0)=0 AND contact jet=0."""
+    min_intercept = float("inf")
+    max_first_jet = 0.0
+    step = 1.0e-5
+    for hard in (0.70, 1.20, 2.00):
+        intercept = intercept_counterexample_form_factor(0.0, hard)
+        derivative = (
+            intercept_counterexample_form_factor(step, hard)
+            - intercept_counterexample_form_factor(-step, hard)
+        ) / (2.0 * step)
+        min_intercept = min(min_intercept, abs(intercept))
+        max_first_jet = max(max_first_jet, abs(derivative))
+    require(
+        min_intercept > 5.0e-2,
+        f"ML5-A intercept counterexample vanished: {min_intercept}",
+    )
+    require(
+        max_first_jet < 2.0e-8,
+        f"ML5-A intercept counterexample first jet: {max_first_jet}",
+    )
+    return min_intercept, max_first_jet
+
+
+def audit_scaled_nonuniformity(red_uniform: bool) -> tuple[float, float, float]:
+    """ML4-Q1: k=2pi/N must refute the retracted uniform trace bound."""
+    hard = 2.0 * np.pi / 5.0
+    traces: list[float] = []
+    normalized_ratios: list[float] = []
+    for n_sites in SCALED_SIZES:
+        soft = 2.0 * np.pi / n_sites
+        basis, current_state = lowering_current_state(n_sites, hard)
+        phases = one_magnon(n_sites, hard)
+        descendant = np.asarray(
+            [phases[x] + phases[y] for x, y in basis], dtype=complex
+        )
+        projection = descendant * (
+            np.vdot(descendant, current_state) / np.vdot(descendant, descendant)
+        )
+        orthogonal = current_state - projection
+        outgoing = transported_outgoing_wave(n_sites, basis, soft, hard)
+        trace = abs(np.vdot(outgoing, orthogonal))
+        amplitude = abs(np.expm1(1j * soft) * np.vdot(outgoing, orthogonal))
+        traces.append(trace)
+        normalized_ratios.append(amplitude / (np.sqrt(n_sites - 2) * soft**2))
+
+    expected_limit = 2.0 * abs(J * np.sin(hard)) * (1.0 - 4.0 / np.pi**2)
+    require(
+        abs(traces[-1] - expected_limit) < 1.5e-1,
+        f"ML4-Q1 trace limit: got {traces[-1]}, expected {expected_limit}",
+    )
+    if red_uniform:
+        require(
+            normalized_ratios[-1] < 1.5 * normalized_ratios[0],
+            "red uniform-ML4 mutation was detected by k=2pi/N scaling",
+        )
+    else:
+        require(
+            normalized_ratios[-1] > 2.5 * normalized_ratios[0],
+            "ML4-Q1 did not detect the nonuniform k=2pi/N growth",
+        )
+    return traces[-1], normalized_ratios[0], normalized_ratios[-1]
+
+
 def main() -> None:
+    allowed = {"--red-uniform"}
+    unknown = set(sys.argv[1:]) - allowed
+    require(not unknown, f"unknown arguments: {sorted(unknown)}")
+    red_uniform = "--red-uniform" in sys.argv[1:]
     for n_sites in SIZES:
         result = audit_size(n_sites)
         print(
@@ -280,7 +390,15 @@ def main() -> None:
     print(
         "SOURCE soft_zero=%.3e coefficient_error=%.3e" % counterexample
     )
-    print("PASS: ML4 orthogonal suppression and ML5 source obstruction")
+    intercept = audit_intercept_counterexample()
+    print(
+        "INTERCEPT min_abs=%.3e first_jet=%.3e" % intercept
+    )
+    scaled = audit_scaled_nonuniformity(red_uniform)
+    print(
+        "ML4-Q1 trace_last=%.6f ratio_first=%.6f ratio_last=%.6f" % scaled
+    )
+    print("PASS: fixed-volume ML4, nonuniform scaling, and ML5 obstructions")
 
 
 if __name__ == "__main__":

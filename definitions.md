@@ -585,7 +585,10 @@ is `δx := ϱ_{t_f}(𝔛_W) − ϱ_{t_i}(𝔛_W)`.
 `N`, with no asymptotic hypothesis and no order-of-limits clause.  For `δx` to
 *mean* a wall displacement one needs additionally
 (i) the packet outside `W` at `t ∈ {t_i,t_f}` up to `ε`, and
-(ii) `b − a ≫ ξ_c` (D1(c)), whence an `O(e^{-(b-a)/ξ_c})` core-tail error.
+(ii) the kink core padded from both edges of `W`.  If `d_W` is the minimum
+core-to-edge distance, D1(c) gives, for every `λ̃ ∈ (λ_E,1)`, a tail bound
+`C_{λ̃}λ̃^{d_W}`.  A bare `O(e^{-(b-a)/ξ_c}) = O(λ_E^{b-a})` is not valid for
+a transfer operator with a Jordan block at modulus `λ_E`.
 **This is the definition the campaign freezes**; (b) and (c) are corollary
 characterisations, not competing definitions.
 
@@ -676,23 +679,54 @@ intervals (Lieb--Robinson) and is **not** preserved by the `k → 0` limit — a
 plane-wave magnon is not `ℓ¹`.  **Every soft statement about memory must fix
 the packet first and take `k → 0` afterwards; the two limits do not commute.**
 
-## D18 (hypothesis (H-AD): asymptotic decomposition)
+## D18 (hypothesis (H-AD): wave operators, channels, and local decay)
 
-*(`Bd`-level hypothesis, isolated so that everything conditional on it is
-visible.)*  A family `ϱ_t ∈ 𝒦^{(1)}_{αβ}` satisfies **(H-AD)** with data
-`(t_i, t_f, W = [a,b], ε)` iff, up to `‖·‖`-error `ε`, both `ϱ_{t_i}` and
-`ϱ_{t_f}` are convex combinations of product configurations
+Fix a conserved regularised-charge sector of a finite-range `U(1)`-invariant
+dynamics, free left/right one-particle channel spaces `ℋ_L,ℋ_R`,
+`ℋ_as := ℋ_L ⊕ ℋ_R`, channel Hamiltonian `H_as`, an identification `J`, and
+channel projections `P_L,P_T`.  The sector satisfies **(H-AD)** for a selected
+one-kink/one-magnon scattering vector iff all four clauses below hold.
 
-  (kink localised in `W`) `⊗` (free magnon content supported outside `W`),
+**(AD1: wave operators and completeness.)**  The strong limits
 
-each magnon carrying `U(1)` charge `−1` relative to `α` if it sits to the left
-of `W` and `+1` relative to `β` if it sits to the right of `W`.
+  `W_± := s-lim_{t→±∞} e^{itH}J e^{-itH_as}`
 
-(H-AD) is asymptotic completeness for the kink-plus-one-magnon sector of the
-easy-axis XXZ chain, `Δ > 1`.  It is **not proved** anywhere in this repo.  It
-is plausible (gapped magnon, exactly flat kink band, exact one-magnon states)
-and it is the single place where the memory quantisation law can fail.  Any
-statement conditional on it must say so.
+exist as isometries with common range `ℋ_sc`, and the physical sector has the
+orthogonal decomposition `ℋ = ℋ_b ⊕ ℋ_sc`, where `ℋ_b` contains spatially
+localised bound states.  There is no further propagating channel.
+
+**(AD2: selected scattering vector.)**  The vector is `Ψ = W_-(φ,0)`,
+`φ ∈ ℋ_L`, has no `ℋ_b` component, and
+`W_+^*Ψ = (φ_R,φ_T)`.  On `ℋ_sc` define
+
+  `N_T := W_+P_TW_+^*`,  `⟨N_T⟩ := ‖φ_T‖²`.
+
+For an on-shell diagonal scattering matrix,
+`⟨N_T⟩ = ∫(dk/2π)|φ(k)|²T(k)`; it is a packet average, not generally `T` at
+the mean momentum.
+
+**(AD3: channel charges and local decay.)**  The incoming left leg has charge
+`q_in` relative to the left vacuum and each outgoing leg has a stated charge
+`q_out` relative to its vacuum.  For every fixed window containing the kink,
+the free leg charge and non-bound dressing leave the window as `t→±∞`; the
+remaining local state is a kink charge eigenstate, and the increasing-window
+limit of D13(a) exists on it.
+
+**(AD4: order of limits.)**  Infinite-volume dynamics and the wave operators
+are formed before `t→±∞`; fixed-window scattering limits are formed before
+the window is increased to `ℤ`.
+
+H-AD is narrower than general many-body asymptotic completeness and is an
+explicit hypothesis unless a separate theorem supplies AD1--AD4.  It is a
+coherent Hilbert-space statement: reflected/transmitted superpositions are
+retained, not replaced in norm by classical mixtures.
+
+**Superseded r1 formulation.**  The former D18 required the in/out state to be
+norm-close to a convex mixture of product configurations.  That condition is
+withdrawn.  For `|ψ_out⟩ = r|R⟩+t|T⟩` with `rt ≠ 0` and orthogonal separated
+channels, the pure density matrix retains the cross terms
+`r\bar t|R⟩⟨T| + \bar r t|T⟩⟨R|`; its norm distance from the diagonal mixture
+does not vanish.  AD3 uses local decay without discarding this coherence.
 
 ---
 
@@ -700,8 +734,10 @@ statement conditional on it must say so.
 
 *Promoted at the 2026-08-26 freeze from `theory/spt-scoping-draft.md`
 (there numbered `Sd1`--`Sd10`).  These definitions are frozen; the **claims**
-built on them (SPT-B/E/T/D/M) remain at draft status — see
-`theory/TRIANGLE.md` §6 and `claims/CLAIMS.md`.*
+built on them carry the status annotation **UNDER REBUILD — r1 verdict
+`triangle-r1.md` S1--S8; rebuild in `theory/spt-rebuild.md` (in progress)**.
+The definitions themselves are unchanged; see `theory/TRIANGLE.md` §5 and
+`claims/CLAIMS.md`.*
 
 ## D19 (the soft variable in a gapped chain)
 
@@ -796,9 +832,10 @@ state, and a gapped triplet magnon.  The one-parameter family joining them is
 
 # The universality class of the soft factor — D24
 
-*Promoted at the 2026-08-26 freeze from `theory/ml5-universality.md` ⟨1⟩1--⟨1⟩3.
-Conjecture S-general is frozen **with this class as part of its statement**:
-outside it, universality is FALSE by an explicit counterexample (ibid. ⟨1⟩4).*
+*Promoted at the 2026-08-26 freeze from `theory/ml5-universality.md`
+⟨1⟩1--⟨1⟩3 and repaired after the r1 verdict.  D24 fixes the source class;
+the claims built on it are pre-r2.  Outside the class, unrestricted
+universality is refuted by the explicit counterexample in (e).*
 
 ## D24 (hard sources, the contact first jet, and the no-contact class `𝒮_W`)
 
@@ -819,27 +856,45 @@ waves are generalised kernels inside `C_c^∞` packets (D3(a), D12(a′)).
 
   `𝔠_h(O) := ∂_k M_2^O(k,h)|_{k=0} − 2i\,χ(h,0)\,M_1^O(h)`.
 
-**Criterion (ML5-A, PROVED).**  On a linear source class with `M_1^O ∈ L²(I)`
-and `M_2^O(k,·)` `C²` at `k=0` as an `L²(I)`-valued map with locally uniform
-second-derivative bound, the factorisation
-`M_2^O(k,h) = 2iχ k M_1^O(h) + O_{L²(I)}(k²)` is process-independent **if and
-only if** `𝔠_h(O) = 0` in `L²(I)` for every source in the class.
+**Criterion (ML5-A; status in the claims DAG).**  On a linear source class
+with `M_1^O ∈ L²(I)` and `M_2^O(k,·)` `C²` at `k=0` as an `L²(I)`-valued map,
+the factorisation
+`M_2^O(k,h) = 2iχ k M_1^O(h) + O_{L²(I)}(k²)` holds **if and only if both**
+
+  `M_2^O(0,·) = 0`  and  `𝔠_h(O) = 0`
+
+in `L²(I)`.  With
+`K_O(ε) := (1/2)sup_{|q|≤ε}‖∂_q²M_2^O(q,·)‖_{L²(I)}`, Taylor's theorem gives
+the exact control
+`‖M_2^O(k,·) − 2iχ kM_1^O‖_{L²(I)} ≤ K_O(ε)|k|²`.
+The stronger relative bound used in D24(b) requires the additional uniform
+hypothesis `K_O(ε) ≤ C_I‖M_1^O‖_{L²(I)}`; it does not follow from `C²`
+regularity alone.  On an affine class both displayed zero conditions must
+hold on every source difference, and the base source must obey the full
+factorisation with the same stated norm control.
 
 **(d) The Ward-covariant no-contact class `𝒮_W`.**  `𝒮_W` is the class of
-sources satisfying all four of:
-1. *Ward covariance* — the descendant current residue factorises as
+sources satisfying all five of:
+1. *Exhaustive normed LSZ decomposition* — in `L²(I)`, `M_2^O` is exactly the
+   sum of the descendant external-leg term, the orthogonal-current term, and
+   the direct source/contact term named below; there is no additional reduced
+   term, and the equality holds in the same packet norm as D24(b).
+2. *Ward covariance* — the descendant current residue factorises as
    `2i v_h M_1^O(h)`;
-2. *kinematic LSZ normalisation* — the external flux factor `L(k,h)` is
+3. *Kinematic LSZ normalisation* — the external flux factor `L(k,h)` is
    process independent, uniformly `C¹`, and `L(0,h) = −iχ/v_h`;
-3. *reduced-channel regularity* — the orthogonal current channel is
-   ML4-admissible, hence `O_{L²(I)}(k²)` (ML4-A);
-4. **no direct soft contact** — the amputated source commutator/contact term is
+4. *Reduced-channel regularity* — the orthogonal current channel is
+   `O_{L²(I)}(k²)` in the stated target limit, with the relative norm bound of
+   D24(b).  Fixed-volume ML4 does not by itself supply a volume-uniform bound;
+5. **No direct soft contact** — the amputated source commutator/contact term is
    bounded by `C_I|k|²‖M_1^O‖_{L²(I)}`.
 
-Hypothesis 4 is exactly the extra content beyond ML4, and by (c) it is
-*necessary*, not cosmetic.  **`𝒮_W` is nonempty (symmetry-generated
-external-leg insertions) but has not been shown to contain a nontrivial
-microscopic class of physical hard sources** — that is the open half of ML5.
+Hypotheses 1 and 5 are the extra LSZ/contact content beyond the fixed-volume
+Ward reduction, and by (c) the zero-intercept and zero-first-jet conditions
+are necessary, not cosmetic.  Symmetry-generated external-leg insertions are
+the intended seed, but **no nontrivial microscopic class has been proved to
+satisfy all five conditions**; nonemptiness in the target scattering register
+is part of the ML5-B future work.
 
 **(e) The refuting source (a stated feature of the frozen conjecture).**  On
 four consecutive sites let
@@ -850,3 +905,10 @@ while `M_2^{O_η}(k,h) = η\{2i(1−e^{-3ih})k + O_I(k²)\}`, so `𝔠_h(ηD) =
 **Universality over unrestricted local sources is therefore FALSE.**
 (`ml5-universality.md` ⟨1⟩4; checker `theory/checks/ml4_check.py`, soft zero
 `3.14·10^{-16}`, coefficient error `9.96·10^{-6}`.)
+
+The separate *intercept counterexample* is
+`V_int := (9/4)S^-_0S^-_2 − (3/2)S^-_0S^-_3 − (3/2)S^-_1S^-_2 + S^-_1S^-_3`.
+It is local and has `M_1^{V_int}=0`, `∂_kM_2^{V_int}(0,h)=0`, but
+`M_2^{V_int}(0,h)=3/4−(1/2)e^{-ih}+(3/4)e^{-2ih}−(1/2)e^{-3ih}`.  Thus a
+zero first jet does not replace D24(c)'s zero-intercept condition (named
+computation ML5-I1 in `theory/checks/ml4_check.py`).
