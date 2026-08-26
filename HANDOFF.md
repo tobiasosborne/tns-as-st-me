@@ -39,7 +39,8 @@ compiles at PRL shape.
 - Converged loops: oracle (r2 PASS), Corner A (r3 PASS), ML2 (r2 PASS).
   NOT yet critic-reviewed: ml4-ward-reduction.md, ml5-universality.md,
   memory-quantization.md, TRIANGLE.md itself, corner-b-draft.md,
-  spt-scoping-draft.md (tracked: tns-0xi, tns-gk4).
+  spt-rebuild.md (rebuilt 2026-08-26, SKETCH pending critic r2; it supersedes
+  spt-scoping-draft.md — tracked: tns-0xi, tns-gk4).
 - paper/ — v1 draft + figures (all generated from equations + committed JSONs
   via paper/figures/make_figures.py). Known: needs v2 (tns-2ze) absorbing the
   freeze, the generality directive, and the ML5 no-contact form; TJO must

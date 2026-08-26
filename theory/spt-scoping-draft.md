@@ -1,6 +1,6 @@
 # SPT scoping draft — can the projective class `[ω]` modify a lattice soft theorem?
 
-**Status: DRAFT, pre-critic — reconciled against claims DAG @ freeze,
+**SUPERSEDED by `theory/spt-rebuild.md` (2026-08-26) after critic r1 FAIL (`theory/verdicts/triangle-r1.md` S1--S8); retained as history.**  **Status: DRAFT, pre-critic — reconciled against claims DAG @ freeze,
 2026-08-26.**  Three stale citations flagged in
 [`corner-a-pitfalls.md`](corner-a-pitfalls.md) Flag 6 have been repaired in
 place, each marked `(Reconciled at freeze …)`: ⟨1⟩2.⟨2⟩3 no longer calls

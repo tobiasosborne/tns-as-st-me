@@ -11,7 +11,11 @@
      D13-D18 (Corner B) and D19-D23 (SPT) were appended at the 2026-08-26 freeze
      from theory/corner-b-draft.md (Bd1-Bd7) and theory/spt-scoping-draft.md
      (Sd1-Sd10); D24 (soft-factor universality class) from
-     theory/ml5-universality.md. Nothing was renumbered. -->
+     theory/ml5-universality.md. Nothing was renumbered.
+     D19-D23 were then REBUILT 2026-08-26 from theory/spt-rebuild.md <1>8.<2>1
+     (there Sd1'-Sd10') after the r1 verdict triangle-r1.md S1-S8; the SPT
+     claims built on them are SKETCH pending critic r2. Numbering unchanged;
+     theory/spt-scoping-draft.md is superseded history. -->
 
 # Definitions
 
@@ -730,103 +734,125 @@ does not vanish.  AD3 uses local decay without discarding this coherence.
 
 ---
 
-# SPT (Corner A ⊗ Corner C at an endpoint) — D19--D23
+# SPT soft rigidity and endpoint residue — D19--D23
 
-*Promoted at the 2026-08-26 freeze from `theory/spt-scoping-draft.md`
-(there numbered `Sd1`--`Sd10`).  These definitions are frozen; the **claims**
-built on them carry the status annotation **UNDER REBUILD — r1 verdict
-`triangle-r1.md` S1--S8; rebuild in `theory/spt-rebuild.md` (in progress)**.
-The definitions themselves are unchanged; see `theory/TRIANGLE.md` §5 and
-`claims/CLAIMS.md`.*
+*Rebuilt 2026-08-26 in `theory/spt-rebuild.md` ⟨1⟩8.⟨2⟩1 (there `Sd1'`--`Sd10'`),
+replacing the `spt-scoping-draft.md` promotion of `Sd1`--`Sd10` after the r1
+verdict `triangle-r1.md` S1--S8.  Annotation carried by the **claims** built on
+them: **rebuilt 2026-08-26 in `theory/spt-rebuild.md`; SKETCH pending critic r2**.
+See `theory/TRIANGLE.md` §5 and `claims/CLAIMS.md`.*
 
-## D19 (the soft variable in a gapped chain)
+## D19 (soft profiles, fixed registers, and limit order)
 
-*(`Sd5`.)*  The *soft variable* is the lattice momentum `k`, equivalently the
-inverse width `1/L` of a modulated profile `f(x/L) ∈ 𝔉_ec` (D3(a)); and
-**"soft" means zero momentum transfer**, i.e. the emitted quantum's vertex
-degenerates to the conserved charge (D10(c)).  It does **not** mean zero
-frequency: above a gap no on-shell one-particle state has `ω → 0`, and the
-`k → 0` magnon of a Haldane chain sits at the *top* of its band.  The two
-rejected candidates are recorded so they are not re-proposed: `κ := k − π → 0`
-(the band bottom) reaches the minimum frequency but the `k = π` operator is not
-a symmetry generator, so it supports no Ward identity; and a genuinely
-zero-*frequency* object in a gapped chain is not a particle at all — it is the
-DC/memory observable of D13.  `HANDOFF_MPS_SOFT_THEOREM.md` §5.4's "soft =
-low-frequency about the gap" is imprecise; the brief is historical and is not
-edited, and this entry is the correction.
+Let `C` be a D1 injective left-canonical tensor with right fixed point `r>0`.
+For an operator `O` on the first `n` sites of a half-chain define its normalized
+boundary transfer compression
+`𝒞_C^{(n)}(O):=r^{-1/2}E_O(r)r^{-1/2}∈End(E_C)`, `E_C:=ℂ^χ`; hence
+`𝒞_C^{(n)}(I)=I`.  This fixed finite-dimensional transfer register is defined
+before scalar matrix elements or limits.  Its identification with a physical
+edge Hilbert space is hypothesis (H-split) of D21.
 
-## D20 (soft form factor and soft factor)
+Fix `φ(y)=c_φe^{-1/(1-y²)}` for `|y|<1` and zero otherwise, with
+`∫|φ|²=1`.  The bulk family is
+`f_{L,κ}^{bulk}(x)=Z_{L,κ}^{-1/2}φ(x/L)e^{iκx/L}` with
+`Z_{L,κ}=Σ_x|φ(x/L)|²`; the edge family is
+`f_L^{edge}=1_{[0,L-1]}`.  For a finite group use
+`g_L^{edge}(x)=g` on `[0,L-1]` and `e` otherwise, with the normal-ordered
+on-site operator `ǔ_C(g)=e^{-iθ_C(g)}u(g)`.  Every finite-`L` object is local.
+Limits are ordered: `N→∞` at fixed `L` with `N-L→∞`; normalize packet
+states; take scattering/time limits if present; then `L→∞` (`k_L∼L^{-1}→0`).
+For finite `G` the last operation is only a large-window endpoint/string limit,
+not an infinitesimal group or momentum-soft limit.
 
-**(a) Soft form factor (`Sd6`).**  With no massless pole there is no LSZ
-residue to extract, so the amplitude *is* the form factor.  For `ξ ∈ 𝔤` (or,
-for finite `G`, `g ∈ G`), an admissible profile `f` (D3(a)) and states
-`|α⟩, |β⟩`:
+## D20 (operator-valued soft insertions and scalar form factors)
 
-  `F_f(ξ;β,α) := ⟨β|\,Q[f;ξ]\,|α⟩`   (Lie case, D10(c)),
-  `F_f(g;β,α) := ⟨β|\,U[f·g]\,|α⟩`    (finite case, D3(b),(c)).
+For fixed normalized finite-dimensional bulk channel registers and embeddings
+`W_{in/out}^{N,L}`, define
+`𝔉_{N,L}^{bulk}(ξ)=(W_out^{N,L})†Q[f_{L,κ}^{bulk};ξ]W_in^{N,L}`.
+On the edge transfer register define
+`ℜ_{C,L}(ξ)=𝒞_C(Q[f_L^{edge};ξ])` and
+`𝕊_{C,L}^{comp}(g)` as the decorated contraction of
+`Ǔ_{C,[0,L-1]}(g)` with `V_C(g)^{-1}` on the remote cut, viewed on the dual
+left-edge register.  The compensation cancels the far WI endpoint; an
+uncompensated string overlap may decay.  Soft residues are operator-norm limits
+after the D19 order.  Scalar form factors are only their matrix elements, e.g.
+`F_{C,L}^{edge}(e',e;ξ)=⟨e'|ℜ_{C,L}(ξ)|e⟩`; a scalar is never algebra-valued.
 
-*(a1) bulk* soft amplitude: `f ∈ 𝔉_c`, or a wave packet with
-`f(−∞) = f(+∞)`, all legs bulk magnon legs (D5(a) on `A_α`, D5(b) null
-directions quotiented out).
-*(a2) edge/twist* soft amplitude: `f ∈ 𝔉_ec` with **net jump**
-`f(−∞) ≠ f(+∞)`, at least one leg an edge or twist leg (D21).
+Thermodynamic limits are uniform only on compact tensor paths with a common
+transfer bound.  A coefficient through order `p` carries hypothesis (H-soft-p):
+the soft limit is uniform through `p` derivatives.  Scattering statements also
+carry the required wave-operator/asymptotic-completeness hypotheses.
 
-**(b) Soft factor and its value group (`Sd7`).**  `𝖲 := \lim_{k→0} F_f` in the
-sense of (a).  Its *type* is the content: `𝖲` is an element of the twisted
-group algebra `𝔞_α = ℂ_{ω_α}[G]` (D4(d)) represented on the legs' virtual
-data, and the `[ω]`-content of a soft theorem is by definition the class of
-that twisted group algebra.
+## D21 (endpoint module, shifted charge lattice, and physical-edge hypothesis)
 
-## D21 (edge leg, twist leg, edge space, and `d_ω`)
+The unconditional endpoint object is `E_C` (equivalently A1(d1)'s padded-window
+module), carrying the projective action `V_C(g)` with multiplier `ω_C`.
+`d_ω` is the minimal dimension of an `ω`-projective irrep.  A nontrivial class
+has `d_ω>1` because a one-dimensional multiplier is a coboundary.
 
-**(a) Edge leg and edge space (`Sd3`).**  The *half-infinite chain* `x ≥ 0`
-carries one uncontracted virtual index.  Its low-energy space is
-`H_{\rm edge} ⊗ (\hbox{bulk Fock})`, where `H_{\rm edge}` carries that index
-with the `G`-action `V_α(g)` of D2(b).  An *edge leg* is a state in
-`H_{\rm edge}`.
-**Register caveat (mandatory).**  A1(d1) proves a **padded-window-vector**
-action and A1(d2) a **state**-level `PGL(χ)` action; that `𝔞_α` acts on a
-genuine edge *Hilbert space* is the SKETCH box of `corner-a.md` ⟨1⟩4.⟨2⟩9 (the
-split property), which is **not proved**.  `H_{\rm edge}` is therefore a
-definition awaiting that box; every claim using it inherits its status.
+**(H-split):** the half-chain ground/low-energy subspace has a normal split
+realisation and an isometry `J_C:E_C→H_edge` intertwining `V_C` with the
+physical half-chain symmetry, and registered local contractions converge to
+the corresponding compressed physical operators.  This is the explicit
+hypothesis replacing the SKETCH box `corner-a.md` ⟨1⟩4.⟨2⟩9.
 
-**(b) Twist leg (`Sd4`).**  A *`g`-twist at bond `b`* is the state
-`1_{[b,∞)}·g ⊳ ω_α` of D3(c) — by A1(a) the vacuum decorated by the single bond
-insertion `V_α(g)^{-1}@b`.  It is a localised excitation of the `G`-symmetric
-Hamiltonian and a string-endpoint state in the sense of A1(c).
+If the identity component of compact `G` contains a circle, let the universal
+cover of that component have kernel `Z`.  Assume a lift normalised compatibly
+with the full group and the physical vacuum charge fixes a class-invariant
+central character `ν_ω:Z→U(1)`.  If the lifted `2π` path of a
+circle generator `ξ` ends at `z_ξ∈Z`, define
+`e^{2πiq_ω(ξ)}=ν_ω(z_ξ)`.  Then the Hermitian endpoint charge
+`Q_edge(ξ)=-iX_C(ξ)` has spectrum in `q_ω(ξ)+ℤ`.  For `SO(3)`, the two classes
+give `q_ω=1/2` and `0 mod ℤ`.  For the explicit `O(2)` pair, reflection pins the
+same alternatives: AKLT has `V(2π)=-I`, the large-`D` product `V(2π)=I`.  The
+full global group and loop are part of this statement; `U(1)` alone does not
+protect the offset.
 
-**(c) `d_ω`.**  `d_ω :=` the minimal dimension of an `ω_α`-projective irrep of
-`G`.  `d_ω > 1 ⟺ [ω_α] ≠ 0`; for `G = D₂`, `d_ω = 2` when `[ω] ≠ 0` and
-`d_ω = 1` when `[ω] = 0`.
+## D22 (twists, ordered endpoint products, and edge memory)
 
-## D22 (edge memory observable)
+A finite `g`-twist has two endpoints.  A single registered endpoint carries
+`V(g)`, while the other carries the inverse/dual multiplier; a physical
+endpoint observable requires (H-split) and (H-dress), meaning nonzero dressed
+endpoint transfer overlaps with endpoint separation taken first.  For commuting
+`g,h`, conjugation at one endpoint is
+`V(h)V(g)V(h)^{-1}=e^{i[ω(h,g)-ω(g,h)]}V(g)`; the other endpoint compensates
+the phase.  Ordered endpoint-soft operators obey
+`𝕊(h)𝕊(g)=e^{iω(h,g)}𝕊(hg)` in the registered module.
 
-*(`Sd10`.)*  `m_L := \sum_x w(x)\,ϱ(S^z_x)` with `w` an exponentially decaying
-left-edge window, evaluated before and after a magnon wave packet reflects off
-the edge; the *edge memory* is `Δm_L := m_L(t_f) − m_L(t_i)`.  This is the
-half-infinite-chain analogue of D13(a): D13 windows a wall, D22 windows an
-open edge.
+Under (H-AD-edge), asymptotic total charge decomposes as
+`Q_tot=Q_edge+Q_bulk`.  Define
+`ΔQ_edge=W_+†Q_edgeW_+-W_-†Q_edgeW_-`.  “Protected” refers to the projective
+edge module/degeneracy, “quantised” to channel eigenvalues, and “permanent”
+additionally requires isolated charge-preserving edge dynamics.  Protection
+does not force a particular reflection matrix element to be nonzero.
 
-## D23 (the SPT comparison pair)
+## D23 (exact comparison tensors and boundary Hamiltonians)
 
-*(`Sd1`.)*  Fix `d = 3` (spin 1) and `G = D₂ = \{e,R_x,R_y,R_z\}`,
-`R_a := e^{iπS^a}`, with `H²(D₂,U(1)) = ℤ₂`.  Two members of D1/D2 (injective,
-`G`-covariant, `H_α = G`, `Ω_vac = \{α\}`, i.e. unbroken with a unique gapped
-ground state), used throughout as the falsification pair:
+In the Cartesian spin-one basis, the AKLT tensor is
+`A^a=σ_a/√3`, equivalently `A^0=Z/√3`,
+`A^{±1}=√(2/3)σ_±`.  Its `D₂` virtual operators are Pauli matrices and carry
+the nontrivial class.  The symmetric same-phase path is
+`A_b^x=a_bX`, `A_b^y=a_bY`, `A_b^z=bZ`,
+`a_b=√((1-b²)/2)`, `0<b<1`.
 
-* **`𝒜KLT`** (`[ω] ≠ 0`): `χ = 2`, `A^0 = σ_z/\sqrt3`, `A^{±1} = \sqrt{2/3}σ_±`;
-  for `u = e^{iπS^z}` the fundamental theorem gives `V = σ_z` and string order
-  `−4/9` (`refs/arxiv-0802.0447`, "Example 1: AKLT state"), and by `SU(2)`
-  covariance `u = e^{iπS^x}` gives `V = σ_x`, so
-  `V(R_x)V(R_z) = −V(R_z)V(R_x)` and `[ω] ≠ 0`.
-* **`TRIV`** (`[ω] = 0`): any injective spin-1 MPS with the same `G`, `χ = 2`,
-  and `V` a *linear* `D₂`-representation; the physical representative is the
-  large-`D` phase, `|ψ⟩ ≈ ⊗_x|m=0⟩`, `V ≡ 𝟙`.
+The exact normalized injective `χ=2` trivial tensor is
+`T_t^x=[[0,t√3/2],[t/2,0]]`, `T_t^y=0`,
+`T_t^z=diag(√(1-t²/4),√(1-3t²/4))`, `0<t≤1`, with
+`θ=(1,-1,-1,1)` and `V_T=(I,Z,I,Z)` on `(e,R_x,R_y,R_z)`.
+At `t=1`, `r=diag(3/4,1/4)`, transfer spectrum `{1,√3/2,0,0}`, and length-two
+word rank four.  As `t↓0` it tends symmetrically to `|z⟩^{⊗∞}`.  The `O(2)`
+Lie-charge trivial comparator is the `χ=1` product tensor `P^z=1`; it is not an
+`SO(3)` comparator.
 
-Both have on-site, non-anomalous `G` (MPO bond dimension 1), a unique ground
-state, and a gapped triplet magnon.  The one-parameter family joining them is
-`H(D) = \sum_i S_i·S_{i+1} + D\sum_i (S^z_i)^2` with `D = 0` (Haldane) and
-`D = 3` (large-`D`), transition at `D_c ≈ 1`.
+For any such tensor `C`, set
+`Γ_2^C(|i⟩⊗|j⟩)=Σ_{s,t}(C^sC^t)_{ij}|s,t⟩`,
+`W_2^C=Γ_2^C[(Γ_2^C)†Γ_2^C]^{-1/2}`,
+`h_C=I-W_2^C(W_2^C)†`, and
+`H_{C,+}=h_{∂,C}+Σ_{x≥0}τ_x(h_C)`.
+For AKLT, `h_C=P^(S=2)` and `h_{∂,A}=0`.  For `T=T_1`,
+`h_{∂,T}=W_2^T(μ|1⟩⟨1|⊗I)(W_2^T)†`, `μ>0`; it is `D₂`-symmetric and selects
+the one-dimensional trivial-character edge.  For the `χ=1` `O(2)` product
+comparator, `h_P=I-|zz⟩⟨zz|` and `h_{∂,P}=0`.
 
 ---
 

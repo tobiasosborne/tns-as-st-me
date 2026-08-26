@@ -7,11 +7,14 @@
 
 # Claims DAG
 
-**SPT status annotation only.**  SPT-B/E/T/D/M are **UNDER REBUILD — r1
-verdict `triangle-r1.md` S1--S8; rebuild in `theory/spt-rebuild.md` (in
-progress)**.  The all-orders/all-registers form of SPT-nogo is withdrawn
-pending the rebuilt scoped statement.  This annotation does not demote the
-wanted SPT program and does not alter D19--D23.
+**SPT status annotation only.**  The SPT rows were **rebuilt 2026-08-26 in
+`theory/spt-rebuild.md`; SKETCH pending critic r2** (r1 verdict
+`triangle-r1.md` S1--S8).  The old rows SPT-B/E/T/D/M are superseded by
+SPT-B'/-E'/-T'/-D'/-M' and SPT-M'-dyn; the withdrawn pointwise bulk-blindness
+claim is recorded as REFUTED under `SPT-B-r1`, and the all-orders/all-registers
+form of SPT-nogo stays REFUTED.  `definitions.md` D19--D23 were rebuilt in
+lockstep from the same merge proposal.  This annotation does not demote the
+wanted SPT program.
 
 | id | statement (short) | status | depends on | proved in | tested in |
 |---|---|---|---|---|---|
@@ -36,12 +39,14 @@ wanted SPT program and does not alter D19--D23.
 | M | The brief's literal Conjecture M (`δx` = DC limit of the soft factor) is REFUTED.  The surviving candidates are M-flux (physical boundary-current DC weight only) and conditional M-quant, into which soft data enter through `T(k)`.  No virtual/bond-data reading is claimed. | REFUTED | D10(b), D13 | theory/memory-quantization.md §1; theory/corner-b-draft.md §§2,6,10 | mquant_check.py tests flux plus empirical scan only |
 | M-flux | `δx=(1/2s)[ȷ̃_{a−1\|a}(0)−ȷ̃_{b\|b+1}(0)]`, exactly the finite-time DC weight of the **physical** boundary current.  **Under repair: `mquant-ml45-r1.md`/`triangle-r1.md`; positive status awaits r2.** | SKETCH | D10(b), D13 | theory/memory-quantization.md §1 | theory/checks/mquant_check.py (operator and finite-time flux residues) |
 | B3 | Under stationary vacua and finite-range dynamics, the repaired Lamport argument aims to fix the D9(a) vacuum-pair label at finite time.  For a D18-separated event with explicit cut `c∈W` and leg-subtracted charges, the surviving bookkeeping is `2s·δx+(q_out−q_in)=0`.  The raw half-line formula is REFUTED; the `ℤ`-torsor/flatness reading is a separate Conjecture K4.  **Under repair, `triangle-r1.md` B1--B4 cited.** | SKETCH | D9, D10, D13, D14, D18 | theory/corner-b-draft.md §7 | — |
-| SPT-B | *(bulk no-go)* Under (H1),(H2), all legs bulk magnon legs and a profile with `f(−∞)=f(+∞)`: the soft amplitude and every coefficient of its `k`-expansion depend on `V_α` only through `Ad(V_α)`, an honest **linear** rep; hence **`[ω]` drops out of all bulk `n`-point soft amplitudes** | SKETCH | WI, A1, G0(d), D19--D23 | theory/spt-scoping-draft.md ⟨1⟩5 (pre-critic) | not yet run |
-| SPT-E | *(edge)* On the half-infinite chain with `f = 1_{[0,∞)}`: the soft factor is `V_α(g)` on `H_edge` with `𝖲(g)𝖲(h) = e^{iω_α(g,h)}𝖲(gh)`; `dim H_edge ≥ d_ω`, `d_ω>1 ⟺ [ω_α]≠0`; an unpaired endpoint insertion survives `k→0` with residue the edge charge, valued in the `[ω]`-twisted lattice | CONJECTURE | A1, D21 | theory/spt-scoping-draft.md ⟨1⟩4.⟨2⟩2 | not yet run |
-| SPT-T | *(twist)* soft factor at a `g`-twist endpoint is the slant product `[ω(h,g)/ω(g,h)]V(g)` | CONJECTURE | A1, A2, D21(b) | theory/spt-scoping-draft.md ⟨1⟩4.⟨2⟩3 | not yet run |
-| SPT-D | *(double soft)* the cocycle lives in the ordered double-soft limit at an edge, `𝖲(g)𝖲(h) = e^{iω(g,h)}𝖲(gh)`; the continuum pattern inverts | CONJECTURE | SPT-E | theory/spt-scoping-draft.md ⟨1⟩4.⟨2⟩4 | not yet run |
-| SPT-M | *(edge memory)* for `[ω]≠0` the edge-label-changing reflection channel is open at all `k` incl. `k→0`, so `Δm_L` is a protected permanent shift; for `[ω]=0` it is gappable and `Δm_L → 0` | CONJECTURE | SPT-E, D22 | theory/spt-scoping-draft.md ⟨1⟩4.⟨2⟩5 | not yet run |
-| SPT-nogo | `[ω]` cannot appear in **any** coefficient of the soft expansion, at any order, at an edge or in the bulk: coefficients are built from `𝔥_α` data and the Lie-algebra shadow of `[ω]` vanishes for every Haldane-protecting group | REFUTED | A1 (D4(d) caveat) | theory/spt-scoping-draft.md ⟨1⟩3.⟨2⟩2 | — |
+| SPT-B-r1 | Old claim that `Ad(V)`-only closed contractions are pointwise `[ω]`-blind | **REFUTED**: Pauli-projective `Ad` has four distinct `D₂` characters, scalar-trivial `Ad` has four trivial copies; closed `Tr Ad(R_x)=0` vs `4` | — | disproved in theory/spt-rebuild.md ⟨1⟩3.⟨2⟩3 | spt_rebuild_check.py S-C2 |
+| SPT-nogo | Old all-orders claim that `[ω]` cannot appear in any coefficient, including an edge residue | **REFUTED** (Whitehead removes only a Lie central term; edge weights/dimension remain) | — | theory/spt-rebuild.md ⟨1⟩4 | S-C4 |
+| SPT-B' | Closed-bulk multiplier no-go and rigidity: paired on-site endpoint multipliers cancel exactly; normalized bulk coefficients are continuous under common-gap symmetric injective paths and are topological only if separately proved locally constant; class-correlated `Ad(V)` data are allowed | **SKETCH** (complete proposer proof; L6 critic pending) | WI, A1(g), D19-D23 | theory/spt-rebuild.md ⟨1⟩3 | spt_rebuild_check.py S-C2,S-C3 |
+| SPT-E' | Registered half-chain residue is `V(g)` / `Q_edge=-iX`; endpoint modules have dimension `≥d_ω` and charge weights in `q_ω+ℤ`; AKLT-family residue is exactly `-½[1-(2b²-1)^L]Z→-Z/2`, while the `O(2)` trivial product residue is `0` | **SKETCH** in transfer register (complete proposer proof; L6 pending); **CONJECTURE conditional on H-split** as a physical edge-Hilbert statement | A1(d1,g), D19-D23 | theory/spt-rebuild.md ⟨1⟩4 | spt_rebuild_check.py S-C4,S-C5 |
+| SPT-T' | At a registered twist endpoint, `V(h)V(g)V(h)^{-1}` is proportional to `V(hgh^{-1})`; for commuting `g,h` the phase is `e^{i[ω(h,g)-ω(g,h)]}`; the second endpoint compensates, so the observable is relative and requires H-dress | **SKETCH** registered (L6 pending); physical observable conditional on H-split/H-dress | SPT-E', WI, D22 | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩1 | — |
+| SPT-D' | Ordered endpoint-soft operators satisfy `𝕊(h)𝕊(g)=e^{iω(h,g)}𝕊(hg)` in the fixed register; for semisimple Lie groups the infinitesimal bracket has no central term, while the global module remains projective | **SKETCH** registered (L6 pending); physical edge statement conditional on H-split | SPT-E', D22 | theory/spt-rebuild.md ⟨1⟩5.⟨2⟩2 | S-C5 |
+| SPT-M' | Given H-split and H-AD-edge, channel charge bookkeeping is `ΔQ_edge=-(Q_bulk,out-Q_bulk,in)` and channel outcomes are quantised; `[ω]` protects memory capacity/module, not a nonzero amplitude | **SKETCH conditional theorem** (L6 pending) | SPT-E', D22, M-quant bookkeeping | theory/spt-rebuild.md ⟨1⟩6.⟨2⟩1 | dynamical follow-on tns-cpq |
+| SPT-M'-dyn | For the specified AKLT parent/boundary coupling, an edge-changing magnon reflection amplitude is nonzero on an open momentum interval and leaves the post-selected charge memory of SPT-M' | **CONJECTURE**; missing half-chain wave operators, on-shell reflection matrix, and nonvanishing proof | SPT-M', H-AD-edge | theory/spt-rebuild.md ⟨1⟩6.⟨2⟩2 | tns-cpq follow-on |
 | OR1 | Oracle cross-check: (R17)--(R18) coincide term by term with passed oracle O7/O8 on D8's half-zone.  This proves the equality of the two formulas, not process universality. | PROVED | S2-2body, O7, O8 | theory/soft-current-recon.md ⟨1⟩5.⟨2⟩1 | oracle_bethe_check.py, soft_current_recon_check.py |
 | OR2 | Oracle fact O6: `S_{12}(k_s,k_h)→1` from either sign, a plain limit weaker than an Adler-zero theorem. | PROVED | O6 | theory/oracle-bethe.md ⟨1⟩3.⟨2⟩2 | oracle_bethe_check.py (`limit = 2.966e-16`) |
 | N1 | Numerics conjecture (not yet run): excitation-ansatz magnon amplitudes reproduce the Bethe `S(k)` as `k → 0`. | CONJECTURE | S2-2body | — | — |
@@ -88,7 +93,8 @@ downstream claims MUST absorb:
 Two SKETCH boxes are load-bearing and may not be used silently: the split
 property (blocks framing.md's state-space charge algebra) and A2's
 continuum-`Ω_vac` uniformity (blocks Corner B on M1).  Full pitfall list:
-theory/corner-a-pitfalls.md.  Two drafts (`theory/spt-scoping-draft.md`,
+theory/corner-a-pitfalls.md.  Two drafts (`theory/spt-scoping-draft.md`, now
+SUPERSEDED by `theory/spt-rebuild.md` and retained as history, and
 `theory/corner-b-draft.md`) still cite the two retracted/refuted rows; the exact
 line references are tabulated in theory/corner-a-pitfalls.md Flag 6, as input
 for freeze reconciliation.  Round-2 critic residue and its disposition:
@@ -110,5 +116,7 @@ supplied for the three ⟨1⟩6.⟨2⟩2 leaves, both wrap-pair sign flips named
 
 **Post-r1 rule.**  Only rows backed by a PASS verdict (Corner A, oracle facts,
 and ML2) remain frozen.  Rows attacked by `mquant-ml45-r1.md` or
-`triangle-r1.md` are at most SKETCH until r2 passes.  SPT rows are under active
-rebuild in `theory/spt-rebuild.md`; D19--D23 remain unchanged.
+`triangle-r1.md` are at most SKETCH until r2 passes.  The SPT rows were rebuilt
+2026-08-26 in `theory/spt-rebuild.md` and are SKETCH pending critic r2;
+D19--D23 were rebuilt in lockstep and `theory/spt-scoping-draft.md` is
+superseded.

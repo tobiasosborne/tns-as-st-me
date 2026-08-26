@@ -92,7 +92,7 @@ invoked. *Shard:* `corner-a.md` ⟨1⟩4.  *Checks:* C6, C8, C8b.
 **SKETCH box S-A1 (load-bearing).**  Not proved: that `ω_α^{M@b}` is a *normal* state of `π_α(𝔄)''`, i.e. that `𝔞_α` acts
 on the GNS Hilbert space rather than on finite-window spaces `𝒲_{Λ,b}`; the expected route is the split property.  **This
 is exactly `docs/framing.md` §1--§2's demand that the charge algebra act on the physical state space, and that demand is
-NOT met.**  Anything phrased as "the charge algebra acting on `H_A`" — D21(a)'s `H_edge` included — inherits this status.
+NOT met.**  Anything phrased as "the charge algebra acting on `H_A`" — D21's `H_edge`, i.e. its hypothesis **(H-split)**, included — inherits this status.
 (`corner-a.md` ⟨1⟩4.⟨2⟩9.)
 
 ### 1.4 Theorem A2 (broken case: sector jump; vacuum-pair classification) — PROVED
@@ -380,50 +380,48 @@ is numerology and must be dropped from the paper.**  *Shard:* `corner-b-draft.md
 
 ---
 
-## §5. The SPT dichotomy — **SKETCH, UNDER REBUILD**
+## §5. SPT soft rigidity — bulk deformability versus endpoint quantisation
 
-Scoping shard `spt-scoping-draft.md` (reconciled at freeze); definitions D19--D23. **Nothing in this section has been
-through a passing L6 loop.  Status annotation only: **UNDER REBUILD — r1 verdict
-`triangle-r1.md` S1--S8; rebuild in `theory/spt-rebuild.md` (in progress).**
-The SPT results remain wanted for the paper; this is a pre-r2 marker, not a
-retraction of the program.  D19--D23 are unchanged.
+Rebuilt shard: `theory/spt-rebuild.md`; definitions D19--D23.  Status is
+SKETCH pending the shard's L6 critic.  The old pointwise bulk-blindness theorem
+and the all-orders edge no-go are REFUTED.
 
-**The mechanism, in one line.**  By G0(d), `Q[f;ξ] ▹ ω_α = −Σ_x (Δf)(x) 𝒥_{x|x+1}(ξ) ▹ ω_α + boundary` — *the soft factor
-is weighted by the total variation of the profile, never by the profile itself*.  A bulk profile (`f(−∞)=f(+∞)`) gives
-paired insertions; a net-jump profile (`f = 1_{[0,∞)}`) collapses to a **single unpaired** bond insertion, which is
-exactly where `𝔞_α = ℂ_{ω_α}[G]` is seen — a *dichotomy*, not a uniform modification.
+**Dichotomy.**  A closed on-site bulk string has two virtual endpoints.  Their
+projective multipliers cancel, so no projective multiplication anomaly can be
+extracted from a closed bulk soft insertion.  This does not erase the honest
+adjoint representation: Pauli-projective conjugation and scalar-trivial
+conjugation are distinguishable (`Tr Ad(R_x)=0` versus `4`).  Normalized bulk
+coefficients are continuous transfer data under a common-gap symmetric MPS
+path and become topological only after a separate local-constancy proof.
 
-**All-orders/all-registers SPT-nogo — REFUTED (withdrawn pending the rebuilt
-scoped statement).**  The withdrawn argument asserted that every coefficient of the `k`-expansion of a soft amplitude is
-built from finitely many derivatives of `V` at the identity, i.e. from `𝔥_α` data; and for every Haldane-protecting group
-the Lie-algebra shadow of `[ω]` vanishes (`H²(so(3),ℝ) = 0`; `D₂`, `ℤ₂×ℤ₂` have no Lie algebra).  Therefore **`[ω]`
-cannot appear in any coefficient of the soft expansion, at any order, at an edge or in the bulk.**
+An unpaired half-chain endpoint instead carries a fixed registered projective
+module.  Its residue spectrum lies in the `[ω]`-shifted charge lattice.  On the
+anisotropic AKLT path,
+`C_bulk(b)=b²/[4(1-b²)]` changes from `1/8` to `0.240196...`, while
+`ℜ_L(S^z)=-½[1-(2b²-1)^L]Z→-Z/2` is unchanged.  This is the rigid topological
+content.  A physical edge-Hilbert interpretation carries hypothesis H-split.
 
-| id | statement | draft status |
+| id | rebuilt statement | honest status |
 |---|---|---|
-| **SPT-B** | *(bulk no-go)* Under (H1),(H2), all legs bulk magnon legs, profile with `f(−∞)=f(+∞)`: `F_f` and every coefficient of its `k`-expansion depend on `V_α` only through `Ad(V_α)`, an honest **linear** representation; hence **`[ω]` drops out of all bulk `n`-point soft amplitudes**.  Equivalently `[E, V⊗V̄] = 0` with cocycle `ω·ω̄ = 1` (condition C3, refs/arxiv-0802.0447). | **SKETCH** (⟨1⟩5; confidence 0.90).  Obligations `N1` (covariance of the tangent-space gauge fixing), `N2` (wave-packet reading in a multi-leg amplitude), `N3` (a bulk magnon leg is genuinely in `𝒦_{αα}`, not a two-endpoint sector in disguise).  **`N3` is the only place SPT-B could fail.** |
-| **SPT-E** | *(edge modification)* Half-infinite chain, `G`-symmetric gapped boundary, `f = 1_{[0,∞)}`: (a) the soft factor is `V_α(g)` on `H_edge`, so `𝖲(g)𝖲(h) = e^{iω_α(g,h)}𝖲(gh)`; (b) `dim H_edge ≥ d_ω`, `d_ω>1 ⟺ [ω_α]≠0`; (c) an unpaired endpoint insertion survives `k→0` where a bulk profile leaves only paired ones, residue = edge charge; (d) that residue lies in the `[ω]`-twisted charge lattice (`𝒜KLT`: half-integral edge `S^z`; `TRIV`: integral). | **CONJECTURE** (0.85).  **(a) is not A1 re-read**: A1 gives a padded-window-vector action and a state-level `PGL(χ)` action; the edge-Hilbert-space register is SKETCH box S-A1 (D21(a) caveat). |
-| **SPT-T** | *(twist)* The soft factor for an `h`-rotation at a `g`-twist endpoint is `V(h)V(g)V(h)^{-1} = [ω(h,g)/ω(g,h)] V(g)` — the **slant product** of `[ω]`, the 1D `H²` shadow of the 2D `H³` monodromy-defect statement of refs/arxiv-1412.5604. | **CONJECTURE** (0.75).  Risk: on an infinite chain the slant phase at one endpoint is compensated at the other, so the observable is necessarily the *relative* charge of the two endpoints (a string-order statement). |
-| **SPT-D** | *(double soft)* The continuum pattern inverts: single-soft *coefficients* are unmodified, and the cocycle lives in the **ordered double-soft limit** at an edge, `𝖲(g)𝖲(h) = e^{iω(g,h)}𝖲(gh)`. | **CONJECTURE** (0.60).  The gauge-invariant residue is again a degeneracy statement, not a measurable phase. |
-| **SPT-M** | *(edge memory — the payoff)* For `[ω]≠0` the reflection matrix has a nonzero edge-label-changing channel at all momenta including `k→0`, so `Δm_L` (D22) is a protected, quantised, permanent shift; for `[ω]=0` every such channel is gappable by a symmetric boundary perturbation and `Δm_L → 0`. | **CONJECTURE** (0.55).  Protection of the *channel* is solid; **quantisation of `Δm_L` is not argued.** |
+| SPT-B' | Closed-bulk endpoint multipliers cancel exactly; coefficients are continuous/deformable and may retain class-correlated `Ad(V)` data | SKETCH, complete proposer proof; L6 pending |
+| SPT-E' | Registered residue is the endpoint charge in an `ω`-projective module, `dim≥d_ω`, `spec Q_edge⊂q_ω+ℤ`; AKLT residue `±1/2`, trivial `O(2)` product residue `0` | SKETCH registered; physical edge statement conditional on H-split |
+| SPT-T' | For commuting `g,h`, one twist endpoint carries the slant/commutator phase `e^{i[ω(h,g)-ω(g,h)]}` and the other compensates; measurable only relatively with dressed endpoints | SKETCH registered; H-split/H-dress physically |
+| SPT-D' | Ordered endpoint-soft products realise the cocycle globally; no semisimple Lie central term is claimed | SKETCH registered; H-split physically |
+| SPT-M' | Conditional channel bookkeeping quantises edge-charge changes and the projective module protects memory capacity; topology does not force a nonzero reflection amplitude | SKETCH given H-split/H-AD-edge; nonzero AKLT channel CONJECTURE |
 
-**Status annotation for T9:** the deciding-computation design below is
-**UNDER REBUILD** in `theory/spt-rebuild.md`; r1 T9's substantive redesign is
-deferred to that lane.
+**Exact deciding computation.** `spt_rebuild_check.py` fixes all tensors and
+tolerances.  It verifies the explicit injective `χ=2` TRIV tensor, the critic's
+`D₂` adjoint decomposition, the varying bulk coefficient, and the rigid AKLT
+edge residue; its red mutant fails.  The remaining `tns-cpq` work is the
+half-chain scattering calculation.  A zero AKLT edge-changing amplitude would
+refute only SPT-M'-dyn, not the registered endpoint theorem.
 
-**A closed route, recorded so it is not reattempted.**  For on-site `G`, refs/arxiv-2405.00439 states
-`(U^{[i₂,j₂]})†(U^{[i₁,j₁]})† U^{[i₂,j₂]} U^{[i₁,j₁]} = 𝟙`; our `G` **is** on-site, so **no commutator of truncated
-**A closed route, recorded so it is not reattempted.**  For on-site `G`, refs/arxiv-2405.00439 states
-`(U^{[i₂,j₂]})†(U^{[i₁,j₁]})† U^{[i₂,j₂]} U^{[i₁,j₁]} = 𝟙`; our `G` **is** on-site, so **no commutator of truncated
-symmetry operators can detect our `[ω]`** — every `[ω]`-observable must be a degeneracy/selection-rule statement or a
-**two-endpoint** (string-order) statement with dressed endpoints.
-`𝒜KLT` and `TRIV` tensors of D23, for `f ∈ 𝔉_c` and for `f = 1_{[0,∞)}`.  If the bulk contraction returns an `Ad(V)`-only
-**The one deciding computation** (draft ⟨1⟩8; hours, exact transfer algebra, no DMRG).  Contract `Q[f;ξ]` against the
-`𝒜KLT` and `TRIV` tensors of D23, for `f ∈ 𝔉_c` and for `f = 1_{[0,∞)}`.  If the bulk contraction returns an `Ad(V)`-only
-coefficient in **both** models and the half-infinite contraction returns a single unpaired `X(ξ)` generating a 2-dim
-projective `D₂`-rep for `𝒜KLT` and a 1-dim linear one for `TRIV`, SPT-B+SPT-E are established and claim SPT rises to
-SKETCH.  If the half-infinite contraction also collapses to `Ad(V)`, **claim SPT is REFUTED** and the surviving
-publishable statement is the clean no-go SPT-B.  Either outcome is a result.
+**Closed route.**  The commuting/order-two truncated-symmetry commutator used
+to diagnose the MPU anomaly is the identity for an on-site symmetry (a
+noncommuting group can retain only its ordinary group commutator).  SPT
+information here is therefore a projective endpoint module, a relative dressed
+two-endpoint response, or a quantised edge residue—not an anomalous closed-bulk
+commutator phase.
 
 ## §6. The three edges
 
@@ -500,14 +498,21 @@ the refuted `A2-orbit-r1` object is used.  *Shard:* `corner-b-draft.md` §7.
 | Fano `t,T,δ_t` and soft zero, conditional on Mq-E | SKETCH | corner-b-draft.md §5 | crosscheck is empirical only |
 | Conjecture M (brief's literal form) | REFUTED | corner-b-draft.md §10 | — |
 | Bc ("the two 2s"; spin-1 falsifier) | CONJECTURE | §4 | not yet computed |
-| SPT-B — UNDER REBUILD in `theory/spt-rebuild.md` | SKETCH | spt-scoping-draft.md ⟨1⟩5 | not yet run |
-| SPT-E/-T/-D/-M — UNDER REBUILD in `theory/spt-rebuild.md` | CONJECTURE | spt-scoping-draft.md ⟨1⟩4 | not yet run |
-| SPT-nogo all-orders/all-registers form withdrawn pending rebuild | REFUTED | spt-scoping-draft.md | — |
+| SPT-B' closed-bulk multiplier no-go; coefficients continuous/deformable (L6 pending) | SKETCH | spt-rebuild.md ⟨1⟩3 | spt_rebuild_check.py S-C2, S-C3 |
+| SPT-E' registered endpoint residue and shifted charge lattice; physical edge statement conditional on H-split | SKETCH | spt-rebuild.md ⟨1⟩4 | spt_rebuild_check.py S-C4, S-C5 |
+| SPT-T' registered twist endpoint/slant phase; physical observable conditional on H-split/H-dress | SKETCH | spt-rebuild.md ⟨1⟩5.⟨2⟩1 | — |
+| SPT-D' ordered endpoint-soft products realise the cocycle; physical edge statement conditional on H-split | SKETCH | spt-rebuild.md ⟨1⟩5.⟨2⟩2 | spt_rebuild_check.py S-C5 |
+| SPT-M' conditional channel bookkeeping given H-split/H-AD-edge | SKETCH | spt-rebuild.md ⟨1⟩6.⟨2⟩1 | dynamical follow-on tns-cpq |
+| SPT-M'-dyn nonzero AKLT edge-changing reflection channel | CONJECTURE | spt-rebuild.md ⟨1⟩6.⟨2⟩2 | tns-cpq follow-on |
+| SPT-B-r1 pointwise bulk `[ω]`-blindness | REFUTED | spt-rebuild.md ⟨1⟩3.⟨2⟩3 | spt_rebuild_check.py S-C2 |
+| SPT-nogo all-orders/all-registers form | REFUTED | spt-rebuild.md ⟨1⟩4 | spt_rebuild_check.py S-C4 |
 | A ⇒ C | CONJECTURE | §6.1 | fixed-volume/negative probes only |
 | C ⇒ B | SKETCH | §6.2 | flux/empirical checks only |
 | B ⇒ A (repaired B3) | SKETCH | §6.3 | — |
 
 **Freeze rule.**  Only rows backed by PASS verdicts (Corner A, oracle, ML2)
 are frozen.  Summit, memory, B3, and SPT rows are pre-r2 and may not be
-promoted above the status shown.  SPT content is rebuilt only in
-`theory/spt-rebuild.md`; D19--D23 remain unchanged.
+promoted above the status shown.  SPT content lives only in
+`theory/spt-rebuild.md` (rebuilt 2026-08-26; SKETCH pending critic r2);
+`definitions.md` D19--D23, `claims/CLAIMS.md`, and §5 above carry that same
+rebuilt text, and `theory/spt-scoping-draft.md` is superseded history.
