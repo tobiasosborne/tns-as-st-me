@@ -326,7 +326,14 @@ The algebraic statement is
 `2s·δx+(q_out−q_in)=0`, under D18's explicitly stated vacuum jump, channel
 charges, and local decay.  It is independent of scattering phase once those
 channels exist.  This is not a higher-spin channel theorem and not the general
-MPS memory theorem; the latter is tracked by bd `tns-zw2`.
+MPS memory theorem.  **Generalized by M-quant-G (SKETCH; no status transfer),**
+`memory-quantization-general.md`: for compact `G`, arbitrary finite-`χ`
+injective MPS vacua, a common unbroken circle direction, finite-range
+`G`-invariant `H`, a D17 kink packet, D13(a)'s charge-density jump `2s`, and
+H-AD-G (exactly D18 with `q_in=q_L=-1`, `q_T=+1`), the proposer proof gives
+the same `ΔX=-N_T/s`.  Hypothesis `(T)` is optional and only identifies the
+unchanged vacuum pair by D9(d)'s double coset.  The general row remains SKETCH
+until its own L6 critic; H-AD-G is not derived from symmetry or injectivity.
 
 **Projected spectral scope.**  Mq-AD3 is PROVED conditional on Mq-E per
 `corpus-r2.md`: the Kato--Rosenblum/Feshbach argument is sound
@@ -527,6 +534,7 @@ classifying datum.  *Shard:* `corner-b-draft.md` §7.
 | B3 finite-time label rigidity + leg-charge bookkeeping | PROVED | corner-b-draft.md §7; corpus-r2 adjudication with N9 sweep | — |
 | Mq-AD3 conditional on Mq-E | PROVED | memory-quantization.md §3; corpus-r2 adjudication | Mq-E itself untested |
 | M-quant conditional on D18 | PROVED | memory-quantization.md; corpus-r2 adjudication | mquant_check.py is flux/empirical only |
+| M-quant-G conditional on H-AD-G (= D18 with fixed channel charges) | SKETCH | memory-quantization-general.md | mquant_general_check.py arithmetic only; `--red` charge mutation |
 | Fano `t,T,δ_t` and soft zero, conditional on Mq-E for displayed graph | PROVED | corner-b-draft.md §5; corpus-r2 adjudication | crosscheck is empirical full-chain evidence only |
 | Conjecture M (brief's literal form) | REFUTED | corner-b-draft.md §10 | — |
 | Bc ("the two 2s"; spin-1 falsifier) | CONJECTURE | §4 | not yet computed |

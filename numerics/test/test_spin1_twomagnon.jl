@@ -19,6 +19,13 @@
 #                 2 (Bc FALSIFIED).  8%, matching the criterion already used
 #                 for the memory-quantum scan.
 
+# Wrapped in `module TestSpin1TwoMagnon` so that numerics/test/runtests.jl can
+# include every shard test into one process: the shard modules export
+# names that also exist in TriangleMPS / FMTwoMagnon, and `using` them
+# all into a shared `Main` makes those names ambiguous.
+
+module TestSpin1TwoMagnon
+
 using Test
 using LinearAlgebra
 using SparseArrays
@@ -291,3 +298,5 @@ end
     end
 
 end
+
+end # module TestSpin1TwoMagnon

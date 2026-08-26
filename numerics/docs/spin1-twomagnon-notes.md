@@ -220,13 +220,46 @@ curvature of `∂δ/∂k_s`, not a discrepancy — the pointwise agreement there
 
 ### (B) memory quantum `δx/N_T`
 
-`s = 1`, `N = 120`, `dmax = 1`, nine `(Δ,k₀)` points; `s = 1/2` controls and an
-`s = 3/2` point on the same code path.  Spin-1 values fall in `−0.919 … −0.996`
-(mean `≈ −0.98`), spin-1/2 controls in `−1.958 … −1.998`, `s = 3/2` at `−0.660`
-against `−0.6667`.  The single 8%-edge case is `Δ = 2, k₀ = 1.8`, which has
-`trapped = 5.5·10⁻²`: amplitude still bound at the wall, i.e. the asymptotic
-condition behind the law is not yet met there, and the deviation shrinks with
-`Δ` exactly as that reading predicts.
+`s = 1`, `N = 120`, `dmax = 1`, nine `(Δ,k₀)` points with `Δ ∈ {2,3,6}`,
+`k₀ ∈ {0.8,1.2,1.8}`; `s = 1/2` controls and an `s = 3/2` point on the same code
+path.  22 runs in all.
+
+| set | n | mean | sd | range | prediction |
+|---|---|---|---|---|---|
+| `s = 1` grid | 9 | **−0.97996** | 0.02340 | −0.919 … −0.996 | −1 |
+| `s = 1` grid, `trapped < 10⁻²` | 8 | **−0.98755** | 0.00989 | | −1 |
+| `s = 1/2` control | 4 | −1.97817 | 0.01993 | −1.958 … −1.998 | −2 |
+| `s = 3/2` | 1 | −0.66015 | | | −0.66667 |
+
+The only 8%-edge point is `Δ = 2, k₀ = 1.8` (`−0.919`), which has
+`trapped = 5.5·10⁻²` — amplitude still bound at the wall, so the asymptotic
+condition behind the law is not met there; every point with `trapped < 10⁻²`
+lands within 1.4% of `−1`.  The `s = 3/2` point is the sharpest of all because it
+has *partial* transmission (`T = 0.383`), so the ratio is not near-saturated.
+
+Controls: `N ∈ {100,120,140}` agree to 5 decimals (`−0.99045`); sharp vs dressed
+initial wall agree to 0.5%; norm drift `< 3.6·10⁻¹³`, energy drift `< 3.5·10⁻¹⁰`
+over every run.
+
+**Truncation convergence — the decisive check.** At `s = 1`, `N = 46`, `Δ = 6`:
+
+| `dmax` | dim | `δx₂` | `T` | `δx₂/N_T` |
+|---|---|---|---|---|
+| 1 | 7 128 | −0.98037 | 0.99379 | −0.98649 |
+| 2 | 1 021 680 | −0.98543 | 0.99905 | −0.98637 |
+
+The ratio moves by `1.2·10⁻⁴` when the basis grows by a factor of 143 — despite
+the Frobenius leak ratio of 0.999 above.  That settles the question the leak
+metric raises: the discarded matrix elements act where the state has no weight.
+The `s = 1/2` pair (`N = 56`, `Δ = 3`, `dmax = 1` vs `2`) moves by 2.1%,
+consistent with the tolerance of the frozen scan. Its `dmax = 2` run returns
+`T = 1.011 > 1` and `trapped = −0.027`: at `D ≤ 2` the dynamics may create a
+magnon *pair* (an up-magnon on the ↓ side plus a down-magnon on the ↑ side),
+which adds to `T` and `R` alike, so `T + R` need not be 1. That channel is a
+`~1%` effect at `Δ = 3` and `4·10⁻⁴` at the spin-1 point (`Δ = 6`), which is why
+the spin-1 comparison is the clean one.  In every run the *initial* weights are
+`(T,R) = (0,1)` to `10⁻¹⁰`, so `ratio_dx2_over_deltaT` coincides with
+`ratio_dx2_over_T` throughout.
 
 **Verdict: Conjecture Bc SURVIVES both falsifiers.**
 

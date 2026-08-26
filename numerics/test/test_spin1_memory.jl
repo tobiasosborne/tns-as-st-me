@@ -14,6 +14,13 @@
 #                criterion already used for numerics/results/memory-scan-1.json.
 #                Conjecture Bc predicts -1/s: -2 at s = 1/2, -1 at s = 1.
 
+# Wrapped in `module TestSpin1Memory` so that numerics/test/runtests.jl can
+# include every shard test into one process: the shard modules export
+# names that also exist in TriangleMPS / FMTwoMagnon, and `using` them
+# all into a shared `Main` makes those names ambiguous.
+
+module TestSpin1Memory
+
 using Test
 using LinearAlgebra
 import TriangleMPS
@@ -201,3 +208,5 @@ end
     end
 
 end
+
+end # module TestSpin1Memory
