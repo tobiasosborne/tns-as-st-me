@@ -17,13 +17,27 @@
      class inside Theorem 2's display, C^p in the main SPT sentence,
      self-contained Fig. 1/Fig. 2 captions, and the A=>C edge stated as
      Conjecture S at every order (rows 101, 123, 132, 156-159 and the
-     abstract rows updated in lockstep). -->
+     abstract rows updated in lockstep).
+     Round 3 (theory/verdicts/paper-v2-r3.md, FATAL 1,11) closes the three
+     remaining fence surfaces: the abstract's slope sentence ENUMERATES the
+     fence (model, regular two-magnon domain, fixed hard momentum inside the
+     band, unit charge -- the fixed-channel, band-edge and equal-velocity
+     clauses are ENTAILED by "fixed hard momentum inside the band" at the
+     soft point per spin-s-r1.md sec. 3); the opening "whole result"
+     sentence is WEAKENED to a non-claim-bearing signpost ("in an exactly
+     solved two-magnon problem ... (Theorem 1)"); Fig. 1's Corner-C gloss
+     enumerates the full fence. Rows for the abstract, opening, and Fig. 1
+     Corner C updated in lockstep. -->
 
 # Paper v2.1 claim audit — main.tex @ 2026-08-26 (post-repair)
 
 Statuses cited from `claims/CLAIMS.md` (post-r4 + spin-s-r1 promotion).
 Rule: PROVED rows may be asserted with their conditionality carried **in the
-same sentence**; CONJECTURE rows appear only labelled as conjectures; REFUTED
+same sentence** -- either by enumerating the fence, or by clauses that
+provably entail it (entailment checked against the promotion sentence, cited
+in the row), or by weakening the sentence to an indexical signpost that
+points at the fenced theorem and claims no breadth of its own; CONJECTURE
+rows appear only labelled as conjectures; REFUTED
 rows appear only as refutations. Background/credit sentences citing
 literature are marked LIT; numerical values are marked with the committed
 data file that carries them.
@@ -32,20 +46,20 @@ data file that carries them.
 
 | sentence fragment | license |
 |---|---|
-| "is transplanted to quantum spin chains" | framing only; no theorem claim (the proved/conditional/conjectural split follows sentence-by-sentence) |
+| "comes to quantum spin chains" | framing only; no theorem claim (the proved/conditional/conjectural split follows sentence-by-sentence) |
 | "Proved: a truncated symmetry acts only at its endpoints" | WI, A1(a) — PROVED |
 | "its charge algebra centrally extended by the topological index" | A1(d1),(d3) — PROVED (padded-window register; H-split carried in body and Appendix A) |
-| "in the bilinear isotropic ferromagnet, on its regular two-magnon domain, a soft magnon exits with universal phase slope" | S2-2body, S2-2body-S — PROVED; model AND domain fence in the claim-bearing abstract sentence (r2 obj. 1 repaired) |
+| "in the bilinear isotropic ferromagnet---regular two-magnon domain, fixed hard momentum inside the band, unit charge---the soft phase slope is universal" | S2-2body, S2-2body-S — PROVED; fence ENUMERATED in-sentence: model, regular domain (T.1), fixed hard momentum interior to (0,π), unit charge. The remaining promotion-sentence clauses are entailed by the printed ones at the soft point (spin-s-r1.md sec. 3): band-edge exclusion = "inside the band"; fixed channel = sgn(v_h−v_s) constant in a small two-sided soft neighborhood for fixed allowed k_h; equal-velocity exclusion = v_h=v_s outside a sufficiently small soft neighborhood for fixed allowed k_h. Uniformity over compact hard subsets is not claimed (r3 obj. 1 repaired) |
 | "granted a scattering hypothesis, a quantized wall step per transmitted magnon" | M-quant-G — PROVED as conditional implication; conditionality in-sentence |
 | "Its edges stay conjectures" | edge ledger: A⇒C CONJECTURE, C⇒B SKETCH, B⇒A SKETCH — stated as unproved (SKETCH edges are *a fortiori* not asserted) |
-| "The continuum rule that memory is the zero-frequency soft factor fails: the soft factor is a phase, the memory a charge" | M — REFUTED (printed as refutation) |
+| "The continuum rule, memory as zero-frequency soft factor, fails: the soft factor is a phase, the memory a charge" | M — REFUTED (printed as refutation) |
 | (no "numerics verify each claim" sentence) | deliberately absent — the false v2 claim (verdict obj. 2) is removed; verification scope is stated in the body with named checks |
 
 ## Opening and introduction
 
 | sentence fragment | license |
 |---|---|
-| "a soft magnon leaves two-body ferromagnet scattering with a universal phase slope" | S2-2body — PROVED (informal one-sentence summary; the full model/domain fence is carried by the abstract, Theorem 1, the Conjecture-B paragraph, and Fig. 1) |
+| "in an exactly solved two-magnon problem a soft magnon exits with a universal phase slope (Theorem 1)" | signpost, not a claim surface (r3 strategy (b)): the sentence is indexical---it asserts the existence of the fenced Theorem 1 and points at it, claiming no model breadth, domain, or charge scope of its own; the fence lives in Theorem 1/Appendix B (r3 obj. 1 repaired) |
 | "acts at the ends of the chain as a concrete algebra of operators on matrix-product bond space" | A1(d1) — PROVED (window register) |
 | "granted the scattering hypothesis H-AD-G stated below, a magnon that crosses a domain wall displaces it by a quantized charge step" | M-quant-G — PROVED conditional; hypothesis named **in the same sentence** (verdict obj. 3 repaired) |
 | "the continuum rule ... is false here" | M — REFUTED |
@@ -160,7 +174,7 @@ data file that carries them.
 | fragment | license |
 |---|---|
 | Fig 1 "Corner A (asymptotic symmetry, proved)" | WI, A1, A2 — PROVED |
-| Fig 1 "Corner C (soft theorem, proved for two-body scattering in the bilinear isotropic ferromagnet, hard momentum inside (0,π), band edges and equal velocities excluded) ... (1/s at site spin s)" | S2-2body + S2-2body-S — PROVED; model/domain fence and exclusions in-caption (r2 objs. 11, 19) |
+| Fig 1 "Corner C (soft theorem, proved for two-body scattering in the bilinear isotropic ferromagnet on its regular two-magnon domain---fixed hard momentum inside (0,π), fixed channel, unit charge; band edges and equal velocities excluded) ... (1/s at site spin s)" | S2-2body + S2-2body-S — PROVED; the COMPLETE promotion fence is enumerated in-caption: model, regular two-magnon domain, fixed hard momentum inside (0,π), fixed channel, unit charge, band-edge and equal-velocity exclusions (r3 obj. 11 repaired) |
 | Fig 1 "Corner B (memory, proved conditional on the scattering hypothesis H-AD-G: complete kink--magnon wave operators for a fixed packet with no bound component, one reflected and one transmitted channel of definite charges ∓1, local decay, limits taken in the order volume, time, window)" | M-quant-G — PROVED conditional; the H-AD-G gloss now names the no-bound-component, local-decay, and limit-order clauses in-caption (r2 obj. 19 repaired) |
 | Fig 1 "No edge is a theorem: the A⇒C edge remains Conjecture S at every order---Corner C itself is proved two-body; C⇒B ...; B⇒A ..." | edge ledger: A⇒C is CONJECTURE at EVERY order (CLAIMS.md: the edge is not supplied by Corner A; G0(e) gives no Adler zero or universality). The caption no longer assigns any proved sector to the edge; the proved object is the Corner-C two-body amplitude (S2-2body/-S), stated as a corner, not an edge (r2 obj. 21 repaired) |
 | Fig 2 (a) "vanishes quadratically for each hard momentum k_h in a compact subset of (0,π) ... through the magnon frequency omega_h=J(1-cos k_h) and velocity v_h=J sin k_h" | S2-2body — PROVED; the compact-subset fence and the definitions of omega_h, v_h are in-caption (r2 obj. 19 repaired; "every hard momentum"/"all k_h" removed) |

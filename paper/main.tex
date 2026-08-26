@@ -42,15 +42,15 @@
 \affiliation{Leibniz Universit\"{a}t Hannover, Institute of Theoretical Physics, Appelstrasse 2, D-30167 Hannover, Germany}
 
 \begin{abstract}
-The infrared triangle of gauge theory---soft theorem, asymptotic symmetry,
-memory effect---is transplanted to quantum spin chains. Proved: a truncated
-symmetry acts only at its endpoints, its charge algebra centrally extended
-by the topological index; in the bilinear isotropic ferromagnet, on its
-regular two-magnon domain, a soft magnon exits with universal phase slope;
-granted a scattering hypothesis, a quantized wall step per transmitted
-magnon. Its edges stay conjectures. The continuum rule that memory is the
-zero-frequency soft factor fails: the soft factor is a phase, the memory a
-charge.
+The infrared triangle---soft theorem, asymptotic symmetry, memory
+effect---comes to quantum spin chains. Proved: a truncated symmetry acts
+only at its endpoints, its charge algebra centrally extended by the
+topological index; in the bilinear isotropic ferromagnet---regular
+two-magnon domain, fixed hard momentum inside the band, unit charge---the
+soft phase slope is universal; granted a scattering hypothesis, a
+quantized wall step per transmitted magnon. Its edges stay conjectures.
+The continuum rule, memory as zero-frequency soft factor, fails: the soft
+factor is a phase, the memory a charge.
 \end{abstract}
 
 \maketitle
@@ -61,13 +61,14 @@ charge.
 \caption{%
 The infrared triangle at finite lattice spacing. Corner $\mathcal{A}$
 (asymptotic symmetry, proved): a symmetry applied to a region of an MPS
-collapses to two bond operators $V(g)^{-1},V(g)$ at the region's ends; on windows padded about a bond these generate the charge
-algebra $\mathbb{C}_\omega[G]$, whose central extension $[\omega]$ is the
-SPT index. Corner $\mathcal{C}$ (soft theorem, proved for two-body
-scattering in the bilinear isotropic ferromagnet, hard momentum inside
-$(0,\pi)$, band edges and equal velocities excluded): a soft magnon exits
-with phase slope $2$ at spin $\frac12$, i.e.\ displaced by two sites
-($1/s$ at site spin $s$).
+collapses to two bond operators $V(g)^{-1},V(g)$ at the region's ends;
+padded about a bond, these generate the charge algebra
+$\mathbb{C}_\omega[G]$, central extension $[\omega]$ the SPT index. Corner $\mathcal{C}$ (soft theorem, proved for two-body
+scattering in the bilinear isotropic ferromagnet on its regular
+two-magnon domain---fixed hard momentum inside $(0,\pi)$, fixed channel,
+unit charge; band edges and equal velocities excluded): a soft magnon
+exits with phase slope $2$ at spin $\frac12$, i.e.\ displaced by two
+sites ($1/s$ at site spin $s$).
 Corner $\mathcal{B}$ (memory, proved conditional on the scattering
 hypothesis H-AD-G: complete kink--magnon wave operators for a fixed
 packet with no bound component, one reflected and one transmitted channel
@@ -90,8 +91,9 @@ and the \emph{domain wall}, the boundary between a region of up spins and a
 region of down spins. This Letter concerns what each does as the
 magnon's momentum is taken small, and the bookkeeping that controls
 both.
-The whole result in one sentence: on the lattice, a soft magnon leaves
-two-body ferromagnet scattering with a universal phase slope; the symmetry behind this
+The whole result in one sentence: in an exactly solved two-magnon problem
+a soft magnon exits with a universal phase slope
+(Theorem~\ref{thm:soft}); the symmetry behind this
 acts at the ends of the chain as a concrete algebra of operators on
 matrix-product bond space; granted the scattering hypothesis H-AD-G
 stated below, a magnon that crosses a domain wall
@@ -107,8 +109,8 @@ established for photons and gravitons at null infinity
 triangle to Goldstone bosons of a broken global symmetry \cite{Hamada2017};
 scalar and fracton versions followed
 \cite{Campiglia2017,Perez2022,Perez2023}, with local derivations
-avoiding null infinity \cite{DeLuca2024} and a careful account of
-infrared finiteness \cite{Prabhu2022}. Each corner has a
+avoiding null infinity \cite{DeLuca2024} and infrared finiteness
+\cite{Prabhu2022}. Each corner has a
 condensed-matter ancestor: soft-magnon decoupling and Adler zeros of
 nonrelativistic Goldstone theories are by now systematic
 \cite{WatanabeMurayama2012,Mojahed2021,Cheung2023,Gongyo2016}; Lan and
@@ -135,9 +137,9 @@ linearize the proofs, with the repository's shards and machine-checked
 certificates as ground truth (Appendix~E).
 
 \emph{Asymptotic symmetry.---}Apply the symmetry to a finite region $R$
-only: $U_R(g)=\prod_{x\in R}u_x(g)$. The intertwining relation, used once
-per site, cancels the $V$'s pairwise through the interior, and the whole
-operation collapses to two bond insertions, $V(g)^{-1}$ entering $R$ and
+only: $U_R(g)=\prod_{x\in R}u_x(g)$. Used once per site, the intertwining relation cancels the $V$'s
+pairwise through the interior: the operation collapses to two bond
+insertions, $V(g)^{-1}$ entering $R$ and
 $V(g)$ leaving it (Fig.~\ref{fig:triangle}). Everything
 a truncated symmetry does, it does at its two ends. Sending an end to
 infinity makes this an asymptotic-symmetry statement; three facts hold
@@ -145,8 +147,8 @@ infinity makes this an asymptotic-symmetry statement; three facts hold
 \emph{exactly} as a single bond insertion; as an operator sequence it
 converges strongly if and only if $V(g)$ is a phase---otherwise there is
 no strongly convergent implementer at all, the lattice counterpart of a
-large gauge transformation. (ii)~On finite windows padded around the distinguished
-bond, the insertions compose as the twisted group algebra
+large gauge transformation. (ii)~On windows padded around the distinguished bond
+the insertions compose as the twisted group algebra
 $\mathbb{C}_{\omega}[G]$: the SPT class is precisely the central extension
 of the asymptotic charge algebra---a group-cohomological multiplier, not
 a Lie-algebra central charge (Appendix~D). Whether these window states extend to normal states of the physical
@@ -197,8 +199,8 @@ ground state is an exact $\chi=1$ MPS, magnons are one-particle eigenstates
 with $\omega(k)=J(1-\cos k)$ and velocity $v(k)=J\sin k$, and $SU(2)$
 breaks to $U(1)$, making the magnon a type-B Goldstone mode
 \cite{WatanabeMurayama2012}. Write $S_{12}=\ec^{\ic\delta}$ for the exact
-two-magnon amplitude, $\delta$ the continuous phase branch vanishing with
-the soft momentum $k_s$, at fixed hard momentum $k_h$.
+two-magnon amplitude, $\delta$ the continuous phase branch vanishing
+with the soft momentum $k_s$ at fixed hard $k_h$.
 
 \begin{theorem}[soft magnon theorem, two-body]\label{thm:soft}
 For $k_h$ in a compact subset of $(0,\pi)$ and signed $k_s\to0$,
@@ -293,8 +295,8 @@ $\braket{N_T}$. The proof is charge bookkeeping
 (Appendix~C). One hypothesis is structural: the two vacua must carry
 \emph{opposite} charge density along one unbroken direction; the spin
 flip supplies this in XXZ, and a bare abelian symmetry cannot. H-AD-G itself we prove only for the dominant domain-wall sector
-of the XXZ chain, conditional on an explicitly stated sector-reduction
-hypothesis; for the full chain it remains an assumption (Appendix~C).
+of the XXZ chain, conditional on a stated sector-reduction hypothesis;
+for the full chain it remains an assumption (Appendix~C).
 Sparse-sector numerics at $N=160$ confirm
 $\delta x=-2\braket{N_T}$ at $s=\frac12$ to $0.064$ sites across the
 scan (worst for the slowest packets, trapped weight
@@ -390,8 +392,8 @@ reached through a soft limit or $p$ derivatives needs in addition $C^p$
 external data and the uniformity hypothesis H-soft-$p$,
 Appendix~D): nothing bulk is a topological invariant without a
 separate local-constancy proof. Along a symmetric path through the AKLT
-phase, a natural bulk soft-charge coefficient moves from $0.125$ to
-$0.240$ with the SPT class fixed.
+phase a natural bulk soft-charge coefficient moves from $0.125$ to
+$0.240$, SPT class fixed.
 At an \emph{unpaired endpoint} the situation inverts: the compensated soft
 residue is an operator on the $\chi$-dimensional edge register whose
 centered charge has spectrum in the $[\omega]$-shifted lattice
