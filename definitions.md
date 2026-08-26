@@ -745,9 +745,10 @@ does not vanish.  AD3 uses local decay without discarding this coherence.
 *Rebuilt 2026-08-26 in `theory/spt-rebuild.md` (there `Sd1'`--`Sd10'`),
 replacing the `spt-scoping-draft.md` promotion of `Sd1`--`Sd10` after the r1
 verdict `triangle-r1.md` S1--S8, and repaired after `corpus-r2.md` N1--N6.
-The parent SPT claims remain SKETCH awaiting critic r3; the two narrow splits
-are PROVED per corpus-r2.
-See `theory/TRIANGLE.md` §5 and `claims/CLAIMS.md`.*
+Status per the converged loop (`corpus-r4.md` PASS): SPT-B', SPT-T', SPT-D',
+SPT-M' (conditional) PROVED per corpus-r3; SPT-E' PROVED per corpus-r4;
+SPT-M'-dyn CONJECTURE; the two narrow splits (SPT-B-mult, SPT-E-AKLT) PROVED
+per corpus-r2. See `theory/TRIANGLE.md` §5 and `claims/CLAIMS.md`.*
 
 ## D19 (soft profiles, fixed registers, and limit order)
 

@@ -156,6 +156,35 @@ chain that still fits, `N = 46`. The `s = 3/2` sector grows faster still
 `N = 70`; an `N = 100` attempt was OOM-killed at 24 GB, so `s = 3/2` runs at
 `N = 64`.
 
+**Reading `H_truncation_leakage` (it is NOT an error bar).** The function returns
+the Frobenius norm of the matrix elements that `P H P` discards, summed over the
+*whole basis*. It is extensive — it grows with the basis size and with the
+number of boundary hops per configuration — and it carries no normalisation, so
+it cannot be compared to 1 or read as a relative error. Measured against the
+kept hopping operator:
+
+| run | dim | `‖P H P‖_F` (hopping) | leak | leak / total |
+|---|---|---|---|---|
+| `s = 1`, `N = 120`, `dmax = 1` | 136 998 | 165.5 | 4016.8 | 0.9992 |
+| `s = 1/2`, `N = 120`, `dmax = 1` | 3 481 | 7.6 | 50.2 | 0.9886 |
+
+The second row is the **frozen, accepted** spin-1/2 truncation (`dmax = 1 ≡
+dwmax = 3`) behind `results/memory-scan-1.json`, which agrees with the exact
+`≤3`-wall reference values to 0.9–5.8%. So a leak ratio near 1 is *normal* for
+this class of truncation and says nothing about accuracy: the Frobenius norm
+weights every configuration equally, whereas the physical state lives on a
+localized wall plus one magnon, and every discarded process creates an extra
+interface costing `~J_z`. The spin-1 number is larger than the spin-1/2 one only
+because the basis is 40× larger and a spin-1 wall has `n = 1` interior sites,
+each of which contributes boundary hops.
+
+What *does* bound the error is state-level and physical: the initial-state
+leakage (2.5% at `s = 1`, versus 7.4% in the frozen `s = 1/2` scan — the spin-1
+preparation is the cleaner of the two), exact norm/energy conservation (`P H P`
+is Hermitian), `N`-convergence, the `dmax = 1` vs `dmax = 2` comparison, and
+above all the `s = 1/2` control run on the *same code path with the same
+truncation*, which returns `−1.998`.
+
 **Baseline for `T` and `R`.** At `dmax = 1` the initial weights are exactly
 `(T,R) = (0,1)`, so `δx/N_T` is unambiguous. At `dmax ≥ 2` the dressed kink
 carries virtual pairs and starts with `T,R` slightly off `(0,1)`; the results
