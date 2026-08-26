@@ -47,25 +47,27 @@ refutation will be printed as a central result (TJO sign-off recorded).
   Analytic spin-S slope law in numerics/docs/spin1-twomagnon-notes.md (first
   derivation there recorded WRONG; the corrected one is the non-symmetric
   free-extension contact algebra).
-- paper/ — still v1 (pre-freeze-audit); v2 (tns-2ze) NOT yet started — it
-  now has its full certified ingredient list and is the next major step.
+- paper/ — v2 COMPLETE and L6-CERTIFIED (paper-v2-r5.md PASS, five
+  adversarial rounds 20→6→2→1→0; certification paragraph in the verdict).
+  4-page main text + appendices A-E, 3 figures from committed JSONs,
+  paper/v2-claim-audit.md maps every sentence to its DAG row. Also since
+  session-2 close: S2-2body-S PROVED (exact spin-S slope law, spin-s-r1.md)
+  — Bc's slope half is now a theorem at unit charge; corpus at 28 PROVED
+  rows. AWAITING: TJO's own read of paper/main.pdf.
 - Decisions recorded: SPT results ARE in the paper (rigidity dichotomy);
   Conjecture-M refutation printed as central result; numerics standardized
   on TensorKit+MPSKit (laptop-scale, low χ); ED stays as checker layer.
 
 ## Next steps (bd is the tracker — `bd ready`)
 
-1. tns-2ze — paper v2 (Fable subagent per L7; MUST first read
-   docs/prose-guide.md + refs 1305.2176 register). All ingredients certified.
-2. tns-c8q — promote the exact spin-S slope law to a theory shard
-   (S2-2body-S) + L6 loop; if it converges, Bc's slope half becomes theorem.
-3. tns-f5r — MPSKit showcase: spin-1 λ–D chain (all corners + SPT in one
+1. TJO reads paper/main.pdf; any edits re-enter via a critic round.
+2. tns-f5r — MPSKit showcase: spin-1 λ–D chain (all corners + SPT in one
    phase diagram); tns-cpq dynamical SPT-M'-dyn computation feeds it.
-4. tns-ebh — Bc falsifier round 2: charge-2 hard leg (|q| factor).
-5. tns-7ut (ML3), tns-acr (ML1+ML6), tns-axg (𝒮_W), tns-d51 (full-chain
+3. tns-ebh — Bc falsifier round 2: charge-2 hard leg (|q| factor).
+4. tns-7ut (ML3), tns-acr (ML1+ML6), tns-axg (𝒮_W), tns-d51 (full-chain
    D18), tns-00l (Mq-E all-volume) — the conjecture frontier, not
    paper-blocking.
-6. Parked/companion: tns-89h (Kähler/moment-map + Duistermaat–Heckman),
+5. Parked/companion: tns-89h (Kähler/moment-map + Duistermaat–Heckman),
    tns-0w0 ((2+1)d lattice celestial program), tns-qyb (experimental
    proposal), tns-1u8 (ML2 post-sweep minor residue).
 
