@@ -25,7 +25,7 @@
 | `ω(k)`, `v(k)` | one-magnon energy and group velocity `dω/dk` | definitions.md D6 |
 | `λ(k)` | Heisenberg rapidity `(1/2) cot(k/2)` | definitions.md D7 |
 | `ψ(x,y)`, `A_{12}`, `A_{21}` | ordered-coordinate two-magnon wave and its Bethe coefficients | definitions.md D7 |
-| `S_{12}`, `S_{21}` | coefficient ratios `A_{12}/A_{21}` and its inverse | definitions.md D7 |
+| `S_{12}`, `S_{21}` | coefficient ratios `A_{12}/A_{21}` and its inverse; generalized from D7's spin-`1/2` model to site spin `S` by Theorem S2-2body-S | definitions.md D7; theory/spin-s-twomagnon.md |
 | `E(k_1,k_2)` | two-magnon scattering energy | definitions.md D7 |
 | `δ(k_1,k_2)` | continuous phase branch of `S_{12}=exp(iδ)` fixed at a stated base point | definitions.md D7 |
 | `K`, `r`, `f_r`, `t`, `η`, `E_b(K)` | bound-pair total momentum, separation, relative wave, decay data, and energy | definitions.md D7 |
@@ -188,6 +188,16 @@ two rows above are marked SUPERSEDED in place (`S(k;·)`, `R(k)`).*
 | `\|χ_π⟩` | the singular (compactified-rapidity) `K=π` completion state, even `N` | ml2-completeness.md (12) |
 | `\mathscr B_K^{D7}`, `\mathscr X_K`, `\mathscr E_K` | the D7-representable fiber family, its singular completion, and their union | ml2-completeness.md (23) |
 | `ML1`--`ML6` | the six missing lemmas of the general soft theorem | soft-current-recon.md ⟨1⟩7 |
+
+**Spin-`S` two-magnon theorem (proposer shard `S2-2body-S`).**
+
+| Symbol | Meaning | First fixed in |
+|---|---|---|
+| `S`, `H_S` | site spin `S∈{1/2,1,3/2,…}` (uppercase local alias of D13's `s`) and the shifted isotropic spin-`S` ferromagnet | theory/spin-s-twomagnon.md Statement |
+| `ω_S(k)`, `v_S(k)` | spin-`S` one-magnon dispersion `2JS(1−cos k)` and group velocity `2JS sin k` | theory/spin-s-twomagnon.md Statement |
+| `a`, `b`, `μ` | contact polynomials `1+z_1z_2`, `z_1+z_2`, and `(2S−1)a+b` | theory/spin-s-twomagnon.md Statement |
+| `g`, `ρ`, `Σ`, `W` | local contact variables `√[S(2S−1)]`, double-occupancy coefficient, `A+B`, and `Az_2+Bz_1` | theory/spin-s-twomagnon.md ⟨1⟩1--⟨1⟩2 |
+| `q_rel`, `c_K`, `n` | relative half-momentum, `cos(K/2)`, and the independent closed-form numerator with `S_{12}=n/(−conj n)` | theory/spin-s-twomagnon.md ⟨1⟩3 |
 
 **Corner B (memory), D13--D18.**
 
