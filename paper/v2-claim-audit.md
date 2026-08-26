@@ -10,7 +10,14 @@
      This revision repairs the row-map errors found by
      theory/verdicts/paper-v2-r1.md (objections 1-17): no aggregation row is
      used as a license, no conditional row licenses an unconditional sentence,
-     and every number is the one the committed data file actually contains. -->
+     and every number is the one the committed data file actually contains.
+     Round 2 (theory/verdicts/paper-v2-r2.md, FATAL 1,11,21; MAJOR 8,13;
+     MINOR 19) is repaired on top: model/domain fences on every S2-2body-S
+     assertion surface (abstract, main paragraph, Fig. 1), the D17 l1 packet
+     class inside Theorem 2's display, C^p in the main SPT sentence,
+     self-contained Fig. 1/Fig. 2 captions, and the A=>C edge stated as
+     Conjecture S at every order (rows 101, 123, 132, 156-159 and the
+     abstract rows updated in lockstep). -->
 
 # Paper v2.1 claim audit — main.tex @ 2026-08-26 (post-repair)
 
@@ -27,10 +34,10 @@ data file that carries them.
 |---|---|
 | "is transplanted to quantum spin chains" | framing only; no theorem claim (the proved/conditional/conjectural split follows sentence-by-sentence) |
 | "Proved: a truncated symmetry acts only at its endpoints" | WI, A1(a) — PROVED |
-| "generating a charge algebra whose central extension is the topological index" | A1(d1),(d3) — PROVED (padded-window register; H-split carried in body and Appendix A) |
-| "a soft magnon leaves two-body scattering with a universal phase slope" | S2-2body, S2-2body-S — PROVED (two-body scope in-sentence) |
-| "granted a scattering hypothesis, a quantized wall displacement per transmitted magnon" | M-quant-G — PROVED as conditional implication; conditionality in-sentence |
-| "The edges of the triangle remain conjectures" | edge ledger: A⇒C CONJECTURE, C⇒B SKETCH, B⇒A SKETCH — stated as unproved (SKETCH edges are *a fortiori* not asserted) |
+| "its charge algebra centrally extended by the topological index" | A1(d1),(d3) — PROVED (padded-window register; H-split carried in body and Appendix A) |
+| "in the bilinear isotropic ferromagnet, on its regular two-magnon domain, a soft magnon exits with universal phase slope" | S2-2body, S2-2body-S — PROVED; model AND domain fence in the claim-bearing abstract sentence (r2 obj. 1 repaired) |
+| "granted a scattering hypothesis, a quantized wall step per transmitted magnon" | M-quant-G — PROVED as conditional implication; conditionality in-sentence |
+| "Its edges stay conjectures" | edge ledger: A⇒C CONJECTURE, C⇒B SKETCH, B⇒A SKETCH — stated as unproved (SKETCH edges are *a fortiori* not asserted) |
 | "The continuum rule that memory is the zero-frequency soft factor fails: the soft factor is a phase, the memory a charge" | M — REFUTED (printed as refutation) |
 | (no "numerics verify each claim" sentence) | deliberately absent — the false v2 claim (verdict obj. 2) is removed; verification scope is stated in the body with named checks |
 
@@ -38,7 +45,7 @@ data file that carries them.
 
 | sentence fragment | license |
 |---|---|
-| "a soft magnon leaves two-body scattering with a universal phase slope" | S2-2body — PROVED |
+| "a soft magnon leaves two-body ferromagnet scattering with a universal phase slope" | S2-2body — PROVED (informal one-sentence summary; the full model/domain fence is carried by the abstract, Theorem 1, the Conjecture-B paragraph, and Fig. 1) |
 | "acts at the ends of the chain as a concrete algebra of operators on matrix-product bond space" | A1(d1) — PROVED (window register) |
 | "granted the scattering hypothesis H-AD-G stated below, a magnon that crosses a domain wall displaces it by a quantized charge step" | M-quant-G — PROVED conditional; hypothesis named **in the same sentence** (verdict obj. 3 repaired) |
 | "the continuum rule ... is false here" | M — REFUTED |
@@ -98,7 +105,7 @@ data file that carries them.
 |---|---|
 | "Its change over the event is an exact operator identity, no hypotheses ..." | M-flux — PROVED |
 | "the zero-frequency weight of the physical boundary current---the lattice image ..." | M-flux — PROVED; continuum comparison LIT |
-| Theorem 2: fixed normalizable kink-magnon wavepacket (no plane wave); H-AD-G named; wave operators exist and complete; exactly one reflected + one transmitted channel; charges q_in=q_L=-1, q_T=+1; no further propagating channel; no bound-state component; local decay; limit order (volume, time, window) | M-quant-G — PROVED as conditional implication (mquant-g-r2.md). ALL load-bearing H-MQG(4-5)/D18(AD1-AD4) clauses are now INSIDE the displayed statement (verdict obj. 8 repaired) |
+| Theorem 2: one fixed kink-magnon wavepacket "whose charge deviations from the two vacua are summable---the ℓ¹ kink class (no plane wave)"; H-AD-G named; wave operators exist and complete; exactly one reflected + one transmitted channel; charges q_in=q_L=-1, q_T=+1; no further propagating channel; no bound-state component; local decay; limit order (volume, time, window) | M-quant-G — PROVED as conditional implication (mquant-g-r2.md). The D17 ℓ¹/summable-charge-deviation packet class (load-bearing per memory-quantization-general.md items 1,3: weak-* membership alone does not make the regularized charge converge) and all D18(AD1-AD4) clauses are INSIDE the displayed statement (r1 obj. 8, r2 obj. 8 repaired) |
 | "quantized by charge conservation alone: it does not depend on momentum, anisotropy, packet shape, or any scattering phase" | M-quant / M-quant-G — PROVED conditional (channel statement) |
 | "The proof is charge bookkeeping (Appendix C)" | M-quant-G (G.3)-(G.4) — PROVED conditional |
 | "the two vacua must carry opposite charge density along one unbroken direction; ... a bare abelian symmetry cannot" | M-quant-G §3 Remark (Weyl-element criterion) — PROVED scope |
@@ -120,7 +127,7 @@ data file that carries them.
 | "We conjecture---Conjecture B---that both equal \|q_hard\|/s" | Bc — CONJECTURE, labelled in-sentence |
 | "The conjecture was built to fail at s != 1/2 ... it survived" | Bc row falsifier record (2026-08-26) |
 | "phase slope = 1/s across s in {1/2,1,3/2,2} and the memory quantum = -1/s across s in {1/2,1,3/2}, within pre-registered 8% bands (every gated run within 2.7%, and within 1% at the cleanest kinematics)" | spin1-bc-falsifier.json + spin1-bc-crosscheck.json. Under the documented trapped<1e-2 gate (spin1-twomagnon-notes.md), the worst gated deviation is 2.69% (s=1, k0=0.8); k>=1.2/1.5 rows are within 1%. Memory s-range honestly {1/2,1,3/2} (no s=2 memory run) |
-| "An exact two-magnon computation now proves the slope half: ... sgn(v_h-v_s)/s ... ---the unit-charge two-body slope only" | **S2-2body-S — PROVED** (theory/spin-s-twomagnon.md; verdict theory/verdicts/spin-s-r1.md PASS). Verdict obj. 11 resolved UPWARD: the paper/audit are rebased onto the promoted DAG; the theorem's exact scope (unit-charge two-body slope only) is in the same sentence |
+| "An exact two-magnon computation now proves the slope half for the bilinear isotropic ferromagnet at every site spin: on the regular two-magnon domain, at each fixed hard momentum in (0,π) and fixed channel, ∂δ/∂k_s|_0 = sgn(v_h−v_s)/s ... ---the unit-charge two-body slope only, with band edges and equal velocities excluded" | **S2-2body-S — PROVED** (theory/spin-s-twomagnon.md; verdict theory/verdicts/spin-s-r1.md PASS). The main-paragraph sentence now mirrors the promotion sentence's full fence: bilinear isotropic FM, every S, regular two-body domain, fixed 0<\|k_h\|<π and fixed channel, endpoint/equal-velocity excluded, unit charge only; the remaining exclusions (spin-S Bethe completeness, Conjecture S, memory half, \|q\|>1, Conjecture B) are in the adjacent sentences and Appendix B (r2 obj. 11 repaired) |
 | "The memory half remains conditional on H-AD-G; the \|q_hard\| factor is untested ... next falsifier" | Bc row: explicitly untested; honesty sentence (verdict obj. 12: identification never restated as fact) |
 
 ## Where the SPT index lives
@@ -129,7 +136,7 @@ data file that carries them.
 |---|---|
 | "The answer, proved in Appendix D, is a rigidity dichotomy" | SPT-B-mult, SPT-B', SPT-E', SPT-E-AKLT — PROVED |
 | "projective multipliers cancel exactly" | SPT-B-mult — PROVED |
-| "every normalized bulk coefficient is continuous along common-gap symmetric deformation paths with continuously varying external data (soft-limit coefficients need in addition the uniformity hypothesis H-soft-p, Appendix D)" | SPT-B' — PROVED; ALL hypotheses (common gap, continuous/C^p external data, H-soft-p) now in the main-text sentence (verdict obj. 13 repaired) |
+| "every normalized bulk coefficient is continuous along common-gap symmetric deformation paths with continuously varying external data (a coefficient reached through a soft limit or p derivatives needs in addition C^p external data and the uniformity hypothesis H-soft-p, Appendix D)" | SPT-B' — PROVED; common gap, continuous external data, C^p external data for soft-limit/derivative coefficients, and H-soft-p are ALL in the main-text sentence (r2 obj. 13 repaired) |
 | "nothing bulk is a topological invariant without a separate local-constancy proof" | SPT-B'(iii) — PROVED |
 | "bulk soft-charge coefficient moves from 0.125 to 0.240" | spt-rebuild.md (3.2) + S-C3 record |
 | "the compensated soft residue is an operator on the chi-dimensional edge register ... [omega]-shifted lattice ... dimension at least ..." | SPT-E'(i)-(iii) — PROVED (registered statement; physical reading behind H-split) |
@@ -153,10 +160,10 @@ data file that carries them.
 | fragment | license |
 |---|---|
 | Fig 1 "Corner A (asymptotic symmetry, proved)" | WI, A1, A2 — PROVED |
-| Fig 1 "Corner C (soft theorem, proved for two-body scattering) ... (1/s at site spin s)" | S2-2body + S2-2body-S — PROVED, scope in caption |
-| Fig 1 "Corner B (memory, proved conditional on the scattering hypothesis H-AD-G: complete kink--magnon wave operators, one reflected and one transmitted channel of definite charges ∓1)" | M-quant-G — PROVED conditional; hypothesis content in-caption (obj. 19) |
-| Fig 1 "No edge is a theorem: A⇒C ... conjectural beyond (Conjecture S); C⇒B ...; B⇒A ..." | edge ledger statuses, self-contained (obj. 19) |
-| Fig 2 (a) "vanishes quadratically ... coefficient v_h/omega_h" | S2-2body — PROVED |
+| Fig 1 "Corner C (soft theorem, proved for two-body scattering in the bilinear isotropic ferromagnet, hard momentum inside (0,π), band edges and equal velocities excluded) ... (1/s at site spin s)" | S2-2body + S2-2body-S — PROVED; model/domain fence and exclusions in-caption (r2 objs. 11, 19) |
+| Fig 1 "Corner B (memory, proved conditional on the scattering hypothesis H-AD-G: complete kink--magnon wave operators for a fixed packet with no bound component, one reflected and one transmitted channel of definite charges ∓1, local decay, limits taken in the order volume, time, window)" | M-quant-G — PROVED conditional; the H-AD-G gloss now names the no-bound-component, local-decay, and limit-order clauses in-caption (r2 obj. 19 repaired) |
+| Fig 1 "No edge is a theorem: the A⇒C edge remains Conjecture S at every order---Corner C itself is proved two-body; C⇒B ...; B⇒A ..." | edge ledger: A⇒C is CONJECTURE at EVERY order (CLAIMS.md: the edge is not supplied by Corner A; G0(e) gives no Adler zero or universality). The caption no longer assigns any proved sector to the edge; the proved object is the Corner-C two-body amplitude (S2-2body/-S), stated as a corner, not an edge (r2 obj. 21 repaired) |
+| Fig 2 (a) "vanishes quadratically for each hard momentum k_h in a compact subset of (0,π) ... through the magnon frequency omega_h=J(1-cos k_h) and velocity v_h=J sin k_h" | S2-2body — PROVED; the compact-subset fence and the definitions of omega_h, v_h are in-caption (r2 obj. 19 repaired; "every hard momentum"/"all k_h" removed) |
 | Fig 2 (b) "passes through -2 sites ... coefficient 2 to 0.2%" | S2-2body + fm-displacement-scan.json |
 | Fig 2 "within two-body scattering; beyond is Conjecture S, unproved" | scope statement in-caption (obj. 19; replaces "see the text") |
 | Fig 3 (a) "steps back by two sites and stays" (single event) | memory-scan-1.json main-D3.0-k1.2 record (dx2 = -1.978) — data description |
