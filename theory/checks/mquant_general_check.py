@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Arithmetic certificate for Theorem M-quant-G.
 
-The checks are exact SymPy identities and remain active under ``python3 -O``.
-They cover the general charge subtraction, an SU(2) vacuum pair with unbroken
-U(1), a rank-two torus normalised by a Weyl element, and the frozen spin-1/2
-XXZ values.
+The charge checks are exact SymPy identities and remain active under
+``python3 -O``; the semidirect-product check additionally constructs concrete
+numerical representation matrices.  They cover the general charge
+subtraction, an SU(2) vacuum pair with unbroken U(1), a rank-two torus
+normalised by a Weyl element, and the frozen spin-1/2 XXZ values.
 
 ``--red`` changes the transmitted primitive charge from +1 to -1 while the
 theorem target remains ``-1/s``.  The general-law check must then exit 1.
