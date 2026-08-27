@@ -1,3 +1,20 @@
+<!-- ============================================================
+     SUPERSEDED (2026-08-28, T1 round-2 synthesis).
+     This lane-B shard FAILED its r1 critique:
+     theory/verdicts/memory-index-b-r1.md — FAIL(1,2,3,4,5,6).
+     Its surviving content was merged, at the critic's
+     surviving-weaker-statement strength only, into the canonical shard
+       theory/memory-index.md  (§5 there: ⟨1⟩9 M-IDX-density decircularized,
+       ⟨1⟩10 zero offset, ⟨1⟩11 tail-normal-ordered vacuum laws,
+       ⟨1⟩12 nonscalar-V_θ obstruction, nonexistence direction only),
+     per briefs/t1-synthesis.md and briefs/synthesis-notes.md.
+     Do NOT cite this file as a proof source; it is retained verbatim below
+     as the historical lane-B record.  Its merge proposals are superseded by
+     theory/memory-index.md §8.  Relevant verdicts:
+       theory/verdicts/memory-index-b-r1.md (this shard, FAIL),
+       theory/verdicts/memory-index-r1.md (baseline shard, PASS).
+     ============================================================ -->
+
 <!-- ROLE: independent proposer proof shard for Theorem M-INDEX, Lane T1,
      attempt B (Fable lane, briefs/t1-fable-prover.md).  Deliberately written
      without reading theory/memory-index.md (decorrelation).  The claim enters
