@@ -270,3 +270,12 @@ SUPERSEDED in place rather than deleted).*
 | `ρ` (density) | common unbroken-circle tail density `ω_α(S^z)=+ρ=-ω_β(S^z)`; a real parameter, deliberately distinct from D13's site-spin `s` (H-MQG(2) identifies the D13(a) calibration parameter with `ρ`).  Overload note: `ρ` is file-local to theory/spin-s-twomagnon.md ⟨1⟩1--⟨1⟩2 as the double-occupancy coefficient; `κ_{W,c_0}` is the finite-window coset offset | theory/memory-index.md ⟨1⟩9 |
 | `Q_W^α`, `Q_W^β`, `μ_∞^α` | tail-specific vacuum-normal-ordered window charges `Σ_{x∈W}(S^z_x∓ρ)` and the limiting vacuum charge law `(2π)^{-1}∫e^{-iθν}\|tr(V_θr)\|²dθ` | theory/memory-index.md ⟨1⟩11 |
 | `δx` (asymptotic) | the D27-defined ordered asymptotic value of D13(a)'s observable; the finite-time `δx` of D13(a) is unchanged (overload flagged per memory-index-r1 NOTE 5) | proposed definitions.md D27 |
+| `Γ_K`, `Γ_{M,γ}` | exact Gram-normalized kink and tail-magnon band maps assumed by H-ACE | definitions.md D28 |
+| `E_K`, `K_-`, `K_+`, `W_K`, `Δ_M` | kink dispersion, its extrema and bandwidth, and the selected magnon gap | definitions.md D28 |
+| `χ_K,χ_γ,χ̃_K,χ̃_γ` | momentum filters and their companions fixing the filtered frames and kernels | definitions.md D28(3),(4) |
+| `h_K,h_γ` | filtered hopping kernels (Fourier coefficients of `E_Kχ̃_K`, `ω_γχ̃_γ`); rapidly decreasing | definitions.md D28(4) |
+| `κ_a(x)`, `κ_a^{(0)}(x)` | filtered and unfiltered exact kink Wannier vectors | theory/ansatz-scattering.md (C2) |
+| `θ_c` | fixed smooth monotone channel cutoff, transition width `w` | theory/ansatz-scattering.md ⟨1⟩5.⟨2⟩1 |
+| `ε_v`, `d_abs`, `Θ_inel`, `η_inel` | velocity gap, same-kink absorption gap, known inelastic threshold, and its margin (last three: fence only, Remark D28-R) | definitions.md D28 |
+| `D_-^L`, `D_+^L`, `D_+^T` | incoming-left, outgoing-left, and outgoing-transmitted fixed-packet domains | definitions.md D28 |
+| `H_out^{ex}`, `N_T^{ex}` | constructed outgoing range and its transmitted-channel projection; no completeness implied | theory/ansatz-scattering.md ACE.2 |

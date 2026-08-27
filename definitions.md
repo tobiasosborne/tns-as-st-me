@@ -1063,3 +1063,89 @@ second, and the spatial exhaustion last.  No plane-wave or `k→0` interchange
 is included.  *(The former clause LR4 — assumed existence — and the former
 interaction-range-collar TV clause are deleted: the first was a theorem,
 the second was cited by no step; memory-index-r1 objection 1.)*
+
+---
+
+# Ansatz-conditioned scattering — D28
+
+*Appended 2026-08-28 from theory/ansatz-scattering.md §5 (merge proposal applied
+verbatim modulo blockquote scaffolding; r1 FAIL(1,2,3,4) repaired, r2 pending).*
+
+## D28 (H-ACE: exact fixed-packet kink--magnon band data)
+  Assume
+H-MQG(1)--(3).  In addition:
+
+1. The kink folium has a covariant positive-energy Hilbert realization
+`(H_{αβ},π_{αβ},U_{αβ})` implementing the commuting infinite-volume time and
+lattice translations.  This is extra structure beyond the state-set
+definition D9/A2.  The vacuum GNS triples are `(H_γ,π_γ,Ω_γ)`, `γ∈{α,β}`
+(D1(d)), with `HΩ_γ=0`; there is no vacuum vector in `H_{αβ}`.
+2. Its Hamiltonian has an isolated finite-multiplicity kink band with
+dispersion `E_K∈C²(𝕋)` (matrix valued on the finite frame index).  A fixed
+Gram-normalized, translation-covariant finite-core ansatz frame gives an
+**exact** band map `Γ_K`, satisfying `H_{αβ}Γ_K=Γ_KE_K`; it is not merely a
+Rayleigh--Ritz approximation.
+3. Each relevant vacuum tail `γ∈{α,β}` has an isolated selected magnon band
+`ω_γ` (identified as `ω` when symmetry relates the tails), gap
+`Δ_M:=min_kω(k)>0`, and Gram-normalized **exact** band map `Γ_{M,γ}`.  A
+spacetime-Schwartz energy-momentum filter of a local observable gives
+almost-local creators `a_{γ,b}(n)` with strictly positive energy transfer and
+with the **momentum-filtered normalisation**
+`a_{γ,b}(n)Ω_γ=Γ_{M,γ}(χ_γe_n⊗e_b)`, `e_n(k):=e^{-ikn}`,
+for a fixed filter `χ_γ∈C_c^∞(𝕋)`; translation covariance makes `χ_γ`
+independent of `n`.  This equality, not merely nonzero overlap with the
+band, is part of the exactness hypothesis.  *(A position-delta normalisation
+— the case `χ_γ≡1` — is not assumed and is in fact incompatible with a
+compactly supported energy--momentum filter.)*
+4. Packet amplitudes are finite sums of `C_c^∞` products and the resulting
+physical packet states lie in the `ℓ¹` class D17.  The dispersions
+are `C^∞` on open neighbourhoods `U_K,U_γ` of their packet momentum supports
+(global `C²` is retained), their kink and magnon velocity supports have
+distance `ε_v>0`, and their signs are: incoming-left `v_M-v_K≥ε_v` at
+`t→-∞`; outgoing-left `v_M-v_K≤-ε_v`; outgoing-right `v_M-v_K≥ε_v` at
+`t→+∞`.  Thus this is a fixed-packet condition and excludes equal velocities
+and the soft endpoint.  **Filter compatibility:** the filters of (3) and the
+kink filter `χ_K∈C_c^∞(𝕋)` satisfy `χ_•≡1` on the corresponding packet
+momentum support and `supp χ_•⊂U_•`; companions `χ̃_•∈C_c^∞(𝕋)` satisfy
+`χ̃_•≡1` on `supp χ_•` and `supp χ̃_•⊂U_•`.  The channel Hamiltonian symbols
+`h_K:=E_Kχ̃_K`, `h_γ:=ω_γχ̃_γ` are then `C^∞(𝕋)` and agree with the
+dispersions on the packet supports.
+5. **(Two-cluster factorization through the vacuum tails.)**  Write
+`κ_a^{(0)}(x):=Γ_K(e_x⊗e_a)` for the unfiltered exact kink Wannier vectors.
+There are `C_cl<∞` and `λ̃∈(max(λ_{E_α},λ_{E_β}),1)` (D1(c)) such that for
+every `γ∈{α,β}`, all frame indices `a,a'`, all `x,x'∈ℤ`, every `r≥1`, and
+every pair `A∈𝔄_{Λ_α}`, `B∈𝔄_{Λ_β}` with `Λ_α⊂(-∞,min(x,x')-r]` on the `α`
+side and `Λ_β⊂[max(x,x')+r,∞)` on the `β` side (either factor may be `1`) —
+
+  `|⟨κ_a^{(0)}(x),ABκ_{a'}^{(0)}(x')⟩ - ω_α(A)ω_β(B)⟨κ_a^{(0)}(x),κ_{a'}^{(0)}(x')⟩| ≤ C_cl||A||\,||B||\,λ̃^r`.  **(D28-C)**
+
+The one-tail case is `B=1` (or `A=1`), where `ω(1)=1`; the genuinely two-sided
+case is used only in ⟨1⟩6.⟨2⟩3.  `C_cl` and `λ̃` depend on the model and the
+frame only: **not** on
+`A,B,Λ_α,Λ_β,r,x,x',a,a'`, and in particular not on any time parameter (the positions
+are packet-driven and time dependent downstream).  This is the localization
+input that turns exact band equations into a two-cluster estimate; isolated
+eigenvalues alone do not imply it.  It is the sole replacement for the vacuum
+clustering apparatus of `refs/arxiv-1412.2970` (Lemma `clustering-lemma`,
+Theorem `clustering`); no four-point analogue of `(full-decay)` is assumed.
+
+The asymptotic channel Hamiltonian is multiplication by `E_K(p)+ω_γ(k)`.
+Smooth packet domains with the three velocity signs are denoted
+`D_-^L,D_+^L,D_+^T`; `P_L,P_T` are the two outgoing direct-sum projections.
+
+**Remark D28-R (regime fence; NOT a hypothesis of AC-EX).**  Put
+`K_-:=min E_K`, `K_+:=max E_K`, `W_K:=K_+-K_-`, and let `I_in` be the range
+of `E_K(p)+ω(k)` on the incoming packet support.  Same-band kink absorption
+is excluded by `d_abs:=dist(I_in,[K_-,K_+])>0`; the packet-independent
+sufficient condition is `Δ_M>W_K`.  With `Δ_r:=min_kω_r(k)` for every other
+known one-particle vacuum band and `K_*:=inf_{j≥2,p}E_{K,j}(p)` for every
+other known kink band, `sup I_in+η_inel<Θ_inel` where
+`Θ_inel:=min{K_-+2Δ_M,K_*,inf_r(K_-+Δ_r)}` and `η_inel>0`; absent entries are
+`+∞`.  The three entries respectively exclude an additional magnon, a
+higher-kink absorption channel, and a different one-particle channel.  An
+uncomputed wall--magnon bound band is not excluded.
+**These inequalities are used nowhere in the proof of AC-EX.**  Their role is
+to make the *exactness* hypotheses (2)--(3) physically plausible — an isolated
+exact band is not to be expected when a competing channel is open — so they
+belong to the justification of D28, not to its inferential content.  Adding
+or deleting them changes no step of `theory/ansatz-scattering.md`.
