@@ -1,17 +1,22 @@
 <!-- ROLE: T2 proposer shard for AC-EX.  Only a critic-fixed L6 loop may
-     promote the claim.  New definitions are merge proposals, not live D-numbers.
+     promote the claim.  D28 is LIVE in definitions.md since 2026-08-28
+     (commit 2cd5ec2); the shared files are authoritative for definitions,
+     notation and claim rows, and §5 is a pointer index (L4).
      r2 revision (2026-08-28): repairs to the four MAJOR and two MINOR
      objections of theory/verdicts/ansatz-scattering-r1.md; see §6 REPAIR
-     RESPONSE for the objection-by-objection map.  Every edit below is
-     traceable to an objection id; no other change was made. -->
+     RESPONSE for the objection-by-objection map.  r2-repair pass (lane A,
+     2026-08-28): memory-index-r2.md objections 2, 5, 8 and NOTE 13; response
+     table in theory/memory-index.md §10.  Every edit below is traceable to an
+     objection id; no other change was made. -->
 
 # AC-EX — fixed-packet kink--magnon wave operators from exact ansatz bands
 
 **Proposer status:** **SKETCH**.  This is an existence and isometry theorem on
 specified packet domains.  It proves neither asymptotic completeness nor that
 an arbitrary incoming vector has an expansion in the constructed outgoing
-channels.  Proposed definition D28 is reproduced verbatim in **MERGE
-PROPOSALS** and is cited below as `D28-P`.  After the r1 loop, part **ACE.3 is
+channels.  Definition **D28** is live in `definitions.md` (merged 2026-08-28,
+commit `2cd5ec2`), which is authoritative for its text; §5 holds only pointers
+(L4, r2 objection 8).  After the r1 loop, part **ACE.3 is
 conditional** on a named local-decay hypothesis `(AD3-ex)` that this shard does
 *not* prove (Objection 4).
 
@@ -19,12 +24,12 @@ conditional** on a named local-decay hypothesis `(AD3-ex)` that this shard does
 
 ### THEOREM AC-EX
 
-**ASSUME.** H-MQG(1)--(3) from `memory-quantization-general.md`, proposed
-`D28-P (H-ACE)`, and — for ACE.3 only — the charge assignment
+**ASSUME.** H-MQG(1)--(3) from `memory-quantization-general.md`, the live
+`D28 (H-ACE)` of `definitions.md`, and — for ACE.3 only — the charge assignment
 `q_in=q_L=-1`, `q_T=+1` together with the local-decay hypothesis `(AD3-ex)`
 stated in ⟨1⟩7.
 
-**PROVE.**  On the fixed packet domains of D28-P:
+**PROVE.**  On the fixed packet domains of D28:
 
 1. **(ACE.1)** the Cook limits `W_-^L`, `W_+^L`, and `W_+^T` exist;
 2. **(ACE.2)** `W_-^L` and `W_+:=W_+^L\oplus W_+^T` are isometries, and
@@ -48,26 +53,26 @@ No statement is made at `k=0` or after a packet-soft limit.
 **(C1) Vacuum vectors versus vacuum states** *(Objection 6)*.  `ω_γ`,
 `γ∈{α,β}`, is the vacuum **state** on `𝔄` (D1(d)); `(H_γ,π_γ,Ω_γ)` is its GNS
 triple, and `Ω_γ` is a vector **in `H_γ` only**.  There is no vacuum vector in
-the kink Hilbert space `H_{αβ}` of D28-P(1).  Every display of the form
+the kink Hilbert space `H_{αβ}` of D28(1).  Every display of the form
 `XΩ_γ=0` below is a statement in `H_γ` about `π_γ(X)`, equivalent to
 `ω_γ(X^†X)=0`; the corresponding statement inside `H_{αβ}` is always made
 through the two-cluster inequality (D28-C), never by transporting `Ω_γ`.
 
 **(C2) Filtered frames** *(Objection 1)*.  Fix once and for all momentum
 filters `χ_K,χ_γ∈C_c^∞(𝕋)` and companions `χ̃_K,χ̃_γ∈C_c^∞(𝕋)` as in
-D28-P(3)--(4): `χ_•≡1` on the corresponding packet momentum support,
+D28(3)--(4): `χ_•≡1` on the corresponding packet momentum support,
 `χ̃_•≡1` on `supp χ_•`, and `supp χ̃_•` contained in the neighbourhood on which
 the corresponding dispersion is `C^∞`.  Write `e_x(p):=e^{-ipx}`,
 `ê_x^K:=χ_K e_x`, `ê_n^γ:=χ_γ e_n`.  The **filtered Wannier frames** are
 
-`κ_a(x):=Γ_K(ê_x^K⊗e_a)`,  `a_{γ,b}(n)Ω_γ=Γ_{M,γ}(ê_n^γ⊗e_b)`  (D28-P(3)),
+`κ_a(x):=Γ_K(ê_x^K⊗e_a)`,  `a_{γ,b}(n)Ω_γ=Γ_{M,γ}(ê_n^γ⊗e_b)`  (D28(3)),
 
 and the **filtered hopping kernels** are the Fourier coefficients of the
 matrix-valued `C^∞` symbols `h_K:=E_Kχ̃_K` and `h_γ:=ω_γχ̃_γ`:
 `h_{K,a'a}(m):=∫(dp/2π)e^{ipm}(h_K(p))_{a'a}`, likewise `h_{γ,b'b}(m)`.
 Unfiltered objects carry a superscript `(0)`: `κ_a^{(0)}(x):=Γ_K(e_x⊗e_a)`.
 The r1 shard used `χ_K=χ_γ≡1` (position deltas); that choice is what
-Objection 1 refuted, and it is also inconsistent with D28-P(3)'s own
+Objection 1 refuted, and it is also inconsistent with D28(3)'s own
 spacetime-Schwartz energy--momentum filter, which cannot produce a
 momentum-flat profile.
 
@@ -77,7 +82,7 @@ momentum-flat profile.
 
 ### ⟨1⟩1. The kink sector has the fibering needed by the proof
 
-**ASSUME.** D28-P(1)--(3).
+**ASSUME.** D28(1)--(3).
 
 **PROVE.** Momentum, group velocity, and energy transfer used below are
 defined without a translation-invariant kink state.
@@ -91,11 +96,11 @@ therefore representation independent.
 `(exchange-property)`, `(LRB)` and Theorem `smearing-theorem`.
 
 **⟨2⟩2.** D9/A2 only fix state-sector labels; they do not furnish a cyclic
-translation-fixed vector.  D28-P(1) separately assumes a covariant positive
+translation-fixed vector.  D28(1) separately assumes a covariant positive
 energy representation `(H_{αβ},π_{αβ},U_{αβ})`.  SNAG applied to the commuting
 unitaries `U_{αβ}(t,n)` gives the direct-integral momentum fibers.
 
-*Justification.* D9(a), claim A2, D28-P(1), and the SNAG computation in
+*Justification.* D9(a), claim A2, D28(1), and the SNAG computation in
 `refs/arxiv-1412.2970/Scattering_spin-AHP1.tex`, equation `(SNAG)`.
 
 **⟨2⟩3.** In those fibers the exact kink map obeys
@@ -107,14 +112,14 @@ so all vectors used below lie in a bounded spectral subspace of `H_{αβ}` and
 every commutator manipulation with `H` is on an entire vector for the
 dynamics.
 
-*Justification.* D28-P(2), the SNAG fibering of ⟨2⟩2, and `supp χ_K` compact
+*Justification.* D28(2), the SNAG fibering of ⟨2⟩2, and `supp χ_K` compact
 (C2).  The phase ambiguity being removed is recorded in
 `refs/arxiv-1810.07006/p5_excitations.tex`, subsection “Topological
 excitations”, after equation `(eq:kink)`.
 
 **⟨2⟩4.** The excitation papers supply a finite-dimensional generalized
 eigenproblem and kink/magnon candidates, but not exact spectral subspaces.
-The word **EXACT** in D28-P(2)--(3) is therefore a hypothesis, including zero
+The word **EXACT** in D28(2)--(3) is therefore a hypothesis, including zero
 ansatz variance and the distributional eigen-equations.
 
 *Justification.* D5; `refs/arxiv-1103.2286/dispersionrelation_final.tex`, the
@@ -135,11 +140,11 @@ here has an explicit replacement.
 **⟨2⟩1.** Source Lemma `lem:FT` uses invariance of the ground state to obtain
 `U(t,n)Ω=Ω`; source Lemma `HR-auxiliary(a)` then uses that equality and the
 mass-shell spectral integral to prove `B_t^*(g_t)Ω` is time independent.
-D28-P(1)--(3) replace these two steps by the covariant sector representation
+D28(1)--(3) replace these two steps by the covariant sector representation
 and the exact fiber equations of ⟨1⟩1.⟨2⟩3.
 
 *Justification.* Source Lemmas `lem:FT`, `HR-auxiliary(a)`, equation
-`(creation-on-vacuum)`, D28-P(1)--(3), and ⟨1⟩1.
+`(creation-on-vacuum)`, D28(1)--(3), and ⟨1⟩1.
 
 **⟨2⟩2.** Source Theorem `Haag-Ruelle` uses `HR-auxiliary(a)` once more: the
 time derivative of a one-particle creator annihilates `Ω`, after which it is
@@ -148,12 +153,12 @@ commuted to the right.  In the kink sector there is no such `Ω`.  Step
 one-body equations.
 
 *Justification.* Source Theorem `Haag-Ruelle`, its first proof paragraph;
-D28-P(2)--(3); and named computation **ACE-Cook** in ⟨1⟩5.
+D28(2)--(3); and named computation **ACE-Cook** in ⟨1⟩5.
 
 **⟨2⟩3.** Source Lemma `clustering-lemma` and Theorem `Haag-Ruelle-Fock` use
 the unique invariant vacuum, vacuum clustering, and `BΩ=0` to factor scalar
 products.  Step ⟨1⟩6 replaces this by the **displayed** two-cluster inequality
-(D28-C) of D28-P(5); no vacuum Fock formula is imported.  What (D28-C) does
+(D28-C) of D28(5); no vacuum Fock formula is imported.  What (D28-C) does
 *not* supply is the source's four-point decay estimate `(full-decay)`; ⟨1⟩6.⟨2⟩1
 therefore derives the multi-cluster form it needs from the single displayed
 cut, rather than assuming it.
@@ -181,7 +186,7 @@ covariant representation, but its Fock-space application is not needed here.
 
 ### ⟨1⟩3. Filtered creators are almost local and their defects vanish exactly
 
-**ASSUME.** D28-P(1),(3),(4),(5).
+**ASSUME.** D28(1),(3),(4),(5).
 
 **PROVE.** (a) The filtered magnon creators are almost local, uniformly under
 lattice translation; (b) the filtered hopping kernels `h_K,h_γ` are rapidly
@@ -203,14 +208,14 @@ the error is `O(R^{-N})` for every `N`.  Hence `a_{γ,b}(n)=τ_n(τ_F(A_{γ,b}))
 is almost local, uniformly in `n`, and bounded: `||a_{γ,b}(n)||≤||A_{γ,b}||·||F||_1`.
 
 *Justification.* **ACE-LR**, source Lemma `almost-locality` (whose proof is the
-same split, with `A_{(r)}` the truncated smearing), and D28-P(3).
+same split, with `A_{(r)}` the truncated smearing), and D28(3).
 
 **⟨2⟩3. (Kernel decay — the repair of Objection 1.)**  `h_K=E_Kχ̃_K` and
 `h_γ=ω_γχ̃_γ` are `C^∞` on all of `𝕋`, hence their Fourier coefficients obey
 `|h_K(m)|+|h_γ(m)|≤C_N⟨m⟩^{-N}` for every `N`.
 
 *Justification.* `χ̃_•∈C_c^∞` with `supp χ̃_•` a compact subset of the open
-neighbourhood `U_•` on which the dispersion is `C^∞` (D28-P(4)).  On `U_•` the
+neighbourhood `U_•` on which the dispersion is `C^∞` (D28(4)).  On `U_•` the
 product of two `C^∞` functions is `C^∞`; on the open set `𝕋∖supp χ̃_•` the
 product vanishes identically; the two open sets cover `𝕋`.  Rapid decay of
 Fourier coefficients of a `C^∞` function on `𝕋` is repeated integration by
@@ -228,7 +233,7 @@ i.e. `ω_γ(D^†D)=0`; and on the kink side, exactly,
 
 *Justification.* ASSUME `HΩ_γ=0` (stationary vacuum, H-MQG(1) with the
 generator normalised to annihilate the vacuum) and the exact band equations
-`HΓ_{M,γ}=Γ_{M,γ}ω_γ`, `H_{αβ}Γ_K=Γ_KE_K` (D28-P(2)--(3)).  Then
+`HΓ_{M,γ}=Γ_{M,γ}ω_γ`, `H_{αβ}Γ_K=Γ_KE_K` (D28(2)--(3)).  Then
 `π_γ([H,a(n)])Ω_γ=HΓ_{M,γ}(ê_n^γe_b)=Γ_{M,γ}(ω_γê_n^γe_b)`, while
 `Σ_{m,b'}h_{γ,b'b}(m-n)Γ_{M,γ}(ê_m^γe_{b'})=Γ_{M,γ}(χ_γe_n·h_γe_b)`, because
 `Σ_mh_γ(m-n)e^{-ikm}=e^{-ikn}h_γ(k)`.  Their difference carries the factor
@@ -254,20 +259,20 @@ be `1`),
 `|⟨κ_a(x),ABκ_{a'}(x')⟩-ω_α(A)ω_β(B)⟨κ_a(x),κ_{a'}(x')⟩| ≤ C_N||A||\,||B||⟨r⟩^{-N}`.
 
 *Justification.* `κ_a(x)=Σ_{x̄}χ̂_K(x̄-x)κ_a^{(0)}(x̄)` with `χ̂_K` rapidly
-decreasing and `||κ_a^{(0)}(x̄)||=1` (Gram-normalised `Γ_K`, D28-P(2)).  Split
+decreasing and `||κ_a^{(0)}(x̄)||=1` (Gram-normalised `Γ_K`, D28(2)).  Split
 the double sum at `|x̄-x|≤r/2` and `|x̄'-x'|≤r/2`: on that part `Λ_α,Λ_β` are
 still on their respective sides of both `x̄,x̄'` and at distance `≥r/2` from
-them, so the hypothesis (D28-C) of D28-P(5) applies and gives
+them, so the hypothesis (D28-C) of D28(5) applies and gives
 `C_cl||A||\,||B||λ̃^{r/2}`; off it, the bracket is bounded by `2||A||\,||B||`
 and the weights sum to `||χ̂_K||_1·C_N'⟨r⟩^{-N}`.
 Uniformity in `x,x'` (hence in `t` when the positions are packet-driven) is the
-uniformity clause of D28-P(5).  This is named computation **ACE-tail**.
+uniformity clause of D28(5).  This is named computation **ACE-tail**.
 
 **⟨2⟩7. QED.**
 
 ### ⟨1⟩4. Fixed packets separate in velocity
 
-**ASSUME.** D28-P(4).
+**ASSUME.** D28(4).
 
 **PROVE.** The real-space packet outside its velocity cone has summable decay
 strong enough for Cook's method.
@@ -277,7 +282,7 @@ strong enough for Cook's method.
 `E'(supp f)`.  Outside it, `|x/t-E'(p)|≥ε_v`; repeated integration by parts
 with `(it(x/t-E'(p)))^{-1}∂_p` gives pointwise `C_N⟨|x|+|t|⟩^{-N}`.
 
-*Justification.* Named computation **ACE-SP**; D28-P(4) supplies smoothness on
+*Justification.* Named computation **ACE-SP**; D28(4) supplies smoothness on
 a neighbourhood of `supp f`, compact support and the positive separation
 denominator.  This rederives the one-dimensional case of source Proposition
 `norm-corollary`.
@@ -294,20 +299,20 @@ only as an upper bound, and it is what produces the `|t|²` prefactor in
 nothing below depends on the difference, since `N` is free.
 
 **⟨2⟩3.** If `dist(V_K,V_M)=ε_v>0`, the main cones obey
-`|x-y|≥ε_v|t|/2` for large `|t|`; the sign conditions in D28-P(4) put the
+`|x-y|≥ε_v|t|/2` for large `|t|`; the sign conditions in D28(4) put the
 magnon on the left for `t→-∞`, and on the declared left/right side for
 `t→+∞`.  In particular, for `|t|` large enough that `ε_v|t|/2>2w` (`w` the
 `θ_c` transition width of ⟨1⟩5.⟨2⟩1), the near-diagonal region `|x-y|≤2w` lies
 entirely outside the product of the two main cones, so ⟨2⟩1 applies there to at
 least one factor.
 
-*Justification.* D28-P(4) and elementary cone geometry.
+*Justification.* D28(4) and elementary cone geometry.
 
 **⟨2⟩4. QED.**
 
 ### ⟨1⟩5. The cluster defect is Cook integrable
 
-**ASSUME.** D28-P and ⟨1⟩3--⟨1⟩4.
+**ASSUME.** D28 and ⟨1⟩3--⟨1⟩4.
 
 **PROVE.** `∫_{|t|≥1}||(H I_c-I_cH_{0,c})e^{-itH_{0,c}}F||dt<∞` for each
 allowed packet and channel end.
@@ -322,13 +327,13 @@ of `t` and of the packet.  With the filtered kink frame `κ_a(x)` of (C2),
 
 This is the kink--magnon precursor identification.
 
-*Justification.* D28-P(2)--(5); `||a_{c,b}(y)κ_a(x)||≤C_a` uniformly by
+*Justification.* D28(2)--(5); `||a_{c,b}(y)κ_a(x)||≤C_a` uniformly by
 ⟨1⟩3.⟨2⟩2 and `||κ_a(x)||=||χ_K||_{L²}`, so absolute convergence holds on the
 Schwartz packet core; the limiting isometry (not `I_c` itself) extends by ⟨1⟩6.
 
 **⟨2⟩2. (ACE-Cook.)**  `H_{0,c}` is multiplication by `E_K(p)+ω_γ(k)`, which on
 the packet domain coincides with convolution by the filtered kernels
-`h_K,h_γ` (D28-P(4): the packet momentum supports lie in `{χ_•≡1}`, and
+`h_K,h_γ` (D28(4): the packet momentum supports lie in `{χ_•≡1}`, and
 `h_•=`dispersion there).  Writing `Haκ=aHκ+[H,a]κ` and inserting ⟨1⟩3.⟨2⟩4,
 
 `(HI_c-I_cH_{0,c})F = Σ_{x,y}θ_c(y-x)F(x,y)D_{c,b}(y)κ_a(x) + T_M + T_K`,
@@ -341,9 +346,9 @@ kink part of `H_{0,c}` with **no** residue, and the exact magnon equation
 leaves precisely `D_{c,b}(y)κ_a(x)`; the only other residue is the failure of
 the two hopping kernels to commute with `θ_c`.
 
-*Justification.* Direct commutator calculation, D28-P(2)--(4), ⟨1⟩3.⟨2⟩4, and
+*Justification.* Direct commutator calculation, D28(2)--(4), ⟨1⟩3.⟨2⟩4, and
 ⟨1⟩1.⟨2⟩3 for the domain (all vectors lie in a bounded spectral subspace, and
-`a_{c,b}(y)` has compact energy--momentum transfer by D28-P(3), so
+`a_{c,b}(y)` has compact energy--momentum transfer by D28(3), so
 `a(y)κ(x)` does too).  This is named computation **ACE-Cook**.
 
 **⟨2⟩3. (Defect term.)**  `||D_{γ,b}(y)κ_a(x)||≤C_N⟨x-y⟩^{-N}` for every `N`.
@@ -399,7 +404,7 @@ Hilbert-space-valued `C^1` functions.  **⟨2⟩6. QED.**
 
 ### ⟨1⟩6. ACE.1 and ACE.2
 
-**ASSUME.** ⟨1⟩3--⟨1⟩5 and D28-P(5).
+**ASSUME.** ⟨1⟩3--⟨1⟩5 and D28(5).
 
 **PROVE.** The constructed wave operators are isometries and `N_T^{ex}` is
 well defined, without completeness.
@@ -419,7 +424,7 @@ distance `≥r/3` from `{x,x'}`, with error `C_N⟨r⟩^{-N}`.  **ACE-tail**
 (⟨1⟩3.⟨2⟩6, one-tail case) then factors it, and the vacuum evaluation is
 exactly the magnon
 Gram: `ω_γ(a(y)^†a(y'))=⟨π_γ(a(y))Ω_γ,π_γ(a(y'))Ω_γ⟩=G_γ^{bb'}(y,y')` by
-D28-P(3).  So the four-cluster form follows from the **single** displayed cut
+D28(3).  So the four-cluster form follows from the **single** displayed cut
 (D28-C) plus almost-locality — no iterated-factorization hypothesis is needed,
 and the source's `(full-decay)` four-point estimate is not imported.  This is
 named computation **ACE-Gram**.
@@ -432,7 +437,7 @@ for the magnon factor.  Hence, summing ⟨2⟩1 against `F_t` and using ⟨1⟩4
 convergence imply `||W_cF||=||F||`.
 
 *Justification.* **ACE-Gram**, Gram-normalisation of `Γ_K,Γ_{M,γ}`
-(D28-P(2)--(3)), the filter-support clause of D28-P(4), and ⟨1⟩5.
+(D28(2)--(3)), the filter-support clause of D28(4), and ⟨1⟩5.
 
 **⟨2⟩3.** For the two outgoing sides the two magnons sit on *opposite* tails, so
 the operator between the kink frames is a genuine two-sided product
@@ -443,7 +448,7 @@ side.  This is the two-sided case of ⟨1⟩3.⟨2⟩6, which factors it as
 transfer.  Hence `ran W_+^L⊥ran W_+^T` and `W_+=W_+^L\oplus W_+^T` is an
 isometry.
 
-*Justification.* D28-P(3),(5) in its two-sided form (this is the **only** step
+*Justification.* D28(3),(5) in its two-sided form (this is the **only** step
 that uses both tails at once), ⟨1⟩3.⟨2⟩6, source energy-momentum transfer relation
 `(EM-transfer-relation)` (a creator with strictly positive energy transfer has
 vanishing vacuum one-point function), and **ACE-Gram**.
@@ -478,7 +483,7 @@ following hypothesis, which this shard does not prove** *(Objection 4)*:
 > `W↑ℤ` (D18 AD4 order).
 
 `(AD3-ex)` is the AD3 clause of D18 restricted to the constructed channels;
-D28-P deliberately does not contain it.  The missing derivation is recorded as
+D28 deliberately does not contain it.  The missing derivation is recorded as
 named lemma **ACE-LD** (see HONEST STATUS): the free leg and its dressing leave
 any fixed `W` at rate `O(|t|^{-N})` by ⟨1⟩3.⟨2⟩5 and ⟨1⟩4.⟨2⟩1, but converting
 that into convergence of the *window-charge spectral projection* requires
@@ -512,8 +517,9 @@ the channel-diagonality input is hypothesised, not proved — Objection 4.)*
 `2sδx_ex+2p_2^{ex}=0`, exactly Lane T1's target formula
 `-(2s)^{-1}Σ_ννp_ν` on support `{0,2}`.
 
-*Justification.* ⟨2⟩1--⟨2⟩2, claim B3, Lane T1's ledger formula (G-IDX.2 of
-`briefs/memory-campaign-target.md`, row to be cited once merged), and
+*Justification.* ⟨2⟩1--⟨2⟩2, claim B3, Lane T1's ledger formula — claims row
+**M-INDEX-spec** (`theory/memory-index.md` ⟨1⟩7), merged 2026-08-28; the former
+pointer to `briefs/memory-campaign-target.md` (G-IDX.2) is superseded — and
 **ACE-ledger**.
 
 **⟨2⟩4.** If an incoming vector is not in `H_out^{ex}`, AC-EX supplies no
@@ -586,107 +592,38 @@ candidate) and is left to a separate certificate.
 
 ## 5. MERGE PROPOSALS
 
-### `definitions.md` — append exactly
+*(APPLIED 2026-08-28, commit `2cd5ec2`.  Per L4 and r2 objection 8 the
+verbatim copies that stood here are deleted: a definition, a claim row and a
+notation row each live exactly once, in the shared files, which are
+**authoritative**.  This section is now a pointer index only.)*
 
-> **D28 (H-ACE: exact fixed-packet kink--magnon band data).**  Assume
-> H-MQG(1)--(3).  In addition:
->
-> 1. The kink folium has a covariant positive-energy Hilbert realization
-> `(H_{αβ},π_{αβ},U_{αβ})` implementing the commuting infinite-volume time and
-> lattice translations.  This is extra structure beyond the state-set
-> definition D9/A2.  The vacuum GNS triples are `(H_γ,π_γ,Ω_γ)`, `γ∈{α,β}`
-> (D1(d)), with `HΩ_γ=0`; there is no vacuum vector in `H_{αβ}`.
-> 2. Its Hamiltonian has an isolated finite-multiplicity kink band with
-> dispersion `E_K∈C²(𝕋)` (matrix valued on the finite frame index).  A fixed
-> Gram-normalized, translation-covariant finite-core ansatz frame gives an
-> **exact** band map `Γ_K`, satisfying `H_{αβ}Γ_K=Γ_KE_K`; it is not merely a
-> Rayleigh--Ritz approximation.
-> 3. Each relevant vacuum tail `γ∈{α,β}` has an isolated selected magnon band
-> `ω_γ` (identified as `ω` when symmetry relates the tails), gap
-> `Δ_M:=min_kω(k)>0`, and Gram-normalized **exact** band map `Γ_{M,γ}`.  A
-> spacetime-Schwartz energy-momentum filter of a local observable gives
-> almost-local creators `a_{γ,b}(n)` with strictly positive energy transfer and
-> with the **momentum-filtered normalisation**
-> `a_{γ,b}(n)Ω_γ=Γ_{M,γ}(χ_γe_n⊗e_b)`, `e_n(k):=e^{-ikn}`,
-> for a fixed filter `χ_γ∈C_c^∞(𝕋)`; translation covariance makes `χ_γ`
-> independent of `n`.  This equality, not merely nonzero overlap with the
-> band, is part of the exactness hypothesis.  *(A position-delta normalisation
-> — the case `χ_γ≡1` — is not assumed and is in fact incompatible with a
-> compactly supported energy--momentum filter.)*
-> 4. Packet amplitudes are finite sums of `C_c^∞` products and the resulting
-> physical packet states lie in the `ℓ¹` class D17.  The dispersions
-> are `C^∞` on open neighbourhoods `U_K,U_γ` of their packet momentum supports
-> (global `C²` is retained), their kink and magnon velocity supports have
-> distance `ε_v>0`, and their signs are: incoming-left `v_M-v_K≥ε_v` at
-> `t→-∞`; outgoing-left `v_M-v_K≤-ε_v`; outgoing-right `v_M-v_K≥ε_v` at
-> `t→+∞`.  Thus this is a fixed-packet condition and excludes equal velocities
-> and the soft endpoint.  **Filter compatibility:** the filters of (3) and the
-> kink filter `χ_K∈C_c^∞(𝕋)` satisfy `χ_•≡1` on the corresponding packet
-> momentum support and `supp χ_•⊂U_•`; companions `χ̃_•∈C_c^∞(𝕋)` satisfy
-> `χ̃_•≡1` on `supp χ_•` and `supp χ̃_•⊂U_•`.  The channel Hamiltonian symbols
-> `h_K:=E_Kχ̃_K`, `h_γ:=ω_γχ̃_γ` are then `C^∞(𝕋)` and agree with the
-> dispersions on the packet supports.
-> 5. **(Two-cluster factorization through the vacuum tails.)**  Write
-> `κ_a^{(0)}(x):=Γ_K(e_x⊗e_a)` for the unfiltered exact kink Wannier vectors.
-> There are `C_cl<∞` and `λ̃∈(max(λ_{E_α},λ_{E_β}),1)` (D1(c)) such that for
-> every `γ∈{α,β}`, all frame indices `a,a'`, all `x,x'∈ℤ`, every `r≥1`, and
-> every pair `A∈𝔄_{Λ_α}`, `B∈𝔄_{Λ_β}` with `Λ_α⊂(-∞,min(x,x')-r]` on the `α`
-> side and `Λ_β⊂[max(x,x')+r,∞)` on the `β` side (either factor may be `1`) —
->
->   `|⟨κ_a^{(0)}(x),ABκ_{a'}^{(0)}(x')⟩ - ω_α(A)ω_β(B)⟨κ_a^{(0)}(x),κ_{a'}^{(0)}(x')⟩| ≤ C_cl||A||\,||B||\,λ̃^r`.  **(D28-C)**
->
-> The one-tail case is `B=1` (or `A=1`), where `ω(1)=1`; the genuinely two-sided
-> case is used only in ⟨1⟩6.⟨2⟩3.  `C_cl` and `λ̃` depend on the model and the
-> frame only: **not** on
-> `A,B,Λ_α,Λ_β,r,x,x',a,a'`, and in particular not on any time parameter (the positions
-> are packet-driven and time dependent downstream).  This is the localization
-> input that turns exact band equations into a two-cluster estimate; isolated
-> eigenvalues alone do not imply it.  It is the sole replacement for the vacuum
-> clustering apparatus of `refs/arxiv-1412.2970` (Lemma `clustering-lemma`,
-> Theorem `clustering`); no four-point analogue of `(full-decay)` is assumed.
->
-> The asymptotic channel Hamiltonian is multiplication by `E_K(p)+ω_γ(k)`.
-> Smooth packet domains with the three velocity signs are denoted
-> `D_-^L,D_+^L,D_+^T`; `P_L,P_T` are the two outgoing direct-sum projections.
->
-> **Remark D28-R (regime fence; NOT a hypothesis of AC-EX).**  Put
-> `K_-:=min E_K`, `K_+:=max E_K`, `W_K:=K_+-K_-`, and let `I_in` be the range
-> of `E_K(p)+ω(k)` on the incoming packet support.  Same-band kink absorption
-> is excluded by `d_abs:=dist(I_in,[K_-,K_+])>0`; the packet-independent
-> sufficient condition is `Δ_M>W_K`.  With `Δ_r:=min_kω_r(k)` for every other
-> known one-particle vacuum band and `K_*:=inf_{j≥2,p}E_{K,j}(p)` for every
-> other known kink band, `sup I_in+η_inel<Θ_inel` where
-> `Θ_inel:=min{K_-+2Δ_M,K_*,inf_r(K_-+Δ_r)}` and `η_inel>0`; absent entries are
-> `+∞`.  The three entries respectively exclude an additional magnon, a
-> higher-kink absorption channel, and a different one-particle channel.  An
-> uncomputed wall--magnon bound band is not excluded.
-> **These inequalities are used nowhere in the proof of AC-EX.**  Their role is
-> to make the *exactness* hypotheses (2)--(3) physically plausible — an isolated
-> exact band is not to be expected when a competing channel is open — so they
-> belong to the justification of D28, not to its inferential content.  Adding
-> or deleting them changes no step of `theory/ansatz-scattering.md`.
+### `definitions.md` — D28, APPLIED
 
-### `claims/CLAIMS.md` — append exactly
+**D28 (H-ACE: exact fixed-packet kink--magnon band data)**, clauses (1)--(5)
+including the displayed two-sided two-cluster inequality **(D28-C)**, and
+**Remark D28-R** (regime fence; used in no step of this shard), are live at
+`definitions.md` under "Ansatz-conditioned scattering — D28".  Cite `D28`,
+`D28(n)`, `D28-C`, `D28-R` — the provisional `D28` prefix used in the proof
+text of §§0--4 refers to the same live clauses and is retained only where it
+still appears; the live text governs.
 
-| AC-EX | Under D28/H-ACE's **exact** ansatz-band, sector-covariance, momentum-filtered-frame, velocity-separation, and displayed two-cluster hypotheses (D28-C), the fixed-packet kink--magnon Cook limits exist and are isometries; `N_T` is a projection on the constructed out-space.  **Conditionally on the named local-decay hypothesis (AD3-ex)**, on vectors lying in both the constructed in- and out-ranges the T1 measure has constructed support `{0,2}` with `p_2=⟨N_T⟩`.  No completeness, raw-band-data implication, bound-state exclusion, threshold-inequality use, or soft limit is claimed. | SKETCH | D1, D5, D9, D10, D13, D14, D17, B3, D28 | theory/ansatz-scattering.md | ACE-C1, ACE-C2 (specified in shard; not yet implemented) |
+### `claims/CLAIMS.md` — AC-EX and AD3-ex, APPLIED
 
-*(Objection 8.)*  `M-quant-G` is **not** a dependency: ⟨1⟩7 uses B3 and Lane
-T1's ledger formula, not M-quant-G's conclusion.  When Lane T1's row (M-INDEX)
-merges, add it to depends-on in place of the bracketed reference in ⟨1⟩7.⟨2⟩3.
-`(AD3-ex)` should be recorded as its own row at status CONJECTURE, with
-`where-proved` empty and the missing lemma named **ACE-LD**.
+The **AC-EX** row and the **AD3-ex** row (CONJECTURE, `where-proved` empty,
+missing lemma named **ACE-LD**) are live in `claims/CLAIMS.md`; the r2 repairs
+to both (r2 objections 2 and 6 — the T1-measure existence qualifier, the `ex`
+superscripts, and the verbatim (AD3-ex) display) exist only there, and the
+status of record is the one shown there.  `M-quant-G` is **not** a dependency:
+⟨1⟩7 uses B3 and Lane T1's ledger formula, not M-quant-G's conclusion.  Lane
+T1's row has since merged, so AC-EX's depends-on now carries **M-INDEX-spec**
+and ⟨1⟩7.⟨2⟩3 cites that row rather than the brief (r2 objection 5).
 
-### `notation.md` — append exactly
+### `notation.md` — nine rows, APPLIED
 
-| `Γ_K`, `Γ_{M,γ}` | exact Gram-normalized kink and tail-magnon band maps assumed by H-ACE | definitions.md D28 |
-| `E_K`, `K_-`, `K_+`, `W_K`, `Δ_M` | kink dispersion, its extrema and bandwidth, and the selected magnon gap | definitions.md D28 |
-| `χ_K,χ_γ,χ̃_K,χ̃_γ` | momentum filters and their companions fixing the filtered frames and kernels | definitions.md D28(3),(4) |
-| `h_K,h_γ` | filtered hopping kernels (Fourier coefficients of `E_Kχ̃_K`, `ω_γχ̃_γ`); rapidly decreasing | definitions.md D28(4) |
-| `κ_a(x)`, `κ_a^{(0)}(x)` | filtered and unfiltered exact kink Wannier vectors | theory/ansatz-scattering.md (C2) |
-| `θ_c` | fixed smooth monotone channel cutoff, transition width `w` | theory/ansatz-scattering.md ⟨1⟩5.⟨2⟩1 |
-| `ε_v`, `d_abs`, `Θ_inel`, `η_inel` | velocity gap, same-kink absorption gap, known inelastic threshold, and its margin (last three: fence only, Remark D28-R) | definitions.md D28 |
-| `D_-^L`, `D_+^L`, `D_+^T` | incoming-left, outgoing-left, and outgoing-transmitted fixed-packet domains | definitions.md D28 |
-| `H_out^{ex}`, `N_T^{ex}` | constructed outgoing range and its transmitted-channel projection; no completeness implied | theory/ansatz-scattering.md ACE.2 |
+Live and authoritative in `notation.md`: `Γ_K`, `Γ_{M,γ}`; `E_K`, `K_-`,
+`K_+`, `W_K`, `Δ_M`; `χ_K,χ_γ,χ̃_K,χ̃_γ`; `h_K,h_γ`; `κ_a(x)`, `κ_a^{(0)}(x)`;
+`θ_c`; `ε_v`, `d_abs`, `Θ_inel`, `η_inel`; `D_-^L`, `D_+^L`, `D_+^T`;
+`H_out^{ex}`, `N_T^{ex}`.
 
 ## 6. REPAIR RESPONSE — `theory/verdicts/ansatz-scattering-r1.md`
 
@@ -695,24 +632,24 @@ numbers (P(3) and P(4) have amended text, marked below).  r1 `P(5)` (thresholds)
 is **withdrawn as a hypothesis** and reappears as **Remark D28-R**.  r1 `P(6)`
 (clustering substitute) becomes `P(5)`, displayed as **(D28-C)**; the display tag
 carries no number, so a later renumbering cannot silently break citations.  Every
-`D28-P(6)` of r1 therefore reads `D28-P(5)` here, and no r2 citation of `P(5)`
+`D28(6)` of r1 therefore reads `D28(5)` here, and no r2 citation of `P(5)`
 means the thresholds.
 
 | Obj | Severity | Disposition | Exact edit location |
 |---|---|---|---|
-| 1 | MAJOR | **FIXED** by repair (R2), the momentum-filtered frame — *not* by strengthening smoothness. D28-P(3) normalisation `a(n)Ω_γ=Γ_{M,γ}δ_{n,b}` → `Γ_{M,γ}(χ_γe_n⊗e_b)`; kink frame filtered likewise; kernels are now `h_•=`dispersion`·χ̃_•∈C^∞(𝕋)`. Global `C²` is retained (no strengthening); the local-`C^∞` clause was already in D28-P(4). | §0.1(C2); ⟨1⟩3 PROVE(b,d), ⟨2⟩3, ⟨2⟩4 (**ACE-filter**), ⟨2⟩5; ⟨1⟩5.⟨2⟩1--⟨2⟩4 (the `T_M,T_K` estimate is now written out in full, with the failure mode of the r1 argument stated); D28(3),(4) merge text; new checker **ACE-C2**. |
+| 1 | MAJOR | **FIXED** by repair (R2), the momentum-filtered frame — *not* by strengthening smoothness. D28(3) normalisation `a(n)Ω_γ=Γ_{M,γ}δ_{n,b}` → `Γ_{M,γ}(χ_γe_n⊗e_b)`; kink frame filtered likewise; kernels are now `h_•=`dispersion`·χ̃_•∈C^∞(𝕋)`. Global `C²` is retained (no strengthening); the local-`C^∞` clause was already in D28(4). | §0.1(C2); ⟨1⟩3 PROVE(b,d), ⟨2⟩3, ⟨2⟩4 (**ACE-filter**), ⟨2⟩5; ⟨1⟩5.⟨2⟩1--⟨2⟩4 (the `T_M,T_K` estimate is now written out in full, with the failure mode of the r1 argument stated); D28(3),(4) merge text; new checker **ACE-C2**. |
 | 2 | MAJOR | **RETRACTED as a hypothesis / DOWNGRADED to a remark.** The threshold inequalities are moved out of the numbered hypotheses into **Remark D28-R**, labelled "used nowhere in the proof". Claims row and checker prose realigned; `--red-absorption` demoted to a fence regression guard. | D28 merge text (former item 5 → Remark D28-R); §4 ACE-C1 closing paragraph; claims row wording ("threshold-inequality use ... not claimed"). Former item 6 renumbered to item 5. |
 | 3 | MAJOR | **FIXED** — displayed as inequality **(D28-C)** with explicit quantifiers, constants `C_cl,λ̃`, the exact objects bounded, the side/separation condition, and position/frame/time uniformity. The multi-cluster form the critic asked for is now **derived** (⟨1⟩6.⟨2⟩1) from the single cut plus almost-locality, so no iterated-factorization hypothesis is assumed; the filtered-frame version is derived in ⟨1⟩3.⟨2⟩6. | D28 merge item 5 (D28-C); ⟨1⟩3.⟨2⟩6 (**ACE-tail**); ⟨1⟩6.⟨2⟩1 (**ACE-Gram**); ⟨1⟩2.⟨2⟩3 (records that `(full-decay)` is not imported). |
 | 4 | MAJOR | **DOWNGRADED.** ACE.3 is now explicitly conditional on the named hypothesis **(AD3-ex)**, displayed in ⟨1⟩7's ASSUME, flagged in the theorem statement, the claims row, and HONEST STATUS. The missing lemma is named **ACE-LD** with the exact gap stated (boundary-straddling charge on `∂W`). The cross-term half of the critic's reconstruction *is* proved (⟨1⟩7.⟨2⟩2), so only channel-diagonality is hypothesised. | Theorem preamble and ACE.3 statement; ⟨1⟩7 heading, ASSUME block, ⟨2⟩2; claims row; HONEST STATUS ¶2. |
 | 5 | MINOR | **FIXED** — `θ_c` defined: `C^∞`, monotone, `θ'` supported in `[-w,w]`, `||θ'||_∞≤C/w`, fixed profile independent of `t`. The width `w` enters ⟨1⟩4.⟨2⟩3 and the two regimes of ⟨1⟩5.⟨2⟩4. | ⟨1⟩5.⟨2⟩1; ⟨1⟩4.⟨2⟩3; notation merge row. |
 | 6 | MINOR | **FIXED** — the display is now `ω_γ(D^†D)=||π_γ(D)Ω_γ||²_{H_γ}=0` with the truncation error split out, and a standing convention (C1) forbids transporting `Ω_γ` into `H_{αβ}`. | §0.1(C1); ⟨1⟩3.⟨2⟩4; ⟨1⟩5.⟨2⟩3; D28 merge item 1. |
 | 7 | NOTE | **ACKNOWLEDGED, not changed.** The crude `||f_t||_1=O(1+|t|)` is kept (it is used only upward); a parenthetical records the sharp `O(|t|^{1/2})` and that it would give `N≥4` instead of `N≥5`. | ⟨1⟩4.⟨2⟩2. |
-| 8 | NOTE | **FIXED** — `M-quant-G` removed from depends-on; ⟨1⟩7.⟨2⟩3 now cites B3 plus Lane T1's ledger formula, with a note to add the M-INDEX row on merge. | Claims row; ⟨1⟩7.⟨2⟩3; note under the claims merge block. |
+| 8 | NOTE | **FIXED** — `M-quant-G` removed from depends-on; ⟨1⟩7.⟨2⟩3 now cites B3 plus Lane T1's ledger formula. *(r2 update, objection 5: Lane T1's row has merged, so ⟨1⟩7.⟨2⟩3 cites **M-INDEX-spec** by id — the `briefs/memory-campaign-target.md` pointer is superseded — and AC-EX's depends-on carries M-INDEX-spec.)* | Claims row; ⟨1⟩7.⟨2⟩3; §5 pointer index. |
 
-**No silent strengthening.**  The only hypothesis changes are: (i) D28-P(3)'s
+**No silent strengthening.**  The only hypothesis changes are: (i) D28(3)'s
 creator normalisation, replaced by the filtered one (weaker on the momentum
-range reached, and required for internal consistency of D28-P(3) itself);
-(ii) D28-P(4) gains the filter-compatibility clause, which is a *choice* of
+range reached, and required for internal consistency of D28(3) itself);
+(ii) D28(4) gains the filter-compatibility clause, which is a *choice* of
 `χ_•,χ̃_•` made possible by the local-`C^∞` clause already present in r1 — it
 adds no regularity demand; (iii) former P(5) deleted from the hypothesis
 package (strictly weaker); (iv) former P(6) sharpened into (D28-C) — this is
@@ -722,19 +659,27 @@ strength is now visible.  (D28-C) is displayed in the **two-sided** form
 P(6)'s own wording ("observables separated onto **either** tail") but is
 formally stronger than a one-sided display would be, and the r2 critic should
 price it as such.  (v) ACE.3 gained the hypothesis `(AD3-ex)`, i.e. the
-conclusion was weakened.  Nothing else in the argument was altered; ⟨1⟩1,
-⟨1⟩2, ⟨1⟩4 and ⟨1⟩6.⟨2⟩3--⟨2⟩5 are unchanged in content.
+conclusion was weakened.  **(vi)** *(added per r2 NOTE 13, which observed that
+this ledger is the artifact certifying completeness.)*  D28(1) gained the
+clause `HΩ_γ=0`.  This is a **normalisation consequence of H-MQG(3)**, not a
+new assumption: H-MQG(3) makes both vacua stationary, so the GNS generator may
+be normalised to annihilate the invariant vector.  It was added under
+objection 6's repair, is used only inside `H_γ` (⟨1⟩3.⟨2⟩4), and the resulting
+`ω_γ(D^†D)=0` reaches `H_{αβ}` only through (D28-C), as convention (C1)
+requires.  Nothing else in the argument was altered; ⟨1⟩1, ⟨1⟩2, ⟨1⟩4 and
+⟨1⟩6.⟨2⟩3--⟨2⟩5 are unchanged in content.
 
-**Self-reported L2 violation.**  The repaired shard is ~740 lines against L2's
-200--500.  The overrun is entirely §5 (MERGE PROPOSALS) plus §6 (this repair
-response); the proof proper (§0--§3) is ~400 lines.  Proposed remedy at merge
-time, not taken here because `theory/ansatz-scattering.md` is this lane's only
-writable file: move §5 to `theory/merge/ace-d28.md` and §6 to
-`theory/verdicts/ansatz-scattering-r2-response.md`.
+**Self-reported L2 violation.**  The shard now stands at ~700 lines against
+L2's 200--500, after the r2 pointerization of §5 (L4 carve-out, r2 objection 8)
+removed ~145 lines.  The residual overrun is §6 (this repair response); the
+proof proper (§0--§3) is ~400 lines.  Per the r2 verdict §3 ruling the
+remaining split is **post-promotion hygiene**, not a promotion gate: move §6 to
+`theory/verdicts/ansatz-scattering-r2-response.md`, in a commit that carries no
+status change.
 
 ## 7. HONEST STATUS
 
-**Proved (from D28-P).**  ACE.1 and ACE.2: the Cook/isometry implication,
+**Proved (from D28).**  ACE.1 and ACE.2: the Cook/isometry implication,
 including the MPS two-cluster replacement for vacuum clustering.  The Cook
 majorant now closes: `O(|t|^{2-N})` for every `N`, from rapidly decreasing
 *filtered* kernels (⟨1⟩3.⟨2⟩3), the exactly vanishing defect (⟨1⟩3.⟨2⟩4), and
@@ -751,7 +696,7 @@ from T2's constructed channels to T1's outcome measure is a hypothesis, and
 should be recorded in the DAG as such.
 
 **Assumed, and not supplied by the excitation ansatz.**  The raw generalized
-eigenvalues of refs 1103.2286/1810.07006 do **not** prove D28-P: exact band
+eigenvalues of refs 1103.2286/1810.07006 do **not** prove D28: exact band
 invariance, covariant kink-sector implementation, exact filtered frames, and
 the displayed two-cluster inequality (D28-C) are assumptions.  (D28-C) is the
 load-bearing one — it is the campaign's flagged "the adaptation IS the theorem"

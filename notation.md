@@ -205,7 +205,7 @@ two rows above are marked SUPERSEDED in place (`S(k;·)`, `R(k)`).*
 
 | Symbol | Meaning | First fixed in |
 |---|---|---|
-| `s` | site spin, `d = 2s+1`; magnetisation jump across a wall is `2s` (overload 5) | definitions.md D13 |
+| `s` | site spin, `d = 2s+1`; magnetisation jump across a wall is `2s` (overload 5).  **Fence (r2 objection 1):** H-MQG(2) fixes the D13(a) calibration parameter to be the tail density, `s=ρ`; `notation.md`'s `s`-row gloss `d=2s+1` is the fully polarised special case and is NOT a constraint on `ρ` — M-IDX-density (⟨1⟩9) assumes no relation between `ρ` and the on-site dimension | definitions.md D13 |
 | `𝔛_W` | windowed wall-position observable, `∈ 𝔄_loc`; the frozen memory observable | definitions.md D13(a) |
 | `δx` | wall displacement `ϱ_{t_f}(𝔛_W) − ϱ_{t_i}(𝔛_W)` (supersedes the informal row above) | definitions.md D13(a) |
 | `D(x)`, `X_1(t)`, `V_±` | DC weight at site `x`; first-moment wall coordinate; its asymptotic velocities | definitions.md D13(b),(c) |
@@ -267,7 +267,7 @@ SUPERSEDED in place rather than deleted).*
 | `Q̂_{W,c}` | regularised fixed-window wall charge `2s(𝔛_W-c)`; a bounded local observable | proposed definitions.md D27; theory/memory-index.md (IDX.1) |
 | `E_{W,t}`, `𝒟_{W,t}` | spectral resolution of `Q̂_{W,c}(t)` and its nonselective spectral-dephasing map | proposed definitions.md D27 |
 | `p_{W;t_-,t_+}`, `p_ν`, `ΔQ_W` | finite-window TPM escaped-charge law, its ordered D27 limit, and the measured window-charge increment; convention fixed once: `ν=-ΔQ_W=q_--q_+` | proposed definitions.md D27; theory/memory-index.md §0, ⟨1⟩5--⟨1⟩7 |
-| `ρ` (density) | common unbroken-circle tail density `ω_α(S^z)=+ρ=-ω_β(S^z)`; a real parameter, deliberately distinct from D13's site-spin `s` (H-MQG(2) identifies the D13(a) calibration parameter with `ρ`).  Overload note: `ρ` is file-local to theory/spin-s-twomagnon.md ⟨1⟩1--⟨1⟩2 as the double-occupancy coefficient; `κ_{W,c_0}` is the finite-window coset offset | theory/memory-index.md ⟨1⟩9 |
+| `ρ` (density) | common unbroken-circle tail density `ω_α(S^z)=+ρ=-ω_β(S^z)`; a real parameter, deliberately distinct from D13's site-spin `s`.  H-MQG(2) fixes the D13(a) calibration parameter to be the tail density, `s=ρ`; `notation.md`'s `s`-row gloss `d=2s+1` is the fully polarised special case and is NOT a constraint on `ρ` — M-IDX-density (⟨1⟩9) assumes no relation between `ρ` and the on-site dimension.  Overload note: `ρ` is file-local to theory/spin-s-twomagnon.md ⟨1⟩1--⟨1⟩2 as the double-occupancy coefficient; `κ_{W,c_0}` is the finite-window coset offset | theory/memory-index.md ⟨1⟩9 |
 | `Q_W^α`, `Q_W^β`, `μ_∞^α` | tail-specific vacuum-normal-ordered window charges `Σ_{x∈W}(S^z_x∓ρ)` and the limiting vacuum charge law `(2π)^{-1}∫e^{-iθν}\|tr(V_θr)\|²dθ` | theory/memory-index.md ⟨1⟩11 |
 | `δx` (asymptotic) | the D27-defined ordered asymptotic value of D13(a)'s observable; the finite-time `δx` of D13(a) is unchanged (overload flagged per memory-index-r1 NOTE 5) | proposed definitions.md D27 |
 | `Γ_K`, `Γ_{M,γ}` | exact Gram-normalized kink and tail-magnon band maps assumed by H-ACE | definitions.md D28 |

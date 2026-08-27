@@ -16,8 +16,9 @@
 
 ## 0. Statement
 
-The labels **D26** and **D27** below refer to the exact proposals in §8; they
-are not additions to the shared definition file in this lane.
+The labels **D26** and **D27** are the LIVE numbered definitions in
+`definitions.md` (merged 2026-08-28, commit `e0ce677`), which is authoritative
+for their text; §8 now holds only pointers (L4, r2 objection 8).
 
 **Sign convention (fixed once; resolves synthesis-notes item 1).**  All laws
 are indexed primarily by the measured window-charge increment
@@ -43,9 +44,9 @@ exactly this dictionary.
 
 1. H-MQG(1)--(4) of `memory-quantization-general.md`, verbatim.  In
    particular there is no H-AD-G/D18 assumption and no channel inventory.
-2. **(INT)** is proposed D26: for the selected Hermitian charge,
+2. **(INT)** is D26 (`definitions.md`): for the selected Hermitian charge,
    `exp(2πiS^z_x)=c I`, `|c|=1`.
-3. Only for (G-IDX.2), **(LR)** is proposed D27: common-sequence Cesàro
+3. Only for (G-IDX.2), **(LR)** is D27 (`definitions.md`): common-sequence Cesàro
    relaxation of the two one-time window states and the two-projective-
    measurement (TPM) history law, vanishing first-moment measurement
    back-action, and first-moment-tight spatial exhaustion.
@@ -58,7 +59,7 @@ coordinate and the identity
 
 `Q̂_{W,c_0}:=2s(𝔛_W-c_0)`                                      **(IDX.1)**
 
-(the new name is proposed for `notation.md`; the equality is (G.3) of
+(the name is live in `notation.md`; the equality is (G.3) of
 M-quant-G, not a new definition of `𝔛_W`).  Then:
 
 - **(G-IDX.0-fin)** unconditionally, every `Q̂_{W,c_0}` has spectrum in one
@@ -294,7 +295,15 @@ folium.  (ii) *Local implementability:* the `U(1)` rotation moves the ⟨1⟩3
 counterexample state to a disjoint state (no implementer can exist there),
 while on the A2 folium the same rotation is locally implemented.
 
-**Status: CONJECTURE.**  Claim-row proposal in §8.
+**Where the content sits (r2 NOTE 11).**  The whole content of this
+conjecture is **EXISTENCE of the strongly continuous implementer**.  Granted
+existence, with `ϱ_0` pure (so the GNS representation is irreducible),
+`e^{2πiQ̂}` implements `Ad(u(2π))=Ad(c𝟙)=id`, hence lies in `π(𝔄)'=ℂ𝟙` by
+Schur's lemma: the scalar clause is a one-liner and is free.  A future prover
+should attack existence, not the scalar clause.
+
+**Status: CONJECTURE.**  Claim row: `claims/CLAIMS.md` M-INDEX-LA-folium
+(live since 2026-08-28).
 
 ---
 
@@ -453,16 +462,21 @@ change `-2`.
 
 **⟨2⟩2.** (AD3-topology lemma; the two-line lemma demanded by
 memory-index-r1 objection 4.)  (i) *Incoming concentration:* for the
-incoming kink-charge eigenvalue `q_*`, `E_{W,t_-}({q_*})∈𝔄_W` and
+incoming kink-charge eigenvalue `q_*`, `E_W({q_*})∈𝔄_W` and, as `t→-∞`,
 
-`‖E_{W,t_-}({q_*})Ψ_t-Ψ_t‖²=1-⟨Ψ_t,E_{W,t_-}({q_*})Ψ_t⟩→0`,
+`‖E_W({q_*})Ψ_t-Ψ_t‖²=1-⟨Ψ_t,E_W({q_*})Ψ_t⟩=1-⟨Ψ,E_{W,t}({q_*})Ψ⟩→0`,
 
-by the named AD3 reading applied to the window observable `E({q_*})`: the
-incoming window-charge law tends to the point mass at `q_*`.
-(ii) *Cross-term vanishing:* for the outgoing `r|R⟩+t|T⟩`,
+by the named AD3 reading applied to the window observable `E_W({q_*})`: the
+incoming window-charge law tends to the point mass at `q_*`.  *(Indexing
+convention, fixed per r2 NOTE 14: `E_W` is the spectral resolution of
+`Q̂_{W,c_0}` at the reference time and `E_{W,t}(·)=α_{-t}(E_W(·))` its
+Heisenberg translate, so the time label rides on exactly one of the two
+factors — never a fixed `t_∓` subscript on a running vector `Ψ_t`.)*
+(ii) *Cross-term vanishing:* for the outgoing `r|R⟩+t|T⟩` at running `t→+∞`,
+with the same convention,
 
-`|⟨R|E_{W,t_+}({q_R})|T⟩| ≤ ‖E_{W,t_+}({q_R})|T⟩‖
- = ⟨T|E_{W,t_+}({q_R})|T⟩^{1/2} → 0`,
+`|⟨R|E_W({q_R})|T⟩| ≤ ‖E_W({q_R})|T⟩‖
+ = ⟨T|E_W({q_R})|T⟩^{1/2} → 0`,
 
 by Cauchy--Schwarz, since the `T`-leg's window law concentrates on
 `q_T ≠ q_R`.
@@ -569,8 +583,9 @@ half-integer-quantized densities given (INT): an LSM-type rigidity,
 paralleling the “index = charge density” Example of
 refs/arxiv-1810.07351/Index_Re.tex but re-derived in the MPS register with
 no gap, clustering, or dynamical input beyond injectivity.  This is a NEW
-unconditional result relative to the baseline theorem; claim-row proposal
-**M-IDX-density** (SKETCH) in §8.
+unconditional result relative to the baseline theorem; claim row
+**M-IDX-density** in `claims/CLAIMS.md` (live since 2026-08-28; the status
+of record is the one shown there).
 
 *Remark (failed counterexample, recorded per memory-index-b-r1 objection
 9(c)).*  A `χ=2` attack at `ρ=0.37` fails by the virtual charge-cycle
@@ -610,8 +625,9 @@ existing probe's P1/P2 integrality findings instantiate at `s=1/2`.
 *(Imported in the repaired form demanded by memory-index-b-r1 objection 5;
 scoped to pure tails per objection 8's surviving line.)*
 
-**ASSUME.** As ⟨1⟩9; the pure vacuum `ω_α` (or `ω_β`); the **tail-specific
-vacuum charges**
+**ASSUME.** As ⟨1⟩9 — in particular NO site-spin symbol `s` and no `s=ρ`
+identification (r2 objection 4: this lemma needs neither); the pure vacuum
+`ω_α` (or `ω_β`); the **tail-specific vacuum charges**
 
 `Q_W^α := Σ_{x∈W}(S^z_x-ρ)`,  `Q_W^β := Σ_{x∈W}(S^z_x+ρ)`
 
@@ -648,8 +664,11 @@ transfer power `L_{V_θ^{-1}}∘E_α^n∘L_{V_θ}`.
 
 *Justification.* ⟨2⟩1, D1(c); named computation **IDX-ρ.5**.
 
-**⟨2⟩3.** (Support and tightness.)  `spec Q_I^α⊆n(κ-ρ)+ℤ=ℤ` (κ≡ρ,
-⟨1⟩10.⟨2⟩1), so `φ_I` is `2π`-periodic and Fourier inversion on `ℤ`
+**⟨2⟩3.** (Support and tightness.)  `spec Q_I^α⊆n(κ-ρ)+ℤ=ℤ`, where
+`κ≡ρ (mod ℤ)` follows from `c=e^{2πiρ}` (⟨1⟩9.⟨2⟩3) together with
+`c=e^{2πiκ}` (⟨1⟩1.⟨2⟩1) — no site-spin symbol `s` and no `s=ρ`
+identification enters, so this step does not import ⟨1⟩10's hypothesis
+(r2 objection 4).  Hence `φ_I` is `2π`-periodic and Fourier inversion on `ℤ`
 applies.  Truncation inequality (**IDX-ρ.6**, = lane-B NC-4, verified by
 the lane-B critic in objection 10): for a law `μ` on `ℤ` and `0<u≤π`,
 `u^{-1}∫_{-u}^u(1-Re φ(θ))dθ = Σ_ν μ(ν)·2(1-sinc(uν)) ≥ Σ_{|ν|≥2/u}μ(ν)`.
@@ -671,8 +690,10 @@ which needs only ⟨1⟩11 plus A2's weak-\* convergence.
 NONEXISTENCE direction only.)*
 
 **ASSUME.** A D1(e′) two-sided decorated kink reference `ϱ_0` with GNS
-representation `(H,π,Ω)`; (S), D26(INT); and `V_{θ_0}=V_α(exp(θ_0ξ))`
-nonscalar for some `θ_0` (either tail; stated for `α`).
+representation `(H,π,Ω)`; (S), D26(INT); **H-MQG(2)'s `s=ρ`** (the D13(a)
+calibration parameter equals the tail density — consumed in ⟨2⟩1 and listed
+here per r2 objection 4); and `V_{θ_0}=V_α(exp(θ_0ξ))` nonscalar for some
+`θ_0` (either tail; stated for `α`).
 
 **PROVE.** `{e^{iθ_0Q̂_{W,c_0}}}_W` is not Cauchy in the strong topology on
 `Ω`; hence the window charges `Q̂_{W,c_0}` have no self-adjoint
@@ -683,11 +704,13 @@ deep in the `α` tail (left of the cut), the on-site summands commute, so
 
 `‖(e^{iθQ̂_{W',c_0}}-e^{iθQ̂_{W,c_0}})Ω‖² = 2-2 Re⟨Ω,e^{-iθQ_I^α}Ω⟩`,
 
-where `Q_I^α=Σ_{x∈I}(S^z_x-ρ)` is exactly the ⟨1⟩11 tail-normal-ordered
-shell charge.
+where `Q̂_{W',c_0}-Q̂_{W,c_0}=Σ_{x∈I}S^z_x-sℓ` equals the ⟨1⟩11
+tail-normal-ordered shell charge `Q_I^α=Σ_{x∈I}(S^z_x-ρ)` **precisely because
+`s=ρ`** (H-MQG(2); this is where the ASSUME's identification is consumed —
+r2 objection 4).
 
-*Justification.* On-site commutation and unitarity; named computation
-**IDX-ρ.7** (= lane-B NC-5a).
+*Justification.* On-site commutation and unitarity, H-MQG(2)'s `s=ρ`; named
+computation **IDX-ρ.7** (= lane-B NC-5a).
 
 **⟨2⟩2.** Iterated limit: at fixed `ℓ`, letting the distance from `I` to the
 junction, decorations, and cut tend to infinity,
@@ -772,11 +795,19 @@ outcome statements are exclusively about the explicitly stated TPM protocol.
 `theory/checks/memory_index_probe.py` (D16 XXZ at `Δ=2`; exact sector at
 `N=22` validating the `≤5`-domain-wall space, then `N=37,50`; pre-registered
 P1--P5, all PASS; `--red` capable).  Findings of record:
-(i) *Integrality with no channel assumptions* (P2): at every window and
-time, mass farther than `10^{-9}` from `ℤ` is `≤10^{-11}` — the
-(G-IDX.0/2) content, including extra integer mass at `Q_W∈{-1,-3}` carried
-by near-threshold zero-velocity two-magnon channels (the ⟨1⟩8 fence
-remark).  (ii) *Estimator independence* (P4; synthesis-notes item 2): `δx`
+(i) *Integrality, as an arithmetic certificate* (P2; reworded per r2
+objection 9): at every window and time, mass farther than `10^{-9}` from `ℤ`
+is `≤10^{-11}` — but P2 certifies that `spec Q̂_W ⊂ ℤ` holds **by
+construction of the observable** in the D16 instantiation (`site_sz` and
+`rho_vac` are both exactly `±1/2`, so every eigenvalue is an exact IEEE
+integer for any state, evolved or not).  It is an arithmetic certificate of
+(G-IDX.0), **not** a dynamical one, and it says nothing about the law
+(G-IDX.2).  The outcome-support finding — extra integer mass at
+`Q_W∈{-1,-3}`, carried by near-threshold zero-velocity two-magnon channels
+(the ⟨1⟩8 fence remark) — is **P3's** content, not P2's.  Its red
+sensitivity is likewise arithmetic (`RED_RHO_SHIFT=0.3` on a 10-site window
+is exactly `3.0`, so the three 10-site windows are silent under red); a red
+shift coprime to the window widths is referred to the checker lane.  (ii) *Estimator independence* (P4; synthesis-notes item 2): `δx`
 read from `{p_ν}` agrees with the independent gradient-centroid estimator
 `X̂₁` to `<0.1` sites; `X̂₂=⟨Q_W⟩+const` is tautological and is not used as
 validation.  (iii) *Numerics culture* (P1/P3; synthesis-notes item 3):
@@ -787,8 +818,17 @@ spuriously perfect (cannot host kink dressing) and is banned as a control.
 (iv) Tables are indexed by the convention-free `Q_W` value, support
 `{0,-2}` — the §0 convention.
 
-**To implement after merge: `theory/checks/memory_index_check.py`.**
+**IMPLEMENTED AND COMMITTED (`a529a10`): `theory/checks/memory_index_check.py`.**
 Deterministic certificates; every red mutation breaks a necessary premise.
+Run status of record (memory-index-r2.md §2, `python3 -O`): green **exit 0**,
+IDX-C1--C8 all green; `--red` **exit 1**, `RED-OK`, 8/8 checks report
+"caught".  Companion probe: `memory_index_probe.py` green **exit 0**, `--red`
+**exit 1** (190 pre-registered violations), `--selftest` **exit 0**.
+*Open coverage defects, owned by the checker lane (r2 objection 3): the
+⟨1⟩9.⟨2⟩4 tail-covariance mutation of IDX-C7 is unreachable in `--red`; the
+IDX-ρ.6 tail assertion of IDX-C8 is vacuous as instantiated; the SPEC NOTE
+count (four printed) is to be reconciled.  The specification below is the
+frozen target; deviations are recorded in the file's own SPEC NOTES.*
 
 1. **IDX-C1 (finite-window offset and TPM).**  `S^z=diag(-3/2,…,3/2)`,
    three-site window, two seeded Haar unitaries as Heisenberg times, seeded
@@ -847,84 +887,30 @@ Deterministic certificates; every red mutation breaks a necessary premise.
 
 ## 8. MERGE PROPOSALS
 
-### 8.1 Exact text to append to `definitions.md`
+### 8.1 → `definitions.md` D26, D27 — APPLIED 2026-08-28 (commit `e0ce677`)
 
-```markdown
-## D26 (circle-integral on-site charge)
+The proposed texts are **live and authoritative** at `definitions.md`
+"Memory-index campaign — D26--D27" (D26: circle-integral on-site charge;
+D27: charge-history local relaxation (LR), including the `δx` definition
+clause).  Cite the live D-numbers; the former verbatim copy in this shard is
+deleted per L4 (r2 objection 8) — a definition lives exactly once.  The r2
+repair to D26's third sentence (`ρ=0` admitted; r2 objection 7) exists only
+in `definitions.md`.
 
-For the selected Hermitian circle charge `S^z=-iq(ξ)`, hypothesis **(INT)**
-means that there is `c∈U(1)` with `e^{2πiS^z_x}=cI` on one site.  Equivalently,
-after choosing the unique `κ∈[0,1)` with `c=e^{2πiκ}`,
-`spec S^z⊂κ+ℤ`.  (True for every spin-`S` chain, with `c=e^{2πiS}`.)  No
-condition on the real tail-density parameter `ρ>0` is included; under
-additionally (S) of D2(e) at both tails, the density is instead DERIVED to
-satisfy `e^{2πiρ}=c=e^{-2πiρ}`, hence `2ρ∈ℤ` (claim M-IDX-density) — a
-conclusion, not a hypothesis.
+### 8.2 → `claims/CLAIMS.md` rows — APPLIED 2026-08-28 (commit `e0ce677`)
 
-## D27 (charge-history local relaxation, LR)
+Live and authoritative rows: **M-INDEX-fin**, **M-INDEX-spec**,
+**M-IDX-density**, **M-INDEX-LA-folium**, **M-INDEX-LA-strong** in
+`claims/CLAIMS.md`.  The r2 repairs (edges, scoping, where-tested wording;
+objections 4, 5, 9 and NOTES 10--12) exist only there.  Statuses shown in
+`claims/CLAIMS.md` are the ones of record; this shard asserts none.
 
-Fix the D17 vector `Ψ`, a cut `c_0`, and a padded exhaustion
-`W_m=[a_m,b_m]↑ℤ` containing `c_0`.  Put
-`Q̂_{W,c_0}=2s(𝔛_W-c_0)` and let `E_{W,t}` be the spectral resolution of its
-Heisenberg translate.  **(LR)** means:
+### 8.3 → `notation.md` rows — APPLIED 2026-08-28 (commit `e0ce677`)
 
-1. There is one sequence `T_n→∞` such that, for every fixed `W`, the Cesàro
-   states
-   `ω^+_{W,n}(A)=T_n^{-1}∫_{T_n}^{2T_n}⟨Ψ,α_t(A)Ψ⟩dt` and
-   `ω^-_{W,n}(A)=T_n^{-1}∫_{-2T_n}^{-T_n}⟨Ψ,α_t(A)Ψ⟩dt`, `A∈𝔄_W`,
-   and the double-Cesàro TPM laws
-   `p_{W,n}(ν)=T_n^{-2}∫_{T_n}^{2T_n}dt_+∫_{-2T_n}^{-T_n}dt_-
-   Σ_q||E_{W,t_+}({q-ν})E_{W,t_-}({q})Ψ||²`
-   converge.  The sum is over `q∈spec Q̂_{W,c_0}` and absent spectral values
-   contribute zero.
-2. With `𝒟_{W,t_-}(A)=Σ_qE_{W,t_-}({q})AE_{W,t_-}({q})`, the double-Cesàro
-   average of
-   `⟨Ψ,[𝒟_{W,t_-}(Q̂_{W,c_0}(t_+))-Q̂_{W,c_0}(t_+)]Ψ⟩`
-   tends to zero for every fixed `W`.  This is only a first-moment
-   nondemolition condition; operator asymptotic commutativity is not assumed.
-3. Writing `p_W` for the fixed-window time limit, the family `{p_{W_m}}` is
-   first-moment tight:
-   `lim_{M→∞}sup_m Σ_{|ν|>M}(1+|ν|)p_{W_m}(ν)=0`.
-   *Convenience normalisation (optional):* `p_{W_m}` converges weakly to a
-   probability `p`.  This clause buys only uniqueness of the VALUE `δx`;
-   support quantization is subsequence-free without it (Prokhorov on the
-   closed set `ℤ`).
-
-*Definition, not a hypothesis.*  `δx` is the ordered wall expectation
-`lim_m[ω^+_{W_m}(𝔛_{W_m})-ω^-_{W_m}(𝔛_{W_m})]`, along the full sequence when
-the convenience clause holds and along an (LR3) subsequence otherwise.
-Existence is a corollary of LR1--LR3: at every fixed `m`,
-`Σ_ννp_{W_m}(ν)=-2s[ω^+_{W_m}(𝔛_{W_m})-ω^-_{W_m}(𝔛_{W_m})]`
-(theory/memory-index.md ⟨1⟩7.⟨2⟩2), and LR3 makes the left side converge,
-hence the right side.  This `δx` is the ordered asymptotic value of the
-finite-time D13(a) observable; the finite-time `δx` is unchanged.
-Infinite-volume dynamics is formed first, the fixed-window time limits
-second, and the spatial exhaustion last.  No plane-wave or `k→0` interchange
-is included.  *(The former clause LR4 — assumed existence — and the former
-interaction-range-collar TV clause are deleted: the first was a theorem,
-the second was cited by no step; memory-index-r1 objection 1.)*
-```
-
-### 8.2 Exact rows to append to `claims/CLAIMS.md`
-
-```markdown
-| M-INDEX-fin | Under D26(INT), every finite-window regularised wall charge `Q̂_{W,c}=2s(𝔛_W-c)` has spectrum in one coset of `ℤ`, and the escaped increment in the explicit two-projective-measurement protocol is integer-valued because the two fixed-window offsets cancel. | SKETCH | D13(a), D26 | theory/memory-index.md ⟨1⟩1, ⟨1⟩5 | proposed memory_index_check.py IDX-C1,C2; theory/checks/memory_index_probe.py P2 (PASS) |
-| M-INDEX-spec | Under H-MQG(1)--(4), D26(INT), and D27(LR1--LR3, tightness-only), every subsequential ordered TPM escaped-charge law is supported on `ℤ` and `δx=-(2s)^{-1}Σ_ννp_ν`; D27's convenience clause makes `p` and `δx` unique; under H-AD-G with AD3 read as weak-* window convergence per channel it reduces exactly to M-quant-G (G.1)--(G.2).  This is a protocol-explicit conditional theorem, not a proof of LR, of H-AD-G⟹LR, or of a sector-wide total-charge operator. | SKETCH | M-flux, M-quant-G, D13, D17, D26, D27 | theory/memory-index.md ⟨1⟩4--⟨1⟩8 | proposed memory_index_check.py IDX-C1--C5; theory/checks/memory_index_probe.py P1--P5 (PASS) |
-| M-IDX-density | Under D1, D2(a), (S) at both tails, and D26(INT), with common unbroken circle and tail densities `(+ρ,-ρ)`: the IT phase slope is `f_α'(0)=ρ`, additivity+continuity give `f_α(θ)=ρθ mod 2π`, and the two tails force `e^{2πiρ}=c=e^{-2πiρ}`, hence `2ρ∈ℤ`.  LSM-flavored: U(1)-covariant injective MPS tails admit only half-integer-quantized densities given (INT).  `ρ` is a fresh density symbol, NOT D13's site-spin `s`; derived, not assumed. | SKETCH | D1, D2(b,e), D26 | theory/memory-index.md ⟨1⟩9 (route: memory-index-b-r1.md §1(b)) | proposed memory_index_check.py IDX-C6,C7 |
-| M-INDEX-LA-folium | In the GNS representation of a FIXED A2/D1(e′) kink state, under D26(INT)+(S), the selected circle is implemented by a strongly continuous unitary group whose Stone generator `Q̂` has `e^{2πiQ̂}` scalar, hence pure point spectrum in one coset (implementer route; NOT a strong-resolvent limit of window charges, which ⟨1⟩12 refutes for nonscalar `V_θ`).  Evidence: O(1) twisted-transfer window-charge variance on the folium; local implementability of the rotation there. | CONJECTURE | A2, D26, D2(e) | theory/memory-index.md ⟨1⟩3b (markers: memory-index-r1.md objection 3(b)) | — |
-| M-INDEX-LA-strong | D9+D17+(INT) imply existence of a self-adjoint regularised total charge in every `𝒦_{αβ}` GNS representation (operator form of G-IDX.0). | REFUTED | — | two mechanisms: theory/memory-index.md ⟨1⟩3 (D17-fluctuation counterexample, off-folium) and ⟨1⟩12 (nonscalar-`V_θ` obstruction, on-folium) | proposed memory_index_check.py IDX-C3, IDX-C8 |
-```
-
-### 8.3 Exact rows to append to `notation.md`
-
-```markdown
-| `Q̂_{W,c}` | regularised fixed-window wall charge `2s(𝔛_W-c)`; a bounded local observable | proposed definitions.md D27; theory/memory-index.md (IDX.1) |
-| `E_{W,t}`, `𝒟_{W,t}` | spectral resolution of `Q̂_{W,c}(t)` and its nonselective spectral-dephasing map | proposed definitions.md D27 |
-| `p_{W;t_-,t_+}`, `p_ν`, `ΔQ_W` | finite-window TPM escaped-charge law, its ordered D27 limit, and the measured window-charge increment; convention fixed once: `ν=-ΔQ_W=q_--q_+` | proposed definitions.md D27; theory/memory-index.md §0, ⟨1⟩5--⟨1⟩7 |
-| `ρ` (density) | common unbroken-circle tail density `ω_α(S^z)=+ρ=-ω_β(S^z)`; a real parameter, deliberately distinct from D13's site-spin `s` (H-MQG(2) identifies the D13(a) calibration parameter with `ρ`).  Overload note: `ρ` is file-local to theory/spin-s-twomagnon.md ⟨1⟩1--⟨1⟩2 as the double-occupancy coefficient; `κ_{W,c_0}` is the finite-window coset offset | theory/memory-index.md ⟨1⟩9 |
-| `Q_W^α`, `Q_W^β`, `μ_∞^α` | tail-specific vacuum-normal-ordered window charges `Σ_{x∈W}(S^z_x∓ρ)` and the limiting vacuum charge law `(2π)^{-1}∫e^{-iθν}\|tr(V_θr)\|²dθ` | theory/memory-index.md ⟨1⟩11 |
-| `δx` (asymptotic) | the D27-defined ordered asymptotic value of D13(a)'s observable; the finite-time `δx` of D13(a) is unchanged (overload flagged per memory-index-r1 NOTE 5) | proposed definitions.md D27 |
-```
+Live and authoritative rows in `notation.md`: `Q̂_{W,c}`; `E_{W,t}`, `𝒟_{W,t}`;
+`p_{W;t_-,t_+}`, `p_ν`, `ΔQ_W`; `ρ` (density); `Q_W^α`, `Q_W^β`, `μ_∞^α`;
+`δx` (asymptotic).  The r2 fence on the `ρ` row and on the standing `s` row
+(objection 1) exists only in `notation.md`.
 
 ---
 
@@ -970,7 +956,43 @@ the second was cited by no step; memory-index-r1 objection 1.)*
    scattering, channel completeness (except in the consistency corollary),
    soft interchange, or assumption `s∈(1/2)ℤ` (under (S) the density
    quantization is a conclusion).
-8. **Status:** M-INDEX-spec and M-IDX-density are **SKETCH**;
+8. **Status:** `claims/CLAIMS.md` is the status of record (L5); as this shard
+   stands, M-INDEX-fin, M-INDEX-spec and M-IDX-density are **SKETCH**;
    M-INDEX-LA-folium is **CONJECTURE**; M-INDEX-LA-strong is **REFUTED**
    with both mechanisms recorded.  M-INDEX-full (deriving (LR)) was not
-   obtained in either lane; the campaign's top rung remains open.
+   obtained in either lane; the campaign's top rung remains open.  The r2
+   verdict's four promotion decisions are the orchestrator's step after gate
+   verification and are **not** applied in the lane-A repair pass (§10).
+
+---
+
+## 10. r2 repair response (lane A)
+
+Work order: `theory/verdicts/memory-index-r2.md` (adjudicator verdict
+**FAIL(1,2,3)**, 2026-08-28).  Lane A owns `definitions.md`, `notation.md`,
+`claims/CLAIMS.md`, `theory/memory-index.md`, `theory/ansatz-scattering.md`.
+`theory/checks/` belongs to the parallel checker lane and was not touched.
+**No status promotion was applied** — that is the orchestrator's step after
+gate verification (verdict §4).
+
+| id | sev | disposition | exact edit location |
+|---|---|---|---|
+| 1 | MAJOR | **FIXED** (FIX DEMAND applied verbatim, three surfaces) | `notation.md` `ρ` (density) row — parenthesis replaced by the demanded sentence; `notation.md` `s` row (Corner B block) — same sentence as **Fence (r2 objection 1)**; `definitions.md` Corner B D13--D18 preamble (after "…`s = 1/2` in every concrete statement.") — same sentence as a *Fence* paragraph |
+| 2 | MAJOR | **FIXED** | `claims/CLAIMS.md` **AC-EX** row, statement cell rewritten from the verdict §4 scoping sentence: `N_T^{ex}`, `H_out^{ex}` restored throughout; "for which Lane T1's outcome measure exists" restored; ACE.3 stated as conditional on **both** (AD3-ex) **and** the existence of Lane T1's ordered-limit measure; (D28-C) two-sidedness and its unverified status recorded.  Status left at **SKETCH** (AC-EX is HOLD); where-tested cell records the ACE-C1/ACE-C2 gate |
+| 3 | MAJOR | **SKIPPED — checker lane** | `theory/checks/memory_index_check.py` (split `check_c7`, mutation-(ii) red branch, SPEC NOTE count, IDX-ρ.6 assertion, docstring `:21-22`).  Lane A recorded the open defect where a reader meets it: `claims/CLAIMS.md` M-IDX-density where-tested cell, and §7's checker preamble |
+| 4 | MINOR | **FIXED** | ⟨1⟩11 ASSUME (states that no `s`/`s=ρ` enters); ⟨1⟩11.⟨2⟩3 (now cites ⟨1⟩9.⟨2⟩3 + ⟨1⟩1.⟨2⟩1 for `κ≡ρ (mod ℤ)`; the ⟨1⟩10 citation, which carried `s=ρ`, is dropped); ⟨1⟩12 ASSUME (gains **H-MQG(2)'s `s=ρ`**); ⟨1⟩12.⟨2⟩1 (displays `Q̂_{W'}-Q̂_W=Σ_{x∈I}S^z_x-sℓ` and names `s=ρ` as the reason it equals `Q_I^α`); `claims/CLAIMS.md` M-INDEX-LA-strong where-proved cell (mechanism B's extra hypotheses disclosed; mechanism A flagged as needing neither (S) nor `s=ρ`) |
+| 5 | MINOR | **FIXED** | `claims/CLAIMS.md`: M-INDEX-spec depends-on `+ M-INDEX-fin`; AC-EX depends-on `+ M-INDEX-spec`; M-IDX-density depends-on `D1, D2(b,e), D26` → `D1, D2(a,b,e), D26`.  `theory/ansatz-scattering.md` ⟨1⟩7.⟨2⟩3 justification now cites row **M-INDEX-spec** instead of `briefs/memory-campaign-target.md`; §6 row 8 annotated |
+| 6 | MINOR | **FIXED** | `claims/CLAIMS.md` **AD3-ex** row: the displayed limit `lim_{t→+∞}\|\|E_W({q_ch})Ψ_t-P_{ch}Ψ_t\|\|=0` quoted verbatim from ⟨1⟩7's ASSUME with the "before `W↑ℤ`" order; the ordered-limit gloss demoted to a parenthetical describing ACE-LD; last clause replaced by "no part of (AD3-ex) is proved; ⟨1⟩7.⟨2⟩2 derives the inter-channel cross-term vanishing FROM it…" |
+| 7 | MINOR | **FIXED** | `definitions.md` D26, third sentence → "No **arithmetic** condition on the real tail-density parameter `ρ` is included (`ρ=0` is admitted — the AKLT cross-check at §7 IDX-C8; H-MQG(2)'s `s>0` is a separate hypothesis of the kink setting)".  The duplicate in this shard's §8.1 is gone (objection 8), so the live text is the only copy |
+| 8 | MINOR (L4) | **FIXED** | This shard §8.1--§8.3 → pointers to live `definitions.md` D26/D27, the five live DAG rows, the six live notation rows (~78 lines removed).  `theory/ansatz-scattering.md` §5 → pointers to live D28/D28-C/D28-R, the AC-EX and AD3-ex rows, the nine notation rows (~100 lines removed).  Prefixes dropped: `D28-P` → `D28` (48 occurrences) in the T2 proof text and header; "proposed D26/D27" → live D-numbers in §0 and ⟨1⟩9's remark |
+| 9 | MINOR | **FIXED** (document half; one suggestion referred) | §7 "Findings of record (i)" reworded to the demanded text — P2 is an **arithmetic** certificate of (G-IDX.0) true by construction of the observable, not a dynamical one, and the `Q_W∈{-1,-3}` finding is **P3's**; `claims/CLAIMS.md` M-INDEX-fin where-tested cell amended to match.  *Referred to the checker lane:* "consider a red shift coprime to the window widths" (`memory_index_probe.py`) |
+| N10 | NOTE | **FIXED** | `claims/CLAIMS.md` M-IDX-density: LSM sentence gains "— for an antisymmetric tail pair; one tail alone gives only `ρ∈κ+ℤ`, and a general pair only `ρ_α-ρ_β∈ℤ`." |
+| N11 | NOTE | **FIXED** | ⟨1⟩3b gains "Where the content sits" (existence is the whole content; the scalar clause is a Schur one-liner once the implementer exists); same in `claims/CLAIMS.md` M-INDEX-LA-folium |
+| N12 | NOTE | **FIXED** | §7 heading "To implement after merge" → "IMPLEMENTED AND COMMITTED (`a529a10`)" with the run status of record (green exit 0; `--red` exit 1, RED-OK 8/8; probe `--red` exit 1, `--selftest` exit 0); "proposed" dropped from the where-tested cells of M-INDEX-fin, M-INDEX-spec, M-IDX-density, M-INDEX-LA-strong |
+| N13 | NOTE | **FIXED** | `theory/ansatz-scattering.md` §6 "No silent strengthening" ledger gains clause **(vi)**: D28(1)'s `HΩ_γ=0`, labelled a normalisation consequence of H-MQG(3), not a new assumption |
+| N14 | NOTE | **FIXED** | ⟨1⟩8.⟨2⟩2(i) re-indexed: `E_W({q_*})` on the running `Ψ_t`, with the identity written `1-⟨Ψ_t,E_W({q_*})Ψ_t⟩=1-⟨Ψ,E_{W,t}({q_*})Ψ⟩`, plus a stated indexing convention; (ii) made consistent |
+
+**L2.** Per verdict §3 the splits are post-promotion hygiene.  The two
+pre-promotion carve-outs are done here: objection 8's pointerization (above),
+and no status change in this commit.  The L2-correct cut for this shard when it
+is taken remains §5 (⟨1⟩9--⟨1⟩12) → `theory/memory-index-density.md`.

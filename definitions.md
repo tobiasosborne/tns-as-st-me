@@ -579,6 +579,11 @@ parentheses so its prose stays readable; the D-numbers here are the single
 source (L4).  `s` denotes the site spin (`d = 2s+1`), so the magnetisation jump
 across a wall is `2s`; `s = 1/2` in every concrete statement.*
 
+*Fence (r2 objection 1).  H-MQG(2) fixes the D13(a) calibration parameter to be
+the tail density, `s=ρ`; `notation.md`'s `s`-row gloss `d=2s+1` is the fully
+polarised special case and is NOT a constraint on `ρ` — M-IDX-density (⟨1⟩9)
+assumes no relation between `ρ` and the on-site dimension.*
+
 ## D13 (memory observables: windowed wall position, and its two dresses)
 
 **(a) Windowed wall-position observable — the frozen definition (`Bd3`).**
@@ -1016,7 +1021,9 @@ For the selected Hermitian circle charge `S^z=-iq(ξ)`, hypothesis **(INT)**
 means that there is `c∈U(1)` with `e^{2πiS^z_x}=cI` on one site.  Equivalently,
 after choosing the unique `κ∈[0,1)` with `c=e^{2πiκ}`,
 `spec S^z⊂κ+ℤ`.  (True for every spin-`S` chain, with `c=e^{2πiS}`.)  No
-condition on the real tail-density parameter `ρ>0` is included; under
+arithmetic condition on the real tail-density parameter `ρ` is included (`ρ=0`
+is admitted — it is the AKLT cross-check registered at memory-index.md §7
+IDX-C8; H-MQG(2)'s `s>0` is a separate hypothesis of the kink setting); under
 additionally (S) of D2(e) at both tails, the density is instead DERIVED to
 satisfy `e^{2πiρ}=c=e^{-2πiρ}`, hence `2ρ∈ℤ` (claim M-IDX-density) — a
 conclusion, not a hypothesis.
