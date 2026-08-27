@@ -86,3 +86,15 @@ Notes:
 - Additional sources found by the novelty sweep get appended here when fetched.
 - Paywalled non-arXiv items (e.g. Dyson, Phys. Rev. 102, 1217 (1956)): ask TJO
   for TIB VPN access if the full text becomes load-bearing.
+
+## Batch 3 — memory-index campaign (fetched 2026-08-27, titles verified from TeX)
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 1810.07351 | A many-body index for quantum charge transport | Index_Re.tex | BBDF many-body transport index — template for the M-INDEX quantization route |
+| 1412.2970 | Lieb-Robinson bounds, Arveson spectrum and Haag-Ruelle scattering theory for gapped quantum spin systems | Scattering_spin-AHP1.tex | rigorous lattice Haag-Ruelle existence — template for AC-EX (T2) |
+
+**Mismatch record (L3):** 1708.02120 was fetched on a guessed id for
+Bachmann-Dybalski-Naaijkens; its TeX title is "Chirality induced Interface
+Currents in the Chalker Coddington Model" — WRONG paper, directory deleted,
+id must not be cited. Correct id is 1412.2970 (verified above).
