@@ -1002,3 +1002,64 @@ conjectured behavior is `𝖲→0`, leading order linear in `k_s`, with
 does not strengthen its status: existence, factorisation, and universality
 remain `S-general` (CONJECTURE).  It is distinct from the SPT endpoint operator
 `𝕊_C` and from the Bethe amplitudes `S_{12}`, `S_{21}`, and `S_phys`.
+
+---
+
+# Memory-index campaign — D26--D27
+
+*Appended 2026-08-28 from theory/memory-index.md §8.1 (merge proposal applied
+verbatim; verdicts: memory-index-r1.md PASS baseline, r2 pending).*
+
+## D26 (circle-integral on-site charge)
+
+For the selected Hermitian circle charge `S^z=-iq(ξ)`, hypothesis **(INT)**
+means that there is `c∈U(1)` with `e^{2πiS^z_x}=cI` on one site.  Equivalently,
+after choosing the unique `κ∈[0,1)` with `c=e^{2πiκ}`,
+`spec S^z⊂κ+ℤ`.  (True for every spin-`S` chain, with `c=e^{2πiS}`.)  No
+condition on the real tail-density parameter `ρ>0` is included; under
+additionally (S) of D2(e) at both tails, the density is instead DERIVED to
+satisfy `e^{2πiρ}=c=e^{-2πiρ}`, hence `2ρ∈ℤ` (claim M-IDX-density) — a
+conclusion, not a hypothesis.
+
+## D27 (charge-history local relaxation, LR)
+
+Fix the D17 vector `Ψ`, a cut `c_0`, and a padded exhaustion
+`W_m=[a_m,b_m]↑ℤ` containing `c_0`.  Put
+`Q̂_{W,c_0}=2s(𝔛_W-c_0)` and let `E_{W,t}` be the spectral resolution of its
+Heisenberg translate.  **(LR)** means:
+
+1. There is one sequence `T_n→∞` such that, for every fixed `W`, the Cesàro
+   states
+   `ω^+_{W,n}(A)=T_n^{-1}∫_{T_n}^{2T_n}⟨Ψ,α_t(A)Ψ⟩dt` and
+   `ω^-_{W,n}(A)=T_n^{-1}∫_{-2T_n}^{-T_n}⟨Ψ,α_t(A)Ψ⟩dt`, `A∈𝔄_W`,
+   and the double-Cesàro TPM laws
+   `p_{W,n}(ν)=T_n^{-2}∫_{T_n}^{2T_n}dt_+∫_{-2T_n}^{-T_n}dt_-
+   Σ_q||E_{W,t_+}({q-ν})E_{W,t_-}({q})Ψ||²`
+   converge.  The sum is over `q∈spec Q̂_{W,c_0}` and absent spectral values
+   contribute zero.
+2. With `𝒟_{W,t_-}(A)=Σ_qE_{W,t_-}({q})AE_{W,t_-}({q})`, the double-Cesàro
+   average of
+   `⟨Ψ,[𝒟_{W,t_-}(Q̂_{W,c_0}(t_+))-Q̂_{W,c_0}(t_+)]Ψ⟩`
+   tends to zero for every fixed `W`.  This is only a first-moment
+   nondemolition condition; operator asymptotic commutativity is not assumed.
+3. Writing `p_W` for the fixed-window time limit, the family `{p_{W_m}}` is
+   first-moment tight:
+   `lim_{M→∞}sup_m Σ_{|ν|>M}(1+|ν|)p_{W_m}(ν)=0`.
+   *Convenience normalisation (optional):* `p_{W_m}` converges weakly to a
+   probability `p`.  This clause buys only uniqueness of the VALUE `δx`;
+   support quantization is subsequence-free without it (Prokhorov on the
+   closed set `ℤ`).
+
+*Definition, not a hypothesis.*  `δx` is the ordered wall expectation
+`lim_m[ω^+_{W_m}(𝔛_{W_m})-ω^-_{W_m}(𝔛_{W_m})]`, along the full sequence when
+the convenience clause holds and along an (LR3) subsequence otherwise.
+Existence is a corollary of LR1--LR3: at every fixed `m`,
+`Σ_ννp_{W_m}(ν)=-2s[ω^+_{W_m}(𝔛_{W_m})-ω^-_{W_m}(𝔛_{W_m})]`
+(theory/memory-index.md ⟨1⟩7.⟨2⟩2), and LR3 makes the left side converge,
+hence the right side.  This `δx` is the ordered asymptotic value of the
+finite-time D13(a) observable; the finite-time `δx` is unchanged.
+Infinite-volume dynamics is formed first, the fixed-window time limits
+second, and the spatial exhaustion last.  No plane-wave or `k→0` interchange
+is included.  *(The former clause LR4 — assumed existence — and the former
+interaction-range-collar TV clause are deleted: the first was a theorem,
+the second was cited by no step; memory-index-r1 objection 1.)*

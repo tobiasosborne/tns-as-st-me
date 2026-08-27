@@ -264,3 +264,9 @@ SUPERSEDED in place rather than deleted).*
 | `P_3`, `H_3 = P_3HP_3` | the `≤3`-domain-wall projection and the projected kink+magnon dynamics | memory-quantization.md §3 |
 | `m_0(z)` | the free half-line Jacobi Weyl function `[(z−E_c)²−J²]^{-1/2}` used in the Feshbach spectral analysis of `H_3` | memory-quantization.md ⟨1⟩3.⟨2⟩2 |
 | `ε_AD`, `ε_num` | the charge-decomposition defect and the numerical error in the finite-window memory budget (Mq.11) | memory-quantization.md §5 |
+| `Q̂_{W,c}` | regularised fixed-window wall charge `2s(𝔛_W-c)`; a bounded local observable | proposed definitions.md D27; theory/memory-index.md (IDX.1) |
+| `E_{W,t}`, `𝒟_{W,t}` | spectral resolution of `Q̂_{W,c}(t)` and its nonselective spectral-dephasing map | proposed definitions.md D27 |
+| `p_{W;t_-,t_+}`, `p_ν`, `ΔQ_W` | finite-window TPM escaped-charge law, its ordered D27 limit, and the measured window-charge increment; convention fixed once: `ν=-ΔQ_W=q_--q_+` | proposed definitions.md D27; theory/memory-index.md §0, ⟨1⟩5--⟨1⟩7 |
+| `ρ` (density) | common unbroken-circle tail density `ω_α(S^z)=+ρ=-ω_β(S^z)`; a real parameter, deliberately distinct from D13's site-spin `s` (H-MQG(2) identifies the D13(a) calibration parameter with `ρ`).  Overload note: `ρ` is file-local to theory/spin-s-twomagnon.md ⟨1⟩1--⟨1⟩2 as the double-occupancy coefficient; `κ_{W,c_0}` is the finite-window coset offset | theory/memory-index.md ⟨1⟩9 |
+| `Q_W^α`, `Q_W^β`, `μ_∞^α` | tail-specific vacuum-normal-ordered window charges `Σ_{x∈W}(S^z_x∓ρ)` and the limiting vacuum charge law `(2π)^{-1}∫e^{-iθν}\|tr(V_θr)\|²dθ` | theory/memory-index.md ⟨1⟩11 |
+| `δx` (asymptotic) | the D27-defined ordered asymptotic value of D13(a)'s observable; the finite-time `δx` of D13(a) is unchanged (overload flagged per memory-index-r1 NOTE 5) | proposed definitions.md D27 |
