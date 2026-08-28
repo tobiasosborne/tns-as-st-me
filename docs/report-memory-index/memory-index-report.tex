@@ -1,0 +1,891 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\definecolor{linkblue}{rgb}{0.1,0.1,0.45}
+\usepackage[colorlinks=true,linkcolor=linkblue,citecolor=linkblue,urlcolor=linkblue]{hyperref}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\Hs}{\mathcal{H}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\slim}{\operatorname*{s-lim}}
+
+\title{Quantization of the domain-wall memory effect\\ on a spin chain, without scattering assumptions\\[1ex]
+\large A self-contained report}
+\author{Project \texttt{tns-as-st-me} --- campaign report\thanks{Prepared 2026-08-28 by the
+project's automated adversarial-verification campaign.  Every theorem below was
+produced by a proposer--critic loop in which independent provers and hostile
+reviewers (from different model families) attacked each statement until no
+fatal or major objection remained; the final adjudication records are cited in
+Appendix~\ref{app:method}.  The internal claim identifiers
+(\texttt{M-INDEX-fin}, \texttt{M-INDEX-spec}, \texttt{M-IDX-density},
+\texttt{AC-EX}) refer to the project's claim ledger.}}
+\date{28 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+A wall between two oppositely magnetized halves of a spin chain shifts its
+position when a spin wave scatters off it, and the shift survives after the
+spin wave has left: the chain remembers the collision.  This report proves,
+in a precisely delimited sense, that this remembered shift is \emph{quantized}
+--- each recorded outcome is an integer multiple of a unit fixed by the
+magnetization density --- and that the proof needs \emph{no} assumptions about
+how the scattering proceeds: no decomposition into reflected and transmitted
+waves, no absence of bound states, no completeness of any scattering theory.
+Those scattering assumptions, previously believed necessary, are needed only
+to compute \emph{which} multiple occurs with which probability, not to prove
+that only integer multiples occur.  Three further results are established
+along the way: the average shift itself is \emph{not} quantized (it is a
+probability-weighted average of quantized outcomes, and the distinction is
+essential); a by-product theorem shows that the magnetization density of a
+symmetric matrix-product ground state is itself quantized in half-integers;
+and there is provably \emph{no} single operator whose spectrum expresses the
+quantization --- the measurement protocol in the statement cannot be removed.
+Finally, for chains whose excitations are described exactly by the
+matrix-product excitation ansatz, the existence half of the scattering theory
+is proved from the ansatz data.  Every term used above is defined in the body
+of the report.  Each theorem's exact hypotheses, including two assumptions
+that remain unproved from first principles, are stated in full; a section
+lists what has \emph{not} been proved.  All results were verified by
+adversarial review and by machine-checked certificates, including a
+pre-registered numerical falsification attempt that failed to falsify.
+\end{abstract}
+
+\tableofcontents
+
+\section{Summary of results}\label{sec:summary}
+
+The whole content of this report in one sentence: \emph{on an infinite spin
+chain carrying a wall between two domains of opposite magnetization density
+$\pm\rho$, the outcome of measuring the wall's displacement --- by the
+explicit two-measurement protocol of Definition~\ref{def:tpm} --- is always an
+integer multiple of $1/(2\rho)$ lattice sites, provided only that the chain's
+local dynamics conserves magnetization and that the measured region settles
+down at late times (Hypothesis~\ref{hyp:lr}); no property of the scattering
+process is assumed.}
+
+The five main statements, with their logical status:
+
+\begin{center}
+\begin{tabular}{@{}llp{7.8cm}@{}}
+\toprule
+ & status & content \\
+\midrule
+Theorem~\ref{thm:fin} & proved, unconditional & at any fixed finite window,
+the measured charge lies on a rigid integer lattice, at all times \\
+Theorem~\ref{thm:spec} & proved from Hyp.~\ref{hyp:int}+\ref{hyp:lr} &
+the asymptotic outcome distribution of the two-measurement protocol is
+supported on the integers; the mean shift is
+$\delta x = -(2\rho)^{-1}\sum_\nu \nu\, p_\nu$ \\
+Theorem~\ref{thm:density} & proved, unconditional & the density itself obeys
+$2\rho\in\Z$ for symmetric injective matrix-product vacua \\
+Theorem~\ref{thm:noq} & proved (a refutation) & no global charge operator
+exists whose spectrum could express Theorem~\ref{thm:spec}; the protocol is
+unremovable \\
+Theorem~\ref{thm:acex} & proved from Hyp.~\ref{hyp:band} & scattering states
+(wave operators) \emph{exist} whenever the matrix-product excitation ansatz is
+exact; their completeness is not claimed and not needed \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Section~\ref{sec:notproved} lists, without euphemism, what is assumed and what
+remains open.  Section~\ref{sec:numerics} reports the numerical checks,
+including a falsification attempt that was specified before the theorems were
+proved.
+
+\section{The setting}\label{sec:setting}
+
+Everything in this report happens on an infinite one-dimensional lattice of
+quantum spins.  This section defines the lattice, its observables, its states,
+and its dynamics.  A reader familiar with quantum spin systems can skim to
+Section~\ref{sec:mps}; nothing nonstandard appears before then.
+
+\begin{definition}[spin chain, local observables]\label{def:chain}
+Fix an integer $d\ge 2$ (the \emph{on-site dimension}).  To each site
+$x\in\Z$ attach the Hilbert space $\C^d$.  For a finite set
+$\Lambda\subset\Z$, an \emph{observable supported in $\Lambda$} is a linear
+operator on $\bigotimes_{x\in\Lambda}\C^d$, extended to act as the identity on
+all other sites.  The collection of all such operators, for all finite
+$\Lambda$, together with the limits of sequences that converge in operator
+norm, is denoted $\A$ and called the \emph{observable algebra} of the chain.
+\end{definition}
+
+\begin{definition}[state]\label{def:state}
+A \emph{state} $\omega$ is a linear map $\omega:\A\to\C$ assigning to each
+observable its expectation value, with $\omega(A^\dagger A)\ge 0$ for all $A$
+and $\omega(\mathbf{1})=1$.  This is the standard notion: a state is a
+consistent assignment of expectation values to all local measurements.
+\end{definition}
+
+\begin{definition}[Hilbert-space realization]\label{def:gns}
+Every state $\omega$ can be \emph{realized} on a Hilbert space: there exist a
+Hilbert space $\Hs$, a unit vector $\Psi\in\Hs$, and an assignment $\pi$ of an
+operator $\pi(A)$ on $\Hs$ to each $A\in\A$, compatible with sums, products
+and adjoints, such that $\omega(A)=\langle\Psi,\pi(A)\Psi\rangle$ for all
+$A\in\A$.  (This is the Gelfand--Naimark--Segal construction; we use only its
+existence.)  When a state is fixed we write $A$ for $\pi(A)$.
+\end{definition}
+
+\begin{definition}[on-site charge, total charge of a region]\label{def:charge}
+Fix a Hermitian $d\times d$ matrix $S^z$ (the \emph{on-site charge}; for a
+spin-$S$ chain, $d=2S+1$ and $S^z$ is the usual third spin component with
+eigenvalues $-S,-S+1,\dots,S$).  Write $S^z_x$ for the copy of $S^z$ at site
+$x$.  For a finite interval $W=[a,b]\subset\Z$ the \emph{charge of $W$} is
+$\sum_{x=a}^{b}S^z_x$.  The one-parameter family of unitaries
+$u(\theta)=e^{i\theta S^z}$, applied simultaneously at every site of a region,
+implements a \emph{rotation} of that region by angle $\theta$.
+\end{definition}
+
+\begin{hypothesis}[integer spacing of the on-site charge, (INT)]\label{hyp:int}
+There is a complex number $c$ with $|c|=1$ such that
+$e^{2\pi i S^z}=c\,\mathbf{1}$ on one site.  Equivalently, writing
+$c=e^{2\pi i\kappa}$ with $\kappa\in[0,1)$: all eigenvalues of $S^z$ lie in
+the shifted integer lattice $\kappa+\Z$.
+\end{hypothesis}
+
+\begin{remark}
+Hypothesis~\ref{hyp:int} holds for every spin-$S$ chain, with
+$c=e^{2\pi iS}$: the eigenvalues of the third spin component are spaced by
+exactly $1$.  It is the only structural input about the on-site charge that
+any result below uses.  No result assumes anything about the \emph{value} of
+any density; densities are outputs (Theorem~\ref{thm:density}), not inputs.
+\end{remark}
+
+\begin{definition}[dynamics]\label{def:dynamics}
+A \emph{finite-range, charge-conserving Hamiltonian} is a formal sum
+$H=\sum_{x\in\Z}h_x$ where each $h_x$ is a fixed Hermitian observable
+supported in $[x,x+R]$ for some fixed range $R<\infty$, independent of $x$ up
+to translation, and each $h_x$ commutes with the total charge of any interval
+containing its support plus a collar of width $R$.  Such a sum generates, in a
+standard way, a family of transformations $\alpha_t$ ($t\in\R$) of the
+observable algebra: $\alpha_t(A)$ is the observable $A$ evolved for time $t$
+(Heisenberg picture).  Charge conservation means concretely: the change of the
+charge of $W$ in time equals the net current through the two ends of $W$,
+where the \emph{current} at a bond is itself a local observable determined by
+$H$; no charge is created or destroyed in the interior.
+\end{definition}
+
+\section{The two vacua, matrix product states, and the density theorem}
+\label{sec:mps}
+
+The wall of the title separates two translation-invariant reference states.
+This section defines the class of reference states used --- matrix product
+states --- and proves the first main theorem, which constrains their
+densities.  The definitions here are standard in the tensor-network
+literature \cite{cirac2021}; they are restated so that this report is
+self-contained.
+
+\begin{definition}[matrix product state, MPS]\label{def:mps}
+Fix an integer $\chi\ge 1$ (the \emph{bond dimension}) and a collection
+$A=(A^{1},\dots,A^{d})$ of $\chi\times\chi$ complex matrices, one per basis
+state of the site Hilbert space $\C^d$.  Define the linear map
+$\mathbb{E}$ on $\chi\times\chi$ matrices, and for each single-site operator
+$X$ the map $\mathbb{E}_X$, by
+\[
+\mathbb{E}(Y):=\sum_{m=1}^{d}A^{m}\,Y\,(A^{m})^{\dagger},\qquad
+\mathbb{E}_X(Y):=\sum_{m,n=1}^{d}\langle n|X|m\rangle\,A^{m}\,Y\,(A^{n})^{\dagger}.
+\]
+Assume the normalization: the largest eigenvalue of $\mathbb{E}$ (in absolute
+value) is $1$, it is the unique eigenvalue on the unit circle, and it has
+positive-definite fixed points --- a matrix $\Lambda$ with
+$\mathbb{E}(\Lambda)=\Lambda$ and a matrix $\Lambda'$ with
+$\mathbb{E}^{\dagger}(\Lambda')=\Lambda'$, normalized by
+$\tr(\Lambda'\Lambda)=1$.  The \emph{matrix product state} $\omega_A$ is the
+translation-invariant state whose expectation of a product
+$X_{1}\otimes\cdots\otimes X_{n}$ of single-site operators on $n$ consecutive
+sites is
+\[
+\omega_A\bigl(X_{1}\otimes\cdots\otimes X_{n}\bigr)
+=\tr\bigl(\Lambda'\;\mathbb{E}_{X_{1}}\circ\cdots\circ\mathbb{E}_{X_{n}}(\Lambda)\bigr).
+\]
+The matrices $A^m$ act on an auxiliary $\chi$-dimensional space (the
+\emph{bond space}) that carries the correlations of the state; $\chi=1$ gives
+exactly the uncorrelated product states.
+\end{definition}
+
+\begin{definition}[injectivity]\label{def:injective}
+The tensor $A$ is \emph{injective} if there is a length $k$ such that the
+products $A^{m_1}A^{m_2}\cdots A^{m_k}$, over all choices of indices, span the
+full space of $\chi\times\chi$ matrices.  Injectivity is the genericity
+condition of the MPS literature: it guarantees that the state determines the
+tensor up to the natural equivalences, and that the normalization of
+Definition~\ref{def:mps} can be arranged.  All reference states below are
+injective MPS.
+\end{definition}
+
+\begin{definition}[symmetric MPS pair with opposite densities]\label{def:vacua}
+Fix two injective MPS tensors $A_\alpha$, $A_\beta$ of a common bond dimension
+$\chi$, with states $\omega_\alpha$, $\omega_\beta$ (the two \emph{vacua}).
+We assume:
+\begin{enumerate}
+\item \emph{(invariance)} both states are invariant under all rotations:
+$\omega_\gamma\bigl(u(\theta)^{\otimes n}\,B\,(u(\theta)^{\dagger})^{\otimes n}\bigr)
+=\omega_\gamma(B)$ for $\gamma\in\{\alpha,\beta\}$, every $\theta$, and every
+observable $B$ on $n$ sites;
+\item \emph{(local implementation)} for each vacuum there are invertible
+$\chi\times\chi$ matrices $V_\theta$ and phases $f(\theta)$, with
+$V_0=\mathbf{1}$, $f(0)=0$, both differentiable in $\theta$, such that
+rotating the physical index of the tensor equals a similarity transformation
+on the bond space:
+\[
+\sum_{n}\,[u(\theta)]_{mn}\,A^{n}
+=e^{i f(\theta)}\;V_\theta\,A^{m}\,V_\theta^{-1}\qquad(m=1,\dots,d).
+\]
+For an injective tensor, clause (2) with \emph{some} $V_\theta$ and
+$f(\theta)$ is a theorem given clause (1) (the ``fundamental theorem'' of MPS
+symmetries \cite{perez2008,cirac2021}); the differentiability of the chosen
+family is the one extra smoothness assumption, labelled (S);
+\item \emph{(opposite densities)} the two charge densities are antisymmetric:
+\[
+\rho\;:=\;\omega_\alpha(S^z_0)\;=\;-\,\omega_\beta(S^z_0).
+\]
+Here $\rho$ is a real parameter of the pair; nothing is assumed about its
+value, and $\rho=0$ is allowed;
+\item \emph{(stationarity)} both vacua are invariant in time under the
+dynamics of Definition~\ref{def:dynamics}, and $H$ commutes with rotations.
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+The simplest example is the spin-$\tfrac12$ chain with
+$\alpha=$ all spins up, $\beta=$ all spins down: product states ($\chi=1$)
+with $\rho=\tfrac12$.  A genuinely correlated example with $\rho=0$ is the
+spin-$1$ chain state of Affleck, Kennedy, Lieb and Tasaki (the \emph{AKLT
+state}), an explicit injective MPS with $\chi=2$.  The point of the definitions above is that
+\emph{nothing} below is restricted to product states.
+\end{example}
+
+The first theorem was found as a by-product of the campaign and constrains
+which densities can occur at all.  It has the flavor of the
+Lieb--Schultz--Mattis-type results, which tie densities of symmetric ground
+states to lattice constraints, but its proof is a short exact computation.
+
+\begin{theorem}[density quantization; claim \texttt{M-IDX-density}]
+\label{thm:density}
+Under Definition~\ref{def:vacua} (clauses 1--3, with the smoothness (S) at
+both vacua) and Hypothesis~\ref{hyp:int} with constant $c$:
+\[
+e^{2\pi i\rho}\;=\;c\;=\;e^{-2\pi i\rho},
+\qquad\text{and therefore}\qquad 2\rho\in\Z .
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Differentiating the local-implementation identity of
+Definition~\ref{def:vacua}(2) at $\theta=0$ and taking the expectation value
+in $\omega_\alpha$ gives $f'(0)=\omega_\alpha(S^z_0)=\rho$: the phase slope
+\emph{is} the density.  The identity composes under successive rotations, and
+injectivity makes the decomposition into ($f$, $V_\theta$) rigid enough that
+$f$ is additive; with differentiability this forces
+$f(\theta)=\rho\,\theta$ up to integer multiples of $2\pi$.  At $\theta=2\pi$
+the rotation $u(2\pi)=c\,\mathbf{1}$ is a pure number by
+Hypothesis~\ref{hyp:int}, so $e^{2\pi i\rho}=c$.  Running the same argument in
+the second vacuum, whose density is $-\rho$, gives $e^{-2\pi i\rho}=c$.
+Dividing the two conclusions yields $e^{4\pi i\rho}=1$.  The antisymmetry of
+clause (3) is load-bearing: one vacuum alone gives only $\rho\in\kappa+\Z$,
+and a general pair only $\rho_\alpha-\rho_\beta\in\Z$.  No step uses any
+relation between $\rho$ and the on-site dimension $d$.  The full proof, in
+machine-auditable numbered steps, is in the project file
+\texttt{theory/memory-index.md}; its two load-bearing computations carry
+machine-checked certificates (Section~\ref{sec:numerics}).
+\end{proof}
+
+\section{The wall, the window charge, and the wall position}
+\label{sec:wall}
+
+\begin{definition}[kink states]\label{def:kink}
+A \emph{kink state} (or wall state) is a state $\omega$ of the chain that
+agrees with $\omega_\alpha$ far to the left and with $\omega_\beta$ far to the
+right, with summable charge deviations:
+\[
+\sum_{x<0}\bigl|\omega(S^z_x)-\rho\bigr|
+\;+\;\sum_{x>0}\bigl|\omega(S^z_x)+\rho\bigr| \;<\;\infty .
+\]
+When first moments are needed (they are, in Hypothesis~\ref{hyp:lr}(iii)) we
+additionally require the sums above to converge with an extra weight $|x|$,
+i.e.\ $\sum_x |x|\,\bigl|\omega(S^z_x)\mp\rho\bigr|<\infty$ with the sign
+matching the corresponding side.  From here on, fix a kink
+state, realize it on a Hilbert space as in Definition~\ref{def:gns}, and call
+the realizing vector $\Psi$.
+\end{definition}
+
+For $\rho>0$ the charge profile of a kink state falls from $+\rho$ on the far
+left to $-\rho$ on the far right; the crossover region is the \emph{wall}.
+Moving the entire wall one site to the right converts one site's expected
+charge from $-\rho$ to $+\rho$: the region of density $+\rho$ grows by one
+site, so the total charge \emph{increases} by $2\rho$.  This calibration --- one site of wall motion equals $2\rho$ units of
+charge --- is the entire mechanism of the memory effect, and motivates:
+
+\begin{definition}[window charge and wall position]\label{def:window}
+For a finite interval $W=[a,b]$ and a marked interior site $c\in W$ (the
+\emph{cut}), the \emph{window charge} is the observable
+\[
+\widehat{Q}_{W,c}\;:=\;\sum_{x=a}^{c}\bigl(S^z_x-\rho\bigr)
+\;+\;\sum_{x=c+1}^{b}\bigl(S^z_x+\rho\bigr),
+\]
+i.e.\ the charge of $W$ measured against the profile of a reference wall
+sitting exactly at the cut.  The associated \emph{wall-position observable}
+is
+\[
+X_{W,c}\;:=\;c\;+\;\frac{\widehat{Q}_{W,c}}{2\rho}\qquad(\rho>0),
+\]
+so that a state whose wall sits $n$ sites to the right of $c$ (and which is
+exactly vacuum elsewhere in $W$) has $\langle X_{W,c}\rangle=c+n$.
+\end{definition}
+
+\begin{remark}
+$\widehat{Q}_{W,c}$ is a bounded observable supported in the finite window
+$W$; no infinite sums are involved.  All limits ($t\to\pm\infty$ first, then
+$W\uparrow\Z$) are taken later, in a stated order, and the order matters.
+\end{remark}
+
+\section{What ``memory'' means, and why the naive definition fails}
+\label{sec:naive}
+
+The physical effect: prepare a kink plus an incoming localized spin-wave
+packet (a \emph{magnon}: a traveling disturbance of the vacuum carrying one
+unit of charge); let them collide; after the collision the wall sits, on
+average, somewhere else.  The displacement persists after the magnon has
+left --- the chain remembers.  The question is what exactly is quantized.
+
+One is tempted to define a displacement \emph{operator}
+``$X(+\infty)-X(-\infty)$'' and ask for its spectrum.  Two theorems below say
+this temptation must be resisted, for two independent reasons.
+
+\emph{First reason: differences of lattice-valued observables are not
+lattice-valued.}  The window charge at late times,
+$\alpha_t(\widehat{Q}_{W,c})$, and at early times,
+$\alpha_{-t}(\widehat{Q}_{W,c})$, do not commute with one another.  For
+noncommuting operators, even when each has spectrum in $\Z$, the difference
+need not: take, on $\C^2$ with orthonormal basis $\{|0\rangle,|1\rangle\}$ and
+$|+\rangle:=(|0\rangle+|1\rangle)/\sqrt2$, the projections
+$Q_-=|0\rangle\langle 0|$ and $Q_+=|+\rangle\langle +|$.  Both have spectrum
+$\{0,1\}\subset\Z$, yet
+\[
+\spec\,(Q_+-Q_-)=\Bigl\{-\tfrac{1}{\sqrt2},\,+\tfrac{1}{\sqrt2}\Bigr\},
+\]
+which contains no integers at all.  Any correct quantization statement must
+therefore say \emph{how} the two charges are measured, not merely subtract
+them.
+
+\emph{Second reason: the global charge operator does not exist.}  One might
+instead try to build a single conserved operator (``total charge relative to
+the wall'') and use its spectrum.  This fails:
+
+\begin{theorem}[no global charge operator; claim \texttt{M-INDEX-LA-strong},
+refuted form]\label{thm:noq}
+There is no construction of a self-adjoint operator $\widehat{Q}$ on the
+Hilbert space of Definition~\ref{def:kink} that (i) is the limit of the
+window charges $\widehat{Q}_{W,c}$ as $W\uparrow\Z$ in any of the standard
+operator senses, and (ii) exists for every kink state satisfying the
+summability condition of Definition~\ref{def:kink}.  Two independent
+obstructions were established:
+\begin{enumerate}
+\item \emph{(fluctuations)} the summability condition controls the
+\emph{means} $\omega(S^z_x)\mp\rho$ but not the fluctuations; there are
+explicit product states (bond dimension $1$, zero Hamiltonian) satisfying
+Definition~\ref{def:kink} for which the variance of $\widehat{Q}_{W,c}$
+diverges logarithmically as $W$ grows, so the sequence converges to no
+operator;
+\item \emph{(correlated vacua)} whenever the bond matrices $V_\theta$ of
+Definition~\ref{def:vacua}(2) are not multiples of the identity --- the
+generic situation for $\chi\ge2$ --- the half-infinite partial sums of
+$(S^z_x-\rho)$ fail to converge on the kink vector, by the same mechanism
+that makes a rotation of half the chain impossible to implement by a
+norm-convergent sequence of local unitaries.
+\end{enumerate}
+Consequently any quantization theorem must be a statement about
+\emph{measurement outcomes}, not about the spectrum of a global observable.
+A weaker existence statement --- a charge operator built from the symmetry
+group acting on the specific Hilbert space realization of the kink state ---
+remains plausible and is recorded as a conjecture in
+Section~\ref{sec:notproved}.
+\end{theorem}
+
+\section{The two-measurement protocol and the relaxation hypothesis}
+\label{sec:protocol}
+
+The correct object is the outcome statistics of an explicit, physically
+performable protocol.
+
+\begin{definition}[projective measurement of the window charge]
+\label{def:projmeas}
+By Theorem~\ref{thm:fin} below, $\widehat{Q}_{W,c}$ has a discrete set of
+eigenvalues.  \emph{Measuring $\widehat{Q}_{W,c}$ at time $t$} means the
+textbook projective measurement of the Heisenberg observable
+$\alpha_t(\widehat{Q}_{W,c})$: the outcome is an eigenvalue $q$, obtained
+with probability $\|E_{W,t}(\{q\})\Psi\|^2$, where $E_{W,t}$ denotes the
+projection onto the eigenspace of $\alpha_t(\widehat{Q}_{W,c})$ with
+eigenvalue $q$; after the measurement the state is the normalized projection.
+\end{definition}
+
+\begin{definition}[the two-measurement protocol and its outcome law]
+\label{def:tpm}
+Fix the window $W$, the cut $c$, an early time $-t_-$ and a late time $t_+$
+(both large).  The protocol: (i) measure $\widehat{Q}_{W,c}$ at time $-t_-$,
+record the outcome $q_-$; (ii) let the system evolve; (iii) measure
+$\widehat{Q}_{W,c}$ at time $t_+$, record $q_+$; (iv) record the
+\emph{escaped charge}
+\[
+\nu\;:=\;q_- - q_+ ,
+\]
+the amount of charge that left the window between the two measurements.  The
+\emph{outcome law} $p_{W;t_-,t_+}(\nu)$ is the probability of recording the
+value $\nu$, computed by the standard rules of sequential projective
+measurement:
+\[
+p_{W;t_-,t_+}(\nu)=\sum_{q}\,
+\bigl\|E_{W,t_+}(\{q-\nu\})\,E_{W,-t_-}(\{q\})\,\Psi\bigr\|^{2}.
+\]
+\end{definition}
+
+Note what the protocol does \emph{not} assume: nothing about reflected or
+transmitted waves, nothing about how many kinds of excitation exist, nothing
+about bound states.  It is a pair of measurements and bookkeeping.
+
+The single dynamical assumption of the main theorem says that these
+statistics settle down at late times and do not leak to infinity as the
+window grows.  ``Ces\`aro convergence'' below means convergence of running
+time-averages: a function $g(t)$ Ces\`aro-converges if
+$\frac{1}{T}\int_{T}^{2T}g(t)\,dt$ converges as $T\to\infty$; this is weaker
+than convergence of $g(t)$ itself and tolerates persistent oscillations.
+
+\begin{hypothesis}[local relaxation, (LR)]\label{hyp:lr}
+For the fixed kink-plus-packet state $\Psi$, the fixed cut $c$, and a fixed
+growing family of windows $W_m\uparrow\Z$ each containing $c$:
+\begin{enumerate}
+\item[(i)] \emph{(settling)} there is one sequence of times $T_n\to\infty$
+along which, for every fixed window $W$, both the single-time expectation
+values of all observables in $W$ (at times $\pm t$, Ces\`aro-averaged) and
+the two-measurement outcome laws $p_{W;t_-,t_+}$ (Ces\`aro-averaged over both
+times) converge; call the limiting law $p_W$;
+\item[(ii)] \emph{(vanishing back-action on the mean)} the first measurement
+does not shift the late-time mean charge in the limit: the Ces\`aro average
+of $\bigl\langle \mathcal{D}_{W,-t_-}\bigl(\alpha_{t_+}(\widehat Q_{W,c})\bigr)
+-\alpha_{t_+}(\widehat Q_{W,c})\bigr\rangle_\Psi$ tends to zero for every
+fixed $W$, where $\mathcal{D}_{W,-t_-}(A):=\sum_q E_{W,-t_-}(\{q\})\,A\,
+E_{W,-t_-}(\{q\})$ is the operation of performing the first measurement and
+forgetting its outcome.  Only this averaged, first-moment statement is
+assumed --- not that the operators commute;
+\item[(iii)] \emph{(no charge stranded at the window edge)} the limiting laws
+are tight with first moments, uniformly in the window:
+\[
+\lim_{M\to\infty}\ \sup_{m}\ \sum_{|\nu|>M}\bigl(1+|\nu|\bigr)\,p_{W_m}(\nu)\;=\;0 .
+\]
+\end{enumerate}
+Optionally, one may also assume the laws $p_{W_m}$ converge (weakly, i.e.\
+probability by probability) to a law $p$; this optional clause buys only the
+uniqueness of the limit values and nothing in the quantization statements.
+\end{hypothesis}
+
+\begin{remark}[status of (LR)]
+Hypothesis~\ref{hyp:lr} is \emph{assumed}, not derived from the microscopic
+dynamics; this is stated prominently in Section~\ref{sec:notproved}.  Its
+role is to be the \emph{weakest} sufficient condition found under which the
+quantization argument closes.  It is strictly weaker than any scattering
+assumption: it does not name channels, does not require wave operators, and
+tolerates bound states, absorption, and any number of excitation species.
+It can fail --- e.g.\ if charge accumulates permanently at the window
+boundary --- and the numerical probe of Section~\ref{sec:numerics} was
+designed to look for exactly such failures (none was found).
+\end{remark}
+
+\section{The quantization theorems}\label{sec:main}
+
+\begin{theorem}[finite-window lattice rigidity; claim \texttt{M-INDEX-fin}]
+\label{thm:fin}
+Assume Hypothesis~\ref{hyp:int} and Definition~\ref{def:vacua}(3).  Fix any
+finite window $W=[a,b]$ and cut $c\in W$.  Then:
+\begin{enumerate}
+\item all eigenvalues of $\widehat{Q}_{W,c}$ lie in a single shifted integer
+lattice $\kappa_{W,c}+\Z$, where the shift
+$\kappa_{W,c}\equiv|W|\kappa+\rho\,(a+b-1-2c) \pmod{\Z}$ depends on the
+window, the cut, and the density, but \emph{not} on the state and \emph{not}
+on time (time evolution preserves the spectrum of an observable);
+\item consequently, in the protocol of Definition~\ref{def:tpm}, both
+recorded outcomes $q_\pm$ lie in the \emph{same} shifted lattice, the shifts
+cancel in the difference, and every recorded escaped charge $\nu=q_--q_+$ is
+an exact integer --- at every window size, at all times, with no hypotheses
+on the dynamics beyond its existence.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Each $S^z_x$ has spectrum in $\kappa+\Z$ (Hypothesis~\ref{hyp:int}); the
+window charge is a sum of commuting such operators minus the number
+$\rho\,(c-a+1)-\rho\,(b-c)$; adding commuting operators adds their spectra.
+The integrality of $\nu$ is then arithmetic --- crucially, arithmetic of two
+outcomes of the \emph{same} observable at fixed $W$, so the state-independent
+shift cancels exactly.  This is where the protocol earns its keep: it is
+immune to the noncommutativity trap of Section~\ref{sec:naive} because no
+operator subtraction ever occurs, only subtraction of recorded numbers.
+\end{proof}
+
+\begin{theorem}[quantization of the memory outcome law; claim
+\texttt{M-INDEX-spec}]\label{thm:spec}
+Assume the setting of Sections~\ref{sec:setting}--\ref{sec:wall}
+(finite-range charge-conserving dynamics, symmetric vacuum pair with density
+$\rho>0$, kink state with summable deviations and first moments),
+Hypothesis~\ref{hyp:int}, and Hypothesis~\ref{hyp:lr}.  Then, along the time
+sequence provided by (LR):
+\begin{enumerate}
+\item for every fixed window $W_m$ the limiting outcome law $p_{W_m}$ exists
+and is supported on the integers;
+\item every limit point $p=\{p_\nu\}_{\nu\in\Z}$ of the family
+$\{p_{W_m}\}$ as $m\to\infty$ is a probability distribution supported on
+$\Z$: no probability escapes to infinity and none lands off the integer
+lattice.  (With the optional convergence clause of (LR) the limit $p$ is
+unique.);
+\item the asymptotic mean wall displacement, defined as the ordered double
+limit (time limits first at fixed window, then $W_m\uparrow\Z$) of the
+difference of expectations of the wall-position observable
+$X_{W,c}$ of Definition~\ref{def:window}, exists along the same subsequence
+and equals
+\[
+\boxed{\ \delta x\;=\;-\,\frac{1}{2\rho}\ \sum_{\nu\in\Z}\ \nu\,p_\nu\ }
+\]
+\item in particular, \emph{every individual outcome} of the protocol
+displaces the recorded wall position by an exact integer multiple of
+$1/(2\rho)$ lattice sites, while the \emph{mean} $\delta x$ is a
+probability-weighted average of these quantized outcomes and is not itself
+quantized.
+\end{enumerate}
+Bound states, absorption of the magnon by the wall, additional excitation
+species, and any other exotic process are all permitted: they contribute
+probability at other integers $\nu$ and cannot produce non-integer outcomes.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Clause (1): Theorem~\ref{thm:fin}(2) puts each finite-time law on $\Z$;
+Ces\`aro limits of probability laws on the closed set $\Z$ stay on $\Z$
+provided no mass escapes, which at fixed $W$ is automatic (finitely many
+eigenvalues).  Clause (2): as $W$ grows the lattice itself is fixed
+(integers), and Hypothesis~\ref{hyp:lr}(iii) is exactly the tightness needed
+so that weak limit points remain probability laws on $\Z$ (this is the
+standard compactness argument for tight families, and the counterexamples
+showing that plain convergence of means would \emph{not} suffice are recorded
+alongside the proof).  Clause (3): at fixed window and finite times, charge
+conservation (Definition~\ref{def:dynamics}) gives an exact identity: the
+change of $\langle\widehat Q_{W,c}\rangle$ equals the net current through the
+two ends, and the first-moment identity
+$\sum_\nu\nu\,p_{W;t_-,t_+}(\nu)
+=\langle\alpha_{-t_-}(\widehat Q)\rangle-
+\langle\mathcal{D}_{W,-t_-}(\alpha_{t_+}(\widehat Q))\rangle$
+relates the protocol mean to the unmeasured evolution up to the back-action
+term that Hypothesis~\ref{hyp:lr}(ii) kills in the limit;
+Hypothesis~\ref{hyp:lr}(iii) (first moments, not just tightness) lets the
+mean pass through the window limit.  Dividing by $-2\rho$ converts escaped
+charge to wall displacement (Definition~\ref{def:window}).  The full
+numbered-step proof is \texttt{theory/memory-index.md}; the first-moment
+identity and the tightness counterexamples carry machine certificates.
+\end{proof}
+
+\begin{remark}[consistency with the scattering picture]\label{rem:consistency}
+Suppose one \emph{additionally} assumes the full scattering package that
+earlier work had to assume from the start: a complete two-channel scattering
+theory in which the incoming magnon (charge $-1$ relative to the left vacuum)
+either reflects (outgoing charge $-1$ on the same side, escaped charge
+$\nu=0$) or transmits (outgoing charge $+1$ relative to the right vacuum,
+escaped charge $\nu=2$), with transmission probability $T$.  Then the outcome
+law of Theorem~\ref{thm:spec} collapses to $p_0=1-T$, $p_2=T$, and the boxed
+formula gives $\delta x=-T/\rho$: exactly the previously known conditional
+result.  The logical relation is strict: the old theorem = the new theorem +
+the scattering package; the quantization itself never needed the package.
+\end{remark}
+
+\section{Existence of scattering states from the excitation ansatz}
+\label{sec:acex}
+
+Theorem~\ref{thm:spec} quantizes the outcomes without knowing their
+probabilities.  Computing the probabilities $p_\nu$ is the job of scattering
+theory, and the obstruction there is well known: proving that wave operators
+exist and are complete for a many-body lattice system is out of reach in
+general, and completeness can even be false as posed (extra channels, bound
+states).  The final theorem shows that the \emph{existence} half --- enough
+to define the transmission probability on the states the construction
+reaches --- follows from hypotheses that the matrix-product
+\emph{excitation ansatz} \cite{haegeman2011,haegeman2013,vanderstraeten2019}
+is designed to provide.  The philosophy: the ansatz supplies the kinematic
+data (which single excitations exist and how they disperse); once those data
+are assumed exact, the dynamical statement (scattering states exist) becomes
+a theorem.  Completeness is \emph{not} claimed, and by
+Theorem~\ref{thm:spec} it is no longer needed for quantization.
+
+\begin{definition}[wave operators]\label{def:wave}
+Let $\Hs$ carry the dynamics $e^{-iHt}$ of the kink sector (the
+Hilbert-space realization of Definition~\ref{def:gns} for kink states), and
+let $\Hs_{\mathrm{ch}}$ be a \emph{channel space}: square-summable functions
+of a kink momentum $p$ and a magnon momentum $k$, evolving under
+multiplication by $e^{-i(E_K(p)+\omega(k))t}$, where $E_K$ and $\omega$ are
+given functions (the \emph{dispersions}: the energy of each excitation as a
+function of its momentum; the derivative of a dispersion is the excitation's
+propagation speed, its \emph{group velocity}).  Given a linear \emph{identification
+map} $J:\Hs_{\mathrm{ch}}\to\Hs$ (built below from the ansatz data), the
+\emph{wave operators} are the strong limits
+\[
+W_\pm\;:=\;\slim_{t\to\pm\infty}\;e^{iHt}\,J\,e^{-iH_{\mathrm{ch}}t}
+\]
+whenever they exist on a stated domain.  Physically: $W_-\phi$ is the true
+state of the interacting chain that, in the far past, looked like the freely
+moving kink-plus-magnon configuration $\phi$.
+\end{definition}
+
+\begin{hypothesis}[exact band data; abbreviated statement]\label{hyp:band}
+There exist: (a) a family of \emph{kink vectors} $\kappa_a(x)\in\Hs$
+($x\in\Z$, finitely many labels $a$), translation-covariant, whose closed
+span is invariant under $H$ with matrix dispersion $E_K$, twice continuously
+differentiable in momentum; (b) over each vacuum, \emph{magnon creation
+operators}: almost-local operators (localized up to tails decaying faster
+than any power) adding one unit of charge, whose action on the vacuum
+realizes an isolated single-magnon energy band with dispersion $\omega$ and
+positive gap; both band relations hold \emph{exactly}, not approximately ---
+this is the mathematical idealization of ``the excitation ansatz is exact'';
+(c) a \emph{two-cluster factorization estimate}: there are $C<\infty$ and
+$\lambda\in(0,1)$ such that for all kink vectors and all observables $A$
+localized at least $r$ sites to the left and $B$ at least $r$ sites to the
+right of the kink positions,
+\[
+\bigl|\langle\kappa_a(x),\,AB\,\kappa_{a'}(x')\rangle
+-\omega_\alpha(A)\,\omega_\beta(B)\,\langle\kappa_a(x),\kappa_{a'}(x')\rangle\bigr|
+\;\le\;C\,\|A\|\,\|B\|\,\lambda^{r};
+\]
+(d) the incoming wave packets are smooth with disjoint group-velocity
+supports separated by some $\varepsilon_v>0$ (in particular, this is a
+fixed-packet theorem: the zero-velocity limit $k\to0$ is excluded, and no
+uniformity in it is claimed).
+\end{hypothesis}
+
+\begin{theorem}[existence of kink--magnon scattering states; claim
+\texttt{AC-EX}, parts ACE.1--ACE.2]\label{thm:acex}
+Under Definition~\ref{def:vacua}, Definition~\ref{def:dynamics} and
+Hypothesis~\ref{hyp:band}, with the identification map $J$ built by applying
+a momentum-filtered magnon creation operator to a kink vector, the wave
+operators $W_-$ (one incoming configuration) and $W_+$ (two outgoing
+configurations, magnon on the left or on the right of the kink) exist on the
+stated packet domains and are isometries (norm-preserving maps, so no
+probability is lost in the construction).  On the \emph{constructed}
+outgoing subspace, the orthogonal projection $N_T^{\mathrm{ex}}$ onto the
+transmitted configuration is well defined, and
+$\langle\Psi,N_T^{\mathrm{ex}}\Psi\rangle$ is the transmission probability of
+the constructed channels.  Nothing is asserted about the orthogonal
+complement of the constructed subspace: completeness --- the statement that
+the constructed states exhaust everything that propagates --- is not claimed,
+is not used anywhere in this report, and is known to be unprovable at this
+generality.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The standard route (Cook's method): show that the time derivative of
+$e^{iHt}J e^{-iH_{\mathrm{ch}}t}\phi$ is integrable in $t$.  The derivative
+is controlled by (i) the exactness of the band relations, which makes the
+naive error term vanish identically for a single excitation, leaving only
+cross terms between the kink and the magnon; (ii) the cluster estimate
+(c) and the velocity separation (d), which confine the cross terms to an
+exponentially suppressed spatial cone, giving an integrable
+$O(|t|^{-3})$ bound.  A technical device is essential and easy to state: the
+magnon creation operators must be \emph{momentum-filtered} (their momentum
+content cut off smoothly around the packet support) --- with the naive
+unfiltered normalization the hopping kernels decay too slowly and the
+integral does not close.  The port of this argument from the
+translation-invariant setting of \cite{bachmann2015} to the kink sector
+(where the wall breaks translation invariance of the \emph{state} but the
+sector as a whole still carries a translation action) is the substance of
+the proof; every step is re-derived rather than cited by analogy.  Full
+proof: \texttt{theory/ansatz-scattering.md}.
+\end{proof}
+
+\begin{remark}[bridge to the outcome law; conditional]\label{rem:bridge}
+On states in the range of both wave operators, one expects the outcome law of
+Theorem~\ref{thm:spec} to be carried by the constructed channels with
+$p_2=\langle N_T^{\mathrm{ex}}\rangle$ (as in
+Remark~\ref{rem:consistency}).  This bridge is proved \emph{conditionally}
+on three explicitly stated extra assumptions: the charge bookkeeping of the
+two legs ($q$-values $-1$, $-1$, $+1$ as in Remark~\ref{rem:consistency}), a
+local-decay hypothesis (the outgoing state, restricted to any fixed window
+around the wall, becomes charge-definite --- the missing lemma is named and
+tracked), and the applicability of Hypothesis~\ref{hyp:lr} to the vector in
+question.  None of the three is proved here; see
+Section~\ref{sec:notproved}.
+\end{remark}
+
+\section{Numerical verification}\label{sec:numerics}
+
+Three independent machine checks accompany the theorems.  Two conventions
+first.  \emph{Exact diagonalization} (ED) means: represent the full
+many-body Hilbert space of a finite chain on a computer with no
+approximation beyond machine arithmetic, and evolve by the exact matrix
+exponential.  A \emph{red test} (used throughout the project) means: every
+machine-checked certificate must be demonstrated to \emph{fail} when one of
+its hypotheses is deliberately broken; a check that cannot fail certifies
+nothing.  All checkers pass their green runs and fail their red runs; the
+suite is rerun before every status change.
+
+\paragraph{Pre-registered falsification attempt.}
+Before the proofs of Section~\ref{sec:main} existed, a falsifier was
+specified: if the outcome distribution of the window charge, in an honest
+simulation of a kink--magnon collision, put persistent probability off the
+integer lattice or leaked mass under growing windows, the theorem targets
+would have been withdrawn.  The model: the spin-$\tfrac12$ easy-axis XXZ
+ferromagnet,
+\[
+H=-J\sum_x\Bigl[S^x_xS^x_{x+1}+S^y_xS^y_{x+1}
++\Delta\bigl(S^z_xS^z_{x+1}-\tfrac14\bigr)\Bigr],
+\qquad \Delta=2,\ J=1,
+\]
+with boundary spins frozen up (left) and down (right) to hold one wall in
+the system; here $\rho=\tfrac12$, so the predicted displacement quantum is
+$1/(2\rho)=1$ site per unit of escaped charge, and the transmission outcome
+($\nu=2$) displaces by $2$ sites.  A chain of $N=50$ sites (restricted to at
+most five domain walls, a truncation validated against the exact space at
+$N=22$ to $3.4\times10^{-3}$ in every probability) was prepared with a
+\emph{dressed} kink (the true ground state of the kink sector, not a sharp
+product wall) and an incoming magnon packet, and evolved through the
+collision.  Results: the probability off the integer lattice was
+\emph{exactly zero} to machine precision at every time, window, and
+geometry tested; at the latest clean time the law concentrated on the two
+scattering outcomes, $p(\nu=2)=0.9996$, $p(\nu=0)=0.0004$ (this model is
+nearly transparent at the chosen momentum), with residual mass
+$\le 2.5\times10^{-3}$ on neighboring integers; the mean displacement
+computed from the outcome law agreed with an independent estimator of the
+wall position (a profile centroid, algebraically unrelated to the window
+charge) to $0.011$ sites.  Two instructive artifacts were found and
+documented: preparing a \emph{sharp} wall instead of the dressed one fakes a
+$5\%$ off-outcome signal (the preparation defect radiates slow magnon pairs
+--- a state-preparation effect, not a violation); and the residual
+integer-valued mass sits in near-threshold two-magnon configurations with
+group velocity near zero --- precisely the slow-excitation regime that
+scattering-based approaches cannot control, absorbed here by
+Theorem~\ref{thm:spec} because such outcomes still land on integers.
+
+\paragraph{Certificates for the proofs.}
+A second program certifies, in exact or high-precision arithmetic, the
+load-bearing computations of Sections~\ref{sec:mps}--\ref{sec:main}: the
+lattice arithmetic of Theorem~\ref{thm:fin} including an irrational-offset
+stress test; the $2\times2$ counterexample of Section~\ref{sec:naive}; the
+divergent-fluctuation counterexample of Theorem~\ref{thm:noq}; the
+density-equals-phase-slope computation behind Theorem~\ref{thm:density} on
+randomly drawn symmetric tensors of bond dimensions up to $4$ (agreement to
+$9\times10^{-16}$, with the necessity of the antisymmetric vacuum pair
+red-certified); the first-moment identity of Theorem~\ref{thm:spec}; and the
+exact reduction of Remark~\ref{rem:consistency}.  A third program certifies
+the two quantitative pillars of Theorem~\ref{thm:acex}: the band and
+threshold data of the reference model, and the decay rate of the Cook
+integrand, with a red mode confirming that a slowly decaying (unfiltered)
+kernel destroys the required integrability --- the failure mode the
+momentum filter exists to prevent.
+
+\section{What is not proved}\label{sec:notproved}
+
+For clarity, the complete list of assumptions and open items.
+
+\begin{enumerate}
+\item \emph{Hypothesis (LR) is not derived from the dynamics.}  No proof is
+offered that any concrete Hamiltonian satisfies the relaxation clauses; (LR)
+is the stated interface between the quantization arithmetic and the hard
+open problems of many-body relaxation theory.  In particular, no claim of
+the form ``scattering assumptions imply (LR)'' is made; an attempted proof
+of such an implication was reviewed and rejected during verification.
+\item \emph{Hypothesis \ref{hyp:band} (exact band data) is not derived.}
+In practice the excitation ansatz provides these data as the output of a
+numerical optimization; here their exactness is an assumption.  The cluster estimate (c) is the
+load-bearing clause and is verified on no model.
+\item \emph{Completeness of scattering is neither proved nor assumed.}  It
+is provably not derivable from band data alone, and Theorem~\ref{thm:spec}
+was engineered precisely so that it is not needed.
+\item \emph{The bridge of Remark~\ref{rem:bridge}} rests on a named,
+unproved local-decay lemma and on (LR); both are tracked as open problems.
+\item \emph{The mean $\delta x$ is not quantized}, and no claim to the
+contrary is made anywhere; quantization is a property of individual
+protocol outcomes.
+\item \emph{Conjecture (charge operator on the kink representation).}  While
+Theorem~\ref{thm:noq} kills the state-independent construction, it is
+conjectured that on the specific Hilbert-space realization of a fixed kink
+state the symmetry rotations are implemented by a continuous unitary group
+whose generator has purely discrete, integer-spaced spectrum; supporting
+evidence (uniformly bounded charge variance on such realizations) is
+recorded, but no proof exists.
+\item \emph{Model scope of the numerics.}  The simulations concern one
+ferromagnetic model family; they are consistency checks and falsification
+attempts, not proofs, and are labelled as such throughout.
+\end{enumerate}
+
+\appendix
+
+\section{How these results were verified}\label{app:method}
+
+Each theorem above was produced by an adversarial loop: a \emph{proposer}
+(an automated prover) writes the full argument in numbered, individually
+addressable steps, every step justified by a numbered definition, a
+previously established claim, or a named machine-checked computation; an
+independent \emph{critic} (a different automated system, from a different
+model family, to decorrelate blind spots) attacks the argument by
+recomputing its key steps, constructing counterexamples, and auditing every
+quantifier, and issues a written verdict listing objections classified by
+severity, each with a demanded fix and a statement of what survives if the
+fix fails.  The loop repeats until a verdict contains no fatal or major
+objection.  For the results reported here the loop ran three rounds; the
+objection counts fell from $20$ (first round, three parallel verdicts) to
+$14$ to $13$, with major objections $6\to3\to1\to0$ and no fatal objection
+at any round.  Two of the corrections flowed in the reverse direction ---
+errors in a critic's verdict caught and refuted by the machine-checked
+certificates --- which is the intended behavior of the design.  Two draft
+claims did not survive: the global charge operator (now the refutation,
+Theorem~\ref{thm:noq}) and an implication from scattering assumptions to
+(LR) (withdrawn; item 1 of Section~\ref{sec:notproved}).  The verdicts,
+proofs, and certificates are in the project repository
+(\texttt{theory/memory-index.md}, \texttt{theory/ansatz-scattering.md},
+\texttt{theory/verdicts/memory-index-r1}--\texttt{r3},
+\texttt{theory/checks/}).
+
+\begin{thebibliography}{9}
+\bibitem{perez2008} D.~P\'erez-Garc\'ia, M.~M.~Wolf, M.~Sanz, F.~Verstraete,
+and J.~I.~Cirac, \emph{String order and symmetries in quantum spin lattices},
+Phys.\ Rev.\ Lett.\ \textbf{100}, 167202 (2008); arXiv:0802.0447.
+\bibitem{cirac2021} J.~I.~Cirac, D.~P\'erez-Garc\'ia, N.~Schuch, and
+F.~Verstraete, \emph{Matrix product states and projected entangled pair
+states: concepts, symmetries, theorems}, Rev.\ Mod.\ Phys.\ \textbf{93},
+045003 (2021); arXiv:2011.12127.
+\bibitem{haegeman2011} J.~Haegeman, B.~Pirvu, D.~J.~Weir, J.~I.~Cirac,
+T.~J.~Osborne, H.~Verschelde, and F.~Verstraete, \emph{Variational matrix
+product ansatz for dispersion relations}, Phys.\ Rev.\ B \textbf{85}, 100408
+(2012); arXiv:1103.2286.
+\bibitem{haegeman2013} J.~Haegeman, S.~Michalakis, B.~Nachtergaele,
+T.~J.~Osborne, N.~Schuch, and F.~Verstraete, \emph{Elementary excitations in
+gapped quantum spin systems}, Phys.\ Rev.\ Lett.\ \textbf{111}, 080401
+(2013); arXiv:1305.2176.
+\bibitem{vanderstraeten2019} L.~Vanderstraeten, J.~Haegeman, and
+F.~Verstraete, \emph{Tangent-space methods for uniform matrix product
+states}, SciPost Phys.\ Lect.\ Notes \textbf{7} (2019); arXiv:1810.07006.
+\bibitem{bachmann2015} S.~Bachmann, W.~Dybalski, and P.~Naaijkens,
+\emph{Lieb--Robinson bounds, Arveson spectrum and Haag--Ruelle scattering
+theory for gapped quantum spin systems}, Ann.\ H.\ Poincar\'e \textbf{17},
+1737 (2016); arXiv:1412.2970.
+\bibitem{bbdf2020} S.~Bachmann, A.~Bols, W.~De Roeck, and M.~Fraas,
+\emph{A many-body index for quantum charge transport}, Commun.\ Math.\
+Phys.\ \textbf{375}, 1249 (2020); arXiv:1810.07351.
+\end{thebibliography}
+
+\end{document}
