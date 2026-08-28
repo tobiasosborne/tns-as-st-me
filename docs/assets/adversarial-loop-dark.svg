@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 506" width="900" height="506" role="img" aria-labelledby="avl">
+<title id="avl">The adversarial verification loop. Stage 1, target brief with a pre-registered falsifier and frozen red and green gates. Stage 2, two provers from different model families, sealed from each other. Stage 3, adversarial critics who recompute rather than referee. Stage 4, adjudication across lanes. Stage 5, the claims DAG ratchet. A dashed feedback arrow returns from adjudication to the provers for repair rounds.</title>
+<defs>
+<marker id="l-step" viewBox="0 0 10 10" refX="9.4" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0.4,0.7 L9.4,5 L0.4,9.3 L2.4,5 Z" fill="#c3c2b7"/></marker>
+<marker id="l-back" viewBox="0 0 10 10" refX="9.4" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0.4,0.7 L9.4,5 L0.4,9.3 L2.4,5 Z" fill="#898781"/></marker>
+</defs>
+<g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+<text x="450" y="36" font-size="19" font-weight="600" fill="#ffffff" text-anchor="middle">The adversarial verification loop</text>
+<text x="450" y="58" font-size="11.5" font-weight="400" fill="#898781" text-anchor="middle">rk-light — a claim is PROVED only after an independent recomputation fails to break it</text>
+<rect x="31" y="86" width="150" height="122" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<circle cx="56" cy="110" r="9.5" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="56" y="114" font-size="11" font-weight="700" fill="#c3c2b7" text-anchor="middle">1</text>
+<text x="47" y="143" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="start">Target brief</text>
+<text x="47" y="166.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">pre-registered</text>
+<text x="47" y="180.5" font-size="11" font-weight="400" fill="#898781" text-anchor="start">falsifier; red and</text>
+<text x="47" y="195.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">green gates frozen</text>
+<rect x="203" y="86" width="150" height="122" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<circle cx="228" cy="110" r="9.5" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="228" y="114" font-size="11" font-weight="700" fill="#c3c2b7" text-anchor="middle">2</text>
+<text x="219" y="143" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="start">Two provers</text>
+<text x="219" y="166.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">different model</text>
+<text x="219" y="180.5" font-size="11" font-weight="400" fill="#898781" text-anchor="start">families, sealed</text>
+<text x="219" y="195.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">from each other</text>
+<rect x="375" y="86" width="150" height="122" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<circle cx="400" cy="110" r="9.5" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="400" y="114" font-size="11" font-weight="700" fill="#c3c2b7" text-anchor="middle">3</text>
+<text x="391" y="143" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="start">Adversarial critics</text>
+<text x="391" y="166.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">recompute, never</text>
+<text x="391" y="180.5" font-size="11" font-weight="400" fill="#898781" text-anchor="start">referee prose;</text>
+<text x="391" y="195.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">hunt counterexamples</text>
+<rect x="547" y="86" width="150" height="122" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<circle cx="572" cy="110" r="9.5" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="572" y="114" font-size="11" font-weight="700" fill="#c3c2b7" text-anchor="middle">4</text>
+<text x="563" y="143" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="start">Adjudication</text>
+<text x="563" y="166.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">cross-lane compare;</text>
+<text x="563" y="180.5" font-size="11" font-weight="400" fill="#898781" text-anchor="start">one binding verdict</text>
+<text x="563" y="195.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">per round</text>
+<rect x="719" y="86" width="150" height="122" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<circle cx="744" cy="110" r="9.5" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="744" y="114" font-size="11" font-weight="700" fill="#c3c2b7" text-anchor="middle">5</text>
+<text x="735" y="143" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="start">Claims DAG</text>
+<text x="735" y="166.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">four statuses,</text>
+<text x="735" y="180.5" font-size="11" font-weight="400" fill="#898781" text-anchor="start">one-way ratchet:</text>
+<text x="735" y="195.0" font-size="11" font-weight="400" fill="#898781" text-anchor="start">no silent upgrades</text>
+<line x1="185" y1="147" x2="200" y2="147" stroke="#c3c2b7" stroke-width="2" stroke-linecap="round" marker-end="url(#l-step)"/>
+<line x1="357" y1="147" x2="372" y2="147" stroke="#c3c2b7" stroke-width="2" stroke-linecap="round" marker-end="url(#l-step)"/>
+<line x1="529" y1="147" x2="544" y2="147" stroke="#c3c2b7" stroke-width="2" stroke-linecap="round" marker-end="url(#l-step)"/>
+<line x1="701" y1="147" x2="716" y2="147" stroke="#c3c2b7" stroke-width="2" stroke-linecap="round" marker-end="url(#l-step)"/>
+<path d="M 622 208 V 230 Q 622 240 612 240 H 288 Q 278 240 278 230 V 214" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#l-back)"/>
+<text x="450" y="262" font-size="11" font-weight="400" fill="#898781" text-anchor="middle">repair round — every objection is accepted or refuted, in writing</text>
+<rect x="31" y="292" width="262" height="124" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="49" y="319" font-size="11" font-weight="600" fill="#898781" text-anchor="start" letter-spacing="1.0">OBJECTION TRAJECTORY</text>
+<text x="49" y="350" font-size="21" font-weight="700" fill="#ffffff" text-anchor="start">6 → 2 MAJOR</text>
+<text x="49" y="374.0" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">S2 lane, two hostile rounds · 0 FATAL;</text>
+<text x="49" y="388.5" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">the r2 critic re-derived 14 of 15 repairs.</text>
+<text x="49" y="403.0" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">The memory lane ran 6 → 3 → 1 → repaired.</text>
+<rect x="319" y="292" width="262" height="124" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="337" y="319" font-size="11" font-weight="600" fill="#898781" text-anchor="start" letter-spacing="1.0">FALSIFIER, PRE-REGISTERED</text>
+<text x="337" y="350" font-size="21" font-weight="700" fill="#ffffff" text-anchor="start">1.0217</text>
+<text x="337" y="374.0" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">the soft slope law at S = 1, measured</text>
+<text x="337" y="388.5" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">out of sample (exact 1); the S = 1/2</text>
+<text x="337" y="403.0" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">calibration gave 1.9929 against 2.</text>
+<rect x="607" y="292" width="262" height="124" rx="9" fill="rgba(255,255,255,0.045)" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+<text x="625" y="319" font-size="11" font-weight="600" fill="#898781" text-anchor="start" letter-spacing="1.0">CORPUS DAMAGE FOUND</text>
+<text x="625" y="350" font-size="21" font-weight="700" fill="#ffffff" text-anchor="start">×3 recomputations</text>
+<text x="625" y="374.0" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">ML4-Ward (9), 2nd display: a PROVED row.</text>
+<text x="625" y="388.5" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">Critics broke it for n ≥ 2. Rescoped,</text>
+<text x="625" y="403.0" font-size="11" font-weight="400" fill="#c3c2b7" text-anchor="start">erratum added, audit opened.</text>
+<line x1="30" y1="440" x2="870" y2="440" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+<text x="198" y="466" font-size="11" font-weight="400" fill="#898781" text-anchor="start">claims DAG statuses</text>
+<circle cx="330" cy="462" r="4.2" fill="#0ca30c"/>
+<text x="342" y="466" font-size="11" font-weight="600" fill="#c3c2b7" text-anchor="start" letter-spacing="0.5">PROVED</text>
+<circle cx="422" cy="462" r="4.2" fill="#3987e5"/>
+<text x="434" y="466" font-size="11" font-weight="600" fill="#c3c2b7" text-anchor="start" letter-spacing="0.5">SKETCH</text>
+<circle cx="514" cy="462" r="4.2" fill="#d95926"/>
+<text x="526" y="466" font-size="11" font-weight="600" fill="#c3c2b7" text-anchor="start" letter-spacing="0.5">CONJECTURE</text>
+<circle cx="637" cy="462" r="4.2" fill="#d03b3b"/>
+<text x="649" y="466" font-size="11" font-weight="600" fill="#c3c2b7" text-anchor="start" letter-spacing="0.5">REFUTED</text>
+<text x="450" y="490" font-size="11" font-weight="400" fill="#898781" text-anchor="middle">every number above is recorded in theory/verdicts/ and HANDOFF.md</text>
+</g></svg>
