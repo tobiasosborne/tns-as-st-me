@@ -1,47 +1,72 @@
 #!/usr/bin/env python3
-"""Certificate for the D24(d) clause-3 external-flux normalisation (bd tns-iu5).
+"""Certificate for the D24(d) clause-3 adjudication (bd tns-iu5, r2).
 
-The frozen clause is ``L(0,h) = -i chi / v_h``.  Composed with ML5-B equation
-(6) it predicts the soft multiplier ``2 i chi k`` at EVERY tail density
-``rho`` -- the density cancels identically.  The PROVED row ``S2-2body-S``
-gives ``i chi k / S`` at site spin ``S``, and the fully polarised tail has
-``rho = S``.  The two agree only at ``rho = 1/2``.
+What is certified (matching theory/verdicts/d24d3-adjudication-r2.md):
 
-This checker reproduces that collision from scratch and certifies the repair
+* the DEFECT: the frozen clause (amputation constant a_leg = 1) is exactly
+  density-blind and misses the PROVED/measured ``1/S`` law at every
+  ``S != 1/2`` while hitting it at ``S = 1/2``;
+* clause 2's residue is exactly ``Z_rho``-linear (no repair needed there);
+* the CONDITIONAL matched value of claim D24-VAL: ``a_leg = 1/(2 rho)``,
+  i.e. ``L(0,h) = -i chi/(2 rho v_h)``, reproduces the ansatz-free data at
+  ``rho = S in {1/2, 1, 3/2, 2}``, and the exponent ``p`` in
+  ``a_leg = (2 rho)^{-p}`` is pinned to 1 symbolically by the exact law
+  ``(2S)^p = 2S`` at any single ``2S != 1``.
 
-    L(0,h) = -i chi / (Z v_h),     Z := <Om|[S^+_x, S^-_x]|Om> = 2 rho,
-
-whose only new ingredient, ``Z``, is the per-site order-parameter density.
+The definition D24(d)3b itself asserts NO value for ``a_leg`` (it is the
+OPEN lemma AMP); the red modes below falsify the D24-VAL *candidate*, not
+the definition.
 
 Named computations
 ------------------
-D24N-C1  symbolic: the frozen constant makes ML5-B(6) rho-free and v_h-free.
-D24N-C2  Z = 2 rho from first-principles spin-S ladder matrices, and
-         ||Q^-_k|Om>||^2 / N = Z exactly (the soft-leg norm).
-D24N-C3  the Ward residue is exactly linear in Z:
-         <h|Q_0^dag J^-_0|h> = Z * 2iJ sin h = 2i v_S(h),
-         computed on a ring from the raw two-site bond matrix.  This is the
-         load-bearing leaf: (R14)'s frozen ``2iJ sin k_h`` and D24(d)2's
-         ``2i v_h`` are the SAME number only at Z = 1.
+D24N-C1  symbolic: the frozen constant makes ML5-B(6) rho-free and v_h-free;
+         the matched constant gives jet chi/rho.
+D24N-C2  Z_rho = 2 rho from first-principles spin-S ladder matrices, and the
+         soft-leg norm ||Q^-_k|Om>||^2 / N = 2 rho by ACTUAL CONSTRUCTION of
+         Q^-_k|Om> = sum_x e^{ikx} S^-_x |Om> from the ladder matrix
+         elements (r1-critic M3(c)(i): the r1 gate was the algebraic no-op
+         ``sites*two_s/sites - two_s``; this one moves when the
+         construction is mutated).
+D24N-C3  the Ward residue is exactly linear in Z_rho:
+         <h|Q_0^dag J^-_0|h> = Z_rho * 2iJ sin h = 2i v_S(h), computed on a
+         ring from the raw two-site bond matrix.
 D24N-C4  ground truth: the ansatz-free ring slopes of
-         numerics/results/spin1-bc-falsifier.json equal 1/S in the
-         pre-registered 8% band, S in {1/2, 1, 3/2, 2}.
-D24N-C5  the frozen constant FAILS that band for S != 1/2 (the defect).
-D24N-C6  the repaired constant PASSES it at all four spins, and the exponent
-         p in ``L ~ 1/(2 rho)^p`` fitted from the data is 1 (over-determined
-         by four spins, so the repair is not a one-point fit).
-D24N-C7  the half-power route ``(2 rho N)^{-1/2}`` of both S1 lanes is
-         N-dependent and never equals ``(2 rho)^{-1}`` on the data's own N.
+         numerics/results/spin1-bc-falsifier.json equal 1/S within the
+         PRE-REGISTERED 8% band (the ``decision_band`` key is REQUIRED to be
+         present and equal to 0.08; deleting it fails — r1-critic M3(b)
+         bonus hole closed).
+D24N-C5  the frozen constant FAILS that band for S != 1/2 and passes at
+         S = 1/2 (the defect).
+D24N-C6  ACCEPTANCE (independent failure mode): the candidate constant must
+         match the data within the r2 acceptance band 0.02.  This is NOT
+         deductively implied by D24N-C4's 0.08 band (r1-critic M3(b)
+         subsumption finding): a uniform -6% shift of every summary row
+         passes C4 (max row dev 0.064 < 0.08) and dies HERE
+         (dev ~0.06 > 0.02) — mutant m2b_shift60, exit path recorded in
+         theory/verdicts/d24d3-adjudication-r2.md section 7.  Also:
+         the exponent fitted from the non-degenerate spins (2S != 1) must
+         be 1 within 0.03, and the SYMBOLIC exact law (2S)^p = 2S is solved
+         with sympy at S in {1, 3/2, 2} (unique root p = 1), replacing the
+         r1 ``lstsq(x, x)`` tautology (r1-critic M3(c)(ii)); the S = 1/2
+         point is reported as degenerate (1^p = 1 for every p, r1-critic
+         m4).  The resolving interval of p under the acceptance band is
+         printed, so the certificate states what it actually pins.
+D24N-C7  the (2 rho N)^{-1/2} half-power route is N-dependent and never
+         equals (2 rho)^{-1} on the data's own N (refutes the S1-A critic's
+         proposed mechanism; see r2 adjudication ⟨1⟩4.⟨2⟩2).
 
-Every failure raises ``SystemExit(1)``; there is no bare ``assert``, so
-``python3 -O`` cannot disable a check.
+Exit paths
+----------
+Every failure raises ``SystemExit(1)`` through ``fail()``, whose message
+BEGINS with the gate name (D24N-Cn) — the exit path is in the first token
+of stderr.  No bare ``assert``; ``python3 -O`` cannot disable a check.
 
-Red modes (each MUST exit 1)
-----------------------------
---red-frozen     keep the frozen rho-independent flux in D24N-C6.
---red-power      use 1/(2 rho)^2 (wrong power).
---red-halfpower  use 1/(2 rho)^(1/2) (both lanes' stated half-power).
---red-ward       claim the Ward residue scales as Z^2 in D24N-C3.
+Red modes (each MUST exit 1; expected death gate in parentheses)
+----------------------------------------------------------------
+--red-frozen     a_leg = 1, the frozen density-blind flux      (D24N-C6)
+--red-power      a_leg = 1/(2 rho)^2, wrong power              (D24N-C6)
+--red-halfpower  a_leg = 1/(2 rho)^(1/2), the half-power       (D24N-C6)
+--red-ward       claim the residue scales as Z_rho^2           (D24N-C3)
 """
 
 from __future__ import annotations
@@ -54,9 +79,12 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 
-DECISION_BAND = 0.08          # pre-registered in spin1-bc-falsifier.json
+DECISION_BAND = 0.08     # pre-registered in spin1-bc-falsifier.json (C4/C5)
+ACCEPT_BAND = 0.02       # r2 acceptance band for the D24-VAL candidate (C6);
+                         # tighter than DECISION_BAND on purpose: C6 must be
+                         # able to fail on data that C4 accepts.
+EXPONENT_FIT_BAND = 0.03
 EXACT_TOL = 1.0e-12
-EXPONENT_TOL = 1.0e-9
 SPINS = (0.5, 1.0, 1.5, 2.0)
 DEFAULT_DATA = (
     Path(__file__).resolve().parents[2] / "numerics" / "results" / "spin1-bc-falsifier.json"
@@ -105,6 +133,11 @@ def bond_matrix(two_s: int, coupling: float = 1.0) -> np.ndarray:
 
 
 def apply_lowering(state: dict, site: int, two_s: int) -> dict:
+    """S^-_site applied to a configuration-dictionary state.
+
+    The matrix element sqrt((n+1)(2S-n)) is the first-principles ladder
+    element <n+1|S^-|n> in the occupation (lowered-quanta) labelling.
+    """
     out: dict = {}
     for configuration, amplitude in state.items():
         occupation = configuration[site]
@@ -149,7 +182,7 @@ def inner(first: dict, second: dict) -> complex:
 
 
 # --------------------------------------------------------------------------
-# D24N-C1 : the frozen constant is density blind
+# D24N-C1 : the frozen constant is density blind; the matched one is not
 # --------------------------------------------------------------------------
 def check_frozen_is_density_blind() -> tuple[sp.Expr, sp.Expr]:
     momentum, velocity, density = sp.symbols("k v_h rho", positive=True)
@@ -158,21 +191,22 @@ def check_frozen_is_density_blind() -> tuple[sp.Expr, sp.Expr]:
     residue = 2 * sp.I * velocity
     frozen = sp.series(kinematic * (-sp.I * sign / velocity) * residue,
                        momentum, 0, 2).removeO()
-    repaired = sp.series(kinematic * (-sp.I * sign / (2 * density * velocity)) * residue,
-                         momentum, 0, 2).removeO()
+    matched = sp.series(kinematic * (-sp.I * sign / (2 * density * velocity)) * residue,
+                        momentum, 0, 2).removeO()
     exact_zero(frozen - 2 * sp.I * sign * momentum, "D24N-C1 frozen jet != 2i chi k")
     exact_zero(sp.diff(frozen, density), "D24N-C1 frozen jet depends on rho")
     exact_zero(sp.diff(frozen, velocity), "D24N-C1 frozen jet depends on v_h")
-    exact_zero(repaired - sp.I * sign * momentum / density,
-               "D24N-C1 repaired jet != i chi k / rho")
-    return sp.simplify(frozen / (sp.I * momentum)), sp.simplify(repaired / (sp.I * momentum))
+    exact_zero(matched - sp.I * sign * momentum / density,
+               "D24N-C1 matched jet != i chi k / rho")
+    return sp.simplify(frozen / (sp.I * momentum)), sp.simplify(matched / (sp.I * momentum))
 
 
 # --------------------------------------------------------------------------
-# D24N-C2 : the order-parameter density Z = 2 rho, and the soft-leg norm
+# D24N-C2 : Z_rho = 2 rho, and the soft-leg norm by actual construction
 # --------------------------------------------------------------------------
 def check_order_parameter_residue() -> float:
     worst = 0.0
+    # (i) the order-parameter residue from the ladder matrices
     for two_s in range(1, 7):
         _, raising, lowering = spin_matrices(two_s)
         dimension = two_s + 1
@@ -180,20 +214,30 @@ def check_order_parameter_residue() -> float:
         vacuum[0] = 1.0
         residue = float(vacuum @ (raising @ lowering - lowering @ raising) @ vacuum)
         worst = max(worst, abs(residue - two_s))
+    # (ii) the soft-leg norm ||Q^-_k|Om>||^2 / N = 2S, k-independent, by
+    # CONSTRUCTING Q^-_k|Om> = sum_x e^{ikx} S^-_x |Om> from apply_lowering.
+    # (The r1 gate summed |e^{ikx}|^2 * two_s directly — an algebraic no-op
+    # that accepted two_s = 3.7, -5.0, 1e6.  This one exercises the actual
+    # ladder element sqrt((n+1)(2S-n)) and dies if it is mutated.)
+    for two_s in (1, 2, 3, 4):
         for sites in (6, 9):
+            vacuum_state = {tuple([0] * sites): 1.0}
             for momentum in (0.0, 0.7, 2.1):
-                # || sum_x e^{ikx} S^-_x |Om> ||^2 = sum_x |<Om|S^+_x S^-_x|Om>|
-                norm_squared = sum(
-                    abs(np.exp(1j * momentum * x)) ** 2 * float(two_s)
-                    for x in range(sites)
-                )
+                charged: dict = {}
+                for x in range(sites):
+                    phase = np.exp(1j * momentum * x)
+                    lowered = apply_lowering(vacuum_state, x, two_s)
+                    charged = combine(
+                        charged, {c: phase * a for c, a in lowered.items()}
+                    )
+                norm_squared = inner(charged, charged).real
                 worst = max(worst, abs(norm_squared / sites - two_s))
-    require(worst < EXACT_TOL, f"D24N-C2 order-parameter residue error {worst:.3e}")
+    require(worst < EXACT_TOL, f"D24N-C2 order-parameter/soft-leg-norm error {worst:.3e}")
     return worst
 
 
 # --------------------------------------------------------------------------
-# D24N-C3 : the Ward residue is exactly linear in Z
+# D24N-C3 : the Ward residue is exactly linear in Z_rho
 # --------------------------------------------------------------------------
 def check_ward_residue_scaling(red_ward: bool) -> float:
     sites = 8
@@ -233,13 +277,15 @@ def check_ward_residue_scaling(red_ward: bool) -> float:
 
 
 # --------------------------------------------------------------------------
-# D24N-C4 -- C6 : ground truth, defect, repair
+# D24N-C4 -- C6 : ground truth, defect, conditional matched value
 # --------------------------------------------------------------------------
 def load_ring_slopes(data_path: Path) -> dict[float, list[float]]:
     require(data_path.is_file(), f"D24N-C4 missing ground-truth file {data_path}")
     payload = json.loads(data_path.read_text())
     require("A_ring_summary" in payload, "D24N-C4 no A_ring_summary in the data file")
-    band = payload.get("decision_band", DECISION_BAND)
+    require("decision_band" in payload,
+            "D24N-C4 decision_band key missing from the data file")
+    band = float(payload["decision_band"])
     require(abs(band - DECISION_BAND) < 1.0e-12,
             f"D24N-C4 decision band moved: {band}")
     slopes: dict[float, list[float]] = {}
@@ -261,14 +307,14 @@ def check_ground_truth(slopes: dict[float, list[float]]) -> float:
 
 
 def predicted_jet(spin: float, exponent: float | None) -> float:
-    """Soft multiplier coefficient from ML5-B(6) with L(0,h) = -i chi/((2 rho)^p v_h)."""
-    if exponent is None:                       # the frozen, density-blind clause
+    """ML5-B(6) jet with a_leg = 1/(2 rho)^p (None = frozen a_leg = 1)."""
+    if exponent is None:
         return 2.0
     return 2.0 / (2.0 * spin) ** exponent
 
 
 def check_defect(slopes: dict[float, list[float]]) -> tuple[float, list[float]]:
-    """The frozen clause must MISS the band off rho=1/2 and HIT it at rho=1/2."""
+    """The frozen clause must MISS the C4 band off rho=1/2, HIT it at 1/2."""
     deviations = []
     for spin in SPINS:
         measured = float(np.mean(slopes[spin]))
@@ -281,41 +327,67 @@ def check_defect(slopes: dict[float, list[float]]) -> tuple[float, list[float]]:
     return max(deviations[1:]), deviations
 
 
-def check_repair(slopes: dict[float, list[float]], exponent: float | None) -> float:
+def check_acceptance(slopes: dict[float, list[float]],
+                     exponent: float | None) -> float:
+    """D24N-C6 part 1: candidate vs data, ACCEPT_BAND (independent of C4)."""
     worst = 0.0
     offenders = []
     for spin in SPINS:
         measured = float(np.mean(slopes[spin]))
         deviation = abs(predicted_jet(spin, exponent) - measured) * spin
-        if deviation > DECISION_BAND:
+        if deviation > ACCEPT_BAND:
             offenders.append(f"S={spin} dev={deviation:.4f}")
         worst = max(worst, deviation)
     require(not offenders,
-            "D24N-C6 candidate flux misses the band at " + "; ".join(offenders))
+            "D24N-C6 candidate flux misses the acceptance band "
+            f"({ACCEPT_BAND}) at " + "; ".join(offenders))
     return worst
 
 
-def check_exponent_is_one(slopes: dict[float, list[float]]) -> float:
-    """Fit p in jet = 2 (2 rho)^{-p} from the four spins; p must be exactly 1."""
-    design = []
-    target = []
-    for spin in SPINS:
-        measured = float(np.mean(slopes[spin]))
-        design.append([np.log(2.0 * spin)])
-        target.append(np.log(2.0 / measured))
-    exponent = float(np.linalg.lstsq(np.array(design), np.array(target), rcond=None)[0][0])
-    require(abs(exponent - 1.0) < DECISION_BAND,
-            f"D24N-C6 fitted exponent {exponent:.6f} is not 1")
-    ideal_design = np.array([[np.log(2.0 * s)] for s in SPINS])
-    ideal_target = np.array([np.log(2.0 / (1.0 / s)) for s in SPINS])
-    ideal = float(np.linalg.lstsq(ideal_design, ideal_target, rcond=None)[0][0])
-    require(abs(ideal - 1.0) < EXPONENT_TOL,
-            f"D24N-C6 exact-law exponent {ideal:.12f} is not 1")
-    return exponent
+def check_exponent(slopes: dict[float, list[float]]) -> tuple[float, list]:
+    """D24N-C6 part 2: fitted exponent (non-degenerate spins) + symbolic pin."""
+    # data fit over the spins with 2S != 1 (the S = 1/2 row has design entry
+    # log(1) = 0 and contributes nothing — r1-critic m4; drop it openly)
+    fit_spins = [s for s in SPINS if abs(2.0 * s - 1.0) > 1.0e-12]
+    design = np.array([[np.log(2.0 * s)] for s in fit_spins])
+    target = np.array([np.log(2.0 / float(np.mean(slopes[s]))) for s in fit_spins])
+    exponent = float(np.linalg.lstsq(design, target, rcond=None)[0][0])
+    require(abs(exponent - 1.0) < EXPONENT_FIT_BAND,
+            f"D24N-C6 fitted exponent {exponent:.6f} is not 1 "
+            f"(band {EXPONENT_FIT_BAND})")
+    # symbolic pin: (2S)^p = 2S has the unique root p = 1 at each 2S != 1
+    p = sp.Symbol("p", real=True)
+    roots_per_spin = []
+    for s in (1, sp.Rational(3, 2), 2):
+        roots = sp.solve(sp.Eq((2 * s) ** p, 2 * s), p)
+        require(roots == [1],
+                f"D24N-C6 symbolic exact law (2S)^p = 2S at S={s} "
+                f"gives roots {roots}, not [1]")
+        roots_per_spin.append((s, roots))
+    # S = 1/2 degeneracy, stated rather than hidden: 1^p - 1 == 0 identically
+    degenerate = sp.simplify(sp.Integer(1) ** p - 1)
+    require(degenerate == 0,
+            f"D24N-C6 expected S=1/2 exact law to be degenerate, got {degenerate}")
+    return exponent, roots_per_spin
+
+
+def resolving_interval(slopes: dict[float, list[float]]) -> tuple[float, float]:
+    """The p-interval the acceptance band actually pins (reported, not gated)."""
+    passing = []
+    for candidate in np.arange(0.80, 1.20001, 0.001):
+        ok = all(
+            abs(predicted_jet(s, float(candidate)) - float(np.mean(slopes[s]))) * s
+            <= ACCEPT_BAND
+            for s in SPINS
+        )
+        if ok:
+            passing.append(float(candidate))
+    require(bool(passing), "D24N-C6 resolving scan found no passing exponent")
+    return min(passing), max(passing)
 
 
 # --------------------------------------------------------------------------
-# D24N-C7 : the lanes' half-power route cannot produce the factor
+# D24N-C7 : the S1-A critic's half-power route cannot produce the factor
 # --------------------------------------------------------------------------
 def check_half_power_refuted(data_path: Path) -> float:
     payload = json.loads(data_path.read_text())
@@ -333,17 +405,17 @@ def check_half_power_refuted(data_path: Path) -> float:
 
 # --------------------------------------------------------------------------
 def main() -> None:
-    parser = argparse.ArgumentParser(description="D24(d)3 flux-normalisation certificate")
+    parser = argparse.ArgumentParser(description="D24(d)3 adjudication certificate (r2)")
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA,
                         help="path to spin1-bc-falsifier.json (copies allowed)")
     parser.add_argument("--red-frozen", action="store_true",
-                        help="keep the frozen density-blind flux; exit 1 expected")
+                        help="a_leg = 1 (frozen); expected death: D24N-C6")
     parser.add_argument("--red-power", action="store_true",
-                        help="use 1/(2 rho)^2; exit 1 expected")
+                        help="a_leg = 1/(2 rho)^2; expected death: D24N-C6")
     parser.add_argument("--red-halfpower", action="store_true",
-                        help="use 1/(2 rho)^(1/2); exit 1 expected")
+                        help="a_leg = 1/(2 rho)^(1/2); expected death: D24N-C6")
     parser.add_argument("--red-ward", action="store_true",
-                        help="claim the Ward residue scales as Z^2; exit 1 expected")
+                        help="residue ~ Z_rho^2; expected death: D24N-C3")
     arguments = parser.parse_args()
 
     exponent: float | None = 1.0
@@ -354,28 +426,33 @@ def main() -> None:
     elif arguments.red_halfpower:
         exponent = 0.5
 
-    frozen_jet, repaired_jet = check_frozen_is_density_blind()
+    frozen_jet, matched_jet = check_frozen_is_density_blind()
     residue_error = check_order_parameter_residue()
     ward_error = check_ward_residue_scaling(arguments.red_ward)
     slopes = load_ring_slopes(arguments.data)
     truth_error = check_ground_truth(slopes)
     defect_size, deviations = check_defect(slopes)
-    repair_error = check_repair(slopes, exponent)
-    fitted_exponent = check_exponent_is_one(slopes)
+    accept_error = check_acceptance(slopes, exponent)
+    fitted_exponent, _ = check_exponent(slopes)
+    p_low, p_high = resolving_interval(slopes)
     half_power_gap = check_half_power_refuted(arguments.data)
 
-    print(f"D24N-C1 frozen_jet_coefficient={frozen_jet} repaired={repaired_jet}")
-    print(f"D24N-C2 Z=2rho max_error={residue_error:.3e}")
-    print(f"D24N-C3 Ward residue = Z*2iJ sin h, max_error={ward_error:.3e}")
+    print(f"D24N-C1 frozen_jet_coefficient={frozen_jet} matched={matched_jet}")
+    print(f"D24N-C2 Z_rho=2rho and constructed soft-leg norm, max_error={residue_error:.3e}")
+    print(f"D24N-C3 Ward residue = Z_rho*2iJ sin h, max_error={ward_error:.3e}")
     print(f"D24N-C4 ansatz-free slopes vs 1/S: max_rel_dev={truth_error:.4f} "
-          f"(band {DECISION_BAND})")
+          f"(pre-registered band {DECISION_BAND})")
     print("D24N-C5 frozen-clause relative deviations at S=1/2,1,3/2,2: "
           + ", ".join(f"{d:.3f}" for d in deviations)
           + f"  -> defect size {defect_size:.3f}")
-    print(f"D24N-C6 repaired-clause max_rel_dev={repair_error:.4f}, "
-          f"fitted exponent={fitted_exponent:.4f}")
+    print(f"D24N-C6 candidate max_rel_dev={accept_error:.4f} "
+          f"(acceptance band {ACCEPT_BAND}, independent of C4); "
+          f"fitted exponent={fitted_exponent:.4f} over 2S!=1 spins; "
+          f"symbolic (2S)^p=2S root p=1 at S=1,3/2,2 (S=1/2 degenerate); "
+          f"resolving interval p in [{p_low:.3f}, {p_high:.3f}]")
     print(f"D24N-C7 half-power route gap={half_power_gap:.3e}")
-    print("PASS: D24(d)3 repaired normalisation L(0,h) = -i chi / (2 rho v_h)")
+    print("PASS: D24-VAL candidate a_leg = 1/(2 rho) matches; frozen a_leg = 1 refuted; "
+          "the D24(d)3b definition itself fixes no value (lemma AMP open)")
 
 
 if __name__ == "__main__":

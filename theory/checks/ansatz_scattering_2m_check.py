@@ -2,9 +2,12 @@
 """Red-capable certificate for AC-EX-2M's MPS-2M-cluster computation.
 
 A2M-C1a checks the connected AKLT two-point function by a raw contraction and
-by the fixed-point-subtracted transfer formula.  A2M-C1b checks block-support
-independence for product observables of lengths one through three.  The three
-registered mutations must be run separately and must exit with status one.
+by the fixed-point-subtracted transfer formula.  A2M-C1b corroborates a finite
+block-support cap and monotonicity for product observables of lengths one
+through three.  Its ratio-route gate is only route agreement in rescaled
+units; it does not certify the absence of a two-sided support-length factor.
+The three registered mutations must be run separately and must exit with
+status one.
 
 No Python ``assert`` is used, so every gate remains live under ``python3 -O``.
 """
@@ -134,8 +137,8 @@ class C1bResult:
     agreement_error: float
     max_ratio: float
     max_ratio_location: tuple[int, int, int]
-    support_profile_error: float
-    support_profile_location: tuple[int, int, int]
+    ratio_route_error: float
+    ratio_route_location: tuple[int, int, int]
     monotonicity_excess: float
     monotonicity_location: tuple[int, int, int]
 
@@ -179,7 +182,7 @@ def check_c1b(red_c1b: bool, red_supportfold: bool) -> C1bResult:
                 direct_ratios[(width_c, width_d, separation)] = direct_ratio
 
     max_location, max_ratio = max(ratios.items(), key=lambda item: item[1])
-    support_location, support_profile_error = max(
+    ratio_route_location, ratio_route_error = max(
         (
             (location, abs(ratio - direct_ratios[location]))
             for location, ratio in ratios.items()
@@ -193,6 +196,8 @@ def check_c1b(red_c1b: bool, red_supportfold: bool) -> C1bResult:
         baseline = ratios[(1, 1, separation)]
         for width_c in (1, 2, 3):
             for width_d in (1, 2, 3):
+                if (width_c, width_d) == (1, 1):
+                    continue
                 varied = ratios[(width_c, width_d, separation)]
                 excess = varied - baseline
                 if excess > monotonicity_excess:
@@ -203,8 +208,8 @@ def check_c1b(red_c1b: bool, red_supportfold: bool) -> C1bResult:
         agreement_error,
         max_ratio,
         max_location,
-        float(support_profile_error),
-        support_location,
+        float(ratio_route_error),
+        ratio_route_location,
         float(monotonicity_excess),
         monotonicity_location,
     )
@@ -230,10 +235,10 @@ def violations(c1a: C1aResult, c1b: C1bResult) -> list[str]:
             "C1b cap "
             f"{c1b.max_ratio:.6f} at {c1b.max_ratio_location} > {BLOCK_CAP:.1f}"
         )
-    if c1b.support_profile_error > BLOCK_TOL:
+    if c1b.ratio_route_error > BLOCK_TOL:
         found.append(
-            "C1b support-profile disagreement "
-            f"{c1b.support_profile_error:.6e} at {c1b.support_profile_location}"
+            "C1b ratio-route disagreement "
+            f"{c1b.ratio_route_error:.6e} at {c1b.ratio_route_location}"
         )
     if c1b.monotonicity_excess > BLOCK_TOL:
         found.append(
@@ -248,7 +253,11 @@ def parse_args() -> argparse.Namespace:
     mutations = parser.add_mutually_exclusive_group()
     mutations.add_argument("--red-c1a", action="store_true")
     mutations.add_argument("--red-c1b", action="store_true")
-    mutations.add_argument("--red-supportfold", action="store_true")
+    mutations.add_argument(
+        "--red-supportfold",
+        action="store_true",
+        help="one-sided support fold; must be caught as ratio-route disagreement",
+    )
     return parser.parse_args()
 
 
@@ -268,7 +277,7 @@ def main() -> None:
         "A2M-C1b "
         f"agreement={c1b.agreement_error:.3e} "
         f"max_ratio={c1b.max_ratio:.6f}@{c1b.max_ratio_location} "
-        f"profile={c1b.support_profile_error:.3e}@{c1b.support_profile_location} "
+        f"ratio_route={c1b.ratio_route_error:.3e}@{c1b.ratio_route_location} "
         f"monotonicity_excess={c1b.monotonicity_excess:.3e}"
         f"@{c1b.monotonicity_location}"
     )

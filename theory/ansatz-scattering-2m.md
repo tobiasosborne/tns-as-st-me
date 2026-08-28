@@ -5,12 +5,14 @@
 # AC-EX-2M — fixed-packet two-magnon wave operators from exact ansatz bands
 
 **Proposer status:** **SKETCH**.  Parts (A2M.1)--(A2M.2) are proved as the
-conditional implication from proposed D31.  Part (A2M.3) proves an
-unconditional **diagonal-order** bounded-family/weak-limit-point statement.
-For the asymptotic-leg reading of the D29 interface, `(ACE2M-LSZ)` is a theorem
-by creator-choice independence; it is not a claim about a fixed-time charge
-insertion.  An iterated-order first jet is conditional on `(ACE2M-SR)`.  No
-soft-uniform Cook estimate is claimed.
+conditional implication from proposed D31.  Part (A2M.3) proves a
+**diagonal-order** bounded-family/weak-limit-point statement conditional only
+on `(D29-den)`.  `(ACE2M-LSZ)` is a separate theorem about admissible
+asymptotic Haag--Ruelle creator families.  **This theorem does NOT apply to the adjudicated D29.**
+The adjudicated datum uses a fixed-time charge insertion,
+and its identification with the constructed channel is **OPEN**.  An
+iterated-order first jet is conditional on `(ACE2M-SR)`.  No soft-uniform Cook
+estimate is claimed.
 
 ## 0. Theorem and fixed-packet fence
 
@@ -28,10 +30,11 @@ supports `K_1,K_2` whose nonzero velocity supports are separated by
 on the smooth product core `𝒟_{12}`; the two slots are labels for the two
 disjoint packet windows, not distinguishable particle species.
 
-For (A2M.3) additionally assume the D29 interface clauses 1--5 in ⟨1⟩8.
-In particular (D29-den) and the one-particle normalization (2M-1P) are
-displayed interface hypotheses, not consequences of D31.  `(ACE2M-SR)` is
-assumed only for the iterated first-jet conclusion.
+For (A2M.3)'s diagonal statement additionally assume the adjudicated D29
+interface clauses 1--4 in ⟨1⟩8, in particular `(D29-den)`.  Clause 5 and
+(2M-1P) instead state the hypotheses of the separate creator-choice theorem;
+they are not properties of the adjudicated D29.  `(ACE2M-SR)` is assumed only
+for the iterated first-jet conclusion.
 
 **PROVE.**
 
@@ -48,17 +51,20 @@ assumed only for the iterated first-jet conclusion.
    outgoing/incoming coefficient; a fixed packet range lies in the matching
    part of ML2's scattering summand, not its two-string summand.
 3. **(A2M.3)** The data are defined for every fixed soft packet scale `ε>0`
-   satisfying D31.  For every sequence of full index tuples
-   `(N_r,W_r,σ_r,t_r,ε_r)` in the D29 interface family, respecting the
+   satisfying D31.  Conditional on `(D29-den)`, for every sequence of full
+   index tuples `(N_r,W_r,σ_r,t_r,ε_r)` in the D29 interface family, respecting the
    precedence in (D29-order) and with `ε_r↓0`, the corresponding data are
    bounded in `L²(I)` and have weakly convergent subsequences.  This is a
    **diagonal-order** statement; no unconditional existence of the iterated
-   `N,t,W,σ` limit is asserted.  If D29's charge-created soft leg is an
-   asymptotic leg carried through `t→±∞`, creator-choice independence proves
-   `(ACE2M-LSZ)` in ⟨1⟩8 and identifies the fixed-`ε` subsequential value
-   with the constructed `W_±^(ε)` channel.  The stronger `C¹` first-jet
-   statement is conditional on `(ACE2M-SR)`; only its exhaustion-free,
-   infinite-chain version is verified on D6--D8.
+   `N,t,W,σ` limit is asserted.  Separately, creator-choice independence
+   proves `(ACE2M-LSZ)` for an admissible asymptotic HR creator family obeying
+   (2M-1P) and D31(4).  **This theorem does NOT apply to the adjudicated D29.**
+   Its fixed-time insertion `Q[f_ε]ψ` is not an HR creator family; the
+   identification of that datum with the constructed `W_±^(ε)` channel is
+   **OPEN**.  The diagonal compactness and fixed-`ε` HR statements concern
+   different families and are not composed here.  The stronger `C¹`
+   first-jet statement is conditional on `(ACE2M-SR)`; only its
+   exhaustion-free, infinite-chain version is verified on D6--D8.
 
 *Justification.* D1, D3(a), D6--D8, D12(a′), proposed D31, and claim ML2.
 
@@ -370,48 +376,54 @@ asymptotic charge creator by the exact filtered creator.
 
 **⟨2⟩5. QED.**  This proves (A2M.2).
 
-## 4. (A2M.3): nonvacuity bridge to Lane S1
+## 4. (A2M.3): diagonal compactness and the separately scoped HR theorem
 
 ### ⟨1⟩8. The sole D29 interface block and the soft-regularity condition
 
-**INTERFACE ASSUMPTIONS ON LANE S1'S PROPOSED D29 — ALL ARE HERE.**
+**ADJUDICATED D29 INTERFACE AND SEPARATE HR-THEOREM HYPOTHESES — ALL ARE HERE.**
 
 1. `𝒜_{N,W,σ,t}(ε)` is the normalized **connected** on-shell
-   pairing, with and without one normalized charge-created soft leg.  The
-   charge leg is an **asymptotic** Haag--Ruelle leg carried through the same
-   `t→±∞` operation as the hard leg; it is not the fixed-time action of a
-   charge operator on an already prepared hard vector.  In D10(c)'s
-   position-profile convention the time-zero insertion is
-   `Q[f̂_ε;ξ^-]=Σ_x f̂_ε(x)q_x^-`.  Its on-shell positive-energy
-   filter and free packet evolution define an almost-local HR family
-   `a_{Q,2,b,t}[f_{ε,t}]`.  The datum is valued in D24(b)'s `L²(I)` hard
-   norm and presupposes no wave operator.
+   pairing, with and without one normalized charge-created soft leg.  Both
+   D29 proposals on record specify the **fixed-time** insertion
+   `Q[f̂_ε;ξ^-]ψ` on an already prepared hard vector: `theory/soft-index.md`
+   §7.1 D29(2) and `theory/soft-index-b.md` §M1, the latter adopted by
+   `theory/verdicts/soft-index-adjudication-r1.md` §3.1.  In D10(c)'s
+   position-profile convention
+   `Q[f̂_ε;ξ^-]=Σ_x f̂_ε(x)q_x^-`.  This fixed-time object is not the
+   almost-local HR family `a_{Q,2,b,t}[f_{ε,t}]` obtained by adding an
+   on-shell positive-energy filter and free packet evolution.  The datum is
+   valued in D24(b)'s `L²(I)` hard norm and presupposes no wave operator.
+   **This theorem does NOT apply to the adjudicated D29.**
 2. At fixed `W,σ,ε`, finite-volume local matrix elements converge to D1
    GNS matrix elements before the scattering-time limit; hard
    preparation/resolution converge, when wave operators exist, into
    `ran W_-`/`ran W_+`.
 3. Write the amputated datum at an allowed full index tuple `α` as
    `𝒜_α(h)=𝒝_α(h)/𝒟_α(h)`, `h∈I`.  On the **selected hard
-   packet** and along the chosen tuple family, assume the displayed uniform
-   denominator and numerator bounds
+   packet**, for every allowed full index tuple `α` in the D29 interface
+   family, assume the displayed uniform denominator and numerator bounds
 
    `ess inf_{α} ess inf_{h∈I}|𝒟_α(h)|≥d_I>0`,
    `sup_α||𝒝_α||_{L²(I)}≤C_I<∞`. **(D29-den)**
 
    Consequently
-   `sup_α||𝒜_α||_{L²(I)}≤C_I/d_I`.  Cauchy--Schwarz for
-   the normalized preparation/resolution supplies the second bound; the
-   first is the explicit nonzero-amputation hypothesis.
+   `sup_α||𝒜_α||_{L²(I)}≤C_I/d_I`.  Both displayed inequalities are
+   assumptions; Cauchy--Schwarz for normalized preparation/resolution is the
+   model for the numerator assumption, not a derivation of it in this shard.
 4. The precedence is
    `N→∞ ≺ t→±∞ ≺ (W↑ℤ,σ↓0)_j ≺ ε↓0`.
    **(D29-order)**  No later operation is taken inside an earlier one;
-   `W` and `σ` may be exhausted jointly along `j`.  Thus the unconditional
-   statement below concerns full-index diagonals respecting this precedence,
-   not an asserted iterated `lim_{σ}lim_W`.  Under `(ACE2M-SR)`, the
-   `j`-diagonal is a specified specialization and `ε` is then iterated last.
-5. **(5a), pairing convention.** Compare D29's connected pairing with hard
+   `W` and `σ` may be exhausted jointly along `j`.  Thus the statement below,
+   conditional only on `(D29-den)`, concerns full-index diagonals respecting
+   this precedence, not an asserted iterated `lim_{σ}lim_W`.  Under
+   `(ACE2M-SR)`, the `j`-diagonal is a specified specialization and `ε` is
+   then iterated last.
+5. **Separate asymptotic-HR theorem; not a D29 clause.**
+
+   **(5a), pairing convention.** Compare a connected HR pairing with hard
    vectors in `ran W_-^(ε)`, `ran W_+^(ε)` and the same soft profile
-   `f_ε`; this fixes the pairing, not its value.
+   `f_ε`; this fixes the pairing, not its value and does not describe the
+   adjudicated D29 datum.
 
    **(5b), one-particle on-shell normalization.**  At fixed `ε>0`, with
    `χ_2=1` on `supp f_ε`, the two admissible HR creator families obey,
@@ -423,33 +435,50 @@ asymptotic charge creator by the exact filtered creator.
 
    and their velocity support is disjoint from the selected hard packet by
    D31(4).  Equality (2M-1P) is the normalized one-particle content of the
-   D29 on-shell charge leg; it is not an operator equality on hard states.
-   No `ε↓0`-uniform estimate is included.
+   admissible HR charge leg; it is not an operator equality on hard states and
+   is not a property asserted of the adjudicated fixed-time D29 insertion.  No
+   `ε↓0`-uniform estimate is included.
 
-These are the complete interface clauses; reconciliation with Lane S1's final
-D29 is an orchestrator task.
+These are the complete interface clauses.  Under the adjudicated D29,
+(A2M.3)'s channel identification is **OPEN**; clause 5 records only the
+separate creator-choice theorem that survives.
 
 **⟨2⟩1. [NEW — D6 one-particle normalization]**
 
 **ASSUME.** D6--D8 and fixed `ε>0`.  **PROVE.** (2M-1P) holds for the D6
 charge creator and the D31 filtered creator.
 
-On D6, `q_x^-=S_x^-`, so, with D10(c)'s argument convention,
+On D6, `q_x^-=S_x^-`; its multiplicity is one, so bind `b=1`.  With
+D10(c)'s argument convention,
 
 `Q[f̂_ε;ξ^-]Ω=Σ_x f̂_ε(x)S_x^-Ω
- =Σ_x f̂_ε(x)|x⟩=Γ_M(f_ε)=a_{2,b}[f_ε]Ω`.
+ =Σ_x f̂_ε(x)|x⟩=Γ_M(f_ε⊗e_1)=a_{2,1}[f_ε]Ω`.
 
-The measure is `dk/(2π)`, so `Γ_M` is isometric.  Applying the two
-on-shell HR evolutions preserves this vacuum vector for every `t` by the exact
-band equation.
+The measure is `dk/(2π)`, so `Γ_M` is isometric.  Choose the source filter so
+that its Fourier multiplier equals one on
+`𝔥∩Sp_{Q[f̂_ε;ξ^-]}τ` over `supp f_ε`; filtering is then transparent on the
+vacuum vector, exactly as required in the proof of source Theorem
+`Haag-Ruelle-Fock`.  Since `S_x^-Ω` is purely one-magnon on D6, this condition
+holds.  Applying the two on-shell HR evolutions then preserves the vacuum
+vector for every `t` by the exact band equation.
+
+The source's isolation and `Sp_{A^*}τ∩Sp U⊂𝔥` hypotheses are used here only
+in D31(2)'s charge-graded form.  On D6 the one-magnon shell is embedded in the
+two-magnon continuum and is isolated only within the `S^z`-charge-one sector;
+`S_x^-Ω` nevertheless has spectral support entirely in `𝔥`, which is the
+condition needed by `(creation-on-vacuum)`.  Source
+`commutators-decay(a)` itself uses almost locality and disjoint velocity
+support, not global shell isolation.
 
 *Justification.* D6, D10(c), `soft-current-recon.md` ⟨1⟩1 for
 `q_x^-=S_x^-`, proposed D31(2)--(3), and source equation
-`(creation-on-vacuum)` in §“Haag--Ruelle creation operators”.
+`(creation-on-vacuum)` in §“Haag--Ruelle creation operators”, together with
+the filter-transparency condition in the proof of source Theorem
+`Haag-Ruelle-Fock`.
 
 **⟨2⟩2. [PORTED THEOREM — creator-choice independence / `(ACE2M-LSZ)`]**
 
-**ASSUME.** Interface clauses 1, 5(a)--(b), D31(3)--(4), and fixed `ε>0`.
+**ASSUME.** The separate HR hypotheses 5(a)--(b), D31(3)--(4), and fixed `ε>0`.
 **PROVE.** Replacing the asymptotic charge creator by `a_{2,b}` changes no
 fixed-`ε` connected on-shell pairing.
 
@@ -478,7 +507,10 @@ This port does **not** identify the raw fixed-time vector
 `Q_{k_s}|k_h⟩` with a scattering eigenvector.  On D6 the PROVED identity
 `Q_{k_s}|k_h⟩-|B^{in}⟩=(1-S_{12})|P_{12}⟩
 =-2ik_s|P_{12}⟩+O(k_s²)` (R8 and R19) remains true.  It is precisely why
-clause 1 requires an asymptotic on-shell leg.
+the adjudicated D29 is outside the port: **This theorem does NOT apply to the
+adjudicated D29.**  The mismatch is nonzero at the soft law's own linear
+order, so identification of its datum with the constructed channel is
+**OPEN**.
 
 *Justification.* Claim S2-2body, `theory/soft-current-recon.md`
 ⟨1⟩2.⟨2⟩3 (R8) and ⟨1⟩5 (R19).
@@ -520,13 +552,14 @@ asserts the inner iterated-limit object and does not use `W_±`.
 *Justification.* D29 interface clauses 1 and 3, (D29-den), and weak sequential
 compactness of bounded sets in the reflexive space `L²(I)`.
 
-**⟨2⟩2. [ADAPTED — fixed-packet AC-EX bridge]** At fixed `ε>0`, ⟨1⟩5
-supplies `W_±^(ε)`.  The proved creator-independence theorem
-`(ACE2M-LSZ)` in ⟨1⟩8.⟨2⟩2 replaces (5a)'s asymptotic charge creator
-by the D31(3) creator without changing the connected pairing.  Thus every
-fixed-`ε` subsequential value for which the hard preparation/resolution
-converges is the constructed-channel value.  Wave operators enter (A2M.3)
-only here.
+**⟨2⟩2. [SCOPED — separate fixed-packet HR theorem]** At fixed `ε>0`,
+⟨1⟩5 supplies `W_±^(ε)`.  For an admissible asymptotic HR family satisfying
+clause 5, the proved creator-independence theorem `(ACE2M-LSZ)` in
+⟨1⟩8.⟨2⟩2 replaces its charge creator by the D31(3) creator without changing
+the connected pairing.  Thus a fixed-`ε` HR subsequential value for which the
+hard preparation/resolution converges is the constructed-channel value.  The
+adjudicated D29 fixed-time family is not this family, so no channel
+identification for Lane S1 follows from this step.
 
 *Justification.* (A2M.1)--(A2M.2), interface clauses 2 and 5,
 and ⟨1⟩8.⟨2⟩2.
@@ -595,14 +628,19 @@ from the two-body contact equations; no integrability hypothesis enters.
 Cook constants diverge through the packet seminorms and control neither an
 on-shell first derivative nor the `(W,σ)` exhaustion.  The `(W,σ)`-uniform
 version is open on every model, D6 included.  Creator independence proves
-`(ACE2M-LSZ)` only for the asymptotic-leg interface; a fixed-time insertion
-retains the R8 branch term displayed in ⟨1⟩8.⟨2⟩2.
+`(ACE2M-LSZ)` only for the separate asymptotic HR family; the adjudicated
+fixed-time insertion retains the R8 branch term displayed in
+⟨1⟩8.⟨2⟩2.  The diagonal compactness of ⟨2⟩1 and the fixed-`ε` HR channel
+identification of ⟨2⟩2 concern different families and are not joined.  Even
+`(ACE2M-SR)` supplies regularity/limit-order control, not the missing
+fixed-time amplitude matching.
 
 *Justification.* ⟨1⟩2.⟨2⟩1, ⟨1⟩5's **ACE-SP**, and the ML3/ML6
 CONJECTURE rows in `claims/CLAIMS.md`.
 
 **⟨2⟩7. QED.**  This proves (A2M.3) at the stated diagonal/conditional
-strength.
+strength and the HR theorem at its separately stated scope; it proves no D29
+channel identification.
 
 ## 5. Reference-hypothesis audit
 
@@ -623,7 +661,8 @@ smoothness/separated velocities replace global regularity.  Density, full-Fock, 
 **⟨2⟩3. [PORTED, SCOPED]** Source Theorem `Haag-Ruelle`'s final
 creator-choice-independence clause is ported in ⟨1⟩8.⟨2⟩2.  Its matching
 vacuum-vector and cross-velocity hypotheses are exactly (2M-1P) and D31(4).
-It is used only for the asymptotic D29 soft leg.  It is not used to compare
+It is used only for the separate admissible asymptotic HR family.  **This
+theorem does NOT apply to the adjudicated D29.**  It is not used to compare
 different packet-window ranges in ⟨1⟩7.⟨2⟩4 and supplies no density or
 completeness conclusion.
 
@@ -646,9 +685,9 @@ Both **connected** answers must equal `4/3·(-1/3)^d` within `10^-12`, and
 each successive ratio must obey `|ratio+1/3|≤10^-8`.  This certifies only
 the fixed-point-subtracted connected two-point identity on one model.
 **Red `--red-c1a`:** replace `E^{d-1}-P` by `E^{d-1}`; its retained `+1`
-must fail both gates.
+must fail the route-value and successive-ratio gates.
 
-**A2M-C1b (support-length independence).** For all `w_C,w_D∈{1,2,3}`, take `C_{w_C}=⊗_{j=1}^{w_C}(I+S^z_j)` and likewise `D_{w_D}`, separated by `d_sep∈{2,4,6}` sites. Compare direct and fixed-point-subtracted contractions and, with `λ̃=1/2`, require
+**A2M-C1b (finite support-length corroboration).** For all `w_C,w_D∈{1,2,3}`, take `C_{w_C}=⊗_{j=1}^{w_C}(I+S^z_j)` and likewise `D_{w_D}`, separated by `d_sep∈{2,4,6}` sites. Compare direct and fixed-point-subtracted contractions and, with `λ̃=1/2`, require
 
 `max_{w_C,w_D,d_sep}
  |conn|/(||C_{w_C}||||D_{w_D}||λ̃^{d_sep}) ≤0.1`.
@@ -661,13 +700,15 @@ every fixed `d_sep`,
 for all `w_C,w_D∈{1,2,3}`.  **Red `--red-c1b`:** replace the rate by
 `λ̃^{d_sep+2(w_C+w_D)}`; the cap must fail.  **Red
 `--red-supportfold`:** multiply the fixed-point-subtracted connected numerator
-by `w_Cw_D` only in the support-variation calculation; it must disagree by
-more than `10^-12` with the independently direct-contraction ratio profile.
-The ordinary monotonicity gate is retained, but this profile-agreement gate is
-the direct certificate that a support-length factor has not been hidden in
-`C_{A,λ̃}`.
+by `w_Cw_D` in only one route; it must disagree by more than `10^-12` with
+the independently direct-contraction ratio profile.  This profile gate merely
+re-tests contraction-route agreement in ratio units.  It does **not** certify
+that a two-sided support-length factor has not been hidden in
+`C_{A,λ̃}`.  The monotonicity margin is reported over non-baseline support
+pairs so a green run displays its actual negative margin rather than the
+identically zero baseline comparison.
 
-**Uncertified scope.** AKLT's transfer map is diagonalizable, so A2M-C1 certifies neither D1(c)'s Jordan-safe `λ̃>λ_E` form nor D31-C4, exact bands, `(ACE2M-LSZ)`, or `(ACE2M-SR)`. Every gate/red mode must use `raise` or `sys.exit`, never bare `assert`; green and red run under `python3 -O`, and every red mode exits nonzero.
+**Uncertified scope.** AKLT's transfer map is diagonalizable, so A2M-C1 certifies neither D1(c)'s Jordan-safe `λ̃>λ_E` form nor D31-C4, exact bands, `(ACE2M-LSZ)`, or `(ACE2M-SR)`.  A2M-C1b corroborates the finite `w≤3` cap and monotonicity but does not exclude a hidden two-sided `w_Cw_D` factor; support-length independence is proved analytically in ⟨1⟩3, not certified by this finite grid. Every gate/red mode must use `raise` or `sys.exit`, never bare `assert`; green and red run under `python3 -O`, and every red mode exits nonzero.
 
 ## 7. MERGE PROPOSALS
 
@@ -703,7 +744,7 @@ are consequences, not hypotheses.  The theorem is fixed-packet only; a soft scal
 
 ### Exact additions to `claims/CLAIMS.md`
 
-| AC-EX-2M | Under D31/H-ACE2M over one D1 injective translation-invariant MPS vacuum, exact momentum-filtered magnon bands and two compact nonzero separated-velocity packets give fixed-packet Cook wave operators `W_±`; D1's transfer gap derives D31-C2, and with D31(3)'s uniform almost-locality also D31-C4, so no independent clustering hypothesis is assumed.  The maps are isometries, intertwine joint translations, and avoid the D31-listed fiberwise-isolated charge-two bound bands.  On D6--D8 a fixed packet range lies in the corresponding part of ML2's Jacobi scattering summand: `W_+^*W_-` carries D7's `S_phys`, while the two-string is orthogonal.  For Lane S1's D29 interface, every full-index sequence respecting (D29-order) is `L²(I)`-bounded under (D29-den) and has weak diagonal subsequences; no unconditional iterated-order object is asserted.  If the charge-created soft leg is carried as an asymptotic HR leg, the ported creator-choice-independence theorem `(ACE2M-LSZ)` identifies its fixed-`ε` value with the constructed channel from the one-particle normalization (2M-1P) and D31(4).  First-jet compactness is conditional on `(ACE2M-SR)`, whose full `(W,σ)`-uniform version is open on every model; D6 verifies D31 and only the exhaustion-free infinite-chain first jet.  No fixed-time charge/scattering-vector equality, soft-uniform Cook bound, equal-velocity/endpoint construction, bound-state wave operator, range exhaustion, or asymptotic completeness is claimed. | SKETCH | D1, D3(a), D6--D8, D10, D12(a′), D24, D31, ML2, S2-2body | theory/ansatz-scattering-2m.md | theory/checks/ansatz_scattering_2m_check.py, A2M-C1a/C1b |
+| AC-EX-2M | Under D31/H-ACE2M over one D1 injective translation-invariant MPS vacuum, exact momentum-filtered magnon bands and two compact separated-velocity packets give fixed-packet Cook wave operators `W_±`; D1's transfer gap derives D31-C2, and with D31(3)'s uniform almost-locality also D31-C4, so no independent clustering hypothesis is assumed.  The maps are isometries, intertwine joint translations, and avoid the D31-listed fiberwise-isolated charge-two bound bands.  On D6--D8 a fixed packet range lies in the corresponding part of ML2's Jacobi scattering summand: `W_+^*W_-` carries D7's `S_phys`, while the two-string is orthogonal.  D6 is verified to satisfy D31(1)--(5).  **Adjudicated scoping (verbatim):** for Lane S1's D29 interface the shard proves exactly two separate things.  (1) *Diagonal compactness, conditional on (D29-den):* assuming the displayed selected-hard-packet bounds `ess inf_α ess inf_{h∈I}\|𝒟_α(h)\|≥d_I>0` and `sup_α‖𝒝_α‖_{L²(I)}≤C_I<∞`, one has `sup_α‖𝒜_α‖_{L²(I)}≤C_I/d_I`, so every full-index sequence respecting (D29-order) with `ε↓0` has a weakly convergent `L²(I)` subsequence.  This is Banach--Alaoglu on an assumed bound; nothing unconditional is claimed, and no iterated-order object is asserted to exist.  (2) *Creator-choice independence, `(ACE2M-LSZ)`, a THEOREM:* at fixed `ε>0`, if the soft slot is filled by an admissible Haag--Ruelle creator family whose one-particle vector equals the D31(3) filtered magnon's ((2M-1P)) and whose velocity support is disjoint from the hard packet's (D31(4)), then every connected on-shell `t→±∞` pairing is unchanged when that family is replaced by `a_{2,b}` (ported from `refs/arxiv-1412.2970` Theorem `Haag-Ruelle`, final clause).  **This theorem does NOT apply to the adjudicated D29.**  Both D29 proposals on record — `theory/soft-index.md` §7.1 D29(2) and `theory/soft-index-b.md` §M1, the latter adopted by `theory/verdicts/soft-index-adjudication-r1.md` §3.1 — specify a fixed-time insertion `Q[f_ε]ψ` on an already prepared hard vector, which is not a Haag--Ruelle creator family; for it the PROVED row S2-2body gives `Q_{k_s}\|k_h⟩−\|B^{in}⟩=(1−S_{12})\|P_{12}⟩=−2ik_s\|P_{12}⟩+O(k_s²)` (R8, R19), nonzero at the soft law's own linear order, and the identification of the D29 datum with the constructed channel is **OPEN**.  First-jet compactness is conditional on `(ACE2M-SR)`, including existence of the `N,t` limits; its full `(W,σ)`-uniform version is open on every model, and D6 verifies only the exhaustion-free infinite-chain first jet.  No fixed-time charge/scattering-vector equality, soft-uniform Cook bound, equal-velocity/endpoint construction, bound-state wave operator, range exhaustion, or asymptotic completeness is claimed. | SKETCH | D1, D3(a), D6--D8, D10, D12(a′), D24, D31, ML2, S2-2body | theory/ansatz-scattering-2m.md; PROMOTE at SKETCH per ansatz-scattering-2m-r3.md §9, scoping sentence applied verbatim | theory/checks/ansatz_scattering_2m_check.py A2M-C1a/C1b (green exit 0; `--red-c1a`, `--red-c1b`, `--red-supportfold` exit 1, orchestrator re-run).  **Gate caveat (r3 R3-O2):** the profile-agreement gate is a rescaled duplicate of the agreement gate and does NOT certify that a support-length factor is absent — the critic folded `w_Cw_D` into the constant in both routes and every gate still passed |
 
 ### Exact additions to `notation.md`
 
@@ -715,10 +756,10 @@ are consequences, not hypotheses.  The theorem is fixed-packet only; a soft scal
 | `d_sep` | number of uniform transfer sites separating two local/almost-local clusters in D31-C2/C4 | definitions.md D31 |
 | `ε_v`, `ε_0`, `s_N(F)` | D31 packet-velocity separation, distance of each packet velocity from zero (unused by A2M.1--A2M.2), and fixed-packet Schwartz seminorm | definitions.md D31(4); theory/ansatz-scattering-2m.md ⟨1⟩2 |
 | `V_w`, `Ψ_O` | block Stinespring isometry and block-to-virtual contraction used in MPS-2M-cluster | theory/ansatz-scattering-2m.md ⟨1⟩3.⟨2⟩2 |
-| `f_ε`, `Q[f̂_ε;ξ^-]`, `a_{2,b}[f_ε]`, `a_{Q,2,b,t}[f_{ε,t}]` | rescaled momentum packet, D10(c) charge with its position-space Fourier profile, exact filtered packet creator, and asymptotic charge HR creator | theory/ansatz-scattering-2m.md ⟨1⟩2, ⟨1⟩8 |
+| `f_ε`, `Q[f̂_ε;ξ^-]`, `a_{2,b}[f_ε]`, `a_{Q,2,b,t}[f_{ε,t}]` | rescaled momentum packet, D10(c) fixed-time charge with its position-space Fourier profile, exact filtered packet creator, and separate asymptotic charge HR creator (not the adjudicated D29 object) | theory/ansatz-scattering-2m.md ⟨1⟩2, ⟨1⟩8 |
 | `𝒜_α`, `𝒝_α`, `𝒟_α`, `d_I`, `C_I` | D29 full-index amputated datum, numerator, hard denominator, and its selected-packet lower/numerator bounds | theory/ansatz-scattering-2m.md ⟨1⟩8(3) |
 | `A_j(ε)`, `ε_★` | post-`N,t` D29 datum along the joint `(W_j,σ_j)` exhaustion and its soft-scale interval endpoint | theory/ansatz-scattering-2m.md ⟨1⟩8 `(ACE2M-SR)` |
-| `(ACE2M-LSZ)` | theorem that fixed-`ε` connected on-shell pairings are independent of the asymptotic soft creator when (2M-1P) and cross-velocity separation hold | theory/ansatz-scattering-2m.md ⟨1⟩8.⟨2⟩2 |
+| `(ACE2M-LSZ)` | theorem that fixed-`ε` connected on-shell pairings are independent of the asymptotic soft creator when (2M-1P) and cross-velocity separation hold; it does not apply to the adjudicated D29 | theory/ansatz-scattering-2m.md ⟨1⟩8.⟨2⟩2 |
 | `(ACE2M-SR)` | `j=(W_j,σ_j)`-uniform compact-containment and equicontinuous first jet after existence of the `N,t` limits; a genuine non-Cook soft-uniformity hypothesis | theory/ansatz-scattering-2m.md ⟨1⟩8 |
 
 ## 8. HONEST STATUS
@@ -726,13 +767,16 @@ are consequences, not hypotheses.  The theorem is fixed-packet only; a soft scal
 **Proved from D31.**  (A2M.1)--(A2M.2): fixed-packet Cook existence, isometry, translation intertwining, separation from
 listed bound/inelastic channels, and exact ML2/D7 agreement on D6--D8.  D31-C2/C4 are derived from D1, not assumed.
 
-**Proved diagonal bridge.**  Under the displayed selected-hard-packet
+**D29 interface status.**  Under the displayed selected-hard-packet
 denominator bound (D29-den), the full-index D29 family is `L²(I)`-bounded,
 so every sequence respecting (D29-order) has a weakly convergent subsequence.
 This is diagonal compactness only; existence of the iterated inner limits is
-not claimed.  For an asymptotic D29 charge leg, creator-choice independence
-proves `(ACE2M-LSZ)` from (2M-1P) and D31(4).  The raw fixed-time D6 mismatch
-(R8) is retained and is outside that theorem.
+not claimed.  Separately, creator-choice independence proves `(ACE2M-LSZ)`
+from (2M-1P) and D31(4) for admissible asymptotic HR creator families.
+**This theorem does NOT apply to the adjudicated D29.**  Its fixed-time charge
+insertion has the nonzero `O(k_s)` R8 mismatch, and identification of its datum
+with the constructed channel is **OPEN**.  The compactness and HR statements
+concern different families and are not joined.
 
 **Conditional.** Generic iterated first-jet control assumes `(ACE2M-SR)`,
 including existence of the `N,t` limits.  ML2/S2-2body verify only its
@@ -745,8 +789,9 @@ ML2 supplies only the D6 exact spectral anchor.
 
 **Assumed.** Exact band invariance/creator normalization, positive-energy
 covariance, and the threshold inventory are D31 hypotheses, not variational
-consequences.  At the D29 interface, asymptotic-HR admissibility of the charge
-leg, (2M-1P), and (D29-den) are displayed hypotheses; creator-choice
-independence derives `(ACE2M-LSZ)` from them.  Separation from D31-listed bound
-bands is derived from `d_B>0`, not assumed.  ML1/ML3/ML6, Bethe completeness,
-and soft-uniform Cook estimates are unused.
+consequences.  At the adjudicated D29 interface, `(D29-den)` is assumed and
+the fixed-time channel identification is open.  For the separate HR theorem,
+admissibility and (2M-1P) are displayed hypotheses; creator-choice independence
+derives `(ACE2M-LSZ)` from them.  Separation from D31-listed bound bands is
+derived from `d_B>0`, not assumed.  ML1/ML3/ML6, Bethe completeness, and
+soft-uniform Cook estimates are unused.
