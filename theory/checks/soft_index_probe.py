@@ -483,19 +483,32 @@ def run_p4(quick: bool) -> dict:
         basis2 = sector_basis(n, 2, two_s)
         h2, _ = hamiltonian(n, 2, two_s)
         evals2, evecs2 = np.linalg.eigh(h2)
-        # bound band: lowest state in each total-momentum fiber
+        # bound band: lowest state in each total-momentum fiber.  Project
+        # onto momentum sectors FIRST (eigh mixes the degenerate +-K pair),
+        # then diagonalise H inside each fiber.
         trans2 = translation_matrix(basis2, n)
         bound_vecs, bound_ks = [], []
-        for i in range(len(evals2)):
-            vec = evecs2[:, i]
-            kphase = np.vdot(vec, trans2 @ vec)
-            if abs(abs(kphase) - 1.0) > 1e-8:
+        powers = [np.linalg.matrix_power(trans2, j) for j in range(n)]
+        for m_idx in range(n):
+            ktot = 2.0 * np.pi * m_idx / n
+            proj = sum(np.exp(-1j * ktot * j) * powers[j]
+                       for j in range(n)) / n
+            rank = np.linalg.matrix_rank(proj, tol=1e-8)
+            if rank == 0:
                 continue
-            ktot = float(-np.angle(kphase))
+            # orthonormal fiber basis via QR of the projector columns
+            q_full, r_full = np.linalg.qr(proj)
+            cols = [i for i in range(proj.shape[1])
+                    if abs(r_full[i, i]) > 1e-8][:rank]
+            fib = q_full[:, cols]
+            h_fib = fib.conj().T @ h2 @ fib
+            ev, evec = np.linalg.eigh((h_fib + h_fib.conj().T) / 2.0)
             e_bound = 0.5 * J * (1.0 - math.cos(ktot))
-            if abs(evals2[i] - e_bound) < 0.02 and evals2[i] < 0.55:
-                bound_vecs.append(vec)
-                bound_ks.append(ktot)
+            if abs(ev[0] - e_bound) < 0.02 and (len(ev) < 2
+                                                or ev[1] - ev[0] > 0.03):
+                vec = fib @ evec[:, 0]
+                bound_vecs.append(vec / np.linalg.norm(vec))
+                bound_ks.append(float(ktot))
         k0, sig_k = np.pi / 2.0, 0.25
         packet = np.zeros(len(basis2), dtype=complex)
         for vec, ktot in zip(bound_vecs, bound_ks):
@@ -525,12 +538,20 @@ def run_p4(quick: bool) -> dict:
                   int(n * 0.25 + v_s * t_final) + 6]
         d_soft = windowed_centroid(dens, window, n)
         d_free = windowed_centroid(np.abs(freet) ** 2, window, n)
-        return {"status": "recorded", "n": n,
-                "displacement": float(circular_diff(d_soft, d_free, n)),
+        separation = (v_b - v_s) * t_final
+        return {"status": "geometry-limited", "n": n,
+                "displacement_raw": float(circular_diff(d_soft, d_free, n)),
                 "prediction_2_over_s": 4.0,
                 "v_bound": v_b, "v_soft": v_s,
-                "note": "exploratory; window overlap and small ring make "
-                        "this evidence-grade only (pre-registered as such)"}
+                "separation_sites": separation,
+                "note": "exploratory and NON-GATING: relative drift "
+                        f"{separation:.1f} sites < packet widths, so the "
+                        "packets never fully separate on this ring — the "
+                        "raw number is NOT an asymptotic displacement and "
+                        "must not be read against the prediction.  The "
+                        "proper charge-2 falsifier (phase readout in the "
+                        "three-magnon sector, larger ring) is tracked as "
+                        "bd tns-ebh."}
     except Exception as exc:  # exploratory: never gate, never crash
         return {"status": "inconclusive", "reason": repr(exc)}
 
@@ -607,8 +628,9 @@ def main() -> None:
     for two_s in (1, 2):
         RESULTS[f"p1_two_s_{two_s}"] = run_p1(two_s, sizes[two_s], red, quick)
         r = RESULTS[f"p1_two_s_{two_s}"]
-        print(f"P1 PASS  S={two_s/2}: extrap {r['extrapolated']:+.4f} "
-              f"vs {r['predicted']:.4f} (rel {r['relative_error']:.3f})")
+        print(f"P1 PASS  S={two_s/2}: slope {r['slope']:+.4f} "
+              f"vs {r['predicted']:.4f} (rel {r['relative_error']:.3f}, "
+              f"adler {r['adler_residual']:.4f})")
     signs = {RESULTS[f"p1_two_s_{t}"]["sign"] for t in (1, 2)}
     require(len(signs) == 1, "P1 sign inconsistent across S")
     if "--skip-p4" not in args:

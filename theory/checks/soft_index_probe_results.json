@@ -1,0 +1,72 @@
+{
+ "p2_overlaps": [
+  {
+   "k": 0.3490658503988659,
+   "abs": 13.903816440391278
+  },
+  {
+   "k": 0.6981317007977318,
+   "abs": 7.655072891512785
+  }
+ ],
+ "p2": {
+  "jet_errors": [
+   4.282935914593823e-08,
+   5.4519119026157345e-08
+  ],
+  "protocol_eta_diff": 0.0,
+  "protocol_slope": 2.0001191774600064
+ },
+ "p3": {
+  "raw_normalised": [
+   0.051414189010507115,
+   0.490033678064418,
+   0.6826262853572284,
+   0.8092104707892424,
+   0.907631748542739,
+   1.0539257387683447
+  ],
+  "smeared": [
+   0.014095491820558607,
+   0.07556878804431257,
+   0.06750271419816885,
+   0.056941697949844355,
+   0.051094925435072915,
+   0.0516450065727057
+  ],
+  "growth": 20.49873311340109,
+  "smeared_max_over_median": 1.3918607876827
+ },
+ "p1_two_s_1": {
+  "two_s": 1,
+  "n": 112,
+  "rows": 7,
+  "adler_residual": 0.0006066936899190023,
+  "slope": 1.9929248158430923,
+  "predicted": 2.0,
+  "relative_error": 0.003537592078453833,
+  "sign": 1.0,
+  "quick_smoke_only": false
+ },
+ "p1_two_s_2": {
+  "two_s": 2,
+  "n": 96,
+  "rows": 6,
+  "adler_residual": 0.002941582543770707,
+  "slope": 1.0217264890765967,
+  "predicted": 1.0,
+  "relative_error": 0.02172648907659669,
+  "sign": 1.0,
+  "quick_smoke_only": false
+ },
+ "p4": {
+  "status": "geometry-limited",
+  "n": 28,
+  "displacement_raw": 0.7479264572881519,
+  "prediction_2_over_s": 4.0,
+  "v_bound": 0.5,
+  "v_soft": 0.29552020666133955,
+  "separation_sites": 6.134393800159813,
+  "note": "exploratory and NON-GATING: relative drift 6.1 sites < packet widths, so the packets never fully separate on this ring \u2014 the raw number is NOT an asymptotic displacement and must not be read against the prediction.  The proper charge-2 falsifier (phase readout in the three-magnon sector, larger ring) is tracked as bd tns-ebh."
+ }
+}
