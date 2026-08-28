@@ -110,3 +110,12 @@ Therefore, for EVERY checker you attack or write:
   constants proves nothing about the claim.
 - **Check for deductive subsumption between gates.**  If gate `Cj`'s bound is
   implied by gate `Ci`'s, `Cj` adds no evidence; say so and say what would.
+5. `ace_ld_check.py` LD-C5: violates its own `(V-in)` hypothesis, never
+   produces the `ν=0` atom it certifies, and **has no red mode at all**;
+   `--red-coset` is bit-identical to a constant shrink and blind to cosets.
+
+- **Check that every gate can FAIL AT ALL.**  A gate with no red mode is
+  decoration.  Enumerate the gates, enumerate the red modes, and report any
+  gate that no mutation reaches.  Then check each red mode is *specific*: if
+  `--red-X` is bit-identical in effect to `--red-Y`, one of them is testing
+  nothing it claims to.
