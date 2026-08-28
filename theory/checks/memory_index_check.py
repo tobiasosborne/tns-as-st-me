@@ -23,11 +23,17 @@ Red mode
 --------
 Every row of the CHECK TABLE carries exactly ONE named mutation.  ``--red``
 applies all of them at once, each *in place of* the premise it breaks, and
-every row must then fail.  Where the spec attaches two mutations to one
-certificate they are registered as two rows, so that each is independently
-reachable in red: that is r2 objection 3(c)(i), which found IDX-C7's
-mutation (ii) sitting as dead code behind mutation (i)'s eager failure, and
-3(c)(iii), which found the IDX-rho.6 assertion vacuous inside IDX-C8.
+every row must then fail.  TWO rows are exceptions and are ASSERTION-FLIP
+rows rather than premise perturbations: IDX-C4 and IDX-C7(ii).  Both certify
+a NECESSITY (an implication that must fail), and one cannot perturb the
+premise of a non-implication, so the mutated objects are computed in BOTH
+modes and it is the assertion about them that flips -- green asserts they are
+live, red asserts they vanish (SPEC NOTE 6).  Where the spec attaches two
+mutations to one certificate they are registered as two rows, so that each is
+independently reachable in red: that is r2 objection 3(c)(i), which found
+IDX-C7's mutation (ii) sitting as dead code behind mutation (i)'s eager
+failure, and 3(c)(iii), which found the IDX-rho.6 assertion vacuous inside
+IDX-C8.
 
     C1/C2      naive unmeasured difference <Q(t-)> - <Q(t+)> for (IDX.4)
     C3         eps_n -> (n+1)^{-1}, which makes V_N bounded
@@ -114,12 +120,21 @@ SPEC_NOTES = [
     "(kink_partners), behind the explicit anti-vacuity guard "
     "|r_beta - r_alpha| > 1e-3.  Printed here for the first time: it lived "
     "only as that in-code guard (r2 objection 3(c)(ii)).",
-    "IDX-C4: the spec asks the checker to REJECT first-moment convergence, so "
-    "there is no premise to perturb -- the laws are hand-written arithmetic "
-    "exhibits.  The mutation is therefore an INSERTED false assertion (red "
-    "asserts the first moment converges to 0), not a perturbed premise, and "
-    "IDX-C4 is evidence about the implication only, not about any model.  "
-    "Printed here for the first time (r2 objection 3(c)(ii)).",
+    "IDX-C4 and IDX-C7(ii) are ASSERTION-FLIP rows, not premise "
+    "perturbations.  IDX-C4: the spec asks the checker to REJECT first-moment "
+    "convergence, so there is no premise to perturb -- the laws are "
+    "hand-written arithmetic exhibits.  The mutation is therefore an INSERTED "
+    "false assertion (red asserts the first moment converges to 0), not a "
+    "perturbed premise, and IDX-C4 is evidence about the implication only, "
+    "not about any model.  IDX-C7(ii) has the same structure for the same "
+    "reason (r3 objection 8): it certifies a NECESSITY, and a premise of a "
+    "non-implication cannot be perturbed, so the mutated objects (beta_bad, "
+    "beta_nc and the charge-shifted family) are computed in BOTH modes and "
+    "the assertion about them flips -- green asserts the defects are live "
+    "(the non-covariant tails fail at the correct counterterm, the "
+    "charge-shifted family has phi_W(2pi) != 1), red asserts they vanish.  "
+    "Printed here for the first time (r2 objection 3(c)(ii); IDX-C7(ii) "
+    "clause added per r3 objection 8).",
     "IDX-C7(i) red shift -- the checker half of r2 objection 9.  The spec's "
     "rho -> rho+0.1 is resonant with round window arithmetic: 0.1 against a "
     "multiplier of 10 is an exact integer and would leave that window "

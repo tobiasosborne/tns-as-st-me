@@ -572,19 +572,44 @@ with `w=4`, and a magnon filter `χ̃∈C_c^∞` with `χ̃≡1` on `[0.6,0.8]`,
 *Green run:* `h(m)` = Fourier coefficients of `h_γ=ωχ̃` (rapidly decreasing).
 Gate: the last three effective doubling exponents of `C_θ(t)` are `<-2`, and
 the trapezoidal Cook tail's last two contribution ratios are `<0.30`.
-*Predicted mechanism (⟨1⟩5.⟨2⟩4 regime (i)):* the dominant factor is
-`Σ_{|m|≥ε_v t/2}|h(m)|`, which is `O(t^{-∞})` here, so `C_θ` should fall faster
-than any power until it hits the FFT/wraparound floor; the gate is stated at
-`<-2` to stay well above that floor.
+*Mechanism — CORRECTED red-first; supersedes the prediction that stood here
+(memory-index-r3.md §1, which overrules memory-index-r2.md R9(iii)).*  The
+tail sum `Σ_{|m|≥ε_v t/2}|h(m)|` governs the **majorant** of ⟨1⟩5.⟨2⟩4(i),
+not `C_θ` itself.  That sum is manufactured by the triangle inequality of
+⟨1⟩5.⟨2⟩4(i), which discards the phase; it is a property of the majorant.  On
+the literal `ℓ²` object the kernel enters as `ĥ(k)` restricted to the packet's
+momentum band, and the filter holds that band away from `ĥ_slow`'s only
+singularity at `k=0`; a bounded smooth multiplier maps a `C_c^∞` packet to a
+`C_c^∞` packet, so the off-cone decay that actually governs `C_θ` survives it
+and the object is merely rescaled.  Measured: `C_θ^{slow}/C_θ` is constant
+(`≈0.29`) across five octaves.  The certificate is therefore split.
 
-*Red mutation `--red-slow-kernel`:* replace `h` by `h_slow(m):=c⟨m⟩^{-2}` with
-`c` fixed by `||h_slow||_1=||h_γ||_1`.  Then
-`Σ_{|m|≥R}|h_slow(m)|≍2c/R` with `R≍ε_v t/2`, so `C_θ(t)≍t^{-1}`: the effective
-doubling exponent tends to `-1` and the trapezoidal contribution per octave
-tends to the constant `c'ln2`, ratio `→1`.  Both gates must FAIL.  A `|m|^{-2}`
-kernel is precisely the borderline the r1 hypotheses left open
-(`C²(𝕋)⇒o(m^{-2})`, and `∫dtΣ_{|m|>ε_vt}|h(m)|<∞ ⟺ Σ_m|m||h(m)|<∞`), so this
-mutation tests exactly the leaf Objection 1 broke.
+*ACE-C2a (literal object, dead mutation asserted):* `C_θ(t)` as displayed,
+`t=128,256,…,4096`.  Gate: the last three effective doubling exponents are
+`<-2` and the trapezoidal Cook tail's last two contribution ratios are
+`<0.30`; the green run passes.  Under `--red-slow-kernel` the gates **also
+pass** (doubling exponents `[-1.170,-2.334,-2.775,-3.397,-4.424]`), and the
+checker **asserts** that they do, so this mutation is registered as DEAD and
+cannot silently come back as a spurious red test.
+
+*ACE-C2b (the ⟨1⟩5.⟨2⟩4(i) majorant; the live Objection-1 red test):*
+`M(t) := (Σ_u S(u)²P_t(u))^{1/2}` with
+`S(u)=Σ_m|h_γ(m)||θ_c(u)-θ_c(u+m)|` — the `ℓ²(x,y)` triangle majorant of the
+same object, which dominates `C_θ(t)` pointwise in both modes.  Green:
+tail slope `-6.704`, both gates pass.  *Red mutation `--red-slow-kernel`:*
+replace `h` by `h_slow(m):=c⟨m⟩^{-2}` with `c` fixed by
+`||h_slow||_1=||h_γ||_1`.  Then `Σ_{|m|≥R}|h_slow(m)|≍2c/R` with
+`R≍ε_v t/2`, so `M(t)≍t^{-1}`: measured tail slope `-1.295`, doubling
+exponents `→-1.393`, octave ratios `→0.747`, and **both gates FAIL** as
+required.  A `|m|^{-2}` kernel is precisely the borderline the r1 hypotheses
+left open (`C²(𝕋)⇒o(m^{-2})`, and
+`∫dtΣ_{|m|>ε_vt}|h(m)|<∞ ⟺ Σ_m|m||h(m)|<∞`), so this mutation tests exactly
+the leaf Objection 1 broke — on the object the proof's estimate consumes.
+
+*(r3 NOTE 9.)*  ACE-C2b's `-4.4` green exponent certifies the decay rate of
+the `ℓ²` majorant `M(t)`, **not** the operator-norm `|t|^{-3}` rate; the
+latter stands on r2 R7's analysis of the `ℓ¹` pairing `Σ_{x,y''}|F_t|S(u)`,
+which carries an extra `O(t²)`, and is not established by this run.
 
 Neither certificate touches D28-C; that hypothesis is checkable only in a model
 with an explicit exact kink frame (D16's `|K(z)⟩` family is the natural
@@ -603,9 +628,9 @@ notation row each live exactly once, in the shared files, which are
 including the displayed two-sided two-cluster inequality **(D28-C)**, and
 **Remark D28-R** (regime fence; used in no step of this shard), are live at
 `definitions.md` under "Ansatz-conditioned scattering — D28".  Cite `D28`,
-`D28(n)`, `D28-C`, `D28-R` — the provisional `D28` prefix used in the proof
-text of §§0--4 refers to the same live clauses and is retained only where it
-still appears; the live text governs.
+`D28(n)`, `D28-C`, `D28-R` — the proof text of §§0--4 cites these same live
+clauses under the same names (the provisional `D28-P` prefix it once used was
+replaced throughout at `2cd5ec2`); the live text governs.
 
 ### `claims/CLAIMS.md` — AC-EX and AD3-ex, APPLIED
 
@@ -632,8 +657,8 @@ numbers (P(3) and P(4) have amended text, marked below).  r1 `P(5)` (thresholds)
 is **withdrawn as a hypothesis** and reappears as **Remark D28-R**.  r1 `P(6)`
 (clustering substitute) becomes `P(5)`, displayed as **(D28-C)**; the display tag
 carries no number, so a later renumbering cannot silently break citations.  Every
-`D28(6)` of r1 therefore reads `D28(5)` here, and no r2 citation of `P(5)`
-means the thresholds.
+`D28-P(6)` of r1 — that was r1's name for the clause — therefore reads `D28(5)`
+here, and no r2 citation of `P(5)` means the thresholds.
 
 | Obj | Severity | Disposition | Exact edit location |
 |---|---|---|---|

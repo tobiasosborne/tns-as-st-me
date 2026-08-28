@@ -351,7 +351,7 @@ that `Q̂_{W,c_0}(t_-)` and `Q̂_{W,c_0}(t_+)` commute.
 `p_{W;t_-,t_+}(ν)=Σ_{q∈κ_{W,c_0}+ℤ}
  ||E_{W,t_+}({q-ν})E_{W,t_-}({q})Ψ||²`, `ν∈ℤ`.
 
-*Justification.* Proposed D27(LR2); the first projection is the initial
+*Justification.* D27(LR2); the first projection is the initial
 measurement and the leftmost projection is the final measurement.  This is
 named computation **IDX-TPM.1**.
 
@@ -468,10 +468,12 @@ incoming kink-charge eigenvalue `q_*`, `E_W({q_*})∈𝔄_W` and, as `t→-∞`,
 
 by the named AD3 reading applied to the window observable `E_W({q_*})`: the
 incoming window-charge law tends to the point mass at `q_*`.  *(Indexing
-convention, fixed per r2 NOTE 14: `E_W` is the spectral resolution of
-`Q̂_{W,c_0}` at the reference time and `E_{W,t}(·)=α_{-t}(E_W(·))` its
-Heisenberg translate, so the time label rides on exactly one of the two
-factors — never a fixed `t_∓` subscript on a running vector `Ψ_t`.)*
+convention, fixed per r2 NOTE 14: `E_W` and `E_{W,t}` are D27's objects and
+are not redefined here (L4) — under D27's convention `E_{W,t}(·)=α_t(E_W(·))`
+— so the time label rides on exactly one of the two factors, never as a fixed
+`t_∓` subscript on a running vector `Ψ_t`.  The `α_{-t}` written here at r2
+NOTE 14 was a wrong-sign gloss and is withdrawn per r3 objection 5; the
+displayed identity is unchanged and is correct under D27.)*
 (ii) *Cross-term vanishing:* for the outgoing `r|R⟩+t|T⟩` at running `t→+∞`,
 with the same convention,
 
@@ -666,7 +668,9 @@ transfer power `L_{V_θ^{-1}}∘E_α^n∘L_{V_θ}`.
 
 **⟨2⟩3.** (Support and tightness.)  `spec Q_I^α⊆n(κ-ρ)+ℤ=ℤ`, where
 `κ≡ρ (mod ℤ)` follows from `c=e^{2πiρ}` (⟨1⟩9.⟨2⟩3) together with
-`c=e^{2πiκ}` (⟨1⟩1.⟨2⟩1) — no site-spin symbol `s` and no `s=ρ`
+`c=e^{2πiκ}` (**D26**(INT) directly, and ⟨1⟩1.⟨2⟩1, whose own justification
+is D26 plus the finite-dimensional spectral computation; the direct D26
+citation is added per r3 NOTE 12) — no site-spin symbol `s` and no `s=ρ`
 identification enters, so this step does not import ⟨1⟩10's hypothesis
 (r2 objection 4).  Hence `φ_I` is `2π`-periodic and Fourier inversion on `ℤ`
 applies.  Truncation inequality (**IDX-ρ.6**, = lane-B NC-4, verified by
@@ -818,17 +822,27 @@ spuriously perfect (cannot host kink dressing) and is banned as a control.
 (iv) Tables are indexed by the convention-free `Q_W` value, support
 `{0,-2}` — the §0 convention.
 
-**IMPLEMENTED AND COMMITTED (`a529a10`): `theory/checks/memory_index_check.py`.**
-Deterministic certificates; every red mutation breaks a necessary premise.
-Run status of record (memory-index-r2.md §2, `python3 -O`): green **exit 0**,
-IDX-C1--C8 all green; `--red` **exit 1**, `RED-OK`, 8/8 checks report
-"caught".  Companion probe: `memory_index_probe.py` green **exit 0**, `--red`
+**IMPLEMENTED AND COMMITTED (`a529a10`, checker lane repair `6f746d5`):
+`theory/checks/memory_index_check.py`.**
+Deterministic certificates; every red mutation breaks a necessary premise
+except IDX-C4 and IDX-C7(i)(b), whose mutations are an inserted false
+assertion and a counterterm-arithmetic perturbation respectively (SPEC NOTES
+6 and 1).
+Run status of record (memory-index-r3.md §0 V3, `python3 -O`): green **exit
+0**, IDX-C1--C8 all green as **ten registered rows**; `--red` **exit 1**,
+`RED-OK`, **10 of 10** checks report "caught", each with its own diagnostic.
+Companion probe: `memory_index_probe.py` green **exit 0**, `--red`
 **exit 1** (190 pre-registered violations), `--selftest` **exit 0**.
-*Open coverage defects, owned by the checker lane (r2 objection 3): the
-⟨1⟩9.⟨2⟩4 tail-covariance mutation of IDX-C7 is unreachable in `--red`; the
-IDX-ρ.6 tail assertion of IDX-C8 is vacuous as instantiated; the SPEC NOTE
-count (four printed) is to be reconciled.  The specification below is the
-frozen target; deviations are recorded in the file's own SPEC NOTES.*
+*The three r2-objection-3 coverage defects are CLOSED at `6f746d5` and
+re-verified by independent recomputation in memory-index-r3.md §0 V3: the
+⟨1⟩9.⟨2⟩4 tail mutation is now the separately registered row IDX-C7(ii) with
+a live red path; the IDX-ρ.6 assertion is non-vacuous as IDX-C8rho, guarded
+by `require(out > 0)` and a printed VACUITY LEDGER; the SPEC NOTE count is
+reconciled at seven with a COUNT ledger.  Carried forward, not a gate:
+`memory_index_probe.py`'s `RED_RHO_SHIFT = 0.3` remains resonant with the
+10-site windows (r3 NOTE 10; the checker's own shift was replaced by the
+irrational `RED_SHIFT`, SPEC NOTE 7).  The specification below is the frozen
+target; deviations are recorded in the file's own SPEC NOTES.*
 
 1. **IDX-C1 (finite-window offset and TPM).**  `S^z=diag(-3/2,…,3/2)`,
    three-site window, two seeded Haar unitaries as Heisenberg times, seeded
