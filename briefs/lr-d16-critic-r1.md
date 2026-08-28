@@ -50,3 +50,75 @@ clause, whether LR1 / LR2 / LR3 are proved unconditionally for D16 — because
 if all three are, M-INDEX-spec gains its **first unconditional dynamical
 instance**, which is a headline. Do not certify that lightly, and say plainly
 if only a subset survives.
+
+---
+
+## ADDENDUM (orchestrator, after the prover landed)
+
+The lane returned a **clause-split result**, not a clean proof, and it is the
+strongest positive artifact of the round.  Attack it accordingly — the danger
+here is not overclaiming in the statement, it is a load-bearing step that does
+not survive recomputation.
+
+**Claimed:**
+- **LR1 — PROVED UNCONDITIONALLY** (⟨1⟩3) by compactness + diagonal
+  extraction, using no gap, no Lieb--Robinson velocity, and no property of `Ψ`
+  beyond normalisation; generalised as **LR1-GEN** (⟨1⟩6.⟨2⟩2).  **MP-1
+  therefore proposes an EDIT TO D27** — that D27 carries as a hypothesis
+  something that is a theorem.  That is a change to an L4 single source and
+  needs your explicit MERGE/HOLD.
+  *Attack:* D27 demands ONE sequence `T_n` serving **every fixed `W`**
+  simultaneously.  Does the diagonal argument actually deliver that, or a
+  `W`-dependent subsequence?  Is `spec Q̂_{W,c₀}` finite for the reason
+  claimed?  Is `α_t` strong continuity enough, or is uniformity in `t` needed
+  somewhere?
+- **LR2 — verbatim OPEN**; a weakened **(LR2′)** is proved, with residue named
+  **(DPH)** and marked CONJECTURE.  The prover explicitly did NOT patch it with
+  operator asymptotic commutativity.
+  *Attack the mitigation, which is the risky claim:* ⟨1⟩4.⟨2⟩7 asserts LR2 is
+  consumed at **exactly one leaf** of `theory/memory-index.md` (⟨1⟩7.⟨2⟩1),
+  that the error enters before the spatial limit and is removed by it, and
+  therefore that **(IDX.2) and M-INDEX-spec's conclusions hold verbatim with
+  LR2 weakened to (LR2′)**.  That is a claim about ANOTHER shard and about a
+  PROVED row.  Verify it by reading `memory-index.md` yourself and grepping
+  every use of LR2 — if there is a second consumer, the mitigation fails and
+  M-INDEX-spec is affected.
+- **LR3 — PROVED from one named input (NR)** (⟨1⟩5), via an exact
+  second-moment identity, an edge split, a **monotonicity lemma**
+  `𝒩_{W'} ≤ 𝒩_W` claimed to kill `sup_m` "for free" (the smallest window
+  dominates), and an **energy--domain-wall bound**
+  `H_XXZ ⪰ (J/2)(Δ−1)D ⟹ ⟨D(t)⟩ ≤ 2E₀/(J(Δ−1))`, uniform in time.
+  *Attack:* is **(NR)** a genuine single hypothesis or a repackaging of LR3
+  itself?  Does the monotonicity lemma really hold in the claimed direction —
+  a `sup_m` collapsing to the smallest window is surprising and is exactly
+  where a sign or inclusion error would hide.  Recompute (EDW)'s operator
+  inequality independently.
+- **Class statement — CONJECTURE, and a NEGATIVE result the lane volunteered:**
+  ⟨1⟩6.⟨2⟩5 claims **"gap + Lieb--Robinson ⟹ (LR)" is FALSE as a class
+  statement**, exhibiting a gapped finite-range model with a mobile charged
+  core that satisfies both and fails LR3.  Verify that counterexample; if it
+  stands it saves the campaign real effort, and if it is wrong it must not
+  enter the corpus.
+- **Cross-lane:** flatness of D16's kink band was derived from **K1+K2 only**
+  (both PROVED), never citing the CONJECTURE row K4 — check that claim
+  strictly, since the instruction to avoid K4 was explicit.  ⟨1⟩5.⟨2⟩4 further
+  claims the outcome bound is majorised by a fixed smallest-window quantity
+  independent of `m`, so `|ν| ≍ 2s|W_m|` cannot be manufactured by window
+  geometry or the `c₀` offset.  A separate lane (`tns-r2c`) claims exactly such
+  growth for a ballistic transit channel and its critic CONFIRMED that claim.
+  Say explicitly whether the two are consistent — the prover asserts they are
+  and that D16 is outside the obstruction's class because its band is flat.
+
+**Checker:** exit 0 on 18 rows; four red modes each exit 1; **two source-level
+mutations on copies**, one exiting 1 and one (a legitimate cut move) exiting 0
+to show the rows are not over-fitted.  That is the first lane this round to do
+the non-over-fitting check unprompted.  Verify it anyway, and apply every
+standing obligation — especially reachability: which gate kills each mutant,
+and is any of the 18 rows reached by nothing?
+
+**Two caveats the lane states itself in §H** — `N=12` certifies identities and
+inequalities, not asymptotics; and the honest headline is *one clause proved
+outright, one proved weakened but sufficient downstream, one reduced to a
+single named dynamical hypothesis*, so **M-INDEX-spec still has no fully
+unconditional dynamical instance**.  Check that this honesty is maintained
+everywhere in the shard and not just in §H.

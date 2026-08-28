@@ -6,8 +6,9 @@ by the fixed-point-subtracted transfer formula.  A2M-C1b corroborates a finite
 block-support cap and monotonicity for product observables of lengths one
 through three.  Its ratio-route gate is only route agreement in rescaled
 units; it does not certify the absence of a two-sided support-length factor.
-The three registered mutations must be run separately and must exit with
-status one.
+The seven registered mutations must be run separately and must exit with
+status one.  Together they reach every gate, including the direct-value,
+block-agreement, lambda-domain, and route-independence gates.
 
 No Python ``assert`` is used, so every gate remains live under ``python3 -O``.
 """
@@ -25,6 +26,7 @@ VALUE_TOL = 1.0e-12
 RATIO_TOL = 1.0e-8
 BLOCK_TOL = 1.0e-12
 BLOCK_CAP = 0.1
+LAMBDA_E = 1.0 / 3.0
 LAMBDA_TILDE = 0.5
 
 
@@ -100,7 +102,7 @@ class C1aResult:
     ratio_errors: tuple[float, ...]
 
 
-def check_c1a(red_c1a: bool) -> C1aResult:
+def check_c1a(red_c1a: bool, red_truth: bool) -> C1aResult:
     direct_values: list[complex] = []
     route_values: list[complex] = []
     direct_errors: list[float] = []
@@ -120,6 +122,8 @@ def check_c1a(red_c1a: bool) -> C1aResult:
         route_connected = vacuum_expectation(observable_transfer(PHYSICAL_C, middle))
 
         expected = (4.0 / 3.0) * ((-1.0 / 3.0) ** distance)
+        if red_truth:
+            expected += 1.0e-6
         direct_values.append(direct_connected)
         route_values.append(route_connected)
         direct_errors.append(float(abs(direct_connected - expected)))
@@ -139,12 +143,45 @@ class C1bResult:
     max_ratio_location: tuple[int, int, int]
     ratio_route_error: float
     ratio_route_location: tuple[int, int, int]
+    route_independence_error: float
+    route_independence_location: tuple[int, int, int]
     monotonicity_excess: float
     monotonicity_location: tuple[int, int, int]
 
 
-def check_c1b(red_c1b: bool, red_supportfold: bool) -> C1bResult:
+def connected_routes(
+    propagated: np.ndarray,
+    right: np.ndarray,
+    width_c: int,
+    one_c: complex,
+    one_d: complex,
+    *,
+    drop_fixed_subtraction: bool,
+    collapse_routes: bool,
+) -> tuple[complex, complex]:
+    """Evaluate the two algebraically equal contractions by distinct routes."""
+
+    raw = vacuum_expectation(block_transfer(propagated, width_c))
+    direct_connected = raw - one_c * one_d
+    subtracted = propagated
+    if not drop_fixed_subtraction:
+        subtracted = propagated - fixed_projection(right)
+    fixed_connected = vacuum_expectation(block_transfer(subtracted, width_c))
+    if collapse_routes:
+        direct_connected = fixed_connected
+    return direct_connected, fixed_connected
+
+
+def check_c1b(
+    red_c1b: bool,
+    red_supportfold: bool,
+    red_c1b_sub: bool,
+    red_route_collapse: bool,
+    lambda_tilde: float,
+) -> C1bResult:
     agreement_error = 0.0
+    route_independence_error = 0.0
+    route_independence_location = (1, 1, 2)
     ratios: dict[tuple[int, int, int], float] = {}
     direct_ratios: dict[tuple[int, int, int], float] = {}
 
@@ -157,24 +194,49 @@ def check_c1b(red_c1b: bool, red_supportfold: bool) -> C1bResult:
             norm_d = block_operator_norm(width_d)
             for separation in (2, 4, 6):
                 propagated = iterate(transfer, right, separation)
-                raw = vacuum_expectation(block_transfer(propagated, width_c))
-                direct_connected = raw - one_c * one_d
-                subtracted = propagated - fixed_projection(right)
-                fixed_connected = vacuum_expectation(block_transfer(subtracted, width_c))
+                direct_connected, fixed_connected = connected_routes(
+                    propagated,
+                    right,
+                    width_c,
+                    one_c,
+                    one_d,
+                    drop_fixed_subtraction=red_c1b_sub,
+                    collapse_routes=red_route_collapse,
+                )
                 agreement_error = max(
                     agreement_error, float(abs(direct_connected - fixed_connected))
                 )
+
+                # A controlled one-route perturbation guards against replacing
+                # the two implementations by the same expression.  Dropping
+                # the fixed-point subtraction must change only the fixed route
+                # by exactly omega(C)omega(D).
+                probe_direct, probe_fixed = connected_routes(
+                    propagated,
+                    right,
+                    width_c,
+                    one_c,
+                    one_d,
+                    drop_fixed_subtraction=True,
+                    collapse_routes=red_route_collapse,
+                )
+                probe_error = float(
+                    abs((probe_fixed - probe_direct) - one_c * one_d)
+                )
+                if probe_error > route_independence_error:
+                    route_independence_error = probe_error
+                    route_independence_location = (width_c, width_d, separation)
 
                 exponent = separation
                 if red_c1b:
                     exponent += 2 * (width_c + width_d)
                 ratio = float(
                     abs(fixed_connected)
-                    / (norm_c * norm_d * (LAMBDA_TILDE**exponent))
+                    / (norm_c * norm_d * (lambda_tilde**exponent))
                 )
                 direct_ratio = float(
                     abs(direct_connected)
-                    / (norm_c * norm_d * (LAMBDA_TILDE**exponent))
+                    / (norm_c * norm_d * (lambda_tilde**exponent))
                 )
                 if red_supportfold:
                     ratio *= width_c * width_d
@@ -210,40 +272,78 @@ def check_c1b(red_c1b: bool, red_supportfold: bool) -> C1bResult:
         max_location,
         float(ratio_route_error),
         ratio_route_location,
+        route_independence_error,
+        route_independence_location,
         float(monotonicity_excess),
         monotonicity_location,
     )
 
 
-def violations(c1a: C1aResult, c1b: C1bResult) -> list[str]:
-    found: list[str] = []
+def violations(
+    c1a: C1aResult, c1b: C1bResult, lambda_tilde: float
+) -> list[tuple[str, str]]:
+    found: list[tuple[str, str]] = []
     direct_error = max(c1a.direct_errors)
     route_error = max(c1a.route_errors)
     ratio_error = max(c1a.ratio_errors)
+    if not (LAMBDA_E < lambda_tilde < 1.0):
+        found.append(
+            (
+                "G0",
+                f"C1b lambda_tilde={lambda_tilde:.6g} not in "
+                f"({LAMBDA_E:.6g}, 1)",
+            )
+        )
     if direct_error > VALUE_TOL:
-        found.append(f"C1a direct value error {direct_error:.6e} > {VALUE_TOL:.1e}")
+        found.append(
+            ("G1", f"C1a direct value error {direct_error:.6e} > {VALUE_TOL:.1e}")
+        )
     if route_error > VALUE_TOL:
-        found.append(f"C1a route value error {route_error:.6e} > {VALUE_TOL:.1e}")
+        found.append(
+            ("G2", f"C1a route value error {route_error:.6e} > {VALUE_TOL:.1e}")
+        )
     if ratio_error > RATIO_TOL:
-        found.append(f"C1a ratio error {ratio_error:.6e} > {RATIO_TOL:.1e}")
+        found.append(("G3", f"C1a ratio error {ratio_error:.6e} > {RATIO_TOL:.1e}"))
     if c1b.agreement_error > BLOCK_TOL:
         found.append(
-            f"C1b contraction disagreement {c1b.agreement_error:.6e} > {BLOCK_TOL:.1e}"
+            (
+                "G4",
+                "C1b contraction disagreement "
+                f"{c1b.agreement_error:.6e} > {BLOCK_TOL:.1e}",
+            )
         )
     if c1b.max_ratio > BLOCK_CAP:
         found.append(
-            "C1b cap "
-            f"{c1b.max_ratio:.6f} at {c1b.max_ratio_location} > {BLOCK_CAP:.1f}"
+            (
+                "G5",
+                "C1b cap "
+                f"{c1b.max_ratio:.6f} at {c1b.max_ratio_location} > {BLOCK_CAP:.1f}",
+            )
         )
     if c1b.ratio_route_error > BLOCK_TOL:
         found.append(
-            "C1b ratio-route disagreement "
-            f"{c1b.ratio_route_error:.6e} at {c1b.ratio_route_location}"
+            (
+                "G6",
+                "C1b ratio-route disagreement "
+                f"{c1b.ratio_route_error:.6e} at {c1b.ratio_route_location}",
+            )
+        )
+    if c1b.route_independence_error > BLOCK_TOL:
+        found.append(
+            (
+                "G8",
+                "C1b route-independence probe error "
+                f"{c1b.route_independence_error:.6e} at "
+                f"{c1b.route_independence_location}",
+            )
         )
     if c1b.monotonicity_excess > BLOCK_TOL:
         found.append(
-            "C1b support monotonicity excess "
-            f"{c1b.monotonicity_excess:.6e} at {c1b.monotonicity_location}"
+            (
+                "G7",
+                "C1b support monotonicity excess "
+                f"{c1b.monotonicity_excess:.6e} at {c1b.monotonicity_location}",
+            )
         )
     return found
 
@@ -258,14 +358,41 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="one-sided support fold; must be caught as ratio-route disagreement",
     )
+    mutations.add_argument(
+        "--red-truth",
+        action="store_true",
+        help="shift the independent C1a ground truth; must reach G1 and G2",
+    )
+    mutations.add_argument(
+        "--red-c1b-sub",
+        action="store_true",
+        help="drop the C1b fixed-point subtraction; must reach G4",
+    )
+    mutations.add_argument(
+        "--red-route-collapse",
+        action="store_true",
+        help="collapse both C1b routes; must reach the G8 independence probe",
+    )
+    mutations.add_argument(
+        "--red-lambda",
+        action="store_true",
+        help="set lambda_tilde=3.7; must reach the G0 theorem-domain gate",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    c1a = check_c1a(args.red_c1a)
-    c1b = check_c1b(args.red_c1b, args.red_supportfold)
-    found = violations(c1a, c1b)
+    lambda_tilde = 3.7 if args.red_lambda else LAMBDA_TILDE
+    c1a = check_c1a(args.red_c1a, args.red_truth)
+    c1b = check_c1b(
+        args.red_c1b,
+        args.red_supportfold,
+        args.red_c1b_sub,
+        args.red_route_collapse,
+        lambda_tilde,
+    )
+    found = violations(c1a, c1b, lambda_tilde)
 
     print(
         "A2M-C1a "
@@ -278,18 +405,35 @@ def main() -> None:
         f"agreement={c1b.agreement_error:.3e} "
         f"max_ratio={c1b.max_ratio:.6f}@{c1b.max_ratio_location} "
         f"ratio_route={c1b.ratio_route_error:.3e}@{c1b.ratio_route_location} "
+        f"route_guard={c1b.route_independence_error:.3e}"
+        f"@{c1b.route_independence_location} "
         f"monotonicity_excess={c1b.monotonicity_excess:.3e}"
         f"@{c1b.monotonicity_location}"
     )
 
-    red_mode = args.red_c1a or args.red_c1b or args.red_supportfold
+    red_mode = any(
+        (
+            args.red_c1a,
+            args.red_c1b,
+            args.red_supportfold,
+            args.red_truth,
+            args.red_c1b_sub,
+            args.red_route_collapse,
+            args.red_lambda,
+        )
+    )
     if red_mode:
         if not found:
             fail("registered mutation unexpectedly passed all gates")
-        print("RED-OK: " + " | ".join(found))
+        print(
+            "RED-OK ["
+            + ",".join(gate for gate, _ in found)
+            + "]: "
+            + " | ".join(message for _, message in found)
+        )
         raise SystemExit(1)
     if found:
-        fail(" | ".join(found))
+        fail(" | ".join(f"{gate}: {message}" for gate, message in found))
     print("PASS: A2M-C1a/C1b")
 
 

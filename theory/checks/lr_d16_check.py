@@ -54,8 +54,9 @@ equally strict.
 
 Modes:
     (default)          full green run, must exit 0
-    --red-noncons      add a transverse field, breaking U(1); (FN)/(LRD.5)
-                       dies, so LRD-C2(c) and LRD-C3(b) must fail
+    --red-split        compute the complement charge on a MISMATCHED window,
+                       so Q_W + Q_Wc is no longer the conserved scalar calQ;
+                       (LRD.5) dies and LRD-C2(c)/LRD-C3(b) must fail
     --red-edw          use (Delta+1) in place of (Delta-1) in (EDW);
                        LRD-C4 must fail
     --red-monotone     majorize the escaped charge by the SIGNED Q_Wc instead
@@ -116,11 +117,8 @@ def sz_table(states, n):
 def hamiltonian(states, index, n, delta, kink_field, transverse=0.0):
     """Dense H in the sector.  kink_field=True adds D16's telescoping term.
 
-    `transverse` (red mode only) adds h * sum_x S^x_x, which does NOT conserve
-    S^z; it is applied as a sector-diagonal surrogate that breaks the exact
-    conservation used by (LRD.5): a next-nearest hop sum_x S^+_x S^-_{x+2}
-    would preserve S^z, so instead we use a bond term that mixes within the
-    sector but is NOT a symmetry of Q: h * sum_x (S^+_x S^-_{x+2} + h.c.).
+    `transverse` adds h * sum_x (S^+_x S^-_{x+2} + h.c.); unused by every
+    registered row and kept only as a diagnostic hook.
     """
     dim = len(states)
     h = np.zeros((dim, dim))
@@ -272,3 +270,278 @@ def cesaro_law(prop, psi0, q_w, blocks, bigt, ngrid):
 def tv(p, r):
     keys = set(p) | set(r)
     return 0.5 * sum(abs(p.get(k, 0.0) - r.get(k, 0.0)) for k in keys)
+
+
+# --------------------------------------------------------------------- states
+def build_states(delta, mode):
+    """Return everything the rows need, for the D16 chain of NSITES sites."""
+    n, c0 = NSITES, C0
+    nd_kink = n - c0                      # pure-kink sector: 6 downs
+    nd_evt = nd_kink + 1                  # kink + one magnon
+    q = delta - math.sqrt(delta * delta - 1.0)
+
+    st_k, ix_k = sector_basis(n, nd_kink)
+    st_e, ix_e = sector_basis(n, nd_evt)
+
+    hk_k = hamiltonian(st_k, ix_k, n, delta, kink_field=True)
+    hk_e = hamiltonian(st_e, ix_e, n, delta, kink_field=True)
+    hx_e = hamiltonian(st_e, ix_e, n, delta, kink_field=False)
+
+    dressed = kink_product_vector(st_k, n, q, 1.0)
+    if mode == "red-sharp":
+        dressed = sharp_kink_vector(st_k, ix_k, n, c0)
+    psi0 = lower_packet(dressed.astype(complex), st_k, ix_e, n, K0, Y0, SIG)
+
+    return dict(
+        n=n, c0=c0, q=q, delta=delta,
+        st_k=st_k, ix_k=ix_k, st_e=st_e, ix_e=ix_e,
+        hk_k=hk_k, hk_e=hk_e, hx_e=hx_e,
+        sz_k=sz_table(st_k, n), sz_e=sz_table(st_e, n),
+        dressed=dressed, psi0=psi0, nd_kink=nd_kink,
+    )
+
+
+def charges_for(env, a, b, mode):
+    sz, n, c0 = env["sz_e"], env["n"], env["c0"]
+    q_w, q_wc, n_w = window_charges(sz, n, c0, a, b)
+    if mode == "red-split":                      # mismatched complement
+        _, q_wc, _ = window_charges(sz, n, c0, a - 1, b + 1)
+    return q_w, q_wc, n_w
+
+
+# ----------------------------------------------------------------------- rows
+def row_c1(env, prop, led, mode):
+    q_w, _, _ = charges_for(env, 4, 9, mode)
+    blocks = spectral_blocks(q_w)
+    laws = {t: cesaro_law(prop, env["psi0"], q_w, blocks, t, 8)
+            for t in (8.0, 24.0, 72.0)}
+    spec = np.unique(np.round(q_w, 9))
+    allowed = {int(round(x - y)) for x in spec for y in spec}
+    ok_norm = all(abs(sum(p.values()) - 1.0) < TOL_PROB for p in laws.values())
+    ok_int = all(all(abs(nu - round(nu)) < 1e-12 for nu in p) for p in laws.values())
+    ok_supp = all(set(p) <= allowed for p in laws.values())
+    d1 = tv(laws[8.0], laws[24.0])
+    d2 = tv(laws[24.0], laws[72.0])
+    ok_trend = d2 <= d1 + 0.02
+    led.add("LRD-C1(a) normalisation", ok_norm,
+            f"max |sum p - 1| = {max(abs(sum(p.values())-1.0) for p in laws.values()):.2e}")
+    led.add("LRD-C1(b) integer support", ok_int and ok_supp,
+            f"support in spec-spec (|allowed| = {len(allowed)})")
+    led.add("LRD-C1(c) Cesaro contraction", ok_trend,
+            f"TV(8,24) = {d1:.4f} -> TV(24,72) = {d2:.4f}")
+    return laws
+
+
+def row_c2(env, prop, led, mode, windows):
+    psi0, q_w, _, _ = env["psi0"], *charges_for(env, *windows[0], mode)
+    times = [-9.0, -5.0, -2.0, 2.0, 5.0, 9.0]
+    a, b = windows[0]
+    q_w, q_wc, _ = charges_for(env, a, b, mode)
+    blocks = spectral_blocks(q_w)
+    r_w = max(env["c0"] - a + 1, b - env["c0"])
+    calq0 = float(np.round(q_w[0] + q_wc[0]))
+
+    eq_defect = []
+    for t in times:
+        psi_t = prop.evolve(psi0, t)
+        _, _, etas = tpm_law(prop, psi_t, q_w, blocks, 0.0)
+        dd = sum(float(np.vdot(e, q_w * e).real) for _, e in etas)
+        dd -= float(np.vdot(psi_t, q_w * psi_t).real)
+        eq_defect.append(abs(dd))
+    led.add("LRD-C2(a) equal-time defect vanishes", max(eq_defect) < TOL_IDENT,
+            f"max |Delta_W(t,t)| = {max(eq_defect):.2e}  (<1>4.<2>2)")
+
+    worst_b, worst_s = -1.0, -1.0
+    for tm in (-9.0, -5.0, -2.0):
+        psi_tm = prop.evolve(psi0, tm)
+        w = np.abs(psi_tm) ** 2
+        eps2 = 1.0 - float(w[np.abs(q_w - calq0) < 1e-9].sum())
+        qwc2 = float((w * q_wc ** 2).sum())
+        worst_s = max(worst_s, eps2 - qwc2)
+        eps = math.sqrt(max(eps2, 0.0))
+        for tp in (2.0, 6.0, 11.0):
+            _, _, etas = tpm_law(prop, psi_tm, q_w, blocks, tp - tm)
+            dd = sum(float(np.vdot(e, q_w * e).real) for _, e in etas)
+            dd -= float(np.vdot(prop.evolve(psi0, tp), q_w * prop.evolve(psi0, tp)).real)
+            worst_b = max(worst_b, abs(dd) - 4.0 * r_w * eps)
+    led.add("LRD-C2(b) |Delta_W| <= 4 R_W eps_W", worst_b <= TOL_IDENT,
+            f"max slack = {worst_b:+.3e}  (<1>4.<2>3, R_W = {r_w})")
+    led.add("LRD-C2(c) eps_W^2 <= <Q_Wc^2>", worst_s <= TOL_IDENT,
+            f"max slack = {worst_s:+.3e}  (<1>4.<2>4, calQ0 = {calq0:+.0f})")
+
+    prof = []
+    for (a, b) in windows:
+        _, q_wc_m, _ = charges_for(env, a, b, mode)
+        g = max(float((np.abs(prop.evolve(psi0, t)) ** 2 * q_wc_m ** 2).sum())
+                for t in np.linspace(-12.0, 12.0, 25))
+        prof.append(g)
+    ok = all(prof[i + 1] <= prof[i] + 1e-9 for i in range(len(prof) - 1))
+    led.add("LRD-C2(d) escape profile falls with padding", ok,
+            "G(m) = " + ", ".join(f"{g:.4f}" for g in prof) + "  (<1>4.<2>5)")
+
+
+def row_c3(env, prop, led, mode, windows):
+    psi0 = env["psi0"]
+    a1, b1 = windows[0]
+    _, q_wc1, n_w1 = charges_for(env, a1, b1, mode)
+    maj1 = q_wc1 if mode == "red-monotone" else n_w1
+
+    mono_ok, mono_worst = True, 0.0
+    for i in range(len(windows) - 1):
+        _, qc_i, nw_i = charges_for(env, *windows[i], mode)
+        _, qc_j, nw_j = charges_for(env, *windows[i + 1], mode)
+        mi = qc_i if mode == "red-monotone" else nw_i
+        mj = qc_j if mode == "red-monotone" else nw_j
+        v = float(np.max(mj - mi))
+        mono_worst = max(mono_worst, v)
+        mono_ok = mono_ok and v <= 1e-12
+    dom = float(np.max(np.abs(q_wc1) - n_w1))
+    led.add("LRD-C3(c) monotonicity N_{W'} <= N_W", mono_ok and dom <= 1e-12,
+            f"max(N_next - N_prev) = {mono_worst:+.3f}, max(|Q_Wc| - N_W) = {dom:+.3f}"
+            "  (<1>5.<2>4)")
+
+    id_worst, split_worst, unif_worst = 0.0, -1e9, -1e9
+    for tm in (-8.0, -3.0):
+        psi_tm = prop.evolve(psi0, tm)
+        w_tm = np.abs(psi_tm) ** 2
+        term1 = 2.0 * float((w_tm * q_wc1 ** 2).sum())
+        term1u = 2.0 * float((w_tm * maj1 ** 2).sum())
+        for tp in (3.0, 9.0):
+            tau = tp - tm
+            for (a, b) in windows:
+                q_w, q_wc, _ = charges_for(env, a, b, mode)
+                blocks = spectral_blocks(q_w)
+                law, _, etas = tpm_law(prop, psi_tm, q_w, blocks, tau)
+                lhs = sum(nu * nu * p for nu, p in law.items())
+                rhs = sum(float((np.abs(e) ** 2 * (q_w - q) ** 2).sum())
+                          for q, e in etas)
+                id_worst = max(id_worst, abs(lhs - rhs))
+                t2 = 2.0 * sum(float((np.abs(e) ** 2 * q_wc ** 2).sum())
+                               for _, e in etas)
+                t2u = 2.0 * sum(float((np.abs(e) ** 2 * maj1 ** 2).sum())
+                                for _, e in etas)
+                base = 2.0 * float((w_tm * q_wc ** 2).sum())
+                split_worst = max(split_worst, lhs - (base + t2))
+                unif_worst = max(unif_worst, lhs - (term1u + t2u))
+    led.add("LRD-C3(a) second-moment identity (LRD.11)", id_worst < TOL_IDENT,
+            f"max |LHS - RHS| = {id_worst:.2e}")
+    led.add("LRD-C3(b) edge split (LRD.12)", split_worst <= TOL_IDENT,
+            f"max slack = {split_worst:+.3e}")
+    led.add("LRD-C3(d) m-uniform bound (LRD.13)", unif_worst <= TOL_IDENT,
+            f"max slack over {len(windows)} windows = {unif_worst:+.3e}")
+
+
+def row_c4(env, prop, led, mode):
+    delta = env["delta"]
+    gapc = 0.5 * J * ((delta + 1.0) if mode == "red-edw" else (delta - 1.0))
+    up, dn = np.array([1.0, 0.0]), np.array([0.0, 1.0])
+    basis = [np.kron(up, up), np.kron(up, dn), np.kron(dn, up), np.kron(dn, dn)]
+    szl = np.diag([0.5, 0.5, -0.5, -0.5])
+    szr = np.diag([0.5, -0.5, 0.5, -0.5])
+    sp_sm = np.zeros((4, 4))
+    sp_sm[1, 2] = sp_sm[2, 1] = 1.0
+    hxx = -J * (0.5 * sp_sm + delta * (szl @ szr - 0.25 * np.eye(4)))
+    pdw = np.diag([0.0, 1.0, 1.0, 0.0])
+    lam = float(np.linalg.eigvalsh(hxx - gapc * pdw).min())
+    led.add("LRD-C4(a) h_XXZ >= (J/2)(Delta-1) P_DW", lam >= -TOL_PSD,
+            f"min eig = {lam:+.3e}  (<1>5.<2>6, constant {gapc:.4f})")
+
+    dvals = dw_number(env["sz_e"])
+    e0 = float(np.vdot(env["psi0"], env["hx_e"] @ env["psi0"]).real)
+    bound = e0 / gapc if gapc > 0 else float("inf")
+    worst, dmax = -1e9, 0.0
+    for t in np.linspace(-12.0, 12.0, 25):
+        psi_t = prop.evolve(env["psi0"], t)
+        d = float((np.abs(psi_t) ** 2 * dvals).sum())
+        dmax = max(dmax, d)
+        worst = max(worst, d - bound)
+    led.add("LRD-C4(b) <D(t)> <= 2 E0 / (J(Delta-1))", worst <= TOL_PSD,
+            f"max <D> = {dmax:.4f} <= {bound:.4f} (E0 = {e0:.4f}); slack {worst:+.3e}")
+
+    dvk = dw_number(env["sz_k"])
+    v = env["dressed"]
+    hxk = hamiltonian(env["st_k"], env["ix_k"], env["n"], delta, kink_field=False)
+    ek = float(v @ hxk @ v)
+    dk = float((v ** 2 * dvk).sum())
+    inf_val = math.sqrt((delta + 1.0) / (delta - 1.0))
+    led.add("LRD-C4(c) bare-kink domain-wall count", dk - ek / gapc <= TOL_PSD,
+            f"<D> = {dk:.4f}, E0/c = {ek/gapc:.4f}, infinite-chain value "
+            f"sqrt((D+1)/(D-1)) = {inf_val:.4f}")
+
+
+def row_c5(env, led, mode):
+    n, delta, q = env["n"], env["delta"], env["q"]
+    resid, mineigs = [], []
+    for nd in range(0, n + 1):
+        st, ix = sector_basis(n, nd)
+        h = hamiltonian(st, ix, n, delta, kink_field=True)
+        v = (sharp_kink_vector(st, ix, n, env["c0"]) if mode == "red-sharp"
+             and nd == env["nd_kink"] else kink_product_vector(st, n, q, 1.0))
+        resid.append(float(np.linalg.norm(h @ v)))
+        mineigs.append(float(np.linalg.eigvalsh(h).min()))
+    led.add("LRD-C5(a) || H_kink |K(z)> || = 0 in every sector",
+            max(resid) < TOL_EXACT,
+            f"max residual over {n+1} sectors = {max(resid):.2e}  (K1+K2, <1>5.<2>8)")
+    led.add("LRD-C5(b) H_kink >= 0 with 0 attained in every sector",
+            min(mineigs) >= -TOL_PSD and max(mineigs) <= TOL_PSD,
+            f"min eig range = [{min(mineigs):+.2e}, {max(mineigs):+.2e}]")
+
+
+def row_c6(env, led, mode):
+    st, ix, n = env["st_k"], env["ix_k"], env["n"]
+    zero = kink_product_vector(st, n, env["q"], 1.0)
+    sharp = sharp_kink_vector(st, ix, n, env["c0"])
+    ov = float(np.dot(zero, sharp)) ** 2
+    esh = float(sharp @ env["hk_k"] @ sharp)
+    ezo = float(zero @ env["hk_k"] @ zero)
+    used = env["dressed"]
+    used_e = float(used @ env["hk_k"] @ used)
+    led.add("LRD-C6(a) sharp kink is NOT the dressed kink",
+            ov < SHARP_OVERLAP_MAX and esh > SHARP_ENERGY_MIN,
+            f"|<sharp|dressed>|^2 = {ov:.4f}, E_kink(sharp) = {esh:.4f}")
+    led.add("LRD-C6(b) the state actually used is a zero mode",
+            used_e < TOL_EXACT,
+            f"E_kink(used) = {used_e:.2e} (dressed reference {ezo:.2e})")
+
+
+# ----------------------------------------------------------------------- main
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__)
+    for flag in ("red-split", "red-edw", "red-monotone", "red-sharp"):
+        ap.add_argument(f"--{flag}", action="store_true")
+    args = ap.parse_args(argv)
+    modes = [f for f in ("red_split", "red_edw", "red_monotone", "red_sharp")
+             if getattr(args, f)]
+    mode = modes[0].replace("_", "-") if modes else "green"
+
+    print(f"lr_d16_check: D16 with J={J}, Delta={DELTA}, N={NSITES}, c0={C0}; "
+          f"mode = {mode}")
+    env = build_states(DELTA, mode)
+    prop = Propagator(env["hk_e"])
+    windows = [(4, 9), (3, 10), (2, 11)]
+    led = Ledger()
+
+    row_c1(env, prop, led, mode)
+    row_c2(env, prop, led, mode, windows)
+    row_c3(env, prop, led, mode, windows)
+    row_c4(env, prop, led, mode)
+    row_c5(env, led, mode)
+    row_c6(env, led, mode)
+
+    bad = led.failed()
+    if mode == "green":
+        if bad:
+            print(f"\nFAIL: {len(bad)} row(s) failed: {', '.join(bad)}")
+            return 1
+        print(f"\nPASS: all {len(led.rows)} rows green.")
+        return 0
+    if bad:
+        print(f"\nRED-OK ({mode}): caught by {', '.join(bad)}")
+        return 1
+    print(f"\nRED-MISSED ({mode}): mutation not caught; checker is not "
+          "red-capable in this mode.")
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
