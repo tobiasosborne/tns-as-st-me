@@ -60,24 +60,48 @@ is absorbed by the channel-free formulation, empirically).
 - Paper: UNCHANGED and PARKED. Nothing from this campaign is in the paper.
 - No git remote exists — local commits are the durable record.
 
-## Next steps (bd is the tracker — `bd ready`)
+## Next steps (bd is the tracker — `bd ready`; queue re-ranked 2026-08-28
+## after the TJO strategy exchange — full record in bd memory
+## `session-3-strategic-record-2026-08-28-tjo`)
 
-1. **TJO review of the memory-index package** — TRIANGLE.md §3.6 is the
-   5-minute read; theory/memory-index.md §0 the 30-minute one. Decisions
-   needed: (a) is M-IDX-density a standalone letter? (b) does the TPM
-   register satisfy the "true generality" ask, or push M-INDEX-LA-folium
-   next (the implementer-route charge operator)?
-2. ACE-LD / AD3-ex (new bd row): the one lemma separating AC-EX from an
-   unconditional-given-D28 two-channel law.
-3. M-INDEX-LA-folium: O(1) twisted-transfer variance + local
-   implementability markers recorded; a focused prover round is plausible.
-4. L2 splits (memory-index §5 → own shard; checker toolbox) + NOTE-10
-   probe RED_RHO_SHIFT coprime fix — hygiene, one Sonnet pass.
-5. Then the pre-campaign queue: tns-f5r showcase (now with the dressed-kink
-   discipline), tns-cpq, tns-ebh (Bc |q|>1), tns-d51/tns-acr (these two are
-   now "verify D28/H-AD-G instances", cheaper than before).
-6. Paper v3: only after TJO defines the register; the memory-index package
-   changes the Letter's spine (quantization-without-channels is the story).
+Corner scoreboard after the campaign: **A strong** (PROVED general; now
+enriched by the density lemma and the tns-pwl scope theorem — charges live
+on the center of the unbroken subgroup, the Weyl group makes the walls,
+finite groups are a hard fence). **B strong-conditional** (M-INDEX:
+channel-free quantization; hypotheses evidenced near-minimal by critic
+counterexamples; missing only dynamical (LR) instances). **C now the
+weakest corner** (S-general CONJECTURE; beyond two-body only Bethe
+evidence). **Edges weakest overall.** The playbook to reapply: invert the
+burden — symmetry/superselection gives quantization, dynamics only supplies
+existence/values; protocol-level checkable hypotheses; pre-registered
+falsifier; cross-family L6 loops.
+
+1. **TJO decisions** — (a) is M-IDX-density a standalone letter? (b) TPM
+   register vs pushing M-INDEX-LA-folium (tns-x3o)? (c) greenlight for the
+   Corner-C campaign?
+2. **tns-5oc (P1)** — Corner-C campaign: general soft theorem = ML4 Ward
+   identity + AC-EX wave-operator existence, conditional only on D28 band
+   data, no integrability; falsifier = the Bethe oracle O1--O10. Would
+   upgrade edge A⇒C. Highest-value theory move on the board.
+3. **tns-xf4 (P1)** — prove (LR) for D16: first unconditional dynamical
+   instance of M-INDEX-spec; only window-relaxation needed, not
+   completeness. The biggest remaining memory-corner prize.
+4. **tns-r2c (P1)** — ACE-LD: the one lemma closing edge C⇒B (soft data
+   enter the outcome law only through p_2 = <N_T^ex>).
+5. **tns-q5z (P2)** — SPT TPM port: remove H-AD-edge from SPT-M' by
+   transplanting the two-measurement register to an edge window.
+6. **tns-x3o (P2)** folium charge operator; **tns-pwl (P2)** scope theorem
+   mini-loop (semisimple zero-density lemma + joint-torus Z^r corollary);
+   **tns-7ov (P3)** L2 splits/hygiene; **tns-gi9 (P4)** full counting
+   statistics.
+7. **B⇒A edge**: memory quantum as moment-map value — the Kähler route
+   (tns-89h companion, TJO's program); tns-day notes updated.
+8. Pre-campaign queue continues underneath: tns-f5r showcase (dressed-kink
+   discipline mandatory), tns-cpq, tns-ebh (Bc |q|>1), tns-d51/tns-acr.
+9. Paper v3 only after the register decision; the campaign's spine
+   sentence: *symmetry quantizes; the ansatz supplies the kinematics;
+   dynamics only picks the values.* A self-contained 13-page account for
+   TJO exists at docs/report-memory-index/memory-index-report.pdf.
 
 ## Standing directives (TJO)
 
