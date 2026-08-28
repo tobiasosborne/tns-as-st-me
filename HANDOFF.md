@@ -2,12 +2,67 @@
 
 # HANDOFF — live state
 
-Updated: 2026-08-28, end of session 3 (the overnight memory-index campaign,
-TJO greenlight: "prove the most general, most ambitious result conceivable",
-3 Fable + 3 codex xhigh + Opus lanes, ~6h autonomous). Read order gate:
-CLAUDE.md → HANDOFF_MPS_SOFT_THEOREM.md → this file → theory/TRIANGLE.md.
+Updated: 2026-08-28, end of session 4 (soft-index campaign, WOUND UP EARLY
+by TJO mid-r1; budget was 1 Fable + 3 codex xhigh, 2 codex spent, 1
+reserved for repairs). Read order gate: CLAUDE.md →
+HANDOFF_MPS_SOFT_THEOREM.md → this file → theory/TRIANGLE.md.
 
-## Where we are — one paragraph
+## Session 4 — the soft-index campaign (Corner C inverted), state at stop
+
+TJO directive: revisit the soft theorem at the memory-index level of
+generality; the greenlight formerly gating tns-5oc is SPENT — the campaign
+ran. **Target** (briefs/soft-index-target.md, the campaign's ground truth):
+the soft law as a symmetry CONSTRAINT on every limit point of the
+windowed, packet-smeared, CHARGE-CREATED protocol datum (the ML5/O_η
+ambiguity is dodged by protocol-pinning the soft leg to the charge, the
+exact analogue of memory's TPM move); scattering demoted to
+existence/value supplier. Ladder: S-IDX-fin (unconditional finite-volume
+index identity) → S-IDX-spec (subsequential law under D29 PROTO + D30
+TGT) → instances from ansatz bands (Lane S2: AC-EX-2M over one vacuum).
+
+**DONE and committed (HEAD at wind-up):**
+- **Falsifier PASSED pre-proof** (a0728bd, the decisive empirical result):
+  theory/checks/soft_index_probe.py — P1 charge-created windowed phase
+  datum reproduces the soft slope law, S=1/2: 1.9929 vs 2 (0.35%,
+  calibration), S=1: 1.0217 vs 1 (2.2%, OUT-OF-SAMPLE), Adler residuals
+  ≤0.003; P2 protocol dodge certified both ways (source-register η-jet =
+  D24(e) prediction; protocol register arithmetically immune); P3 sees
+  the ML4-Q1 √N disease (growth 20.5) while the smeared datum stays
+  bounded (1.39); P4 honestly geometry-limited (charge-2 leg → tns-ebh).
+  Green exit 0; --red and --red-p3 both exit 1. Method note: the working
+  P1 readout is the momentum-space phase of interacting-vs-free-evolved
+  SAME initial data, through-origin cubic fit on rows k<0.42 — centroid
+  readouts and high-k polynomial fits both FAILED calibration and are
+  dead ends (see git history c2ef162→a0728bd).
+- **S1-A shard** theory/soft-index.md (codex, 486 loc, SKETCH): full
+  ladder, N−2n→N−2→2ρ offsets public, physical datum honestly redefined
+  as ∂arg(1+𝖲*), |q|>1 left to Bc. NO CRITIC YET (tns-sha).
+- **S2 shard** theory/ansatz-scattering-2m.md (codex, 500 loc, SKETCH) +
+  **r1 verdict** theory/verdicts/ansatz-scattering-2m-r1.md:
+  FAIL(O1–O6), 0 FATAL / 6 MAJOR / 9 MINOR / 8 NOTE. The lane's advance —
+  clustering (D31-C2) DERIVED from the D1 transfer gap, not assumed —
+  SURVIVED independent recomputation; MAJORs concentrate at the (A2M.3)
+  interface clause 5 (an unproved soft-leg LSZ reduction, provable on
+  D6), the (ACE2M-SR) limit-order incoherence, and a completeness
+  register break at ⟨1⟩7.⟨2⟩4. Repair work order: tns-jkx (codex #3
+  reserved and still in budget).
+- **S1-B (Fable independent prover): NEVER LANDED.** Died twice on the
+  64k output cap — it drafts the entire proof in extended thinking
+  (~170KB blocks, persisted encrypted-only, unrecoverable) before any
+  Write. Killed at wind-up; NO file exists; lane clean. Relaunch recipe
+  (tns-alq): fresh agent, derive-and-Write ONE Lamport section per
+  response. Do not resume, relaunch.
+- Nothing merged into definitions.md/CLAIMS.md/notation.md — the D29/D30/
+  D31 proposals live only in the shards' MERGE PROPOSALS sections; merge
+  happens after critics converge, per lane discipline.
+
+**Resume order for session 5:** tns-jkx (S2 repair, codex #3) ∥ tns-alq
+(S1-B relaunch) → tns-sha (S1-A critic, + cross-lane audit once S1-B
+lands; brief briefs/soft-critic-r1.md covers all critics) → r2
+adjudication → orchestrator merges D29–D31 → DAG rows at adjudicated
+status. The falsifier is DONE and green — do not touch its frozen gates.
+
+## Where we were before session 4 (session-3 summary, still current)
 
 **The paper is PARKED by TJO verdict** (2026-08-27: "really really bad, I
 would never author something like this" — its L6 r5 PASS certified
