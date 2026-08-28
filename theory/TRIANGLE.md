@@ -13,9 +13,14 @@ promotions below are exactly those in `verdicts/corpus-r2.md` and
 missing step recorded.
 
 **Two standing TJO directives.**  *Generality*: Corner A is general.  The
-present memory shard proves only conditional charge arithmetic and studies the
-spin-`1/2` D16 model; the general `(G, injective MPS, finite-range H)` memory
-theorem is a known gap tracked by bd `tns-zw2`, not asserted here.
+memory corner now carries, beyond the D16 study and the conditional
+M-quant-G, the 2026-08-28 memory-index package (§3.6): quantization of the
+TPM outcome law with NO channel inventory (M-INDEX-fin/spec, PROVED /
+PROVED-conditional per memory-index-r2/r3), the LSM-type density
+quantization `2ρ∈ℤ` (M-IDX-density, PROVED), and the ansatz-conditioned
+existence half of D18(AD1)+(AD2) (AC-EX, PROVED conditional on D28).  The
+sector-wide total-charge operator is REFUTED (M-INDEX-LA-strong); statuses
+and exact scoping live in `claims/CLAIMS.md`, never here.
 Universality of the soft coefficient is scoped to `𝒮_W` (D24(d)).
 *Integrability* (bd `tns-e50`): no theorem hypothesis mentions integrability.  Bethe is **verification only**:
 `oracle-bethe.md` supplies O1--O10 as an oracle the derivations must match, and `ml2-completeness.md` proves two-body
@@ -392,6 +397,34 @@ soft-factor expression varies with them; (b) `δx` is insensitive to `δ_t(k)` e
 `δ_t ≡ 0` still displaces by exactly `−1/s`.  **The soft factor is a phase; the memory quantum is a charge.**  The
 surviving candidate is §3.1 + §3.2: *memory is the DC weight of the boundary current, and the
 soft data enter only through `T(k)`.*
+
+### 3.6 The memory-index restructuring (2026-08-28) — quantization without channels
+
+Shards `theory/memory-index.md` (canonical; lane-B record
+`theory/memory-index-b.md` superseded) and `theory/ansatz-scattering.md`;
+verdicts `memory-index-r1/-b-r1/-r2/-r3.md`, `ansatz-scattering-r1.md`
+(trajectory: 20 objections across three r1 verdicts → 14 → 13, MAJORs
+6 → 3 → 1 → repaired, 0 FATAL); checkers `memory_index_check.py` (10 rows,
+red 10/10), `memory_index_probe.py` (ED falsifier, off-lattice mass exactly
+0, N=50), `ansatz_scattering_check.py` (ACE-C1/C2, four red modes).
+
+The restructuring inverts D18's role.  **M-INDEX-fin/spec** (PROVED /
+PROVED-conditional): under D26(INT) + D27(LR) — no wave operators, no
+completeness, no channel inventory, bound states and extra channels
+allowed — every subsequential ordered TPM escaped-charge law is supported
+on `ℤ`, so every memory outcome of the explicit two-projective-measurement
+protocol is a multiple of `1/(2s)`; `δx` itself is a `{p_ν}`-average, never
+claimed quantized.  Under H-AD-G it reduces exactly to M-quant-G
+(G.1)--(G.2): *scattering theory computes the value; superselection alone
+quantizes it.*  **M-IDX-density** (PROVED): `2ρ∈ℤ` for U(1)-covariant
+injective-MPS antisymmetric vacuum pairs — an LSM-type by-product.
+**M-INDEX-LA-strong** (REFUTED, two mechanisms): no unconditional
+sector-wide charge operator; the folium-restricted form survives as
+CONJECTURE (M-INDEX-LA-folium).  **AC-EX** (PROVED conditional on D28,
+ACE.1--ACE.2 only): the existence half of D18(AD1)+(AD2) from exact
+ansatz-band hypotheses via momentum-filtered Cook estimates; ACE.3 stays
+conditional on AD3-ex (CONJECTURE, missing lemma ACE-LD).  Exact scoping
+sentences: the DAG rows.
 
 ---
 
