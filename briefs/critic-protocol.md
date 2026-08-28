@@ -72,3 +72,41 @@ attacking.  Do not git commit.
 
 Work fully autonomously.  Do not ask questions.  Do not soften findings to be
 agreeable — a severity-falling FAIL is the method working.
+
+---
+
+## Standing checker obligations (added 2026-08-29 — a CAMPAIGN-LEVEL PATTERN)
+
+This corpus has now shipped **four** gates that did not test what they
+advertised, found in three separate rounds:
+
+1. `soft_index_probe.py` P2(b): compared `proto` with `proto_dressed`, which
+   were the identical expression — recorded exactly `0.0` by construction.
+2. `ansatz_scattering_2m_check.py` profile-agreement gate (r3 R3-O2): a
+   rescaled duplicate of the agreement gate; a genuine two-sided support-fold
+   passes it.
+3. `d24d3_normalization_check.py` D24N-C2 "soft-leg norm": algebraically
+   `sites·two_s/sites − two_s ≡ 0` — returns 0 for every input.
+4. `d24d3_normalization_check.py` `check_exponent_is_one`: `lstsq(x, x)`,
+   design matrix identical to target, so `p=1` "to 1e-9" is a tautology.
+
+Therefore, for EVERY checker you attack or write:
+
+- **Simplify each gate symbolically before believing it.**  If the expression
+  reduces to `0 ≡ 0`, or to `x` fitted against `x`, or to a comparison of two
+  textually identical subexpressions, the gate is a no-op regardless of what
+  it prints.  Feed it absurd inputs (`two_s = 3.7`, `−5.0`, `1e6`) and see
+  whether anything moves.
+- **Check gate REACHABILITY, not just gate correctness.**  If an earlier gate
+  fires first on every mutant, the later gates — typically the acceptance test
+  the artifact actually rests on — are never exercised.  Report the exit
+  *path*, not only the exit *code*: for each `--red` mode, name which gate
+  killed it.  "All three mutants died at C4 and never reached the acceptance
+  test" is a finding.
+- **Mutate the DATA, not only the code.**  An acceptance checker must be shown
+  non-self-fulfilling by falsifying the ground truth it compares against
+  (shift every row, move the decision band, delete the band key, remove the
+  data file).  A checker that only responds to flipping one of its own
+  constants proves nothing about the claim.
+- **Check for deductive subsumption between gates.**  If gate `Cj`'s bound is
+  implied by gate `Ci`'s, `Cj` adds no evidence; say so and say what would.
