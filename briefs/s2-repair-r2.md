@@ -82,7 +82,7 @@ Two are checker-spec defects you must fix in code, not prose:
   Run green (exit 0) and every red mode (exit 1) and paste the output.
 - You may NOT rely on any REFUTED row, and you may NOT use the second
   display of ML4-Ward (9) at n≥2 — it carries an ERRATUM; the correct form
-  is `P J^-_0 = 2D(D^†D)^{-1} J^z_0` (exact at every n).
+  is `P J^-_0 = 2D A^{-1} J^z_0` with `A=D^†D` on the FULL sector (register-dependent — see `theory/verdicts/ml4-ward-n2-audit.md` §1.2; in the hw-restricted register that string collapses back to the refuted display and the correct form is `(1/m_λ)Q_0Π_{hw}J^z_0`) (exact at every n).
 - Bethe is an ORACLE ONLY; no hypothesis may use integrability beyond
   two-body contact structure.
 

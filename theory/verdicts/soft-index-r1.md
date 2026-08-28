@@ -5,6 +5,22 @@
 
 # r1 verdict — `theory/soft-index.md` (Lane S1-A, S-INDEX)
 
+> **ORCHESTRATOR ERRATUM — appended 2026-08-28, bd `tns-uxr`.  The verdict
+> below is NOT rewritten; this annotation narrows two clearances in it.**
+>
+> The downstream audit (`verdicts/ml4-ward-n2-audit.md`) found that this
+> verdict's clearance items (C-d) and §5, and objection M6(d), are **over-broad**
+> with respect to the ML4-Ward `n≥2` defect: they clear uses of the projected
+> current at general `n` on the strength of `n=1` checks.  An over-broad
+> clearance in a verdict is more damaging than a defect in a shard, because it
+> is what the next session cites.  Read those three items as scoped to `n=1`.
+> The `n≥2` statement sites in `theory/soft-index.md` and
+> `theory/soft-index-b.md` are enumerated in the audit's §2.3/§2.4 and are
+> repaired by the unified r2 rewrite (`tns-v44`), not by editing the two
+> superseded lane records.
+
+
+
 **Verdict: FAIL(F1, M1–M8).**  1 FATAL, 8 MAJOR, 9 MINOR, 6 NOTE.
 
 ## 0. What I did (obligations 1–5)

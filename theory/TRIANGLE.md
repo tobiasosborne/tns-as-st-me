@@ -279,8 +279,14 @@ on-shell trace regularity)*; the sign `sgn(v_h−v_s)` merely labels which conti
 no zero.
 
 **Exact Ward projection in every finite sector — PROVED per corpus-r2
-adjudication.**  On `ℋ_{n,N}`, `D_{n,N}^†J^-_0 = 2J^z_0 + J^-_0S^+`; on
-`ker S^+` (`n < N/2`), `D_{n,N}^†D_{n,N} = (N−2n)𝟙` and `P_{n,N}J^-_0 = \frac{2}{N−2n}Q_0J^z_0`.  For one hard magnon
+adjudication, SCOPED 2026-08-28.**  On `ℋ_{n,N}`, `D_{n,N}^†J^-_0 = 2J^z_0 + J^-_0S^+`; on
+`ker S^+` (`n < N/2`), `D_{n,N}^†D_{n,N} = (N−2n)𝟙`.  **ERRATUM (bd `tns-uxr`):** the
+scalar consequence `P_{n,N}J^-_0 = \frac{2}{N−2n}Q_0J^z_0` is exact at `n=1` and
+**REFUTED for `n≥2`** — `⟨3⟩4` applies the scalar `(N−2n)^{-1}` to `2J^z_0ψ`, which
+leaves `ker S^+` as soon as `‖J^+_0ψ‖≠0` (`0 / 0.66 / 1.36` at `n=1/2/3`).  The form
+valid at every `n` is `P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0` with `A_n := D_{n,N}^†D_{n,N}`
+on the **full** sector; the register matters (`theory/verdicts/ml4-ward-n2-audit.md` §1.2).
+Certified by `theory/checks/ml4_ward_n2_check.py`.  For one hard magnon
 this gives `P_{1,N}J^-_0|h⟩_N = \frac{2iv(h)}{N−2}Q_0|h⟩_N` — equation (R15), upgraded from one momentum vector to the
 whole hard packet space.  The complementary vector remains nonzero, which is precisely why ML4-A is needed.
 

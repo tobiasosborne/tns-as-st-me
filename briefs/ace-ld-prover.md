@@ -116,7 +116,7 @@ after the critic converges.
   channel an indefinite charge).  No bare `assert` — they vanish under
   `python3 -O`.  Mutation-test on COPIES in a temp dir.
 - You may NOT rely on any REFUTED row.  You may NOT use the second display of
-  ML4-Ward (9) at n≥2 (ERRATUM; correct form `P J^-_0 = 2D(D^†D)^{-1}J^z_0`).
+  ML4-Ward (9) at n≥2 (ERRATUM; correct form `P J^-_0 = 2D A^{-1} J^z_0` with `A=D^†D` on the FULL sector (register-dependent — see `theory/verdicts/ml4-ward-n2-audit.md` §1.2; in the hw-restricted register that string collapses back to the refuted display and the correct form is `(1/m_λ)Q_0Π_{hw}J^z_0`)).
 - Bethe is an ORACLE ONLY, never a hypothesis.
 - Quote references only from local TeX under `refs/` (L3), by section/equation.
 

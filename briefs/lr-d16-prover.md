@@ -117,7 +117,7 @@ orchestrator merges after the critic converges.
   its explicit one-body kink--magnon structure, but no closed Bethe
   factorisation and nothing beyond two-body contact structure.
 - You may NOT rely on any REFUTED row.  You may NOT use the second display of
-  ML4-Ward (9) at `n≥2` (ERRATUM; correct form `P J^-_0 = 2D(D^†D)^{-1}J^z_0`).
+  ML4-Ward (9) at `n≥2` (ERRATUM; correct form `P J^-_0 = 2D A^{-1} J^z_0` with `A=D^†D` on the FULL sector (register-dependent — see `theory/verdicts/ml4-ward-n2-audit.md` §1.2; in the hw-restricted register that string collapses back to the refuted display and the correct form is `(1/m_λ)Q_0Π_{hw}J^z_0`)).
 - Quote references only from local TeX under `refs/` (L3), by section/equation.
 
 Work fully autonomously.  Do not ask questions.  Do not stop at a plan.

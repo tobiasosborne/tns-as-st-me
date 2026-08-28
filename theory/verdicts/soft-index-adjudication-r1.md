@@ -6,6 +6,35 @@
 
 # Soft-index campaign — r1 adjudication (all lanes)
 
+> **ORCHESTRATOR ERRATUM — appended 2026-08-28, bd `tns-uxr`.  The frozen
+> adjudication below is NOT rewritten; this annotation corrects one binding
+> instruction in it.**
+>
+> §3.7 (and the register note in §2.2) instructs the r2 unified shard to state
+> the projected-current identity "over `m_λ`, with the corrected
+> `2D A⁻¹J^z₀` form".  **Those two halves are mutually inconsistent** and, if
+> followed literally, re-inject the very defect this round found — for the
+> third time.  Reason (`verdicts/ml4-ward-n2-audit.md` §1.2, UXR-R1;
+> independently reconfirmed by the orchestrator): the correction is
+> REGISTER-DEPENDENT.
+>
+> * **Full-sector register** (`D_{n,N}=Q_0|_{ℋ_{n,N}}`, `A_n=D^†D` on the whole
+>   sector, where `A_n` is non-scalar): the correct form is
+>   `P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0` (exact `≤2.4e-15` at every `n`).
+> * **Highest-weight-restricted register** (`D_λ=Q_0|_{ker S^+}`): here
+>   `A_λ=(N-2n)𝟙` is SCALAR — by the PROVED first display of (9) — so the
+>   string `2D A^{-1}J^z_0` *evaluates to* `2Q_0J^z_0/(N-2n)`, i.e. exactly the
+>   REFUTED display.  The correct form in this register is
+>   `(1/m_λ)Q_0Π_{hw}J^z_0`, `m_λ=(N-2n)/2` (exact `≤7.6e-16` at every `n`).
+>
+> Cross-register substitution is wrong by `O(1)`: `1.7e-01` at `n=2`, `N=8`.
+> **Binding correction for the r2 shard (`tns-v44`): pick ONE register and name
+> it at the point of statement.**  Either full-sector with `2D_{n,N}A_n^{-1}J^z_0`,
+> or hw-restricted with `(1/m_λ)Q_0Π_{hw}J^z_0`.  Never "over `m_λ`" together
+> with `2DA^{-1}J^z_0`.
+
+
+
 ## 0. Verdict summary
 
 | Lane | Shard | Verdict | FATAL | MAJOR | Trajectory |

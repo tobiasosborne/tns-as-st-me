@@ -121,9 +121,19 @@ it exactly as stated.
    analogue of M-INDEX-fin; get it airtight, it alone is publishable).*
    In every finite sector, for every hard packet in ker S^+, the
    descendant-channel component of the charge-created soft amplitude is
-   EXACTLY the charge datum: the Ward projection (ML4-Ward (9)--(11))
-   pins P_{n,N}J^-_0 = 2Q_0J^z_0/(N−2n) — no dynamics, no k_s expansion,
-   valid for every N, every n<N/2, every packet. Restate this as a
+   EXACTLY the charge datum: the Ward projection (ML4-Ward (8),(10),(11))
+   pins P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0, with A_n := D_{n,N}^†D_{n,N}
+   on the FULL sector ℋ_{n,N} — no dynamics, no k_s expansion, valid for
+   every N, every n<N/2, every packet.
+   **CORRECTED 2026-08-28 (bd tns-uxr — this instruction was the root cause
+   of a defect that two independent prover lanes then wrote down).**  The
+   scalar form `2Q_0J^z_0/(N−2n)` previously demanded here is exact at n=1
+   and REFUTED for n≥2.  Do NOT ask for it at general n.  And name the
+   register: in the highest-weight-restricted register D_λ=Q_0|_{ker S^+}
+   one has A_λ=(N−2n)𝟙, so the string `2DA^{-1}J^z_0` collapses back to the
+   refuted display there; the correct hw-register form is
+   (1/m_λ)Q_0Π_{hw}J^z_0 with m_λ=(N−2n)/2.  Certificate:
+   theory/checks/ml4_ward_n2_check.py; audit: verdicts/ml4-ward-n2-audit.md. Restate this as a
    finite-volume soft-index identity for the D29 object: the descendant
    part of 𝒜 at ε=0 equals (leg-charge datum)×(hard velocity datum) with
    the kinematic factor (e^{ik_s}−1) separated explicitly (R10 does the

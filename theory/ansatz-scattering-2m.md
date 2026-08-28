@@ -28,6 +28,11 @@ supports `K_1,K_2` whose nonzero velocity supports are separated by
 on the smooth product core `𝒟_{12}`; the two slots are labels for the two
 disjoint packet windows, not distinguishable particle species.
 
+For (A2M.3) additionally assume the D29 interface clauses 1--5 in ⟨1⟩8.
+In particular (D29-den) and the one-particle normalization (2M-1P) are
+displayed interface hypotheses, not consequences of D31.  `(ACE2M-SR)` is
+assumed only for the iterated first-jet conclusion.
+
 **PROVE.**
 
 1. **(A2M.1)** The fixed-packet limits
@@ -62,9 +67,11 @@ disjoint packet windows, not distinguishable particle species.
 **ASSUME.** D31.  **PROVE.** Neither the soft endpoint nor the two-string is
 hidden in Cook.
 
-**⟨2⟩1. [NEW]** Every estimate fixes `K_1,K_2` and may depend on
-`ε_v,ε_0,d_B,η_inel` and on the packet-amplitude Schwartz seminorms
-`s_N(F):=sup_{0≤j≤N}||∂^jF||_∞`.  The latter carry the soft-family
+**⟨2⟩1. [NEW]** Every estimate fixes `K_1,K_2`.  Cook/Gram constants may
+depend on `ε_v` and on the packet-amplitude Schwartz seminorms
+`s_N(F):=sup_{0≤j≤N}||∂^jF||_∞`; the later joint-spectral fences
+use `d_B,η_inel`.  The parameter `ε_0` is fixed by D31(4) but used by no
+estimate in (A2M.1)--(A2M.2).  The seminorms carry the soft-family
 divergence.  For a later one-sided profile
 `f_ε(k)=ε^{-1/2}f(k/ε)` with `0∉supp f`, first form
 
@@ -473,6 +480,9 @@ This port does **not** identify the raw fixed-time vector
 =-2ik_s|P_{12}⟩+O(k_s²)` (R8 and R19) remains true.  It is precisely why
 clause 1 requires an asymptotic on-shell leg.
 
+*Justification.* Claim S2-2body, `theory/soft-current-recon.md`
+⟨1⟩2.⟨2⟩3 (R8) and ⟨1⟩5 (R19).
+
 **(ACE2M-SR).** Apply only the first two D29 operations. Let `j` index `(W_j,σ_j)` with `W_j↑ℤ`, `σ_j↓0`, and at fixed `ε>0` put
 
 `A_j(ε):=lim_{t→±∞}lim_{N→∞}𝒜_{N,W_j,σ_j,t}(ε)∈L²(I)`.
@@ -541,8 +551,10 @@ nonempty instance of D31(1)--(5).
 The all-up state is the `χ=1` injective product MPS; its transfer map has no
 nontrivial peripheral block.  The shifted D6 Hamiltonian is positive,
 `HΩ=0`, and in its finite-excitation GNS space has no normalizable zero-energy
-vector beyond `Ω` (the one- and two-magnon zero sets have Plancherel measure
-zero).  `S^z` supplies the conserved circle grading.  The map
+vector beyond `Ω`: equality in every positive swap bond forces a fixed-`n`
+coordinate wave to be constant under adjacent exchanges/translations, and
+that constant is not in `ℓ²` for `n≥1`.  `S^z` supplies the conserved circle
+grading.  The map
 `Γ_Mg=∫(dk/2π)g(k)Σ_xe^{ikx}|x⟩` is isometric and obeys
 `HΓ_M=Γ_Mω`; in charge one it is the entire scalar band.  A
 spacetime-Schwartz filter of `S_n^-` gives D31(3)'s covariant creators and can
@@ -551,9 +563,9 @@ supports give D31(4).  Finally ML2 gives exactly the scattering and one bound
 summand; ⟨1⟩2.⟨2⟩3 proves `d_B>0`, while the alternative propagating
 inventory is empty and `η_inel=+∞`.
 
-*Justification.* D1, D6, proposed D31, ML2 equations (17)--(21), and the
-Plancherel resolution ML2 (21).  This is a direct verification, not an appeal
-to Bethe completeness or to integrability.
+*Justification.* D1, D6's positive swap form, proposed D31, ML2 equations
+(17)--(21), and the Plancherel resolution ML2 (21).  This is a direct
+verification, not an appeal to Bethe completeness or to integrability.
 
 **⟨2⟩5. [NEW — D6 exhaustion-free first jet]**
 
@@ -608,24 +620,52 @@ smoothness/separated velocities replace global regularity.  Density, full-Fock, 
 *Justification.* D1(c,d), D6, ⟨1⟩3; source Theorem `clustering`, Proposition `norm-corollary`, and Theorems `Haag-Ruelle`,
 `Haag-Ruelle-Fock`, `s-matrix`.
 
-**⟨2⟩3. QED.**
+**⟨2⟩3. [PORTED, SCOPED]** Source Theorem `Haag-Ruelle`'s final
+creator-choice-independence clause is ported in ⟨1⟩8.⟨2⟩2.  Its matching
+vacuum-vector and cross-velocity hypotheses are exactly (2M-1P) and D31(4).
+It is used only for the asymptotic D29 soft leg.  It is not used to compare
+different packet-window ranges in ⟨1⟩7.⟨2⟩4 and supplies no density or
+completeness conclusion.
+
+*Justification.* Source §“Scattering states and their Fock space structure”,
+Theorem `Haag-Ruelle`, final clause and final proof paragraph; ⟨1⟩8.
+
+**⟨2⟩4. QED.**
 
 ## 6. CHECKER SPEC
 
 ### A2M-C1 — connected transfer identities on one model
 
-**A2M-C1a (fixed-point subtraction).** Use D23's AKLT tensor `A^a=σ_a/√3`, `r=I/2`, and Cartesian `S^z`. At `d=1,…,12`, contract `C=D=I+S^z` directly and independently as
+**A2M-C1a (fixed-point subtraction).** Use D23's AKLT tensor
+`A^a=σ_a/√3`, `r=I/2`, and Cartesian `S^z`.  At `d=1,…,12`, contract
+`C=D=I+S^z` directly, subtract `ω_A(C)ω_A(D)`, and independently evaluate
 
 `⟨l,E_C(E^{d-1}-P)E_D(r)⟩`.
 
-Both answers must equal `4/3·(-1/3)^d` within `10^-12` and successive ratios `-1/3`. This certifies only the fixed-point-subtracted connected two-point identity on one model. **Red:** replace `E^{d-1}-P` by `E^{d-1}`; its retained `+1` must fail both gates.
+Both **connected** answers must equal `4/3·(-1/3)^d` within `10^-12`, and
+each successive ratio must obey `|ratio+1/3|≤10^-8`.  This certifies only
+the fixed-point-subtracted connected two-point identity on one model.
+**Red `--red-c1a`:** replace `E^{d-1}-P` by `E^{d-1}`; its retained `+1`
+must fail both gates.
 
 **A2M-C1b (support-length independence).** For all `w_C,w_D∈{1,2,3}`, take `C_{w_C}=⊗_{j=1}^{w_C}(I+S^z_j)` and likewise `D_{w_D}`, separated by `d_sep∈{2,4,6}` sites. Compare direct and fixed-point-subtracted contractions and, with `λ̃=1/2`, require
 
 `max_{w_C,w_D,d_sep}
  |conn|/(||C_{w_C}||||D_{w_D}||λ̃^{d_sep}) ≤0.1`.
 
-Compute operator norms independently by singular values. **Red:** replace the rate by `λ̃^{d_sep+2(w_C+w_D)}`; the cap must fail, certifying that support length was not folded into separation.
+Compute operator norms independently by singular values.  Also require, at
+every fixed `d_sep`,
+
+`ratio(w_C,w_D,d_sep)≤ratio(1,1,d_sep)+10^-12`
+
+for all `w_C,w_D∈{1,2,3}`.  **Red `--red-c1b`:** replace the rate by
+`λ̃^{d_sep+2(w_C+w_D)}`; the cap must fail.  **Red
+`--red-supportfold`:** multiply the fixed-point-subtracted connected numerator
+by `w_Cw_D` only in the support-variation calculation; it must disagree by
+more than `10^-12` with the independently direct-contraction ratio profile.
+The ordinary monotonicity gate is retained, but this profile-agreement gate is
+the direct certificate that a support-length factor has not been hidden in
+`C_{A,λ̃}`.
 
 **Uncertified scope.** AKLT's transfer map is diagonalizable, so A2M-C1 certifies neither D1(c)'s Jordan-safe `λ̃>λ_E` form nor D31-C4, exact bands, `(ACE2M-LSZ)`, or `(ACE2M-SR)`. Every gate/red mode must use `raise` or `sys.exit`, never bare `assert`; green and red run under `python3 -O`, and every red mode exits nonzero.
 
@@ -643,7 +683,7 @@ Fix one translation-invariant injective canonical MPS tensor `A` and its D1 stat
 2. There is a finite-multiplicity scalar magnon band `ω∈C²(𝕋)`, isolated within the charge-one sector on clause 4's packet neighbourhoods, and a Gram-normalized translation-covariant **exact** map `Γ_M:L²(𝕋;ℂ^m)→H_A` with `HΓ_M=Γ_M(ω⊗1_m)`. The multiplicity is fixed; matrix-valued crossings are outside D31. Exactness is not a Rayleigh--Ritz conclusion.
 3. For each packet window, a compact-energy-momentum-supported spacetime-Schwartz filter of a charge-one local observable gives uniformly almost-local positive-energy-transfer creators with `a_{i,b}(n)=τ_n(a_{i,b}(0))`, `a_{i,b}(n)Ω_A=Γ_M(χ_i e_n⊗e_b)`, `e_n(k)=e^{-ikn}`.
 4. Packet amplitudes are finite sums of `C_c^∞` products.  The dispersion is `C^∞` on neighbourhoods `U_i` of compact
-   supports `K_i`; `V_i=ω'(K_i)` obey `dist(V_1,V_2)≥ε_v>0`, `dist(V_i,{0})≥ε_0>0`.  Filters satisfy `χ_i=1` on `K_i`,
+   supports `K_i`; `V_i=ω'(K_i)` obey `dist(V_1,V_2)≥ε_v>0`, `dist(V_i,{0})≥ε_0>0`.  The latter nonzero-velocity clause is part of the campaign packet register but is used by no estimate in (A2M.1)--(A2M.2); only `ε_v` enters Cook/Gram.  Filters satisfy `χ_i=1` on `K_i`,
    `supp χ_i⊂U_i`; companions satisfy `χ̃_i=1` on `supp χ_i`, `supp χ̃_i⊂U_i`; put `h_i=ωχ̃_i∈C^∞(𝕋)`.
 5. Supply an inventory `𝓡_inel` of every alternative propagating charge-two band tuple `r=(r_1,…,r_n)` expressible from
    the stated exact band data, and set `θ_r(K):=inf_{Σp_j=K,Σq_{r_j}=2}Σ_jω_{r_j}(p_j)`.  Put `K_Σ=K_1+K_2` and
@@ -663,7 +703,7 @@ are consequences, not hypotheses.  The theorem is fixed-packet only; a soft scal
 
 ### Exact additions to `claims/CLAIMS.md`
 
-| AC-EX-2M | Under D31/H-ACE2M over one D1 injective translation-invariant MPS vacuum, exact momentum-filtered magnon bands and two compact nonzero separated-velocity packets give fixed-packet Cook wave operators `W_±`; D1's transfer gap derives D31-C2, and with D31(3)'s uniform almost-locality also D31-C4, so no independent clustering hypothesis is assumed.  The maps are isometries, intertwine joint translations, and avoid the D31-listed fiberwise-isolated charge-two bound bands.  On D6--D8 a fixed packet range matches the corresponding part of ML2's Jacobi scattering summand: `W_+^*W_-` carries D7's `S_phys`, while the two-string is orthogonal.  For Lane S1's D29 interface, fixed-`ε` constructed-channel identification is conditional on `(ACE2M-LSZ)` (exact on D6); first-jet/TGT compactness is conditional on `(ACE2M-SR)`, whose full `(W,σ)`-uniform version is open on every model, while D6 verifies only the exhaustion-free infinite-chain version.  No soft-uniform Cook bound, equal-velocity/endpoint construction, bound-state wave operator, range exhaustion, or asymptotic completeness is claimed. | SKETCH | D1, D3(a), D6--D8, D12(a′), D31, ML2, S2-2body | theory/ansatz-scattering-2m.md | proposed checker A2M-C1 |
+| AC-EX-2M | Under D31/H-ACE2M over one D1 injective translation-invariant MPS vacuum, exact momentum-filtered magnon bands and two compact nonzero separated-velocity packets give fixed-packet Cook wave operators `W_±`; D1's transfer gap derives D31-C2, and with D31(3)'s uniform almost-locality also D31-C4, so no independent clustering hypothesis is assumed.  The maps are isometries, intertwine joint translations, and avoid the D31-listed fiberwise-isolated charge-two bound bands.  On D6--D8 a fixed packet range lies in the corresponding part of ML2's Jacobi scattering summand: `W_+^*W_-` carries D7's `S_phys`, while the two-string is orthogonal.  For Lane S1's D29 interface, every full-index sequence respecting (D29-order) is `L²(I)`-bounded under (D29-den) and has weak diagonal subsequences; no unconditional iterated-order object is asserted.  If the charge-created soft leg is carried as an asymptotic HR leg, the ported creator-choice-independence theorem `(ACE2M-LSZ)` identifies its fixed-`ε` value with the constructed channel from the one-particle normalization (2M-1P) and D31(4).  First-jet compactness is conditional on `(ACE2M-SR)`, whose full `(W,σ)`-uniform version is open on every model; D6 verifies D31 and only the exhaustion-free infinite-chain first jet.  No fixed-time charge/scattering-vector equality, soft-uniform Cook bound, equal-velocity/endpoint construction, bound-state wave operator, range exhaustion, or asymptotic completeness is claimed. | SKETCH | D1, D3(a), D6--D8, D10, D12(a′), D24, D31, ML2, S2-2body | theory/ansatz-scattering-2m.md | theory/checks/ansatz_scattering_2m_check.py, A2M-C1a/C1b |
 
 ### Exact additions to `notation.md`
 
@@ -673,18 +713,40 @@ are consequences, not hypotheses.  The theorem is fixed-packet only; a soft scal
 | `K_i`, `V_i`, `a_{i,b}(n)`, `χ_i`, `χ̃_i`, `h_i` | fixed packet supports, velocity supports, exact filtered creators, filters/companions, and rapidly decaying filtered symbols | definitions.md D31 |
 | `I_2`, `𝓡_inel`, `Θ_inel`, `η_inel`, `E_{B,j}`, `d_B`, `P_B` | selected two-magnon joint energy--momentum set, inventoried alternative channels and threshold/margin, bound bands, their fiberwise separation, and bound projection | definitions.md D31 |
 | `d_sep` | number of uniform transfer sites separating two local/almost-local clusters in D31-C2/C4 | definitions.md D31 |
-| `(ACE2M-LSZ)` | fixed-`ε` identification of D29's charge-created soft leg with the D31(3) filtered magnon modulo an on-shell-null remainder | theory/ansatz-scattering-2m.md ⟨1⟩8 |
-| `(ACE2M-SR)` | `j=(W_j,σ_j)`-uniform compact-containment and equicontinuous first jet after the `N,t` operations; a genuine non-Cook soft-uniformity hypothesis | theory/ansatz-scattering-2m.md ⟨1⟩8 |
+| `ε_v`, `ε_0`, `s_N(F)` | D31 packet-velocity separation, distance of each packet velocity from zero (unused by A2M.1--A2M.2), and fixed-packet Schwartz seminorm | definitions.md D31(4); theory/ansatz-scattering-2m.md ⟨1⟩2 |
+| `V_w`, `Ψ_O` | block Stinespring isometry and block-to-virtual contraction used in MPS-2M-cluster | theory/ansatz-scattering-2m.md ⟨1⟩3.⟨2⟩2 |
+| `f_ε`, `Q[f̂_ε;ξ^-]`, `a_{2,b}[f_ε]`, `a_{Q,2,b,t}[f_{ε,t}]` | rescaled momentum packet, D10(c) charge with its position-space Fourier profile, exact filtered packet creator, and asymptotic charge HR creator | theory/ansatz-scattering-2m.md ⟨1⟩2, ⟨1⟩8 |
+| `𝒜_α`, `𝒝_α`, `𝒟_α`, `d_I`, `C_I` | D29 full-index amputated datum, numerator, hard denominator, and its selected-packet lower/numerator bounds | theory/ansatz-scattering-2m.md ⟨1⟩8(3) |
+| `A_j(ε)`, `ε_★` | post-`N,t` D29 datum along the joint `(W_j,σ_j)` exhaustion and its soft-scale interval endpoint | theory/ansatz-scattering-2m.md ⟨1⟩8 `(ACE2M-SR)` |
+| `(ACE2M-LSZ)` | theorem that fixed-`ε` connected on-shell pairings are independent of the asymptotic soft creator when (2M-1P) and cross-velocity separation hold | theory/ansatz-scattering-2m.md ⟨1⟩8.⟨2⟩2 |
+| `(ACE2M-SR)` | `j=(W_j,σ_j)`-uniform compact-containment and equicontinuous first jet after existence of the `N,t` limits; a genuine non-Cook soft-uniformity hypothesis | theory/ansatz-scattering-2m.md ⟨1⟩8 |
 
 ## 8. HONEST STATUS
 
 **Proved from D31.**  (A2M.1)--(A2M.2): fixed-packet Cook existence, isometry, translation intertwining, separation from
 listed bound/inelastic channels, and exact ML2/D7 agreement on D6--D8.  D31-C2/C4 are derived from D1, not assumed.
 
-**Conditional.** D31 supplies fixed-packet wave operators, not D29's charge-created value. Wave operators enter (A2M.3) only through `(ACE2M-LSZ)`, unproved abstractly and exact on D6. Generic first-jet control also assumes `(ACE2M-SR)`; ML2/S2-2body verify only its `j`-independent infinite-chain version, while `(W,σ)`-uniform control is open even on D6.
+**Proved diagonal bridge.**  Under the displayed selected-hard-packet
+denominator bound (D29-den), the full-index D29 family is `L²(I)`-bounded,
+so every sequence respecting (D29-order) has a weakly convergent subsequence.
+This is diagonal compactness only; existence of the iterated inner limits is
+not claimed.  For an asymptotic D29 charge leg, creator-choice independence
+proves `(ACE2M-LSZ)` from (2M-1P) and D31(4).  The raw fixed-time D6 mismatch
+(R8) is retained and is outside that theorem.
+
+**Conditional.** Generic iterated first-jet control assumes `(ACE2M-SR)`,
+including existence of the `N,t` limits.  ML2/S2-2body verify only its
+`j`-independent infinite-chain version, while `(W,σ)`-uniform control is open
+even on D6.
 
 **ML1 items still open.**  This shard does **not** close ML1: (i) endpoint packets; (ii) equal velocities; (iii) a
 two-string/bound-band wave operator and transitions; (iv) soft-uniform channel norms; (v) general-model range exhaustion.
 ML2 supplies only the D6 exact spectral anchor.
 
-**Assumed.** Exact band invariance/creator normalization, positive-energy covariance, and the threshold inventory are D31 hypotheses, not variational consequences. Separation from D31-listed bound bands is derived from `d_B>0`, not assumed. ML1/ML3/ML6, Bethe completeness, and soft-uniform Cook estimates are unused.
+**Assumed.** Exact band invariance/creator normalization, positive-energy
+covariance, and the threshold inventory are D31 hypotheses, not variational
+consequences.  At the D29 interface, asymptotic-HR admissibility of the charge
+leg, (2M-1P), and (D29-den) are displayed hypotheses; creator-choice
+independence derives `(ACE2M-LSZ)` from them.  Separation from D31-listed bound
+bands is derived from `d_B>0`, not assumed.  ML1/ML3/ML6, Bethe completeness,
+and soft-uniform Cook estimates are unused.

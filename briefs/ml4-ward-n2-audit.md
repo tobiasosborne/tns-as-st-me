@@ -15,7 +15,7 @@ audit.  This is an AUDIT, not a repair — you report, the orchestrator edits.
   NOT in `ker S^+` for `n≥2`, because `[S^+,J^z_0]=−J^+_0` and
   `||J^+_0ψ|| = 0 / 0.66 / 1.36` at `n=1/2/3`.
 - CORRECT replacement, verified `≤2.4e-15` at every `n`:
-  `P J^-_0 = 2D(D^†D)^{-1} J^z_0`.
+  `P J^-_0 = 2D A^{-1} J^z_0` with `A=D^†D` on the FULL sector (register-dependent — see `theory/verdicts/ml4-ward-n2-audit.md` §1.2; in the hw-restricted register that string collapses back to the refuted display and the correct form is `(1/m_λ)Q_0Π_{hw}J^z_0`).
 - Certificate: `theory/checks/ml4_ward_n2_check.py` (green exit 0, `--red`
   exit 1).  The `n=1` consequence (11)/(R15) is UNTOUCHED.
 

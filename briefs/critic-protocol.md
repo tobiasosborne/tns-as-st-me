@@ -38,7 +38,7 @@ truth extends.  A critic pass that reads as a book report has failed.
    construction).
 5. **Reliance audit.**  No step may rely on a REFUTED row; on the second
    display of ML4-Ward (9) at `n≥2` (ERRATUM — correct form
-   `P J^-_0 = 2D(D^†D)^{-1}J^z_0`); on Bethe integrability as a hypothesis
+   `P J^-_0 = 2D A^{-1} J^z_0` with `A=D^†D` on the FULL sector (register-dependent — see `theory/verdicts/ml4-ward-n2-audit.md` §1.2; in the hw-restricted register that string collapses back to the refuted display and the correct form is `(1/m_λ)Q_0Π_{hw}J^z_0`)); on Bethe integrability as a hypothesis
    (oracle only, beyond two-body contact structure); or on the class `𝒮_W`
    being nonempty at `ρ≠1/2` while bd `tns-iu5` is open.
 

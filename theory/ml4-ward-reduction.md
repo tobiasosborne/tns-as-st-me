@@ -188,8 +188,20 @@ On the highest-weight subspace `ℋ^{hw}_{n,N}:=ker S^+`, `n<N/2`,
 \[
  D_{n,N}^\dagger D_{n,N}=(N-2n)1,
  \qquad
- P_{n,N}J^-_0={2\over N-2n}Q_0J^z_0 .                        \tag{9}
+ P_{n,N}J^-_0={2\over N-2n}Q_0J^z_0\quad(\textbf{only }n=1) .   \tag{9}
 \]
+
+> **ERRATUM (2026-08-28, bd `tns-uxr`).**  The FIRST display of (9) is exact at
+> every `n<N/2`.  The SECOND display is exact at `n=1` and **REFUTED for
+> `n≥2`**: see ⟨3⟩4 below and `theory/checks/ml4_ward_n2_check.py`.  The form
+> valid at every `n` is (10) specialised to `ker S^+`, namely
+> `P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0` with `A_n:=D_{n,N}^†D_{n,N}` taken on
+> the **full** sector `ℋ_{n,N}` (where it is non-scalar).  **Register warning
+> (`verdicts/ml4-ward-n2-audit.md` §1.2):** in the highest-weight-restricted
+> register `D_λ:=Q_0|_{ker S^+}` one has `A_λ=(N-2n)𝟙`, so the string
+> `2D A^{-1}J^z_0` collapses back to the refuted display; there the correct
+> form is `(1/m_λ)Q_0Π_{hw}J^z_0` with `m_λ=(N-2n)/2`.  Any restatement of this
+> identity MUST name its register.
 
 For a general subspace on which `A_n:=D_{n,N}†D_{n,N}` is invertible,
 
@@ -210,9 +222,21 @@ Justification: `[A,B]=AB-BA`.
 `S^+S^-ψ=[S^+,S^-]ψ=2S^zψ=(N-2n)ψ`.
 Justification: `S^z=N/2-n` on `ℋ_{n,N}`.
 
-**⟨3⟩4.** Insert ⟨3⟩2--⟨3⟩3 in definition (2) to obtain (9); without the
+**⟨3⟩4.** Insert ⟨3⟩2--⟨3⟩3 in definition (2) to obtain (10); without the
 highest-weight restriction, insert (8) to obtain (10).
 Justification: orthogonal projection onto the range of an injective map.
+
+> **ERRATUM (2026-08-28, bd `tns-uxr`) — this leaf is where the defect sat.**
+> Passing from (10) to the scalar second display of (9) applies `A_n^{-1}` as
+> the scalar `(N-2n)^{-1}` to `2J^z_0ψ`.  That is legitimate only when
+> `2J^z_0ψ` lies in `ker S^+`, i.e. the subspace on which the first display
+> makes `A_n` scalar.  But `[S^+,J^z_0]=-J^+_0`, so `S^+J^z_0ψ=-J^+_0ψ`, which
+> vanishes at `n=1` by momentum conservation and is **nonzero for `n≥2`**
+> (`‖J^+_0ψ‖ = 0 / 0.66 / 1.36` at `n=1/2/3`, `N=8`).  Measured failure of the
+> scalar display at `N=8`: error `0.26 / 1.11` against `‖lhs‖ = 0.91 / 1.39` at
+> `n=2/3`, versus `≤2.4e-15` for the (10) form.  Certificate:
+> `theory/checks/ml4_ward_n2_check.py` (green exit 0, `--red` exit 1);
+> independently reconfirmed by the orchestrator, `verdicts/ml4-ward-n2-audit.md`.
 
 **⟨3⟩5. QED.**
 
@@ -414,14 +438,25 @@ completeness alone does not supply it.
 ## ⟨1⟩5. Two hard magnons: exact Ward part and the remaining obstruction
 
 **⟨2⟩1. PROVE.** Every finite-ring hard state in `ℋ_{2,N}` has the complete
-ML2 expansion, and (10) gives its exact descendant projection.  On the ML2
-highest-weight subspace,
+ML2 expansion, and (10) gives its exact descendant projection:
 
 \[
- P_{2,N}J^-_0={2\over N-4}Q_0J^z_0 .                          \tag{18}
+ P_{2,N}J^-_0 = 2D_{2,N}A_2^{-1}J^z_0 ,
+ \qquad A_2:=D_{2,N}^\dagger D_{2,N}\ \text{on all of}\ ℋ_{2,N} .  \tag{18}
 \]
 
 For ML2 descendants the extra `J^-_0S^+` term in (10) is mandatory.
+
+> **ERRATUM (2026-08-28, bd `tns-uxr`) — (18) formerly read
+> `P_{2,N}J^-_0=\frac{2}{N-4}Q_0J^z_0` and was REFUTED.**  It is false already
+> on the ML2 **singular contact vector** `|χ_π⟩ ∝ Σ_x(-1)^x|x,x+1⟩` — the very
+> vector ⟨3⟩3 below names — by `100%` of the left-hand side: at `N=8`,
+> `‖lhs‖=0.775`, `‖rhs_old‖=1.414`, error `0.775` (rel `1.000`); at `N=10`,
+> error `0.504` (rel `0.730`).  The displayed corrected form is exact there
+> (`≤2.4e-16`).  Independently recomputed twice
+> (`verdicts/ml4-ward-n2-audit.md` §1.3 and the orchestrator's re-run).
+> The two-hard Ward part therefore survives only in the (10)/(18) full-sector
+> form; no scalar `(N-4)^{-1}` version of it is available.
 
 **⟨3⟩1.** ML2 (14), including its singular contact vector, is an orthonormal
 basis of `ℋ_{2,N}`.
@@ -500,9 +535,13 @@ Justification: inspection and the recorded optimized-mode run of
 
 ## ⟨1⟩7. ML4 verdict
 
-1. **PROVED per `corpus-r2.md` adjudication:** exact sector Ward projection
-   (8)--(11), including arbitrary one-hard packets and all finite-ring ML2
-   two-hard states.
+1. **PROVED per `corpus-r2.md` adjudication, SCOPED 2026-08-28 (bd `tns-uxr`):**
+   exact sector Ward projection (8), the norm identity (first display of (9)),
+   the general-sector polar formula (10), the corrected two-hard form (18), and
+   the one-hard consequence (11)/(R15) — including arbitrary one-hard packets.
+   **The scalar second display of (9) is PROVED only at `n=1` and REFUTED for
+   `n≥2`**; the claim "all finite-ring ML2 two-hard states" is retained only in
+   the (10)/(18) full-sector register, never in the scalar one.
 2. **PROVED per `corpus-r2.md` adjudication:** the standalone cancellation lemma ML4-A.  The property that
    kills the orthogonal `O(k)` contribution is energy-shell descendant
    matching plus `C¹` trace regularity; the Ward identity computes the

@@ -16,8 +16,26 @@ Claims tested, for random highest-weight psi in sector n:
   (C3) eq (9):  P J^-_0 psi = (2/(N-2n)) S^- J^z_0 psi   -- expected FALSE n>=2
   (C4) corrected: P J^-_0 psi = 2 D A^{-1} J^z_0 psi with A = D†D on the
        FULL n-sector                                 -- expected TRUE all n
+
+Added 2026-08-28 (bd tns-uxr downstream audit, findings UXR-R1/UXR-R2;
+verdicts/ml4-ward-n2-audit.md sections 1.2-1.3).  These make the corpus
+immune to the defect class rather than merely repaired:
+  (C5) UXR-R1 REGISTER TRAP.  In the highest-weight-restricted register
+       D_lambda = Q_0|_{ker S^+} one has A_lambda = (N-2n) 1 (the PROVED
+       first display of (9)), so the string "2 D A^{-1} J^z_0" evaluates
+       to the REFUTED display.  Certifies: A_lambda is scalar; the naive
+       hw reading reproduces the refuted display exactly; the correct hw
+       form (1/m_lambda) Q_0 Pi_hw J^z_0 is exact at every n; and the two
+       registers' repairs are NOT interchangeable (cross-error O(1)).
+  (C6) UXR-R2 NAMED-LEAF FAILURE.  The former eq (18) is false on the ML2
+       singular contact vector |chi_pi> ~ sum_x (-1)^x |x,x+1>, the very
+       vector <1>5.<2>1.<3>3 names as belonging to its branch: relative
+       error 1.000 at N=8.  The corrected full-sector form is exact there.
 Exit 0 iff the F1 pattern is confirmed exactly (C3 holds at n=1, fails at
-n>=2; C4 holds at all n).  --red flips (9) into the test that must fail.
+n>=2; C4 holds at all n) and C5, C6 confirm.  --red flips (9) into the
+test that must fail; --red-register asserts the two registers' repairs are
+interchangeable (they are not); --red-chi asserts the old (18) holds on
+|chi_pi> (it does not).
 """
 import sys
 import numpy as np
@@ -66,6 +84,120 @@ def build(n_sites):
 def sector_basis(num, n):
     vals = np.round(np.diag(num).real).astype(int)
     return np.where(vals == n)[0]
+
+
+def hw_basis(Sp, idx_n):
+    """Orthonormal basis of ker S^+ inside sector n, as columns."""
+    _u, sv, vh = np.linalg.svd(Sp[:, idx_n], full_matrices=True)
+    rank = int(np.sum(sv > 1e-10))
+    return vh[rank:].conj().T
+
+
+def check_registers_and_chi(n_sites, Sp, Sm, Sz, Jm, Jz, Jp, num, rng):
+    """C5 (UXR-R1 register trap) and C6 (UXR-R2 named-leaf failure)."""
+    red_reg = "--red-register" in sys.argv
+    red_chi = "--red-chi" in sys.argv
+    dim = Sp.shape[0]
+    ok = True
+
+    # ---------------- C5: the register trap ----------------
+    for n in (1, 2, 3):
+        idx_n = sector_basis(num, n)
+        idx_n1 = sector_basis(num, n + 1)
+        hw = hw_basis(Sp, idx_n)
+        if hw.shape[1] == 0:
+            continue
+        c = rng.normal(size=hw.shape[1]) + 1j * rng.normal(size=hw.shape[1])
+        psi_sec = hw @ c
+        psi_sec /= np.linalg.norm(psi_sec)
+        psi = np.zeros(dim, dtype=complex)
+        psi[idx_n] = psi_sec
+
+        D = Sm[np.ix_(idx_n1, idx_n)]              # full-sector map
+        A = D.conj().T @ D
+        P = D @ np.linalg.solve(A, D.conj().T)
+        Dl = D @ hw                                 # hw-restricted map
+        Al = Dl.conj().T @ Dl
+        Pi_hw = hw @ hw.conj().T
+        jz = (Jz @ psi)[idx_n]
+        m_lambda = (n_sites - 2 * n) / 2.0
+
+        # (i) A_lambda is scalar = (N-2n) 1  -- the PROVED first display of (9)
+        scal = np.linalg.norm(Al - (n_sites - 2 * n) * np.eye(Al.shape[0]))
+        # (ii) the naive hw reading of "2 D A^-1 Jz" IS the refuted display
+        naive_hw = 2.0 * (Dl @ np.linalg.solve(Al, hw.conj().T @ jz))
+        refuted = (2.0 / (n_sites - 2 * n)) * (D @ jz)
+        hwform = (1.0 / m_lambda) * (D @ (Pi_hw @ jz))
+        # (iii) correct forms in each register
+        lhs_full = P @ (Jm @ psi)[idx_n1]
+        err_full = np.linalg.norm(lhs_full - 2.0 * (D @ np.linalg.solve(A, jz)))
+        Pl = Dl @ np.linalg.solve(Al, Dl.conj().T)
+        lhs_hw = Pl @ (Jm @ psi)[idx_n1]
+        err_hw = np.linalg.norm(lhs_hw - hwform)
+        # (iv) cross-register substitution must be WRONG for n>=2
+        cross = np.linalg.norm(lhs_full - hwform)
+
+        # The trap, stated literally: dropping Pi_hw in the hw register (where
+        # A_lambda is scalar) reproduces the REFUTED display exactly.
+        naive_nopi = 2.0 * (D @ jz) / (n_sites - 2 * n)
+        trap = np.linalg.norm(naive_nopi - refuted)
+        print(f"C5 n={n}: ||A_l-(N-2n)1||={scal:.1e}  full-form err={err_full:.2e}  "
+              f"hw-form err={err_hw:.2e}  cross-register err={cross:.3e}  "
+              f"||naive-hw-reading - REFUTED display||={trap:.2e}  "
+              f"||2 D_l A_l^-1 Pi_hw Jz - hwform||={np.linalg.norm(naive_hw - hwform):.2e}")
+        if trap > 1e-10:
+            print("FAIL C5(ii): the naive hw reading did not reproduce the "
+                  "refuted display — the register trap is not what we think")
+            ok = False
+
+        if scal > 1e-10:
+            print("FAIL C5(i): A_lambda is not scalar on ker S^+")
+            ok = False
+        if err_full > 1e-10 or err_hw > 1e-10:
+            print("FAIL C5(iii): a register's own corrected form is not exact")
+            ok = False
+        if n >= 2 and cross < 1e-6:
+            print("FAIL C5(iv): cross-register substitution did not fail as required")
+            ok = False
+        if red_reg and n >= 2 and cross > 1e-10:
+            print("RED-REGISTER: cross-register substitution error detected as required")
+            sys.exit(1)
+
+    # ---------------- C6: the named ML2 singular vector ----------------
+    idx2 = sector_basis(num, 2)
+    idx3 = sector_basis(num, 3)
+    chi = np.zeros(dim, dtype=complex)
+    for x in range(n_sites):
+        bits = 0
+        for site in (x, (x + 1) % n_sites):
+            bits |= (1 << (n_sites - 1 - site))
+        chi[bits] += (-1.0) ** x
+    chi /= np.linalg.norm(chi)
+    D = Sm[np.ix_(idx3, idx2)]
+    A = D.conj().T @ D
+    P = D @ np.linalg.solve(A, D.conj().T)
+    jz = (Jz @ chi)[idx2]
+    lhs = P @ (Jm @ chi)[idx3]
+    err_old = np.linalg.norm(lhs - (2.0 / (n_sites - 4)) * (D @ jz))
+    err_new = np.linalg.norm(lhs - 2.0 * (D @ np.linalg.solve(A, jz)))
+    hw_chi = np.linalg.norm(Sp @ chi)
+    rel = err_old / max(np.linalg.norm(lhs), 1e-30)
+    print(f"C6 |chi_pi>: ||S+chi||={hw_chi:.1e} (highest weight)  "
+          f"old-(18) err={err_old:.3e} (rel {rel:.3f})  corrected err={err_new:.2e}")
+    if hw_chi > 1e-10:
+        print("FAIL C6: |chi_pi> is not highest weight — premise of <3>3 broken")
+        ok = False
+    if err_new > 1e-10:
+        print("FAIL C6: corrected form is not exact on the named vector")
+        ok = False
+    if rel < 0.5:
+        print("FAIL C6: old (18) did not fail on |chi_pi> as required")
+        ok = False
+    if red_chi and rel > 1e-10:
+        print("RED-CHI: old (18) failure on |chi_pi> detected as required")
+        sys.exit(1)
+
+    return ok
 
 
 def main():
@@ -137,6 +269,9 @@ def main():
     if red:
         print("RED FAILED: no eq(9) violation found")
         sys.exit(0)
+    if not check_registers_and_chi(n_sites, Sp, Sm, Sz, Jm, Jz, Jp, num, rng):
+        pattern_ok = False
+
     if pattern_ok:
         print("CONFIRMED: F1 pattern exact — (9) holds n=1, fails n>=2 via "
               "S+ Jz psi = -J+ psi != 0; corrected 2D A^{-1} Jz form holds all n")
