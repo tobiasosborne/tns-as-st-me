@@ -17,6 +17,17 @@ first-moment tightness** — NOT completeness, NOT channel exhaustion, NOT a
 channel inventory.  The channel-free formulation of M-INDEX-spec is exactly
 what makes this reachable.  Do not accidentally prove more than you need.
 
+## WRITING DISCIPLINE (non-negotiable — this brief has already killed one run)
+
+Derive and **Write ONE Lamport section per response**.  Do not draft the proof
+inside extended thinking before writing: a previous attempt at this exact work
+order died at the 64k output cap with ~nothing on disk, and the reasoning was
+unrecoverable.  Write ⟨1⟩1 to the file, then think, then write ⟨1⟩2, and so on.
+The file on disk must be a valid partial deliverable at every moment.
+
+This is NOT a model-family quirk — it is a property of long proof generation,
+and it has now killed runs in two different families.  It applies to you.
+
 ## READ FIRST, in order
 
 1. CLAUDE.md (laws; **L6b Lamport format is mandatory**; L10 honest verdicts)
