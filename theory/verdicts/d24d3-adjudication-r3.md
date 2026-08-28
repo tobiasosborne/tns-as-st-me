@@ -124,7 +124,8 @@ None of that is re-litigated below.  Leaves cite it as `r1-critic V*` /
   leaf citing D-numbers with the prose demoted to a load-free corroboration
   note (L6b).
 * **(R3-d)** Checker third pass (r2-critic M3, m4, m5, n5): the acceptance
-  band is **derived from the data's own quoted error** (`0.05`, §7.5); C2's
+  band is **derived at run time from the data's own quoted error**
+  (`0.0479`; there is no acceptance constant left in the file — §7.5); C2's
   ladder gate extended to a two-route cross-check and to every occupation
   `n ≤ 2S` (kills `cA_deepladder` at C2); the decorative momentum loop
   replaced by a real cross-momentum orthogonality gate (kills `cB_onek`);
@@ -249,7 +250,7 @@ hypothesis of PROVED `M-IDX-density`; r1-critic M4(ii)).
   nonempty.  The membership content of clause (3b) is the **`h`-profile**
   statement — `v_h L(0,h)/χ(h,0)` does not depend on `h` — and not a value.
 * **(iii)** *Conditionally* — given the jet-identification bridge — for
-  **each** `S ∈ {1/2, 1, 3/2, 2}` at which `𝒮_W(S)` is nonempty in the
+  **each** `S ∈ {1/2, 1, 3/2, 2}` at which `𝒮_W(ρ)|_{ρ=S}` is nonempty in the
   fully polarised spin-`S` register, `𝔞_leg(S) = 1/(2S)`; and within the
   one-parameter family `𝔞_leg = Z_ρ^{-p}` the exponent is `p = 1`.
 * **(iv)** On the charge-created reading of `E^O_desc` — the reading the
@@ -439,7 +440,7 @@ Justification: ⟨3⟩1; §4.4; bd `tns-axg`.
 D24(d) soft multiplier equals the jet of the two-body physical phase
 (corpus identification via `soft-current-recon.md` (R17) and
 `oracle-bethe.md` O9; **NOT** a PROVED row — H5); (β) for a given
-`S ∈ {1/2, 1, 3/2, 2}`, a member `O ∈ 𝒮_W(S)` exists in the fully polarised
+`S ∈ {1/2, 1, 3/2, 2}`, a member `O ∈ 𝒮_W(ρ)|_{ρ=S}` exists in the fully polarised
 spin-`S` register `H_S = −JΣ_x(S_x·S_{x+1} − S²)` with `M_1^O ≠ 0`.
 
 **PROVE.**  `𝔞_leg(S) = 1/(2S)`, **for each such `S` separately** (r2-critic
@@ -754,3 +755,579 @@ concurred by the r1 critic §8 and the r2 critic §8; retained in substance).
   ratio is by definition the physical soft factor, which would make
   `D24-VAL` a tautology).  That is the §3.2 discipline applied to a
   convention rather than to a value.
+
+---
+
+## 5. MERGE PROPOSALS
+
+*This lane edited no shared file.  The orchestrator applies §5.0–§5.5 as
+**one commit**: §5.1's `𝔞_leg` and §5.2's clause 3b are meaningless without
+§5.0's convention, and §5.3's rows quote both.  A partial application is
+**not** offered.*
+
+**Mechanics.**  All three `definitions.md` spans are REPLACEments of adjacent
+blocks, so apply them in **descending line order** — §5.2 (952–973), then
+§5.1 (931–950), then §5.0 (923–929) — or match on the quoted first and last
+lines.  Anchors re-verified this round against the current files:
+`definitions.md:923` begins `**(b) Amputated amplitudes.**`, the (b) span
+ends at `929` (`waves are generalised kernels inside \`C_c^∞\` packets
+(D3(a), D12(a′)).`); `:931` begins `**(c) The contact first jet.**`, the (c)
+span ends at `950` (`factorisation with the same stated norm control.`);
+`:952` begins `**(d) The Ward-covariant no-contact class`, the (d) span ends
+at `973` (`is part of the ML5-B future work.`).  `claims/CLAIMS.md` ML5-A is
+line 40, ML5-B line 41.  `notation.md`: `𝒮_W` row `= 258`, `𝖲` row `= 244`,
+`χ(h,k)` row `= 261`, overload rule 2 at `91–98`, rule 8 at `123–130`,
+rule 9 at `131–134`, `𝔞_α` row at `55`.
+
+### 5.0 `definitions.md` — D24(b), lines 923–929  (NEW; r2-critic F1)
+
+**REPLACE** (from `**(b) Amputated amplitudes.**` through
+`waves are generalised kernels inside \`C_c^∞\` packets (D3(a), D12(a′)).`):
+
+```
+**(b) Amputated amplitudes, and the normalisation they are measured in.**
+For a source `O`, `M_1^O(h)` is its amputated one-hard amplitude and
+`M_2^O(k,h)` its connected hard-plus-soft amplitude in the physical channel;
+both are linear in `O`, and both are measured as multipliers in `L²(I,dh)`
+for a fixed hard window `I = [a,b] ⋐ (0,π)`.  Remainders are measured in
+`‖R_{S2}(k)‖_{L²(I)} ≤ C_I|k|²‖M_1^O‖_{L²(I)}`, or, for
+`f_ε(k) = ε^{-1/2}f(k/ε)`, as `O(ε²)` in the product packet norm.  Plane
+waves are generalised kernels inside `C_c^∞` packets (D3(a), D12(a′)).
+
+*Amputation and leg-normalisation convention.*  Both amplitudes are taken
+against asymptotic one-magnon kernels normalised by `⟨k|k′⟩ = 2πδ(k−k′)`,
+inside the corpus's packet discipline (D3(a); the `ℓ¹∩BV` packet class of
+D12(a′); the fixed-`k` reading of D12(b)).  The **same** amputation is
+applied to the **same** hard leg in both.  The soft leg enters `M_2^O` as
+**one additional `δ`-normalised asymptotic magnon of momentum `k`, carrying
+unit leg weight** — not as a charge-created or current-created vector.
+
+This is a *convention*, not a theorem, and it is load-bearing.  A change of
+normalisation `M_1^O ↦ c\,M_1^O`, `M_2^O(k,·) ↦ c′(k)\,M_2^O(k,·)` with
+`c, c′(k) ≠ 0` (necessarily independent of `O`, by linearity above) leaves
+clauses (d)1, 2, 4, 5 invariant, while the (d)3a external flux factor and
+the (d)3b amputation constant transform as
+`L(k,h) ↦ (c′(k)/c)L(k,h)` and `𝔞_leg ↦ (c′(0)/c)\,𝔞_leg`.  Fixing
+`c′(0)/c = 1` as above is exactly what makes `𝔞_leg` a number rather than a
+name: without it, "`𝔞_leg = 1`" and "`𝔞_leg = 1/Z_ρ`" are statements about a
+convention and not about a model.  What remains free does not move `𝔞_leg`:
+rescaling the source (both amplitudes are linear in `O`); any hard-leg
+amputation convention applied identically in both (it cancels in the (d)3a
+quotient); and any soft-leg envelope `λ(k)` with `λ(0) = 1`.
+
+Two consequences are recorded because they are used below.  (i) In the fully
+polarised spin-`S` ferromagnet the **charge-created** soft leg is *not* this
+convention's soft leg: `S^-_x|Ω⟩ = √(Z_ρ)\,|x⟩` on normalised one-flip
+states, hence `Q^-_k|Ω⟩ = √(Z_ρ)\,|k⟩` exactly, the two coinciding only at
+`ρ = 1/2` (named computation D24N-C8 in
+`theory/checks/d24d3_normalization_check.py`, verified against the
+Hamiltonian's own one-magnon eigenvector).  (ii) Consequently a soft-leg
+normalisation argument alone contributes `Z_ρ^{-1/2}` to `𝔞_leg`, not
+`Z_ρ^{-1}`; see the fence on lemma AMP in (d)3b.
+```
+
+### 5.1 `definitions.md` — D24(c), lines 931–950
+
+**REPLACE** (from `**(c) The contact first jet.**` through
+`factorisation with the same stated norm control.`):
+
+```
+**(c) The contact first jet.**  With `χ(h,k) := sgn(v(h) − v(k))` and
+`𝔞_leg` the soft-leg amputation constant of (d)3b below (the forward
+reference is deliberate: `𝔠_h` is by definition the obstruction to the
+factorisation (d) predicts),
+
+  `𝔠_h(O) := ∂_k M_2^O(k,h)|_{k=0} − 2i\,𝔞_leg\,χ(h,0)\,M_1^O(h)`.
+
+**Criterion (ML5-A; status in the claims DAG).**  On a linear source class
+with `M_1^O ∈ L²(I)` and `M_2^O(k,·)` `C²` at `k=0` as an `L²(I)`-valued map,
+the factorisation
+`M_2^O(k,h) = 2i𝔞_leg χ k M_1^O(h) + O_{L²(I)}(k²)` holds **if and only if
+both**
+
+  `M_2^O(0,·) = 0`  and  `𝔠_h(O) = 0`
+
+in `L²(I)`.  With
+`K_O(ε) := (1/2)sup_{|q|≤ε}‖∂_q²M_2^O(q,·)‖_{L²(I)}`, Taylor's theorem gives
+the exact control
+`‖M_2^O(k,·) − 2i𝔞_leg χ kM_1^O‖_{L²(I)} ≤ K_O(ε)|k|²`.
+The stronger relative bound used in D24(b) requires the additional uniform
+hypothesis `K_O(ε) ≤ C_I‖M_1^O‖_{L²(I)}`; it does not follow from `C²`
+regularity alone.  On an affine class both displayed zero conditions must
+hold on every source difference, and the base source must obey the full
+factorisation with the same stated norm control.
+**The criterion is constant-agnostic** — its proof (`ml5-universality.md`
+⟨1⟩2) evaluates at `k = 0` and differentiates once, and never uses the
+value of `𝔞_leg` (`𝔞_leg ≠ 0` suffices).  The counterexamples of (e) are
+likewise `𝔞_leg`-blind: both have `M_1^O = 0`, so the `𝔞_leg`-dependent term
+vanishes identically for every `𝔞_leg`, and neither (e) nor
+`theory/checks/ml4_check.py` needs an edit (bd `tns-iu5`).
+```
+
+### 5.2 `definitions.md` — D24(d), lines 952–973
+
+**REPLACE** (from `**(d) The Ward-covariant no-contact class` through
+`is part of the ML5-B future work.`):
+
+```
+**(d) The Ward-covariant no-contact class `𝒮_W(ρ)`.**  Fix a broken-symmetry
+tail density `ρ := ω_α(S^z) > 0` (`notation.md`'s `ρ`-row), and write
+`Z_ρ := 2ρ` for the order-parameter density (`notation.md`'s `Z_ρ`-row; in
+an su(2) model with a fully polarised α tail, `Z_ρ = ω_α([S^+_x, S^-_x])` —
+a special case, not a membership condition).  Under (S) at both tails,
+D26(INT), and the antisymmetric tail pair `ω_β(S^z) = −ω_α(S^z) = −ρ` —
+the load-bearing hypothesis of claim `M-IDX-density` — `2ρ ∈ ℤ`, so `Z_ρ`
+is then a positive integer.  `ρ = 0` is excluded: D26 admits it, but there
+is then no broken order parameter and no type-B soft leg.  In the fully
+polarised spin-`S` ferromagnet `ρ = S`.  All amplitudes below are in the
+normalisation convention of (b); clause 3b is empty without it.  `𝒮_W(ρ)` is
+the class of sources satisfying all five of (clause 3 has two parts; the
+*count* of conditions is deliberately unchanged, so `paper/main.tex:244`
+"five-condition" and the audit rows that quote it stay correct):
+1. *Exhaustive normed LSZ decomposition* — in `L²(I)`, `M_2^O` is exactly
+   the sum of the descendant external-leg term `E^O_desc`, the
+   orthogonal-current term, and the direct source/contact term named below;
+   there is no additional reduced term, and the equality holds in the same
+   packet norm as (b).
+2. *Ward covariance* — the descendant current residue factorises as
+   `2i v_h M_1^O(h)`.  (This clause is correct at every density: on the
+   fully polarised spin-`S` tail the residue is exactly `Z_ρ`-linear,
+   `⟨h|Q_0^†J^-_0|h⟩ = 2i v_S(h)` with `v_S(h) = Z_ρ J\sin h`; frozen
+   `soft-current-recon.md` (R14) is its `Z_ρ = 1` reading — named
+   computation D24N-C3 in `theory/checks/d24d3_normalization_check.py`.)
+3. *Kinematic LSZ normalisation*, in two parts:
+   **(3a) hypothesis** — the external flux factor
+   `L(k,h) := E^O_desc(k,h)/[(e^{ik}−1)\,2i v_h\,M_1^O(h)]` is well
+   defined by clauses 1--2 for `k ≠ 0` at every `h` with `M_1^O(h) ≠ 0`;
+   the hypothesis is that it extends to a process-independent, uniformly
+   `C¹` function on `{|k| ≤ ε} × I`, and `L(0,h)` denotes that extension's
+   value at `k = 0`.
+   **(3b) the profile of `L(0,h)`, and the OPEN amputation constant** —
+   `v_h\,L(0,h)/χ(h,0)` does not depend on `h` on `I`; equivalently
+   `L(0,h) = 𝔞_leg(ρ)·(−iχ(h,0)/v_h)` for some nonzero constant
+   `𝔞_leg(ρ)`.  **What this clause asserts is that `h`-profile — the
+   reciprocal LSZ energy denominator `[ω(h+k)−ω(h)]^{-1}k`, the corpus's
+   fixed provenance for `L` (`soft-current-recon.md` ⟨1⟩7,
+   `paper/main.tex:524--527`, `soft-index-b.md:808`) — and no value.**  By
+   (3a) `L` is a single class-level function, so `𝔞_leg(ρ)` is a datum of
+   the class `𝒮_W(ρ)` and not of any individual source, and it is defined
+   only when that class is nonempty.  **This definition fixes no value of
+   `𝔞_leg(ρ)` at any density, `ρ = 1/2` included.**  As frozen, this clause
+   stipulated `𝔞_leg = 1`, which under the corpus's jet-identification
+   bridge contradicts PROVED `S2-2body-S` at every `ρ ≠ 1/2` (bd
+   `tns-iu5`); that stipulation is withdrawn.  Two candidate readings are
+   carried in `claims/CLAIMS.md` and neither is part of this definition:
+   the conditional matched value `𝔞_leg(ρ) = 1/Z_ρ` (row `D24-VAL`,
+   proved as an implication from the bridge plus class membership), and
+   the open lemma **AMP** of the same value from a soft-leg amputation
+   mechanism (row `AMP`, CONJECTURE).  Fence on AMP: by (b)(ii) a leg
+   normalisation alone contributes `Z_ρ^{-1/2}`, and that value is refuted
+   against the ansatz-free two-magnon data at the pre-registered band, so
+   AMP requires a second factor `Z_ρ^{-1/2}` from a different mechanism
+   (`theory/verdicts/d24d3-adjudication-r3.md` ⟨1⟩4).  At `ρ = 1/2` the two
+   candidate readings and the retired stipulation all coincide at `1`, so
+   the D6 displays of the soft coefficient `2` remain numerically
+   consistent with this clause; those displays rest on the contact/oracle
+   route (`oracle-bethe.md` O7–O9; `paper/main.tex:515–520`), not on this
+   clause;
+4. *Reduced-channel regularity* — the orthogonal current channel is
+   `O_{L²(I)}(k²)` in the stated target limit, with the relative norm
+   bound of (b).  Fixed-volume ML4 does not by itself supply a
+   volume-uniform bound;
+5. **No direct soft contact** — the amputated source commutator/contact
+   term is bounded by `C_I|k|²‖M_1^O‖_{L²(I)}`.
+
+Hypotheses 1 and 5 are the extra LSZ/contact content beyond the fixed-volume
+Ward reduction, and by (c) the zero-intercept and zero-first-jet conditions
+are necessary, not cosmetic.  Symmetry-generated external-leg insertions are
+the intended seed, but **no nontrivial microscopic class has been proved to
+satisfy all five conditions**; nonemptiness in the target scattering
+register is part of the ML5-B future work.  The `tns-iu5` adjudication of
+clause 3 removed a *proof* that `𝒮_W(ρ)` is empty for `ρ ≠ 1/2` — as frozen,
+clause 3 forced soft slope `2` at every density, contradicting PROVED
+`S2-2body-S` given the jet-identification bridge — but it supplies no member
+and fixes no value of `𝔞_leg(ρ)`, so nonemptiness stays open at every `ρ`
+(bd `tns-axg`).
+```
+
+### 5.3 `claims/CLAIMS.md`
+
+*L5 compliance note.*  The file header fixes the authoritative statuses as
+`PROVED | SKETCH | CONJECTURE | REFUTED` and says that "empirical,
+conditional, under-review, and future-work qualifiers belong in prose, never
+as additional status values".  So the r2 critic's suggested label "PROVED
+(conditional implication; currently vacuous-or-unknown)" is taken as
+**status `PROVED`** with the qualifier moved into the statement column,
+exactly as ML5-B already does.
+
+**5.3a — REPLACE the ML5-B row (line 41) with:**
+
+```
+| ML5-B | Conditional implication on the five-condition D24(d) class `𝒮_W(ρ)`, including the exhaustive normed LSZ decomposition.  The implication is proved; its displayed conclusion is `M_2^O(k,h) = 2i𝔞_leg(ρ) χ k M_1^O(h) + O_{L²(I)}(k²)`, with `𝔞_leg(ρ)` the D24(d)3b soft-leg amputation constant.  **This conclusion contains no number at any density, `ρ = 1/2` included:** D24(d)3b fixes no value of `𝔞_leg`, so ML5-B predicts a factorisation SHAPE — linear in `k`, proportional to `M_1^O`, with a class constant — and not a coefficient.  The number `2` was never a consequence of this row; it was a consequence of this row plus the frozen D24(d)3 stipulation `𝔞_leg = 1`, which is withdrawn.  Corpus displays of the soft coefficient `2` rest on the contact/oracle route (`oracle-bethe.md` O7–O9, `paper/main.tex:515–520`), which does not use D24(d).  **Re-scoped 2026-08-29 (bd `tns-iu5` r3):** the frozen clause forced soft slope `2` at EVERY tail density, contradicting PROVED `S2-2body-S` (`1/S`) given the jet-identification bridge — frozen `𝒮_W` provably empty for `ρ ≠ 1/2`.  Clause 3 is now split: 3a keeps the process-independence/`C¹`-extension hypothesis with `L` DEFINED as the descendant quotient (`k ≠ 0`); 3b asserts only the `h`-profile of `L(0,h)` and leaves `𝔞_leg(ρ)` open.  The two candidate values are carried as rows D24-VAL (conditional, proved as an implication) and AMP (CONJECTURE).  The proof of the implication is unchanged apart from carrying `𝔞_leg` as a nonzero constant factor (⟨2⟩1.⟨3⟩2 needs only `𝔞_leg ≠ 0` and `v_h` bounded below on `I`), so the corpus-r2 promotion is reparametrised, not reopened.  Nonemptiness and microscopic membership remain CONJECTURE/future work bd `tns-axg`, at every `ρ`. | PROVED | ML4-A, ML5-A, D24(d) | theory/ml5-universality.md ⟨1⟩3; PROVED per corpus-r2.md adjudication (conditional implication) — see the r3 annotation appended at corpus-r2.md:174–178, which records that the multiplication certified there survives verbatim with `𝔞_leg` carried; clause-3 repair adjudicated in theory/verdicts/d24d3-adjudication-r3.md (bd tns-iu5 r3) | theory/checks/ml4_check.py local obstructions only (`𝔞_leg`-blind: both D24(e) counterexamples have `M_1^O = 0`); theory/checks/d24d3_normalization_check.py D24N-C1–C3 test the kinematics of the conclusion, not its constant |
+```
+
+*(Note: `S2-2body-S` is deliberately NOT added to ML5-B's depends-on — with
+the value retired, ML5-B's conclusion does not reference it; the dependency
+belongs to `D24-VAL`.  The r2 critic verified this reasoning, §7.)*
+
+**5.3b — ADD a new row `D24-VAL` (immediately after the ML5-B row):**
+
+```
+| D24-VAL | Conditional matched value of the D24(d)3b amputation constant, in the D24(b) normalisation convention.  GIVEN (α) the jet-identification bridge — the D24(d) soft multiplier's jet equals the two-body physical phase jet (corpus identification via soft-current-recon.md (R17) and oracle-bethe.md O9; NOT a PROVED row) — and (β_S) existence of a member `O ∈ 𝒮_W(ρ)|_{ρ=S}` with `M_1^O ≠ 0` in the fully polarised spin-`S` register (written `𝒮_W(ρ)|_{ρ=S}`, not `𝒮_W(S)`, to keep the `ρ`-vs-`s` fence visible at the point of use; and note that the `ρ` here is the D24(d) tail density of `notation.md`'s `ρ`-row, NOT the file-local double-occupancy coefficient `ρ` of theory/spin-s-twomagnon.md ⟨1⟩1–⟨1⟩2, which is the shard `S2-2body-S` lives in): THEN, for each such `S` separately, `𝔞_leg(S) = 1/(2S) = 1/Z_ρ`, i.e. `L(0,h) = −iχ/(2ρ v_h)` and ML5-B jet `χ/ρ`, at `S ∈ {1/2, 1, 3/2, 2}`.  Within the family `𝔞_leg = Z_ρ^{-p}` the exact law `(2S)^p = 2S` forces `p = 1` at any single `2S ≠ 1` (the `S = 1/2` point is degenerate; the four densities are four points of one analytic curve, not four independent measurements).  **The implication is a theorem; its antecedents are not.**  It is currently VACUOUS-OR-UNKNOWN: (β_S) is open at every `S` (bd `tns-axg`) and (α) is unproved, so the row constrains future work — any member ever exhibited must have this value — rather than supplying evidence now.  It cannot be upgraded past that reading until `tns-axg` exhibits a member or AMP closes.  Extension to non-half-integer `ρ` is hypothesis, not consequence. | PROVED | D24(b), D24(d), S2-2body-S, ML5-B | theory/verdicts/d24d3-adjudication-r3.md §2 ⟨1⟩3 | theory/checks/d24d3_normalization_check.py D24N-C6 tests the numerical consistency of the CONSEQUENT with the ansatz-free two-magnon slopes, at a band derived from the data's own quoted error; neither antecedent is tested by any gate, and no gate bears on `L`, `E^O_desc` or membership |
+```
+
+**5.3c — ADD a new row `AMP` (immediately after the `D24-VAL` row):**
+
+```
+| AMP | Soft-leg amputation lemma: in the D24(b) normalisation convention, charge-created soft-leg amputation contributes the per-site order-parameter density `Z_ρ = 2ρ` to the external flux, i.e. `𝔞_leg(ρ) = 1/Z_ρ` UNCONDITIONALLY — without the D24-VAL bridge and without assuming a class member.  Originally named at theory/verdicts/soft-index-r1.md F1(c)(i).  Statable only relative to D24(b)'s convention: a change of normalisation rescales `𝔞_leg`, so before that convention the statement had no truth value (bd `tns-iu5` r2 critic F1).  **Quantitative fence (theory/verdicts/d24d3-adjudication-r3.md ⟨1⟩4):** the leg-conversion mechanism is computed exactly — `Q^-_k|Ω⟩ = √(Z_ρ)|k⟩`, D24N-C8 — and supplies only `Z_ρ^{-1/2}`, a value the ansatz-free data refutes at the PRE-REGISTERED band (`--red-halfpower`, deviations 0.42/0.73/1.00 vs band 0.08).  AMP is therefore true only if a second factor `Z_ρ^{-1/2}` arises from a mechanism that is NOT a leg normalisation; any proposed proof must be checked against D24N-C8 or it double-counts the leg. | CONJECTURE | D24(b), D24(d) | — | theory/checks/d24d3_normalization_check.py D24N-C8 (the leg-conversion constant); D24N-C6 `--red-halfpower` (the leg-normalisation-only value refuted) |
+```
+
+**5.3d — REPLACE the ML5-A row (line 40) with:**
+
+```
+| ML5-A | Repaired iff: `M_2^O(0)=0` and `𝔠_h(O)=0`, with source-wise remainder controlled by `K_O` and the relative bound separately assumed.  The criterion is constant-agnostic: its proof evaluates at `k=0` and differentiates once and never uses the value; since bd `tns-iu5` (r3) it is stated with D24(c)'s constant `2i𝔞_leg χ`, and `𝔞_leg ≠ 0` suffices.  D24(e)'s counterexamples are `𝔞_leg`-blind (both have `M_1^O = 0`), so neither D24(e) nor ml4_check.py tests `𝔞_leg` or needs an edit. | PROVED | D24(c) | theory/ml5-universality.md ⟨1⟩2; PROVED per corpus-r2.md adjudication | theory/checks/ml4_check.py ML5-I1 |
+```
+
+### 5.4 `notation.md` (the L4 symbol registry)
+
+**5.4a — ADD to the ML4/ML5/M-quant symbol table (after the `𝒮_W` row):**
+
+```
+| `L(k,h)`, `L(0,h)` | D24(d)3a external flux factor: the descendant quotient `E^O_desc/[(e^{ik}−1)·2iv_h·M_1^O(h)]`, defined for `k ≠ 0` where `M_1^O(h) ≠ 0`; `L(0,h)` is the value at `k=0` of the hypothesised `C¹` extension.  D24(d)3b asserts its `h`-profile — the reciprocal LSZ energy denominator, whose provenance in the corpus (`soft-current-recon.md` ⟨1⟩7; `paper/main.tex:524–527`; `soft-index-b.md:808`) is written in the D6 register `ρ = 1/2` and fixes the profile, not the constant.  `L(0,h) = 𝔞_leg(ρ)·(−iχ(h,0)/v_h)`.  Normalisation-dependent: `L ↦ (c′/c)L` under D24(b)'s rescalings | definitions.md D24(d)3 |
+| `Z_ρ` | order-parameter density `2ρ`; for an su(2) model with a fully polarised α tail, `Z_ρ = ω_α([S^+_x, S^-_x])`.  Subscripted deliberately: bare `Z` stays Pauli-reserved (overload rule 9, unchanged) | definitions.md D24(d) |
+| `𝔞_leg(ρ)` | soft-leg amputation constant of D24(d)3b, `𝔞_leg(ρ) := i v_h L(0,h)/χ(h,0)`; a datum of the class `𝒮_W(ρ)`, defined only when that class is nonempty, constant in `k`, `h` and `O` but NOT in `ρ`.  Meaningful only in the D24(b) normalisation convention, which rescales it.  Value OPEN: conditionally matched `= 1/Z_ρ` by claim D24-VAL; asserted `= 1/Z_ρ` unconditionally by the CONJECTURE row AMP; `= 1` as frozen (withdrawn).  Written bare `𝔞_leg` inside a fixed-`ρ` display (overload rule 13) | definitions.md D24(d)3b |
+| `E^O_desc` | descendant external-leg term of the D24(d)1 decomposition (fraktur `𝔈` avoided: `𝔈_W`, `𝔈_{A_α}`, `𝔈_{A_β}` are the window CP maps); not a transfer map — see overload rule 8 | definitions.md D24(d)1 |
+```
+
+**5.4b — REPLACE the `𝒮_W` row (line 258) with:**
+
+```
+| `𝒮_W(ρ)` | the ρ-indexed five-condition Ward/LSZ/no-contact source class in the repaired conditional ML5-B implication; `ρ := ω_α(S^z) > 0` | definitions.md D24(d) |
+```
+
+**5.4c — In the `𝖲(k_s;{q_i,v_i})` row (line 244), replace** "on the D24(d)
+class `𝒮_W`" **with** "on the D24(d) class `𝒮_W(ρ)`".
+
+**5.4d — APPEND to overload rule 2** (the pre-existing bare-`χ` tension;
+minimal amendment, not a resolution):
+
+```
+   Recorded exception (2026-08-29, bd `tns-iu5` r3): D24(c)/(d) and the ML5
+   shards use the *argumented* channel sign `χ(h,k)` (registered below) and
+   abbreviate it `χ` inside their own displays; the bare-`χ` =
+   bond-dimension rule is unchanged everywhere else.
+```
+
+**5.4e — APPEND to overload rule 8** (r2-critic m2: `E_O` is live at
+`definitions.md:67`, `theory/spt-rebuild.md:183`,
+`theory/ansatz-scattering-2m.md:146` (the r2 critic wrote `:141`; the live line is `:146`, re-verified this round), so `E^O_desc` collides with the rule as
+written):
+
+```
+   Exception (bd `tns-iu5` r3): `E^O_desc`, with the literal word subscript
+   `desc` and an operator superscript, is the D24(d)1 descendant
+   external-leg term and is NOT a transfer map or a contraction of one.  It
+   is the only member of the `E` family carrying a word subscript.
+```
+
+**5.4f — ADD overload rule 13** (r2-critic m1: the r2 rationale "bare `𝔞` is
+the twisted group algebra `𝔞_α`" is **false** — `𝔞_α` is itself subscripted,
+so subscripting does not disambiguate; the actual disambiguator is the
+subscript *type*, and no rule recorded it):
+
+```
+13. **`𝔞`** — the fraktur `𝔞` carries a *Greek tail label* for the twisted
+    group algebra `𝔞_α`, `𝔞_β` of the asymptotic charge algebra (D4,
+    `notation.md`'s `𝔞_α` row), and a *word label* for the D24(d)3b soft-leg
+    amputation constant `𝔞_leg`.  There is no bare `𝔞`.  `𝔞_leg` is written
+    `𝔞_leg(ρ)` wherever more than one density is in play, and bare inside a
+    fixed-`ρ` display.
+```
+
+### 5.5 ADVISORY — same-commit obligations (NOT optional)
+
+1. Apply §4.2's `ml5-universality.md` edits (constant `2i𝔞_leg χ`, the
+   line-158 Wigner sentence, header ERRATUM pointer) in the SAME commit as
+   §5.0–§5.4, or add the ERRATUM-block alternative.  Do not ship §5.0–§5.4
+   alone.
+2. Apply §4.2's `TRIANGLE.md` cross-reference refresh (`𝒮_W → 𝒮_W(ρ)` at
+   lines 24, 215, 254, 257, 528).
+3. ERRATUM pointers (not edits) at the heads of `theory/soft-index.md`
+   (`:161–162`) and `theory/soft-index-b.md` (`:757–758, 808`), pointing at
+   this verdict.
+4. **NEW (r2-critic m8):** ERRATUM pointer at
+   `theory/verdicts/soft-index-r1.md:170` — "for every model in the class …
+   phase slope `2χ`" is superseded; a verdict record, so a pointer suffices.
+5. **NEW (r2-critic M4, the serious one):** append the r3 **annotation** to
+   `theory/verdicts/corpus-r2.md:174–178` given verbatim in §4.2.  This is a
+   promotion record, not a failed-lane record: it must be annotated, not
+   erratum'd, and the annotation must say that the certified implication
+   survives reparametrisation so that ML5-B's where-proved column does not
+   point at a document certifying a different conclusion.
+6. **NEW (r2-critic M4):** the one-clause scoping edit at
+   `paper/main.tex:524–527` given verbatim in §4.2.  This sentence is cited
+   by ⟨1⟩4.⟨3⟩2 as the charge-created reading, so the edit and this verdict
+   must ship together or the paper and the definition disagree about what
+   the division leaves.
+7. bd `tns-v44` (unified S1 r2) instruction: the r2 shard must carry the
+   factor as the displayed OPEN constant `𝔞_leg(ρ)` citing D24(d)3b, with
+   the matched value cited as `D24-VAL` and the unconditional lemma as
+   `AMP`.  **Rider (r2-critic §8):** the shard must not describe `𝔞_leg` as
+   *derivable*, and must not use the leg-normalisation mechanism, which
+   ⟨1⟩4 refutes.
+8. `HANDOFF.md` corpus-damage line "(3) Frozen `𝒮_W` empty for `ρ≠1/2`"
+   becomes "repaired by retirement: clause 3 split, D24(b) convention fixed,
+   `𝔞_leg(ρ)` OPEN (rows `D24-VAL` conditional, `AMP` CONJECTURE); ML5-B now
+   predicts no number at any density; `𝒮_W(ρ)` nonemptiness open at every
+   `ρ`".
+9. Paper-lane ticket (r2-critic n4, outside this lane): `paper/main.tex:179,
+   181–182` (Fig-2 caption) says "the **universal** coefficient `2`" and
+   "**Every** soft magnon…" with no `s`/`ρ` qualifier.  It is unaffected by
+   this repair (it rests on `S2-2body` via the contact route at
+   `main.tex:515–520`), but §4.3's re-sourcing makes the caption's warrant
+   worth restating.  File it; do not fix it here.
+
+---
+
+## 6. HONEST STATUS
+
+**H1 — PROVED (fenced twice; r1-critic V1–V6, r2-critic W7).**
+`Z_ρ = 2ρ = 2S`; `‖Q^-_k|Ω⟩‖²/N = Z_ρ` for all `k`; `v_S(h) = Z_ρ J sin h`;
+`⟨h|Q_0^†J^-_0|h⟩ = 2i v_S(h)` exactly at `2S = 1,2,3,4`; the frozen
+`𝔞_leg = 1` makes ML5-B's jet identically `2χ`; the exact spin-`S` phase
+slope is `1/S`.  **New and PROVED this round:** `Q^-_k|Ω⟩ = √(Z_ρ)|k⟩`
+exactly, with `|k⟩` an eigenvector of the one-magnon block of `H_S`
+(D24N-C8; residual `1.8·10^{-15}`, overlap error `8.9·10^{-16}`).
+
+**H2 — CONVENTIONAL, and declared so.**  The D24(b) normalisation convention
+of §5.0 is a **choice**, not a theorem.  It is the choice under which the
+D24 amplitudes are normalised like the asymptotic amplitudes the physical
+phase is defined from; ⟨1⟩0.⟨3⟩6 names the alternative it refuses and why.
+Every numerical statement about `𝔞_leg` in this corpus is relative to it,
+and that relativity is now displayed in `definitions.md` rather than silent.
+
+**H3 — MATCHED, CONDITIONAL, and RETIRED from the definition.**
+`𝔞_leg(ρ) = 1/Z_ρ` is fixed by on-shell matching against PROVED
+`S2-2body-S` — conditional on the jet-identification bridge (unproved, H6)
+*and* on membership (open, §4.4).  It is not derived, not stipulated into
+any L4 file, and not a fitted constant: within the family `Z_ρ^{-p}` the
+exponent is pinned symbolically at any single `2S ≠ 1` (⟨1⟩3.⟨3⟩3).  Its DAG
+home is `D24-VAL`, whose *implication* is a theorem and whose *content* is
+currently vacuous-or-unknown.
+
+**H4 — OPEN LEMMA, now with a quantitative fence.**  AMP is the
+unconditional statement of the same value.  It is statable only relative to
+H2's convention.  What is known about its mechanism is negative and now
+quantitative: leg conversion supplies exactly `Z_ρ^{-1/2}` (D24N-C8) and
+`Z_ρ^{-1/2}` is refuted against data at the pre-registered band, so AMP
+needs a second factor of the same size from something else (⟨1⟩4.⟨3⟩5).
+Watanabe–Murayama fixes the natural invariant `Z_ρ`, not the factor 2
+(⟨1⟩5.⟨2⟩3).
+
+**H5 — REFUTED.**  (i) The frozen clause 3 as a universal value claim, given
+the bridge (r1-critic V4/V5/V7).  (ii) The soft-leg **normalisation**
+mechanism for AMP, in both its forms: the `N`-dependent `(2ρN)^{-1/2}` route
+of the S1-A critic (D24N-C7, display) and — new, and the sharper of the two
+— the `N`-free `Z_ρ^{-1/2}` route that the fixed convention actually implies
+(D24N-C6 `--red-halfpower`, margin 5–12× at the pre-registered band).  NOT
+refuted: either S1 lane's arithmetic, or lane B's per-volume bookkeeping,
+which is the bookkeeping adopted here.
+
+**H6 — CONDITIONAL, and the one place a critic should push.**  The bridge —
+the D24(d) soft multiplier's jet equals the two-body physical phase jet — is
+the corpus's working identification ((R17), O9), not a PROVED row.  It now
+carries *more* weight than in r2, because ⟨1⟩4's refutation of the
+half-power route also rests on it: without the bridge, nothing in §3 is
+matched and nothing is refuted.  Citation note: the bridge evidence is (R17)
+and O9 only; `ml5-universality.md` ⟨1⟩4.⟨3⟩4's `s′(0,h) = 2i` is the `O_η`
+bra coefficient, not ML5-B's constant, and is not cited as bridge evidence.
+
+**H7 — EVIDENCE, not proof.**  The acceptance table is numerical
+(ansatz-free ED, extrapolated); H1's exactness claims are machine-precision
+identities at finite `N`, not `N → ∞` theorems; the `S2-2body-S` input is
+exact and PROVED; the extrapolation carries the residual error, and the
+acceptance band is now that error rather than a chosen number.
+
+**H8 — WHAT THIS MERGE COSTS.**  After it, no L4 file fixes `𝔞_leg` at any
+density and **ML5-B predicts no number at any density, `ρ = 1/2` included**
+(§4.3).  The corpus keeps every display of the coefficient `2`, but on the
+contact/oracle warrant, not on D24(d).  A reader who wants a number from the
+five-condition class will not find one until `tns-axg` or AMP closes.  This
+is stated as a loss, not managed as a footnote (L10).
+
+**H9 — NOT claimed.**  Nothing here promotes `S-general`, `Bc`, `M-quant`,
+`S-INDEX`, or AMP; nothing supplies a member of `𝒮_W(ρ)`; nothing touches
+`tns-ebh` or `tns-uxr`.  Additionally not claimed: any value of `𝔞_leg` in
+`definitions.md`; any statement at non-half-integer `ρ`; any mechanism for
+AMP; and — new this round — any claim that the §5.0 convention is forced.
+
+---
+
+## 7. Certificate
+
+`theory/checks/d24d3_normalization_check.py`, **559 loc** (L2 disclosure: 59
+over the 500-loc guideline; the excess is the new D24N-C8 one-magnon block
+and the two extra C2 routes, both demanded by r2-critic F1/m4 — flagged
+rather than hidden, and a candidate for a later split into an algebra module
+and a data module).  No bare `assert`; every failure raises `SystemExit(1)`
+with the gate name as the first token of the message, so the **exit path** is
+always identified.
+
+Green (`python3 -O`, exit **0**):
+
+```
+D24N-C1 GUARD frozen_jet_coefficient=2*chi matched=chi/rho
+D24N-C2 ladder x4 (residue, dense/occupation cross-check, multi-quantum norms, soft-leg norm + cross-momentum orthogonality), max_error=1.137e-13
+D24N-C3 Ward residue = Z_rho*2iJ sin h, max_error=4.814e-15
+D24N-C4 ansatz-free slopes vs 1/S: max_rel_dev=0.0043 (pre-registered band 0.08)
+D24N-C5 DISPLAY frozen-clause relative deviations at S=1/2,1,3/2,2: 0.000, 1.002, 2.003, 3.003  -> defect size 3.003
+D24N-C6 candidate max_rel_dev=0.0033 vs acceptance band 0.0479 DERIVED from the data's own quoted error (< pre-registered 0.08, so C6 is not subsumed by C4); fitted exponent=1.0024 over 2S!=1 spins; symbolic (2S)^p=2S root p=1 at S=1,3/2,2; S=1/2 degenerate: 1**p - 1 = 0
+D24N-C6 resolving intervals for p: at the derived band [0.969, 1.037]; at the pre-registered band [0.947, 1.062]; at r2's retired 0.02 band [0.989, 1.017] (reported, gates nothing)
+D24N-C7 DISPLAY N-dependent half-power route gap=1.855e-01
+D24N-C8 Q^-_k|Om> = sqrt(Z_rho)|k>: eigenvector residual=1.799e-15, overlap error=8.882e-16; so leg conversion alone gives a_leg = Z_rho^(-1/2), refuted by --red-halfpower at the PRE-REGISTERED band
+PASS: D24-VAL candidate a_leg = 1/(2 rho) matches; frozen a_leg = 1 and leg-conversion a_leg = Z_rho^(-1/2) both refuted; the D24(d)3b definition itself fixes no value (lemma AMP open)
+```
+
+### 7.1 Red modes — exit PATH, not just exit code (six, up from four)
+
+| mode | exit | died at (gate named in first stderr token) |
+|---|---|---|
+| `--red-frozen` (`𝔞_leg = 1`) | 1 | **D24N-C6** `at S=1.0 dev=1.0016; S=1.5 dev=2.0027; S=2.0 dev=3.0033` — fails at `S = 1` first, as the r1 work order demanded |
+| `--red-power` (`Z_ρ^{-2}`) | 1 | **D24N-C6** `at S=1.0 dev=0.4984; S=1.5 dev=0.6640; S=2.0 dev=0.7467` |
+| `--red-halfpower` (`Z_ρ^{-1/2}` — now the **leg-conversion prediction**, ⟨1⟩4) | 1 | **D24N-C6** `at S=1.0 dev=0.4158; S=1.5 dev=0.7347; S=2.0 dev=1.0033` |
+| `--red-ward` (residue `∼ Z_ρ²`) | 1 | **D24N-C3** `Ward residue Z-scaling error 1.697e+01` |
+| `--red-ladder` (**NEW**; ladder element `×3.7` at every `n ≥ 1`, exact at `n = 0` — the r2 critic's `cA_deepladder`) | 1 | **D24N-C2** `ladder/soft-leg-norm error 1.477e+06` — r2's C2 passed this mutant at `8.9·10^{-16}` and it died only downstream at C3 |
+| `--red-legfactor` (**NEW**; leg conversion `Z_ρ` instead of `√Z_ρ`) | 1 | **D24N-C8** `leg-conversion factor is not sqrt(Z_rho) (error 5.657e+00)` |
+
+### 7.2 Data mutants (copies in the scratchpad; the DATA falsified)
+
+| mutant (copy of `spin1-bc-falsifier.json`) | exit | died at |
+|---|---|---|
+| `m1_slope` — `S=1` summary slopes forced to `2.0` | 1 | **D24N-C4** `slope deviates from 1/S by 1.0000` |
+| `m2_shift799` — every summary slope `×(1−0.0799)` | 1 | **D24N-C4** `0.0839` |
+| `m2b_shift60` — every summary slope `×(1−0.060)` | 1 | **D24N-C6** `at S=0.5 dev=0.0604 … S=2.0 dev=0.0631` — **passes C4 (max row dev 0.064 < 0.08) and dies at the acceptance gate**, so C6 is still not subsumed by C4 with the *derived* band |
+| **`m6_shift30` — every summary slope `×(1−0.030)`** | **0 (PASSES, and must)** | a `−3%` perturbation is *inside* the data's own quoted error at every spin; r2's `0.02` band **rejected** it (r2-critic M3(b)(iii)).  The derived band accepts it: `max_rel_dev = 0.0332 < 0.0479`.  This is the calibration fix, demonstrated |
+| `m3_bandmoved` — `decision_band` `0.08 → 0.5` | 1 | **D24N-C4** `decision band moved: 0.5` |
+| `m4_noband` — `decision_band` key deleted | 1 | **D24N-C4** `decision_band key missing` |
+| `m5_absent` — data file missing | 1 | **D24N-C4** `missing ground-truth file` |
+| **`m7_noerror` — the `error` column deleted from every row** | 1 | **D24N-C6** `data row has no quoted error column` — the derived band cannot silently default |
+| **`m8_errinflate` — `error` column `×4`** | 1 | **D24N-C6** `derived band 0.1914 is not tighter than the pre-registered 0.08: C6 would be subsumed by C4` — the checker refuses to run a gate that C4 would imply |
+| **`m9_errzero` — `error` column set to `0`** | 1 | **D24N-C6** `derived acceptance band is zero` |
+
+### 7.3 Code mutants (copies in the scratchpad)
+
+| mutant | result |
+|---|---|
+| `c1_nosqrt` — ladder element `sqrt((n+1)(2S−n)) → (n+1)(2S−n)` | exit 1 at **D24N-C2** `error 3.312e+05` |
+| `c2_wronglaw` — symbolic law `(2S)^p = 2S → (2S)^p = 4S` | exit 1 at **D24N-C6** `gives roots [2], not [1]` |
+| **`cB_onek`** — momentum loop reduced to one value (the r2 critic's mutant, which r2's checker passed with an *identical* error) | exit 1 at **D24N-C2** `fewer than three commensurate momenta: the orthogonality gate would be vacuous` |
+| **`c3_wrongdispersion`** — C8's predicted one-magnon energy `ω_S(k) → ω_S(2k)` | exit 1 at **D24N-C8** `plane wave is not an H_S one-magnon eigenvector (residual 4.000e+00)` |
+
+### 7.4 Gate audit (standing obligation, applied to this file)
+
+* **C1** is a symbolic **guard** with no candidate-dependent input: no runtime
+  mutation reaches it; only a code edit moves it.  Declared as a guard in the
+  banner (`D24N-C1 GUARD`), not offered as evidence.
+* **C5 is deductively subsumed by C4** for the true data and is labelled
+  DISPLAY in the banner.
+* **C7 is unfalsifiable on this data** (`N ∈ [60,480]`, so `|1/√(2SN) −
+  1/2S| > 10^{-3}` always) and is labelled DISPLAY (r2-critic m5, adopted).
+  The half-power route that *matters* is the `N`-free one, and it is
+  falsified at C6, not here.
+* **C6 is C4's comparison at a tighter band with mean rather than per-row
+  aggregation.**  It measures no new quantity, and `predicted_jet(S,1.0) =
+  1/S` exactly, so the two gates compare to the identical target (r2-critic
+  M3(b)(i) — accepted without reservation).  It is not deductively subsumed
+  **only** because the derived band `0.0479 < 0.08`, and the file now
+  *asserts that ordering as a gate* (`m8_errinflate` dies on it) instead of
+  claiming independence.  r2's "independent of C4" and "evidential gates"
+  language is struck from this document.  C6's real gain is resolving power
+  on the exponent: `p ∈ [0.969, 1.037]` versus C4's `[0.947, 1.062]`, a
+  factor `≈1.7` — smaller than r2's claimed `≈3.5`, because that figure came
+  from the over-tight band.  Quoted as an interval, never as a `±`
+  (r2-critic m6).
+* **C2, C3, C6, C8 have dedicated red modes; C4 is exercised by data
+  mutation by design.**  Every gate is reachable: the candidate exponent is
+  consumed at exactly one call site, and C8's inputs are independent of the
+  data file, so no earlier gate short-circuits it.
+* **Residual no-op audit (r2-critic m4, all three closed).**  (i) C2's
+  ladder is now probed at every `n ≤ 2S−1` against a second, independently
+  coded formula, and in multi-quantum norms — `--red-ladder` proves it moves.
+  (ii) The momentum loop now carries a cross-momentum orthogonality test and
+  a minimum-momenta requirement — `cB_onek` proves it moves.  (iii) The
+  `require(1**p − 1 == 0)` non-gate is deleted; the degeneracy is printed.
+
+### 7.5 The acceptance band: what changed and why (r2-critic M3(b)(iii))
+
+r2's `ACCEPT_BAND = 0.02` was, objectively, post-registered (data committed
+`2026-08-26` "Pre-registered 8% criteria"; the band `2026-08-29`), and — the
+substantive complaint — **1.2–2.4× tighter than the data's own quoted
+extrapolation error at every spin**, so a `−3%` perturbation drawn from
+inside the error bars was rejected.  There is now **no acceptance constant in
+the file**.  The band is computed at run time as `max_rows |error|·S` over
+`A_ring_summary`, in the checker's own `dev·S` units:
+
+| `S` | `\|1/S − mean\|·S` | max row dev·S | **max quoted `error`·S** |
+|---|---|---|---|
+| 1/2 | 0.000428 | 0.001071 | **0.032025** |
+| 1   | 0.001604 | 0.002784 | **0.024125** |
+| 3/2 | 0.002651 | 0.003283 | **0.038772** |
+| 2   | 0.003321 | 0.004341 | **0.047854** |
+
+so the derived band is `0.0479`.  It is guarded on both sides: zero or
+missing `error` fails, and an `error` column so wide that `C4 ⇒ C6` fails
+(`m8_errinflate`).  The r2 figure `0.02` is still *printed*, labelled "r2's
+retired band … gates nothing", purely so the resolving intervals of the two
+rounds can be compared.  r2's disclosure arithmetic ("one order above the
+scatter, `0.0043`") is withdrawn: `0.02/0.0043 = 4.6`, and `0.0043` was the
+residual *bias*, not the scatter (r2-critic m7).
+
+**Consequence for the headline numbers.**  Every substantive conclusion of
+the certificate survives at the **pre-registered** `0.08` band and needs no
+acceptance band at all: the frozen `𝔞_leg = 1` misses by `1.00/2.00/3.00`,
+and the leg-conversion `Z_ρ^{-1/2}` by `0.42/0.73/1.00`.  Only the exponent
+interval uses the derived band.
+
+### 7.6 Declination recorded (r1 M3(c)(iii), silently declined in r2)
+
+r1 demanded an acceptance test that builds the jet from a **constructed**
+`E^O_desc` rather than from `predicted_jet = 2.0/(2S)**p`.  r2 did not do it
+and did not say so; the r2 critic caught that.  **It is declined here, with
+its reason: constructing `E^O_desc` requires a member of `𝒮_W(ρ)`, and
+exhibiting one would settle bd `tns-axg`.**  A checker cannot supply what the
+open problem is about; a fabricated `E^O_desc` would be a gate testing its
+own construction.  What is offered instead is the part that *can* be built
+without a member: **D24N-C8** constructs the descendant soft leg
+(`Q^-_k|Ω⟩`) and the asymptotic soft leg (the `H_S` one-magnon eigenvector)
+from first principles and measures the conversion between them — the one
+factor in `L` that is model-computable without membership.  That is a
+partial substitute and is labelled as one.
+
+---
+
+## 8. Disposition
+
+* **Merge**: §5.0 + §5.1 + §5.2 + §5.3 + §5.4 in one commit, in descending
+  line order for the `definitions.md` spans, together with §5.5's nine
+  same-commit obligations.  §5.0 is not optional and not separable: without
+  it, §5.2's clause 3b and §5.3's three rows are statements about a
+  convention that does not exist.
+* bd `tns-iu5`: **re-scope, do not close.**  Its scope **grows**, per the r2
+  critic §8, and sub-task (1) is now *done*: "(1) D24(b)'s amputation and
+  leg-normalisation convention — **FIXED at r3 §5.0**; (2) prove or refute
+  AMP (`𝔞_leg(ρ) = 1/Z_ρ`), now statable, with the ⟨1⟩4 fence: the leg
+  normalisation supplies `Z_ρ^{-1/2}` and is refuted, so a second mechanism
+  of the same size is required; (3) `D24-VAL` stays vacuous-or-unknown until
+  (2) closes or `tns-axg` exhibits a member."
+* bd `tns-axg`: stays open, unchanged; explicitly coupled to `D24-VAL`'s
+  content and to `𝔞_leg`'s very definedness (⟨1⟩2.⟨3⟩5).
+* bd `tns-v44`: unblocked on this axis, with the §5.5 item 7 instruction and
+  its rider.
+* **New bd (paper lane), to be filed by the orchestrator:** Fig-2 caption
+  warrant, §5.5 item 9.
+* **The next prover target is AMP**, and it is now writable: *in the D24(b)
+  convention, compute the LSZ amputation of the charge-created soft leg for
+  a descendant external-leg insertion, and decide whether the total is
+  `Z_ρ^{-1}`; D24N-C8 fixes the leg-conversion factor at `Z_ρ^{-1/2}`, so the
+  proof must exhibit a second, independent `Z_ρ^{-1/2}` or refute AMP.*  In
+  the `m_λ` register per binding `soft-index-adjudication-r1.md` §3.5.
