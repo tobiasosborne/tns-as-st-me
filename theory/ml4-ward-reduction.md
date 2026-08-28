@@ -159,6 +159,21 @@ supplies no zero.
 
 ## ⟨1⟩3. The exact `SU(2)` Ward projection in every finite sector
 
+> **ERRATUM (orchestrator, 2026-08-28; see `claims/CLAIMS.md` ML4-Ward row
+> and bd `tns-uxr`).** The second display of (9) below holds at `n=1` ONLY
+> and is REFUTED for `n≥2`: step ⟨3⟩4 applies the scalar `(N-2n)^{-1}` to
+> the vector `2J^z_0ψ`, which is not in `ker S^+` for `n≥2`
+> (`S^+J^z_0ψ = −J^+_0ψ ≠ 0`; at `n=1` it vanishes by momentum
+> conservation). Verified correction, exact at every `n<N/2` on `ker S^+`:
+> `P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0` — i.e. use (10), whose
+> `J^-_0S^+` term dies on `ker S^+`, but keep `A_n^{-1}` as the operator
+> inverse. Refuting/confirming computations: soft-index-b-r1.md F1 (ED),
+> the S1-B prover's own n=1 check, and
+> `theory/checks/ml4_ward_n2_check.py` (independent full-space route;
+> green/red). The first display of (9), (8), (10), (11), and (R15) are
+> unaffected. ⟨1⟩5's ⟨3⟩2 ("put `n=2` in (9)") inherits the defect and is
+> under audit (`tns-uxr`).
+
 Let `S^±=Q_0^{\dagger},Q_0` and let `J^a_0` be the three components of the
 same spin current.
 

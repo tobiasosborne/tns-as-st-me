@@ -2,10 +2,53 @@
 
 # HANDOFF — live state
 
-Updated: 2026-08-28, end of session 4 (soft-index campaign, WOUND UP EARLY
-by TJO mid-r1; budget was 1 Fable + 3 codex xhigh, 2 codex spent, 1
-reserved for repairs). Read order gate: CLAUDE.md →
+Updated: 2026-08-28, end of session 5 (soft-index r1/r2 critic round
+COMPLETE, adjudicated). Read order gate: CLAUDE.md →
 HANDOFF_MPS_SOFT_THEOREM.md → this file → theory/TRIANGLE.md.
+
+## Session 5 — the r1 critic round, run to adjudication
+
+Executed the session-4 resume order to completion; campaign budget now
+FULLY SPENT (3rd codex on the S2 repair; the 1 Fable prover on the S1-B
+relaunch, which SUCCEEDED with the one-Lamport-section-per-response
+discipline — 1234 loc, full ladder, the 64k-cap death mode is fixed).
+Full synthesis: **theory/verdicts/soft-index-adjudication-r1.md** (read
+it; it is binding for r2). Headlines:
+
+- **S2 converging:** repair round accepted all 23 objections; r2 critic
+  verified 14/15 by recomputation, trajectory 6→2 MAJOR, 0 FATAL ever.
+  Left: R2-O1 (ACE2M-LSZ vacuum-vector vs operator-statement gap — fix
+  is the Haag-Ruelle creator-independence port, hypotheses already
+  owned) + R2-O2 (diagonal vs iterated limit order). Repair = tns-s5e,
+  **budget-gated on TJO** (codex #4 or an Opus lane).
+- **S1 both FAIL with FATALs, but the LAW keeps winning:** the S1-A
+  critic's two fresh in-class falsification attempts (NNN, biquadratic)
+  measured slope 1/ρ exactly; (S-IDX.0)'s Ward package verified across
+  deformations. S1-A F1: slope value is a D29(5) stipulation (leaf
+  SIDX-FLUX does not exist); PROVED constructively that NO
+  regularity-only (TGT) can pin the jet — the value must come from
+  on-shell data (S2-2body-S matching). S1-B F1/F2: (B4) n≥2 false,
+  (B6) Adler anchor fails S≥1 / tautological at S=1/2. Cross-lane
+  adjudicated (§3 of the adjudication doc): B's D29 design + A's
+  ℓ_h/m_λ registers; r2 = ONE unified S1 shard.
+- **CORPUS DAMAGE (reaches outside the campaign):** (1) **ML4-Ward (9)
+  2nd display REFUTED for n≥2** — a PROVED row; confirmed ×3 (critic ED,
+  analytic mechanism, new red-capable theory/checks/ml4_ward_n2_check.py);
+  CLAIMS row scoped + shard ERRATUM added; two-hard ⟨1⟩5 damaged;
+  downstream audit = tns-uxr (P0). (2) **Frozen probe P2(b) η-gate is a
+  code no-op** (both S1 critics independently): quote a0728bd as
+  P1+P2(a)-only until tns-9z4 unfreeze. (3) **Frozen 𝒮_W empty for
+  ρ≠1/2** (D24(d)3+ML5-B force slope 2 at every ρ vs PROVED 1/S) —
+  tns-iu5, blocks any D29/D30 merge.
+- **NO shared-file merges performed** (critics not converged); all
+  D29/D30/D31 proposals stay quarantined in the shards.
+
+**Resume order for session 6:** (1) TJO decisions — budget for tns-s5e
+(S2 round-2) + the unified-S1-r2 prover, and whether to unfreeze the
+probe for tns-9z4; (2) tns-uxr downstream audit (P0, no budget needed —
+grep-and-check every n≥2 use of ML4-Ward (9)); (3) tns-iu5 D24(d)3
+adjudication (orchestrator edit, small); (4) then the r2 rounds per the
+adjudication doc §4.
 
 ## Session 4 — the soft-index campaign (Corner C inverted), state at stop
 
@@ -56,11 +99,10 @@ TGT) → instances from ansatz bands (Lane S2: AC-EX-2M over one vacuum).
   D31 proposals live only in the shards' MERGE PROPOSALS sections; merge
   happens after critics converge, per lane discipline.
 
-**Resume order for session 5:** tns-jkx (S2 repair, codex #3) ∥ tns-alq
-(S1-B relaunch) → tns-sha (S1-A critic, + cross-lane audit once S1-B
-lands; brief briefs/soft-critic-r1.md covers all critics) → r2
-adjudication → orchestrator merges D29–D31 → DAG rows at adjudicated
-status. The falsifier is DONE and green — do not touch its frozen gates.
+**Resume order for session 5 (EXECUTED in session 5, see above):**
+tns-jkx ∥ tns-alq → critics → adjudication. Note the falsifier's frozen
+gates are now known to contain the P2(b) no-op (tns-9z4) — the
+"do not touch" freeze holds until TJO authorizes the unfreeze.
 
 ## Where we were before session 4 (session-3 summary, still current)
 
