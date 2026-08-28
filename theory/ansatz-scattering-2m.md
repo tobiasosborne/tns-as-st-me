@@ -5,10 +5,12 @@
 # AC-EX-2M — fixed-packet two-magnon wave operators from exact ansatz bands
 
 **Proposer status:** **SKETCH**.  Parts (A2M.1)--(A2M.2) are proved as the
-conditional implication from proposed D31.  Part (A2M.3) has an unconditional
-bounded-family/weak-limit-point core; its identification with the constructed
-channel is conditional on `(ACE2M-LSZ)`, and its first-jet conclusion is
-conditional on `(ACE2M-SR)`.  No soft-uniform Cook estimate is claimed.
+conditional implication from proposed D31.  Part (A2M.3) proves an
+unconditional **diagonal-order** bounded-family/weak-limit-point statement.
+For the asymptotic-leg reading of the D29 interface, `(ACE2M-LSZ)` is a theorem
+by creator-choice independence; it is not a claim about a fixed-time charge
+insertion.  An iterated-order first jet is conditional on `(ACE2M-SR)`.  No
+soft-uniform Cook estimate is claimed.
 
 ## 0. Theorem and fixed-packet fence
 
@@ -40,13 +42,18 @@ disjoint packet windows, not distinguishable particle species.
    On D6--D8, `W_+^*W_-` is exactly multiplication by D7's physical
    outgoing/incoming coefficient; a fixed packet range lies in the matching
    part of ML2's scattering summand, not its two-string summand.
-3. **(A2M.3)** For each fixed soft packet scale `ε>0` satisfying D31, Lane
-   S1's intended protocol data have weak `L²(I)` subsequential limit points
-   with `ε→0` strictly last.  Their identification with the constructed
-   `W_±^(ε)` channel is conditional on `(ACE2M-LSZ)` in ⟨1⟩8, which is
-   exact on D6--D8.  The stronger `C¹` exhaustion-limit/TGT statement is
-   conditional on `(ACE2M-SR)`; only its exhaustion-free, infinite-chain
-   version is verified on D6--D8.
+3. **(A2M.3)** The data are defined for every fixed soft packet scale `ε>0`
+   satisfying D31.  For every sequence of full index tuples
+   `(N_r,W_r,σ_r,t_r,ε_r)` in the D29 interface family, respecting the
+   precedence in (D29-order) and with `ε_r↓0`, the corresponding data are
+   bounded in `L²(I)` and have weakly convergent subsequences.  This is a
+   **diagonal-order** statement; no unconditional existence of the iterated
+   `N,t,W,σ` limit is asserted.  If D29's charge-created soft leg is an
+   asymptotic leg carried through `t→±∞`, creator-choice independence proves
+   `(ACE2M-LSZ)` in ⟨1⟩8 and identifies the fixed-`ε` subsequential value
+   with the constructed `W_±^(ε)` channel.  The stronger `C¹` first-jet
+   statement is conditional on `(ACE2M-SR)`; only its exhaustion-free,
+   infinite-chain version is verified on D6--D8.
 
 *Justification.* D1, D3(a), D6--D8, D12(a′), proposed D31, and claim ML2.
 
@@ -66,9 +73,9 @@ with no `ε`-uniform bound.  Indeed
 
 `||∂^jf_ε||_∞=ε^{-j-1/2}||f^{(j)}||_∞`,
 
-so the `N` integrations by parts in **ACE-SP** contribute `ε^{-N}` beyond
-the fixed `L²` normalization (equivalently the raw `L∞` seminorm has the
-displayed additional `ε^{-1/2}` factor).
+so an upper bound for the `N` integrations by parts in **ACE-SP** carries
+`ε^{-N}` beyond the fixed `L²` normalization (the raw `L∞` seminorm has
+the displayed additional `ε^{-1/2}` factor).
 *Justification.* D3(a), D12(a′), proposed D31(4), and the limit-order clause
 of `briefs/soft-index-target.md`, Lane S2.
 
@@ -79,7 +86,7 @@ Like D28's `P_T`, `P_B` is an explicit channel projection; here it fences the
 bound summand rather than naming a transmitted summand.
 *Justification.* Proposed D31(5), and the standard intertwining computation
 proved in ⟨1⟩7.⟨2⟩2.  This is a forward reference without circularity:
-⟨1⟩5 uses only D31(2)--(4) and ⟨1⟩4, not ⟨1⟩2.
+none of ⟨1⟩3--⟨1⟩7 uses ⟨1⟩2, so the dependency chain closes independently.
 
 **⟨2⟩3. [NEW — D6 exact fence]** On D6, ML2 gives one bound band.  With its
 variables `K=k_1+k_2`, `q=(k_2-k_1)/2`, `c=cos(K/2)`,
@@ -88,7 +95,8 @@ variables `K=k_1+k_2`, `q=(k_2-k_1)/2`, `c=cos(K/2)`,
 Its only zero has `q=0,c=1`, excluded by D31(4), so compact packets have
 `d_B>0`.  Along `k_s→0` at fixed `0<|k_h|<π`,
 `ε_v→|v_h|`, `d_B→J sin²(k_h/2)>0`, and `η_inel=+∞`; only
-`ε_0` degenerates, and `ε_0` occurs in no estimate below.  ML2 has no
+`ε_0` (D31's distance of either velocity set from zero) degenerates, and
+`ε_0` is used by no estimate in §§2--3.  ML2 has no
 third charge-two summand; `Θ_inel=+∞`.
 *Justification.* D6--D8 and ML2 equations (18)--(21),
 `theory/ml2-completeness.md` ⟨1⟩5.
@@ -115,10 +123,15 @@ maps gives separately the two D1(d) contractions, hence their product.
 
 **⟨2⟩2. [NEW]** For a block of length `w`, put
 `V_wx:=Σ_s|s⟩⊗A^{s_1}⋯ A^{s_w}x`.  D1(c)'s `l=1` gauge gives
-`V_w^†V_w=1`, so `V_w` is an isometry for every `w`.  Writing
-`Ψ_D(r):=tr_{d^w}[(D⊗1)V_wrV_w^†]` gives
-`||Ψ_D(r)||_1≤||D||||r||_1=||D||`, while
-`|tr Ψ_C(Z)|≤||C||||Z||_1`.  Therefore
+`V_w^†V_w=1`, so `V_w` is an isometry for every `w`.  For every block
+operator `O` of length `w_O`, define the contraction
+`Ψ_O(Y):=tr_{d^{w_O}}[(O⊗1)V_{w_O}YV_{w_O}^†]=E_O(Y)`.
+Then `||Ψ_D(r)||_1≤||D||||r||_1=||D||` and
+`|tr Ψ_C(Z)|≤||C||||Z||_1`.  The exact chain identity is
+
+`ω_A(CD)-ω_A(C)ω_A(D)=tr Ψ_C((E^{d_sep}-P)Ψ_D(r))`.
+
+Therefore
 
 `|ω_A(CD)-ω_A(C)ω_A(D)|
  ≤||C||||D|| ||E^{d_sep}-P||_{1→1}`,
@@ -172,7 +185,7 @@ under translation, and the Fourier coefficients of
 **⟨2⟩2. [VERBATIM PORT — ACE-filter, `ansatz-scattering.md`
 ⟨1⟩3.⟨2⟩4--⟨2⟩5]** Put
 
-`D_{i,b}(n):=[H,a_{i,b}(n)]-Σ_{m,b'}h_{i,b'b}(m-n)a_{i,b'}(m)`.
+`D_{i,b}(n):=[H,a_{i,b}(n)]-Σ_mh_i(m-n)a_{i,b}(m)`.
 
 Then `D_{i,b}(n)Ω_A=0`, and `D_{i,b}(n)` is almost local about `n`, uniformly
 in `n`.
@@ -228,8 +241,9 @@ full `ℓ¹` norm is `O(1+|t|)`.  On the product of the two main cones,
 split into the product cones and their complement.  The first part is at most
 `C_N|t|²⟨ε_v|t|/2⟩^{-N}`; the complement is `O(|t|^{2-N})`.  Taking `N≥5`
 gives an integrable `C|t|^{-3}` majorant.  Here
-`C_N=C_N(ε_v,ε_0,d_B,η_inel,s_N(F))` has the packet-seminorm dependence
-and soft-family divergence displayed in ⟨1⟩2.⟨2⟩1.
+`C_N=C_N(ε_v,s_N(F))` has the packet-seminorm dependence and soft-family
+divergence displayed in ⟨1⟩2.⟨2⟩1.  In particular `ε_0` occurs in no Cook
+constant; `d_B,η_inel` enter only the later joint-spectral fences.
 
 *Justification.* ⟨2⟩2--⟨2⟩3 and the same cone sum as named computation
 **ACE-Cook** in `theory/ansatz-scattering.md` ⟨1⟩5.⟨2⟩5.
@@ -308,7 +322,16 @@ eigenfunction is
 `Ψ^sc_{Kq}(x,x+r)=(e^{iK(x+r/2)}/2π)[S(K,q)e^{iqr}+e^{-iqr}]`,
 
 with `k_1=K/2-q`, `k_2=K/2+q`, `S(K,q)=S_{12}` and the exact resolution
-(21).  If `v(k_2)>v(k_1)`, stationary phase puts the `e^{-iqr}` term in the
+(21).  Here every torus pair is first put in ML2's chart by the unique data
+
+`K^♯=Arg(e^{i(k_1+k_2)})∈(-π,π]`, `q^♯∈(0,π)`,
+
+for which
+`{e^{i(K^♯/2-q^♯)},e^{i(K^♯/2+q^♯)}}={e^{ik_1},e^{ik_2}}`.
+The branch labels and the following in/out assignment are stated in this
+fundamental domain; the odd-`r` anti-periodicity under a different `K` lift
+changes the fiber gauge, not `S_phys`.  If `v(k_2)>v(k_1)`, stationary phase
+puts the `e^{-iqr}` term in the
 incoming region (`k_2` on the left at `t→-∞`) and the `e^{iqr}` term in the
 outgoing region.  Therefore
 
@@ -320,10 +343,10 @@ Thus the constructed labels are exactly D7's physical out/in labels, not a
 new convention.  Moreover `|S(K,q)|=1` by ML2 (18), since `c` is real, so
 the adjoint computation in the last displayed identity is valid.
 
-*Justification.* D7; ML2 equations (17)--(21), proved without Bethe
+*Justification.* D7; ML2 equations (15), (17)--(21), proved without Bethe
 completeness in `theory/ml2-completeness.md` ⟨1⟩5; and **ACE-SP** stationary
-cone selection.  The coefficient assignment is D7's explicit incoming
-convention.
+cone selection.  ML2 (15) supplies the fundamental-domain/anti-periodicity
+rule, and D7 supplies the explicit incoming convention.
 
 **⟨2⟩4. [NEW — fixed-pair scope]** For each fixed D31 packet pair on
 D6--D8, `ran W_±` is a closed subspace of the matching part of ML2's
@@ -334,7 +357,9 @@ completeness is claimed.
 
 *Justification.* ⟨2⟩2--⟨2⟩3, ML2 resolution (21), and proposed D31(5).
 The creator-choice-independence clause of source Theorem `Haag-Ruelle` is not
-ported because the theorem here asserts only this fixed-pair range.
+needed to compare or exhaust different packet-window ranges here.  It is
+ported only in ⟨1⟩8 for the distinct fixed-pair task of replacing the
+asymptotic charge creator by the exact filtered creator.
 
 **⟨2⟩5. QED.**  This proves (A2M.2).
 
@@ -344,31 +369,119 @@ ported because the theorem here asserts only this fixed-pair range.
 
 **INTERFACE ASSUMPTIONS ON LANE S1'S PROPOSED D29 — ALL ARE HERE.**
 
-1. `𝒜_{N,W,σ,t}(ε)` is the normalized connected on-shell pairing, with and without one normalized charge-created soft leg `Q[f_ε]`; it is valued in D24(b)'s `L²(I)` hard norm and presupposes no wave operator.
-2. At fixed `W,σ,ε`, finite-volume local matrix elements converge to D1 GNS matrix elements before the scattering-time limit; hard preparation/resolution converge, when wave operators exist, into `ran W_-`/`ran W_+`.
-3. The amputating hard denominator is nonzero and bounded away from zero along the chosen subsequence.
-4. The order is `N→∞ ≺ t→±∞ ≺ W↑ℤ ≺ σ↓0 ≺ ε↓0`. **(D29-order)**
-5. **(5a), interface convention.** Compare D29's connected pairing with hard vectors in `ran W_-^(ε)`, `ran W_+^(ε)` and the same soft profile `f_ε`; this fixes the pairing, not its value.
+1. `𝒜_{N,W,σ,t}(ε)` is the normalized **connected** on-shell
+   pairing, with and without one normalized charge-created soft leg.  The
+   charge leg is an **asymptotic** Haag--Ruelle leg carried through the same
+   `t→±∞` operation as the hard leg; it is not the fixed-time action of a
+   charge operator on an already prepared hard vector.  In D10(c)'s
+   position-profile convention the time-zero insertion is
+   `Q[f̂_ε;ξ^-]=Σ_x f̂_ε(x)q_x^-`.  Its on-shell positive-energy
+   filter and free packet evolution define an almost-local HR family
+   `a_{Q,2,b,t}[f_{ε,t}]`.  The datum is valued in D24(b)'s `L²(I)` hard
+   norm and presupposes no wave operator.
+2. At fixed `W,σ,ε`, finite-volume local matrix elements converge to D1
+   GNS matrix elements before the scattering-time limit; hard
+   preparation/resolution converge, when wave operators exist, into
+   `ran W_-`/`ran W_+`.
+3. Write the amputated datum at an allowed full index tuple `α` as
+   `𝒜_α(h)=𝒝_α(h)/𝒟_α(h)`, `h∈I`.  On the **selected hard
+   packet** and along the chosen tuple family, assume the displayed uniform
+   denominator and numerator bounds
 
-   **(5b), named hypothesis `(ACE2M-LSZ)`.** At fixed `ε>0`, with `χ_2=1` on `supp f_ε`, put
-   `a_2[f_ε]Ω_A:=Σ_n f̂_ε(n)a_{2,b}(n)Ω_A=Γ_M(χ_2f_ε⊗e_b)=Γ_M(f_ε⊗e_b)`.
-   Assume `Q[f_ε]Ω_A=a_2[f_ε]Ω_A+R_ε`, where substituting the on-shell-null `R_ε` in every (5a) soft slot gives zero.  No `ε↓0`-uniform estimate is included.
+   `ess inf_{α} ess inf_{h∈I}|𝒟_α(h)|≥d_I>0`,
+   `sup_α||𝒝_α||_{L²(I)}≤C_I<∞`. **(D29-den)**
 
-These are the complete interface clauses; reconciliation with Lane S1's final D29 is an orchestrator task. `(ACE2M-LSZ)` is unproved in abstract D31.
+   Consequently
+   `sup_α||𝒜_α||_{L²(I)}≤C_I/d_I`.  Cauchy--Schwarz for
+   the normalized preparation/resolution supplies the second bound; the
+   first is the explicit nonzero-amputation hypothesis.
+4. The precedence is
+   `N→∞ ≺ t→±∞ ≺ (W↑ℤ,σ↓0)_j ≺ ε↓0`.
+   **(D29-order)**  No later operation is taken inside an earlier one;
+   `W` and `σ` may be exhausted jointly along `j`.  Thus the unconditional
+   statement below concerns full-index diagonals respecting this precedence,
+   not an asserted iterated `lim_{σ}lim_W`.  Under `(ACE2M-SR)`, the
+   `j`-diagonal is a specified specialization and `ε` is then iterated last.
+5. **(5a), pairing convention.** Compare D29's connected pairing with hard
+   vectors in `ran W_-^(ε)`, `ran W_+^(ε)` and the same soft profile
+   `f_ε`; this fixes the pairing, not its value.
 
-**⟨2⟩1. [NEW — exact D6 LSZ anchor]** On D6, `q_x^-=S_x^-`, hence
+   **(5b), one-particle on-shell normalization.**  At fixed `ε>0`, with
+   `χ_2=1` on `supp f_ε`, the two admissible HR creator families obey,
+   for every scattering time,
 
-`Q[f]Ω=Σ_x f̂(x)S_x^-Ω=Σ_x f̂(x)|x⟩=a_2[f]Ω`.
+   `a_{Q,2,b,t}[f_{ε,t}]Ω_A
+     =a_{2,b,t}[f_{ε,t}]Ω_A
+     =Γ_M(f_ε⊗e_b)`, **(2M-1P)**
 
-Thus `(ACE2M-LSZ)` holds on D6--D8 with `R_ε=0`: the charge-created leg is literally the D31(3) packet in the D6 coordinate/Fourier bases.
+   and their velocity support is disjoint from the selected hard packet by
+   D31(4).  Equality (2M-1P) is the normalized one-particle content of the
+   D29 on-shell charge leg; it is not an operator equality on hard states.
+   No `ε↓0`-uniform estimate is included.
 
-*Justification.* D6, D10(c), and proposed D31(3)'s exact normalization.
+These are the complete interface clauses; reconciliation with Lane S1's final
+D29 is an orchestrator task.
+
+**⟨2⟩1. [NEW — D6 one-particle normalization]**
+
+**ASSUME.** D6--D8 and fixed `ε>0`.  **PROVE.** (2M-1P) holds for the D6
+charge creator and the D31 filtered creator.
+
+On D6, `q_x^-=S_x^-`, so, with D10(c)'s argument convention,
+
+`Q[f̂_ε;ξ^-]Ω=Σ_x f̂_ε(x)S_x^-Ω
+ =Σ_x f̂_ε(x)|x⟩=Γ_M(f_ε)=a_{2,b}[f_ε]Ω`.
+
+The measure is `dk/(2π)`, so `Γ_M` is isometric.  Applying the two
+on-shell HR evolutions preserves this vacuum vector for every `t` by the exact
+band equation.
+
+*Justification.* D6, D10(c), `soft-current-recon.md` ⟨1⟩1 for
+`q_x^-=S_x^-`, proposed D31(2)--(3), and source equation
+`(creation-on-vacuum)` in §“Haag--Ruelle creation operators”.
+
+**⟨2⟩2. [PORTED THEOREM — creator-choice independence / `(ACE2M-LSZ)`]**
+
+**ASSUME.** Interface clauses 1, 5(a)--(b), D31(3)--(4), and fixed `ε>0`.
+**PROVE.** Replacing the asymptotic charge creator by `a_{2,b}` changes no
+fixed-`ε` connected on-shell pairing.
+
+Put `Δ_{2,t}:=a_{Q,2,b,t}[f_{ε,t}]-a_{2,b,t}[f_{ε,t}]`.
+By (2M-1P), `Δ_{2,t}Ω_A=0`.  If the soft creator is rightmost in a
+two-particle precursor, the precursor difference is therefore zero.  In the
+opposite order it is
+
+`Δ_{2,t}a_{1,t}[g_t]Ω_A=[Δ_{2,t},a_{1,t}[g_t]]Ω_A`.
+
+D31(4)'s disjoint velocity supports, almost locality, and the packet cone
+estimate make this commutator `O(|t|^{-∞})`.  Hence both `t→+∞` and
+`t→-∞` precursor differences vanish in norm.  Pairing either limit with
+the same hard out/in vector, and applying the same argument to the disconnected
+subtractions, proves equality of the connected on-shell pairings.  This is
+`(ACE2M-LSZ)` as an **operator-level asymptotic statement**.
+
+*Justification.* `refs/arxiv-1412.2970/Scattering_spin-AHP1.tex`,
+§“Scattering states and their Fock space structure”, Theorem
+`Haag-Ruelle`, final clause after equation `(Asymptotic symmetry)`, and its
+last proof paragraph; source Lemma `commutators-decay(a)` and
+`HR-auxiliary(d)`; D31(3)--(4); ⟨1⟩5--⟨1⟩6.  The displayed
+commutator is the source proof specialized to two creators.
+
+This port does **not** identify the raw fixed-time vector
+`Q_{k_s}|k_h⟩` with a scattering eigenvector.  On D6 the PROVED identity
+`Q_{k_s}|k_h⟩-|B^{in}⟩=(1-S_{12})|P_{12}⟩
+=-2ik_s|P_{12}⟩+O(k_s²)` (R8 and R19) remains true.  It is precisely why
+clause 1 requires an asymptotic on-shell leg.
 
 **(ACE2M-SR).** Apply only the first two D29 operations. Let `j` index `(W_j,σ_j)` with `W_j↑ℤ`, `σ_j↓0`, and at fixed `ε>0` put
 
 `A_j(ε):=lim_{t→±∞}lim_{N→∞}𝒜_{N,W_j,σ_j,t}(ε)∈L²(I)`.
 
-Require the continuous extension `A_j(0):=lim_{ε↓0}A_j(ε)`, membership in `C¹([0,ε_0];L²(I))`, and relative compactness of `{A_j(ε),∂_εA_j(ε):j,ε}` in `L²(I)`, together with
+Existence of these two inner limits is part of `(ACE2M-SR)`, not a
+consequence of the diagonal boundedness statement.  Require the continuous
+extension `A_j(0):=lim_{ε↓0}A_j(ε)`, membership in
+`C¹([0,ε_★];L²(I))`, and relative compactness of
+`{A_j(ε),∂_εA_j(ε):j,0≤ε≤ε_★}` in `L²(I)`, together with
 
 `lim_{δ↓0}sup_j sup_{|ε-ε'|≤δ}||∂_εA_j(ε)-∂_εA_j(ε')||_{L²(I)}=0`. **(SR)**
 
@@ -379,21 +492,38 @@ This amplitude-data condition is not a Cook-integrand hypothesis, but it is unif
 
 ### ⟨1⟩9. Constructed-channel limit points
 
-**ASSUME.** D31 and the D29 interface block; assume `(ACE2M-LSZ)` for channel identification and `(ACE2M-SR)` for the first jet.
+**ASSUME.** D31 and the D29 interface block; assume `(ACE2M-SR)` only for
+the iterated first-jet conclusion.
 
 **PROVE.** (A2M.3).
 
-**⟨2⟩1. [NEW — bounded-family core]** Clauses 1 and 3 give a uniform Cauchy--Schwarz bound, hence every soft sequence has weakly convergent `L²(I)` subsequences. This Banach--Alaoglu conclusion does not use `W_±`.
+**⟨2⟩1. [NEW — diagonal bounded-family core]** For any full-index sequence
+`α_r=(N_r,W_r,σ_r,t_r,ε_r)` respecting (D29-order), with `ε_r↓0`,
+interface clause 3 gives
 
-*Justification.* D29 interface clauses 1 and 3 and weak sequential
+`sup_r||𝒜_{α_r}||_{L²(I)}≤C_I/d_I`.
+
+Reflexivity of `L²(I)` therefore gives a weakly convergent subsequence.
+This proves exactly the diagonal statement in (A2M.3); it neither forms nor
+asserts the inner iterated-limit object and does not use `W_±`.
+
+*Justification.* D29 interface clauses 1 and 3, (D29-den), and weak sequential
 compactness of bounded sets in the reflexive space `L²(I)`.
 
-**⟨2⟩2. [ADAPTED — fixed-packet AC-EX bridge]** At fixed `ε>0`, ⟨1⟩5 supplies `W_±^(ε)`. Under `(ACE2M-LSZ)`, (5a)'s soft slot is the D31(3) leg modulo a pairing-null remainder, so the D29 value is the constructed-channel value. Wave operators enter (A2M.3) only here.
+**⟨2⟩2. [ADAPTED — fixed-packet AC-EX bridge]** At fixed `ε>0`, ⟨1⟩5
+supplies `W_±^(ε)`.  The proved creator-independence theorem
+`(ACE2M-LSZ)` in ⟨1⟩8.⟨2⟩2 replaces (5a)'s asymptotic charge creator
+by the D31(3) creator without changing the connected pairing.  Thus every
+fixed-`ε` subsequential value for which the hard preparation/resolution
+converges is the constructed-channel value.  Wave operators enter (A2M.3)
+only here.
 
-*Justification.* (A2M.1)--(A2M.2), interface clauses (5a)--(5b), and the
-definition of an on-shell-null remainder in ⟨1⟩8.
+*Justification.* (A2M.1)--(A2M.2), interface clauses 2 and 5,
+and ⟨1⟩8.⟨2⟩2.
 
-**⟨2⟩3. [NEW]** Under `(SR)`, Banach-valued Arzelà--Ascoli gives `j_ℓ` converging in `C¹([0,ε_0];L²(I))`; Lane S1's TGT first jet exists with last operation
+**⟨2⟩3. [NEW]** Under `(SR)`, Banach-valued Arzelà--Ascoli gives
+`j_ℓ` converging in `C¹([0,ε_★];L²(I))`; Lane S1's TGT first jet
+exists with last operation
 
 `lim_{ε↓0}[lim_{ℓ→∞}lim_{t→±∞}lim_{N→∞}
  𝒜_{N,W_{j_ℓ},σ_{j_ℓ},t}(ε)]`.
@@ -403,26 +533,64 @@ No `ε→0` limit is taken inside ⟨1⟩5's Cook integral; `ε` is a fixed pack
 *Justification.* `(ACE2M-SR)`, D29-order, and Arzelà--Ascoli in the
 relatively compact metric target specified by `(SR)`.
 
-**⟨2⟩4. [NEW — D6 exhaustion-free anchor]**  On D6--D8, ⟨1⟩7 and
-⟨1⟩8.⟨2⟩1 identify the `j`-independent infinite-chain amplitude with
-ML2's D7 multiplier.  For `I=[a,b]⋐(0,π)`, S2-2body gives uniform
-compact-hard `C²` control at `k_s=0`; hence the single-function,
-exhaustion-free version of `(SR)` holds and its limit-point set is nonempty.
-The `(W,σ)`-uniform version is open on every model, D6 included.
+**⟨2⟩4. [NEW — D6 satisfies D31]**
 
-*Justification.* Claims ML2 and S2-2body, D24(b), `theory/TRIANGLE.md` §2.3,
-and the exact-match computations ⟨1⟩7.⟨2⟩3 and ⟨1⟩8.⟨2⟩1.  ML2 is a
-Jacobi resolution, not an assumed Bethe-completeness statement.
+**ASSUME.** D6 and fixed compact packets obeying D31(4).  **PROVE.** D6 is a
+nonempty instance of D31(1)--(5).
 
-**⟨2⟩5. [NEW — scope]** D31 alone implies neither `(ACE2M-LSZ)` nor
-`(SR)`: fixed-packet Cook estimates identify no charge-created soft leg,
-their constants diverge through the packet seminorms, and they control
-neither an on-shell first derivative nor the `(W,σ)` exhaustion.
+The all-up state is the `χ=1` injective product MPS; its transfer map has no
+nontrivial peripheral block.  The shifted D6 Hamiltonian is positive,
+`HΩ=0`, and in its finite-excitation GNS space has no normalizable zero-energy
+vector beyond `Ω` (the one- and two-magnon zero sets have Plancherel measure
+zero).  `S^z` supplies the conserved circle grading.  The map
+`Γ_Mg=∫(dk/2π)g(k)Σ_xe^{ikx}|x⟩` is isometric and obeys
+`HΓ_M=Γ_Mω`; in charge one it is the entire scalar band.  A
+spacetime-Schwartz filter of `S_n^-` gives D31(3)'s covariant creators and can
+be chosen equal to one on either fixed packet.  Compact separated packet
+supports give D31(4).  Finally ML2 gives exactly the scattering and one bound
+summand; ⟨1⟩2.⟨2⟩3 proves `d_B>0`, while the alternative propagating
+inventory is empty and `η_inel=+∞`.
 
-*Justification.* ⟨1⟩2.⟨2⟩1, ⟨1⟩5's **ACE-SP**, and the ML3/ML6 CONJECTURE
-rows in `claims/CLAIMS.md`.
+*Justification.* D1, D6, proposed D31, ML2 equations (17)--(21), and the
+Plancherel resolution ML2 (21).  This is a direct verification, not an appeal
+to Bethe completeness or to integrability.
 
-**⟨2⟩6. QED.**  This proves (A2M.3) at the stated conditional strength.
+**⟨2⟩5. [NEW — D6 exhaustion-free first jet]**
+
+**ASSUME.** D6--D8, `I=[a,b]⋐(0,π)`, and D24(b)'s normalized packet
+multiplier convention.  **PROVE.** The `j`-independent infinite-chain datum is
+`C¹` at `ε=0` and has a nonempty limit-point set.
+
+Normalize `f` in `L²` and put
+`dμ_f(u)=|f(u)|²du`, `m_1=∫u dμ_f(u)`.  For the exact D7
+multiplier, the packet-amputated datum is
+
+`A(ε)(h)=∫dμ_f(u) S_phys(εu,h)`.
+
+S2-2body's compact-hard Taylor remainder and D24(b)'s product-packet norm give
+
+`A(ε)=A(0)+εm_1∂_{k_s}S_phys(0,·)+O_{L²(I)}(ε²)`.
+
+Thus `A∈C¹([0,ε_★];L²(I))`; a singleton family is relatively
+compact and has an equicontinuous first jet.  This uses the normalized
+multiplier amputation of D24(b), with no extra `ε^{-1}` factor.
+
+*Justification.* Claims S2-2body and ML2, D24(b), and the exact-match
+computations ⟨1⟩7.⟨2⟩3 and ⟨1⟩8.⟨2⟩1--⟨2⟩2.  S2-2body is proved
+from the two-body contact equations; no integrability hypothesis enters.
+
+**⟨2⟩6. [NEW — scope]** D31 alone does not imply `(SR)`: fixed-packet
+Cook constants diverge through the packet seminorms and control neither an
+on-shell first derivative nor the `(W,σ)` exhaustion.  The `(W,σ)`-uniform
+version is open on every model, D6 included.  Creator independence proves
+`(ACE2M-LSZ)` only for the asymptotic-leg interface; a fixed-time insertion
+retains the R8 branch term displayed in ⟨1⟩8.⟨2⟩2.
+
+*Justification.* ⟨1⟩2.⟨2⟩1, ⟨1⟩5's **ACE-SP**, and the ML3/ML6
+CONJECTURE rows in `claims/CLAIMS.md`.
+
+**⟨2⟩7. QED.**  This proves (A2M.3) at the stated diagonal/conditional
+strength.
 
 ## 5. Reference-hypothesis audit
 
