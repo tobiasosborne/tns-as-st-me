@@ -7,9 +7,10 @@
 Status: **THEOREM(class), proposer pass; not yet through the capped critic
 loop.**  The class is stated in §1.  The theorem is exact and finite-volume;
 its general projected-current coefficient is an operator on a multiplicity
-space.  A scalar *coefficient* requires the extra rank-one condition isolated
-in §2; the normalized Ward index itself is exactly one whenever defined.  No
-root-`sl_2` reduction is used.
+space.  A scalar *coefficient* is governed by the exact map criterion
+(C-SCAL) in §2; a one-dimensional nonzero selected source line is sufficient,
+not necessary.  The normalized Ward index itself is exactly one whenever
+defined.  No root-`sl_2` reduction is used.
 
 ## 0. Result and scope
 
@@ -180,9 +181,11 @@ If the broken directions instead form a higher-dimensional irreducible
 \]
 
 The same theorem holds with the CG-copy space included in the multiplicity
-register.  A **canonical scalar** statement then requires either
-`c^\mu_{W,\lambda}=1` plus a one-dimensional hard multiplicity, or an explicit
-choice of CG channel and hard line.  Compactness alone supplies neither.
+register.  A scalar statement is not characterized by the rank of either the
+CG-copy space or the hard multiplicity: it is characterized by (C-SCAL) in
+⟨1⟩10.  A nonzero one-dimensional selected source line is a sufficient
+special case, while higher-rank blocks can also have a scalar coefficient.
+Compactness alone supplies no instance of that criterion.
 
 More explicitly, package the tensor operators as
 
@@ -473,14 +476,27 @@ identity (G2.FULL) remains valid but the ratio is deliberately undefined.
 
 ### ⟨1⟩10. Scalar-coefficient boundary of the theorem
 
-The projected-current coefficient in (G2.13) is a canonical multiplicity
-operator.  It becomes a scalar only on a one-dimensional selected hard line,
-or if `dA^+r` is separately proved scalar on the chosen multiplicity block.
-Neither the character integral (G2.7) nor Frobenius reciprocity implies this.
-Thus (G2.15) is the universal scalar **normalized index**, while a universal
-scalar formula for `P J_b\psi` itself is an extra dynamical/multiplicity
-hypothesis.  This is a scope boundary, not an obstruction to
-S-IDX-fin-G2.
+Suppress the irreducible factor and type the multiplicity maps as
+`d:M_dom->M_out` and `j:M_dom->M_out`.  Put
+`A=d^dagger d`, `r=d^dagger j`, and `B=A^+r` on `M_dom`.  Then
+`P\widehat J=dA^+r=dB`, and the exact map-level scalar criterion is
+
+\[
+ P\widehat J=cD
+ \quad\Longleftrightarrow\quad
+ dA^+r=cd.                                                   \tag{C-SCAL}
+\]
+
+If `d` is injective, (C-SCAL) is equivalent to `A^{-1}r=cI`, equivalently
+`r=cA`.  On one selected vector `v`, the criterion is only that `dA^+rv` be
+proportional to `dv`.  A nonzero one-dimensional selected source line is
+therefore sufficient, but it is not necessary: higher-rank blocks can obey
+(C-SCAL).  Conversely, rank one of `d` is not sufficient on a
+higher-dimensional source.  Neither the character integral (G2.7) nor
+Frobenius reciprocity implies (C-SCAL).  Thus (G2.15) remains the universal
+scalar **normalized index**, while a scalar formula for `P J_b\psi` itself
+requires the displayed criterion.  This is a scope boundary, not an
+obstruction to S-IDX-fin-G2.
 
 ## 3. Reduction to the certified SU(2) theorem
 
@@ -670,7 +686,7 @@ Nothing in this section has been applied to an existing file.
 
 ### 6.2 Proposed `claims/CLAIMS.md` row
 
-> | S-IDX-fin-G | For every compact Lie on-site symmetry and finite `G`-invariant chain, the charge/current tensor maps obey the isotypic block identity `P^W\widehat J^W=D^W(1\otimes A^+)R`, with `A=d^\dagger d` canonical on the combined CG/chain multiplicity space.  If a closed `K\leq G` has a `K`-stable soft line `\mathbb Cb` and `Q_{b^\dagger}\psi=0`, then `P J_b\psi=D(1\otimes A^+)J_{[b^\dagger,b]}\psi`; the separately restricted register contains `\Pi_{pol}`, and the normalized finite index is exactly one when defined.  At `G=SU(2)`, `K=U(1)_z`, `b=S^-`, these are FIN.1--FIN.3 with the full-sector/highest-weight split of the ML4-Ward ERRATUM.  Finite groups have no Lie-current instance; a scalar projected-current coefficient beyond the normalized index needs a rank-one hard/CG channel or a separately proved scalar reduced operator. | SKETCH | D10, ML4-Ward, S-IDX-fin-r2 | theory/soft-index-g2.md §§1--4 | theory/checks/soft_index_g2_check.py G2-C0--C2; `--red-scalar-gram` |
+> | S-IDX-fin-G | For every compact Lie on-site symmetry and finite `G`-invariant chain, the charge/current tensor maps obey the isotypic block identity `P^W\widehat J^W=D^W(1\otimes A^+)R`, with `A=d^\dagger d` canonical on the combined CG/chain multiplicity space.  If a closed `K\leq G` has a `K`-stable soft line `\mathbb Cb` and `Q_{b^\dagger}\psi=0`, then `P J_b\psi=D(1\otimes A^+)J_{[b^\dagger,b]}\psi`; the separately restricted register contains `\Pi_{pol}`, and the normalized finite index is exactly one when defined.  At `G=SU(2)`, `K=U(1)_z`, `b=S^-`, these are FIN.1--FIN.3 with the full-sector/highest-weight split of the ML4-Ward ERRATUM.  Finite groups have no Lie-current instance; a scalar projected-current coefficient beyond the normalized index is governed by `dA^+r=cd`, with a nonzero one-dimensional selected source line sufficient but not necessary. | SKETCH | D10, ML4-Ward, S-IDX-fin-r2 | theory/soft-index-g2.md §§1--4 | theory/checks/soft_index_g2_check.py G2-C0--C2; `--red-scalar-gram` |
 
 The proposed status is **SKETCH**, despite the complete proposer proof,
 because this new headline generalization has not yet passed PRD.md's capped
@@ -682,9 +698,10 @@ changed by this proposal.
 Replace “SU(2)” in the finite index headline only by the block statement
 (G2.BLOCK), followed by the polarized-line formula (G2.FULL) and normalized
 index (G2.15).  Keep the SU(2) formula as the explicit corollary (G2.17)--
-(G2.19).  Do not print a scalar general-`G` coefficient unless the selected
-hard/CG multiplicity is one-dimensional, and do not suppress
-`\Pi_{\rm pol}` in the restricted register.
+(G2.19).  Print a scalar general-`G` coefficient only after verifying
+(C-SCAL); a nonzero one-dimensional selected source line is merely one
+sufficient route.  Do not suppress `\Pi_{\rm pol}` in the restricted
+register.
 
 ### 6.4 Final honest status
 

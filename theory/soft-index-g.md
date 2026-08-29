@@ -8,8 +8,9 @@
 `Lie(G)_C`, on every positive coroot-weight sector of a finite periodic ring,
 for a displayed complex-linear adjoint-covariant current zero mode.
 The central torus has no roots and hence no root-ladder identity.
-**Multiplicity verdict:** the theorem is block diagonal for the centralizer
-of the root `sl_2`, not for a general unbroken subgroup `H`; the latter premise
+**Multiplicity verdict:** the theorem preserves the canonical isotypic
+decomposition for the centralizer of the root `sl_2`, not irreducible-copy
+blocks and not blocks for a general unbroken subgroup `H`; the latter premise
 is false, but the full-sector identity survives because it never needs it.
 
 The theorem below is finite-dimensional representation theory plus the D10
@@ -28,8 +29,9 @@ registers are kept separate exactly as required by the `ML4-Ward` ERRATUM in
 finite-dimensional unitary on-site representation, and a finite periodic
 ring carries a finite-range `G`-invariant Hamiltonian.  In addition, the ring
 is supplied with a complex-linear current zero mode `J_0` satisfying the
-adjoint covariance (G.2); a standard periodization of a D10 interaction
-supplies this register.  A relevant vacuum or sector has closed stabilizer
+adjoint covariance (G.2).  This displayed covariance is the theorem
+hypothesis; a chosen periodization of a termwise invariant D10 interaction is
+an example supplying it.  A relevant vacuum or sector has closed stabilizer
 `H` in the D2(a)/A2 sense.  Let `alpha` be a root of the complexified
 semisimple Lie algebra whose root `sl_2` is represented nontrivially on the
 ring.
@@ -408,9 +410,10 @@ displayed.
 `C_alpha:=C_G(Q(E_alpha),Q(F_alpha),Q(H_alpha))` be the represented
 centralizer of the root triple and `C_{H,alpha}:=H intersect C_alpha`.
 
-**PROVE.**  The root identity is canonically block diagonal over this action;
-no general full-`H` block statement exists, and accidental larger commutants
-are not excluded.
+**PROVE.**  The registered maps preserve the canonical isotypic decomposition
+over this action; no canonical decomposition into individual equivalent
+copies, no general full-`H` block statement, and no exclusion of accidental
+larger commutants is asserted.
 
 **⟨2⟩1.**  On the full weight sector, (G.7)--(G.8) give
 
@@ -431,7 +434,17 @@ dimensional.
 `U(c)J_0(X)U(c)^dagger=J_0(X)` for
 `X in {E_alpha,F_alpha,H_alpha}`.  Therefore both sides of
 (GFIN.1) and (GFIN.2) are `C_{H,alpha}`-intertwiners and split over its
-irreducible blocks in the multiplicity spaces.
+canonical isotypic summands.  If the total multiplicity register is written
+
+\[
+ \bigoplus_\tau V_\tau\otimes L_\tau,
+ \qquad
+ T=\bigoplus_\tau\mathbb 1_{V_\tau}\otimes B_\tau,          \tag{G.14a}
+\]
+
+then the `tau`-summands are canonical, while `B_tau` may mix equivalent
+copies in `L_tau`, including occurrences carried by different root-spin
+labels `n` when their centralizer type agrees.
 
 *Justification.*  Definition of the centralizer, (G.2), (G.5)--(G.6), and
 functional calculus for `A^{-1}`.
@@ -776,7 +789,7 @@ centralizer wording.  All repairs are mechanically verified in ⟨1⟩8.
 
 > | id | statement | status | depends on | proved in | tested in |
 > |---|---|---|---|---|---|
-> | S-IDX-fin-G | For a finite periodic ring with compact connected on-site `G`, finite-dimensional unitary on-site representation, finite-range `G`-invariant Hamiltonian, and a displayed complex-linear adjoint-covariant current zero mode (supplied by a standard periodized D10 interaction), every represented semisimple root and every positive coroot-weight sector obey the full-sector identity `P_alpha J_0(F_alpha)psi=D_alpha A_alpha^{-1}J_0(H_alpha)psi` for root-highest `psi`, with `A_alpha=D_alpha^dagger D_alpha` on the full sector; in the separately highest-weight-restricted register `D_hw^dagger D_hw=lambda I` and `P_hwJ_0(F_alpha)psi=lambda^{-1}Q(F_alpha)Pi_hwJ_0(H_alpha)psi`.  The identity is canonically block diagonal over the root-`sl_2` centralizer, not a general unbroken `H`; full `H` transports conjugate-root identities.  Central-torus directions have no root analogue. | PROVED | D10, G0, ML4-Ward | theory/soft-index-g.md ⟨1⟩3--⟨1⟩5 | theory/checks/soft_index_g_check.py SIDXG-C1--C5 |
+> | S-IDX-fin-G | For a finite periodic ring with compact connected on-site `G`, finite-dimensional unitary on-site representation, finite-range `G`-invariant Hamiltonian, and a displayed complex-linear adjoint-covariant current zero mode, every represented semisimple root and every positive coroot-weight sector obey the full-sector identity `P_alpha J_0(F_alpha)psi=D_alpha A_alpha^{-1}J_0(H_alpha)psi` for root-highest `psi`, with `A_alpha=D_alpha^dagger D_alpha` on the full sector; in the separately highest-weight-restricted register `D_hw^dagger D_hw=lambda I` and `P_hwJ_0(F_alpha)psi=lambda^{-1}Q(F_alpha)Pi_hwJ_0(H_alpha)psi`.  A chosen periodization of a termwise invariant D10 interaction is an example supplying the displayed current covariance.  The identity preserves the canonical isotypic decomposition over the root-`sl_2` centralizer, with equivalent copies allowed to mix; it does not give blocks for a general unbroken `H`, which instead transports conjugate-root identities.  Central-torus directions have no root analogue. | PROVED | D10, G0, ML4-Ward | theory/soft-index-g.md ⟨1⟩3--⟨1⟩5 | theory/checks/soft_index_g_check.py SIDXG-C1--C5 |
 
 **⟨2⟩1. QED.**  This proposals block changes no authoritative L4 or
 L5 row.

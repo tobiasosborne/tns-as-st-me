@@ -12,8 +12,9 @@ Registered red modes mutate load-bearing theorem structure and must exit 1:
 
 The new instance is the N=4 SU(3) fundamental permutation ring.  The SU(2)
 gate imports the same finite-ring constructor used by soft_index_r2_check.py
-and verifies its SIDXR2-C2 numbers.  No bare assert is used, so every gate
-remains active under python3 -O.
+and verifies its SIDXR2-C2 numbers.  SIDXG-C6 imports the existing G4 SU(3)
+helpers and checks the shared root/central overlap without adding a mutation.
+No bare assert is used, so every gate remains active under python3 -O.
 """
 
 from __future__ import annotations
@@ -426,6 +427,88 @@ def centralizer_weyl_gate(ring: dict[str, object],
           f"tr(H01 H02)={nonorthogonal:.1f}")
 
 
+def shared_su3_overlap_gate(ring: dict[str, object]) -> None:
+    g4 = load_module("soft_index_g4_for_g", HERE / "soft_index_g4_check.py")
+    data = g4.su3_ring()
+    hard = g4.su3_hard(data, math.pi / 2.0)
+
+    local_e, local_f, local_h = local_root(0, 1)
+    raising = global_sum(local_e, int(ring["N"]))
+    lowering = global_sum(local_f, int(ring["N"]))
+    coroot = global_sum(local_h, int(ring["N"]))
+    current_f = current_zero_mode(ring, local_f)
+    current_h = current_zero_mode(ring, local_h)
+
+    weights = np.rint(np.diag(coroot).real).astype(int)
+    source = np.where(weights == 3)[0]
+    target = np.where(weights == 1)[0]
+    descendant_map = lowering[np.ix_(target, source)]
+    gram = descendant_map.conj().T @ descendant_map
+    root_projection = descendant_map @ np.linalg.solve(
+        gram, descendant_map.conj().T
+    )
+    root_projected = np.zeros(hard.size, dtype=complex)
+    root_projected[target] = root_projection @ (current_f @ hard)[target]
+
+    central_diagonal = np.diag(data["C"]).real
+    central_source = np.where(
+        np.isclose(central_diagonal, 5.0 / 3.0, atol=TOL)
+    )[0]
+    central_target = np.where(
+        np.isclose(central_diagonal, 2.0 / 3.0, atol=TOL)
+    )[0]
+    central_map = data["Q"][np.ix_(central_target, central_source)]
+    central_projection = central_map @ np.linalg.pinv(central_map, rcond=TOL)
+    central_projected = np.zeros(hard.size, dtype=complex)
+    central_projected[central_target] = central_projection @ (
+        data["J"] @ hard
+    )[central_target]
+
+    charge_created = lowering @ hard
+    coefficient = np.vdot(charge_created, root_projected) / np.vdot(
+        charge_created, charge_created
+    )
+    denominator = np.vdot(hard, current_h @ hard)
+    index = np.vdot(charge_created, root_projected) / denominator
+    root_rhs = np.zeros(hard.size, dtype=complex)
+    root_rhs[target] = descendant_map @ np.linalg.solve(
+        gram, (current_h @ hard)[source]
+    )
+
+    gram_error = float(np.linalg.norm(gram - 3.0 * np.eye(source.size)))
+    overlap_error = float(np.linalg.norm(root_projected - central_projected))
+    coefficient_error = abs(coefficient - 2.0j / 3.0)
+    denominator_error = abs(denominator - 2.0j)
+    index_error = abs(index - 1.0)
+    ward_error = float(np.linalg.norm(root_projected - root_rhs))
+    highest_error = float(np.linalg.norm(raising @ hard))
+    current_match_error = float(np.linalg.norm(current_f - data["J"]))
+
+    require((source.size, target.size) == (4, 16),
+            "SIDXG-C6 wrong root source/target dimensions")
+    require(gram_error < TOL,
+            f"SIDXG-C6 spec(A) != {{3^4}}: {gram_error:.3e}")
+    require(highest_error < TOL,
+            f"SIDXG-C6 hard state is not root-highest: {highest_error:.3e}")
+    require(current_match_error < TOL,
+            f"SIDXG-C6 G1/G4 current mismatch {current_match_error:.3e}")
+    require(overlap_error < TOL,
+            f"SIDXG-C6 root/central projection mismatch {overlap_error:.3e}")
+    require(coefficient_error < TOL,
+            f"SIDXG-C6 coefficient mismatch {coefficient_error:.3e}")
+    require(denominator_error < TOL,
+            f"SIDXG-C6 denominator mismatch {denominator_error:.3e}")
+    require(index_error < TOL,
+            f"SIDXG-C6 normalized-index mismatch {index_error:.3e}")
+    require(ward_error < TOL,
+            f"SIDXG-C6 root Gram/Ward residual {ward_error:.3e}")
+    print(
+        "SIDXG-C6 PASS: lambda=3, spec(A)={3^4}; root/central mismatch="
+        f"{overlap_error:.2e}; coefficient={coefficient}; "
+        f"denominator={denominator}; index={index}; Ward={ward_error:.2e}"
+    )
+
+
 def main() -> None:
     arguments = sys.argv[1:]
     require(len(arguments) <= 1, "red modes are mutually exclusive")
@@ -444,6 +527,7 @@ def main() -> None:
     identity_gate(certificates, weight_two, mode)
     su2_reduction_gate()
     centralizer_weyl_gate(ring, certificates, mode)
+    shared_su3_overlap_gate(ring)
 
     if mode is not None:
         print(f"RED SURVIVED UNDETECTED: {mode}")
