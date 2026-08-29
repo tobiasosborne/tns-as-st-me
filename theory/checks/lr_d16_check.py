@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Mutation-complete certificates for theory/lr-d16.md, repair round 2.
+"""Mutation-complete certificates for theory/lr-d16.md, repair round 3.
 
 The checker separates algebraic certificates from finite-volume diagnostics.
-It does not claim asymptotic physics.  In particular, LRD-C2(d) and
-LRD-C3(e) are *negative* diagnostics: they exhibit the O(1) escaped magnon
-and the m-dependent pinched state which force the r2 withdrawals/repairs.
+It does not claim asymptotic physics.  In particular, LRD-C2(d) reports only
+an H_XXZ finite-volume inner-window profile and the free-bound comparison;
+LRD-C3(e) reports only finite-sample dependence of the H_XXZ-pinched state.
+Neither row certifies an exhaustion limit or a general monotonicity direction.
 
-Green mode evaluates all 17 rows.  Every evidence row has one registered,
-specific mutant.  Red modes evaluate the target row group directly, so no
-earlier failure can make a later gate unreachable; all gates in a group are
-evaluated without short-circuiting.
+Green mode evaluates all 16 evidence rows.  Every evidence row has at least
+one registered, specific mutant.  Red modes evaluate the full row suite and
+require exactly the registered singleton to fail, so collateral failures and
+masking are visible.  All gates are evaluated without short-circuiting.
 
     python3 -O theory/checks/lr_d16_check.py
     python3 -O theory/checks/lr_d16_check.py --red MODE
@@ -32,6 +33,7 @@ TOL_EXACT = 1.0e-11
 TOL_IDENT = 1.0e-9
 TOL_PSD = 1.0e-12
 TOL_PROB = 1.0e-10
+TOL_REL_VARIATION = 1.0e-3
 
 J = 1.0
 DELTA = 2.5
@@ -43,16 +45,15 @@ SIG = 1.4
 WINDOWS = [(4, 9), (3, 10), (2, 11)]
 
 R_C1A = "LRD-C1(a) normalisation"
-R_C1B = "LRD-C1(b) raw integer spectrum/support"
+R_C1B = "LRD-C1(b) raw integer spectrum"
 R_C2A = "LRD-C2(a) equal-time defect"
 R_C2B = "LRD-C2(b) scalar sharpness bound"
 R_C2C = "LRD-C2(c) escaped-charge inequality"
-R_C2D = "LRD-C2(d) O(1) magnon; ESC fails"
+R_C2D = "LRD-C2(d) H_XXZ finite-volume inner-window profile"
 R_C3A = "LRD-C3(a) independent matrix identity"
 R_C3B = "LRD-C3(b) edge split"
 R_C3C = "LRD-C3(c) observable monotonicity"
-R_C3D = "LRD-C3(d) W_m-pinched majorant"
-R_C3E = "LRD-C3(e) pinched state varies with m"
+R_C3E = "LRD-C3(e) H_XXZ pinched sample varies with m"
 R_C4A = "LRD-C4(a) bond EDW inequality"
 R_C4B = "LRD-C4(b) H_XXZ dynamical EDW bound"
 R_C4C = "LRD-C4(c) finite-chain kink calibration"
@@ -67,11 +68,12 @@ RED_TARGETS = {
     "c2-small-constant": R_C2B,
     "c2-mismatched-complement": R_C2C,
     "c2-delete-outside-data": R_C2D,
+    "c2-kink-propagator": R_C2D,
     "c3-perturb-final-evolution": R_C3A,
     "c3-mismatched-complement": R_C3B,
     "c3-signed-majorant": R_C3C,
-    "c3-delete-majorant": R_C3D,
     "c3-freeze-pinching": R_C3E,
+    "c3-kink-propagator": R_C3E,
     "c4-wrong-gap": R_C4A,
     "c4-kink-propagator": R_C4B,
     "c4-sharp-calibration": R_C4C,
@@ -83,7 +85,7 @@ RED_TARGETS = {
 ROW_GROUP = {
     R_C1A: "c1", R_C1B: "c1",
     R_C2A: "c2", R_C2B: "c2", R_C2C: "c2", R_C2D: "c2",
-    R_C3A: "c3", R_C3B: "c3", R_C3C: "c3", R_C3D: "c3", R_C3E: "c3",
+    R_C3A: "c3", R_C3B: "c3", R_C3C: "c3", R_C3E: "c3",
     R_C4A: "c4", R_C4B: "c4", R_C4C: "c4",
     R_C5A: "c5", R_C5B: "c5", R_C6A: "c6",
 }
@@ -262,6 +264,10 @@ class Ledger:
         if not self.quiet:
             print(f"  [{'PASS' if ok else 'FAIL'}] {row}: {msg}")
 
+    def display(self, label, msg):
+        if not self.quiet:
+            print(f"  [DISPLAY] {label}: {msg}")
+
     def failed(self):
         return [row for row, ok, _ in self.rows if not ok]
 
@@ -311,8 +317,8 @@ def row_c1(ctx, led, mode):
     if mode == "c1-noninteger":
         q_w = q_w + 0.3
     blocks = spectral_blocks(q_w)
-    prop = (ScaledPropagator(ctx.pk, 1.37)
-            if mode == "c1-nonunitary" else ctx.pk)
+    prop = (ScaledPropagator(ctx.px, 1.37)
+            if mode == "c1-nonunitary" else ctx.px)
     psi_tm = prop.evolve(env["psi0"], -8.0)
     law, _ = tpm_law(prop, psi_tm, q_w, blocks, 11.0)
     norm_err = abs(sum(law.values()) - 1.0)
@@ -324,13 +330,17 @@ def row_c1(ctx, led, mode):
     allowed = [x - y for x, _ in blocks for y, _ in blocks]
     supp_ok = all(any(abs(nu - candidate) < TOL_EXACT for candidate in allowed)
                   for nu in law)
-    led.add(R_C1B, raw_err < TOL_EXACT and nu_err < TOL_EXACT and supp_ok,
-            f"max dist(spec Q_W,Z) = {raw_err:.2e}; "
-            f"max dist(nu,Z) = {nu_err:.2e}; |support| = {len(law)}")
+    led.add(R_C1B, raw_err < TOL_EXACT,
+            f"max dist(spec Q_W,Z) = {raw_err:.2e}")
+    led.display("C1(b) derived increment/support arithmetic",
+                f"max dist(nu,Z) = {nu_err:.2e}; support derived from the "
+                f"same spectral blocks = {supp_ok}; |support| = {len(law)} "
+                "(reported, not gated)")
 
 
 def row_c2(ctx, led, mode):
-    env, prop = ctx.env, ctx.pk
+    env = ctx.env
+    prop = ctx.pk if mode == "c2-kink-propagator" else ctx.px
     a, b = WINDOWS[0]
     q_w, q_wc, _ = charges(env, a, b)
     blocks = spectral_blocks(q_w)
@@ -390,10 +400,33 @@ def row_c2(ctx, led, mode):
         radius = max(env["c0"] - wa + 1, wb - env["c0"])
         profile.append(g_m)
         etas.append(4.0 * radius * math.sqrt(g_m))
-    order_ok = all(etas[i + 1] > etas[i] + 1.0 for i in range(len(etas) - 1))
-    led.add(R_C2D, min(profile) > 0.90 and order_ok,
+    e0 = float(np.vdot(env["psi0"], env["hx_e"] @ env["psi0"]).real)
+    energies = np.einsum("it,ij,jt->t", evolved.conj(), env["hx_e"],
+                         evolved).real
+    energy_drift = float(np.max(np.abs(energies - e0)))
+
+    sample_times = (0.0, -2.0, -5.0, -9.0, -20.0, -40.0)
+    eps = []
+    for tm in sample_times:
+        psi_tm = prop.evolve(env["psi0"], tm)
+        weights = np.abs(psi_tm) ** 2
+        eps2 = 1.0 - float(weights[np.abs(q_w - calq0) < 1.0e-9].sum())
+        eps.append(math.sqrt(max(eps2, 0.0)))
+    sampled_bounds = [4.0 * r_w * value for value in eps]
+    free_bound = 2.0 * float(np.max(np.abs(q_w)))
+    weaker_count = sum(value > free_bound for value in sampled_bounds)
+
+    # W_3 leaves only two sites outside at N=12 and is display-only for
+    # escape.  The gate records only the two inner-window observations.
+    inner_ok = min(profile[:2]) > 0.90
+    led.add(R_C2D,
+            inner_ok and weaker_count == 5 and energy_drift < TOL_IDENT,
             "G = " + ", ".join(f"{x:.3f}" for x in profile)
-            + "; eta = " + ", ".join(f"{x:.1f}" for x in etas))
+            + "; eta = " + ", ".join(f"{x:.1f}" for x in etas)
+            + "; 4 R_W eps = "
+            + ", ".join(f"{x:.1f}" for x in sampled_bounds)
+            + f" ({weaker_count}/6 > free {free_bound:.1f}); "
+            + f"energy drift = {energy_drift:.2e}; W_3 display-only")
 
 
 def independent_matrix_identity(mode):
@@ -405,7 +438,7 @@ def independent_matrix_identity(mode):
     dressed = kink_product_vector(st_k, n, q, 1.0)
     psi0 = lower_packet(dressed.astype(complex), st_k, ix_e,
                         n, K0, 2.5, 1.1)
-    h = hamiltonian(st_e, ix_e, n, DELTA, True)
+    h = hamiltonian(st_e, ix_e, n, DELTA, False)
     prop = Propagator(h)
     sz = sz_table(st_e, n)
     q_w, _, _ = window_charges(sz, n, c0, 3, 6)
@@ -449,7 +482,8 @@ def pinched_terms(env, prop, tm, tp, freeze=False):
 
 
 def row_c3(ctx, led, mode):
-    env, prop = ctx.env, ctx.pk
+    env = ctx.env
+    prop = ctx.pk if mode == "c3-kink-propagator" else ctx.px
     lhs_m, rhs_m = independent_matrix_identity(mode)
     matrix_err = abs(lhs_m - rhs_m)
     led.add(R_C3A, matrix_err < TOL_IDENT,
@@ -470,11 +504,11 @@ def row_c3(ctx, led, mode):
             f"max next-prev = {mono_worst:+.3f}; max |Q_Wc|-majorant = {dominance:+.3f}")
 
     split_worst, majorant_worst = -1.0e9, -1.0e9
+    subsumption_gap = math.inf
     for tm in (-8.0, -3.0):
         psi_tm = prop.evolve(env["psi0"], tm)
         w_tm = np.abs(psi_tm) ** 2
-        majorant = (np.zeros_like(n_w1)
-                    if mode == "c3-delete-majorant" else n_w1)
+        majorant = n_w1
         fixed_first = 2.0 * float((w_tm * majorant ** 2).sum())
         for tp in (3.0, 9.0):
             for a, b in WINDOWS:
@@ -493,20 +527,35 @@ def row_c3(ctx, led, mode):
                 split_worst = max(split_worst, second_moment - first - second)
                 majorant_worst = max(majorant_worst,
                                       second_moment - fixed_first - fixed_second)
+                subsumption_gap = min(
+                    subsumption_gap,
+                    (fixed_first + fixed_second) - (first + second),
+                )
     led.add(R_C3B, split_worst <= TOL_IDENT,
             f"max slack = {split_worst:+.3e}")
-    led.add(R_C3D, majorant_worst <= TOL_IDENT,
-            f"max slack = {majorant_worst:+.3e}")
+    led.display("LRD-C3(d) fixed-observable majorant",
+                f"max slack = {majorant_worst:+.3e}; minimum excess over "
+                f"C3(b) majorant = {subsumption_gap:+.3e}; deductively "
+                "subsumed by C3(b)+C3(c), so not an evidence row")
 
     terms = pinched_terms(env, prop, -8.0, 9.0,
                           freeze=(mode == "c3-freeze-pinching"))
     spread = max(terms) - min(terms)
-    increasing = all(terms[i + 1] > terms[i] + 0.03
-                     for i in range(len(terms) - 1))
-    led.add(R_C3E, spread > 0.40 and increasing,
+    mean_term = float(np.mean(terms))
+    relative_spread = spread / mean_term
+    e0 = float(np.vdot(env["psi0"], env["hx_e"] @ env["psi0"]).real)
+    energy_drift = 0.0
+    for t in (-8.0, 9.0):
+        psi_t = prop.evolve(env["psi0"], t)
+        energy = float(np.vdot(psi_t, env["hx_e"] @ psi_t).real)
+        energy_drift = max(energy_drift, abs(energy - e0))
+    led.add(R_C3E,
+            relative_spread > TOL_REL_VARIATION
+            and energy_drift < TOL_IDENT,
             "2 sum ||N_W1 eta_q^(m)||^2 = "
             + " / ".join(f"{x:.3f}" for x in terms)
-            + f"; spread = {spread:.3f}")
+            + f"; spread/mean = {relative_spread:.3f}; "
+            + f"energy drift = {energy_drift:.2e}")
 
 
 def row_c4(ctx, led, mode):
@@ -597,7 +646,7 @@ def run(ctx, mode="green", group=None, quiet=False):
 
 def red_result(ctx, mode, quiet=False):
     target = RED_TARGETS[mode]
-    led = run(ctx, mode=mode, group=ROW_GROUP[target], quiet=quiet)
+    led = run(ctx, mode=mode, quiet=quiet)
     failed = led.failed()
     exact = failed == [target]
     return exact, failed
@@ -609,11 +658,11 @@ def main(argv=None):
     parser.add_argument("--red-all", action="store_true")
     args = parser.parse_args(argv)
 
-    print(f"lr_d16_check r2: J={J}, Delta={DELTA}, N={NSITES}, c0={C0}")
+    print(f"lr_d16_check r3: J={J}, Delta={DELTA}, N={NSITES}, c0={C0}")
     ctx = Context()
     if args.red_all:
         all_ok = True
-        print("red reachability table (each mode evaluates its target group directly):")
+        print("red reachability table (each mode evaluates the full row suite):")
         for mode, target in RED_TARGETS.items():
             exact, failed = red_result(ctx, mode, quiet=True)
             all_ok = all_ok and exact

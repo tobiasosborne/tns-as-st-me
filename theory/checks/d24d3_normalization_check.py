@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Certificate for the D24(d) clause-3 adjudication (bd tns-iu5, r4).
+"""Certificate for the D24(d) clause-3 adjudication (bd tns-iu5, r5).
 
 Full gate audit, red-mode table and mutation record: section 6 of
-theory/verdicts/d24d3-adjudication-r4.md (r3 architecture: section 7 of
+theory/verdicts/d24d3-adjudication-r5.md (r4: section 6 of
+theory/verdicts/d24d3-adjudication-r4.md; r3 architecture: section 7 of
 theory/verdicts/d24d3-adjudication-r3.md).  Summary:
 
 D24N-C1  GUARD (symbolic, no runtime red mode): the frozen constant makes
@@ -16,13 +17,26 @@ D24N-C2  the spin-S ladder four independent ways -- order-parameter residue;
          r3-critic M3) the TWO-MAGNON SAME-total-momentum overlap
          <(Q^-_{k})^2 Om | (Q^-_{k+pi})^2 Om> = -2N*Z_rho, exact, against a
          closed form derived independently of the code, sensitive to the
-         n >= 1 ladder elements.  Red mode ``--red-ladder``.
+         n >= 1 ladder elements.  Its ISOLATED error is reported on the
+         C2 banner line beside the aggregate max (r4-critic m5), because
+         the aggregate is set by sub-gate (iii) under ``--red-ladder``
+         and so no red mode names (v) in its exit path.  What (v) adds
+         over (ii) is COMPOSITION-path coverage (apply_charge o
+         apply_charge, inner, the coincidence bookkeeping), NOT ladder
+         coverage: (ii) already pins every ladder element exactly.  It is
+         insensitive at 2S = 1, where the coincidence term carries
+         2S - 1 = 0.  Red mode ``--red-ladder``.
 D24N-C3  the Ward residue is exactly Z_rho-linear against the CHARGE-CREATED
          soft leg, <h|Q_0^dag J^-_0|h> = 2i v_S(h).  Red mode ``--red-ward``.
-         A DISPLAY line prints the same residue in BOTH normalisations
-         (charge-created: 2i*Z_rho*J*sin h; (b)-asymptotic: 2i*sqrt(Z_rho)*
-         J*sin h = C3/sqrt(Z_rho), deductively C3 divided by C8's factor --
-         labelled DISPLAY, never gated, because it would be subsumed).
+         A DISPLAY line prints the same residue in BOTH normalisations.
+         (b)'s leg is the delta-normalised ASYMPTOTIC magnon, so the
+         conversion is exactly sqrt(Z_rho) only in the LSZ limit: the line
+         prints the LSZ-limit value C3/sqrt(Z_rho) AND the finite-N value
+         C3/sqrt(Z_rho - 2/N) obtained by dividing by the MEASURED
+         descendant-leg ratio ||Q^-_0|h>||/sqrt(N) (r4-critic M1: r4
+         printed the first labelled as the second, 3.28% out at 2S=4,
+         N=8).  Both are DISPLAY, never gated -- as gates they would be
+         deductively subsumed by C3 and C8.
 D24N-C4  ground truth: the ansatz-free ring slopes equal 1/S inside the
          PRE-REGISTERED 0.08 band; ``decision_band`` is a required key.  No
          code red mode by design -- C4 is exercised by DATA mutation.
@@ -67,7 +81,15 @@ retracted in all four layers; the honest statement is):
     (r3-critic m2): a single row whose quoted error exceeds 3x the median
     row error is rejected as corrupted.  It can only REJECT data, never
     accept it, so it is a guard, not an acceptance constant.  On the true
-    data the worst row is 2.29x the median.
+    data the worst row is 2.29x the median.  STRUCTURAL BLIND SPOT
+    (r4-critic m4): the guard is a RATIO (max/median), so it cannot see a
+    UNIFORM inflation of the whole error column, which loosens the derived
+    acceptance band proportionally; the only backstop on that channel is
+    the band < DECISION_BAND subsumption guard, and no conclusion is
+    exposed because both refutations hold at the pre-registered 0.08 with
+    5-37x margins and need no derived band at all.
+No constant-true ``require`` remains: the r4 guard on the derived exponent
+band was structurally unreachable and is deleted (r4-critic m3).
 
 The definition D24(d)3b asserts NO value for ``a_leg`` (open lemma AMP); the
 red modes falsify *candidates*, never the definition.  Every failure raises
@@ -227,8 +249,9 @@ def check_frozen_is_density_blind() -> tuple[sp.Expr, sp.Expr]:
 # --------------------------------------------------------------------------
 # D24N-C2 : the ladder, four independent ways
 # --------------------------------------------------------------------------
-def check_order_parameter_residue(red_ladder: bool) -> float:
+def check_order_parameter_residue(red_ladder: bool) -> tuple[float, float]:
     worst = 0.0
+    worst_two_magnon = 0.0   # sub-gate (v) alone (r4-critic m5)
     # (i) order-parameter residue <Om|[S^+,S^-]|Om> = 2S from the dense matrices
     for two_s in range(1, 7):
         _, raising, lowering = spin_matrices(two_s)
@@ -281,7 +304,14 @@ def check_order_parameter_residue(red_ladder: bool) -> float:
     #     = 4(2S)^2 sum_{x<y} (-1)^{x+y}  +  2*2S*(2S-1) * sum_x 1
     #     = 4(2S)^2 (-N/2) + 2*2S*(2S-1)*N  =  -2*N*2S .
     # This gate CAN fail: --red-ladder moves it at every 2S >= 2 (the
-    # coincidence term scales with the n = 1 element squared).
+    # coincidence term scales with the n = 1 element squared); its
+    # ISOLATED error is reported separately on the banner, because under
+    # --red-ladder the aggregate max is set by sub-gate (iii), so no red
+    # mode names (v) in its exit path (r4-critic m5).  What (v) adds over
+    # (ii) is COMPOSITION-path coverage -- apply_charge o apply_charge,
+    # inner, and the coincidence bookkeeping -- and NOT ladder coverage:
+    # (ii) already pins every ladder element exactly at every n <= 2S-1.
+    # At 2S = 1 it is insensitive (the coincidence term carries 2S-1 = 0).
     for two_s in (1, 2, 3, 4):
         for sites in (6, 8):
             vacuum_state = {tuple([0] * sites): 1.0}
@@ -295,26 +325,38 @@ def check_order_parameter_residue(red_ladder: bool) -> float:
                 k2, sites, two_s, red_ladder)
             overlap = inner(two_a, two_b)
             predicted = -2.0 * sites * two_s
+            worst_two_magnon = max(worst_two_magnon, abs(overlap - predicted))
             worst = max(worst, abs(overlap - predicted))
     require(worst < EXACT_TOL, f"D24N-C2 ladder/soft-leg-norm error {worst:.3e}")
-    return worst
+    return worst, worst_two_magnon
 
 
 # --------------------------------------------------------------------------
 # D24N-C3 : the Ward residue is exactly linear in Z_rho (charge-created leg)
 # --------------------------------------------------------------------------
-def check_ward_residue_scaling(red_ward: bool) -> tuple[float, float, float]:
+def check_ward_residue_scaling(red_ward: bool) -> tuple[float, float, float, float]:
     """Gate: <h|Q_0^dag J^-_0|h> = Z_rho * 2iJ sin h against the
     CHARGE-CREATED leg (the normalisation clause (d)2 is quoted in).
-    Also returns the residue read against the (b)-asymptotic leg at the
-    largest spin, for the DISPLAY line: dividing by C8's exact conversion
-    sqrt(Z_rho) gives 2i*sqrt(Z_rho)*J sin h.  That value is DISPLAY only
-    -- as a gate it would be deductively subsumed by C3 + C8."""
+
+    Also returns, for the DISPLAY line, the same residue read against
+    (b)'s leg in TWO scopes (r4-critic M1).  (b)'s leg is the
+    delta-normalised ASYMPTOTIC magnon, and the charge-created leg here is
+    the DESCENDANT one, Q^-_0|h>, whose norm is ||Q^-_0|h>||^2 =
+    Z_rho*N - 2 (C8(ii)) and not Z_rho*N.  So:
+      * LSZ-limit value   = |residue| / sqrt(Z_rho)          -- what the
+        conversion becomes as N -> infinity, the register D24(b)
+        amplitudes are defined in;
+      * finite-N value    = |residue| / (||Q^-_0|h>|| / sqrt(N)), i.e.
+        divided by the MEASURED leg ratio sqrt(Z_rho - 2/N).
+    r4 printed the first labelled as the second (3.28% out at 2S = 4,
+    N = 8: 2.828427 against 2.921187).  Both are DISPLAY only -- as gates
+    they would be deductively subsumed by C3 + C8."""
     sites = 8
     coupling = 1.0
     worst = 0.0
     display_cc = 0.0
-    display_asym = 0.0
+    display_lsz = 0.0
+    display_finite = 0.0
     for two_s in (1, 2, 3, 4):
         bond = bond_matrix(two_s, coupling)
         for index in (1, 3):
@@ -345,10 +387,14 @@ def check_ward_residue_scaling(red_ward: bool) -> tuple[float, float, float]:
             worst = max(worst, abs(measured - predicted))
             if two_s == 4 and index == 1:
                 display_cc = abs(measured)
-                display_asym = abs(measured) / np.sqrt(float(two_s))
+                display_lsz = abs(measured) / np.sqrt(float(two_s))
+                # the MEASURED descendant-leg ratio, not the closed form:
+                # ||Q^-_0|h>|| / sqrt(N) = sqrt(Z_rho - 2/N)  (C8(ii))
+                leg_ratio = np.sqrt(inner(charged, charged).real / sites)
+                display_finite = abs(measured) / leg_ratio
     require(worst < EXACT_TOL,
             f"D24N-C3 Ward residue Z-scaling error {worst:.3e}")
-    return worst, display_cc, display_asym
+    return worst, display_cc, display_lsz, display_finite
 
 
 # --------------------------------------------------------------------------
@@ -389,6 +435,15 @@ def derive_accept_band(payload: dict) -> float:
     value fails, so one inflated entry cannot silently loosen the gate
     (r3-critic's mutant: one S=1/2 error -> 0.1579 gave band 0.0790 and
     passed r3's one-sided guard; here it is 3.78x the median and dies).
+
+    Declared blind spot (r4-critic m4): the corrupted-entry guard is a
+    RATIO, max/median, hence invariant under multiplying the WHOLE error
+    column by a constant -- a uniform inflation still loosens this band
+    proportionally, up to the DECISION_BAND ceiling, and only the
+    subsumption guard below stops it.  (A x1.6 uniform inflation combined
+    with a -6% slope shift passes every gate.)  Nothing is exposed: both
+    refutations hold at the pre-registered 0.08 with 5-37x margins and
+    need no derived band at all.
     """
     row_bands = []
     for row in payload["A_ring_summary"]:
@@ -437,12 +492,19 @@ def derive_exponent_band(accept_band: float) -> float:
     subsumption be reported, not gated over).  r3's 0.03 gate did
     independent work precisely BECAUSE it was miscalibrated.  The
     symbolic pin (2S)^p = 2S remains the gated content of C6 part 2.
+    This function contains no ``require``: the only one r4 had here could
+    not fail on any input (r4-critic m3), and the quantity it guards gates
+    nothing.
     """
     fit_spins = [s for s in SPINS if abs(2.0 * s - 1.0) > 1.0e-12]
     design = [np.log(2.0 * s) for s in fit_spins]
     ratio = sum(design) / sum(x * x for x in design)
     band = ratio * np.log(1.0 / (1.0 - accept_band))
-    require(band > 0.0, "D24N-C6 derived exponent band is zero")
+    # r4's require(band > 0.0) is DELETED (r4-critic m3): by the guards in
+    # derive_accept_band, accept_band lies in (0, DECISION_BAND) and ratio
+    # is the fixed positive constant 0.880539 over SPINS, so band > 0
+    # ALWAYS -- it was a constant-true guard shipped by the round that
+    # deleted one for being constant-true.
     return float(band)
 
 
@@ -661,8 +723,9 @@ def main() -> None:
         exponent = 0.5
 
     frozen_jet, matched_jet = check_frozen_is_density_blind()
-    ladder_error = check_order_parameter_residue(arguments.red_ladder)
-    ward_error, residue_cc, residue_asym = check_ward_residue_scaling(arguments.red_ward)
+    ladder_error, two_magnon_error = check_order_parameter_residue(arguments.red_ladder)
+    ward_error, residue_cc, residue_lsz, residue_finite = \
+        check_ward_residue_scaling(arguments.red_ward)
     payload = load_payload(arguments.data)
     slopes = load_ring_slopes(payload)
     accept_band = derive_accept_band(payload)
@@ -684,13 +747,17 @@ def main() -> None:
     print(f"D24N-C1 GUARD frozen_jet_coefficient={frozen_jet} matched={matched_jet}")
     print(f"D24N-C2 ladder x4 (residue, dense/occupation cross-check, multi-quantum "
           f"norms, soft-leg norm + two-magnon same-momentum overlap = -2N*Z_rho), "
-          f"max_error={ladder_error:.3e}")
+          f"max_error={ladder_error:.3e}; sub-gate (v) alone (the two-magnon "
+          f"overlap, composition-path coverage) error={two_magnon_error:.3e}")
     print(f"D24N-C3 Ward residue = Z_rho*2iJ sin h against the CHARGE-CREATED leg, "
           f"max_error={ward_error:.3e}")
     print(f"D24N-C3 DISPLAY both normalisations at 2S=4, h=pi/4 (gates nothing; "
           f"deductively C3 / C8): charge-created |residue|={residue_cc:.6f} "
-          f"(= Z_rho*2J sin h), (b)-asymptotic |residue|={residue_asym:.6f} "
-          f"(= sqrt(Z_rho)*2J sin h); equal only at Z_rho = 1")
+          f"(= Z_rho*2J sin h); against (b)'s asymptotic leg the same residue "
+          f"is {residue_lsz:.6f} (= sqrt(Z_rho)*2J sin h) in the LSZ LIMIT, and "
+          f"{residue_finite:.6f} at this finite N, where the measured "
+          f"descendant-leg ratio is sqrt(Z_rho - 2/N), not sqrt(Z_rho) "
+          f"(C8(ii)); the two normalisations coincide only at Z_rho = 1")
     print(f"D24N-C4 ansatz-free slopes vs 1/S: max_rel_dev={truth_error:.4f} "
           f"(pre-registered band {DECISION_BAND})")
     print("D24N-C5 DISPLAY frozen-clause relative deviations at S=1/2,1,3/2,2: "
