@@ -28,6 +28,7 @@ RED_FLAGS = {
     "--red-readout",
     "--red-channel",
     "--red-probe",
+    "--red-probe-p2a",
 }
 
 
@@ -179,7 +180,7 @@ def channel_gate(red: bool) -> dict:
             "max_unitarity_error": max(unity_errors), "violated": violated}
 
 
-def frozen_probe_gate(red: bool) -> dict:
+def frozen_probe_gate(red: str | None) -> dict:
     """PMLM-C5: consume only frozen P1 and P2(a) result fields."""
     data = json.loads(PROBE_RESULTS.read_text())
     p1_errors = []
@@ -188,17 +189,21 @@ def frozen_probe_gate(red: bool) -> dict:
         row = data[f"p1_two_s_{two_s}"]
         site_spin = two_s / 2.0
         target = 1.0 / site_spin
-        if red:
-            target = 1.0 / (site_spin + 1.0)
         p1_errors.append(abs(abs(float(row["slope"])) - target) / target)
         p1_signs.append(float(row["sign"]))
+    if red == "sign":
+        # MS-O1 mutation: both frozen P1 signs reversed, magnitudes intact.
+        p1_signs = [-value for value in p1_signs]
 
     # Deliberately read only P2(a)'s source-jet errors.  The P2(b) fields in
     # this JSON are outside this gate because that frozen code path is a no-op.
     p2a_errors = [float(value) for value in data["p2"]["jet_errors"]]
-    if red:
+    if red == "p2a":
         p2a_errors[0] += 0.2
-    violated = (max(p1_errors) > 0.05 or len(set(p1_signs)) != 1
+    # MS-O1 repair: the registered D7 orientation is positive; a common
+    # negative sign is a real channel defect and must fire this gate.
+    violated = (max(p1_errors) > 0.05
+                or any(value <= 0 for value in p1_signs)
                 or max(p2a_errors) > 0.08)
     return {"p1_errors": p1_errors, "p1_signs": p1_signs,
             "p2a_errors": p2a_errors, "violated": violated}
@@ -217,7 +222,9 @@ def main() -> None:
         "PMLM-C2": separation_gate(red_flag == "--red-separation"),
         "PMLM-C3": readout_gate(red_flag == "--red-readout"),
         "PMLM-C4": channel_gate(red_flag == "--red-channel"),
-        "PMLM-C5": frozen_probe_gate(red_flag == "--red-probe"),
+        "PMLM-C5": frozen_probe_gate(
+            "sign" if red_flag == "--red-probe"
+            else "p2a" if red_flag == "--red-probe-p2a" else None),
     }
     violated = [name for name, row in gates.items() if row["violated"]]
     for name, row in gates.items():

@@ -9,7 +9,7 @@ regular primitive two-magnon channel, for the displayed separated-preparation
 subclass `(D29-HS-SEP)` of the quarantined D29 proposal.  Along every actual
 ordered row-measure limit subsequence the match is exact, hence is stronger than the required
 `o(epsilon)` statement.  `(PROTO-LSZ)` is **not proved**.  L5 status remains
-**SKETCH**.  The one hostile critic returned four MAJOR repair demands and
+**SKETCH**.  An internal self-critic returned four MAJOR repair demands and
 no FATAL; the single repair wave required by PRD.md is incorporated below.
 
 ## 1. Setup by D-number
@@ -797,8 +797,9 @@ antecedent.
 *Justification.*  ⟨1⟩11.⟨2⟩1 and the live claims-row scopes.
 
 **⟨2⟩2.**  Keep `S-IDX-HR-value-r2` separate and unchanged.  The proposed
-bridge row cites it only as the on-shell endpoint whose connection has now
-been proved on `(D29-HS-SEP)`.
+bridge row does not cite it; this discussion merely compares with that
+separate HR row, whose connection is now proved on `(D29-HS-SEP)` by the
+shard's own ⟨1⟩3--⟨1⟩4 construction (MS-O3).
 
 *Justification.*  ⟨1⟩8 and hard fence 4 of the work order.
 
