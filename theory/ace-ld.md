@@ -980,30 +980,46 @@ This is verdict M2's strengthening adopted verbatim.  Named computation
 **LD-ESC-MEAN**.
 
 **⟨2⟩6. (REMARK — the dichotomy, the evidence, and the `tns-xf4` fence.)**
-(i) *Dichotomy.*  ⟨1⟩4 and ⟨1⟩5 partition the reach of the unsubtracted
-window charge: on confined-kink sharp-tail states ((K-TAIL)+(K-Q);
-`θ = 0`) the ε-version holds and is compatible with D27(LR); on
-mean-transiting states (`θ > 0`) D27(LR3) fails and no ordered outcome
-measure exists.  A `{0,2}`-type ledger for the UNSUBTRACTED charge can
-therefore live only on the confined side; on transiting classes it
-requires a subtracted or co-moving observable (the D13(c) trap paragraph's
-leg subtraction — a definition-level move, proposed for adjudication in
-r1 and still open, not made here).  (ii) *Evidence for the mechanism.*
+(i) *Dichotomy (r3 sharpening).*  ⟨1⟩4 and ⟨1⟩5 partition the reach of
+the unsubtracted window charge: on confined-charge sharp-tail states
+((K-TAIL)+(K-Q); `θ = 0`) the ε-version holds and — by LD-ID ⟨3⟩4 — the
+ordered memory is exactly `δx = 0`; on mean-transiting states (`θ > 0`)
+D27(LR3) fails and no ordered outcome measure exists.  Neither side of
+the dichotomy carries a nonzero ordered memory for the unsubtracted
+charge; a `{0,2}`-type ledger with `δx ≠ 0` therefore requires a
+subtracted or co-moving observable (the D13(c) trap paragraph's leg
+subtraction — a definition-level move, proposed for adjudication in r1
+and still open, not made here).  (ii) *Evidence for the mechanism.*
 The two-atom law `||F_ret||²δ_0 + ||F_tr||²δ_{−2s|W|}` with LR3 tail
 `(1+2s|W|)||F_tr||²` — r1's obstruction shape — is real as a MECHANISM:
 the r1 critic reproduced it to four digits on a scattering model
 (verdict §0: weights `0.5567/0.4433`, incoming-concentration defect
 `2.4e-09`, tail `(1+513)(0.4433) = 227.86` vs measured `227.867`), and
-checker gate LD-C5 re-certifies it here on a barrier model together with
-the ⟨2⟩2 identity itself.  It is recorded as evidence for ⟨2⟩5's
-`θ = p_tr` arithmetic, NOT re-claimed as a theorem: the r1 proposition
-that asserted it had an empty hypothesis class (F1).  (iii) *Fence.*
-D16 is in the complement of (M-ESC): its kink band is exactly flat
-(ground energy `0` in every `S^z` sector — verdict F1(b)(iii), checker
-LD-C7), so `θ = 0` there and NOTHING in this shard bears on the
-(LR)-for-D16 lane bd `tns-xf4`.  What ⟨1⟩5 does transmit to that lane is
-a hint, not a constraint: LR3 for D16 hinges on kink confinement (band
-flatness), not on magnon dynamics.
+checker gate LD-C5 re-certifies the configuration on a barrier model
+(honest content per r2 M4(d): incoming concentration and the two-atom
+support including the `ν=0` atom; the identity and tail gates are
+consequences of those facts, disclosed as such in §5, not independent
+evidence).  It is recorded as evidence for ⟨2⟩5's `θ = p_tr` arithmetic,
+NOT re-claimed as a theorem: the r1 proposition that asserted it had an
+empty hypothesis class (F1).  (iii) *Fence (justification replaced per
+r2 verdict M5).*  D16 is in the complement of (M-ESC): every state in
+the closed span of D16's K1--K2 family is exactly stationary (K1+K2,
+PROVED; exhaustion of `ker H_kink` by that family is **K4, CONJECTURE**
+— the r2 sentence "its kink band is exactly flat, so `θ = 0`" was a
+K4-strength upgrade about BARE kinks, while `θ` concerns kink+magnon
+states, and is withdrawn), and for D17 kink--magnon packets the mean
+wall transport is bounded by `⟨N_T⟩/s` — M-quant-G's conclusion (PROVED
+conditional), not a consequence of band flatness — so `θ = 0` there and
+NOTHING in this shard bears on the (LR)-for-D16 lane bd `tns-xf4`.
+LD-C7(a) certifies only the 13 sector ground energies at `L = 12`.
+(iv) *Cross-lane composition (recorded as such, r2 verdict §7 item 3;
+NOT this shard's theorem).*  Composing this lane's M2-sharpened bound
+(`LR3 ⟹ sup_m|ω^+−ω^-|(𝔛_{W_m}) < ∞`, first-moment level) with
+LR-D16's ⟨1⟩5.⟨2⟩4 monotonicity remark (the same statement at
+second-moment level) yields **`(M-ESC) ⟹ (NR) fails`** — a constraint
+neither lane has alone, attributed to the composition of the ace-ld-r2
+and lr-d16-r1 critic passes; it is transmitted to `tns-xf4` via MP-6 and
+is not proved in this shard.
 
 **⟨2⟩7. QED (⟨1⟩5).**  □
 
@@ -1015,21 +1031,47 @@ flatness), not on magnon dynamics.
 implication):**
 
 - **ACE-LD-abs** (⟨1⟩1--⟨1⟩2) and **ACE-LD-nec** (⟨1⟩3).  Verified by the
-  r1 critic (verdict §5, items 1--2) and unchanged in r2 except the m3
-  lockstep fix and the LD-GAP-SET addition ⟨1⟩1.⟨2⟩5 (a two-line parallel
-  of the verified ⟨2⟩1--⟨2⟩2, consumed only by ACE-LD-ε-x).
+  r1 critic (verdict §5, items 1--2), re-fenced by the r2 critic, and
+  unchanged in r2/r3 except the m3 lockstep fix and the LD-GAP-SET
+  addition ⟨1⟩1.⟨2⟩5 (a two-line parallel of the verified ⟨2⟩1--⟨2⟩2,
+  consumed only by ACE-LD-ε-x).
+- **ACE-LD-χ** (r3; §0 and ⟨1⟩4.⟨2⟩9(b)): (K-TAIL) plus D9 kink-class
+  membership FORCES `χ=1` `S^z`-product tail vacua with `s ∈ spec S^z`.
+  Inputs: D9(a), D2(a), (K-TAIL) itself.  This is the theorem form of
+  what r2 carried as a hedged remark (r2 verdict M1).
+- **LD-ID** (⟨1⟩4.⟨2⟩7): `Q̂_{W,c_0} = Σ_{x∈W}(S^z_x − s_{γ_{c_0}}(x))`
+  exactly; `𝒬_{c_0} = 2s(X_1 − c_0)` is D13(c)'s exactly conserved
+  charge; (K-TAIL) is "no charge escaped", jointly unsatisfiable with
+  D18(AD3)'s escaping-leg clause; on the `ε_Q = 0` class the ordered
+  memory is `δx = 0`.  (The r2 critic's F1 identification, adopted as a
+  theorem of this shard.)
+- **LD-MONO** (⟨1⟩4.⟨2⟩7): anchor-free window monotonicity of ε-forms of
+  (AD3-ex), uniform (not decaying) in the outer window, compatible with
+  an escaped leg beyond the outer window.
 - **ACE-LD-obst′** (⟨1⟩5): D27(LR3) fails whenever the mean tail transport
   is a positive fraction of the window.  Inputs: MI ⟨1⟩5 and MI
   ⟨1⟩7.⟨2⟩1--⟨2⟩2 (both inside the PROVED M-INDEX-fin/M-INDEX-spec
   perimeter), D27(LR1)--(LR2), and (M-ESC).  No channel structure, no
-  variance hypothesis, no D28.  This is verdict M2's statement, adopted.
+  variance hypothesis, no D28.  This is r1 verdict M2's statement,
+  adopted; its closing positive statement is the **O(1)** bound
+  `sup_m|ω^+−ω^-|(𝔛_{W_m}) ≤ (M_0+1)/(2s)` (r2 verdict M2), which is
+  the quantitative form of D27's own existence corollary (r2 n1) — the
+  genuine addition is the `M_0` tightness route.
 
 **Proved conditionally (each hypothesis named, none hidden):**
 
 - **ACE-LD-ε / ACE-LD-ε-t / ACE-LD-ε-x** (⟨1⟩4): conditional on
   **(K-TAIL)** and **(K-Q)** (with `t`-uniform data for the family form).
-  The hypothesis class is inhabited (D16 static-kink sector states —
-  ⟨2⟩9(c)), unlike r1's `(E-TAIL) ∧ (V-ch)`.
+  **Forced scope (ACE-LD-χ; r2 M1(c), carried verbatim in §0 and MP-1):
+  (K-TAIL) entails `χ=1` `S^z`-product tail vacua with `s ∈ spec S^z`;
+  the theorems are claimed for that corner only.**  The hypothesis class
+  is inhabited (D16 static-kink sector states — ⟨2⟩9(c), verified at
+  hypothesis AND conclusion level), unlike r1's `(E-TAIL) ∧ (V-ch)`.
+  **But (r3, F1): the class is disjoint from D18(AD3)'s escaping-leg
+  class (LD-ID ⟨3⟩3); ACE-LD-ε-x's `q_L ≠ q_T` is unavailable within one
+  D18 sector (⟨3⟩3, §0 emptiness warning); and on the `ε_Q = 0` class
+  the ordered memory is `δx = 0` (⟨3⟩4).  Nothing here supplies AS
+  ⟨1⟩7.⟨2⟩2's input.**
 
 **Hypothesised / not proved:**
 
@@ -1039,47 +1081,70 @@ implication):**
   infinite-volume proof (e.g. from D1(c)'s transfer gap on the sector
   MPS) is the natural next target and is NOT claimed here.
 - (K-Q) for all `t`: propagated from `t=0` by conservation WHERE a
-  commuting relative-charge operator exists (⟨1⟩4.⟨2⟩4); exact in the D16
-  sector realization; not constructed abstractly (and unconditionally it
-  CANNOT be — M-INDEX-LA-strong).
-- (M-ESC) on any concrete model/state: the barrier-model certificate
-  LD-C5 exhibits the mechanism (including the ⟨1⟩5.⟨2⟩2 identity) on a
+  commuting relative-charge operator exists (⟨1⟩4.⟨2⟩4); exact in the
+  finite-volume D16 sector realization; **in infinite volume the
+  existence of the commuting implementer on the D16 kink folium is
+  exactly M-INDEX-LA-folium, CONJECTURE** (r2 m6) — and unconditionally
+  it CANNOT exist sector-wide (M-INDEX-LA-strong, REFUTED row).
+- (M-ESC) on any concrete model/state: **no model or state realising
+  `θ > 0` is exhibited anywhere in this corpus** (r2 m7; independently
+  confirmed by the parallel lane, lr-d16-r1 M2(b)1).  The barrier-model
+  certificate LD-C5 exhibits the mechanism's configuration on a
   one-particle model; whether a D28-class kink--magnon state realises
   `θ > 0` is a model question this shard does not answer.  *(r1's claim
-  that D28 packets force ballistic kinks was FALSE — F1(b)(iv) — and is
-  withdrawn; D28's class contains `θ = 0` members, D16 among them.)*
+  that D28 packets force ballistic kinks was FALSE — r1 F1(b)(iv) — and
+  is withdrawn; D28's class contains `θ = 0` members, D16 among them.)*
 
-**Refuted / withdrawn (r2):**
+**Refuted / withdrawn (r2, r3):**
 
 - r1's ACE-LD-esc, COROLLARY ACE-LD, ACE-LD-obst as stated: hypothesis
-  class `(E-TAIL) ∧ (V-ch)` EMPTY on every instantiated model (F1);
-  withdrawn, not repaired.  The exact fixed-window (AD3-ex) additionally
-  has a counterexample in D16: strictly positive defect at every finite
-  `W`, decaying as `λ̃^{d_W}` (⟨1⟩4.⟨2⟩8, LD-C7) — so the `AD3-ex` row's
-  exact form is false at fixed `W` on the one instantiated model of its
-  intended class, and only the ε-version survives.
+  class `(E-TAIL) ∧ (V-ch)` EMPTY on every instantiated model (r1 F1);
+  withdrawn, not repaired.
+- **r3 (r2 verdict F1):** the r2 claim that (AD3-ex-ε)/ACE-LD-ε-x
+  supplies what AS ⟨1⟩7.⟨2⟩2 consumes, the "Compatible with D27(LR3)"
+  framing, and MP-3(ii) are withdrawn as FALSE: `𝒬_{c_0} = 2s(X_1−c_0)`
+  is D13(c)'s conserved charge, (K-TAIL) is equivalent to "no leg charge
+  outside `K`", it is jointly unsatisfiable with D18(AD3)'s
+  escaping-leg clause and with `q_L ≠ q_T`, and on its own class
+  `δx = 0` (⟨1⟩4.⟨2⟩7).
+- On (AD3-ex) at fixed `W` (r2 M6 correction of the r2 wording): D16's
+  exact kink states are never `Q̂_{W,c_0}` eigenvectors at finite `W`
+  (defect decaying as `λ̃^{d_W}`, LD-C7), so the exact display can hold
+  at fixed `W` only in ε-form; but the measured state is a magnon-free
+  zero mode, not an (AD3-ex) vector, so **the exact display is not
+  refuted — it is unavailable**, and no in-class vector is exhibited.
+  `AD3-ex` stays CONJECTURE.
 
 **Merely evidence:**
 
 - The numerical certificates (§5, `theory/checks/ace_ld_check.py`):
   LD-C1--C4 instantiate ACE-LD-abs/-nec surfaces on a free two-channel
-  lattice model; LD-C5 exhibits the obstruction mechanism and the
-  first-moment identity on a barrier scattering model; LD-C6 certifies the
-  static contrast (`p_W = δ_0`, bounded LR3 tail); LD-C7 certifies the
-  D16 flat band, the strictly positive fixed-`W` defect, its `λ̃^{d_W}`
-  decay rate, and the coset location, by exact diagonalisation.  All on
-  those models only.
+  lattice model; LD-C5 certifies, on a barrier scattering model, the
+  incoming one-charge concentration and the exact two-atom TPM support
+  including the `ν=0` atom (its identity and tail gates are disclosed as
+  consequences, not independent evidence — r2 M4), plus a two-branch
+  dephasing certificate for the `𝒟` mechanism of MI ⟨1⟩7; LD-C6
+  certifies the bounded-transport contrast on the D16 kink+magnon
+  battery, where the dynamics does NOT commute with `Q̂_W` (r2 M3: the
+  r2 position-diagonal LD-C6 was a tautology and is replaced); LD-C7
+  certifies the D16 sector ground energies, the strictly positive
+  fixed-`W` defect, its `λ̃^{d_W}` decay rate, the coset location, AND
+  (K-TAIL) itself site-by-site (r2 n5), by exact diagonalisation.  All
+  on those models only.
 
-**Honest defects and L2 self-report.**  (i) This shard is ~1030 lines
+**Honest defects and L2 self-report.**  (i) This shard is ~1200 lines
 against the 200--500 band; the r1 critic's m7 split proposal (obstruction
-into its own shard) is endorsed but outside this lane's writable set — a
-MERGE PROPOSAL requests the split.  (ii) (K-TAIL) is a hypothesis ABOUT
-the channel family `{φ_t}`; its reduction to initial data + dynamics
-(confinement) is supplied only in the D16 instance via band flatness, not
-abstractly.  (iii) The `o(|W_m|)` in (M-ESC)/⟨2⟩5 is not quantified; any
-downstream use wanting rates must sharpen it.  (iv) ⟨2⟩9(b)'s weak-\*
-tail-relaxation argument is stated at remark level (it scopes, it is not
-load-bearing for any claim).
+into its own shard) is endorsed by both critics (r2 m8, MP-5) but outside
+this lane's writable set — a MERGE PROPOSAL requests the split.
+(ii) (K-TAIL) is a hypothesis ABOUT the channel family `{φ_t}`; its
+reduction to initial data + dynamics (confinement) is supplied only in
+the D16 instance, and there only up to K4 (CONJECTURE) and
+M-INDEX-LA-folium (CONJECTURE).  (iii) The `o(|W_m|)` in (M-ESC)/⟨2⟩5 is
+not quantified; any downstream use wanting rates must sharpen it.
+(iv) The shard-local symbol `θ` of (M-ESC) collides with the frozen twist
+variable `θ` of `notation.md` line 271 (r2 n2); MP-4 proposes the merged
+name `θ_{tr}` and flags the overload — inside this shard `θ` always means
+(M-ESC)'s transport fraction.
 
 ## 5. CHECKER SPEC — `theory/checks/ace_ld_check.py` (r2 rebuild)
 
