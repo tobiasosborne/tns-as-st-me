@@ -447,9 +447,12 @@ over `s∈{1/2,1,3/2,2}`.  More sharply, `S2-2body-S` now proves within its
 proposer shard that the **slope half** is exactly `1/s` for every site spin
 when the hard leg is a unit-charge magnon (`|q_hard|=1`); its L5 status is
 SKETCH until its own critic promotes it.  The **memory half** remains the
-conditional content of M-quant/M-quant-G.  Every tested leg has unit charge,
-so the `|q_hard|>1` factor remains open (`tns-ebh`), with a charge-2 bound
-state the next falsifier.  Bc therefore remains CONJECTURE.  *Shard:*
+conditional content of M-quant/M-quant-G.  The first charge-two slope falsifier
+survives at finite volume: an `N=100` three-magnon ED wavepacket experiment
+gives `4.07001 +/- 0.08981` against `|q_hard|/s=4`.  This remains
+finite-packet evidence, not a proof: an `N`/width convergence study and the
+charge-two kink-memory experiment are open (`tns-ebh`).  Bc therefore
+remains CONJECTURE.  *Shard:*
 `spin-s-twomagnon.md` and `corner-b-draft.md` §10.  *Records:*
 `numerics/results/spin1-bc-falsifier.json`,
 `numerics/results/spin1-bc-crosscheck.json`.
