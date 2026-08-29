@@ -8,13 +8,13 @@ anyon label $x$, the same-circle two-projective-measurement (TPM) flux
 increment is exactly $x$, and closed probe ribbons return the nondegenerate
 braiding character $(-1)^{x_ey_m+x_my_e}$.
 
-**Status.** The finite toric-code theorem and proof in §§1--3 are **PROVED in
-this shard** by finite Pauli algebra. The doubled-Ising calculation in §4 is
+**Status.** The finite toric-code theorem and proof in §§1--3 are **PROVED**
+by finite Pauli algebra and were certified at that strength by the capped
+review. The doubled-Ising calculation in §4 is
 exact fusion arithmetic, but its identification with a chosen microscopic
 endpoint tensor is not proved here. The PEPS statement in §5 is deliberately
 **SKETCH**, conditional on the displayed exact pulling-through/tube-algebra
-hypothesis. Since this artifact has not passed a campaign hostile-review
-round, any new `claims/CLAIMS.md` row should initially be `SKETCH`.
+hypothesis.
 
 This is a 2+1-dimensional label theorem. It does not alter or repackage any
 of the campaign's 1D rows. In particular, the finite-window
@@ -119,6 +119,11 @@ $x=\epsilon$, a direct and a dual endpoint in the same small endpoint
 neighbourhood form the composite ribbon endpoint. “Pure” means that the
 single $x$-component (A.7) has been selected. A coherent sum of different
 $W_x$ need not have one label and is outside the definite-sector clause.
+For $x=1$, $W_1=I$ is the empty/identity ribbon and is not a physical
+endpoint. The boundary covariance and TPM shift are invariant under ribbon
+deformations that preserve the inside/outside endpoint partition, including
+arbitrary extra even crossings; they need not survive moving an endpoint
+across $\partial D$ or changing the circle between the two measurements.
 
 ### 1.4 Same-circle TPM protocol
 
@@ -525,13 +530,12 @@ for the model-general (PT) hypothesis.
 
 ## 7. MERGE PROPOSALS
 
-1. **New 2+1D claim row.** Add `A-INDEX-TC-fin` at `SKETCH`: on a finite
+1. **New 2+1D claim row.** Add `A-INDEX-TC-fin` at `PROVED`: on a finite
    toric-code torus, a pure open ribbon $W_x$ crossing a fixed contractible
    boundary circle once obeys (A.11); its endpoint has definite
    $x\in\mathbb Z_2^e\times\mathbb Z_2^m$, the same-circle TPM increment is
    $x$, and (A.14) gives the braiding character. Point to §§2--3 and checker
-   gates `ANYON-C1`--`ANYON-C4`. Promotion, if desired, waits for the
-   capped review required by `PRD.md`.
+   gates `ANYON-C1`--`ANYON-C4`; the capped review is complete.
 2. **Non-abelian companion row.** Add `A-INDEX-PEPS` only at `SKETCH`,
    with (PT1)--(PT4) displayed verbatim: the fine outcome is the fusion event
    $(x,a\to b;\mu)$; invertible $x$ gives an

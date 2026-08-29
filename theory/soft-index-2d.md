@@ -4,10 +4,10 @@
 **Input.** Only finite-dimensional root-`sl_2` algebra and `[Q(X),J_0(Y)]=J_0([X,Y])` are used.
 **Geometry.** No operator-identity proof leaf uses an order, interval, translation, momentum, cut, or dimension.
 **D10 audit.** D10(a)'s half-line `y <= m` is 1D notation, not an operator-theorem premise.
-**Replacement.** On a graph use a displayed cut flux `-[H,Q_S]` or an oriented-edge flux zero mode.
+**Replacement.** On a graph use a displayed cut-current map `-[H,Q_S]`; only a periodic directional sum is called a zero-momentum flux.
 **Registers.** The full `A^{-1}` and highest-restricted `lambda^{-1} Pi_hw` registers remain distinct.
 **ED.** SU(2) `2x3` and SU(3) `2x2` instances reproduce both registers and Ward index one.
-**Status.** This is a proof-complete theorem candidate; no CLAIMS promotion precedes the capped review.
+**Status.** The capped review certified the finite-lattice carrier at **PROVED** strength.
 
 ## 1. Scope and dimension audit
 
@@ -72,14 +72,27 @@ Let `Gamma=(V,E)` be a finite graph with graph metric, let
 
 where the interaction has finite graph range and each term is invariant:
 `[h_Z,sum_(v in Z)q_v(Y)]=0`.  For any displayed vertex subset `S`, define
-the flux through its graph boundary by
+the displayed cut-current map
 
 \[
  j_{\partial S}(Y):=-[H_\Gamma,Q_S(Y)].                    \tag{2D.1}
 \]
 
 Terms supported wholly inside `S` or its complement vanish in (2D.1), so
-only terms meeting the finite-range boundary contribute.  Moreover Jacobi,
+only terms meeting the finite-range boundary contribute.  With
+`q_Y=max_(v in V)||q_v(Y)||`,
+
+\[
+ \|j_{\partial S}(Y)\|
+ \leq 2\!\sum_{\substack{Z:\,Z\cap S\ne\varnothing\\
+                              Z\cap S^c\ne\varnothing}}
+       \|h_Z\|\,|S\cap Z|\,q_Y
+ \leq C(Y,\Phi)|\partial_rS| .                            \tag{2D.1a}
+\]
+
+The second inequality uses bounded degree together with a uniformly bounded,
+finite-range interaction; `partial_r S` is the range-`r` boundary collar.
+Moreover Jacobi,
 `[Q(X),H_Gamma]=0`, and
 `[Q(X),Q_S(Y)]=Q_S([X,Y])` give
 
@@ -104,12 +117,12 @@ case `J_0` must remain displayed data.  This non-canonicity is already
 present on a ring as the current-improvement warning in
 `soft-index-general.md` §0, and is not used by the operator proof.
 
-### 2.2 Theorem S-IDX-fin-G-LAT
+### 2.2 Theorem S-IDX-fin-G (finite-lattice carrier cell)
 
 Let `Gamma=(V,E)` be any finite graph (including a finite periodic lattice)
 carrying the finite-dimensional on-site unitary representation
-`U_V=u^{\otimes |V|}` of a compact Lie group `G`.  Let `H_Gamma` be a
-finite-range `G`-invariant Hamiltonian.  Supply a complex-linear map
+`U_V=u^{\otimes |V|}` of a compact Lie group `G`.  Supply a displayed
+complex-linear adjoint-covariant current map
 
 \[
  J_0:\mathfrak g_{\mathbb C}\longrightarrow
@@ -117,11 +130,15 @@ finite-range `G`-invariant Hamiltonian.  Supply a complex-linear map
  [Q(X),J_0(Y)]=J_0([X,Y]).                                  \tag{2D.4}
 \]
 
-It may, but need not, be constructed by (2D.1)--(2D.3).  Choose any
+On a periodic lattice `J_0` may be the displayed directional zero-momentum
+flux (2D.3); on an arbitrary graph no canonical direction or zero mode is
+supplied.  The map may, but need not, be constructed by (2D.1)--(2D.3).
+Choose any
 represented root `alpha` of the semisimple Lie algebra of `G^0`, with the
 normalization (H.3), and any occupied positive coroot-weight sector
-`H^alpha_(lambda,V)`.  Define `D_alpha`, `A_alpha`, `P_alpha`,
-`K^alpha_(lambda,V)`, `Pi_hw`, `D_hw`, and `P_hw` exactly as in
+`H^alpha_(lambda,V)`.  Put
+`K^alpha_(lambda,V)=ker Q(E_alpha) cap H^alpha_(lambda,V)`, and define
+`D_alpha`, `A_alpha`, `P_alpha`, `Pi_hw`, `D_hw`, and `P_hw` exactly as in
 (H.5)--(H.7), with `N` replaced by `V`.
 
 Then for every `psi in K^alpha_(lambda,V)`, `A_alpha>0` and
@@ -151,6 +168,10 @@ If `langle psi,J_0(H_alpha)psi rangle != 0`, then
 The Hamiltonian, graph metric, interaction range, and construction of `J_0`
 do not occur in (2D.5)--(2D.7) beyond supplying the finite carrier and the
 displayed covariance (2D.4).
+
+Central-torus directions have no root row, finite groups have no Lie-current
+row, and the full-sector Gram inverse in (2D.5) is not interchangeable with
+the separately highest-restricted scalar register in (2D.6).
 
 ### 2.3 Proof by citation (minimal diff)
 
@@ -296,11 +317,11 @@ not the proof; the proof is §2.3.
 
 No existing file is edited by this lane.  After the capped theorem review:
 
-1. **S-IDX-fin-G row.** In `claims/CLAIMS.md`, replace “finite periodic
-   ring” by “finite graph or finite periodic lattice carrying a displayed
-   adjoint-covariant current zero mode”; add this shard and
+1. **S-IDX-fin-G row.** In `claims/CLAIMS.md`, use the finite-lattice carrier
+   cell of §2.2 with its “displayed adjoint-covariant current map” wording
+   and subordinate periodic directional zero-mode specialization; add this shard and
    `soft_index_2d_check.py` as proof/check pointers.  Do not change the two
-   registers or the theorem's existing PROVED content before adjudication.
+   Gram registers.
 2. **D10 graph clause.** Add a graph-current clause stating (2D.1)--(2D.3).
    Keep D10(a)'s half-line formula as the one-dimensional specialization,
    and state that an arbitrary graph supplies no canonical direction or

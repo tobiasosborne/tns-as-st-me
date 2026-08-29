@@ -12,7 +12,8 @@
          implication (LR2_2D and first-moment tightness are not derived);
        * Goldstone interpretation: exploration plus one exact finite-volume
          one-magnon computation, not a thermodynamic theorem.
-     The proposed new DAG rows remain SKETCH until the PRD promotion loop.
+     The capped review certified M-INDEX-2D-fin at PROVED strength and held
+     M-INDEX-2D-spec at SKETCH.
      The missing unconditional LR2_2D/LR3_2D instance is an open input, not a
      no-go result; no negative-result review rounds were spent.  Rounds: 0.
 -->
@@ -127,17 +128,22 @@ Absent spectral values contribute zero.  This is the donor convention in
 of `[a,b]`.  It is a sequential measurement law, not the spectral law of
 the generally noncommuting operator `Qhat_W(t_-)-Qhat_W(t_+)`.
 
-If the interaction is local and preserves the selected 0-form charge, then
+If the interaction is represented by local terms satisfying the termwise
+conservation law
+
+`[Phi(Z),sum_{x in Z}q_x]=0`,
+
+then
 
 `J_out(W,t):=-d Qhat_W(t)/dt`
 
 is a sum of interaction-current terms crossing the oriented boundary.  For
 an annulus it contains the outer and inner boundary currents with their
-respective outward orientations.  Along a branch created by the first
-measurement, `nu` is the net charge carried through those boundaries.  Its
-TPM mean is the charge change of the initially dephased ensemble; it need not
-equal the unmeasured mean charge change.  The exact difference is §4's
-dephasing defect.
+respective outward orientations.  The variable `nu` is the TPM two-readout
+charge change.  Only its first moment is identified with the boundary-current
+ledger of the initially dephased ensemble; it need not equal the unmeasured
+mean charge change, and no trajectory-level full-counting-statistics identity
+is asserted.  The exact difference is §4's dephasing defect.
 
 ---
 
@@ -415,8 +421,13 @@ superselection, so none is included in `M-INDEX-2D-spec`.
 
 ### ⟨1⟩11. Perimeter audit
 
-For a finite-range interaction `H=sum_Z Phi(Z)`, charge conservation cancels
-all terms wholly inside or wholly outside `W`; schematically,
+For a finite-range interaction `H=sum_Z Phi(Z)`, choose a termwise
+charge-conserving decomposition
+
+`[Phi(Z),sum_{x in Z}q_x]=0`.
+
+(For a compact symmetry, a symmetry-averaged local decomposition may be
+chosen.)  Then every term wholly inside or wholly outside `W` cancels and
 
 `d Qhat_W(t)/dt
  = i alpha_t(sum_{Z: Z meets W and W^c}[Phi(Z),sum_{x in W}q_x])`. **(2D.7)**
@@ -424,8 +435,14 @@ all terms wholly inside or wholly outside `W`; schematically,
 Only a finite-range collar of the boundary contributes.  On a disk of radius
 `R`, the number of such terms is `O(|partial W|)=O(R)`, rather than the `O(1)`
 two-endpoint boundary of an interval.  On `A_{r,R}` it is `O(r+R)` because
-both boundary components contribute.  Consequently a norm estimate of
-(2D.7) is naturally perimeter-sized.  A Lieb--Robinson estimate localises
+both boundary components contribute.  With `q_*=sup_x||q_x||`,
+
+`||d Qhat_W(t)/dt||`
+` <= 2q_* sum_(Z: Z meets W and W^c) |Z cap W| ||Phi(Z)||`
+` <= C_(Phi,q,r)|partial_r W|`.                            **(2D.8)**
+
+The last inequality uses bounded degree and a uniformly bounded finite-range
+interaction.  Thus the norm estimate is perimeter-sized.  A Lieb--Robinson estimate localises
 the terms but does not by itself cancel that perimeter factor or prove
 `(LR2_2D)`/`(LR3_2D)`.
 
@@ -545,6 +562,9 @@ therefore breaks (2D-INT).  TPM normalisation and the dephasing identity stay
 green; the integer-support gate alone catches the mutation.  There are no
 bare assertions.  The checker establishes no infinite-volume time limit,
 SSB construction, antiferromagnetic result, or `(LR3_2D)` bound.
+In particular, this finite `9x9`, finite-time ED is not a witness for
+`(LR2_2D)` or `(LR3_2D)`, and therefore is not a nonzero instance of
+`M-INDEX-2D-spec`.
 
 ---
 
@@ -572,9 +592,9 @@ Keep D26 unchanged: it is already dimension-free.  Add a new 2D definition
 
 | proposed id | proposed statement | proposed status | dependencies | proof/check |
 |---|---|---|---|---|
-| `M-INDEX-2D-fin` | Under D26/(2D-INT), every finite disk/annulus charge (2D-Q) has spectrum in one coset of `Z`, invariant under `alpha_t`; its same-window TPM escaped increment is integer-valued by offset cancellation. | `SKETCH` pending the PRD promotion loop; proof complete here | D26, `M-INDEX-fin` | §2; checker M2D-C2 |
+| `M-INDEX-2D-fin` | Under D26/(2D-INT), every finite disk/annulus charge (2D-Q) has spectrum in one coset of `Z`, invariant under `alpha_t`; its same-window TPM escaped increment is integer-valued by offset cancellation. | `PROVED`; capped review complete | D26, `M-INDEX-fin` | §2; checker M2D-C2 |
 | `LR1-GEN-2D` | The live `LR1-GEN` theorem applies to `Z^2`; one subsequence works for all finite disks/annuli and their TPM weights. | no new status row needed; corollary of existing `PROVED` row | `LR1-GEN`, `M-INDEX-2D-fin` | §3 |
-| `M-INDEX-2D-spec` | `(2D-INT)+(LR1_2D)--(LR3_2D)` imply that every ordered limit point is a probability on `Z` and obeys the charge ledger (2D.4); optional full-law convergence gives uniqueness. | `SKETCH` pending the PRD promotion loop; conditional proof complete here | `M-INDEX-2D-fin`, `LR1-GEN`, proposed 2D definition | §4; no numerical gate for the limit |
+| `M-INDEX-2D-spec` | `(2D-INT)+(LR1_2D)--(LR3_2D)` imply that every ordered limit point is a probability on `Z` and obeys the charge ledger (2D.4); optional full-law convergence gives uniqueness. | `SKETCH`; no nonzero model instance of `(LR2_2D)--(LR3_2D)` is known | `M-INDEX-2D-fin`, `LR1-GEN`, proposed 2D definition | §4; no numerical gate for the limit |
 
 The scoping sentence for `M-INDEX-2D-spec` must say verbatim in substance:
 `(LR2_2D)` and `(LR3_2D)` are assumed, not derived; boundary terms are
@@ -592,11 +612,11 @@ statement or implementation ceases to detect nonintegral on-site charge.
 
 ## 8. Final status
 
-The 2D finite-window theorem is a clean, channel-free transplant.  The
-probability-theoretic part of the donor limit proof also transplants once the
+The 2D finite-window theorem is a clean, channel-free **PROVED** transplant.
+The probability-theoretic part of the donor limit proof also transplants once the
 2D nondemolition and first-moment-tightness clauses are assumed.  What does
 not transplant is the 1D conversion from escaped charge to a unique kink
 position.  In a 2D Goldstone phase the honest observable is instead the
 integer-valued history of net conserved spin charge radiated through a
 chosen closed boundary; obtaining its unconditional ordered limit remains
-open.
+open, so `M-INDEX-2D-spec` remains **SKETCH**.

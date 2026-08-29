@@ -182,6 +182,8 @@ does not fix a measurable magnitude response.  Section 4 gives two explicit
 ways to see the latter: interference between stabilizer-equivalent paths and
 leakage under a unitary local rotation.  Both are normalized at `k=0` and have
 arbitrary curvature in the same endpoint channel.
+The witness varies the momentum-dependent probe family and is not a pair of
+fully specified Hamiltonian/PEPS models with one fixed normalized protocol.
 
 The theorem also explains why a bulk energy gap matters conceptually.  A
 massive anyon remains separated from the ground register by a positive energy
