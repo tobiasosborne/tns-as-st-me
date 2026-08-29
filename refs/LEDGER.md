@@ -98,3 +98,32 @@ Notes:
 Bachmann-Dybalski-Naaijkens; its TeX title is "Chirality induced Interface
 Currents in the Chalker Coddington Model" — WRONG paper, directory deleted,
 id must not be cited. Correct id is 1412.2970 (verified above).
+
+## Batch 4 — 2+1 recon (fetched 2026-08-29)
+
+Lane W5 of the 2+1 recon wave (bd tns-7pp). 13/13 fetched OK; every title
+below extracted from the local TeX and compared to the arXiv listing. No id
+mismatches. Digest: `docs/2p1-antecedents.md`.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 2411.13633 | Soft gravitons in three dimensions | arXiv_v1.tex | THE 2+1 antecedent: a complete IR triangle in 3d (soft graviton theorem + BMS3 + memory) with no propagating graviton |
+| 1703.01833 | Canonical Realization of (2+1)-dimensional Bondi-Metzner-Sachs symmetry | main.tex | bms3 realized canonically on a free 2+1 Klein-Gordon field — matter-only asymptotic charges, closest to a lattice-field corner A |
+| 2503.20173 | Asymptotic symmetry and confinement in three-dimensional QED | arxiv_v1.tex | WARNING: 3d log-confinement makes asymptotic-symmetry action on states trivial and kills the 3d EM memory effect |
+| 1712.00873 | Memory effect for particle scattering in odd spacetime dimensions | PRD_final_odd_Memory.tex | the d=3 memory verdict: no gravitational memory; scalar/EM give an *infinite momentum* memory, not a displacement memory |
+| 1702.00095 | The Memory Effect for Particle Scattering in Even Spacetime Dimensions | main.tex | companion even-d computation (no memory for d>4) — fixes what "memory" means dimension by dimension |
+| 1901.05942 | The Asymptotic Behavior of Massless Fields and the Memory Effect | main.tex | radiative vs Coulombic order, null vs ordinary memory split; odd-d total Coulombic memory vanishes (d>=4 analysis) |
+| 1707.08016 | Color Memory | main.tex | memory as a holonomy/parallel-transport rotation of test charges — the observable shape a lattice topological memory should copy |
+| 2211.09570 | A Goldstone theorem for continuous non-invertible symmetries | draft07.tex | only existing Goldstone theorem for a non-invertible symmetry — the gapless-mode input any categorical soft theorem needs |
+| 2205.05086 | Non-invertible Global Symmetries in the Standard Model | QED_draft.tex | non-invertible symmetry -> selection rules on amplitudes; recasts the soft-pion/ABJ story as a generalized-symmetry matching |
+| 2305.05774 | Fusion Surface Models: 2+1d Lattice Models from Fusion 2-Categories | main.tex | the concrete 2+1 lattice models carrying fusion 2-category symmetry — the arena for the lift |
+| 1511.08090 | Anyons and matrix product operator algebras | AnyonsPEPS.tex | PEPS/MPO-injectivity <-> fusion category dictionary; anyon sectors as central idempotents (corner-A machinery in 2+1) |
+| 1703.04748 | Edge modes and corner ambiguities in 3d Chern-Simons theory and gravity | Boundary.tex | boundary/edge symmetry of 3d CS as Kac-Moody; the classic "asymptotic symmetry = edge mode" statement |
+| 1601.04744 | Local subsystems in gauge theory and gravity | symplectic.tex | Donnelly-Freidel extended phase space — why a 2+1 region boundary carries physical charge dof at all |
+
+Not fetched, recorded honestly: Barnich-Compere gr-qc/0610130 (the founding
+bms3 central-extension paper). The old-style id contains a slash, which
+`scripts/fetch_refs.sh` would turn into a nested `refs/arxiv-gr-qc/0610130`
+directory, breaking the naming convention. bms3 ground truth for this batch
+is 2411.13633 + 1703.01833; fetch 0610130 separately if a bms3 quote becomes
+load-bearing.
