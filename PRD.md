@@ -130,6 +130,16 @@ Each event is narrated once, in its home:
 - commit message ≤ 10 lines
 - user report: short, results first, process only if it changed a decision
 
+## Hygiene is plumbing, not progress (TJO 2026-08-29)
+
+Hygiene items, missing-result bookkeeping, gap inventories, nonblocking
+errors, stale-pointer fixes, checker plumbing: all vital, all done
+promptly — and **never sold as significant**. They are the CI/CD busywork
+of the campaign. Report them in one line or not at all; never let them
+headline a commit message, a session report, or a bd note. Progress is a
+status change on a claim the Letter states, a figure, or a section —
+nothing else gets the word.
+
 ## Definition of a good session
 
 At session end, the honest answer to both must be yes:
