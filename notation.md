@@ -250,6 +250,7 @@ SUPERSEDED in place rather than deleted).*
 | `H_{\rm edge}`, `J_C`, **(H-split)** | physical half-chain edge space, the intertwining isometry `E_C → H_edge`, and the hypothesis that supplies them — **register caveat**: this is still the SKETCH split-property box, corner-a.md ⟨1⟩4.⟨2⟩9 | definitions.md D21 |
 | `d_ω` | minimal dimension of an `ω`-projective irrep of `G`; a nontrivial class has `d_ω>1` | definitions.md D21 |
 | `ν_ω`, `q_ω(ξ)`, `q_{ω,C}^∘(ξ)`, `Q_edge(ξ)` | central character, the lift-dependent raw offset, the gauge-invariant centered offset, and the Hermitian centered endpoint charge `-iX_C^∘(ξ)` with spectrum in `q_{ω,C}^∘(ξ)+ℤ` | definitions.md D21 |
+| `Q_L^∂`, `p_L(ν)`, `r_L(m)`, **(E-LR)** | D19 boundary-window Hermitian charge; escaped-charge TPM law; reflected edge-memory-change law `m=-ν`; common-Cesàro/dephasing/first-moment-tight boundary relaxation | definitions.md D22, theory/spt-tpm.md |
 | `ΔQ_edge`, **(H-dress)**, **(H-AD-edge)** | edge memory operator `W_+^†Q_edgeW_+ - W_-^†Q_edgeW_-`, and the dressed-endpoint / asymptotic-decomposition hypotheses it requires | definitions.md D22 |
 | `A_b`, `T_t`, `P` | the symmetric AKLT path (`A^a=σ_a/√3` at `b=1/√3`), the injective `χ=2` `D₂`-trivial tensor, and the `χ=1` `O(2)` product comparator | definitions.md D23 |
 | `Γ_2^C`, `W_2^C`, `h_C`, `h_{∂,C}`, `H_{C,+}` | length-two range map, its isometry, the parent bond term, the boundary term, and the half-chain parent Hamiltonian | definitions.md D23 |

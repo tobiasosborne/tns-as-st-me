@@ -722,35 +722,7 @@ theorem of arXiv:1509.07840.  □
 
 ## ⟨1⟩6. SPT-M' — protected edge memory, with the dynamical gap exposed
 
-### ⟨2⟩1. Conditional charge-bookkeeping theorem
-
-**ASSUME.**  (H-split), (H-AD-edge), conservation of the chosen `U(1)` charge,
-and asymptotic channels with definite bulk and edge charges.
-
-**PROVE.**  On every channel,
-
-`ΔQ_edge=-(Q_bulk,out-Q_bulk,in)`.                               **(6.1)**
-
-Consequently the channel spectrum lies in
-`(q_{ω,C}^∘+ℤ)-(q_{ω,C}^∘+ℤ)=ℤ` (or the corresponding finite set after restricting the edge
-multiplet).  For the AKLT doublet it is contained in `{-1,0,+1}`.  Expectations
-are convex combinations and need not be integers.
-
-**⟨3⟩1.** By (H-AD-edge), `Q_tot=Q_edge+Q_bulk` on both asymptotic channel
-spaces.  **Justification:** `Sd10'`.
-
-**⟨3⟩2.** Conservation gives `Q_tot,out-Q_tot,in=0`; rearrangement gives (6.1).
-**Justification:** the assumed `U(1)` symmetry; exact charge bookkeeping, the
-same mechanism as M-quant but with edge charge replacing wall position.
-
-**⟨3⟩3.** SPT-E'(iii) puts edge eigenvalues in `q_{ω,C}^∘+ℤ`; taking differences
-gives the stated channel lattice.  **Justification:** ⟨1⟩4.⟨2⟩3.
-
-**⟨3⟩4. QED.**  The bookkeeping derivation is conditional exactly where
-M-quant is conditional on its asymptotic decomposition.  Given (H-split),
-(H-AD-edge), charge conservation, and definite channel charges, SPT-M' is
-PROVED as this conditional implication.  It uses only the fixed-tensor
-congruence in SPT-E'(iii), not deformation constancy.  □
+| SPT-M' | For D19's boundary windows and D20's Hermitian normal-ordered charge, D26(INT) implies that the explicit TPM memory change `m=q_+−q_-` is in `ℤ` at every finite `L`, because the same-window spectral offset cancels; no commutativity of the two Heisenberg observables is assumed.  Under additionally D22(E-LR2--E-LR3), with the common sequence supplied by LR1-GEN, every ordered limit-point law is a probability on `ℤ` and its first moment is the ordered boundary-window charge change along that subsequence.  D21(H-split)+SPT-E' add the physical projective-edge/capacity interpretation only.  No H-AD-edge, wave operator, channel inventory, definite channel charge, nonzero amplitude, or permanence is assumed or proved; conservation is needed only for current-flow semantics. | SKETCH | D19--D22, D26, M-INDEX-fin, M-INDEX-spec, LR1-GEN, SPT-E' | theory/spt-tpm.md ⟨1⟩1--⟨1⟩7; PROVED-candidate pending capped L6 | finite arithmetic inherited from the red-capable M-INDEX-fin checker; no gate bears on E-LR2--E-LR3 |
 
 ### ⟨2⟩2. What “protected edge magnon memory” can honestly mean
 
@@ -764,7 +736,9 @@ Schur's lemma.
 Hamiltonian `H_{A,+}^{dyn}` with boundary coupling
 `h_{mag-edge}=P^{(S=2)}_{0,1}`, at least one symmetry-allowed edge-changing
 reflection matrix element is nonzero on an open momentum interval, and the
-post-selected memory obeys (6.1).  The exact missing step is a half-chain
+resulting boundary-window history is tested by the SPT-M' TPM protocol.
+H-AD-edge remains a separate conjectural input for the scattering-channel
+identification.  The exact missing step is a half-chain
 scattering calculation establishing (H-AD-edge), the on-shell reflection
 matrix, and nonvanishing of that matrix element.
 

@@ -859,12 +859,32 @@ endpoint transfer overlaps with endpoint separation taken first.  For commuting
 the phase.  Ordered endpoint-soft operators obey
 `𝕊(h)𝕊(g)=e^{iω(h,g)}𝕊(hg)` in the registered module.
 
+For the channel-free operational register, use D19's boundary windows
+`f_L^{edge}=1_[0,L-1]` and D20's local Hermitian charge
+`Q_L^∂:=Q^H[f_L^{edge};ξ]`.  Let `E_{L,t}` be the spectral resolution of
+`α_t^+(Q_L^∂)`.  The boundary two-projective-measurement (TPM) law records
+`ν=q_-−q_+` and the edge-memory change `m=q_+−q_-=-ν` with
+`p_{L;t_-,t_+}(ν):=Σ_q||E_{L,t_+}({q−ν})E_{L,t_-}({q})Ψ||²`.
+Hypothesis **(E-LR)** means: (1) one common sequence `T_n→∞` gives, for every
+fixed `L`, weak-* limits of the positive/negative Cesàro states and limits of
+all double-Cesàro TPM weights; (2) with
+`𝒟_{L,t_-}(A):=Σ_qE_{L,t_-}({q})AE_{L,t_-}({q})`, the double-Cesàro average
+of `⟨Ψ,[𝒟_{L,t_-}(Q_L^∂(t_+))−Q_L^∂(t_+)]Ψ⟩` tends to zero for every fixed
+`L`; and (3), writing `p_L` for the fixed-window time limit,
+`lim_{M→∞}sup_LΣ_{|ν|>M}(1+|ν|)p_L(ν)=0`.  Optionally one may require
+`p_L⇒p`; this selects a unique limit law and first moment.  Dynamics is formed
+first, fixed-`L` time limits second, and `L→∞` last.  This operational law is
+distinct from the channel operator below and assumes no wave operator or
+channel inventory.
+
 Under (H-AD-edge), asymptotic total charge decomposes as
 `Q_tot=Q_edge+Q_bulk`.  Define
 `ΔQ_edge=W_+†Q_edgeW_+-W_-†Q_edgeW_-`.  “Protected” refers to the projective
 edge module/degeneracy, “quantised” to channel eigenvalues, and “permanent”
 additionally requires isolated charge-preserving edge dynamics.  Protection
 does not force a particular reflection matrix element to be nonzero.
+This is an optional channel corollary; neither (H-AD-edge) nor this channel
+operator is part of the operational TPM theorem SPT-M'.
 
 ## D23 (exact comparison tensors and boundary Hamiltonians)
 
