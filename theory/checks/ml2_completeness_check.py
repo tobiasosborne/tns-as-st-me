@@ -173,6 +173,8 @@ def coincident_zero_audit(
     maximum_error = 0.0
     for root_number in range(n_sites):
         momentum = (2 * root_number + 1) * np.pi / n_sites
+        k_1 = momentum
+        k_2 = momentum
         z = np.exp(1j * momentum)
         incoming_amplitude = 1.0
         outgoing_amplitude = -(z * z - 2.0 * z + 1.0) / (
@@ -180,8 +182,8 @@ def coincident_zero_audit(
         )
         coordinate_wave = np.asarray(
             [
-                outgoing_amplitude * np.exp(1j * momentum * (x + y))
-                + incoming_amplitude * np.exp(1j * momentum * (y + x))
+                outgoing_amplitude * np.exp(1j * (k_1 * x + k_2 * y))
+                + incoming_amplitude * np.exp(1j * (k_2 * x + k_1 * y))
                 for x, y in basis
             ]
         )

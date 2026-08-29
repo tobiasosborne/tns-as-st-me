@@ -116,7 +116,7 @@ rule that can be applied mechanically).**
    `ml2-completeness.md` ⟨1⟩3--⟨1⟩5 and `oracle-bethe.md` ⟨1⟩3.⟨2⟩3.⟨3⟩3, where
    it is local to those steps.
 7. **`X`** — `X_α(ξ)` and bare `X ∈ M_χ(ℂ)` are virtual/tangent matrices
-   (D2(e), D5(b)); `X = \cos q` is local to `ml2-completeness.md` ⟨1⟩3;
+   (D2(e), D5(b)); `X = \cos q` is local to `ml2-completeness.md` ⟨1⟩3--⟨1⟩4;
    `X_1(t)` is the first-moment wall coordinate (D13(c)); `𝔛_W` (fraktur) is
    the windowed wall-position observable (D13(a)) and is a *different glyph*.
 
@@ -201,6 +201,7 @@ two rows above are marked SUPERSEDED in place (`S(k;·)`, `R(k)`).*
 | `\|C_K⟩` | adjacent-pair contact vector `Σ_x e^{iKx}\|x,x+1⟩` | soft-current-recon.md (R9) |
 | `\|χ_π⟩` | the singular (compactified-rapidity) `K=π` completion state, even `N` | ml2-completeness.md (12) |
 | `\mathscr B_K^{D7}`, `\mathscr X_K`, `\mathscr E_K` | the D7-representable fiber family, its singular completion, and their union | ml2-completeness.md (23) |
+| `{\cal U}_c` | unitary center Fourier transform from the ordered two-magnon chamber `ℓ²(ℤ×ℕ)` to `∫^⊕dK\,ℓ²(ℕ)`; the subscript distinguishes it from `U[f]` (D3) and `𝒰(g)` (D2) | theory/ml2-completeness.md (15) |
 | `ML1`--`ML6` | the six missing lemmas of the general soft theorem | soft-current-recon.md ⟨1⟩7 |
 
 **Spin-`S` two-magnon theorem (proposer shard `S2-2body-S`).**
@@ -267,7 +268,7 @@ SUPERSEDED in place rather than deleted).*
 | `D_{n,N}`, `P_{n,N}`, `R_{n,N}` | `Q_0` restricted to `ℋ_{n,N}`; the orthogonal projection onto its range; the orthogonal current `(1−P_{n,N})J^-_0` | ml4-ward-reduction.md (2) |
 | `Γ_N(k)`, `𝒜_{⊥,N}(k;f,g)` | off-shell analytic interpolation at fixed periodic `N`, transported to the `k=0` fiber; the orthogonal contribution to the Ward-reduced numerator | ml4-ward-reduction.md (3), (12) |
 | **ML4-A** | the standalone cancellation lemma: `Γ(0)=U` (energy-shell channel matching) + `C¹` trace regularity ⟹ `‖b(k)Γ(k)^†R‖ ≤ C_bC_Γ‖J‖k²` | ml4-ward-reduction.md ⟨1⟩2 |
-| `J^z_0`, `S^±` | the `z`-current and global raising/lowering operators of the exact Ward projection.  **The scalar form `P_{n,N}J^-_0 = \frac{2}{N-2n}Q_0J^z_0` holds ONLY at `n=1`** (ERRATUM 2026-08-28, bd `tns-uxr`): for `n≥2` it is REFUTED, because `J^z_0ψ ∉ ker S^+` when `‖J^+_0ψ‖≠0`.  The form valid at every `n` is `P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0` with **`A_n := D_{n,N}^†D_{n,N}` on the FULL sector `ℋ_{n,N}`** (where `A_n` is non-scalar); in the highest-weight-restricted register `D_λ=Q_0|_{ker S^+}` one has `A_λ=(N-2n)𝟙` and the same string collapses back to the refuted display unless `J^z_0` is first projected, the correct hw-register form being `(1/m_λ)Q_0Π_{hw}J^z_0`, `m_λ=(N-2n)/2` | ml4-ward-reduction.md (8)--(11); `theory/checks/ml4_ward_n2_check.py`; `theory/verdicts/ml4-ward-n2-audit.md` §1.2 |
+| `J^z_0`, `S^±` | the `z`-current and global raising/lowering operators of the exact Ward projection.  **The scalar form `P_{n,N}J^-_0 = \frac{2}{N-2n}Q_0J^z_0` holds ONLY at `n=1`** (ERRATUM 2026-08-28, bd `tns-uxr`): for `n≥2` it is REFUTED, because `J^z_0ψ ∉ ker S^+` when `‖J^+_0ψ‖≠0`.  The form valid at every `n` is `P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0` with **`A_n := D_{n,N}^†D_{n,N}` on the FULL sector `ℋ_{n,N}`** (where `A_n` is non-scalar); in the highest-weight-restricted register `D_λ=Q_0\|_{ker S^+}` one has `A_λ=(N-2n)𝟙` and the same string collapses back to the refuted display unless `J^z_0` is first projected, the correct hw-register form being `(1/m_λ)Q_0Π_{hw}J^z_0`, `m_λ=(N-2n)/2` | ml4-ward-reduction.md (8)--(11); `theory/checks/ml4_ward_n2_check.py`; `theory/verdicts/ml4-ward-n2-audit.md` §1.2 |
 | `‖O‖_μ`, `M_1^O`, `M_2^O` | exponentially-quasi-local source norm; amputated one-hard and hard-plus-soft amplitudes | definitions.md D24(a),(b) |
 | `𝔠_h(O)` | the contact first jet; ML5-A requires both `M_2^O(0)=0` and `𝔠_h(O)=0`, with the D24(c) second-derivative norm control | definitions.md D24(c) |
 | `𝒮_W(ρ)` | the ρ-indexed five-condition Ward/LSZ/no-contact source class in the repaired conditional ML5-B implication; `ρ := ω_α(S^z) > 0`.  Written bare `𝒮_W` where the density is fixed or immaterial — the D24 section header, D25, the CLAIMS rows quantifying over the class (`S-general` and the corner-implication prose), `ml5-universality.md`, `HANDOFF.md`, and the Letter (`\mathcal{S}_W`) | definitions.md D24(d) |
@@ -302,7 +303,7 @@ SUPERSEDED in place rather than deleted).*
 | `ε_v`, `d_abs`, `Θ_inel`, `η_inel` | **(D28 sense)** velocity gap, same-kink absorption gap, known inelastic threshold, and its margin (last three: fence only, Remark D28-R).  `ε_v`, `Θ_inel`, `η_inel` are re-bound in the **D31 sense** in the D31 rows below — the two senses are distinct and must be read from the citing definition (overload resolved 2026-08-29 per ansatz-scattering-2m-r6.md R6-O1) | definitions.md D28 |
 | `D_-^L`, `D_+^L`, `D_+^T` | incoming-left, outgoing-left, and outgoing-transmitted fixed-packet domains | definitions.md D28 |
 | `H_out^{ex}`, `N_T^{ex}` | constructed outgoing range and its transmitted-channel projection; no completeness implied | theory/ansatz-scattering.md ACE.2 |
-| `ℋ_{0,12}`, `H_{0,12}`, `𝒟_{12}` | labeled two-packet free magnon channel, sum Hamiltonian, and smooth product core.  **Pointer referred (orchestrator, 2026-08-29):** the merged D31 text does not itself introduce these three symbols — they are fixed in the shard only.  Recorded for adjudication rather than silently re-pointed; see bd `tns-uz8` | theory/ansatz-scattering-2m.md (D31 pointer under review) |
+| `ℋ_{0,12}`, `H_{0,12}`, `𝒟_{12}` | labeled two-packet free magnon channel, sum Hamiltonian, and smooth product core | theory/ansatz-scattering-2m.md ⟨1⟩1 |
 | 𝒞, Σ_bad, 𝓗_ch, 𝓗_sc, 𝓗_b | ML2 canonical (K,q) chart, excluded regular-packet set, channel space, real-scattering summand, and bound-band summand | theory/ml1-wave-operators.md |
 | β(K,q), P_cont,j, (L6-order) | normalized D6 bound-fiber overlap with the charge-created relative wave, contaminating spectral projection, and the ML6-HS-SEP limit precedence | theory/ml6-hs-sep.md |
 | `K_i`, `V_i`, `a_{i,b}(n)`, `χ_i`, `χ̃_i`, `h_i` | fixed packet supports, velocity supports, exact filtered creators, filters/companions, and rapidly decaying filtered symbols | definitions.md D31 |

@@ -4,9 +4,19 @@ Status: **L6 loop CONVERGED — r2 critic PASS** ([`verdicts/ml2-r2.md`](verdict
 10/10 mutants killed).  Residue m12 (three unjustified leaves in ⟨1⟩6.⟨2⟩2) and
 m14 (the wrap-pair sign flips) were swept at the 2026-08-26 freeze; m1--m11,
 m13, m15 and n7--n8 were swept in the 2026-08-26 residue sweep (`bd tns-peh`;
-closing note in `verdicts/ml2-r2.md`).  Only n6 remains open — a cosmetic
-rewrite inside `checks/ml2_completeness_check.py`, tracked in `bd`.  Neither
-sweep changed the mathematics of any step.
+closing note in `verdicts/ml2-r2.md`).  Residue n6 was swept on 2026-08-29 by
+writing the two checker plane waves with explicit `k_1x+k_2y` and
+`k_2x+k_1y` slots before the coincident specialization.  None of these sweeps
+changed the mathematics of any step.
+
+**L2 deliberate exception (2026-08-29).**  This converged proof remains one
+over-length shard: its finite-ring classification, infinite-chain Jacobi
+resolution, and soft-shard consequence are the three conclusions of the
+single ML2 theorem and share the same recurrence, coefficient convention,
+equation numbering, and terminal QED.  Splitting after convergence would
+invalidate the audited step/equation anchors in `claims/CLAIMS.md` and both
+critic verdicts without separating an independent claim.  Further ML2 work
+must go in a new shard rather than lengthening this file.
 No literature result is used.
 The proof starts from D6,
 uses the D7 coefficient convention, and uses the local equations already proved
