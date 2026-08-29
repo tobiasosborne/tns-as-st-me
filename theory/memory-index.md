@@ -267,42 +267,26 @@ argument is in §“Proof of Theorem 2.1” around (`Defchi`) and
 (`lem:the phase understood`).  H-IDX supplies none of those hypotheses, and
 the reference does not construct a regularised total charge in a D9 sector.
 
-### ⟨1⟩3b. CONJECTURE M-INDEX-LA-folium (the surviving restricted candidate)
+### ⟨1⟩3b. THEOREM M-INDEX-LA-folium (fixed-kink implementer)
 
-*(Added per memory-index-r1 objection 3; scoped so as not to collide with
-mechanism B, ⟨1⟩12.)*
+Let `ϱ_0=ϱ_x^{(g)}` be the fixed bare A2/D1(e′) kink, and let the selected
+circle be common-unbroken, `h_θ∈H_α∩H_β`, with (S) at both tails and
+D26(INT).  In the GNS representation of `ϱ_0`, the circle automorphisms are
+implemented by a strongly continuous unitary group `U(θ)=e^{iθQ̂}` with
+`e^{2πiQ̂}∈ℂ𝟙`; hence `Q̂` is pure point with spectrum in one coset of `ℤ`.
 
-**Statement.**  Let `ϱ_0` be a FIXED A2/D1(e′) MPS kink state with GNS
-representation `(H,π,Ω)`, under D26(INT) and (S).  Then the selected circle
-is implemented on `H` by a strongly continuous unitary group whose Stone
-generator `Q̂` satisfies `e^{2πiQ̂} ∈ ℂ𝟙`; hence (by ⟨1⟩2) `Q̂` is pure
-point with spectrum in one coset of `ℤ`.
+Proof: `theory/folium-implementer.md`
+⟨1⟩1--⟨1⟩6.  Injectivity turns every nearby circle-rotated junction matrix
+into a continuously varying local vector in the fixed kink GNS folium;
+irreducibility then gives a locally `C¹` projective implementer, whose scalar
+cocycle is removed explicitly on the one-dimensional parameter group.
 
-**Scope.**  This is the *implementer route*.  It is NOT the strong-resolvent
-limit of the window charges `Q̂_{W,c_0}` — that route is refuted on this very
-folium whenever `V_θ` is nonscalar (⟨1⟩12).  The conjecture asserts only
-that a self-adjoint generator exists by Stone's theorem; its relation to the
-window charges is at most in law (⟨1⟩11).
-
-**Evidence (the r1 critic's two markers, memory-index-r1.md objection 3(b)).**
-(i) *O(1) twisted-transfer variance:* for any state normal to the GNS
-representation of a two-sided injective-MPS decoration, the window-charge
-variance is `O(1)` — by (IT), the `θ`-twisted transfer matrix `E_θ` is
-similar to `e^{iθ_α(θ)}E`, so the extensive part of `log ω(e^{iθQ̂_W})` is
-purely imaginary (mean only) and the second cumulant is boundary-law.  The
-⟨1⟩3 counterexample has `V_N ≍ log N` and is disjoint from every such
-folium.  (ii) *Local implementability:* the `U(1)` rotation moves the ⟨1⟩3
-counterexample state to a disjoint state (no implementer can exist there),
-while on the A2 folium the same rotation is locally implemented.
-
-**Where the content sits (r2 NOTE 11).**  The whole content of this
-conjecture is **EXISTENCE of the strongly continuous implementer**.  Granted
-existence, with `ϱ_0` pure (so the GNS representation is irreducible),
-`e^{2πiQ̂}` implements `Ad(u(2π))=Ad(c𝟙)=id`, hence lies in `π(𝔄)'=ℂ𝟙` by
-Schur's lemma: the scalar clause is a one-liner and is free.  A future prover
-should attack existence, not the scalar clause.
-
-**Status: CONJECTURE.**  Claim row: `claims/CLAIMS.md` M-INDEX-LA-folium
+This is the implementer route, not a strong-resolvent limit of
+`Q̂_{W,c_0}`.  For nonscalar `V_θ`, ⟨1⟩12 still proves that those bare window
+unitaries are not Cauchy; the compatibility is proved in the folium shard
+⟨1⟩7.  The theorem covers the fixed bare A2 kink (and finite-core variants
+whose padded blocked tensors span `M_χ(ℂ)`), not arbitrary D1(e′) finite-core
+modifications.  **Status: PROVED** (capped L6 passed: critic theory/verdicts/blitz-la-folium-r1.md, 0 FATAL / 0 MAJOR).
 (live since 2026-08-28).
 
 ---
@@ -942,10 +926,7 @@ Live and authoritative rows in `notation.md`: `Q̂_{W,c}`; `E_{W,t}`, `𝒟_{W,t
    zero offset (⟨1⟩10), and the pure-tail vacuum charge laws (⟨1⟩11).
 2. **Refuted:** the operator form of the requested L-A, by TWO mechanisms
    bounding the retreat from both sides: D17 fluctuation divergence off the
-   folium (⟨1⟩3) and the nonscalar-`V_θ` obstruction on the folium (⟨1⟩12).
-   The surviving folium-restricted implementer-route candidate is an
-   explicit CONJECTURE (⟨1⟩3b), so the REFUTED row does not over-advertise
-   its reach (L10).
+   folium (⟨1⟩3) and the nonscalar-`V_θ` obstruction on the folium (⟨1⟩12).  The fixed-A2-folium implementer theorem is proved in ⟨1⟩3b by the separate implementer route, so the REFUTED row remains restricted to the sector-wide/window-limit statement (L10).
 3. **Assumed, not derived:** D27.  No implication H-AD-G ⟹ (LR) is claimed;
    the AD3-topology gap is named (⟨1⟩8 recital, landmine L2), and the μ_W
    exhibits show one-point convergence can never supply LR3.  (S) is
@@ -972,7 +953,7 @@ Live and authoritative rows in `notation.md`: `Q̂_{W,c}`; `E_{W,t}`, `𝒟_{W,t
    quantization is a conclusion).
 8. **Status:** `claims/CLAIMS.md` is the status of record (L5); as this shard
    stands, M-INDEX-fin, M-INDEX-spec and M-IDX-density are **SKETCH**;
-   M-INDEX-LA-folium is **CONJECTURE**; M-INDEX-LA-strong is **REFUTED**
+   M-INDEX-LA-folium is **PROVED** (implementer route, blitz-la-folium-r1); M-INDEX-LA-strong is **REFUTED**
    with both mechanisms recorded.  M-INDEX-full (deriving (LR)) was not
    obtained in either lane; the campaign's top rung remains open.  The r2
    verdict's four promotion decisions are the orchestrator's step after gate
