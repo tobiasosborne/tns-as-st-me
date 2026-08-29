@@ -23,6 +23,11 @@ written by the critic and applied verbatim.  This repair brings the shard into
 lockstep with **those** cells, not with the prover's r4 draft rows, which were
 correctly not applied.  `claims/CLAIMS.md` was not touched.
 
+**Current locator state.**  After the hoist, the orchestrator applied the
+authorized locator-only updates: the live PROVED row now cites and ranges
+through `⟨1⟩7′`.  This response and the shard's §7 mirror have been resynced
+to that live cell; no claim text or mathematics was changed here.
+
 ## 1. R5-O1 — the hoist (the MAJOR)
 
 `⟨1⟩9.⟨2⟩4` proved *D6 satisfies D31(1)--(5)* — the promoted row's nonvacuity
@@ -72,8 +77,11 @@ statement cell cites "*(⟨1⟩9.⟨2⟩5)*" for the constructed-channel jet.  S
 stable keeps every applied pointer exact at the cost of one documented gap.
 The marker states the reason in the shard, so no auditor has to reconstruct it.
 
-Renumbering becomes safe in the same pass in which the orchestrator applies r5
-§9 condition 2 (below).  Filed as RESIDUE-1.
+The r6 convergence ruling later confirmed that retaining the documented gap is
+the recommended disposition: r5 §9 condition 2 alone does not make
+renumbering safe, because the live `AC-EX-2M-D29` row still excludes
+`⟨1⟩9.⟨2⟩4` and cites `⟨1⟩9.⟨2⟩5`.  The marker is therefore retained as an
+auditable address translation, not as a proof step.
 
 ## 2. R5-O3 — the G8 `route_guard`
 
@@ -212,9 +220,10 @@ the two route expressions have not been collapsed into one.
 
 ## 5. Lockstep
 
-- §7's two mirror rows versus `claims/CLAIMS.md` lines for `AC-EX-2M` and
-  `AC-EX-2M-D29`: **byte-identical**, 4467 and 3465 bytes, checked
-  programmatically after the edit.
+- §7's two mirror rows versus the live `claims/CLAIMS.md` lines for
+  `AC-EX-2M` and `AC-EX-2M-D29`: **byte-identical**, 4307 and 3465 bytes
+  (excluding each line terminator),
+  checked programmatically after the post-hoist locator update.
 - Header status block, `⟨1⟩1`, §7 and §8 now all say: `AC-EX-2M` **PROVED**
   (conditional, A2M.1--A2M.2; per ansatz-scattering-2m-r5.md §9);
   `AC-EX-2M-D29` **SKETCH**; the implication is non-vacuous by `⟨1⟩7′`; the
@@ -228,16 +237,14 @@ the two route expressions have not been collapsed into one.
 
 ## 6. Residues
 
-**RESIDUE-1 (for the orchestrator, one cell).**  `AC-EX-2M`'s `where-proved`
-reads "*⟨1⟩2--⟨1⟩7, plus ⟨1⟩9.⟨2⟩4 for the D6 instance of D31 (r5 R5-O1
-requires that step be hoisted out of ⟨1⟩9's D29 ASSUME; …)*".  The hoist has
-landed, so the parenthetical is satisfied as written and r5 §9 condition 2
-permits the cell to be simplified to "*theory/ansatz-scattering-2m.md
-⟨1⟩2--⟨1⟩7′*".  That is a `claims/CLAIMS.md` edit, outside this lane, and was
-deliberately not made.  `AC-EX-2M-D29`'s `where-proved` would then read
-"*⟨1⟩8--⟨1⟩9*" with no exclusion clause.  Only after that edit is it safe to
-renumber `⟨1⟩9`'s sub-steps `⟨2⟩5--⟨2⟩7 → ⟨2⟩4--⟨2⟩6` and drop the marker;
-doing it now would falsify two applied pointers (§1).
+**RESIDUE-1 (resolved locator; retained audit address).**  The orchestrator
+has applied r5 §9 condition 2 and the later pointer corrections:
+`AC-EX-2M` now cites and ranges through `⟨1⟩7′`, and §7 mirrors that live row.
+The r6 ruling recommends keeping the vacated `⟨1⟩9.⟨2⟩4` marker because the
+live `AC-EX-2M-D29` row still excludes that address and cites
+`⟨1⟩9.⟨2⟩5`; renumbering would falsify both pointers and invalidate the prior
+audit trail.  The marker is explicitly non-probative and no step depends on
+it.
 
 **RESIDUE-2 (unchanged, correctly retracted).**  `--red-supportfold` remains
 self-fulfilling; it is now disclosed as such in §6 and kept only as G6's
