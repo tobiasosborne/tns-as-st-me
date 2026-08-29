@@ -89,7 +89,8 @@ retracted in all four layers; the honest statement is):
     exposed because both refutations hold at the pre-registered 0.08 with
     5-37x margins and need no derived band at all.
 No constant-true ``require`` remains: the r4 guard on the derived exponent
-band was structurally unreachable and is deleted (r4-critic m3).
+band and C5's two DISPLAY guards were deductively subsumed by earlier gates
+and are deleted (r4-critic m3; r5-critic m3).
 
 The definition D24(d)3b asserts NO value for ``a_leg`` (open lemma AMP); the
 red modes falsify *candidates*, never the definition.  Every failure raises
@@ -526,16 +527,16 @@ def predicted_jet(spin: float, exponent: float | None) -> float:
 
 
 def check_defect(slopes: dict[float, list[float]]) -> tuple[float, list[float]]:
-    """D24N-C5, DISPLAY: the frozen clause misses off rho=1/2, hits at 1/2."""
+    """D24N-C5, DISPLAY: the frozen clause misses off rho=1/2, hits at 1/2.
+
+    This function intentionally contains no gate: C4 already forces the
+    displayed S=1/2 deviation below DECISION_BAND and every displayed
+    off-S=1/2 deviation above it (r5-critic m3).
+    """
     deviations = []
     for spin in SPINS:
         measured = float(np.mean(slopes[spin]))
         deviations.append(abs(predicted_jet(spin, None) - measured) * spin)
-    require(deviations[0] < DECISION_BAND,
-            f"D24N-C5 frozen clause must match at S=1/2, deviation {deviations[0]:.4f}")
-    for spin, deviation in zip(SPINS[1:], deviations[1:]):
-        require(deviation > DECISION_BAND,
-                f"D24N-C5 frozen clause unexpectedly matched at S={spin}")
     return max(deviations[1:]), deviations
 
 
