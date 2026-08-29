@@ -1,0 +1,5 @@
+PARSE PASS: numerics/src/lambdaD_edge.jl
+PARSE PASS: numerics/src/lambdaD_memory.jl
+PARSE PASS: numerics/src/lambdaD_memory_run.jl
+PARSE PASS: numerics/scripts/run_lambdaD_memory.jl
+PARSE PASS: numerics/test/test_lambdaD_memory.jl

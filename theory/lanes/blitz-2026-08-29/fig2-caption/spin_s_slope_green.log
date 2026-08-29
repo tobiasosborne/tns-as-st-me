@@ -1,0 +1,6 @@
+SYMBOLIC independent=0 dlog=I/S
+GRID closed=1.337e-15 unitary=8.882e-16 exchange=3.334e-16
+SLOPE physical_sign_error=1.200e-11
+HALF ratio=5.237e-16 slope=2*I phase2=-(y + 1)/(y - 1) amplitude2=-(3*y - 1)/(y - 1)
+RING max_residual=1.696e-14
+PASS: Theorem S2-2body-S

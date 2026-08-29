@@ -1,0 +1,25 @@
+ERROR: LoadError: ArgumentError: Package MPSKit [bb1c41ca-d63c-52ed-829e-0820dda26502] is required but does not seem to be installed:
+ - Run `Pkg.instantiate()` to install all recorded dependencies.
+
+Stacktrace:
+  [1] __require_prelocked(pkg::Base.PkgId, env::String)
+    @ Base ./loading.jl:2615
+  [2] _require_prelocked(uuidkey::Base.PkgId, env::String)
+    @ Base ./loading.jl:2493
+  [3] macro expansion
+    @ ./loading.jl:2421 [inlined]
+  [4] macro expansion
+    @ ./lock.jl:376 [inlined]
+  [5] __require(into::Module, mod::Symbol)
+    @ Base ./loading.jl:2386
+  [6] require(into::Module, mod::Symbol)
+    @ Base ./loading.jl:2362
+  [7] top-level scope
+    @ ~/Projects/tns-as-st-me/numerics/test/test_lambdaD_memory.jl:57
+  [8] include(mod::Module, _path::String)
+    @ Base ./Base.jl:306
+  [9] exec_options(opts::Base.JLOptions)
+    @ Base ./client.jl:317
+ [10] _start()
+    @ Base ./client.jl:550
+in expression starting at /home/tobias/Projects/tns-as-st-me/numerics/test/test_lambdaD_memory.jl:52

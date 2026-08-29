@@ -1,0 +1,20 @@
+static D=0
+static D=3
+T2 periodic D=0
+T2 periodic D=3
+T3 dynamics D=0
+T3 dynamics D=3
+{
+  "scientific_gates": {
+    "T0": false,
+    "T1": false,
+    "T2": false,
+    "T3": false
+  },
+  "validation": {
+    "max_hermiticity_residue": 0.0,
+    "max_norm_drift": 1.8385293287792592e-13,
+    "max_charge_sector_residue": 3.679279103607769e-13
+  },
+  "wall_seconds": 269.0334506034851
+}

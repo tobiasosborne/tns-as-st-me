@@ -1,0 +1,15 @@
+{
+  "all_six_mutations_caught": true,
+  "mode": "selftest",
+  "note": "P6 mutation adds 1e-6 to the F-A orbit period; the real F-D failure is separate.",
+  "probe": "bta_moment_probe",
+  "provenance_constraint": "The observation that TNS variational classes carry a K\u00e4hler structure and that TDVP is the associated Hamiltonian flow originated with Tobias Osborne, who communicated it to Jutho Haegeman, who made it work. Do not state this in any paper without TJO's explicit sign-off.",
+  "red_capable": {
+    "P1": true,
+    "P2": true,
+    "P3": true,
+    "P4": true,
+    "P5": true,
+    "P6": true
+  }
+}

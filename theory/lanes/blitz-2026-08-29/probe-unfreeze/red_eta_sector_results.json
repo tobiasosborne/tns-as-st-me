@@ -1,0 +1,41 @@
+{
+ "p2_overlaps": [
+  {
+   "k": 0.3490658503988659,
+   "abs": 13.903816440391278
+  },
+  {
+   "k": 0.6981317007977318,
+   "abs": 7.655072891512785
+  }
+ ],
+ "p2": {
+  "jet_errors": [
+   4.282935914593823e-08,
+   5.4519119026157345e-08
+  ],
+  "protocol_eta_diff": 1.25839350020828,
+  "protocol_eta_sensitivity": 0.8389290001388533,
+  "eta_mutation": "sector",
+  "eta_rows": [
+   {
+    "k": 0.3490658503988659,
+    "eta": 0.375,
+    "bare_h2_norm": 4.0,
+    "d24_h3_norm": 5.502006911174161,
+    "dressed_direct_sum_norm": 4.500778961148479,
+    "projected_difference": 1.25839350020828,
+    "relative_eta_sensitivity": 0.8389290001388533
+   },
+   {
+    "k": 0.6981317007977318,
+    "eta": 0.375,
+    "bare_h2_norm": 4.0,
+    "d24_h3_norm": 4.937118014370433,
+    "dressed_direct_sum_norm": 4.407692509604641,
+    "projected_difference": 0.9676346469299426,
+    "relative_eta_sensitivity": 0.6450897646199617
+   }
+  ]
+ }
+}

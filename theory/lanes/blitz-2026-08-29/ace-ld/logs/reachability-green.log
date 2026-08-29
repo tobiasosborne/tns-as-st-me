@@ -1,0 +1,12 @@
+COMMAND: PYTHONDONTWRITEBYTECODE=1 python3 -O measure_reachability.py
+EXIT: 0
+| registered mode | measured gates reached | dies at |
+|---|---|---|
+| `c5b-flat` | C5b-WEDGE | C5b-WEDGE |
+| `c5b-concentrated` | C5b-WEDGE | C5b-WEDGE |
+| `c5b-nobarrier` | C5b-CESARO-FLOOR, C5b-WEDGE | C5b-CESARO-FLOOR |
+| `c6-static` | C6-LIVENESS, C6-MOMENT, C6-SUPPORT | C6-LIVENESS |
+| `c6-moving` | C6-MOMENT | C6-MOMENT |
+| `c6-weaktransit` | C6-MOMENT, C6-SUPPORT | C6-SUPPORT |
+Measured unreached target gates: C5b-STABILITY, C6-SWEEP
+GREEN: measured reachability matches the registered expectation.

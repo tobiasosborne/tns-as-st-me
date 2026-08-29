@@ -1,0 +1,209 @@
+{
+  "examples": {
+    "P1_Delta1.5_S0.5_x0_0p3_omegas": [
+      0.9995539415237903,
+      0.9995539448902225,
+      0.9995539448902225,
+      0.9995539448902225
+    ],
+    "P1_Delta1.5_S0.5_x0_0p3_potentials": [
+      113.03149331524826,
+      417.1573667546666,
+      1602.8633037015297,
+      6284.091937881352
+    ]
+  },
+  "gates": {
+    "P1": {
+      "criterion": "growth exponent >= 1.5 and |Omega_80-Omega_40| <= 1e-10",
+      "families": [
+        "F-A",
+        "F-B"
+      ],
+      "metrics": {
+        "growth_exponents": {
+          "S=0.5,Delta=1.5": 1.789405586439038,
+          "S=0.5,Delta=2.0": 1.7904560963864442,
+          "S=0.5,Delta=4.0": 1.7911882634719096,
+          "S=1.0,Delta=1.5": 1.7894055864390381,
+          "S=1.0,Delta=2.0": 1.7904560963864435,
+          "S=1.0,Delta=4.0": 1.7911882634719098,
+          "S=1.5,Delta=1.5": 1.7894055864390381,
+          "S=1.5,Delta=2.0": 1.7904560963864435,
+          "S=1.5,Delta=4.0": 1.7911882634719092,
+          "S=2.0,Delta=1.5": 1.789405586439038,
+          "S=2.0,Delta=2.0": 1.7904560963864442,
+          "S=2.0,Delta=4.0": 1.7911882634719103
+        },
+        "max_curvature_change_40_to_80": 1.7763568394002505e-15,
+        "min_growth_exponent": 1.789405586439038
+      },
+      "passed": true
+    },
+    "P2": {
+      "criterion": "max |mu'+Omega|/max(1,|Omega|) <= 1e-12",
+      "families": [
+        "F-A",
+        "F-B"
+      ],
+      "metrics": {
+        "max_absolute_residue": 1.1628657551986845,
+        "max_relative_residue": 1.0000000000000013
+      },
+      "passed": false
+    },
+    "P3": {
+      "criterion": "|(area/2pi)-2S| <= 1e-8 per lattice period",
+      "families": [
+        "F-A",
+        "F-B"
+      ],
+      "metrics": {
+        "area_over_2pi": {
+          "S=0.5,Delta=1.5": {
+            "max": 1.0000000000000004,
+            "min": 0.9999999999999993
+          },
+          "S=0.5,Delta=2.0": {
+            "max": 1.0000000000000007,
+            "min": 0.9999999999999994
+          },
+          "S=0.5,Delta=4.0": {
+            "max": 1.0000000000000004,
+            "min": 0.9999999999999993
+          },
+          "S=1.0,Delta=1.5": {
+            "max": 2.000000000000001,
+            "min": 1.9999999999999987
+          },
+          "S=1.0,Delta=2.0": {
+            "max": 2.0000000000000013,
+            "min": 1.999999999999999
+          },
+          "S=1.0,Delta=4.0": {
+            "max": 2.000000000000001,
+            "min": 1.9999999999999987
+          },
+          "S=1.5,Delta=1.5": {
+            "max": 3.0000000000000013,
+            "min": 2.9999999999999982
+          },
+          "S=1.5,Delta=2.0": {
+            "max": 3.0000000000000018,
+            "min": 2.9999999999999982
+          },
+          "S=1.5,Delta=4.0": {
+            "max": 3.0000000000000013,
+            "min": 2.9999999999999982
+          },
+          "S=2.0,Delta=1.5": {
+            "max": 4.000000000000002,
+            "min": 3.9999999999999973
+          },
+          "S=2.0,Delta=2.0": {
+            "max": 4.000000000000003,
+            "min": 3.999999999999998
+          },
+          "S=2.0,Delta=4.0": {
+            "max": 4.000000000000002,
+            "min": 3.9999999999999973
+          }
+        },
+        "max_error": 1.0000000000000027
+      },
+      "passed": false
+    },
+    "P4": {
+      "criterion": "nu=2 gives delta x=-1/S and matches both frozen slope oracles to 1e-8",
+      "families": [
+        "F-B",
+        "S2-2body-S",
+        "spin1-bc-falsifier.json"
+      ],
+      "metrics": {
+        "calibration_error": 1.0,
+        "frozen_json_prediction_error": 3.333999742949345e-13,
+        "frozen_json_rows": 22,
+        "max_error": 1.0,
+        "spin_s_slope_error": 5.6068483189619656e-12
+      },
+      "passed": false
+    },
+    "P5": {
+      "criterion": "P2 remains true on q'/q in {0.8,1.25} to 1e-12",
+      "families": [
+        "F-C"
+      ],
+      "metrics": {
+        "max_absolute_residue": 1.3019496815198999,
+        "max_relative_residue": 1.0000000000000013
+      },
+      "passed": false
+    },
+    "P6": {
+      "criterion": "scalar periods <=1e-10 and nonscalar F-D period >=1e-3",
+      "families": [
+        "F-A",
+        "F-B",
+        "F-C",
+        "F-D"
+      ],
+      "metrics": {
+        "F-A_abs_period": 0.0,
+        "F-D": {
+          "abs_period": 0.0,
+          "alpha_transfer_gap": 0.42916885479883,
+          "beta_transfer_gap": 0.1763263831235251,
+          "max_abs_curvature": 1.0035513441566346,
+          "nonscalar_distance": 0.7148326234387438
+        },
+        "base_case_kill_shot_fired": false,
+        "nonscalar_prediction_survived": false,
+        "scalar_max_abs_period": 0.0
+      },
+      "passed": false
+    }
+  },
+  "grid": {
+    "Delta": [
+      1.5,
+      2.0,
+      4.0
+    ],
+    "L": [
+      10,
+      20,
+      40,
+      80
+    ],
+    "S": [
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "qprime_over_q": [
+      0.8,
+      1.25
+    ],
+    "x0": {
+      "count": 301,
+      "start": 0.0,
+      "stop": 3.0
+    }
+  },
+  "mode": "red",
+  "overall_pass": false,
+  "pre_registered_thresholds": {
+    "P1_curvature_tol": 1e-10,
+    "P1_exponent_min": 1.5,
+    "P2_relative_tol": 1e-12,
+    "P3_tol": 1e-08,
+    "P4_tol": 1e-08,
+    "P5_relative_tol": 1e-12,
+    "P6_nonscalar_min": 0.001,
+    "P6_scalar_tol": 1e-10
+  },
+  "probe": "bta_moment_probe",
+  "provenance_constraint": "The observation that TNS variational classes carry a K\u00e4hler structure and that TDVP is the associated Hamiltonian flow originated with Tobias Osborne, who communicated it to Jutho Haegeman, who made it work. Do not state this in any paper without TJO's explicit sign-off."
+}

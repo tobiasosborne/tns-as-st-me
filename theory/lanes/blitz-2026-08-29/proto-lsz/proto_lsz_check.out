@@ -1,0 +1,14 @@
+COMMAND: python3 -O theory/lanes/blitz-2026-08-29/proto-lsz/proto_lsz_check.py
+PLSZ-C1 max scaled extension error = 3.524010e+00
+PLSZ-C2 max exact factor error = 2.081781e-17
+PLSZ-C3 max packet error = 3.469447e-18
+PLSZ-C3 max quadratic coefficient = 9.905436e-01
+PLSZ-C4 max invariant-sum error = 8.131516e-19
+PLSZ-C4 min live linear-shift ratio = 3.605551e-01
+PASS
+
+REGISTERED RED RUNS (python3 -O; each must exit 1):
+--red-profile exit=1: FAIL: PLSZ-C1 removable profile failed
+--red-ward-factor exit=1: FAIL: PLSZ-C2 exact Ward/LSZ factor failed
+--red-slope exit=1: FAIL: PLSZ-C3 first-jet remainder failed
+--red-split exit=1: FAIL: PLSZ-C4 compensating component split failed

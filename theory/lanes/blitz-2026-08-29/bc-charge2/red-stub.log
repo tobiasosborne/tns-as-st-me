@@ -1,0 +1,44 @@
+Bc charge-2 three-magnon ED decision: Test Failed at /home/tobias/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:18
+  Expression: isfinite(result.stderr)
+
+Stacktrace:
+ [1] top-level scope
+   @ ~/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:16
+ [2] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+ [3] macro expansion
+   @ ~/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:18 [inlined]
+ [4] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:680 [inlined]
+Bc charge-2 three-magnon ED decision: Test Failed at /home/tobias/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:19
+  Expression: abs(result.slope - PREDICTED_SLOPE) <= DECISION_ATOL
+   Evaluated: 4.0 <= 0.35
+
+Stacktrace:
+ [1] top-level scope
+   @ ~/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:16
+ [2] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+ [3] macro expansion
+   @ ~/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:19 [inlined]
+ [4] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:680 [inlined]
+Bc charge-2 three-magnon ED decision: Test Failed at /home/tobias/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:20
+  Expression: result.stderr <= MAX_REPORTED_ERROR
+   Evaluated: Inf <= 0.35
+
+Stacktrace:
+ [1] top-level scope
+   @ ~/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:16
+ [2] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+ [3] macro expansion
+   @ ~/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:20 [inlined]
+ [4] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:680 [inlined]
+Test Summary:                        | Pass  Fail  Total  Time
+Bc charge-2 three-magnon ED decision |    1     3      4  4.6s
+RNG of the outermost testset: Random.Xoshiro(0x01b327d081bbca63, 0x694578a504fed6bb, 0x465e118543c42786, 0x63e483d92a16e742, 0x5899844a0a2d6700)
+ERROR: LoadError: Some tests did not pass: 1 passed, 3 failed, 0 errored, 0 broken.
+in expression starting at /home/tobias/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/bc-charge2/test_bc_charge2.jl:15
+exit_code=1

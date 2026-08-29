@@ -1,0 +1,41 @@
+TriangleMPS: Error During Test at /home/tobias/Projects/tns-as-st-me/numerics/test/runtests.jl:5
+  Got exception outside of a @test
+  LoadError: ArgumentError: Package MPSKit [bb1c41ca-d63c-52ed-829e-0820dda26502] is required but does not seem to be installed:
+   - Run `Pkg.instantiate()` to install all recorded dependencies.
+  
+  Stacktrace:
+    [1] __require_prelocked(pkg::Base.PkgId, env::String)
+      @ Base ./loading.jl:2615
+    [2] _require_prelocked(uuidkey::Base.PkgId, env::String)
+      @ Base ./loading.jl:2493
+    [3] macro expansion
+      @ ./loading.jl:2421 [inlined]
+    [4] macro expansion
+      @ ./lock.jl:376 [inlined]
+    [5] __require(into::Module, mod::Symbol)
+      @ Base ./loading.jl:2386
+    [6] require(into::Module, mod::Symbol)
+      @ Base ./loading.jl:2362
+    [7] top-level scope
+      @ ~/Projects/tns-as-st-me/numerics/test/test_lambdaD_groundstate.jl:32
+    [8] include(mapexpr::Function, mod::Module, _path::String)
+      @ Base ./Base.jl:307
+    [9] top-level scope
+      @ ~/Projects/tns-as-st-me/numerics/test/runtests.jl:6
+   [10] macro expansion
+      @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+   [11] macro expansion
+      @ ~/Projects/tns-as-st-me/numerics/test/runtests.jl:8 [inlined]
+   [12] include(mod::Module, _path::String)
+      @ Base ./Base.jl:306
+   [13] exec_options(opts::Base.JLOptions)
+      @ Base ./client.jl:317
+   [14] _start()
+      @ Base ./client.jl:550
+  in expression starting at /home/tobias/Projects/tns-as-st-me/numerics/test/test_lambdaD_groundstate.jl:26
+Test Summary:                         | Pass  Error  Total   Time
+TriangleMPS                           |  828      1    829  41.0s
+  FM two-magnon wavepacket scattering |  828           828  38.6s
+RNG of the outermost testset: Random.Xoshiro(0xd597bb7bb2ca7805, 0x8a5e75d38feb3ee3, 0xb97696c098c46c86, 0xccdf5ec29ea38555, 0xae1fa60bb4daf89f)
+ERROR: LoadError: Some tests did not pass: 828 passed, 0 failed, 1 errored, 0 broken.
+in expression starting at /home/tobias/Projects/tns-as-st-me/numerics/test/runtests.jl:5

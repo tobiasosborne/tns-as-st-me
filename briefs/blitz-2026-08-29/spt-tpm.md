@@ -1,0 +1,3 @@
+LANE: spt-tpm | BEAD: tns-q5z (P2) | LANE DIR: theory/lanes/blitz-2026-08-29/spt-tpm/
+Read RULES.md first, then theory/memory-index.md, theory/spt-rebuild.md, claims rows M-INDEX-fin/spec, SPT-M'.
+TASK: Transplant the M-INDEX TPM register to the SPT corner: edge-window charge + two-measurement protocol + (LR)-style relaxation => quantization of edge-memory outcomes with NO edge-channel assumptions, removing H-AD-edge from SPT-M'. Same arithmetic as theory/memory-index.md with the window at the boundary. Lamport shard spt-tpm.md in your lane dir; state the exact hypothesis set and compare it line-by-line with SPT-M' current hypotheses so the improvement is explicit.

@@ -1,0 +1,12 @@
+MUTATION: first coefficient_measured += 0.1
+dispersion chi=16 s=0.960339977746404 gap=2.794651895762831 symmetry=PASS
+dispersion chi=24 s=0.960339977081312 gap=2.794651871327076 symmetry=PASS
+dispersion chi=32 s=0.960339977065703 gap=2.794651871168101 symmetry=PASS
+Traceback (most recent call last):
+  File "/home/tobias/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/wave2-verify/check_results.py", line 82, in <module>
+    main()
+  File "/home/tobias/Projects/tns-as-st-me/theory/lanes/blitz-2026-08-29/wave2-verify/check_results.py", line 58, in main
+    assert close(derived, row["coefficient_measured"]), (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (1, 1.918387433219214, 2.018387433219214)
+mutation_exit_code=1

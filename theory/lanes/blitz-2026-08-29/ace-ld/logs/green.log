@@ -1,0 +1,11 @@
+COMMAND: PYTHONDONTWRITEBYTECODE=1 python3 -O ace_ld_check.py
+EXIT: 0
+LD-C1 hypothesis audit: single coset, gap >= 1, [P,H]=0, orthogonal, resolving
+LD-C2 first-moment escape: eps_+(final)=7.18e-12, eps_-(final)=3.27e-12
+LD-C3 inequality (LD.1) holds at all times at the asserted constant (max lhs/rhs = 0.168; not a sharpness test)
+LD-C4 diagonality at t=1024: all channels < 1e-06
+LD-C5 obstruction configuration: |r|^2=0.2704, |t|^2=0.7296; two-atom law {0, -|W|} incl. nu=0 atom; identity/tail consistency lines pass (disclosed as subsumed); LR3 tail 13.13(|W|=17) -> 24.80(|W|=33) -> 48.15(|W|=65) -> 94.84(|W|=129)
+LD-C5b (straddling config, |W|=17): wedge at (t_-,t_+)=(0,300): sum nu p = +0.3677 vs unpinched -5.7155, wedge 6.0832 > 1.0 — D genuinely acts (not the LR2 quantity); D27(LR2) double-Cesaro defect -3.3592 (T=20), -3.3592 (T=40), |defect| > 3.0 and T-stable — LR2 fails at its own quantity (r3 M2 corrected number); mechanism: backward branch weights left/in/right = 0.8563/0.0170/0.1267 at t_-=-80, 0.8563/0.0170/0.1267 at t_-=-400 — the split persists; the bound state is not the cause (r3 M2(b))
+LD-C6 bounded-transport contrast (kink+magnon, [H,Q_W] != 0): [4,7]: 1-p0=0.017, sum|nu|p=0.017; [3,8]: 1-p0=0.402, sum|nu|p=0.402; [2,9]: 1-p0=0.423, sum|nu|p=0.423; [1,10]: 1-p0=0.453, sum|nu|p=0.453; t_+ sweep (4.0, 20.0, 40.0, 200.0): max sum|nu|p = 1.0712 (t_+=20, W=[3,8]) <= 1.2
+LD-C7 epsilon-version on D16: sector energies (max |E0| 8.2e-17); defects 4.45e-02, 9.30e-03, 1.94e-03, 4.05e-04; ratios 0.2089, 0.2087, 0.2083 vs q = 0.208712; (K-TAIL) profile C_K = 0.209, per-site ratio = q on both sides (Z2-flipped orientation)
+GREEN: LD-C1..LD-C7 all pass; exit 0.

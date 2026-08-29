@@ -1,0 +1,3 @@
+LANE: d51-lift | BEAD: tns-d51 (P3, HARD/speculative) | LANE DIR: theory/lanes/blitz-2026-08-29/d51-lift/
+Read RULES.md first, then claims row H-AD and the D18 material, theory/TRIANGLE.md.
+TASK: Attack the lift of projected kink-magnon completeness to full XXZ: control coupling from the <=3-domain-wall Jacobi/Fano channel to >=5-wall channels uniformly in scattering time (Feshbach/Mourre or equivalent). This is known-hard; a sharp partial (e.g. a Mourre estimate on the projected resolvent, or a clean conditional reduction with the exact missing estimate named) is the realistic win. Do NOT bluff completeness. Lamport, incremental.

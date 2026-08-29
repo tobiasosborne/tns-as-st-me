@@ -1,0 +1,7 @@
+command: python3 theory/lanes/blitz-2026-08-29/ogata/ogata_separation_check.py --red
+exit_code: 1
+onsite_2pi_residual=2.449e-16
+aklt_L=24
+aklt_edge_magnitude=0.999999999996459
+edge_limit_error=5.000e-01
+RED-OK: wrong edge prefactor was detected

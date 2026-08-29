@@ -1,0 +1,10 @@
+LANE: joint-critic | LANE DIR: theory/lanes/blitz-2026-08-29/joint-critic/
+Read briefs/blitz-2026-08-29/RULES.md first (same write discipline: your lane dir ONLY, no bd, no git writes).
+You are the ONE hostile critic round (PRD.md capped loop: this is the single attack pass; repairs will not be re-reviewed) over SEVEN prover lanes from today's blitz. Your UNIQUE job, beyond per-lane attack, is CROSS-CONSISTENCY — no other agent sees all seven.
+LANES UNDER REVIEW (each: read its SUMMARY.md, main shard(s), checker + logs, PATCH.md):
+theory/lanes/blitz-2026-08-29/{proto-lsz, ml1-ml6, m-esc-nr, scope-g, spt-tpm, la-folium, mq-e}/
+GROUND TRUTH: definitions.md, notation.md, claims/CLAIMS.md, the theory/ shards they cite. Recompute, do not trust. Run their checkers yourself (green AND the registered reds) — a checker that cannot fire is a FATAL finding (this campaign has found NINE no-op gates; hunt for the tenth, but do NOT expand into auditing old verdicts or process archaeology — PRD forbids meta-scope).
+PER LANE deliver verdict-<lane>.md: objections classified FATAL / MAJOR / minor / note, each with file:line and the exact broken step; then a one-line adjudication: PROMOTE-к-PROVED / DEMOTE-to-SKETCH / REJECT.
+CROSS-LANE section (cross-consistency.md), at minimum: (1) proto-lsz's residual gap vs ml3's reconciliation verdict (theory/lanes/blitz-2026-08-29/ml3/reconciliation.md) — do they name the SAME remaining obstruction? (2) ml1-ml6's ML1 kernel (conditional on D31) vs mq-e's enumeration — compatible registers? (3) scope-g and spt-tpm both extend M-INDEX arithmetic — same window/cut conventions, no silent D27 strengthening mismatch? (4) la-folium's implementer vs the ogata lane's separation claim (ogata/ogata-map.md) — consistent? (5) Every PATCH.md: check each string anchor is UNIQUE at current HEAD; list any anchor that misses or double-matches.
+Do NOT review: kaehler-dh, bta-probe, fcs, bridges, d51-lift, spt-dyn, or any checker-repair lane — out of scope.
+Write verdicts INCREMENTALLY, one file per lane as you finish it, then cross-consistency.md, then SUMMARY.md (counts per lane + adjudications).

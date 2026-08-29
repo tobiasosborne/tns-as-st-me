@@ -1,0 +1,4 @@
+RED-CAUGHT SG-C1: SG-C1 semisimple-density gate: density=1.746e-01, state_covariance=9.719e-02, mps_covariance=2.149e-01
+RED-CAUGHT SG-C2: SG-C2 affine-offset cancellation residue=1.414e-01
+RED-OK: 2/2 registered mutations failed
+EXIT: 1 (expected for --red)

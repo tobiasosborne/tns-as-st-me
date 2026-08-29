@@ -1,0 +1,2 @@
+FAIL: SS-C3 independent closed forms: nonzero symbolic residue
+RED_EXIT=1

@@ -1,0 +1,8 @@
+SOURCE AUDIT: original C5 require count=2; repaired count=0
+MUTATION AUDIT: injected no-op require detected (count=1)
+C4/C5 S=1/2 identity: frozen=2.00, 1/S=2.00
+C4/C5 off-half lower bounds: S=1:0.92, S=1.5:1.92, S=2:2.92; each exceeds band=0.08
+GREEN REGRESSION: original and repaired stdout/stderr are byte-identical
+RED REGRESSION: all seven original/repaired red paths are byte-identical
+RED CAPABILITY: --red-frozen exit=1, first stderr line=FAIL: D24N-C6 candidate flux misses the data-derived acceptance band (0.0479) at S=1.0 dev=1.0016; S=1.5 dev=2.0027; S=2.0 dev=3.0033
+PASS: C5 is display-only and the rest of the checker is behavior-preserved

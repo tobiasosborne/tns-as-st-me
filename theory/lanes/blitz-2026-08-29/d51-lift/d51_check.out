@@ -1,0 +1,3 @@
+D51-CHECK PASS
+sizes=6..12 max_row=3 max_col=3 cross_edges=1470
+wall_changes=[-2, 0, 2] schur_beta_over_J=1.500000000000

@@ -1,0 +1,8 @@
+dispersion chi=16 s=0.960339977746404 gap=2.794651895762831 symmetry=PASS
+dispersion chi=24 s=0.960339977081312 gap=2.794651871327076 symmetry=PASS
+dispersion chi=32 s=0.960339977065703 gap=2.794651871168101 symmetry=PASS
+row=1 chi_max=32 -nu/dx=1.918387433219214 2s=1.920679955492809 relative_error=0.119359931%
+row=2 chi_max=48 -nu/dx=1.918400884963647 2s=1.920679955492809 relative_error=0.118659568%
+recorded_ranks=[32, 48]
+expected_ranks=[32, 48, 64] complete=False
+CHECK: PASS

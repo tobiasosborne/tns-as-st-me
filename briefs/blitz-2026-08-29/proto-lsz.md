@@ -1,0 +1,3 @@
+LANE: proto-lsz | BEAD: tns-7ou (P1, HEADLINE) | LANE DIR: theory/lanes/blitz-2026-08-29/proto-lsz/
+Read RULES.md in this dir first, then briefs/proto-lsz-match-prover.md (the standing brief with fences), theory/soft-index-general.md, claims/CLAIMS.md rows S-IDX-MATCH-HS-SEP, S-IDX-D29-value-HS-SEP.
+TASK: Prove (PROTO-LSZ) — the finite protocol-to-LSZ decomposition for the fixed-time D29 datum. (MATCH-S) is PROVED on (D29-HS-SEP); PROTO-LSZ is the SOLE remaining hypothesis between the PROVED finite theorems and the full 1D soft limit law (paper/skeleton.md section 5). Respect every fence in the standing brief. Full Lamport proof in your lane dir as proto-lsz.md. If the full statement resists, prove the strongest subclass version you can and state exactly what remains.

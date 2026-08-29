@@ -1,0 +1,7 @@
+COMMAND: PYTHONDONTWRITEBYTECODE=1 python3 -O mutation_probes.py
+EXIT: 0
+GREEN wrap guard: shipped spans (20.0, 40.0) satisfy T < N_BAR/8 = 256.
+RED-OK wrap guard: C5B_LR2_TS violates the no-wrap protocol guard: require 0 < T < N_BAR/8 = 256; got (20.0, 256.0)
+RED-OK C5b-STABILITY: LD-C5b: double-Cesaro defect not T-stable: values -3.3592, -3.3592 spread 4.882e-05 >= 1e-06
+RED-OK C6-SWEEP: LD-C6: first moment 1.0712 > 1.0 at W=[3,8], t_+=20 (sweep gate — the bound must hold across the recorded protocol times, r3 M3)
+GREEN: all three deliberate mutations were rejected at their target.

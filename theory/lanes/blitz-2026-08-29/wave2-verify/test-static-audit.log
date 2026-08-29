@@ -1,0 +1,10 @@
+vacua: source=6 executed=6 REAL_ASSERTIONS
+dispersion: source=7 executed=7 REAL_ASSERTIONS
+packet: source=4 executed=4 REAL_ASSERTIONS
+LD-ID: source=4 executed=4 REAL_ASSERTIONS
+integer support: source=4 executed=4 REAL_ASSERTIONS
+transport: source=10 executed=10 REAL_ASSERTIONS
+edge memory: source=9 executed=11 REAL_ASSERTIONS
+JSON records: source=6 executed=6 REAL_ASSERTIONS
+total_source=50 total_executed=52 stubs=0
+STATIC AUDIT: PASS (runtime execution still required)

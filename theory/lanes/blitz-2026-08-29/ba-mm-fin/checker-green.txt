@@ -1,0 +1,9 @@
+command: python3 theory/lanes/blitz-2026-08-29/ba-mm-fin/check_ba_mm_fin.py
+exit_code=0
+mode=GREEN
+cases=3536
+calibration=1.0
+max_absolute_residual=8.881784e-16
+max_scaled_residual=4.037175e-04
+min_omega=3.890260e-04
+PASS: dmu = i_(d/dphi) omega on the registered D16 grid

@@ -1,0 +1,70 @@
+COMMAND: PYTHONDONTWRITEBYTECODE=1 python3 -O ace_ld_check.py --red
+EXIT: 1 (intentional red)
+--- red mode 'gap' (fresh mutated free model) ---
+  LD-C1: broken as registered — exit path: LD-C1: spectral separation 1.000e-01 < 1
+  LD-C2: survives as registered
+  LD-C3: broken as registered — exit path: LD-C3: (LD.1) violated at t=8, channel +: lhs 4.121597e-01 > rhs 3.724759e-01
+  LD-C4: survives as registered
+--- red mode 'coset' (fresh mutated free model) ---
+  LD-C1: broken as registered — exit path: LD-C1: spectrum not in a single coset of Z (max coset spread 4.142e-01)
+  LD-C2: survives as registered
+  LD-C3: survives as registered
+  LD-C4: survives as registered
+--- red mode 'halfspace' (fresh mutated free model) ---
+  LD-C1: broken as registered — exit path: LD-C1: [P_+, H] != 0 (5.316e-01)
+  LD-C2: survives as registered
+  LD-C3: survives as registered
+  LD-C4: survives as registered
+--- red mode 'c1-overlap' (fresh mutated free model) ---
+  LD-C1: broken as registered — exit path: LD-C1: channel projections not orthogonal (6.455e-02)
+  LD-C2: broken as registered — exit path: LD-C2: eps_+(t_final) = 2.125e+00 >= 1e-06 (no first-moment escape)
+  LD-C3: survives as registered
+  LD-C4: broken as registered — exit path: LD-C4: ||E({q_+})psi_t - P_+ psi_t|| = 6.455e-02 >= 1e-06 at t=1024
+--- red mode 'c1-leak' (fresh mutated free model) ---
+  LD-C1: broken as registered — exit path: LD-C1: sum P_ch psi != psi (8.068e-02)
+  LD-C2: broken as registered — exit path: LD-C2: eps_+(t_final) = 1.099e-01 >= 1e-06 (no first-moment escape)
+  LD-C3: survives as registered
+  LD-C4: broken as registered — exit path: LD-C4: ||E({q_+})psi_t - P_+ psi_t|| = 4.841e-02 >= 1e-06 at t=1024
+--- red mode 'merged' (fresh mutated free model) ---
+  LD-C1: survives as registered
+  LD-C2: broken as registered — exit path: LD-C2: eps_1(t_final) = 2.640e+01 >= 1e-06 (no first-moment escape)
+  LD-C3: survives as registered
+  LD-C4: broken as registered — exit path: LD-C4: ||E({q_1})psi_t - P_1 psi_t|| = 8.000e-01 >= 1e-06 at t=1024
+--- red mode 'dup' (fresh mutated free model) ---
+  LD-C1: survives as registered
+  LD-C2: broken as registered — exit path: LD-C2: eps_-(t_final) = 2.640e+01 >= 1e-06 (no first-moment escape)
+  LD-C3: survives as registered
+  LD-C4: broken as registered — exit path: LD-C4: ||E({q_-})psi_t - P_- psi_t|| = 1.000e+00 >= 1e-06 at t=1024
+--- red mode 'c5-nobarrier' (fresh mutated barrier model) ---
+  LD-C5: broken as registered — exit path: LD-C5: nu=0 (reflected) atom absent (p0=0.0000, |W|=17) — the atom r1's certificate never produced
+--- red mode 'c5-meanshift' (fresh mutated barrier model) ---
+  LD-C5: broken as registered — exit path: LD-C5: first-moment identity violated at |W|=17: sum nu p = -12.4024 vs <Q>_- - <Q>_+ = -11.4024 (consistency line, subsumed by gate (a) — disclosed)
+--- red mode 'c5-inwindow' (fresh mutated barrier model) ---
+  LD-C5: broken as registered — exit path: LD-C5: incoming state not concentrated at q=0 (defect 9.971e-01, |W|=17)
+--- red mode 'c5-weights' (fresh mutated barrier model) ---
+  LD-C5: broken as registered — exit path: LD-C5: nu=0 weight 0.2704 != measured |r|^2 0.3204
+--- red mode 'c5-fixedwin' (fresh mutated barrier model) ---
+  LD-C5: broken as registered — exit path: LD-C5: LR3 tail moment not growing: 13.132 (|W|=17) -> 13.132 (|W|=17)
+--- red mode 'c5b-flat' (fresh mutated barrier2 model) ---
+  LD-C5b: broken as registered — exit path: LD-C5b: dephasing wedge absent: sum nu p = +0.0000 vs <Q>_- - <Q>_+ = +0.0000 (|gap| = 1.776e-15 <= 1.0) — the pinching does not act, so this is not a two-branc
+--- red mode 'c5b-concentrated' (fresh mutated barrier2 model) ---
+  LD-C5b: broken as registered — exit path: LD-C5b: dephasing wedge absent: sum nu p = -12.4024 vs <Q>_- - <Q>_+ = -12.4024 (|gap| = 4.260e-11 <= 1.0) — the pinching does not act, so this is not a two-bra
+--- red mode 'c5b-nobarrier' (fresh mutated barrier2 model) ---
+  LD-C5b: broken as registered — exit path: LD-C5b: D27(LR2) holds at its own quantity: double-Cesaro mean defect -1.997e-04 within 3.0 at T=20 — 'D acts' does not imply 'LR2 fails' (r3 M2), and this stat
+--- red mode 'c6-static' (fresh mutated c6 model) ---
+  LD-C6: broken as registered — exit path: LD-C6: dynamics looks Q_W-commuting: 1 - p_0 = -2.220e-16 < 0.02 at the largest window (the r2 tautology mode — a position-diagonal H gives p_W = delta_0 for ev
+--- red mode 'c6-moving' (fresh mutated c6 model) ---
+  LD-C6: broken as registered — exit path: LD-C6: first moment 12.4024 > 1.2 at W=|W|=17
+--- red mode 'c6-weaktransit' (fresh mutated c6 model) ---
+  LD-C6: broken as registered — exit path: LD-C6: TPM support not bounded at W=|W|=17: mass 3.742e-02 at |nu| > 3 (transit-scale transport — this is the LD-C5 side of the dichotomy)
+--- red mode 'c7-delta' (fresh mutated d16 model) ---
+  LD-C7: broken as registered — exit path: LD-C7: decay ratio 0.1717 (step 0) != claimed rate q = 0.208712 within 2%
+--- red mode 'c7-mixed' (fresh mutated d16 model) ---
+  LD-C7: broken as registered — exit path: LD-C7: <Q_W> = -0.499010 off the integer coset at W=[4,7]
+--- red mode 'c7-product' (fresh mutated d16 model) ---
+  LD-C7: broken as registered — exit path: LD-C7: defect vanished at W=[4,7] (0.000e+00) — an exact Q_W eigenvector, contradicting the D16 record
+--- red mode 'c7-noboundary' (fresh mutated d16 model) ---
+  LD-C7: broken as registered — exit path: LD-C7: sector ground energies not zero: max |E0| = 1.146e+00
+--- red mode 'c7-orientation' (fresh mutated d16 model) ---
+  LD-C7: broken as registered — exit path: LD-C7: (K-TAIL) fails: max ||D_x phi|| lam^-dist = 2525.009 > 0.3 (tail deviations not exponentially clustered at the claimed rate/orientation)
+RED-OK: every mutation reproduced its registered pattern; exit 1 signals red-capability.

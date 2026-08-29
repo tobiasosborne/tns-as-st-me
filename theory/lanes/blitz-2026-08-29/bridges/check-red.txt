@@ -1,0 +1,1 @@
+FAIL: SPT telescoping failed at q=1/3, L=1

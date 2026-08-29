@@ -1,0 +1,24 @@
+Precompiling packages...
+ 106279.9 ms  ✓ Pkg (serial)
+  1 dependency successfully precompiled in 106 seconds
+┌ Warning: The project dependencies or compat requirements have changed since the manifest was last resolved.
+│ It is recommended to `Pkg.resolve()` or consider `Pkg.update()` if necessary.
+└ @ Pkg.API ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Pkg/src/API.jl:1308
+ERROR: `MPSKit` is a direct dependency, but does not appear in the manifest. If you intend `MPSKit` to be a direct dependency, run `Pkg.resolve()` to populate the manifest. Otherwise, remove `MPSKit` with `Pkg.rm("MPSKit")`. Finally, run `Pkg.instantiate()` again.
+Stacktrace:
+ [1] pkgerror(::String, ::Vararg{String})
+   @ Pkg.Types ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Pkg/src/Types.jl:68
+ [2] instantiate(ctx::Pkg.Types.Context; manifest::Nothing, update_registry::Bool, verbose::Bool, platform::Base.BinaryPlatforms.Platform, allow_build::Bool, allow_autoprecomp::Bool, workspace::Bool, julia_version_strict::Bool, kwargs::@Kwargs{})
+   @ Pkg.API ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Pkg/src/API.jl:1315
+ [3] instantiate
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Pkg/src/API.jl:1271 [inlined]
+ [4] instantiate(; kwargs::@Kwargs{verbose::Bool})
+   @ Pkg.API ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Pkg/src/API.jl:1270
+ [5] top-level scope
+   @ none:1
+ [6] eval(m::Module, e::Any)
+   @ Core ./boot.jl:489
+ [7] exec_options(opts::Base.JLOptions)
+   @ Base ./client.jl:283
+ [8] _start()
+   @ Base ./client.jl:550

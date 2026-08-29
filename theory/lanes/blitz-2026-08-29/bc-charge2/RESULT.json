@@ -1,0 +1,26 @@
+{
+  "status": "PARTIAL",
+  "model": "D6 spin-1/2 Heisenberg ferromagnet",
+  "N": 100,
+  "three_magnon_dimension": 161700,
+  "hard_bound_momentum": 1.5707963267948966,
+  "sigma_x": 8.0,
+  "prediction_qhard_over_s": 4.0,
+  "measured_soft_phase_slope": 4.07000839,
+  "fit_shift_error": 0.08981226,
+  "symmetric_slopes": {
+    "0.06": 4.15982065,
+    "0.10": 4.31948688
+  },
+  "rows": [
+    {"ks": 0.06, "slope": 4.679516546338071, "transmission": 0.9770245231230538, "norm_drift": 5.3177351411193285e-11, "free_norm_drift": 8.02657562637421e-9},
+    {"ks": -0.06, "slope": 3.640124748903748, "transmission": 0.9786804333818755, "norm_drift": 1.4113821222849765e-11, "free_norm_drift": 4.736349534795181e-9},
+    {"ks": 0.10, "slope": 5.259524091308542, "transmission": 0.9675558519381366, "norm_drift": 4.854894264383347e-12, "free_norm_drift": 5.752982867868184e-9},
+    {"ks": -0.10, "slope": 3.3794496733650305, "transmission": 0.9769265850323273, "norm_drift": 9.617862062327731e-13, "free_norm_drift": 3.864331743486105e-9}
+  ],
+  "fused_bethe_soft_slope": 4.000000000002001,
+  "decision_tolerance": 0.35,
+  "green_log": "green.log",
+  "stub_red_log": "red-stub.log",
+  "mutation_red_log": "red-mutation.log"
+}

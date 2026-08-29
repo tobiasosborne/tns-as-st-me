@@ -1,0 +1,29 @@
+mode=RED(sign-flip)
+TPM law={-2: 0.012531421838, -1: 0.170131720340, 0: 0.484821491458, 1: 0.309969359583, 2: 0.022546006781}
+normalization=0.999999999999999
+trace_residue=4.578e-16
+determinant_residue=7.428e-01
+simple_determinant_residue=4.441e-16
+mean=0.159866809129 mean_residue=8.327e-17
+second_raw=0.620410794397 second_residue=2.220e-16
+variance=0.594853397735 lattice_floor=0.134309412468
+periodicity_residue=3.334e-16
+toeplitz_min_eigenvalue=9.704e-02
+law_A_cumulants=(1.0, 0.5, 0.30000000000000004, 0.3500000000000001)
+law_B_cumulants=(1.0, 0.28, 0.12000000000000001, 0.2848)
+heavy_tail cutoff,mass,abs_first,second_raw:
+     10 0.996235687784 1.289263201345 2.436630284531
+    100 0.999958818505 1.360155160615 4.315417601284
+   1000 0.999999584462 1.367601286063 6.227218396130
+  10000 0.999999995841 1.368349591042 8.142381621301
+PASS FCS-C1 TPM trace identity
+FAIL FCS-C2 quasifree determinant
+PASS FCS-C2b commuting-state determinant
+PASS FCS-C3 first moment
+PASS FCS-C4 second moment
+PASS FCS-C5 integer periodicity
+PASS FCS-C6 positive definiteness
+PASS FCS-C7 lattice variance floor
+PASS FCS-C8 same support/mean, different higher cumulants
+PASS FCS-C9 finite first/infinite second witness
+RESULT=FAIL

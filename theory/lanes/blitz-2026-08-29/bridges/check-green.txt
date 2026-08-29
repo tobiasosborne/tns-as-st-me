@@ -1,0 +1,1 @@
+PASS: SPT telescoping, Ward/Fredholm separation, Gauss offset, FCS, mod-two flow

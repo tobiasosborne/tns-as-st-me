@@ -1,0 +1,6 @@
+
+[Bc charge-2] ED slope = 4.07000839 +/- 0.08981226; prediction 2/s = 4.0; N=100 dim=161700 min_transmission=0.967556
+[Bc charge-2] symmetrized finite-k slopes: 4.15982065 at |k|=.06, 4.31948688 at |k|=.10; fused Bethe limit 4.000000000002
+Test Summary:                        | Pass  Total   Time
+Bc charge-2 three-magnon ED decision |   10     10  25.6s
+exit_code=0

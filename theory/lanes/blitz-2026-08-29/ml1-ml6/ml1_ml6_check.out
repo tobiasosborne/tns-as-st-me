@@ -1,0 +1,26 @@
+GREEN: python3 -O ml1_ml6_check.py
+exit=0
+beta_zero=0.000e+00
+geometric_sum_error=6.800e-16
+soft_slope_error=8.670e-10
+unitarity_error=2.220e-16
+sample_min_gap_over_J=3.211473e-02
+PASS
+
+RED 1: python3 -O ml1_ml6_check.py --red-bound
+exit=1
+beta_zero=1.973e+01
+geometric_sum_error=2.285e+01
+soft_slope_error=1.440e+02
+unitarity_error=2.220e-16
+sample_min_gap_over_J=3.211473e-02
+FAIL: G1 bound overlap at k=0; G2 geometric-series overlap; G3 soft bound-overlap derivative
+
+RED 2: python3 -O ml1_ml6_check.py --red-unitarity
+exit=1
+beta_zero=0.000e+00
+geometric_sum_error=6.800e-16
+soft_slope_error=8.670e-10
+unitarity_error=9.089e-01
+sample_min_gap_over_J=3.211473e-02
+FAIL: G4 scattering unitarity

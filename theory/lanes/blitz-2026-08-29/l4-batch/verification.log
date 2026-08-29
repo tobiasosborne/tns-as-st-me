@@ -1,0 +1,121 @@
+# Verification log — 2026-08-29
+
+## HEAD TABLE AUDIT
+COMMAND: python3 -O theory/lanes/blitz-2026-08-29/l4-batch/table_row_field_check.py
+EXIT: 1
+FAIL notation.md:269: label='`J^z_0`, `S^±`': fields=4, expected=3
+FAIL claims/CLAIMS.md:45: label='S2-2body-S': fields=8, expected=6
+FAIL claims/CLAIMS.md:51: label='ML4-Ward': fields=8, expected=6
+FAIL claims/CLAIMS.md:83: label='M-tk': fields=8, expected=6
+FAIL claims/CLAIMS.md:85: label='M-INDEX-fin': fields=8, expected=6
+FAIL claims/CLAIMS.md:89: label='M-IDX-density': fields=8, expected=6
+FAIL: 6 malformed table row(s)
+AUDIT notation.md: rows=190, expected_fields=3
+AUDIT claims/CLAIMS.md: rows=80, expected_fields=6
+
+## PATCHED TABLE AUDIT
+COMMAND: python3 -O theory/lanes/blitz-2026-08-29/l4-batch/table_row_field_check.py --notation theory/lanes/blitz-2026-08-29/l4-batch/notation.patched.md --claims theory/lanes/blitz-2026-08-29/l4-batch/CLAIMS.patched.md
+EXIT: 0
+AUDIT theory/lanes/blitz-2026-08-29/l4-batch/notation.patched.md: rows=191, expected_fields=3
+AUDIT theory/lanes/blitz-2026-08-29/l4-batch/CLAIMS.patched.md: rows=80, expected_fields=6
+PASS: all notation rows have 3 fields and all CLAIMS rows have 6
+
+## RED TABLE MUTATION
+COMMAND: python3 -O theory/lanes/blitz-2026-08-29/l4-batch/table_row_field_check.py --notation theory/lanes/blitz-2026-08-29/l4-batch/notation.patched.md --claims theory/lanes/blitz-2026-08-29/l4-batch/CLAIMS.patched.md --red-claims-label S2-2body-S
+EXIT: 1
+FAIL theory/lanes/blitz-2026-08-29/l4-batch/CLAIMS.patched.md:45: label='S2-2body-S': fields=7, expected=6
+FAIL: 1 malformed table row(s)
+AUDIT theory/lanes/blitz-2026-08-29/l4-batch/notation.patched.md: rows=191, expected_fields=3
+AUDIT theory/lanes/blitz-2026-08-29/l4-batch/CLAIMS.patched.md: rows=80, expected_fields=6
+
+## GAMMA USE AUDIT
+COMMAND: python3 -O theory/lanes/blitz-2026-08-29/l4-batch/gamma_use_audit.py .
+EXIT: 0
+Γ_M	HISTORY	briefs/s2-repair-r2.md:41
+Γ_M	ACTIVE	claims/CLAIMS.md:99
+Γ_{M,γ}	ACTIVE	definitions.md:1250
+Γ_{M,γ}	ACTIVE	definitions.md:1254
+Γ_M	ACTIVE	definitions.md:1329
+Γ_M	ACTIVE	definitions.md:1330
+Γ_{M,γ}	ACTIVE	notation.md:294
+Γ_M	ACTIVE	notation.md:295
+Γ_{M,γ}	ACTIVE	notation.md:295
+Γ_{M,γ}	ACTIVE	theory/ace-ld.md:1738
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:236
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:431
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:432
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:503
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:527
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:529
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:848
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:849
+Γ_M	ACTIVE	theory/ansatz-scattering-2m.md:884
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:68
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:229
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:236
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:237
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:238
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:417
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:439
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:648
+Γ_{M,γ}	ACTIVE	theory/ansatz-scattering.md:665
+Γ_{M,γ}	HISTORY	theory/verdicts/ace-ld-r4.md:269
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r1.md:85
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r1.md:211
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r1.md:438
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r2.md:52
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r2.md:62
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r2.md:388
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r2.md:449
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r2.md:474
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r3.md:58
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r3.md:367
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r3.md:379
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r3.md:472
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r4.md:382
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r5.md:93
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r5.md:596
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r6.md:107
+Γ_M	HISTORY	theory/verdicts/ansatz-scattering-2m-r6.md:112
+Γ_{M,γ}	HISTORY	theory/verdicts/ansatz-scattering-r1.md:99
+Γ_{M,γ}	HISTORY	theory/verdicts/ansatz-scattering-r1.md:100
+Γ_{M,γ}	HISTORY	theory/verdicts/ansatz-scattering-r1.md:123
+Γ_{M,γ}	HISTORY	theory/verdicts/ansatz-scattering-r1.md:127
+SUMMARY Γ_M: active=13, history=18, total=31
+SUMMARY Γ_{M,γ}: active=14, history=5, total=19
+PASS: every occurrence belongs to the D31 register, D28 register, or history
+
+## PATCHED ML2 OPTIMIZED
+COMMAND: python3 -O theory/lanes/blitz-2026-08-29/l4-batch/ml2_completeness_check.patched.py
+EXIT: 0
+N= 6 dim= 15 real=  6 bound= 2 desc= 6 singular=1 pi-deg= 0 coincident-zero= 6
+  spectrum=2.220e-15 residual=2.273e-15 orth=2.547e-15 projector=2.480e-15 secular=1.082e-15 coincident=3.109e-15 singular-overlap=1.845e-15
+N=10 dim= 45 real= 26 bound= 6 desc=10 singular=1 pi-deg= 2 coincident-zero=10
+  spectrum=3.109e-15 residual=5.550e-15 orth=5.353e-15 projector=5.288e-15 secular=2.276e-15 coincident=5.500e-15 singular-overlap=1.072e-15
+N=11 dim= 55 real= 36 bound= 8 desc=11 singular=0 pi-deg= 0 coincident-zero=11
+  spectrum=3.997e-15 residual=7.353e-15 orth=6.500e-15 projector=6.582e-15 secular=3.331e-15 coincident=8.962e-15 singular-overlap=0.000e+00
+N=12 dim= 66 real= 41 bound= 8 desc=12 singular=1 pi-deg= 4 coincident-zero=12
+  spectrum=6.217e-15 residual=9.148e-15 orth=8.884e-15 projector=8.329e-15 secular=1.693e-15 coincident=9.793e-15 singular-overlap=3.161e-15
+N=13 dim= 78 real= 55 bound=10 desc=13 singular=0 pi-deg= 0 coincident-zero=13
+  spectrum=4.441e-15 residual=1.075e-14 orth=9.843e-15 projector=9.736e-15 secular=3.553e-15 coincident=8.353e-15 singular-overlap=0.000e+00
+N=14 dim= 91 real= 62 bound=10 desc=14 singular=1 pi-deg= 4 coincident-zero=14
+  spectrum=7.550e-15 residual=1.116e-14 orth=9.832e-15 projector=8.963e-15 secular=3.497e-15 coincident=8.477e-15 singular-overlap=1.814e-15
+N=16 dim=120 real= 85 bound=12 desc=16 singular=1 pi-deg= 6 coincident-zero=16
+  spectrum=8.882e-15 residual=1.598e-14 orth=1.632e-14 projector=1.488e-14 secular=3.497e-15 coincident=7.358e-15 singular-overlap=2.092e-15
+N=18 dim=153 real=114 bound=14 desc=18 singular=1 pi-deg= 6 coincident-zero=18
+  spectrum=6.217e-15 residual=2.057e-14 orth=2.016e-14 projector=1.924e-14 secular=2.109e-15 coincident=6.776e-15 singular-overlap=4.724e-15
+N=20 dim=190 real=145 bound=16 desc=20 singular=1 pi-deg= 8 coincident-zero=20
+  spectrum=6.217e-15 residual=2.313e-14 orth=2.409e-14 projector=2.126e-14 secular=3.886e-15 coincident=5.933e-15 singular-overlap=2.504e-15
+N=22 dim=231 real=184 bound=16 desc=22 singular=1 pi-deg= 8 coincident-zero=22
+  spectrum=8.882e-15 residual=2.696e-14 orth=2.712e-14 projector=2.731e-14 secular=3.553e-15 coincident=1.952e-14 singular-overlap=3.216e-15
+N=26 dim=325 real=268 bound=20 desc=26 singular=1 pi-deg=10 coincident-zero=26
+  spectrum=7.994e-15 residual=4.044e-14 orth=4.689e-14 projector=4.640e-14 secular=5.052e-15 coincident=1.722e-14 singular-overlap=6.280e-15
+PASS: ML2 finite-ring spectrum, exceptional inventory, and completeness
+
+## HEAD/PATCHED ML2 OUTPUT DIFF
+COMMAND: diff -u <(python3 theory/checks/ml2_completeness_check.py) <(python3 theory/lanes/blitz-2026-08-29/l4-batch/ml2_completeness_check.patched.py)
+EXIT: 0
+
+(no diff output)
+
+

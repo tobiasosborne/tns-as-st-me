@@ -1,0 +1,3 @@
+LANE: mq-e | BEAD: tns-00l (P3) | LANE DIR: theory/lanes/blitz-2026-08-29/mq-e/
+Read RULES.md first, then claims rows Mq-E, Mq-AD3, M-tk; theory shards they cite.
+TASK: Prove the all-volume Mq-E sector reduction: the enumeration and explicit unitary identifying the incoming spin-1/2 <=3-domain-wall component with the Fano graph, including left/right leg labels, charges, local-observable mapping. Context: demoted from the critical path (M-INDEX-spec is channel-free) but still the standing hypothesis of M-tk (the D16 Fano transmission t(k)=[1+iJ^2/(4 omega v)]^-1 and its quadratic soft zero). Goal: make M-tk unconditional. Lamport proof, quantified enumeration, explicit unitary.

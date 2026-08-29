@@ -1,0 +1,9 @@
+command: python3 theory/lanes/blitz-2026-08-29/ba-mm-fin/check_ba_mm_fin.py --red
+exit_code=1
+mode=RED
+cases=3536
+calibration=2.0
+max_absolute_residual=1.162866e+00
+max_scaled_residual=2.396938e+11
+min_omega=3.890260e-04
+RED-OK: mutated calibration was caught
