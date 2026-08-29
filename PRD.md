@@ -82,6 +82,23 @@ Per artifact: **prove → attack → repair. Hard stop.**
   conventions, and checkers get one pass and a plain fix. Checkers are
   red-capable once, then frozen (postmortem R3).
 
+## Negative results earn no rounds (TJO 2026-08-29)
+
+Obstructions, blockers, no-go gates, underdetermination certificates:
+**these are not progress.** They are useful ONLY if they suggest a new
+strategy for moving forward. The rule:
+
+- A negative result that names a viable new attack → the attack is
+  value-gated like any lane; the negative note itself is recorded (bead or
+  shard header) and gets NO critic round, NO repair, NO promotion machinery.
+- A negative result with no forward strategy → STOP the line entirely and
+  trigger a **total re-evaluation** of the approach with TJO. Do not spend
+  another token certifying, reviewing, or polishing the dead end. A
+  beautifully verified obstruction is still an obstruction.
+- The verification machinery of this repo (L6 loops, checkers, verdicts)
+  exists to protect POSITIVE claims the paper will state. It is never
+  applied to negative side-results.
+
 ## Budget and lane discipline (postmortem R1, R5)
 
 - **Value gate before any lane launches:** "if this converges, does the
