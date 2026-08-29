@@ -127,3 +127,21 @@ bms3 central-extension paper). The old-style id contains a slash, which
 directory, breaking the naming convention. bms3 ground truth for this batch
 is 2411.13633 + 1703.01833; fetch 0610130 separately if a bms3 quote becomes
 load-bearing.
+
+## Batch 5 — Ogata cluster (fetched 2026-08-29, session 8; requested by TJO Ogata deep-dive)
+
+Fetched via scripts/fetch_refs.sh; every title extracted from the TeX itself
+and checked against the ogata blitz lane's expected attribution
+(theory/lanes/blitz-2026-08-29/ogata/ogata-map.md §2). 9/9 OK, no mismatches.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 2110.04671 | Classification of symmetry protected topological phases in quantum spin chains | (single tex) | OGA-SURVEY: split ⇒ type-I half-chain, projective H^2 class, stability |
+| 1810.01045 | A Z_2-index of symmetry protected topological phases with time reversal symmetry for quantum spin chains | (single tex) | OGA-INDEX: original SPT-index stability |
+| 1908.08621 | A classification of pure states on quantum spin chains satisfying the split property with on-site finite group symmetries | (single tex) | OGA-SPLIT-CLASS: completeness of the H^2 class |
+| 1906.05479 | Automorphic equivalence within gapped phases in the bulk | (single tex) | OGA-AUTO |
+| 1407.3924 | C^1-Classification of gapped parent Hamiltonians of quantum spin chains | (single tex) | OGA-PARENT (no symmetry) |
+| 1602.08839 | C^1-Classification of gapped parent Hamiltonians of quantum spin chains with local symmetry | (single tex) | OGA-PARENT (local symmetry) |
+| 2004.06458 | General Lieb-Schultz-Mattis type theorems for quantum spin chains | OgataTachikawaTasaki.tex | OGA-LSM (on-site symmetry, split-state no-go) |
+| 1808.08740 | Lieb-Schultz-Mattis type theorems for quantum spin chains without continuous symmetry | main.tex | OGA-LSM (no continuous symmetry) |
+| 1301.5737 | Normal states of type III factors | (single tex) | OGA-TYPEIII: general type-III normal-state results |
