@@ -6,11 +6,11 @@
 ## 0. Statement and honest status
 
 **Status:** M-flux is **PROVED**, M-quant is **PROVED conditional on D18**,
-Mq-AD3 is **PROVED conditional on Mq-E**, and the displayed Fano formula/soft
-zero is **PROVED conditional on Mq-E for the displayed graph**, all per
-`verdicts/corpus-r2.md` adjudication.  In particular, the projected result is conditional on
-the stated all-volume sector enumeration/unitary isomorphism; the repository
-currently contains only a finite `N=14` enumeration.
+Mq-E and Mq-AD3 are **PROVED for the projected incoming `≤3`-wall
+component** (theory/mq-e.md; critic blitz-mq-e-r1), and the displayed Fano
+formula/soft zero is consequently **PROVED unconditionally for that
+projected component**.  The unprojected full-chain lift remains open
+because `P_3H(1-P_3)≠0`.
 
 **M-quant statement (spin-`1/2` easy-axis XXZ; conditional on D18).**
 Let `Δ>1` and take the spin-`1/2` Hamiltonian of D16, with unbroken `U(1)`
@@ -127,26 +127,22 @@ the operator `N_T` and the displacement variance below retain that coherence.
 
 ## 3. Conditional H-AD verification for the `≤3`-wall graph
 
-**Mq-AD3 (PROVED conditional on Mq-E per corpus-r2 adjudication).**  For spin
+**Mq-AD3 (PROVED for the projected component, using Mq-E).**  For spin
 `1/2`, let `P_3` project the fixed-`S^z`
 kink-plus-one-magnon space onto configurations with one or three domain walls
 and retain the connected component containing the incoming magnon.
 
-**ASSUME Mq-E (all-volume enumeration/isomorphism).**  For every volume in a
-cofinal open-chain sequence, and in the infinite-volume limit, there is an
-explicit unitary from that incoming cyclic component to `ℓ²(ℤ)⊕ℂ|d⟩` which:
+**USE Mq-E (all-volume enumeration/isomorphism; PROVED in
+`theory/mq-e.md`).**  For every admissible frozen-boundary volume and at
+infinite volume, its explicit unitary intertwines `H_3` with (Mq.7), labels
+the negative/positive tails as the D14 reflected/transmitted channels with
+charges `-1/+1`, and maps every fixed-window observable to its two
+channel-kink constants plus a finite-support remainder.  Thus the
+channel-subtracted observable needed for Jacobi local decay has finite graph
+support.  The former `N=14` enumeration is now only one check of the proved
+all-volume formula.
 
-1. intertwines `H_3=P_3HP_3` with (Mq.7);
-2. identifies the two tails with the D14 reflected/transmitted leg channels;
-3. assigns relative charges `-1` to the incoming/reflected tail and `+1` to
-   the transmitted tail; and
-4. carries fixed-window observables to finite-support graph observables, so
-   Jacobi local decay implies D18(AD3).
-
-The `N=14` enumeration S1 in `corner-b-draft.md` is evidence for Mq-E, not a
-proof of this quantified assumption.
-
-**PROVE.**  Under Mq-E, `H_3` satisfies D18 for every incoming packet with
+**PROVE.**  By Mq-E, `H_3` satisfies D18 for every incoming packet with
 smooth momentum amplitude compactly supported in `k∈(0,π)`.  A
 finite-dimensional bound subspace may be present but is orthogonal to a
 Møller-prepared packet.
@@ -256,10 +252,10 @@ limits impose AD4.
 
 **⟨1⟩5. QED.** □
 
-**Why this is conditional even before the full-chain lift.**  The cited S1
-support is one `N=14` enumeration, not the all-volume unitary Mq-E.  The
-Kato--Rosenblum and Feshbach steps prove the spectral conclusion only after
-Mq-E is assumed.  Separately, the full Hamiltonian has
+**Why this still does not prove the full-chain lift.**  Mq-E now proves the
+all-volume unitary for the compressed incoming component, so the projected
+Kato--Rosenblum and Feshbach conclusions are unconditional.  Separately, the
+full Hamiltonian has
 `P_3H(1-P_3)≠0`; five-wall and higher configurations are real, not absent.
 The finite-time probabilities reported in `corner-b-draft.md` §5.2 are about
 `0.10,0.03,0.008` at `Δ=2,4,8`, consistent with `O(Δ^{-2})`.  Promoting that

@@ -279,9 +279,9 @@ its Fourier dress and D13(c) reduces to it after D18 leg subtraction.
 
 ## 5. The kink–magnon scattering problem in the XXZ chain
 
-This is the dynamical model computation.  The Fano solution is exact **if**
-the all-volume sector enumeration/isomorphism Mq-E of
-`memory-quantization.md` §3 holds.
+This is the dynamical model computation.  Mq-E (`theory/mq-e.md`) proves the
+all-volume sector enumeration/isomorphism for the projected incoming
+component, so the Fano solution below is exact on that component.
 
 ### 5.1 The sector and its graph
 
@@ -291,30 +291,23 @@ domain-wall positions.  The XY term flips the wall indicators at bonds `n−1`
 and `n+1` simultaneously, so it either creates two walls, destroys two, or
 moves one wall by two sites.  Consequently:
 
-**Finite-enumeration hypothesis S1 (not an all-volume lemma).** Within the `≤3`-wall manifold, the connected
-component containing a single magnon consists of
-(i) *left channel*: magnon (a single ↓) at `x ≤ m − 1`, wall at bond `m`;
-(ii) *right channel*: hole (a single ↑) at `y ≥ m − 1`, wall at bond `m − 2`;
-(iii) one *junction* configuration shared by the two channels; and
-(iv) one *pure-kink* state, wall at bond `m − 1`, attached to the junction by
-a single bond and lying `J_z = JΔ` below.
-All on-site (Ising) energies in (i)–(iii) equal `3JΔ/2`; every hopping matrix
-element equals `−J/2`.
+**Theorem (Mq-E, proved).**  `theory/mq-e.md` §§1--6 proves, for every
+admissible frozen-boundary volume and at infinite volume, that the connected
+incoming `≤3`-wall component is exactly the left/right channel tails (magnon
+at `x ≤ m−1` with wall at `m`; hole at `y ≥ m−1` with wall at `m−2`), one
+shared junction, and one pure-kink side state `JΔ` below, with uniform Ising
+energy `3JΔ/2` and every hopping `−J/2` — the Fano graph, with an explicit
+all-volume unitary and local-observable map.
 
-*Evidence only.* Direct enumeration, `N = 14`, wall at bond `6`, `≤3` walls:
-component of size `12` = 5 magnon states + 6 hole states + 1 kink state; degree
-histogram `{1:3, 2:8, 3:1}`; the single degree-3 vertex is the junction; the
-degree-1 vertex with one wall is the pure kink.  Configurations with a
-down-*block* of length `≥ 2` sit in disconnected components (they move only
-through 5-wall intermediates).
-
-**The `−2` is visible in this finite enumeration**: the wall sits at bond `m` in the
-incoming channel and at bond `m − 2` in the outgoing channel, with no free
-parameter.
+*Falsifier example (retained as a check, not as the basis of the claim).*
+Direct enumeration, `N = 14`, wall at bond `6`: component of size `12` = 5
+magnon + 6 hole + 1 kink states; degree histogram `{1:3, 2:8, 3:1}`; the
+degree-3 vertex is the junction.  The `−2` is visible: wall at `m` incoming,
+`m − 2` outgoing, with no free parameter.
 
 ### 5.2 Conditional Fano solution on the Mq-E graph
 
-Assuming Mq-E, the effective one-body problem is a *uniform* tight-binding chain
+By Mq-E, the effective one-body problem is a *uniform* tight-binding chain
 (hopping `−J/2`, uniform on-site energy) with a single **side-coupled level**
 — the pure kink — attached at the junction with amplitude `−J/2` and detuning
 `ω(k) = J(Δ − \cos k)`.  Eliminating the side level gives an energy-dependent
@@ -353,9 +346,9 @@ T(k)=\Big[1+\Big(\frac{J^2}{4\omega(k)v(k)}\Big)^{2}\Big]^{-1}\;}
   `T ≈ 32(Δ−1)^2(ω−ω_{\rm gap})/J`: *linear in the excess energy above the gap*.
   The crossover momentum is `k_* = 1/(4(Δ−1))`.
 
-**Scope.** (5.1)–(5.3) are exact for the displayed Fano graph, conditional on
-Mq-E identifying that graph with the all-volume incoming component.  Even
-after Mq-E, they are not exact for the unprojected `H_{\rm XXZ}` because of
+**Scope.** (5.1)–(5.3) are exact for the displayed Fano graph, because Mq-E
+identifies that graph with the all-volume incoming component
+(`theory/mq-e.md`).  They are not exact for the unprojected `H_{\rm XXZ}` because of
 leakage into `≥5`-wall configurations.  That leakage is measured (full-sector ED, `N = 22`,
 `k = π/2`, `σ = 2.6`, `0 ≤ Jt ≤ 13`) to be `P(≥5\text{ walls}) ≈`
 `8·10^{-3}` at `Δ = 8`, `3·10^{-2}` at `Δ = 4`, `1·10^{-1}` at `Δ = 2`,
@@ -456,7 +449,7 @@ about one-time `Var(𝔛_W)` without a sharp initial state/two-time protocol.
 | ⟨1⟩3 (window ⇒ wall position) | **PROVED conditional on D18**, with the D1(c) `C_{λ̃}λ̃^{d_W}` error. |
 | ⟨1⟩4 (charge bookkeeping) | **PROVED conditional on D18 per corpus-r2 adjudication.** |
 | **H-AD** | **CONJECTURE** for the full XXZ chain.  D18 is the sole definition. |
-| `T(k)` from (5.1) | **PROVED conditional on Mq-E for the displayed Fano graph per corpus-r2 adjudication**; `O(Δ^{-2})` leakage measured beyond the projection. |
+| `T(k)` from (5.1) | **PROVED for the projected incoming component by Mq-E** (`theory/mq-e.md`; blitz-mq-e-r1); `O(Δ^{-2})` leakage measured beyond the projection. |
 | `δx = ` DC limit of the *soft factor* | **REFUTED as stated** (see §10). |
 
 ### What the soft theorem is actually needed for

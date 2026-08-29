@@ -123,11 +123,11 @@ data file that carries them.
 | "quantized by charge conservation alone: it does not depend on momentum, anisotropy, packet shape, or any scattering phase" | M-quant / M-quant-G — PROVED conditional (channel statement) |
 | "The proof is charge bookkeeping (Appendix C)" | M-quant-G (G.3)-(G.4) — PROVED conditional |
 | "the two vacua must carry opposite charge density along one unbroken direction; ... a bare abelian symmetry cannot" | M-quant-G §3 Remark (Weyl-element criterion) — PROVED scope |
-| "H-AD-G itself we prove only for the dominant domain-wall sector ... conditional on ... sector-reduction hypothesis; for the full chain it remains an assumption" | Mq-AD3 — PROVED conditional on Mq-E; Mq-E CONJECTURE; full-chain D18 open (tns-d51) |
+| "H-AD-G itself we prove only for the dominant domain-wall sector ... conditional on ... sector-reduction hypothesis; for the full chain it remains an assumption" | Mq-E and Mq-AD3 — PROVED for the projected incoming component (theory/mq-e.md); full-chain D18 open (tns-d51) |
 | "confirm delta x = -2<N_T> at s=1/2 to 0.064 sites across the momentum scan ... and to 0.005 sites on the nine rows with trapped weight below 10^-6" | N2 — SKETCH (empirical); memory-scan-1.json. Honest numbers (verdict obj. 9 repaired): full-scan max \|dx2+2T\| = 0.0636 (dx1: 0.0754, both at Delta=3, k0=0.4, trapped ≈ 4.2e-3); gated nine rows (N=160, standoff 36, dwmax 3, trapped<1e-6): max dx1 residual 0.00433, max dx2 residual 0.00123 — both ≤ 0.005 |
-| "In the reduced sector ... t(k)=[1+iJ^2/4 omega v]^{-1}" | M-tk — PROVED conditional on Mq-E ("In the reduced sector" carries it) |
+| "In the reduced sector ... t(k)=[1+iJ^2/4 omega v]^{-1}" | M-tk — PROVED, unconditional within the projected incoming component ("In the reduced sector" carries it); full-chain formula open |
 | "matches this over Delta in [1.5,12] to 0.9-5.8% ... criterion 8%, fixed in advance" | crosscheck_corner_b_tk.py + memory-scan-1.json |
-| Eq. (3) soft zero | M-tk — PROVED conditional on Mq-E for the displayed graph |
+| Eq. (3) soft zero | M-tk — PROVED for the projected incoming component; universality of the coefficient open |
 | "Whether the zero's coefficient is universal we have not established; that remains a conjecture" | TRIANGLE §3.4 — CONJECTURE, labelled |
 | "That statement is false in the XXZ chain, twice over" | M — REFUTED |
 | "What survives---and is proved---is the pair above ... charge transport, not phase accumulation" | M-flux (PROVED) + M-quant (PROVED conditional); replaces v2's "lattice sharpening / third corner closes" (verdict objs. 3, 20 repaired) |

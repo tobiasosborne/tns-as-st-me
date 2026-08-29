@@ -359,19 +359,18 @@ the same `ΔX=-N_T/s`.  Hypothesis `(T)` is optional and only identifies the
 unchanged vacuum pair by D9(d)'s double coset.  The general row remains SKETCH
 until its own L6 critic; H-AD-G is not derived from symmetry or injectivity.
 
-**Projected spectral scope.**  Mq-AD3 is PROVED conditional on Mq-E per
-`corpus-r2.md`: the Kato--Rosenblum/Feshbach argument is sound
-for the displayed Fano operator, but identifying the incoming `≤3`-wall
-component with that operator is now explicit hypothesis Mq-E.  The repository
-has one `N=14` enumeration, not an all-volume proof.  Thus projected H-AD is
-conditional on Mq-E; full-chain D18 additionally requires control of
+**Projected spectral scope.**  Mq-E is PROVED (`theory/mq-e.md`;
+blitz-mq-e-r1): the all-volume enumeration/unitary identifying the incoming
+`≤3`-wall component with the displayed Fano operator is explicit, so Mq-AD3
+and the Kato--Rosenblum/Feshbach conclusions are unconditional on the
+projected component.  Full-chain D18 still requires control of
 `P_3H(1-P_3)≠0` (bd `tns-d51`).
 
 *Checker scope:* `mquant_check.py` tests M-flux and an empirical spin-`1/2`
 scan only.  It does not construct wave operators, prove Mq-E, exclude
 singular-continuous spectrum, or test `spec(ΔX)`.
 
-### 3.3 Fano `t(k)` — **PROVED conditional on Mq-E for the displayed graph**
+### 3.3 Fano `t(k)` — **PROVED for the projected incoming component**
 
 Under Mq-E the kink+magnon component reduces to a uniform tight-binding chain with a single **side-coupled
 level** (the pure kink) attached at a junction — a Fano problem.  Eliminating the side level gives the junction potential
@@ -386,7 +385,7 @@ verification:* `crosscheck_corner_b_tk.py` compares `R(k;Δ) = x/(1+x)`, `x = J�
 sparse-sector scan `numerics/results/memory-scan-1.json` on all `main-*`/`Dscan-*` runs, pass criterion fixed in advance
 at 8%.  **Measured agreement 0.9%--5.8% (ratios 1.009--1.058) across `Δ ∈ {1.5,2,3,6,12}`, `k_0 ∈ [0.4,1.8]` — all pass.**
 
-### 3.4 The soft memory zero — **PROVED conditional on Mq-E for the displayed graph; universality CONJECTURE**
+### 3.4 The soft memory zero — **PROVED for the projected incoming component; universality CONJECTURE**
 
 On the Fano graph, as `k → 0` at fixed `Δ > 1`: `v → 0`, `ω → J(Δ−1)`, hence `T(k) = 16(Δ−1)²k² + O(k⁴)`, `R(k) = 1 − 16(Δ−1)²k² + O(k⁴)` — **total
 reflection of a soft magnon, with a quadratic zero** — and by §3.2, `δx(k) = −(1/s)T(k)`.  In the frequency variable
