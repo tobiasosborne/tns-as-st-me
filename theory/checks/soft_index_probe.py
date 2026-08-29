@@ -36,7 +36,9 @@ cannot touch the charge-created datum.
      evidence for the Bc |q|>1 factor (tns-ebh).  Never gates.
 
 Mutation discipline: --red mutates the frozen P1 prediction 1/S -> 1/(S+1)
-and must exit 1; --red-p3 inverts the disease gate and must exit 1.  No
+and must exit 1; --red-p3 inverts the disease gate and must exit 1;
+--red-eta-sector and --red-eta-rank independently violate the P2(b) sector
+separation and must each exit 1 with a NONZERO measured eta-sensitivity.  No
 bare asserts (python3 -O safe).  --selftest checks the sector machinery
 (dispersion 2JS(1-cos k), norms, hermiticity) and exits 0.
 --quick runs reduced sizes for smoke testing and NEVER counts as a
@@ -60,11 +62,18 @@ P2B_SLOPE_TOL = 0.02   # frozen: finite-N protocol slope vs 2
 P3_GROWTH = 2.5        # frozen: disease visibility (ml4_check convention)
 P3_BOUND = 2.0         # frozen: smeared datum max/median
 P1_KSOFT = (0.35, 0.50, 0.65)
-SIZES_P3 = (12, 16, 20, 24, 28, 32)
+# Exact fixed-h sequence: h=2*pi/5 is a ring momentum for every size.
+SIZES_P3 = (15, 20, 25, 30, 35, 40)
+P2_ETA = 0.375
 RESULTS: dict = {}
 
 
 def fail(message: str) -> None:
+    # Red runs are evidence too: preserve the measured nonzero value before
+    # exiting, rather than losing it at the first firing gate.
+    if RESULTS:
+        out = Path(__file__).with_name("soft_index_probe_results.json")
+        out.write_text(json.dumps(RESULTS, indent=1, default=str))
     print(f"FAIL: {message}")
     raise SystemExit(1)
 
@@ -184,6 +193,35 @@ def lowering_matrix(n: int, m_from: int, two_s: int,
                 new = tuple(sorted(list(b) + [x]))
                 mat[index_to[new], j] += weights[x] * amp
     return mat
+
+
+def lower_at_site(coeffs: np.ndarray, n: int, m_from: int, two_s: int,
+                  site: int) -> np.ndarray:
+    """Apply one normalized-basis S^-_site without forming a source ansatz."""
+    weights = np.zeros(n, dtype=complex)
+    weights[site % n] = 1.0
+    return lowering_matrix(n, m_from, two_s, weights) @ coeffs
+
+
+def d24_deformation_on_hard(n: int, two_s: int, hard_vec: np.ndarray,
+                            weights: np.ndarray) -> np.ndarray:
+    """D[f]|hard> in H_3 for the translated D24(e) deformation.
+
+    D24(e) fixes D=S^-_0S^-_1-S^-_1S^-_2+S^-_2S^-_3-S^-_0S^-_3.
+    D10(c) fixes smearing by sum_r f(r) tau_r(D).  Since |hard> is in H_1,
+    this two-lowering term is computed in H_3, distinct from D10(c)'s
+    charge-created Q[f]|hard> in H_2.  The protocol datum is the explicit
+    H_2 projection of their H_2 direct-sum H_3 dressed vector.
+    """
+    out = np.zeros(len(sector_basis(n, 3, two_s)), dtype=complex)
+    terms = ((0, 1, 1.0), (1, 2, -1.0),
+             (2, 3, 1.0), (0, 3, -1.0))
+    for r, weight in enumerate(weights):
+        for x, y, coeff in terms:
+            once = lower_at_site(hard_vec, n, 1, two_s, r + x)
+            twice = lower_at_site(once, n, 2, two_s, r + y)
+            out += weight * coeff * twice
+    return out
 
 
 def gaussian_packet(n: int, center: float, sigma: float,
@@ -321,6 +359,8 @@ def run_p1(two_s: int, n: int, red: bool, quick: bool = False) -> dict:
            "adler_residual": adler, "slope": c1, "predicted": predicted,
            "relative_error": rel, "sign": float(np.sign(c1)),
            "quick_smoke_only": quick}
+    # Preserve the measured red target/error in JSON if a P1 gate fires.
+    RESULTS[f"p1_two_s_{two_s}"] = row
     loosen = 3.0 if quick else 1.0     # quick NEVER counts as an outcome
     require(adler <= 0.02 * loosen,
             f"P1 Adler-zero consistency violated (S={s_val}): "
@@ -358,7 +398,7 @@ def source_form_factor(soft: float, hard: float) -> complex:
                for x, y, c in terms)
 
 
-def run_p2(red: bool) -> dict:
+def run_p2(red: bool, eta_mutation: str | None = None) -> dict:
     n, two_s = 18, 1
     # (a) source register: eta-jet of M2^{eta D} equals 2i(1-e^{-3ih}).
     jet_errs = []
@@ -375,24 +415,51 @@ def run_p2(red: bool) -> dict:
     hard_idx = 4
     hard_k = 2.0 * np.pi * hard_idx / n
     hard_vec = np.exp(1j * hard_k * np.arange(n)) / math.sqrt(n)
-    diffs = []
+    diffs, sensitivities, eta_rows = [], [], []
     for k_idx in (1, 2):
         k = 2.0 * np.pi * k_idx / n
         weights = np.exp(1j * k * np.arange(n))
         qk = lowering_matrix(n, 1, two_s, weights)
         proto = qk @ hard_vec
-        # dressed protocol: adding eta*D to the soft-leg creator adds a
-        # THREE-magnon component; its two-magnon projection is unchanged.
-        # In the m=2 sector the dressed and bare data are the same vector,
-        # certified arithmetically:
-        proto_dressed = qk @ hard_vec  # D-part lands outside m=2: exact 0
-        diffs.append(float(np.linalg.norm(proto - proto_dressed)))
+        # D10(c) + D24(e): (Q[f] + eta D[f])|hard> is a genuinely distinct
+        # vector in H_2 direct-sum H_3.  D29(PROTO) reads the charge-created
+        # H_2 leg, so compute that projection instead of repeating `proto`.
+        d_h3 = d24_deformation_on_hard(n, two_s, hard_vec, weights)
+        proto_dressed_full = np.concatenate((proto, P2_ETA * d_h3))
+        proto_dressed_h2 = proto_dressed_full[:len(proto)].copy()
+        if eta_mutation == "sector":
+            # RED: erase one lowering with Q_0^dagger before sector
+            # projection, leaking the D24(e) H_3 block into H_2.
+            raise_total = lowering_matrix(
+                n, 2, two_s, np.ones(n, dtype=complex)).conj().T
+            proto_dressed_h2 += P2_ETA * (raise_total @ d_h3)
+        elif eta_mutation == "rank":
+            # RED: mutate D's lowering rank from two to one.  The erroneous
+            # term then occupies H_2 and is visible to the D29 projection.
+            proto_dressed_h2 += P2_ETA * (qk @ hard_vec)
+        diff = float(np.linalg.norm(proto - proto_dressed_h2))
+        sensitivity = diff / (abs(P2_ETA) * float(np.linalg.norm(proto)))
+        diffs.append(diff)
+        sensitivities.append(sensitivity)
+        eta_rows.append({"k": float(k), "eta": P2_ETA,
+                         "bare_h2_norm": float(np.linalg.norm(proto)),
+                         "d24_h3_norm": float(np.linalg.norm(d_h3)),
+                         "dressed_direct_sum_norm":
+                             float(np.linalg.norm(proto_dressed_full)),
+                         "projected_difference": diff,
+                         "relative_eta_sensitivity": sensitivity})
         bra = out_wave(n, basis2, k, hard_k)
         overlap = np.vdot(bra, proto)
         RESULTS.setdefault("p2_overlaps", []).append(
             {"k": k, "abs": abs(overlap)})
+    row = {"jet_errors": jet_errs, "protocol_eta_diff": max(diffs),
+           "protocol_eta_sensitivity": max(sensitivities),
+           "eta_mutation": eta_mutation or "none",
+           "eta_rows": eta_rows}
+    RESULTS["p2"] = row
     require(max(diffs) <= P2B_EXACT,
-            f"P2b protocol register eta-sensitivity: {max(diffs)}")
+            "P2b protocol register eta-sensitivity: "
+            f"diff={max(diffs):.6e}, relative={max(sensitivities):.6e}")
     # protocol slope at finite N against the PROVED R17 value 2:
     eps = 1e-4
     slope_target = 2.0 if not red else 3.0
@@ -401,8 +468,8 @@ def run_p2(red: bool) -> dict:
     rel = abs(slope - slope_target) / slope_target
     require(rel <= P2B_SLOPE_TOL,
             f"P2b protocol slope {slope:.5f} vs {slope_target}")
-    return {"jet_errors": jet_errs, "protocol_eta_diff": max(diffs),
-            "protocol_slope": slope}
+    row["protocol_slope"] = slope
+    return row
 
 
 # ---------------- P3: limit-order discipline ----------------
@@ -419,15 +486,62 @@ def current_on_hard(n: int, two_s: int, k: float, hard_k: float,
     return vec / (np.exp(1j * k) - 1.0)
 
 
+def d29_protocol_datum(n: int, two_s: int, hard_k: float,
+                       h2: np.ndarray, basis2: list) -> dict:
+    """Finite D29-B/D29(PROTO) interacting/free aggregate at fixed scale.
+
+    D10(c) supplies Phi(0)=Q[f]|hard>.  Proposed D29 clauses 3--4 fix the
+    coordinate FFT kernel, free band reference, total free-row-mass
+    normalization, and connected datum A=r-1.  This is not the ML4
+    orthogonal-current trace used by the frozen P3 implementation.
+    """
+    ks = 2.0 * np.pi * np.arange(n) / n
+    soft_rows = [m for m, km in enumerate(ks) if 0.12 < km < 0.72]
+    require(bool(soft_rows), "P3 D29 soft sample is empty")
+    hard_vec = np.exp(1j * hard_k * np.arange(n)) / math.sqrt(n)
+    profile_x = np.zeros(n, dtype=complex)
+    for m in soft_rows:
+        envelope = math.exp(-0.5 * ((ks[m] - 0.35) / 0.14) ** 2)
+        profile_x += envelope * np.exp(1j * ks[m] * np.arange(n))
+    phi0 = lowering_matrix(n, 1, two_s, profile_x) @ hard_vec
+    phi0 /= np.linalg.norm(phi0)
+    evals, evecs = np.linalg.eigh(h2)
+    # Fixed-scale outer sequence: T grows with N while k support stays fixed.
+    t_settle = 0.10 * n
+    phit = evecs @ (np.exp(-1j * evals * t_settle)
+                    * (evecs.conj().T @ phi0))
+    f0 = np.fft.fft2(grid_wavefunction(phi0, basis2, n))
+    ft = np.fft.fft2(grid_wavefunction(phit, basis2, n))
+    s_val = two_s / 2.0
+    omega = 2.0 * J * s_val * (1.0 - np.cos(ks))
+    free_t = f0 * np.exp(-1j * np.add.outer(omega, omega) * t_settle)
+    hard_cols = [m for m, km in enumerate(ks)
+                 if abs(km - hard_k) < 0.22]
+    numerator = sum(ft[r, c] * np.conj(free_t[r, c])
+                    for r in soft_rows for c in hard_cols)
+    denominator = sum(abs(free_t[r, c]) ** 2
+                      for r in soft_rows for c in hard_cols)
+    require(denominator > 1e-14, "P3 D29 free-row mass vanished")
+    ratio = numerator / denominator
+    return {"ratio_real": float(np.real(ratio)),
+            "ratio_imag": float(np.imag(ratio)),
+            "connected_abs": float(abs(ratio - 1.0)),
+            "free_row_mass": float(denominator),
+            "soft_rows": len(soft_rows), "hard_cols": len(hard_cols),
+            "settling_time": float(t_settle)}
+
+
 def run_p3(red_p3: bool) -> dict:
     two_s = 1
-    raw, smeared = [], []
+    raw, smeared, d29_rows, hard_momenta = [], [], [], []
     for n in SIZES_P3:
+        require(n % 5 == 0, "P3 fixed-h sequence requires N divisible by 5")
         basis2 = sector_basis(n, 2, two_s)
         h2, _ = hamiltonian(n, 2, two_s)
         h1, _ = hamiltonian(n, 1, two_s)
-        hard_idx = max(1, round(n / 5.0))
-        hard_k = 2.0 * np.pi * hard_idx / n
+        hard_idx = n // 5
+        hard_k = 2.0 * np.pi / 5.0
+        hard_momenta.append(float(2.0 * np.pi * hard_idx / n))
         weights0 = np.ones(n, dtype=complex)
         q0 = lowering_matrix(n, 1, two_s, weights0)
         hard_vec = np.exp(1j * hard_k * np.arange(n)) / math.sqrt(n)
@@ -440,27 +554,22 @@ def run_p3(red_p3: bool) -> dict:
         bra = out_wave(n, basis2, k, hard_k)
         amp = abs((np.exp(1j * k) - 1.0) * np.vdot(bra, orth))
         raw.append(amp / (math.sqrt(n - 2.0) * k * k))
-        # fixed-width smeared datum at the same N:
-        total, wsum = 0.0, 0.0
-        for m_idx in range(1, n // 4):
-            km = 2.0 * np.pi * m_idx / n
-            if km > 1.2:
-                break
-            w = math.exp(-(km / 0.2) ** 2)
-            jv = current_on_hard(n, two_s, km, hard_k, h2, h1)
-            ov = jv - descendant * (np.vdot(descendant, jv)
-                                    / np.vdot(descendant, descendant))
-            brm = out_wave(n, basis2, km, hard_k)
-            total += w * abs((np.exp(1j * km) - 1.0) * np.vdot(brm, ov)) \
-                / math.sqrt(n - 2.0)
-            wsum += w
-        smeared.append(total / wsum)
+        # Literal D29 interacting/free ratio datum, not the ML4 orthogonal
+        # trace.  Record |A|=|r-1| at the same N.
+        d29 = d29_protocol_datum(n, two_s, hard_k, h2, basis2)
+        d29_rows.append(d29)
+        smeared.append(d29["connected_abs"])
     growth = raw[-1] / raw[0]
     med = float(np.median(smeared))
     bound = max(smeared) / med
     row = {"raw_normalised": [float(x) for x in raw],
            "smeared": [float(x) for x in smeared],
+           "smeared_kind": "D29 interacting/free connected datum |r-1|",
+           "hard_momenta": hard_momenta,
+           "hard_momentum_target": float(2.0 * np.pi / 5.0),
+           "d29_rows": d29_rows,
            "growth": float(growth), "smeared_max_over_median": float(bound)}
+    RESULTS["p3"] = row
     if red_p3:
         require(growth <= P3_GROWTH,
                 "red-p3 mutation detected (disease still visible)")
@@ -609,17 +718,26 @@ def selftest() -> None:
 
 def main() -> None:
     args = set(sys.argv[1:])
-    allowed = {"--red", "--red-p3", "--selftest", "--quick", "--skip-p4"}
+    allowed = {"--red", "--red-p3", "--red-eta-sector",
+               "--red-eta-rank", "--selftest", "--quick", "--skip-p4"}
     require(not (args - allowed), f"unknown args: {sorted(args - allowed)}")
+    eta_flags = args & {"--red-eta-sector", "--red-eta-rank"}
+    require(len(eta_flags) <= 1, "choose at most one eta mutation")
     if "--selftest" in args:
         selftest()
         return
     red = "--red" in args
     quick = "--quick" in args
     selftest()
-    RESULTS["p2"] = run_p2(red=False)
+    eta_mutation = None
+    if "--red-eta-sector" in args:
+        eta_mutation = "sector"
+    elif "--red-eta-rank" in args:
+        eta_mutation = "rank"
+    RESULTS["p2"] = run_p2(red=False, eta_mutation=eta_mutation)
     print("P2 PASS  jets", ["%.4f" % e for e in RESULTS["p2"]["jet_errors"]],
           "proto_diff %.1e" % RESULTS["p2"]["protocol_eta_diff"],
+          "eta_sens %.1e" % RESULTS["p2"]["protocol_eta_sensitivity"],
           "slope %.5f" % RESULTS["p2"]["protocol_slope"])
     RESULTS["p3"] = run_p3(red_p3="--red-p3" in args)
     print("P3 PASS  growth %.2f  smeared max/med %.2f"
