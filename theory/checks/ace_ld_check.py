@@ -833,8 +833,12 @@ REGISTRY = {
                    "must_pass": {"LD-C3"}},
     "c1-leak": {"battery": "free",
                 "build": lambda: FreeModel(leak=True, is_green=False),
-                "must_break": {"LD-C1", "LD-C3", "LD-C4"},
-                "must_pass": {"LD-C2"}},
+                # measured pattern: the hard momentum cutoff leaves
+                # position-space ringing at small qv, so LD-C2 breaks too
+                # and LD-C3 survives (its rhs inflates with eps); the
+                # LD-C1 exit path is the RESOLUTION sub-gate
+                "must_break": {"LD-C1", "LD-C2", "LD-C4"},
+                "must_pass": {"LD-C3"}},
     "merged": {"battery": "free",
                "build": lambda: FreeModel(merged=True, is_green=False),
                "must_break": {"LD-C2", "LD-C4"},

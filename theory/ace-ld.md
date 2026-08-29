@@ -1149,136 +1149,185 @@ variable `θ` of `notation.md` line 271 (r2 n2); MP-4 proposes the merged
 name `θ_{tr}` and flags the overload — inside this shard `θ` always means
 (M-ESC)'s transport fraction.
 
-## 5. CHECKER SPEC — `theory/checks/ace_ld_check.py` (r2 rebuild)
+## 5. CHECKER SPEC — `theory/checks/ace_ld_check.py` (r3 rebuild)
 
 Deterministic; no randomness; no bare `assert` (every violation raises
-`CheckFailure`, active under `python3 -O`).  Green exits 0; `--red` exits 1
-iff every registered mutation reproduces exactly its registered pattern,
-else 2; a green gate failure exits 3.  Rebuilt after verdict M3/M6 against
-every bullet of the critic protocol's standing checker obligations; in
-particular **red runs print the exit PATH** (the gate that fired, with its
-message) per mode, and **every gate — including each internal sub-gate that
-carries evidence — has a registered red mode that reaches it** (map below).
+`CheckFailure`, active under `python3 -O`).  Green exits 0; `--red` exits
+1 iff every registered mutation reproduces exactly its registered
+pattern, else 2; a green gate failure exits 3.  Rebuilt after r2 verdict
+M3 (LD-C6 was a tautology — the campaign's sixth no-op gate — and is
+REPLACED) and M4 (LD-C5's subsumptions disclosed; unreached sub-gates
+armed or listed; **no blanket reachability claim** — the table below is
+the claim, including its honest unreached rows).
 
-**Three model batteries** (constants in the code header; spec and code in
-lockstep — verdict m4):
+**Model batteries** (constants in the code header; spec and code in
+lockstep):
 
-- **FREE** (gates LD-C1--C4; the ACE-LD-abs/-nec surface): one particle on
-  `ℤ_N`, `N = 8192`, `H` = nearest-neighbour hopping (dispersion `2cos k`,
-  FFT propagation), window `W = [N/2−16, N/2+16]`, D13(a) clamp charge
-  `Q̂|x⟩ = clamp_W(x)|x⟩`, `spec = {0,…,|W|} ⊂ ℤ`; channels = momentum-sign
-  projections; state = two counter-propagating bump packets centred at
-  `k = ∓π/2` (NO detune — r1's phantom detune removed), weights `0.8/0.6`
-  normalised; time grid `t = 4,…,1024` dyadic; ring-cut guard `< 1e-16`.
-- **BARRIER** (gates LD-C5, LD-C6; the ACE-LD-obst′ mechanism and its
-  static contrast): one particle on `ℤ_N`, `N = 2048`, `H` = hopping plus a
-  one-site barrier `V_0 = 1.2` at the centre, dense `eigh` propagation;
-  incoming bump packet prepared 300 sites LEFT of the barrier moving right;
-  protocol times `t_- = 0`, `t_+ = 300`; windows `|W| = 17, 33, 65, 129`
-  centred on the barrier.  LD-C6 uses the position-diagonal (`flat`)
-  variant with the packet inside `W`.
-- **D16** (gate LD-C7; the ε-version's measured decay — the work-order
-  gate): exact diagonalisation of the D16 XXZ kink chain, `Δ = 2.5`,
-  `J = 1`, `L = 12`, open, WITH the telescoping boundary field
-  `(J/2)√(Δ²−1)(S^z_1 − S^z_L)`; all 13 `S^z` sectors; ground state of the
-  half-filled sector; `c_0 = 5`; windows `[4,7],[3,8],[2,9],[1,10]`
-  (paddings `d_W = 1,2,3,4` about the 4-site core window).
+- **FREE** (gates LD-C1--C4; the ACE-LD-abs/-nec surface): one particle
+  on `ℤ_N`, `N = 8192`, `H` = nearest-neighbour hopping (dispersion
+  `2cos k`, FFT propagation), window `W = [N/2−16, N/2+16]`, D13(a)
+  clamp charge, `spec = {0,…,|W|} ⊂ ℤ`; channels = momentum-sign
+  projections; state = two counter-propagating bump packets at
+  `k = ∓π/2` (no detune), weights `0.8/0.6` normalised; dyadic times
+  `t = 4,…,1024`; ring-cut guard `< 1e-16`.
+- **BARRIER** (gates LD-C5, LD-C5b): one particle on `ℤ_N`, `N = 2048`,
+  `H` = hopping plus a one-site barrier `V_0 = 1.2` at the centre, dense
+  `eigh` (cached per `V_0` — the H is identical across instances; states
+  are never shared); LD-C5: incoming bump packet 300 sites LEFT of the
+  barrier; `t_- = 0`, `t_+ = 300`; windows `|W| = 17, 33, 65, 129`.
+  LD-C5b: the SAME dynamics with the packet centred ON the barrier
+  inside the `|W| = 17` window (straddling configuration).
+- **D16** (gates LD-C6, LD-C7): exact diagonalisation of the D16 XXZ
+  kink chain, `Δ = 2.5`, `J = 1`, `L = 12`, open, WITH the telescoping
+  boundary field; all 13 `S^z` sectors; half-filled-sector ground state;
+  `c_0 = 5`; windows `[4,7],[3,8],[2,9],[1,10]` (paddings
+  `d_W = 1,2,3,4`); core `K = [4,7]` for the (K-TAIL) profile.  LD-C6
+  adds ONE MAGNON: `S^-` applied at site 10 (the `↑` tail of the ED
+  ground state, which is the ℤ₂-image of D13(a)'s orientation — m2),
+  evolved in the `n_↓ = 7` sector to `t_+ = 4`.
 
-**Green certificates** (measured green values quoted from the shipped run):
+**Green certificates** (measured green values quoted from the shipped
+run, `python3 -O`, exit 0 in 118 s):
 
-- `LD-C1` (hypothesis audit): spectral separation `≥ 1` FIRST, then single
-  coset of `ℤ` (max fractional spread `< 1e-12`), `[P_±,H] = 0`,
-  `P_+P_- = 0`, `(P_++P_-)Ψ = Ψ`, all to `1e-9`.
+- `LD-C1` (hypothesis audit; five sub-gates in order): spectral
+  separation `≥ 1`; single coset of `ℤ` (spread `< 1e-12`; disclosure,
+  r2 n4: this sub-gate is ARITHMETIC on the checker's own integer clamp
+  — it can fail only if the observable's construction is corrupted, the
+  same status `memory_index_probe.py` P2 carries and discloses);
+  `[P_±,H] = 0`; `P_+P_- = 0`; `(P_++P_-)Ψ = Ψ`, all to `1e-9`.
 - `LD-C2` (first-moment escape): `ε_±(t)` decreasing to `< 1e-6`
   (measured final: `7.2e-12`, `3.3e-12`).
-- `LD-C3` (the inequality (LD.1) at the ASSERTED constant): at EVERY grid
-  time, `||E({q_±})Ψ_t − P_±Ψ_t|| ≤ Σ_{ch} d_{ch}^{-1}ε_{ch}(t) + slack`,
-  with `d_{ch}^{-1} = 1` **asserted per ⟨1⟩1.⟨2⟩3 — NOT computed from the
-  model spectrum** (verdict M6: computing it would defeat `--red-gap`).
-  The informative statistic `max_t max_{ch} lhs/rhs` is reported
-  (measured green: `0.168`) and gated below by a green-only liveness floor
-  `0.10` (catches a silently dead lhs).  **Honesty clause (M6): this gate
-  does NOT certify sharpness of the constant** — constants down to ~6×
-  smaller would also pass on this model; what it certifies is that the
-  inequality holds at the asserted constant and that a 10×-optimistic
-  constant is DETECTED (`--red-gap` fails it at `t=8`,
-  `lhs 4.12e-01 > rhs 3.72e-01`).  r1's "it tests the CONSTANT" claim is
-  deleted.
-- `LD-C4` (diagonality at `t = 1024`): `||E({q_±})Ψ_t − P_±Ψ_t|| < 1e-6`.
-  Near-subsumption disclosure: with C2's `ε < 1e-6`, C3 already implies
-  `lhs ≲ 2e-6`; C4's independent value is testing the (AD3-ex)-form norm
-  directly, and it is the surface `--red-merged`/`--red-dup` break.
-- `LD-C5` (obstruction mechanism, rebuilt per M3 on a genuine scattering
-  configuration): (a) incoming concentration
-  `||(1−E({0}))Ψ_{t_-}|| < 1e-4` at every window (measured `≤ 3.2e-6`);
-  (b) the TPM law is EXACTLY two atoms `{ν=0, ν=−|W|}` — **including the
-  `ν = 0` atom r1's certificate never produced** — with off-atom mass
-  `< 1e-4`; (c) atom weights equal the independently measured
-  `|r|² = 0.2704`, `|t|² = 0.7296` (mass left/right of the barrier at
-  `t_+`) within `1e-3`; (d) the MI ⟨1⟩7.⟨2⟩2 first-moment identity
-  `Σ_ν ν p_W = ⟨Q̂⟩_{t_-} − ⟨Q̂⟩_{t_+}` holds within `1e-4` (measured
-  agreement `1e-4`-exact at all four windows: e.g. `−12.4024` vs
-  `−12.4024` at `|W|=17`) — this is ⟨1⟩5.⟨2⟩2's mechanism certified
-  directly, with the ground truth measured from the STATE, not from the
-  law; (e) the LR3 tail moment `Σ_{|ν|>10}(1+|ν|)p_W` grows across windows
-  with floor `0.9(1+|W|)|t|²` at the largest (measured
-  `13.13 → 24.80 → 48.15 → 94.84`, floor `85.4`).  The `ν` convention is
-  the frozen `ν = q_- − q_+` (MI ⟨1⟩5.⟨2⟩3).
-- `LD-C6` (static contrast — verdict M3's fix demand): on the
-  position-diagonal model, `p_W = δ_0` EXACTLY (`p_0 > 1−1e-9`) and the
-  LR3 tail is `0 < 1e-9`, at every window: the confined side of ⟨1⟩5.⟨2⟩6's
-  dichotomy.
-- `LD-C7` (the ε-version's measured decay — the work-order gate): (a) the
-  kink band is flat: `|E_0| < 1e-10` in EVERY `S^z` sector (measured max
-  `8.2e-17`) — the F1 flatness input and the `tns-xf4` fence (`θ = 0`);
-  (b) `min_q||(Q̂_W−q)Ψ|| > 1e-6` at every window — **exact (AD3-ex) is
-  false at fixed `W` in D16** (measured defects `4.45e-02, 9.30e-03,
-  1.94e-03, 4.05e-04`); (c) successive defect ratios equal the claimed
-  rate `q = 0.208712` within 2% (measured `0.2089, 0.2087, 0.2083`) —
-  the `λ̃^{d_W}` law of (LD.4); (d) `⟨Q̂_W⟩` within `1e-2` of the integer
-  coset (M-INDEX-fin arithmetic; measured worst `2.0e-3`).
+- `LD-C3` ((LD.1) at the ASSERTED constant `d^{-1} = 1` per ⟨1⟩1.⟨2⟩3 —
+  NOT computed from the model spectrum): at every grid time.  Measured
+  `max_t max_{ch} lhs/rhs = 0.168`, green-only liveness floor `0.10`.
+  Honesty clause (r1 M6): NOT a sharpness test — constants ~6× smaller
+  would also pass.
+- `LD-C4` (diagonality at `t = 1024`): `< 1e-6`.  Near-subsumption by
+  C2∧C3 disclosed in the gate docstring; its independent value is the
+  direct norm test, and it is the `--red-merged`/`--red-dup` surface.
+- `LD-C5` (obstruction-mechanism configuration; evidence vs consistency
+  split per r2 M4):
+  *Evidence gates:* (a) incoming concentration `< 1e-4` at every window
+  (measured `≤ 3.2e-6`); (b) the TPM law is EXACTLY two atoms
+  `{ν=0, ν=−|W|}` — including the `ν=0` atom — off-atom mass `< 1e-4`;
+  (c) atom weights equal the independently measured `|r|² = 0.2704`,
+  `|t|² = 0.7296` within `1e-3`.
+  *Consistency lines, DISCLOSED as deductively subsumed (r2 M4) — kept
+  as cross-checks, NOT claimed as independent evidence:* (d) the
+  first-moment identity `Σ_ν ν p_W = ⟨Q̂⟩_{t_-} − ⟨Q̂⟩_{t_+}` within
+  `1e-4` — given gate (a) the incoming state is a single spectral
+  branch, so the two sides coincide up to the concentration defect (the
+  measured gap is `~4e-11` and tracks (a)'s defect); (e) the LR3 tail
+  moment `13.13 → 24.80 → 48.15 → 94.84` with floor
+  `0.9(1+|W|)|t|² = 85.4` — given (b)+(c) the floor clause is
+  arithmetically `1 > 0.9`.  The r2 sentences "independent
+  computations" and "no other gate pair is deductively linked" are
+  DELETED (they were false).
+- `LD-C5b` (NEW — the two-branch dephasing WEDGE; r2 M4(c)): in the
+  straddling configuration the two quantities gate (d) compares are
+  measured to DISAGREE: `Σνp = +0.368` vs unpinched
+  `⟨Q̂⟩_- − ⟨Q̂⟩_+ = −5.716`, wedge `6.083 > 1.0`.  This certifies that
+  the D27(LR2) pinching `𝒟` genuinely acts on a two-branch state — and
+  that LR2 measurably FAILS there (the defect saturates at `6.083` by
+  `t = 320`; it does not Cesàro-decay).  Two design decisions, recorded:
+  (i) an identity-with-`𝒟` gate is deliberately NOT shipped — against
+  the same branch decomposition it reduces to `x ≡ x`, the campaign's
+  no-op pattern; (ii) MI ⟨1⟩7.⟨2⟩2's averaged identity is NOT certified
+  on any two-branch state, because on this one its LR2 hypothesis is
+  false — which is the honest finding: LR2 is a hypothesis, and LD-C5's
+  gate (d) succeeds in the concentrated configuration only by virtue of
+  gate (a).
+- `LD-C6` (REPLACED per r2 M3 — bounded-transport contrast on the D16
+  kink+magnon battery; the dynamics does NOT commute with `Q̂_W`):
+  (a) LIVENESS at the largest window: `1 − p_0 ≥ 0.02` (measured
+  `0.453` at `[1,10]`; per-window `0.017, 0.402, 0.423, 0.453`) — this
+  battery CANNOT pass the way the r2 tautology did; (b) SUPPORT: TPM
+  mass at `|ν| > 3` below `1e-9` at every window (measured worst
+  `9.1e-13`) — one magnon transports bounded charge, against LD-C5's
+  transit atom at `ν = −|W|`; (c) BOUNDED FIRST MOMENT:
+  `Σ|ν|p ≤ 1.0` at every window (measured worst `0.453`,
+  non-extensive in `|W|`; the LR3 tail beyond `M = 10` is then `0` at
+  every window — implied by (b), stated not gated).
+- `LD-C7` (the ε-version on D16): (a) sector ground energies:
+  `|E_0| < 1e-10` in every sector (measured max `8.2e-17`) —
+  certifies ONLY this (the `θ_{tr} = 0` fence rests on K1+K2 with K4
+  CONJECTURE, r2 M5, not on this gate); (b) `min_q||(Q̂_W−q)Ψ| > 1e-6`
+  at every window (measured `4.45e-02, 9.30e-03, 1.94e-03, 4.05e-04`) —
+  the exact (AD3-ex) display is UNAVAILABLE at fixed `W` (r2 M6: this
+  state is a magnon-free zero mode, not an in-class refutation);
+  (c) defect ratios = `q = 0.208712` within 2% (measured
+  `0.2089, 0.2087, 0.2083`) — the conclusion's `λ̃^{d_W}` law;
+  (d) `⟨Q̂_W⟩` within `1e-2` of the integer coset (measured worst
+  `2.0e-3`); (e) NEW (r2 n5) — **(K-TAIL) itself**: the one-site
+  deviations `||D_xφ||` outside `K = [4,7]`, in the ℤ₂-flipped
+  orientation (m2), measured
+  `4.36e-02, 9.09e-03, 1.90e-03, 3.96e-04, 8.27e-05` at
+  `dist = 1..5` (right) and `1.90e-03, 3.96e-04, 8.27e-05` (left) —
+  per-site ratios `0.20871` on BOTH sides (gate: within 2% of `q`), and
+  `C_K = max ||D_xφ||λ̃^{−dist} = 0.209 ≤ 0.30`.  These are the r2
+  critic's own §0(iii) figures, now certified rather than merely
+  reproduced; MP-1's eps row now attributes hypothesis-certification to
+  (e) and conclusion-rate to (b)--(c), fixing the n5 mis-attribution.
 
-**Red modes** (thirteen; each a FRESH model variant, never in-place; a
-surviving target or an unregistered casualty exits 2).  Gate-reachability
-map — every sub-gate that carries evidence, with the mode that reaches it:
+**Red modes and the REACHABILITY TABLE (this table IS the claim — no
+blanket sentence).**  21 registered modes (mode count, not firing
+count — r2 n3), each a FRESH model variant; `--red` → exit 1, RED-OK,
+21/21 (80 s).  Per-mode registered pattern and measured exit path:
 
-| mode | battery | must break (exit path) | must pass |
+| mode | battery | breaks (exit path, measured) | survives |
 |---|---|---|---|
-| `--red-gap` | FREE | LD-C1 (**gap** sub-gate: `separation 0.1 < 1`), LD-C3 (constant: fails `t=8`) | LD-C2, LD-C4 |
-| `--red-coset` | FREE | LD-C1 (**coset** sub-gate: spread `0.414`) | LD-C2, **LD-C3**, LD-C4 |
-| `--red-halfspace` | FREE | LD-C1 (**commutation** sub-gate: `[P,H] = 0.53`) | LD-C2, LD-C3, LD-C4 |
-| `--red-merged` | FREE | LD-C2 (escape), LD-C4 (diagonality `0.80`) | LD-C1, LD-C3 |
-| `--red-dup` | FREE | LD-C2, LD-C4 (diagonality `1.00`) | LD-C1, LD-C3 |
-| `--red-c5-nobarrier` | BARRIER | LD-C5 (**atom** gate: `p_0 = 0`) | — |
-| `--red-c5-meanshift` | BARRIER | LD-C5 (**identity** gate, DATA mutation: ground truth shifted `+1`) | — |
-| `--red-c5-inwindow` | BARRIER | LD-C5 (**incoming-concentration** gate: defect `1.0`) | — |
-| `--red-c6-moving` | BARRIER | LD-C6 (`p_0 = 0.27 ≠ 1`) | — |
-| `--red-c7-delta` | D16 | LD-C7 (**rate** gate, DATA mutation: `Δ=3.0` ratios `0.1717` vs kept claim `0.2087`) | — |
-| `--red-c7-mixed` | D16 | LD-C7 (**coset** gate: `⟨Q̂_W⟩ = −0.499`; (K-Q) broken by a two-sector mixture) | — |
-| `--red-c7-product` | D16 | LD-C7 (**defect-positivity** gate: defect `0` — no kink, exact eigenvector, certificate refuses) | — |
-| `--red-c7-noboundary` | D16 | LD-C7 (**flat-band** gate: max `|E_0| = 1.146`) | — |
+| `--red-gap` | FREE | LD-C1 (gap: `separation 0.1 < 1`), LD-C3 (`t=8, lhs 4.12e-01 > rhs 3.72e-01`) | LD-C2, LD-C4 |
+| `--red-coset` | FREE | LD-C1 (coset: spread `0.414`) | LD-C2, LD-C3, LD-C4 |
+| `--red-halfspace` | FREE | LD-C1 (commutation: `[P_+,H] = 0.53`) | LD-C2, LD-C3, LD-C4 |
+| `--red-c1-overlap` (NEW) | FREE | LD-C1 (**orthogonality**: `6.455e-02`), LD-C2 (`2.13`), LD-C4 (`6.46e-02`) | LD-C3 |
+| `--red-c1-leak` (NEW) | FREE | LD-C1 (**resolution**: `sum P_ch psi != psi, 8.068e-02`), LD-C2 (`0.11`), LD-C4 (`4.84e-02`) | LD-C3 (rhs inflates with `ε`) |
+| `--red-merged` | FREE | LD-C2 (`26.4`), LD-C4 (`0.80`) | LD-C1, LD-C3 |
+| `--red-dup` | FREE | LD-C2 (`26.4`), LD-C4 (`1.00`) | LD-C1, LD-C3 |
+| `--red-c5-nobarrier` | BARRIER | LD-C5 (atom: `p0 = 0`) | — |
+| `--red-c5-meanshift` | BARRIER | LD-C5 (identity line, data mutation: `−12.40 vs −11.40`) | — |
+| `--red-c5-inwindow` | BARRIER | LD-C5 (concentration: defect `0.997`) | — |
+| `--red-c5-weights` (NEW) | BARRIER | LD-C5 (weights, data mutation: `0.2704 != 0.3204`) | — |
+| `--red-c5-fixedwin` (NEW) | BARRIER | LD-C5 (tail growth: `13.132 -> 13.132`, degenerate exhaustion) | — |
+| `--red-c5b-flat` (NEW) | BARRIER | LD-C5b (wedge `1.8e-15`: pinching inert) | — |
+| `--red-c5b-concentrated` (NEW) | BARRIER | LD-C5b (wedge `4.3e-11`: not two-branch) | — |
+| `--red-c6-static` (NEW) | D16→BARRIER | LD-C6 (**liveness**: `1−p0 = 0` — the r2 tautology, now DETECTED) | — |
+| `--red-c6-moving` | D16→BARRIER | LD-C6 (support: mass `0.73` at `\|ν\|>3`) | — |
+| `--red-c7-delta` | D16 | LD-C7 (rate: `0.1717` vs `0.2087`) | — |
+| `--red-c7-mixed` | D16 | LD-C7 (coset: `⟨Q̂_W⟩ = −0.499`) | — |
+| `--red-c7-product` | D16 | LD-C7 (defect-positivity: defect `0`) | — |
+| `--red-c7-noboundary` | D16 | LD-C7 (sector energies: max `1.146`) | — |
+| `--red-c7-orientation` (NEW) | D16 | LD-C7 (**(K-TAIL) gate**: `C_K = 2525 > 0.3` under D13(a)'s literal orientation) | — |
 
-Design notes against the standing obligations.  (i) *Distinct red modes
-are distinct in effect:* `--red-coset` shifts ONE edge eigenvalue by
-`√2−1` keeping the gap `≥ 1` — it breaks the coset and **LD-C3 survives,
-correctly**, since (LD.3) consumes only the gap; `--red-gap` is the
-constant shrink.  r1's `--red-coset` (bit-identical to a constant shrink —
-verdict M6) is gone.  (ii) *Data mutations:* `--red-c5-meanshift` and
-`--red-c7-delta` falsify the ground truth the acceptance gates compare
-against, not checker constants.  (iii) *No structurally dead gates:*
-`--red-halfspace` arms the `[P,H]` gate (r1 m1); the two "different"
-expressions in C5(d) are `Σνp` (from the law) and `⟨Q̂⟩_{t_-}−⟨Q̂⟩_{t_+}`
-(from the state) — independent computations, and the meanshift mutation
-proves the comparison live.  (iv) *Subsumption:* C4's near-subsumption by
-C2∧C3 is disclosed in its gate docstring and above; C5's weight gates (c)
-are cross-checked rather than independent of the atom gates (b) plus
-unit total mass — disclosed here; no other gate pair is deductively
-linked.  (v) The C3 ratio floor is green-only (a liveness gate; on
-mutants it is meaningless and is skipped so registered patterns stay
-exact).
+**Honest unreached rows (disclosed, not papered over):**
 
----
+1. `LD-C5(e)`'s FLOOR clause is reached by no registered mode and no
+   in-class mutation can reach it: given gates (b)+(c) it is
+   arithmetically `1 > 0.9`, so any mutation breaking the floor breaks
+   (b) or (c) first.  It is a disclosed consistency line, not evidence
+   (r2 M4(d) adopted).  Its GROWTH clause is armed (`--red-c5-fixedwin`).
+2. `LD-C5(d)`'s identity line is armed only by a DATA mutation
+   (`--red-c5-meanshift`), which proves the comparison live and nothing
+   more; its evidential content in the concentrated configuration is
+   subsumed by gate (a) (measured gap `4e-11` tracks the concentration
+   defect).  The two-branch content lives in LD-C5b.
+3. `LD-C3`'s green-only liveness floor is by design evaluated on no
+   mutant (registered patterns stay exact); it can fire only on green.
 
+Design notes.  (i) Distinct red modes are distinct in effect
+(`--red-coset` shifts ONE edge eigenvalue by `√2−1` keeping the gap
+`≥ 1`; `--red-gap` is the constant shrink; LD-C3 survives the former and
+dies under the latter).  (ii) Data mutations falsify ground truth, not
+checker constants: `c5-meanshift` (the state-side mean), `c5-weights`
+(the measured `|r|²`), `c7-delta` (the model at `Δ = 3.0` against the
+kept `q(2.5)` claim), `c7-orientation` (the tail assignment against the
+ED state's actual orientation).  (iii) `--red-c6-static` runs the NEW
+LD-C6 gates on the r2 LD-C6's own model class (position-diagonal `H`)
+and dies at the liveness gate — the r2 tautology is now itself a
+registered mutant, which is the sharpest available proof that the
+rebuilt gate tests what the old one could not.  (iv) The eigh cache
+shares only the eigendecomposition of the IDENTICAL Hamiltonian at
+fixed `V_0`; every mutant is a fresh model instance and no state is
+shared.
 ## 6. MERGE PROPOSALS (exact replacement text; orchestrator merges after
 the critic converges — nothing below is live.  r3: MP-3(ii) is WITHDRAWN
 per r2 F1; the ACE-LD-eps row carries the r2 verdict §8(A) adjudicated
