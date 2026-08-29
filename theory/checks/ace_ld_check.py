@@ -43,9 +43,10 @@ checker obligations of briefs/critic-protocol.md:
     the on-site clause implies the off-diagonal clause, so (e) certifies
     (K-TAIL) in full (ace-ld-r3 n1).
   * NO blanket reachability claim is made.  The reachability TABLE and
-    the complete unreached-gate list (r3 M3) live in the spec, section 5
-    of theory/ace-ld.md; each unreached gate is listed with its
-    shadowing gate named.
+    the measured unreached-gate list (r3 M3, r4 M1) live in the spec,
+    section 5 of theory/ace-ld.md; each listed unreached gate names its
+    shadowing gate or protocol reason.  In particular, no registered
+    mutation reaches LD-C5b's T-stability gate or LD-C6's t_+-sweep gate.
 
 Batteries:
 
@@ -110,6 +111,24 @@ C5B_WEDGE_MIN = 1.0            # |sum nu p - (<Q>_- - <Q>_+)| must exceed
 # LD-C5b double-Cesaro gate (r4, r3 M2 fix: D27(LR2)'s own quantity)
 C5B_LR2_TS = (20.0, 40.0)      # Cesaro spans T; mean over t_+ in [T,2T],
 #                                t_- in [-2T,-T], C5B_LR2_GRID^2 points
+C5B_LR2_WRAP_CEILING = N_BAR / 8.0
+# The hopping dispersion has max group speed 2, while the protocol reaches
+# |t| = 2T.  Require 4T < N_BAR/2, equivalently T < N_BAR/8: at the ceiling
+# the packet can wrap around the ring and re-enter the measurement window.
+
+
+def _guard_c5b_spans_no_wrap(spans) -> None:
+    """Reject empty, nonpositive, or ring-wrapping Cesaro span sets."""
+    if (not spans
+            or any(span <= 0.0 or span >= C5B_LR2_WRAP_CEILING
+                   for span in spans)):
+        raise ValueError(
+            "C5B_LR2_TS violates the no-wrap protocol guard: require "
+            f"0 < T < N_BAR/8 = {C5B_LR2_WRAP_CEILING:g}; "
+            f"got {spans}")
+
+
+_guard_c5b_spans_no_wrap(C5B_LR2_TS)
 C5B_LR2_GRID = 9               # grid points per axis (matches r3 M2(b))
 C5B_LR2_MIN = 3.0              # |double-Cesaro defect| floor, keyed to the
 #                                measured -3.3592 (r3 M2: stable for
@@ -606,7 +625,8 @@ def check_c5b(m: BarrierModel, log) -> None:
         |mean defect| must exceed C5B_LR2_MIN at every span in
         C5B_LR2_TS, and be stable across spans within C5B_LR2_STAB
         (measured: -3.3592 at T = 20 and 40; r3 M2(b) finds the same
-        value out to T = 200).  Mechanism (logged, r3 M2(b)): under
+        value out to T = 200, below the ring-wrap horizon
+        T = N_BAR/8 = 256).  Mechanism (logged, r3 M2(b)): under
         backward evolution the packet stays split across three
         window-charge branches (left/in/right ~ 0.8563/0.0170/0.1267),
         so the pinching never becomes trivial; the barrier bound state

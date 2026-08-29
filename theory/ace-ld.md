@@ -1318,7 +1318,7 @@ the D16 instance, and there only up to K4 (CONJECTURE) and
 M-INDEX-LA-folium (CONJECTURE).  (iii) The `o(|W_m|)` in (M-ESC)/⟨2⟩5 is
 not quantified; any downstream use wanting rates must sharpen it.
 (iv) The shard-local symbol `θ` of (M-ESC) collides with the frozen twist
-variable `θ` of `notation.md` line 271 (r2 n2); MP-4 proposes the merged
+variable `θ` in notation.md's `μ_∞^α` row (r2 n2); MP-4 proposes the merged
 name `θ_{tr}` and flags the overload — inside this shard `θ` always means
 (M-ESC)'s transport fraction.
 
@@ -1335,7 +1335,7 @@ the claim, including its honest unreached rows).  Repaired in r4 after
 ace-ld-r3 M2 (LD-C5b re-anchored at D27(LR2)'s own double-Cesàro
 quantity; the `V_0 = 0` separator registered), M3 (LD-C6 first-moment
 gate evaluated first; its bound keyed to a recorded `t_+` sweep; the
-unreached list completed below) and m8 (the docstring's phantom
+unreached list expanded below) and m8 (the docstring's phantom
 `--table` flag deleted — the table lives here, in this section, only).
 
 **Model batteries** (constants in the code header; spec and code in
@@ -1358,7 +1358,8 @@ lockstep):
   double-Cesàro protocol — `9×9` grids on
   `[T,2T] × [−2T,−T]`, `T ∈ {20, 40}`, pinching `𝒟_{W,t_-}` realised as
   branch decomposition in the clamp eigenbasis at `t_-` followed by
-  forward evolution of each branch to `t_+`.
+  forward evolution of each branch to `t_+`; an executable no-wrap guard
+  requires `4T < N/2`, equivalently `T < N/8 = 256`.
 - **D16** (gates LD-C6, LD-C7): exact diagonalisation of the D16 XXZ
   kink chain, `Δ = 2.5`, `J = 1`, `L = 12`, open, WITH the telescoping
   boundary field; all 13 `S^z` sectors; half-filled-sector ground state;
@@ -1425,7 +1426,8 @@ run, `python3 -O`, exit 0; wall clock is machine-local — r3 n3 — and is
   `⟨𝒟_{W,t_-}(Q̂_W(t_+))⟩ − ⟨Q̂_W(t_+)⟩`, measured
   **`−3.3592` at `T = 20` and `T = 40`** (floor `|·| > 3.0`, keyed to
   the r3 M2 figure; T-stability gated at `0.02`, measured spread
-  `~3e-5`; the critic finds the same value out to `T = 200`).  **LR2
+  `~3e-5`; the critic finds the same value out to `T = 200`, below the
+  ring-wrap horizon `T = N/8 = 256`).  **LR2
   genuinely fails on this state — at the corrected number.**
   Mechanism (r3 M2(b), logged: measured branch weights): under
   backward evolution the packet stays split across three window-charge
@@ -1524,13 +1526,13 @@ local).  Per-mode registered pattern and measured exit path:
 | `--red-c7-noboundary` | D16 | LD-C7 (sector energies: max `1.146`) | — |
 | `--red-c7-orientation` (NEW) | D16 | LD-C7 (**(K-TAIL) gate**: `C_K = 2525 > 0.3` under D13(a)'s literal orientation) | — |
 
-**Honest unreached rows — COMPLETE enumeration (r4, per ace-ld-r3 M3:
-every gate or guard reached by no registered mutation is listed, with
-the shadowing gate or reason named.  The r3 list stopped three
+**Honest unreached rows — measured enumeration for the 23 registered
+modes (r4, per ace-ld-r3 M3 and ace-ld-r4 M1: each row names the
+shadowing gate or protocol reason).**  The r3 list stopped three
 evidence-carrying items early; the two the critic fired on a copy are
 items 4 and 5 below.  Post-reorder, LD-C6's first moment IS reached
 (`--red-c6-moving`) and its support gate is armed
-(`--red-c6-weaktransit`) — those two r3 gaps are closed, not listed):**
+(`--red-c6-weaktransit`) — those two r3 gaps are closed, not listed.
 
 1. `LD-C5(e)`'s FLOOR clause is reached by no registered mode and no
    in-class mutation can reach it: given gates (b)+(c) it is
@@ -1571,6 +1573,22 @@ items 4 and 5 below.  Post-reorder, LD-C6's first moment IS reached
     (`norm > 0.5`), the FREE battery's ring-cut guard
     (`guard_no_wrap`), and `LD-C5`'s ring-cut guard.  These gate green
     protocol integrity, not evidence.
+11. `LD-C5b`'s `T`-STABILITY gate is reached by no registered mutation:
+    `--red-c5b-flat` and `--red-c5b-concentrated` die at the WEDGE, while
+    `--red-c5b-nobarrier` passes the WEDGE but dies at the first-span
+    Cesàro FLOOR.  Its teeth were re-confirmed on a copy at the shipped
+    spans by tightening only `C5B_LR2_STAB` to `1e-6`: both floor checks
+    pass at `−3.3592`, then STABILITY fires at measured spread
+    `4.882e-05`.  The old `(20, 256)` teeth mutation from ace-ld-r4 M1
+    is now rejected by the no-wrap guard at its `T = 256` endpoint.
+12. `LD-C6`'s `t_+`-SWEEP gate is reached by no registered mutation:
+    `--red-c6-moving`, `--red-c6-weaktransit`, and `--red-c6-static` die
+    respectively at FIRST MOMENT, SUPPORT, and LIVENESS.  Moreover, the
+    red-battery `C6BarrierAdapter` fixes its protocol time, so a reached
+    sweep there would only repeat one cached law.  Its green-side teeth
+    were confirmed on a copy with `C6_MOM_BOUND = 1.0`: gate (a) passes
+    at `0.453`, then SWEEP fires at `1.0712` for `t_+ = 20`, `W = [3,8]`
+    (ace-ld-r4 M1).
 
 Design notes.  (i) Distinct red modes are distinct in effect
 (`--red-coset` shifts ONE edge eigenvalue by `√2−1` keeping the gap
