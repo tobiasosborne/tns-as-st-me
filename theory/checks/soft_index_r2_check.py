@@ -80,6 +80,19 @@ def register_trap_gate(red: bool) -> None:
     green = run_process([sys.executable, "-O", str(certificate)])
     require(green.returncode == 0,
             "SIDXR2-C1 standing ML4 certificate failed green:\n" + green.stdout)
+    if red:
+        # R2-O1 repair: the public red path executes the real standing
+        # mutation and propagates its outcome. Exit 1 exactly when the
+        # mutation is detected (child exit 1, trap coincidence forwarded);
+        # return normally when it survives undetected, so main reports
+        # RED SURVIVED UNDETECTED and exits 0.
+        result = run_process(
+            [sys.executable, "-O", str(certificate), "--red-register"])
+        print(result.stdout, end="")
+        if result.returncode == 1:
+            fail("SIDXR2-C1 RED detected: standing --red-register mutation "
+                 "fired; trap coincidence forwarded above")
+        return
     required_reds = ("--red", "--red-register", "--red-chi")
     red_codes = {}
     for flag in required_reds:
@@ -88,8 +101,6 @@ def register_trap_gate(red: bool) -> None:
         require(result.returncode == 1,
                 f"SIDXR2-C1 standing mutation {flag} did not exit 1:\n"
                 + result.stdout)
-    if red:
-        fail("SIDXR2-C1 RED detected: cross-register substitution is nonzero")
     print("SIDXR2-C1 PASS: full/hw registers exact; scalar n>=2 and old (18) "
           f"rejected; standing reds {red_codes}")
 
