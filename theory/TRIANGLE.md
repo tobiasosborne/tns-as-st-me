@@ -262,12 +262,12 @@ S-general that is not derivable from what those rows say is PROVED.
 
 | id | obligation | difficulty | status |
 |---|---|---|---|
-| **ML1** | Two-magnon wave operators and channel norm: construct the infinite-chain one- and two-magnon scattering spaces and prove existence and isometry of the incoming/outgoing maps on packets supported away from equal velocities and the endpoints.  *Plan:* fiber by total momentum; each relative-coordinate fiber is a half-line Jacobi operator with one boundary defect; explicit spectral measure or Cook estimates; isolate the single bound eigenvalue. | MEDIUM | **CONJECTURE** |
+| **ML1** | Two-magnon wave operators: PROVED as scoped in claims ML1 — fibered half-line Jacobi construction, isometric W_± onto the scattering summand, equal to the AC-EX-2M Cook limits on the dense regular-packet core; endpoint/equal-velocity behaviour and incoming bound-pair channel explicitly excluded from the claim. | MEDIUM | **PROVED** (`ml1-wave-operators.md`; verdict `blitz-ml1-ml6-r1.md`) |
 | **ML2** | Complete charge-created resolution: the family used in (R6) contains every regular scattering root, the two-string, and all `SU(2)` descendants, with no missing exceptional finite-ring vector. | MEDIUM | **PROVED** (`ml2-completeness.md`; verdict `ml2-r2.md`) |
 | **ML3** | Packet-smeared infinite-volume regularity, including the `k=Θ(1/N)` regime exposed by r1; exclude a physical `1/k_s` pole. | MEDIUM--HIGH | **CONJECTURE** |
 | **ML4** | Fixed-volume formulas are an off-shell analytic interpolation only; an on-shell packet-smeared infinite-volume one-hard estimate and the two-hard/three-body statement remain future work. | HIGH | **SKETCH** |
 | **ML5** | Unrestricted universality is refuted.  Repaired conditional ML5-A/B require zero intercept, zero first jet, explicit norm control, and an exhaustive LSZ decomposition; microscopic membership is future work. | HIGH | **REFUTED** |
-| **ML6** | Control finite/infinite, packet-width, soft, bound, and off-shell limit orders. | MEDIUM | **CONJECTURE** |
+| **ML6** | Control finite/infinite, packet-width, soft, bound, and off-shell limit orders. | MEDIUM | **CONJECTURE** (the D6 separated-packet subclass is PROVED as ML6-HS-SEP, `ml6-hs-sep.md`; unrestricted coefficientwise/arbitrary-protocol control remains open) |
 
 ### 2.5 ML4 and ML5-B repairs
 

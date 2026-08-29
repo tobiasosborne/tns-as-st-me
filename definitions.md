@@ -955,8 +955,11 @@ inside the corpus's packet discipline (D3(a); the `ℓ¹∩BV` packet class of
 D12(a′)).  That kernel is *constructed* in the fully polarised spin-`S`
 register, where it is `|k⟩ = Σ_x e^{ikx}|x⟩` (named computation D24N-C8 in
 `theory/checks/d24d3_normalization_check.py`, an exact one-magnon
-eigenvector of `H_S`); in any other register the existence of the
-asymptotic one-magnon kernel is claim `ML1` (CONJECTURE), and every
+eigenvector of `H_S`); in a D31 exact-band register the
+asymptotic one-magnon kernel is the target of claim ML1-D31-kernel
+(SKETCH: two register defects recorded in
+theory/verdicts/blitz-ml1-ml6-r1.md); outside the fully polarised and D31
+registers its existence remains open, and every
 statement about the (d)3b constant `𝔞_leg(ρ)` is scoped to a register
 where the kernel exists.  The **same** amputation is applied to the
 **same** hard leg in both.  The soft leg enters `M_2^O` as **one

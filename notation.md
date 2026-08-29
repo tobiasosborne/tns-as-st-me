@@ -303,6 +303,8 @@ SUPERSEDED in place rather than deleted).*
 | `D_-^L`, `D_+^L`, `D_+^T` | incoming-left, outgoing-left, and outgoing-transmitted fixed-packet domains | definitions.md D28 |
 | `H_out^{ex}`, `N_T^{ex}` | constructed outgoing range and its transmitted-channel projection; no completeness implied | theory/ansatz-scattering.md ACE.2 |
 | `ℋ_{0,12}`, `H_{0,12}`, `𝒟_{12}` | labeled two-packet free magnon channel, sum Hamiltonian, and smooth product core.  **Pointer referred (orchestrator, 2026-08-29):** the merged D31 text does not itself introduce these three symbols — they are fixed in the shard only.  Recorded for adjudication rather than silently re-pointed; see bd `tns-uz8` | theory/ansatz-scattering-2m.md (D31 pointer under review) |
+| 𝒞, Σ_bad, 𝓗_ch, 𝓗_sc, 𝓗_b | ML2 canonical (K,q) chart, excluded regular-packet set, channel space, real-scattering summand, and bound-band summand | theory/ml1-wave-operators.md |
+| β(K,q), P_cont,j, (L6-order) | normalized D6 bound-fiber overlap with the charge-created relative wave, contaminating spectral projection, and the ML6-HS-SEP limit precedence | theory/ml6-hs-sep.md |
 | `K_i`, `V_i`, `a_{i,b}(n)`, `χ_i`, `χ̃_i`, `h_i` | fixed packet supports, velocity supports, exact filtered creators, filters/companions, and rapidly decaying filtered symbols | definitions.md D31 |
 | `I_2`, `𝓡_inel`, `Θ_inel`, `η_inel`, `E_{B,j}`, `d_B`, `P_B` | selected two-magnon joint energy--momentum set, inventoried alternative channels and threshold/margin, bound bands, their fiberwise separation, and bound projection | definitions.md D31 |
 | `d_sep` | number of uniform transfer sites separating two local/almost-local clusters in D31-C2/C4 | definitions.md D31 |
