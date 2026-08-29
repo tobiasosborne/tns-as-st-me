@@ -125,6 +125,7 @@ the story alone (L9).
 | Slot | needs | lane | status |
 |---|---|---|---|
 | §5 headline | S-IDX ladder r2 | tns-v44 | codex IN FLIGHT |
+| §5 generality | S-IDX-fin for general compact G (TJO: SU(2)-only insufficient) | tns-fea | codex IN FLIGHT |
 | §4 instance | D27(2–3) for D16 | tns-xf4 | open; conditional print OK |
 | §6 + Fig 3 | λ-D wave 1 (sweep) | tns-f5r | Opus IN FLIGHT |
 | §6 + Fig 2 | λ-D wave 2 (kinks) | tns-f5r | after wave 1 |
