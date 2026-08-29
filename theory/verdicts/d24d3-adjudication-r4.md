@@ -1022,3 +1022,106 @@ band is DISPLAY and gates nothing (§6.1).
   its declared multiplier and residual (§6.4).
 
 ---
+
+## 7. HONEST STATUS — deltas on r3's H1–H9 (all else unchanged)
+
+**H1 (PROVED) — extended by one identity.**  Add to r3 H1:
+`‖Q^-_q|h⟩‖² = Z_ρN − 2` exactly (r3-critic X15; now gated, D24N-C8(ii),
+error `7.1·10^{-15}`).  The vacuum identity's "exact, `N`-free per site"
+is scoped to the vacuum leg (§1.3 ⟨3⟩1).
+
+**H2′ (CONVENTIONAL) — restated with its true reach.**  The D24(b)
+convention is a choice with **two anchors**: the `δ`-normalised
+asymptotic soft leg for `M_2^O` (§5.0′) and the charge-created
+normalisation of clause (d)2's residue display (§5.2′ clause 2); the
+exact `√Z_ρ` between them is displayed, not hidden.  It makes `𝔞_leg` a
+determined number exactly **on the fully polarised spin-`S` family**,
+where its kernel is constructed (D24N-C8); off that family the kernel is
+claim `ML1` (CONJECTURE) and no `ρ`-general reading is asserted.  r3's
+"makes `𝔞_leg` a number" is kept only with this scope.
+
+**H7′ (EVIDENCE, not proof) — the band sentence corrected.**  The
+acceptance band is the data's own quoted extrapolation error, derived at
+runtime; the exponent comparison is calibrated to the same column and is
+thereby DISPLAY (provably subsumed, §6.1); the two refutations need
+neither — they hold at the pre-registered `0.08` with `5–37×` margins.
+r3's "there is no acceptance constant in the file" is retracted; the
+declared-constants inventory is in the checker docstring.
+
+**H8 — one sentence added (m6).**  After this merge, for every source
+with `M_1^O ≠ 0` the ML5-A membership test through `𝔠_h` is
+**undecidable** until AMP or `tns-axg` closes, because
+`𝔠_h(O) = ∂_kM_2^O|_0 − 2i𝔞_leg χ M_1^O(h)` contains the open constant.
+D24(e)'s counterexamples remain decidable (`M_1^O = 0`, W14), so no
+existing test breaks — but the *price list* of retiring the value
+includes this, and H8's list was incomplete without it.
+
+**§4.3 item 3 — one sentence added (n2).**  `paper/main.tex:244–249`
+identifies `thm:soft` as the two-body instance of the class-level
+conjecture; post-merge that identification silently needs
+`𝔞_leg(1/2) = 1`, which no L4 file supplies.  The Letter stays correct
+because `thm:soft` rests on the contact route (X9), and that residual
+dependence is now recorded rather than only "the warrant moves".
+
+**H9 — unchanged**, plus: nothing here claims the fitted-exponent
+comparison as evidence (it is DISPLAY), and nothing claims the two-magnon
+overlap gate tests class membership (it tests the ladder, which is what
+it says).
+
+---
+
+## 8. Disposition
+
+* **Merge**: §5.0′ + §5.1 + §5.2′ + §5.3(a,b,c′,d) + §5.4(a′,b′,c,d,e,f)
+  in **one commit**, definitions spans in descending line order,
+  `notation.md` edits in the §5-Mechanics order (m3), together with
+  §5.5′'s fourteen same-commit obligations.  Every span the r3 critic
+  ruled MERGE is untouched; every HOLD item is re-issued above with the
+  demanded repair; the two MERGE-after-F1 blockers are discharged by §1.
+  To this lane's knowledge nothing now blocks the commit.
+* bd `tns-iu5`: **re-scope to the r3 critic's four sub-tasks, verbatim
+  (r3-critic §8), then track (4):**
+  1. *(done, r3+r4)* D24(b)'s amputation and soft-leg convention —
+     §5.0/§5.0′, correct in the fully polarised spin-`S` register;
+  2. *(done, r4)* the normalisation of clause (d)2's residue fixed in
+     displayed text and clauses 1–3 made consistent with it (F1, §1);
+  3. *(open — this is `ML1`)* supply, or scope away, the `δ`-normalised
+     asymptotic one-magnon kernel off the fully polarised family;
+     `𝔞_leg(ρ)`'s definedness at general `ρ` rests on it (M1);
+  4. *(open — the prover target)* prove or refute **AMP**, with the ⟨1⟩4
+     fence: leg conversion supplies exactly `Z_ρ^{-1/2}` (X1, X2, §1.3),
+     so a second, non-leg-normalisation factor of the same size is
+     required; `D24-VAL` stays vacuous-or-unknown until (4) closes or
+     `tns-axg` exhibits a member.
+* bd `tns-axg`: stays open, unchanged (X-fenced declination of the
+  constructed-`E^O_desc` gate stands).
+* bd `tns-v44`: unblocked on this axis, with r3 §5.5 item 7's rider PLUS
+  the r3 critic's F1 rider, now discharged into displayed text: the
+  shard must not assume clause (d)2's residue and `E^O_desc` are in the
+  same normalisation — the merged definition now SAYS they are not, so
+  the rider is enforced by the text the shard must cite.
+* **The next prover target is AMP**, unchanged from r3 §8, with §1.3's
+  sharper framing: the proof must exhibit a second, independent
+  `Z_ρ^{-1/2}` that is not a leg conversion, or refute AMP; in the `m_λ`
+  register per binding `soft-index-adjudication-r1.md` §3.5.
+
+**Register comparison** (per protocol): the nearest PROVED row is
+`S2-2body-S`, whose adjudicated scoping sentence enumerates what is not
+proved by name.  This document's claims are: F1 resolved by an explicit
+two-anchor convention (a *choice*, priced in §1.4, not a theorem); M1–M5
+and m1–m8 repaired as itemised; NOTHING promoted, no member exhibited,
+no value installed, `ML1` and AMP and (α) and nonemptiness all still
+open and all still named at every point of use.  The verdicts of §6 are
+computations, reproduced in the certificate, with their reach stated.
+
+**Trajectory.**  r1 `3/7/6/4` → r2 `1/5/8/5` → r3 `1/5/8/4` → r4: every
+r3 item addressed (1 FATAL, 5 MAJOR, 8 MINOR, 4 NOTE — disposition table
+in `theory/verdicts/d24d3-repair-r4-response.md`), with one deviation
+from a critic fix-suggestion (m2's per-spin banding, replaced by the
+corrupted-entry guard, reason in §6.4) and one self-found demotion the
+critic did not demand (the derived exponent gate's subsumption, §6.1).
+The physics is unchanged for the fourth consecutive round: the
+leg-conversion identity is exact on both legs, the two refutations are
+exact at the pre-registered band, the corpus's `2` rests on the contact
+route, and what remains open is exactly `ML1`, AMP, (α), and
+nonemptiness — each with a DAG home and a fence.
