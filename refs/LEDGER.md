@@ -30,7 +30,7 @@ description. All 12/12 fetched OK; no id mismatches.
 | 1411.5745 | Gravitational Memory, BMS Supertranslations and Soft Theorems | canonical memory↔soft edge (Strominger–Zhiboedov) |
 | 2310.16683 | Fracton infrared triangle | first triangle beyond Lorentz (competitive landscape) |
 | 2203.02817 | Asymptotic symmetries and soft charges of fractons | precursor to fracton triangle |
-| 2203.14334 | Infrared Finite Scattering Theory in QFT and Quantum Gravity | rigour counterpoint (Prabhu–Satishchandran–Wald) |
+| 2203.14334 | Infrared Finite Scattering Theory in Quantum Field Theory and Quantum Gravity | rigour counterpoint (Prabhu–Satishchandran–Wald) |
 | 2412.01910 | Gravitational memory and soft theorems: The local perspective | local (no null infinity) derivation — closest continuum template |
 | 2107.05401 | Spin wave driven domain wall motion in easy-plane ferromagnets: a particle perspective | closest phenomenological precedent for corner B (Lan–Xiao) |
 | 1406.6051 | Propulsion of a domain wall in an antiferromagnet by magnons | adjacent (steady-state driving, not memory) |
@@ -43,7 +43,7 @@ description. All 12/12 fetched OK; no id mismatches.
 | 1910.04766 | New Soft Theorems for Goldstone Boson Amplitudes | template if lattice soft limit is corrected, not vanishing |
 | 1509.07840 | Soft theorems from anomalous symmetries | anomaly-modified soft limits (continuum) |
 | 1602.08692 | Effective field theory and the scattering process for magnons in the ferromagnet, antiferromagnet, and ferrimagnet | magnon EFT, vanishing FM scattering length |
-| 1412.5604 | Matrix product operators for symmetry-protected topological phases | core corner-A prior machinery (Williamson et al.) |
+| 1412.5604 | Matrix product operators for symmetry-protected topological phases: Gauging and edge theories | core corner-A prior machinery (Williamson et al.) |
 | 2203.12563 | Classifying phases protected by matrix product operator symmetries using matrix product states | MPO-symmetry classification |
 | 2405.00439 | Fractional domain wall statistics in spin chains with anomalous symmetries | closest MPS treatment of domain walls + anomaly |
 | 2403.04835 | Non-Invertible Symmetries, Anomalies and Scattering Amplitudes | anomaly constrains S-matrix (crossing, 1+1d) |
