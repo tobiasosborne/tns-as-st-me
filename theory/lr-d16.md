@@ -1,13 +1,14 @@
 <!-- ROLE: proposer shard for bd tns-xf4 — prove D27(LR1--LR3) for the D16
-     easy-axis XXZ kink sector.  Lane: this file + theory/checks/lr_d16_check.py.
-     Nothing else in the repo is edited; shared-file text is in MERGE PROPOSALS. -->
+     easy-axis XXZ kink sector.  R3 lane: this file,
+     theory/lr-d16-r3-response.md, theory/checks/lr_d16_check.py.  Nothing else
+     in the repo is edited; shared-file text is in MERGE PROPOSALS. -->
 
 # (LR) for D16 — charge-history local relaxation in the easy-axis XXZ kink sector
 
-**Round r2 repaired proposer draft, 2026-08-29.  Self-status: SKETCH until the
+**Round r3 repaired proposer draft, 2026-08-29.  Self-status: SKETCH until the
 L6 loop converges.  Read the HONEST STATUS section (§H) before citing anything
-here.  LR1 and LR1-GEN are the critic-confirmed unconditional result; the r2
-repair does not alter their proof.**
+here.  `LR1-GEN` and `LR-D16-EDW` are already PROVED in `claims/CLAIMS.md` on
+the r2 critic's wording; this shard is kept in lockstep with those rows.**
 
 Target: D27 (`definitions.md`), clauses (LR1), (LR2), (LR3), for the D16 model
 and a D17 kink packet.  Motivation: `M-INDEX-spec` (`claims/CLAIMS.md`) is
@@ -19,10 +20,10 @@ Summary of the verdict reached below (details in §H):
 
 | clause | D16 verdict |
 |---|---|
-| LR1 | **PROVED unconditionally** (⟨1⟩3), and at class level (⟨1⟩6); critic-confirmed, unchanged in r2 |
-| LR2 | verbatim **OPEN**; the r1 D16 claim **(LR2′) is WITHDRAWN** because its sufficient condition is false for every state obeying (H3): the escaped magnon contributes `O(1)` to `G(m)` |
-| LR3 | **PROVED from the repaired, two-clause (NR)** (⟨1⟩5), whose second clause retains `sup_m`; the monotonicity lemma fixes the majorising observable, not the pinched state; (EDW) is unconditional |
-| class statement | LR1-GEN is **PROVED**; the alleged class counterexample is **RETRACTED** and replaced by the surviving no-mean-transport scoping requirement |
+| LR1 | **PROVED unconditionally** (⟨1⟩3), and at class level (⟨1⟩6); `LR1-GEN` is PROVED in the DAG |
+| LR2 | verbatim **OPEN**; the r1 D16 claim **(LR2′) is WITHDRAWN** because its antecedent (ESC) is unavailable, while the resulting estimate is weaker than the free bound at five of six sampled times under both finite-volume propagators |
+| LR3 | **PROVED from the repaired, two-clause (NR)** (⟨1⟩5), whose second clause retains `sup_m`; the monotonicity lemma fixes the majorising observable, not the pinched state; the EDW operator inequality is unconditional |
+| class statement | `LR1-GEN` is **PROVED**; beyond it this shard supplies only an input inventory, while the unpromoted `ACE-LD-obst′` identifies an unwitnessed transport hypothesis a future theorem would have to contend with |
 
 ---
 
@@ -125,7 +126,7 @@ interaction preserves `𝒬`; with finite range this makes `𝒬` conserved and
 clause).
 
 The same finite-deviation configuration span is a common core for the
-diagonal multiplication operators `𝒬`, `𝒩_W`, and `D`.  Their quadratic-form
+diagonal multiplication operators `𝒬`, `𝒩_W`, and `N_{DW}`.  Their quadratic-form
 inequalities are obtained first for finite spatial truncations and then by
 monotone convergence.  A Heisenberg expression involving one of them means
 the corresponding extended quadratic form in `U(t)Ψ` and may equal `+∞`;
@@ -206,27 +207,32 @@ taken anywhere.
 - **(LRD-1) = D27(LR1), unconditional.**  There is one sequence `T_n→∞` such
   that for **every** finite window `W∋c_0` the two Cesàro states
   `ω^±_{W,n}` converge on `𝔄_W` (indeed on all of `𝔄`) and the double-Cesàro
-  TPM laws `p_{W,n}(ν)` converge for every `ν∈ℤ`.  Proved in ⟨1⟩3 from (H1),
-  (H3) alone — (H2), (H4) are not used.
+  TPM laws `p_{W,n}(ν)` converge for every `ν∈ℤ`.  Proved in ⟨1⟩3 from (H1)
+  only for the existence of `α_t`, together with `‖Ψ‖=1`; (H2)--(H6) are not
+  used.
 
 - **(LRD-2-BND) = a scalar bound, not a D16 relaxation result.**
   Write `Δ_W(t_-,t_+):=⟨Ψ,[𝒟_{W,t_-}(Q̂_{W,c_0}(t_+))−Q̂_{W,c_0}(t_+)]Ψ⟩` for
   D27's first-moment nondemolition defect.  Then
   `limsup_n |double-Cesàro average of Δ_{W_m}| ≤ η_m` with an **explicit**
   `η_m = 4R_{W_m}\sqrt{G(m)}`.  This estimate is proved in ⟨1⟩4, but its
-  sufficient condition `R_{W_m}²G(m)→0` is **false for every state obeying
-  (H3)**: the outgoing magnon leaves every fixed window and contributes one
-  unit to `𝒩_{W_m}`, so `G(m)≥1-o(1)` at every fixed `m`.  Thus the r1 D16
-  result called **(LR2′) is WITHDRAWN**, not patched.  **D27(LR2) verbatim is
-  OPEN**; ⟨1⟩4.⟨2⟩6 isolates the residue and names it (DPH).
+  sufficient condition `R_{W_m}²G(m)→0` is **not established for any D16
+  state obeying (H3)**: proving or refuting the needed uniform escape profile
+  requires local decay in the one-kink/one-magnon sector, i.e.
+  D18(AD1)--(AD3), which item (ii) below declines to assume.  Moreover, the
+  resulting finite-volume estimate is weaker than the free bound at five of
+  six sampled times under either propagator.  Thus the r1 D16 result called
+  **(LR2′) is WITHDRAWN**, not patched.  **D27(LR2) verbatim is OPEN**;
+  ⟨1⟩4.⟨2⟩6 isolates the residue and names it (DPH).
 
 - **(LRD-3) = D27(LR3), conditional on the repaired, two-clause (NR) of
   ⟨1⟩5.⟨2⟩7.**  `lim_{M→∞} sup_m Σ_{|ν|>M}(1+|ν|)p_{W_m}(ν)=0`.  The
   monotonicity lemma ⟨1⟩5.⟨2⟩4 replaces the family of majorising observables
   `{𝒩_{W_m}}` by the single `𝒩_{W_1}`; it does **not** remove the
   `m`-dependence of the `W_m`-pinched state.  Accordingly (NR)'s second clause
-  retains `sup_m`.  The domain-wall count is bounded unconditionally and
-  uniformly in time by ⟨1⟩5.⟨2⟩6.
+  retains `sup_m`.  The domain-wall operator inequality is unconditional;
+  its uniform-in-time expectation bound applies when `E_0` is finite and
+  conserved, exactly as in the PROVED `LR-D16-EDW` row.
 
 - **(LRD-4) optional convenience clause of D27(LR3)** (weak convergence of
   `{p_{W_m}}` to a probability `p`): **NOT proved**, and not needed.  Under
@@ -256,12 +262,15 @@ and no Lieb--Robinson velocity estimate.  It therefore proves no implication
 from "gap + Lieb--Robinson" to (LR), but neither does it refute one.  The r1
 counterexample is retracted: it named no model, and its mobile-core mechanism
 is excluded on (FN), where (LRD.5) identifies sharp-wall position with the
-conserved charge.  What survives is the independent `ACE-LD-obst′` scoping
-fact: a class theorem must exclude mean charge transport.  In the present
-(FN) register a large increment requires unbounded wrong-phase **block
-growth**, not rigid core transit.  K1--K2 supply only that every state in their
-closed product-family span is stationary; exhaustiveness is K4 and is not
-used.
+conserved charge.  Separately, `theory/ace-ld.md`'s `ACE-LD-obst′` is an
+unpromoted merge proposal in a shard at `FAIL(F1,M1--M6)`; it would obstruct
+LR3 on states satisfying (M-ESC), but no such state or model is exhibited in
+the corpus.  It therefore identifies a transport hypothesis a class theorem
+would have to contend with, not a clause the theorem is known to need.  In
+the present (FN) register a large increment requires unbounded wrong-phase
+**block growth**, not rigid core transit.  K1--K2 supply only that every state
+in their closed product-family span is stationary; exhaustiveness is K4 and
+is not used.
 
 *Justification of the display of hypotheses.* D27 verbatim, D16, D17, D26,
 `claims/CLAIMS.md` rows K1--K4, `M-INDEX-spec`, `M-INDEX-LA-strong`.
@@ -272,8 +281,9 @@ used.
 
 ## ⟨1⟩3. LEMMA LRD-1 (= D27(LR1)) — PROVED UNCONDITIONALLY
 
-**ASSUME.** (H1), (H3) of ⟨1⟩2.  (Not used: (H2), (H4), (H5), and any
-scattering, gap, completeness or channel input.)
+**ASSUME.** (H1) only for the existence of the strongly continuous dynamics
+`α_t`, and `‖Ψ‖=1`.  (Not used: (H2)--(H6), or any scattering, gap,
+completeness or channel input.)
 
 **PROVE.** There is a single sequence `T_n→∞` such that
 
@@ -455,17 +465,20 @@ therefore the double-Cesàro average of `Δ_{W_m}` has `limsup_n` at most
 
   **(ESC)** `R_{W_m}²G(m)→0` `⟹` the defect vanishes along the exhaustion
 
-is valid, but **(ESC) is false on the D16 state class (H3)**.  The `C_c^∞`
-magnon has `|v(k)|=J|sin k|` bounded away from zero on its compact momentum
-support.  At large `|t|` it lies outside every fixed `W_m`; whether it exits
-left or right, it contributes exactly one to `N_R^{W_m}` or `N_T^{W_m}`.
-Since `𝒩_{W_m}` has non-negative integer spectrum,
-`𝒩_{W_m}²⪰𝒩_{W_m}`, and hence `G(m)≥1-o(1)` for every fixed `m`.  Thus
-`R_{W_m}²G(m)` cannot vanish and `η_m` grows at least linearly in `R_{W_m}`.
-The r1 D16 result named **(LR2′) is retracted**.  The bound is not rescued by
-its constant: `|Δ_W|≤2‖Q̂_W‖` is always available, whereas at `W=[4,9]` the
-measured `4R_Wε_W(t_-)≈10--12` exceeds the free bound `2‖Q̂_W‖=6` at five of
-six sampled times.  No constant is patched to make the estimate useful.
+is valid, but **(ESC) is unavailable for the D16 state class (H3)**.  The
+free dispersion has `|v(k)|=J|sin k|` bounded away from zero on the chosen
+compact momentum support, but turning that kinematic observation into escape
+of the interacting one-kink/one-magnon state from every fixed window requires
+a local-decay/completeness statement, i.e. D18(AD1)--(AD3), which this shard
+does not assume.  Thus neither `G(m)≥1-o(1)` nor (ESC) is established here.
+The r1 D16 result named **(LR2′) is nevertheless retracted** because it was
+conditional on this undischarged antecedent.  Its finite-volume bound is also
+uninformative where sampled: under the required `H_{XXZ}` propagator at
+`N=12`, `W=[4,9]`, the six values of `4R_Wε_W(t_-)` at
+`t_-=0,-2,-5,-9,-20,-40` are `10.0,11.9,9.7,5.0,6.8,6.5`, so five exceed
+the free bound `2‖Q̂_W‖=6` (the old `H_kink` diagnostic gives the same
+five-of-six count).  No claim about the truth of (ESC), and no retuning of the
+propagator or constant, is needed for the withdrawal.
 
 Two unconditional facts about `G` remain: (i) `G` is non-increasing in `m`,
 because `𝒩_{W_m}` is a sum of
@@ -483,10 +496,12 @@ uniformly bounded function.
 
 **⟨2⟩6 (what is NOT proved: the residue (DPH), and why the shard stops here).**
 D27(LR2) verbatim asks for the double-Cesàro average of `Δ_W` to tend to `0`
-at **fixed** `W`.  ⟨2⟩5 gives only `≤4R_W\sqrt{G(W)}`, and `G(W)>0` at fixed
-`W`.  The relevant residue is **not** the exponentially small K1--K2 kink
-tail `O(q^{2d_W})`; it is the outgoing **O(1) magnon**, which leaves every
-fixed window and contributes one to `𝒩_W`.  The missing statement is
+at **fixed** `W`.  ⟨2⟩5 gives only `≤4R_W\sqrt{G(W)}` and does not establish
+that this upper bound vanishes.  The finite-volume `H_{XXZ}` diagnostic shows
+that the escaped-content contribution is `O(1)` on the two inner sampled
+windows, rather than merely the exponentially small K1--K2 kink tail
+`O(q^{2d_W})`; it does **not** establish the infinite-time escape mechanism.
+The missing statement is
 therefore
 
   **(DPH) — dephasing residue.**  At each fixed `W`,
@@ -526,10 +541,11 @@ recorded in MP-2 and not edited here.
 *Justification.* `theory/memory-index.md` ⟨1⟩6 (IDX.4), ⟨1⟩7.⟨2⟩1--⟨2⟩4,
 D27, and ⟨2⟩5.  The conditional error would be introduced *before* the
 spatial limit and removed *by* it, so the limit order would be respected;
-for D16 it is not removed because `η_m` does not vanish.
+for D16 it is not removed because no vanishing `η_m` has been established.
 
-**⟨2⟩8. QED** (the scalar bound is proved; the D16 LR2′ claim is withdrawn;
-LR2 verbatim is reduced to (DPH) and left OPEN). □
+**⟨2⟩8. QED** (the scalar bound is proved; the D16 LR2′ claim is withdrawn
+because its antecedent is unavailable; LR2 verbatim is reduced to (DPH) and
+left OPEN). □
 
 ---
 
@@ -538,7 +554,9 @@ LR2 verbatim is reduced to (DPH) and left OPEN). □
 **ASSUME.** (H1)--(H6) of ⟨1⟩2, and D27(LR1) as established in ⟨1⟩3.
 
 **PROVE.** `lim_{M→∞} sup_m Σ_{|ν|>M}(1+|ν|)p_{W_m}(ν)=0`, given the repaired,
-two-clause input (NR) of ⟨2⟩7.  Steps ⟨2⟩1--⟨2⟩6 are unconditional.
+two-clause input (NR) of ⟨2⟩7.  Steps ⟨2⟩1--⟨2⟩5 are unconditional in the
+standing register; ⟨2⟩6's operator inequality is unconditional, while its
+expectation bound assumes finite conserved `E_0`.
 
 **⟨2⟩1 (exact second-moment identity — unconditional).**  With
 `ΔQ̂_W := Q̂_{W,c_0}(t_+)−Q̂_{W,c_0}(t_-)`,
@@ -623,29 +641,40 @@ average, and by ⟨1⟩3.⟨2⟩5
 *Justification.* ⟨1⟩3.⟨2⟩5--⟨2⟩6, ⟨2⟩2--⟨2⟩4, Fatou's lemma for non-negative
 summands.
 
-**⟨2⟩6 (UNCONDITIONAL energy--domain-wall bound (EDW)).**  In the basis
+**⟨2⟩6 (energy--domain-wall bound (EDW), in the exact `LR-D16-EDW`
+register).**  In the basis
 `(|↑↓⟩,|↓↑⟩)` the D16 bond term `h^{XXZ}_{x,x+1}` is
 `(JΔ/2)I − (J/2)σ^x`, with eigenvalues `(J/2)(Δ∓1)`, and it annihilates
 `|↑↑⟩,|↓↓⟩`.  Hence, with `P^{DW}_x` the projection onto
-`span{|↑↓⟩,|↓↑⟩}_{x,x+1}` and `D:=Σ_xP^{DW}_x` the domain-wall number,
+`span{|↑↓⟩,|↓↑⟩}_{x,x+1}` and
+`N_{DW}:=Σ_xP^{DW}_x` the domain-wall number,
 
   `h^{XXZ}_{x,x+1} ⪰ \tfrac{J}{2}(Δ−1)\,P^{DW}_x`,
-  `H_{XXZ} ⪰ \tfrac{J}{2}(Δ−1)\,D ⪰ 0`.                          **(LRD.14)**
+  `H_{XXZ} ⪰ \tfrac{J}{2}(Δ−1)\,N_{DW} ⪰ 0`.                     **(LRD.14)**
 
-Since `E_0 := ⟨Ψ,H_{XXZ}Ψ⟩` is finite on a D17 packet and conserved,
+The sum is a quadratic-form inequality on the finite-deviation core of
+`ℋ_ref`; the same bondwise inequality and sum are exact on every finite open
+chain.
 
-  `⟨Ψ, α_t(D)Ψ⟩ ≤ \frac{2E_0}{J(Δ−1)}` **for every `t`**.          **(LRD.15)**
+Consequently, **for any state `Ψ` whose energy
+`E_0:=⟨Ψ,H_{XXZ}Ψ⟩` is finite and conserved by the D16 dynamics**,
+
+  `⟨Ψ, α_t(N_{DW})Ψ⟩ ≤ \frac{2E_0}{J(Δ−1)}` **for every `t`**.     **(LRD.15)**
 
 For the bare K1--K2 kink, ⟨1⟩1.⟨2⟩2 gives `E_0=C_K=\tfrac{J}{2}\sqrt{Δ²−1}`
-and hence `⟨D⟩ ≤ \sqrt{(Δ+1)/(Δ−1)}`, which `→1` as `Δ→∞` (one wall) and
+and hence `⟨N_{DW}⟩ ≤ \sqrt{(Δ+1)/(Δ−1)}`, which `→1` as `Δ→∞` (one wall) and
 diverges as `Δ→1⁺` (the kink delocalises) — both as they must.  For the kink
-plus one magnon of profile `φ`, `E_0=C_K+∫\frac{dk}{2π}|φ(k)|²ω(k)`.
+plus magnon state used by the checker, finiteness and conservation are
+verified directly under the finite-chain `H_{XXZ}` propagator; this shard does
+not derive those two state properties from D17.
 
 *Justification.* D16's displayed `h^{XXZ}`, the explicit `2×2` block (the same
 block as claim **K1**'s ⟨1⟩1, before the telescoping field is added),
-`Δ>1`, conservation of `H_{XXZ}` under `α_t`, and ⟨1⟩1.⟨2⟩2 for the value of
-`C_K`.  Named computation **LRD-EDW**; certified numerically as row
-`LRD-C4` of `theory/checks/lr_d16_check.py`.
+`Δ>1`, the stated finiteness-and-conservation hypotheses on `E_0`, and
+⟨1⟩1.⟨2⟩2 for the value of `C_K`.  Named computation **LRD-EDW**; certified
+numerically as row `LRD-C4` of `theory/checks/lr_d16_check.py`.  This is the
+PROVED `LR-D16-EDW` row of `claims/CLAIMS.md`; it bounds the **number** of
+phase boundaries and nothing about their length.
 
 **⟨2⟩7 (the residual input (NR), stated once and used once).**
 
@@ -711,11 +740,12 @@ shard.
 the low-energy kink states, and does not place D16 outside a ballistic class.
 The exhaustiveness/no-recoil upgrade is precisely K4 (CONJECTURE).
 
-**⟨2⟩9. QED** (LR3 proved from (NR); ⟨2⟩1--⟨2⟩6 and ⟨2⟩8 unconditional). □
+**⟨2⟩9. QED** (LR3 proved from (NR); ⟨2⟩1--⟨2⟩5 and ⟨2⟩8 unconditional in
+the standing register; ⟨2⟩6 in the exact `LR-D16-EDW` register). □
 
 ---
 
-## ⟨1⟩6. CLASS-LEVEL CONTENT — one theorem and one scoping requirement
+## ⟨1⟩6. CLASS-LEVEL CONTENT — one theorem and one bounded inventory
 
 **⟨2⟩1 (inventory: what the D16 proof actually consumed).**  Reading
 ⟨1⟩3--⟨1⟩5 backwards, the inputs are exactly:
@@ -726,7 +756,7 @@ The exhaustiveness/no-recoil upgrade is precisely K4 (CONJECTURE).
 | `Q̂_{W,c_0}∈𝔄_W` self-adjoint, finite spectrum | ⟨1⟩3, ⟨1⟩4 | no (finite local dim) |
 | `spec Q̂_{W,c_0}⊂ℤ` (D26(INT)) | ⟨1⟩4.⟨2⟩4 | no (INT) |
 | (FN): selected vector an eigenvector of a conserved regularised charge | ⟨1⟩4.⟨2⟩4, ⟨1⟩5.⟨2⟩3 | no, but a hypothesis on the vector |
-| scalar escape bound `4R_{W_m}\sqrt{G(m)}`; (ESC) is false on (H3) | ⟨1⟩4.⟨2⟩5 | **yes** |
+| scalar escape bound `4R_{W_m}\sqrt{G(m)}`; (ESC) is unavailable on (H3) | ⟨1⟩4.⟨2⟩5 | **yes** |
 | repaired two-clause (NR), including `sup_m` after pinching | ⟨1⟩5.⟨2⟩7 | **yes** |
 | stationarity of the closed K1--K2 family span (no exhaustiveness) | ⟨1⟩5.⟨2⟩8 (motivation only) | **yes** |
 | spectral gap | **nowhere** | — |
@@ -742,17 +772,21 @@ Lieb--Robinson" is **not** its hypothesis set; see ⟨2⟩5.
 **⟨2⟩2 (THEOREM LR1-GEN — PROVED).**  Let `𝔄` be the quasi-local algebra of a
 quantum spin system on a countable lattice with uniformly finite local
 dimension, `α_t` a strongly continuous one-parameter group of
-`*`-automorphisms of `𝔄` (e.g. any finite-range or exponentially decaying
-translation-invariant interaction), `Ψ` any unit vector in any GNS
-representation, `c_0` any cut and `Q̂_{W,c_0}∈𝔄_W` any self-adjoint window
-observable with finite spectrum for each finite `W`.  For **any prescribed**
-sequence `S_n→∞`, there is a subsequence `T_n=S_{n_j}` along which all the
-Cesàro states and all double-Cesàro TPM laws converge, and each `p_W` is a
-probability on the finite set `spec Q̂_W − spec Q̂_W`.  In particular
-**D27(LR1) holds** with one sequence for all windows.
+`*`-automorphisms of `𝔄`, `Ψ` a unit vector in any representation of `𝔄`,
+`c_0` a cut, and `Q̂_{W,c_0}∈𝔄_W` self-adjoint with finite spectrum at each
+finite window `W∋c_0`.  Then **every** prescribed sequence `S_n→∞` admits a
+subsequence `T_n=S_{n_j}` along which, **simultaneously for every such `W`**,
+the two Cesàro states converge weak-`*` on all of `𝔄` to states and every
+double-Cesàro TPM weight converges.  Each limit `p_W` is a probability
+supported in the finite set `spec Q̂_W−spec Q̂_W`, which under D26(INT) lies
+in `ℤ`.  Clause 1 is therefore a theorem but is not removable: it binds the
+single sequence used by D27's clauses 2--3.  Not claimed are pointwise-in-time
+convergence, full-sequence convergence, or anything about D27(LR2) or (LR3).
 
-*Proof.* Verbatim ⟨1⟩3, whose ⟨2⟩7 records that only these three inputs were
-used. □
+*Proof.* The proof of ⟨1⟩3 with its index sequence `T=1,2,3,…` replaced by the
+prescribed `S_n`; nested extraction makes the diagonal a genuine subsequence.
+⟨1⟩3.⟨2⟩7 records that only separability, strong continuity, finite window
+spectrum, and `‖Ψ‖=1` are used. □
 
 **Consequence worth recording.**  Clause 1 existentially binds the `T_n` used
 by clauses 2--3 and therefore must remain in D27.  LR1-GEN says that for any
@@ -766,21 +800,24 @@ regularised charge `𝒬` with `𝒬Ψ=𝒬_0Ψ` and `Q̂_{W_m,c_0}Ψ_t→𝒬_0
 register of ⟨1⟩1.⟨2⟩5); and the escape profile `G(m)` of (LRD.10).  If
 `R_{W_m}²G(m)→0` then the exhaustion defect vanishes, with the explicit rate
 `η_m=4R_{W_m}\sqrt{G(m)}`.  This is a reusable conditional implication.  It
-has no D16 instance under (H3), where ⟨1⟩4.⟨2⟩5 proves (ESC) false.
+has no established D16 instance under (H3), where ⟨1⟩4.⟨2⟩5 records that
+(ESC) is unavailable without a local-decay input.
 
 *Proof.* Verbatim ⟨1⟩4.⟨2⟩1--⟨2⟩5, ⟨2⟩7; no D16-specific fact enters. □
 
 **⟨2⟩4 (SCOPING REQUIREMENT LR3-SCOPE — what actually survives).**  Neither a
 spectral gap nor a Lieb--Robinson velocity estimate is used anywhere in
-⟨1⟩3--⟨1⟩5.  Therefore this shard supplies no proof that those two inputs
-imply (LR).  Independently, `theory/ace-ld.md`'s proved `ACE-LD-obst′` says
-that D27(LR3) fails under its explicit mean-tail-transport hypothesis
-(M-ESC).  Any future class theorem must therefore include a no-mean-transport
-clause strong enough to exclude (M-ESC), or derive one from named model
-structure.
+⟨1⟩3--⟨1⟩5, so this shard supplies no proof that those two inputs imply (LR),
+and no refutation either.  Separately, `theory/ace-ld.md`'s `ACE-LD-obst′` —
+a merge proposal, not yet a `claims/CLAIMS.md` row, in a shard at
+`FAIL(F1,M1--M6)` — would show that D27(LR3) fails on states satisfying
+(M-ESC).  No such state or model is exhibited anywhere in this corpus, so
+this identifies a hypothesis a class theorem would have to *contend with*,
+not a clause it is known to need.
 
-*Justification.* Inventory ⟨2⟩1 and `ACE-LD-obst′` in `theory/ace-ld.md`
-⟨1⟩5.  This is a necessary scoping requirement, not a model counterexample.
+*Justification.* Inventory ⟨2⟩1, the status of `ACE-LD-obst′` in
+`theory/ace-ld.md` and `theory/verdicts/ace-ld-r2.md`, and the explicit absence
+of an (M-ESC) witness recorded by that shard.
 
 **⟨2⟩5 (RETRACTION of the r1 class counterexample).**  The r1 sentence
 "gap + Lieb--Robinson ⟹ (LR) is false" is withdrawn.  It named, constructed,
@@ -795,17 +832,21 @@ that the D16 kink is ballistic.
 *Justification.* (LRD.5), (FN), `theory/ace-ld.md`'s withdrawal, and the
 absence of a named model in r1.  The surviving statement is ⟨2⟩4 only.
 
-**⟨2⟩6 (what a full class theorem would have to add).**  Three items:
+**⟨2⟩6 (unresolved inputs a full class theorem would have to address).**
+Three items:
 (a) (DPH) of ⟨1⟩4.⟨2⟩6 for verbatim LR2; (b) the (FN) register, which cannot
-be upgraded to the REFUTED sector-wide `M-INDEX-LA-strong`; and (c) a genuine
-no-mean-transport estimate controlling wrong-phase block **length**, such as
-the repaired two-clause (NR).  (EDW) controls block number only.  K1--K2 show
-stationarity only on their closed family span; using that span to assert
-model-wide no recoil or to exhaust the low-energy kink states would require
-K4 (CONJECTURE) and is forbidden.
+be upgraded to the REFUTED sector-wide `M-INDEX-LA-strong`; and (c) control of
+wrong-phase block **length**, such as the repaired two-clause (NR).  The
+unwitnessed (M-ESC) hypothesis is a possible obstruction to that third item,
+not proof that a no-mean-transport clause is necessary.  (EDW) controls block
+number only.  K1--K2 show stationarity only on their closed family span;
+using that span to assert model-wide no recoil or to exhaust the low-energy
+kink states would require K4 (CONJECTURE) and is forbidden.
 
-**⟨2⟩7. QED** (LR1-GEN proved; LR2-BOUND-GEN conditional but empty for the
-D16 (H3) class; the unsupported counterexample retracted; LR3-SCOPE retained). □
+**⟨2⟩7. QED** (`LR1-GEN` proved; `LR2-BOUND-GEN` conditional with no
+established D16 (H3) instance; the unsupported counterexample retracted;
+LR3-SCOPE reduced to the inventory and the unpromoted, unwitnessed
+`ACE-LD-obst′` conditional). □
 
 ---
 
@@ -815,59 +856,64 @@ D16 at `J=1`, `Δ=2.5`, `N=12`, cut `c_0=6`, windows `W_1=[4,9] ⊂ W_2=[3,10] �
 W_3=[2,11]`, exact diagonalization in the conserved `S^z` sectors, exact
 spectral time evolution, dressed-kink initial state (⟨1⟩1.⟨2⟩7).
 
-The r2 checker was simplified gate-by-gate before registration.  C1(b) tests
-the **raw** `q_w` array rather than already-rounded keys.  C3(a) constructs
-`α_{t_±}(Q̂_W)` as independent matrices on an `N=8` sector and compares the
-pinched square with the separately generated TPM law.  C3(d) tests only the
-honest `W_m`-pinched majorant; C3(e) separately exposes the pinching's
-`m`-dependence.  C4(b) evolves with `H_XXZ` and gates its energy conservation.
-The tautological r1 C4(c) ratio and the subsumed r1 C6(b) row were deleted;
-C4(c) now checks the actual finite-chain equality `⟨K|H_XXZ|K⟩≈C_K`.
+The r3 checker was simplified gate-by-gate before registration.  C1(b) gates
+only the **raw** `q_w` array; the integer-increment and support observations
+derived from the same spectral blocks are labelled DISPLAY rather than used
+as tautological conjuncts.  C3(a) constructs `α_{t_±}(Q̂_W)` as independent
+matrices on an `N=8` sector and compares the pinched square with the separately
+generated TPM law.  C3(d) is labelled DISPLAY because it is deductively
+subsumed by C3(b)+C3(c).  C2(d) and C3(e) now evolve with `H_XXZ` and each
+gates its energy conservation; registered mutants revert each row to
+`H_kink`.  C3(e) gates relative variation only, with no ordering requirement.
+C4(b) also evolves with `H_XXZ` and gates its energy conservation.  The
+tautological r1 C4(c) ratio and the subsumed r1 C6(b) row remain deleted;
+C4(c) checks the actual finite-chain equality `⟨K|H_XXZ|K⟩≈C_K`.
 
 | row | evidence / green value | registered mutant (exact exit path) |
 |---|---|---|
-| C1(a) | TPM normalisation, error `6.66e−16` | `c1-nonunitary` → C1(a) |
-| C1(b) | raw `spec Q_W⊂ℤ`, support in `spec−spec`; both integer defects `0` | `c1-noninteger` (`q_w↦q_w+0.3`) → C1(b) |
-| C2(a) | `Δ_W(t,t)=0`, error `1.11e−15` | `c2-unequal-time` → C2(a) |
-| C2(b) | `|Δ_W|≤4R_Wε_W`, slack `−4.110` | `c2-small-constant` → C2(b) |
-| C2(c) | `ε_W²≤⟨Q̂_{W^c}²⟩`, slack `−1.462e−4` | `c2-mismatched-complement` → C2(c) |
-| C2(d) | **negative diagnostic:** `G=0.990,0.965,0.950`, `η=11.9,15.7,19.5`; (ESC) fails | `c2-delete-outside-data` → C2(d) |
-| C3(a) | independent matrix (LRD.11): `1.2910437765` both routes, error `2.00e−15` | `c3-perturb-final-evolution` → C3(a) |
-| C3(b) | edge split (LRD.12), slack `−3.280e−2` | `c3-mismatched-complement` → C3(b) |
+| C1(a) | propagator-independent TPM normalisation, error `6.66e−16` | `c1-nonunitary` → C1(a) |
+| C1(b) | raw `spec Q_W⊂ℤ`, defect `0`; increment/support arithmetic DISPLAY only | `c1-noninteger` (`q_w↦q_w+0.3`) → C1(b) |
+| C2(a) | `Δ_W(t,t)=0`, error `1.89e−15` | `c2-unequal-time` → C2(a) |
+| C2(b) | `|Δ_W|≤4R_Wε_W`, slack `−4.736` | `c2-small-constant` → C2(b) |
+| C2(c) | `ε_W²≤⟨Q̂_{W^c}²⟩`, slack `−1.350e−4` | `c2-mismatched-complement` → C2(c) |
+| C2(d) | `H_XXZ` finite-volume display: `G=0.989,0.949,0.278`, `η=11.9,15.6,10.5`; only the two inner windows are gated; `4R_Wε_W>6` at five of six samples; energy drift `2.18e−14` | `c2-delete-outside-data`, `c2-kink-propagator` → C2(d) |
+| C3(a) | independent matrix (LRD.11): `0.5159528928` both routes, error `0` | `c3-perturb-final-evolution` → C3(a) |
+| C3(b) | edge split (LRD.12), slack `−1.824e−1` | `c3-mismatched-complement` → C3(b) |
 | C3(c) | `𝒩_{W'}⪯𝒩_W`, `|Q̂_{W^c}|⪯𝒩_W`, exact | `c3-signed-majorant` → C3(c) |
-| C3(d) | honest `W_m`-pinched fixed-observable bound, slack `−1.211e−1` | `c3-delete-majorant` → C3(d) |
-| C3(e) | **negative diagnostic:** pinched term `1.383/1.797/1.872`, spread `0.490` | `c3-freeze-pinching` → C3(e) |
+| C3(d) | **DISPLAY, not an evidence row:** fixed-observable slack `−2.882e−1`; its majorant exceeds C3(b)'s by at least `5.490e−4`, so C3(b)+C3(c) imply it | none (deductively subsumed) |
+| C3(e) | `H_XXZ` finite sample `1.607/1.670/1.747`, spread/mean `0.084`, with no direction claim; energy drift `9.77e−15` | `c3-freeze-pinching`, `c3-kink-propagator` → C3(e) |
 | C4(a) | bond EDW, minimum eigenvalue `−0.0` | `c4-wrong-gap` → C4(a) |
-| C4(b) | `H_XXZ` energy drift `1.11e−14`; `max⟨D⟩=3.053≤4.753` | `c4-kink-propagator` → C4(b) |
+| C4(b) | `H_XXZ` energy drift `1.11e−14`; `max⟨N_{DW}⟩=3.053≤4.753` | `c4-kink-propagator` → C4(b) |
 | C4(c) | `⟨K|H_XXZ|K⟩=1.1456439081`, `C_K=1.1456439237` | `c4-sharp-calibration` → C4(c) |
 | C5(a) | K1--K2 local kernel, residual `8.01e−19` | `c5-wrong-root` → C5(a) |
 | C5(b) | distinct kink-bond positivity gate, minimum eigenvalue `−0.0` | `c5-overstrong-field` → C5(b) |
 | C6(a) | sharp/dressed overlap `0.9545`, sharp energy `0.1044` | `c6-identify-sharp-dressed` → C6(a) |
 
 **Exit paths and reachability.**
-`python3 -O theory/checks/lr_d16_check.py` → **exit 0**, 17/17 green.
+`python3 -O theory/checks/lr_d16_check.py` → **exit 0**, 16/16 evidence rows
+green (plus two labelled displays).
 `python3 -O theory/checks/lr_d16_check.py --red-all` → **exit 1, RED-OK
-17/17**.  It prints the row-by-row table above verbatim as exit paths.  Each
-individual `--red MODE` evaluates the target row group directly, evaluates
-every gate in that group without short-circuiting, and exits 1 only when the
-failed-row list is **exactly** the registered singleton; a missed or collateral
-path exits 2.  Thus no row is unreachable and no two modes are bit-identical
-in effect.  Data mutations include a non-unitary propagator, noninteger raw
-spectrum, mismatched complement, deleted outside-count data, perturbed final
-Heisenberg evolution, frozen `W_1` pinching, wrong finite-volume propagator,
-and sharp/dressed substitution.  No bare `assert` appears, so `-O` is strict.
+18/18 mutants**.  Each `--red MODE` evaluates the **full 16-row suite** without
+short-circuiting and exits 1 only when the failed-row list is exactly the
+registered singleton; a missed or collateral path exits 2.  Thus no evidence
+row is unreachable and no collateral failure is masked.  Data mutations
+include a non-unitary propagator, noninteger raw spectrum, mismatched
+complement, deleted outside-count data, perturbed final Heisenberg evolution,
+frozen `W_1` pinching, three independently registered wrong finite-volume
+propagators, and sharp/dressed substitution.  No bare `assert` appears, so
+`-O` is strict.
 
 ---
 
 ## §H. HONEST STATUS
 
-**Proved unconditionally for D16 (nothing further assumed beyond D16, D17 and
-the standing setup).**
+**Proved unconditionally or algebraically in the stated register.**
 1. **D27(LR1)** — ⟨1⟩3.  Complete, and it needed less than expected: only
    separability of `𝔄`, strong continuity of `α_t`, and finiteness of
-   `spec Q̂_{W,c_0}`.  It generalises verbatim (⟨1⟩6.⟨2⟩2, **LR1-GEN**): from
-   any prescribed `T_n→∞`, a subsequence supplies clause 1.  Clause 1 remains
-   the binder for the sequence quantified over by clauses 2--3.
+   `spec Q̂_{W,c_0}` and `‖Ψ‖=1`.  The same proof with the index sequence
+   replaced gives the PROVED **LR1-GEN** row: from any prescribed `T_n→∞`, a
+   subsequence supplies clause 1.  Clause 1 remains the binder for the
+   sequence quantified over by clauses 2--3.
 2. The exact second-moment identity (LRD.11) and the equal-time and
    boundary-current forms of the LR2 defect, (LRD.7).
 3. The **monotonicity lemma** ⟨1⟩5.⟨2⟩4: the escaped-content majorant is
@@ -875,8 +921,10 @@ the standing setup).**
    to `𝒩_{W_1}`.  The `W_m`-pinched state remains `m`-dependent, so `sup_m`
    remains in (NR)'s second clause.
 4. The **energy--domain-wall bound (EDW)** ⟨1⟩5.⟨2⟩6:
-   `H_{XXZ} ⪰ \tfrac{J}{2}(Δ−1)D`, hence `⟨D(t)⟩ ≤ 2E_0/(J(Δ−1))` for all
-   time.  Elementary, and apparently not recorded elsewhere in the campaign.
+   `H_{XXZ} ⪰ \tfrac{J}{2}(Δ−1)N_{DW}` as a quadratic-form inequality.  The
+   PROVED `LR-D16-EDW` row states the consequence
+   `⟨N_{DW}(t)⟩≤2E_0/(J(Δ−1))` for states whose `E_0` is finite and conserved;
+   those two state properties are hypotheses, not derived here from D17.
 5. **Flatness of the K1--K2 kink family** ⟨1⟩5.⟨2⟩8, derived here from the two
    PROVED rows K1 and K2 and nothing else: the closed span of the exact
    zero-energy family lies in `ker H_kink`, so every state in that span is
@@ -886,39 +934,45 @@ the standing setup).**
 **Proved conditionally, with the condition named.**
 6. **LRD-2-BND** — ⟨1⟩4.⟨2⟩5 — the scalar estimate with
    `η_m=4R_{W_m}\sqrt{G(m)}`.  Its abstract (ESC) consequence is valid but
-   empty for the D16 (H3) class; it is not listed as a D16 LR2′ result.
+   unavailable for the D16 (H3) class without local decay; it is not listed
+   as a D16 LR2′ result.
 7. **D27(LR3)** — ⟨1⟩5.⟨2⟩7 — conditional on the repaired **two-clause
    (NR)**, including `sup_m` in the pinched clause, with tail `2S_{NR}/M`.
 
 **Left OPEN, and stated as such.**
 8. **D27(LR2) verbatim** is **not** proved.  ⟨1⟩4.⟨2⟩6 isolates the residue
    (DPH) and marks it CONJECTURE.  The bound of ⟨1⟩4.⟨2⟩3 is uniform in the
-   times but does not vanish at fixed `W`, because the outgoing magnon
-   contributes `O(1)` to `𝒩_W`; the exponentially small kink tail is not the
-   obstruction.  The r1 D16 **(LR2′) is WITHDRAWN** because (ESC) is false.
-   We did **not** patch this by asserting operator
-   asymptotic commutativity, which D27 forbids and which would be a strictly
-   stronger claim.  The abstract downstream mitigation has no D16 antecedent;
-   `M-INDEX-spec` is unaffected and unimproved, and `M-INDEX-fin` is safe.
-9. **The two clauses of (NR)** themselves.  (EDW) bounds the **number** of phase boundaries uniformly
-   in time; it does not bound their **length**, because a one-dimensional
-   wrong-phase block of any length carries the same `O(1)` Ising cost.  That
-   is the whole gap.
+   times but supplies no vanishing estimate at fixed `W`.  The r1 D16
+   **(LR2′) is WITHDRAWN** because (ESC) is unavailable; establishing the
+   escape statement used in r2 would require D18(AD1)--(AD3).  At the sampled
+   finite-volume points the bound is also weaker than the free bound at five
+   of six times under both propagators.  We did **not** patch this by asserting
+   operator asymptotic commutativity, which D27 forbids and which would be a
+   strictly stronger claim.  `M-INDEX-spec` is unaffected and unimproved, and
+   `M-INDEX-fin` is safe.
+9. **The two clauses of (NR)** themselves.  Given finite conserved energy,
+   (EDW) bounds the **number** of phase boundaries uniformly in time; it does
+   not bound their **length**, because a one-dimensional wrong-phase block of
+   any length carries the same `O(1)` Ising cost.  That is the whole gap.
 10. **D27(LR3)'s optional convenience clause** (weak convergence of
     `{p_{W_m}}`): not proved, not needed, not claimed.
 11. The **class theorem beyond LR1-GEN**.  The r1 alleged counterexample to
     "gap + Lieb--Robinson ⟹ (LR)" is retracted: no model was supplied and its
     core-transit mechanism contradicts (FN)/(LRD.5).  What survives is the
-    scoping requirement LR3-SCOPE: this shard uses neither a gap nor an LR
-    velocity, and `ACE-LD-obst′` independently requires a no-mean-transport
-    clause in any future class theorem.
+    inventory: this shard uses neither a gap nor an LR velocity.
+    `ACE-LD-obst′` is an unpromoted claim in a failing shard and has no
+    exhibited (M-ESC) witness; it identifies a hypothesis a future theorem
+    must contend with, not a clause it is known to need.
 
-**Numerical evidence only (not proof).**  The §C table.  At `N=12`, C2(d)
-shows `G=0.990,0.965,0.950` and `η=11.9,15.7,19.5`, evidence **against** the
-r1 D16 LR2′ claim.  C3(e) shows the pinched term
-`1.383/1.797/1.872`, evidence for retaining `sup_m`.  Algebraic rows certify
-the displayed identities and operator inequalities; none certifies
-asymptotic physics.  C4(c) checks the non-tautological finite-chain equality
+**Numerical displays only (not asymptotic evidence).**  Under `H_{XXZ}` at
+`N=12`, C2(d) gives `G=0.989,0.949,0.278` and
+`η=11.9,15.6,10.5`.  Only the two inner-window values illustrate `O(1)`
+escaped content on the sampled time interval; `W_3=[2,11]` leaves only two
+sites outside and carries no escape information.  C3(e) gives the pinched
+sample `1.607/1.670/1.747`, spread/mean `0.084`: finite-sample dependence,
+with no general monotonicity direction and no numerical proof that `sup_m` is
+needed.  Retaining `sup_m` is instead forced by the proof, which does not
+derive a uniform bound without it.  C4(c) checks the finite-chain equality
 `⟨K|H_XXZ|K⟩=1.1456439081` against `C_K=1.1456439237`.
 
 **Bearing on the live cross-lane obstruction.**  ⟨1⟩5.⟨2⟩4 proves only that
@@ -927,8 +981,9 @@ state remains `m`-dependent, so the corresponding term stays under `sup_m`.
 An increment `|ν|≍2s|W_m|` cannot arise from the `c_0` offset (which cancels
 at fixed `W`) and, under (FN), cannot arise from rigid sharp-core transit; it
 requires wrong-phase block growth in the state or pinched state.  Separately,
-`ACE-LD-obst′` proves that mean tail transport must be excluded by a class
-theorem.  No model counterexample is claimed here.
+the unpromoted `ACE-LD-obst′` conditional would obstruct LR3 if an (M-ESC)
+state existed; none is exhibited in the corpus.  No model counterexample or
+necessity claim is made here.
 
 **Register discipline inherited and respected.**  `δx` is never claimed
 quantized; it is a `{p_ν}`-average (`M-INDEX-spec`'s adjudicated scoping).  No
@@ -956,24 +1011,31 @@ contribute zero.`", append:
 > `theory/lr-d16.md` ⟨1⟩3 and ⟨1⟩6.⟨2⟩2, LR1-GEN.)*
 
 **MP-2 — HOLD.**  Do not merge the r1 LR2′ mitigation: its antecedent is
-false for D16.  `M-INDEX-spec` is unaffected and unimproved; `M-INDEX-fin` is
-safe.  Lane-local cleanup proposed separately: `memory-index.md`
+unavailable for D16.  `M-INDEX-spec` is unaffected and unimproved;
+`M-INDEX-fin` is safe.  Lane-local cleanup proposed separately: `memory-index.md`
 ⟨1⟩5.⟨2⟩1 should cite D27's clause-1 TPM display rather than D27(LR2), because
 it uses no dephasing limit.
 
-**MP-3 — `claims/CLAIMS.md`: two PROVED rows; LR-D16 remains HOLD.**
-
-| id | statement | proposed status | depends-on | where-proved | where-tested |
-|---|---|---|---|---|---|
-| LR1-GEN | For any quantum spin system with separable quasi-local `𝔄`, strongly continuous `α_t`, and finite-spectrum window observables, every prescribed `T_n→∞` has a subsequence on which both Cesàro states and all double-Cesàro TPM laws converge simultaneously for every fixed `W`; each limit is a probability on `spec Q̂_W−spec Q̂_W` (and under D26, on `ℤ`).  No gap, LR velocity, scattering, or property of `Ψ` beyond normalisation is used. | PROVED | D26, D27 | theory/lr-d16.md ⟨1⟩3, ⟨1⟩6.⟨2⟩2 | theory/checks/lr_d16_check.py C1(a,b): green 0; `--red c1-nonunitary`, `--red c1-noninteger` each exit 1 |
-| LR-D16-EDW | In D16, `h^{XXZ}_{x,x+1} ⪰ \tfrac{J}{2}(Δ−1)P^{DW}_x`, hence in infinite volume `H_{XXZ} ⪰ \tfrac{J}{2}(Δ−1)D` and `⟨Ψ,α_t(D)Ψ⟩ ≤ 2E_0/(J(Δ−1))` for all `t`, with `E_0=⟨Ψ,H_{XXZ}Ψ⟩` conserved and finite on a D17 packet.  Bounds the NUMBER of phase boundaries, not their length. | PROVED | D16 | theory/lr-d16.md ⟨1⟩5.⟨2⟩6 | theory/checks/lr_d16_check.py C4(a--c): green 0; `--red c4-wrong-gap`, `--red c4-kink-propagator`, `--red c4-sharp-calibration` each exit 1; finite open-chain dynamics uses `H_XXZ`, not `H_kink` |
+**MP-3 — APPLIED by the orchestrator; no longer a proposal.**  `LR1-GEN` and
+`LR-D16-EDW` are PROVED in `claims/CLAIMS.md` on the r2 critic's exact cells.
+The authoritative wording is those DAG rows, not the shorter r2 table that
+formerly appeared here.  Lockstep points now reflected in this shard are:
+`LR1-GEN` quantifies over every prescribed sequence and claims no pointwise or
+full-sequence convergence; `LR-D16-EDW` uses `P^{DW}_x` and `N_{DW}`, and
+carries finiteness and conservation of `E_0` as hypotheses on the selected
+state.  C1(b)'s spectral support is proved analytically in ⟨1⟩3.⟨2⟩4--⟨2⟩6;
+its checker gates raw integrality only and labels the by-construction support
+arithmetic as DISPLAY.
 
 `LR-D16` remains **HOLD**: LR1 is unconditional; D16 LR2′ is withdrawn and
 LR2 remains open; LR3 holds only under repaired two-clause (NR).
 
 **MP-4 — `theory/TRIANGLE.md` / `HANDOFF.md` one-liner.**  "`M-INDEX-spec`
 still has no fully unconditional dynamical instance: for D16, LR1 is now
-unconditional and LR3 is reduced to the single named input (NR), but LR2
-verbatim remains open (residue (DPH)).  The honest headline is *one clause
-proved outright, one clause proved in a weakened form that suffices
-downstream, one clause reduced to a single named dynamical hypothesis*."
+unconditional — indeed a class theorem, `LR1-GEN` — and LR3 is reduced to the
+single named input (NR), but LR2 verbatim remains open (residue (DPH)).  The
+honest headline is *one clause proved outright, one clause still open with its
+residue named, and one clause reduced to a named two-clause dynamical
+hypothesis*.  The clause that became unconditional is the one that carried no
+content: D27's clause 1 only binds the sequence its clauses 2--3 quantify
+over."

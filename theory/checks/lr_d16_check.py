@@ -82,15 +82,6 @@ RED_TARGETS = {
     "c6-identify-sharp-dressed": R_C6A,
 }
 
-ROW_GROUP = {
-    R_C1A: "c1", R_C1B: "c1",
-    R_C2A: "c2", R_C2B: "c2", R_C2C: "c2", R_C2D: "c2",
-    R_C3A: "c3", R_C3B: "c3", R_C3C: "c3", R_C3E: "c3",
-    R_C4A: "c4", R_C4B: "c4", R_C4C: "c4",
-    R_C5A: "c5", R_C5B: "c5", R_C6A: "c6",
-}
-
-
 def sector_basis(n, ndown):
     states = []
     for pos in combinations(range(n), ndown):
@@ -317,8 +308,10 @@ def row_c1(ctx, led, mode):
     if mode == "c1-noninteger":
         q_w = q_w + 0.3
     blocks = spectral_blocks(q_w)
-    prop = (ScaledPropagator(ctx.px, 1.37)
-            if mode == "c1-nonunitary" else ctx.px)
+    # C1 is the propagator-independent finite-W TPM arithmetic recorded in
+    # LR1-GEN's DAG cell; retain its adjudicated unitary fixture verbatim.
+    prop = (ScaledPropagator(ctx.pk, 1.37)
+            if mode == "c1-nonunitary" else ctx.pk)
     psi_tm = prop.evolve(env["psi0"], -8.0)
     law, _ = tpm_law(prop, psi_tm, q_w, blocks, 11.0)
     norm_err = abs(sum(law.values()) - 1.0)
@@ -580,7 +573,8 @@ def row_c4(ctx, led, mode):
         inequality_slack = max(inequality_slack, dcount - bound)
         dmax = max(dmax, dcount)
     led.add(R_C4B, energy_drift < TOL_IDENT and inequality_slack <= TOL_PSD,
-            f"max energy drift = {energy_drift:.3e}; max <D> = {dmax:.3f} "
+            f"max energy drift = {energy_drift:.3e}; "
+            f"max <N_DW> = {dmax:.3f} "
             f"<= {bound:.3f}; slack = {inequality_slack:+.3e}")
 
     vector = (sharp_kink_vector(env["st_k"], env["ix_k"], env["n"], env["c0"])
