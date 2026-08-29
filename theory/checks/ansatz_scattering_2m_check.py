@@ -8,7 +8,30 @@ through three.  Its ratio-route gate is only route agreement in rescaled
 units; it does not certify the absence of a two-sided support-length factor.
 The seven registered mutations must be run separately and must exit with
 status one.  Together they reach every gate, including the direct-value,
-block-agreement, lambda-domain, and route-independence gates.
+block-agreement, lambda-domain, and route-shape gates.
+
+WHAT EACH GATE IS EVIDENCE FOR.  G1-G3 (C1a) and G4-G7 (C1b) are numerical:
+they compare computed numbers against an independent closed form or against
+each other, and every one of them moves when the tensor, the fixed point, the
+observable, the operator norms or the ground truth is mutated.  G8
+(``route_guard``) is NOT numerical.  It evaluates
+
+    | raw - (raw - omega_C*omega_D) - omega_C*omega_D |,
+
+which is identically zero for every tensor, fixed point, observable,
+separation and support length; the green run prints exactly 0.0 by algebra.
+It is a CODE-SHAPE GUARD: it fires only if a future edit makes the two C1b
+route expressions the same expression, in which case the agreement gate G4
+would silently certify 0.0 on a collapsed pair.  It certifies no number about
+AKLT, about D31-C2, or about anything the AC-EX-2M row claims (r5 R5-O3).
+Route *agreement* is certified by G4, which is live and sharp at 1e-6.
+Do not "upgrade" this gate to the delta-sensitivity variant
+``subtracted = propagated - (1+delta)*fixed_projection(right)`` with the
+response compared against ``delta*omega_C*omega_D``: that residual is also an
+exact identity by linearity of ``block_transfer`` and ``fixed_projection``,
+measured at 8e-17..3e-16 (pure roundoff) and unmoved by the wrong-tensor,
+wrong-fixed-point and wrong-observable data mutants.  It would be a sixth
+identically-zero gate wearing a numerical name.
 
 No Python ``assert`` is used, so every gate remains live under ``python3 -O``.
 """
@@ -143,8 +166,8 @@ class C1bResult:
     max_ratio_location: tuple[int, int, int]
     ratio_route_error: float
     ratio_route_location: tuple[int, int, int]
-    route_independence_error: float
-    route_independence_location: tuple[int, int, int]
+    route_shape_error: float
+    route_shape_location: tuple[int, int, int]
     monotonicity_excess: float
     monotonicity_location: tuple[int, int, int]
 
@@ -180,8 +203,8 @@ def check_c1b(
     lambda_tilde: float,
 ) -> C1bResult:
     agreement_error = 0.0
-    route_independence_error = 0.0
-    route_independence_location = (1, 1, 2)
+    route_shape_error = 0.0
+    route_shape_location = (1, 1, 2)
     ratios: dict[tuple[int, int, int], float] = {}
     direct_ratios: dict[tuple[int, int, int], float] = {}
 
@@ -207,10 +230,17 @@ def check_c1b(
                     agreement_error, float(abs(direct_connected - fixed_connected))
                 )
 
-                # A controlled one-route perturbation guards against replacing
-                # the two implementations by the same expression.  Dropping
-                # the fixed-point subtraction must change only the fixed route
-                # by exactly omega(C)omega(D).
+                # CODE-SHAPE GUARD (G8), not a numerical certificate.
+                # With drop_fixed_subtraction=True the two returned routes are
+                # direct = raw - omega_C*omega_D and fixed = raw, from the same
+                # raw, so probe_error is identically 0 for every input: it is
+                # blind to the tensor, the fixed point, the observable, the
+                # norms and the lambda domain, and a genuine subtraction-
+                # coefficient error leaves it at 0 while G4 reports 1e-6.
+                # Its only content is that the two route expressions have not
+                # been collapsed into one; if they were, G4 would compare a
+                # value with itself and certify 0.0 by construction.  Keep the
+                # advertised meaning no wider than that (r5 R5-O3).
                 probe_direct, probe_fixed = connected_routes(
                     propagated,
                     right,
@@ -223,9 +253,9 @@ def check_c1b(
                 probe_error = float(
                     abs((probe_fixed - probe_direct) - one_c * one_d)
                 )
-                if probe_error > route_independence_error:
-                    route_independence_error = probe_error
-                    route_independence_location = (width_c, width_d, separation)
+                if probe_error > route_shape_error:
+                    route_shape_error = probe_error
+                    route_shape_location = (width_c, width_d, separation)
 
                 exponent = separation
                 if red_c1b:
@@ -272,8 +302,8 @@ def check_c1b(
         max_location,
         float(ratio_route_error),
         ratio_route_location,
-        route_independence_error,
-        route_independence_location,
+        route_shape_error,
+        route_shape_location,
         float(monotonicity_excess),
         monotonicity_location,
     )
@@ -328,13 +358,14 @@ def violations(
                 f"{c1b.ratio_route_error:.6e} at {c1b.ratio_route_location}",
             )
         )
-    if c1b.route_independence_error > BLOCK_TOL:
+    if c1b.route_shape_error > BLOCK_TOL:
         found.append(
             (
                 "G8",
-                "C1b route-independence probe error "
-                f"{c1b.route_independence_error:.6e} at "
-                f"{c1b.route_independence_location}",
+                "C1b route-shape guard (code shape only, identically 0 in "
+                "green; certifies no number) "
+                f"{c1b.route_shape_error:.6e} at "
+                f"{c1b.route_shape_location}",
             )
         )
     if c1b.monotonicity_excess > BLOCK_TOL:
@@ -371,7 +402,7 @@ def parse_args() -> argparse.Namespace:
     mutations.add_argument(
         "--red-route-collapse",
         action="store_true",
-        help="collapse both C1b routes; must reach the G8 independence probe",
+        help="collapse both C1b routes; must reach the G8 route-shape guard",
     )
     mutations.add_argument(
         "--red-lambda",
@@ -405,8 +436,8 @@ def main() -> None:
         f"agreement={c1b.agreement_error:.3e} "
         f"max_ratio={c1b.max_ratio:.6f}@{c1b.max_ratio_location} "
         f"ratio_route={c1b.ratio_route_error:.3e}@{c1b.ratio_route_location} "
-        f"route_guard={c1b.route_independence_error:.3e}"
-        f"@{c1b.route_independence_location} "
+        f"route_guard={c1b.route_shape_error:.3e}"
+        f"@{c1b.route_shape_location} "
         f"monotonicity_excess={c1b.monotonicity_excess:.3e}"
         f"@{c1b.monotonicity_location}"
     )
