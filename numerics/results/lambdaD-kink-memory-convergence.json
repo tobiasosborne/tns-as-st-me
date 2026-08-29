@@ -1,0 +1,32 @@
+{
+  "caveats": [
+    "window-TDVP with FROZEN infinite environments; readouts only where edge_leak < 1e-3",
+    "charge_law is the exact single-time law of Q_hat at each sample, NOT the ordered TPM law of D27",
+    "mean escaped charge = <Q>(t_-) - <Q>(t_+) equals the TPM first moment only under D27(LR2)",
+    "s is the measured tail density m_stag, not 1 and not a half-integer",
+    "chi is the vacuum bond dimension; chi_max is the TDVP2 truncation rank in the window"
+  ],
+  "generated": "2026-08-29T22:37:09.595",
+  "issue": "tns-f5r",
+  "purpose": "TDVP2 truncation-rank convergence of the memory numbers",
+  "rows": [
+    {
+      "L": 48,
+      "chi": 16,
+      "chi_max": 32,
+      "coefficient_measured": 1.918387433219214,
+      "coefficient_predicted_2s": 1.9206799554928087,
+      "dx_X1_D13a": 8.524645563369404,
+      "dx_X2_centroid": 8.534724109750496,
+      "energy_drift_readout": 0.00042745942818100957,
+      "norm_drift": 1.5033120441265702e-5,
+      "nu_mean_escaped_charge": -16.372907478138394,
+      "t_minus": 2.0,
+      "t_plus": 6.0,
+      "v_measured": 2.1343148052443706,
+      "v_theory_dwdk": 2.1816276826909453
+    }
+  ],
+  "stage": "converge",
+  "wave": 2
+}
