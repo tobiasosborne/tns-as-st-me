@@ -784,3 +784,241 @@ optional", instructing that it be extended).  New items:
     counterexamples remain decidable (`M_1^O = 0`, W14).
 
 ---
+
+## 6. Certificate, fourth pass (M2, M3, m1, m2, m5, m7)
+
+`theory/checks/d24d3_normalization_check.py`, **727 loc** (L2 disclosure:
+227 over the 500-loc guideline; r3 disclosed 559.  The r4 excess is the
+retraction-bearing module docstring — which now carries the declared
+constants inventory and the subsumption proofs, and is deliberately not
+abbreviated — plus the two new sub-gates.  The r3 split candidate
+(algebra module / data module) stands and is the natural next refactor;
+flagged, not hidden.)  No bare `assert`; every failure raises
+`SystemExit(1)` with the gate name as the first stderr token.
+
+### 6.1 M2 — the four-layer retraction, the derived exponent band, and what deriving it proved
+
+**Retraction, in displayed text.**  r3 asserted "there is no acceptance
+constant in the file" in four layers (§0 R3-d, §3, §7.5, H7, and response
+disclosure 6).  That was FALSE: `EXPONENT_FIT_BAND = 0.03` was
+hand-chosen, post-registered, gated C6, and was strictly tighter than the
+derived band — a `−3.4 %` uniform shift inside the data's own quoted
+error died on it (r3-critic M2(b), reproduced).  All four layers are
+superseded (§0.2).  The honest statement, now in the checker's docstring
+and here: *the acceptance band and the exponent band are both derived at
+runtime from the data's quoted-error column; the remaining constants are
+the pre-registered `0.08` (checked against the data file's own key),
+machine tolerances on exact identities where the nearest competing
+hypothesis differs at `O(1)` (r3-critic n3), and one declared
+robustness-guard multiplier that can only reject (§6.4).*
+
+**The derivation (the critic's fix demand, taken).**  A uniform relative
+slope shift `δ` moves the lstsq exponent by exactly
+`[Σ_s log(2S_s)/Σ_s log²(2S_s)]·log(1/(1−δ)) = 0.8805·log(1/(1−δ))` over
+the non-degenerate fit spins.  Propagating the derived acceptance band
+`b = 0.047854` gives the exponent band `0.8805·log(1/(1−b)) = 0.0432`
+(the critic's own estimate `≈ 0.042` used `log(1+b)`; the `log(1/(1−b))`
+form is the two-sided worst case and is the one implemented).  Under it:
+`m_shift34` (fitted exponent `1.0329`) and `m_shift40` (`1.0383`) now
+PASS — both are inside the data's stated uncertainty and r3 rejected
+both; `m_shift45` dies at the acceptance gate (`dev = 0.0482 > 0.0479`
+at `S = 2`, the critic's own number), exactly where a shift outside the
+quoted error should die.
+
+**What deriving it proved — and the resulting demotion.**  The
+derivation is also a subsumption proof: part 1 requires
+`|1 − mean_s·s| ≤ b` at every fit spin, hence
+`|log(mean_s·s)| ≤ log(1/(1−b))`, hence
+`|p_fit − 1| ≤ [Σx_s/Σx_s²]·log(1/(1−b))` — the derived band, exactly.
+So **a fitted-exponent gate calibrated to the data's own error is
+deductively subsumed by the calibrated acceptance gate**; it can never
+fire on data that reaches it.  r3's `0.03` gate did independent work
+precisely *because* it was miscalibrated.  Per the standing checker
+obligations ("if gate `Cj`'s bound is implied by gate `Ci`'s, `Cj` adds
+no evidence; say so") and the corpus's own C5 precedent (X11), the
+fitted-exponent `require` is **demoted to DISPLAY**: the fitted value,
+the derived band and the subsumption statement are printed; the
+**symbolic pin `(2S)^p = 2S`** remains the gated content of C6 part 2
+(code mutant `c2_wronglaw` dies on it).  What *would* add independent
+exponent evidence is data at a fifth density or an error column tight
+enough to shrink `b` — both outside this lane.
+
+### 6.2 M3 — the fifth no-op, deleted; the gate that replaced it, derived
+
+**Deleted.**  r3's C2(iv) "real cross-momentum orthogonality gate" was
+`0 ≡ 0` for every input: the `|x⟩` states are orthonormal, so
+`⟨charged_i|charged_j⟩ ∝ Σ_x e^{i(k_j−k_i)x} = 0` for distinct
+commensurate momenta and ANY ladder element (the critic probed elements
+`1.0/3.7/−5.0/10⁶`; nothing moved) — translation invariance makes
+cross-momentum orthogonality automatic for every translation-covariant
+construction, so no such gate can ever fail.  Its
+`require(len([a,b,c]) >= 3)` was `3 ≥ 3`, constant-true; the advertised
+kill of `cB_onek` was that self-referential assertion and nothing else.
+Both are deleted.  r3's "r2-critic m4, all three closed" was wrong:
+m4(ii) was NOT closed in r3, and §7.4's residual no-op audit is
+superseded (§0.2).
+
+**Replaced, by a gate that can fail.**  C2(v): for even `N` and
+`k_2 = k_1 + π`, the two-magnon states `(Q^-_{k_1})²|Ω⟩` and
+`(Q^-_{k_2})²|Ω⟩` carry the SAME total momentum `2k_1 (mod 2π)`, so
+translation invariance does NOT force their overlap to vanish; it is
+fixed by the ladder at `n = 0` *and* `n = 1` plus the coincidence
+combinatorics.  Closed form, derived here independently of the code:
+
+    ⟨(Q_{k_1})²Ω, (Q_{k_2})²Ω⟩
+      = Σ_{x<y} 4e^{iπ(x+y)}‖S^-_xS^-_yΩ‖²  +  Σ_x e^{2iπx}‖(S^-_x)²Ω‖²
+      = 4(2S)²·(−N/2)  +  2·2S·(2S−1)·N
+      = −2N·(2S)  =  −2N·Z_ρ ,
+
+using `Σ_{x<y}(−1)^{x+y} = ((Σ_x(−1)^x)² − N)/2 = −N/2` for even `N`,
+`‖S^-_xS^-_yΩ‖² = (2S)²` for `x ≠ y`, and
+`‖(S^-_x)²Ω‖² = 2S·2(2S−1)` (the `n = 1` ladder element squared).
+Verified by the sparse-dict construction at `2S = 1,2,3,4`, `N = 6, 8`:
+max error `1.2·10^{-13}` against the fixed integer `−2N·2S`.  **It can
+fail**: `--red-ladder` moves it at every `2S ≥ 2` (at `2S = 2`, `N = 6`
+the mutated overlap is `+280.56` against predicted `−24`), and the code
+mutant `c4_overlapsign` (closed-form sign flipped) dies at C2 with error
+`1.28·10²`.  The measured side depends on the ladder; the predicted side
+is a ladder-free integer — no shared subexpression, no self-fulfilment.
+
+**The honest residue.**  A mutation that merely SHRINKS the C2(iv)
+momentum loop (fewer momenta tested) reduces coverage and is not
+detected by any gate; each retained momentum's norm check is
+individually genuine (`--red-ladder` moves it).  This is stated in the
+code comment and here, instead of a fake guard.  `cB_onek` is therefore
+recorded as: **not caught by C2, by design impossible to catch as
+wrongness** — it changes no measured quantity (r3-critic M3(c), the
+option the critic offered; the two-magnon gate is the "test that can
+fail" they asked for, on the object where orthogonality is a real
+constraint).
+
+### 6.3 m1 — D24N-C8 now tests the leg it is applied to
+
+New sub-gate (ii): `‖Q^-_q|h⟩‖² = Z_ρN − 2` exactly, by sparse-dict ED
+against the closed form, at `2S = 1,2,3,4`, `N = 8`, two `(h,q)` pairs
+with `q ≠ h`; max error `7.1·10^{-15}`.  This is the critic's X15
+computation, promoted into the certificate.  Its red mode,
+`--red-descnorm`, is exactly the r3 overclaim the critic caught
+("exact, `k`-independent, `N`-free per site" applied to the descendant
+leg): predicted `Z_ρN` instead of `Z_ρN − 2`, dies at D24N-C8 with error
+`2.000e+00`.  Consequence for the text: ⟨1⟩4.⟨3⟩1 is superseded by §1.3
+⟨3⟩1 — the conversion is `√Z_ρ` exactly on the vacuum leg and only in
+the LSZ limit on the descendant leg, with the finite-`N` correction
+`≤ 1/(Z_ρN) ≈ 10^{-2}` at the data's smallest `N = 60` against `5–12×`
+refutation margins.
+
+### 6.4 m2 — the over-wide-error guard, two-sided now
+
+`derive_accept_band` previously refused only a band `≥ 0.08`; one
+inflated `S = 1/2` error entry (`→ 0.1579`) gave band `0.0790`, exit 0,
+silently loosening the acceptance gate `1.65×` (r3-critic m2).  r4 adds
+a per-row corrupted-entry guard: any row whose `|error|·S` exceeds
+**`ROW_BAND_SANITY = 3.0` × the median row band** fails.  This
+multiplier is a **declared** constant and a **guard, not an acceptance
+band** — it can only reject data, never accept it, so it cannot rescue
+any conclusion; it is disclosed in the docstring's constants inventory.
+On the true data the worst row is `2.29×` the median (margin `1.3×`);
+the critic's mutant is `3.78×` and dies with that ratio in the message
+(`m_errwide`, and the combined `m_errwide_shift60`, both:
+"`corrupted error entry: worst row band 0.0790 is 3.78x the median row
+band 0.0209`").  The critic's per-spin-band alternative was considered
+and NOT taken, with the reason recorded: per-spin banding would reject
+the `−3 %` uniform-shift mutant at `S = 1` (whose own error column is
+`2.4 %`), reversing the `m6_shift30`-passes calibration behaviour that
+r2-critic M3(b)(iii) demanded and r3-critic X13 certified; the max-band
+design keeps that calibration and the new guard confines the corruption
+channel.  Residual, stated: a corrupted entry inflated by *less* than
+`3×` the median still loosens the band proportionally; no substantive
+conclusion is exposed, because both refutations hold at the
+pre-registered `0.08` with `5–37×` margins and need no derived band at
+all (X2).
+
+### 6.5 Green banner, red modes, mutants, gate audit
+
+**Green** (`python3 -O`, exit **0**):
+
+```
+D24N-C1 GUARD frozen_jet_coefficient=2*chi matched=chi/rho
+D24N-C2 ladder x4 (residue, dense/occupation cross-check, multi-quantum norms, soft-leg norm + two-magnon same-momentum overlap = -2N*Z_rho), max_error=1.199e-13
+D24N-C3 Ward residue = Z_rho*2iJ sin h against the CHARGE-CREATED leg, max_error=4.814e-15
+D24N-C3 DISPLAY both normalisations at 2S=4, h=pi/4 (gates nothing; deductively C3 / C8): charge-created |residue|=5.656854 (= Z_rho*2J sin h), (b)-asymptotic |residue|=2.828427 (= sqrt(Z_rho)*2J sin h); equal only at Z_rho = 1
+D24N-C4 ansatz-free slopes vs 1/S: max_rel_dev=0.0043 (pre-registered band 0.08)
+D24N-C5 DISPLAY frozen-clause relative deviations at S=1/2,1,3/2,2: 0.000, 1.002, 2.003, 3.003  -> defect size 3.003
+D24N-C6 candidate max_rel_dev=0.0033 vs acceptance band 0.0479 DERIVED from the data's own quoted error (< pre-registered 0.08, so C6 is not subsumed by C4); symbolic (2S)^p=2S root p=1 at S=1,3/2,2; S=1/2 degenerate: 1**p - 1 = 0
+D24N-C6 DISPLAY fitted exponent=1.0024 vs 1, derived exponent band 0.0432 (0.8805*log(1/(1-band)), same error column; gates nothing -- at calibrated bands this comparison is deductively subsumed by the acceptance gate, proof in derive_exponent_band; r3's 0.03 gate did independent work only because it was miscalibrated)
+D24N-C6 resolving intervals for p: at the derived band [0.969, 1.037]; at the pre-registered band [0.947, 1.062]; at r2's retired 0.02 band [0.989, 1.017] (reported, gates nothing)
+D24N-C7 DISPLAY N-dependent half-power route gap=1.855e-01
+D24N-C8 vacuum leg Q^-_k|Om> = sqrt(Z_rho)|k>: eigenvector residual=1.799e-15, overlap error=8.882e-16; descendant leg ||Q^-_q|h>||^2 = Z_rho*N - 2: error=7.105e-15 (so the conversion is sqrt(Z_rho) exactly on the vacuum, and only in the LSZ limit on the descendant leg); leg conversion alone gives a_leg = Z_rho^(-1/2), refuted by --red-halfpower at the PRE-REGISTERED band
+PASS: D24-VAL candidate a_leg = 1/(2 rho) matches; frozen a_leg = 1 and leg-conversion a_leg = Z_rho^(-1/2) both refuted; the D24(d)3b definition itself fixes no value (lemma AMP open)
+```
+
+The r3 quantities the critic certified reproduce unchanged: C2 residues
+and norms, C3 `4.814e-15`, C4 `0.0043`, C5 deviations, C6 acceptance
+`0.0033` vs `0.0479`, both resolving intervals, C7 `1.855e-01`, C8
+vacuum `1.799e-15 / 8.882e-16`.
+
+**Red modes — exit PATH, not just exit code (seven, up from six):**
+
+| mode | exit | died at (first stderr token) |
+|---|---|---|
+| `--red-frozen` | 1 | **D24N-C6** `at S=1.0 dev=1.0016; S=1.5 dev=2.0027; S=2.0 dev=3.0033` |
+| `--red-power` | 1 | **D24N-C6** `at S=1.0 dev=0.4984; …` |
+| `--red-halfpower` | 1 | **D24N-C6** `at S=1.0 dev=0.4158; S=1.5 dev=0.7347; S=2.0 dev=1.0033` |
+| `--red-ward` | 1 | **D24N-C3** `Ward residue Z-scaling error 1.697e+01` |
+| `--red-ladder` | 1 | **D24N-C2** `ladder/soft-leg-norm error 1.477e+06` |
+| `--red-legfactor` | 1 | **D24N-C8** `leg-conversion factor is not sqrt(Z_rho) (error 5.657e+00)` |
+| `--red-descnorm` (**NEW**; the r3 "`N`-free per site" overclaim on the descendant leg) | 1 | **D24N-C8** `descendant-leg norm is not Z_rho*N - 2 (error 2.000e+00)` |
+
+All six r3 paths are byte-preserved (X4).
+
+**Data mutants (copies in the scratchpad; the DATA falsified):**
+
+| mutant | exit | died at |
+|---|---|---|
+| `m1_slope` | 1 | **D24N-C4** `1.0000` |
+| `m2_shift799` (`−7.99 %`) | 1 | **D24N-C4** `0.0839` |
+| `m2b_shift60` (`−6 %`) | 1 | **D24N-C6** acceptance (passes C4 first) |
+| `m6_shift30` (`−3 %`) | **0 (passes, and must — X13)** | inside the quoted error at every spin |
+| **`m_shift34` (`−3.4 %`)** | **0 (passes — NEW: r3 rejected it, M2's headline mutant)** | inside the quoted error |
+| **`m_shift40` (`−4.0 %`)** | **0 (passes — NEW: r3 rejected it)** | inside the quoted error |
+| `m_shift45` (`−4.5 %`) | 1 | **D24N-C6** acceptance `S=2.0 dev=0.0482` (outside the quoted error — the critic's own boundary number) |
+| `m3_bandmoved` / `m4_noband` / `m5_absent` | 1 | **D24N-C4**, stated messages |
+| `m7_noerror` / `m9_errzero` | 1 | **D24N-C6** missing / zero error guards |
+| `m8_errinflate` (`×4`) | 1 | **D24N-C6** `derived band 0.1914 … C6 would be subsumed by C4` |
+| **`m_errwide`** (one `S=1/2` error `→ 0.1579`; r3 passed it silently) | 1 | **D24N-C6** `corrupted error entry: worst row band 0.0790 is 3.78x the median row band 0.0209 (guard 3.0x)` |
+| **`m_errwide_shift60`** (the critic's combined mutant that exposed the load-bearing constant) | 1 | **D24N-C6** same corrupted-entry guard |
+
+**Code mutants (copies):** `c1_nosqrt` dies at **C2** (`3.312e+05`);
+`c2_wronglaw` dies at **C6** symbolic pin (`roots [2], not [1]`);
+`c3_wrongdispersion` dies at **C8** (`residual 4.000e+00`);
+**`c4_overlapsign`** (two-magnon closed form `+2N·2S`) dies at **C2**
+(`1.280e+02`); **`c5_desc_offbyN`** (descendant closed form `Z_ρN − 4`)
+dies at **C8** (`2.000e+00`).  A mutant of the exponent-band derivation
+(`c6_bandratio`) is NOT detected — expected and harmless, since that
+band is DISPLAY and gates nothing (§6.1).
+
+**Gate audit (standing obligation; supersedes r3 §7.4 where it differs):**
+
+* Every gate **offered as evidence** — C2, C3, C4, C6 part 1, C6's
+  symbolic pin, C8 (three sub-gates) — is reachable and has a dedicated
+  red mode or is exercised by data mutation by design (C4).  **C1, C5,
+  C7 and the two DISPLAY lines (C3-both-normalisations, C6-fitted-
+  exponent) are labelled GUARD/DISPLAY precisely because they are not**
+  (m5 adopted; r3's "every gate is reachable" is superseded).
+* C2's ladder range is `n ≤ 2S−1` — the r3 §0 prose said `n ≤ 2S`, off
+  by one; `n = 2S` would be `S^-|{-S}⟩ = 0` (m7 adopted; code was always
+  right).
+* Deductive subsumption, reported: C5 ⊂ C4 both directions (X11);
+  fitted-exponent ⊂ acceptance at calibrated bands (§6.1, NEW — found by
+  this lane, on itself); the C3-both-normalisations line ⊂ C3 ∧ C8
+  (which is why it is DISPLAY, not a gate).
+* The r2-critic m4 audit, restated honestly: (i) closed in r3 (X14);
+  (iii) closed in r3; **(ii) closed only now**, by deletion and
+  replacement (§6.2) — r3's "all three closed" is retracted.
+* Self-declared gap list (r3-critic §9.3 found it accurate on five,
+  incomplete on three): the three omissions are now in the file —
+  the exponent band's derivation-and-demotion (§6.1), the deleted no-op
+  and its constant-true guard (§6.2), and the two-sided error guard with
+  its declared multiplier and residual (§6.4).
+
+---

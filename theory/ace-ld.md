@@ -1,19 +1,23 @@
-<!-- ROLE: proposer shard for the named lemma ACE-LD, round 2 (the reroute).
-     r1 verdict: theory/verdicts/ace-ld-r1.md FAIL(F1,M1-M6).  Work order:
-     briefs/ace-ld-repair-r2.md.  r1's (E-TAIL)/(V-ch) escape route is
-     DELETED per F1 (empty hypothesis class); the obstruction is restated at
-     the minimal strength of verdict objection M2; the main positive content
-     is now the epsilon-version (AD3-ex-eps) of D13(a)'s own tail bound.
-     Objection dispositions: theory/ace-ld-r2-response.md.
-     Lane: this file, theory/ace-ld-r2-response.md, and
+<!-- ROLE: proposer shard for the named lemma ACE-LD, round 3 (the
+     retraction round).  r1 verdict: theory/verdicts/ace-ld-r1.md
+     FAIL(F1,M1-M6).  r2 verdict: theory/verdicts/ace-ld-r2.md
+     FAIL(F1,M1-M6).  Work order: briefs/ace-ld-repair-r3.md.
+     r3 changes: the r2 bridge claim ("ACE-LD-eps-x supplies what
+     AS <1>7.<2>2 consumes") is RETRACTED per r2 F1 — the identification
+     Q_{c_0} = 2s(X_1 - c_0) makes (K-TAIL) and D18(AD3) mutually
+     exclusive; MP-3(ii) is WITHDRAWN.  The chi=1 forcing is upgraded to
+     THEOREM ACE-LD-chi (r2 M1); the obstruction's closing statement is
+     the O(1) bound of <1>5.<2>3 (r2 M2).  Objection dispositions:
+     theory/ace-ld-r3-response.md (r2 round: theory/ace-ld-r2-response.md).
+     Lane: this file, theory/ace-ld-r3-response.md, and
      theory/checks/ace_ld_check.py only.  All text destined for shared files
      is in section MERGE PROPOSALS below.
-     Status: proposer draft, r2.  A critic pass is pending; nothing here
+     Status: proposer draft, r3.  A critic pass is pending; nothing here
      upgrades any CLAIMS.md row until the L6 loop converges. -->
 
-# ACE-LD r2 — window-charge spectral collapse, the ε-version, and the first-moment obstruction
+# ACE-LD r3 — window-charge spectral collapse, the ε-version on the confined-charge corner, and the first-moment obstruction
 
-**Proposer status (r2).**  Four results, stated with their exact quantifiers
+**Proposer status (r3).**  Five results, stated with their exact quantifiers
 in §0:
 
 1. **ACE-LD-abs** (abstract; N channels; general on-site spin) — unchanged
@@ -22,25 +26,41 @@ in §0:
    spectral diagonality with a `t`-uniform constant.
 2. **ACE-LD-nec** (necessity) — unchanged modulo the m3 lockstep fix:
    distinct charges are necessary.
-3. **ACE-LD-ε** (NEW; the main positive content): under two named
-   hypotheses — confined-core exponential tail clustering **(K-TAIL)** and
-   sharp relative charge **(K-Q)** — the **ε-version** of (AD3-ex) holds:
+3. **ACE-LD-ε** (the main positive content, now correctly scoped): under
+   two named hypotheses — confined-core exponential tail clustering
+   **(K-TAIL)** and sharp relative charge **(K-Q)** — the **ε-version** of
+   (AD3-ex) holds:
 
    > **(AD3-ex-ε).**  `limsup_{t→+∞} ||(Q̂_{W,c_0} − q_ch)P_chΨ_t|| ≤
    > C λ̃^{d_W}` at each fixed window `W`, with `d_W` the core-to-edge
    > padding of D13(a); hence `→ 0` as `W↑ℤ` in the D18(AD4) order.
 
-   This is D13(a)'s own tail-bound clause elevated to a theorem, it is
-   compatible with D27(LR3), and it is what `ansatz-scattering.md`
-   ⟨1⟩7.⟨2⟩2 consumes in the ordered limit (⟨1⟩4.⟨2⟩7).  Its hypothesis
-   class is **inhabited**: D16's static-kink sector states satisfy both
-   hypotheses, and the r1 critic measured the predicted `λ̃^{d_W}` decay on
-   D16's exact zero modes to three digits (ratios `0.2089, 0.2085, 0.2041`
-   against `q = 0.208712`; re-certified here by checker gate LD-C7).
-4. **ACE-LD-obst′** (the obstruction, restated at minimal strength per
-   verdict M2): D27(LR3) fails on every class with nonvanishing mean tail
-   transport, from D27's own first-moment identity alone — no `(E-TAIL)`,
-   no `(V-ch)`, no `(V-in)`, no `σ_L ≠ σ_T`, no channel structure at all.
+   This is D13(a)'s own tail-bound clause elevated to a theorem, and its
+   hypothesis class is **inhabited**: D16's static-kink sector states
+   satisfy both hypotheses, verified two ways — the fixed-`W` defect
+   decays at exactly `λ̃^{d_W}` (`λ̃ = q = 0.208712`; checker gate LD-C7),
+   and (K-TAIL) itself holds at rate exactly `q` per site (r2 verdict
+   §0(iii), now certified directly by LD-C7(e)).  **What the theorem is
+   about (r3, verdict F1):** `𝒬_{c_0} = 2s(X_1 − c_0)` is D13(c)'s exactly
+   conserved charge, so (K-TAIL) is precisely the hypothesis *no charge
+   has escaped the core*.  The ε-version is a theorem about the
+   **confined-charge (leg-free) corner** — and it is therefore **jointly
+   unsatisfiable with D18(AD3)'s escaping-leg clause**.  The r2 claim
+   that (AD3-ex-ε) supplies what `ansatz-scattering.md` ⟨1⟩7.⟨2⟩2
+   consumes is **RETRACTED** (see the r3 retraction notice below and
+   ⟨1⟩4.⟨2⟩7): the consumer needs the opposite regime.
+4. **ACE-LD-χ** (NEW in r3; verdict M1 adopted as a theorem): (K-TAIL)
+   plus membership in the D9 kink class *forces* both tail vacua to be
+   `χ=1` `S^z`-product states with `s ∈ spec S^z` — the scope boundary is
+   a theorem, not a hedge, and it excludes (for example) spin-1 at
+   `s = 1/2` by arithmetic alone.
+5. **ACE-LD-obst′** (the obstruction, restated at minimal strength per
+   r1 verdict M2, closing statement strengthened per r2 verdict M2):
+   D27(LR3) fails on every class with nonvanishing mean tail transport,
+   from D27's own first-moment identity alone — no `(E-TAIL)`, no
+   `(V-ch)`, no `(V-in)`, no `σ_L ≠ σ_T`, no channel structure at all.
+   On any (LR) state the mean wall transport is uniformly **O(1)**
+   (⟨1⟩5.⟨2⟩3), not merely `o(|W_m|)`.
 
 **DELETED in r2 (verdict F1 — do not restore).**  r1's PROPOSITION
 ACE-LD-esc, COROLLARY ACE-LD, and PROPOSITION ACE-LD-obst as previously

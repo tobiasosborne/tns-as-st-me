@@ -1,40 +1,73 @@
 #!/usr/bin/env python3
-"""Certificate for the D24(d) clause-3 adjudication (bd tns-iu5, r3).
+"""Certificate for the D24(d) clause-3 adjudication (bd tns-iu5, r4).
 
-Full gate audit, red-mode table and mutation record: section 7 of
-theory/verdicts/d24d3-adjudication-r3.md.  Summary:
+Full gate audit, red-mode table and mutation record: section 6 of
+theory/verdicts/d24d3-adjudication-r4.md (r3 architecture: section 7 of
+theory/verdicts/d24d3-adjudication-r3.md).  Summary:
 
 D24N-C1  GUARD (symbolic, no runtime red mode): the frozen constant makes
          ML5-B(6) rho-free and v_h-free; the matched one gives jet chi/rho.
 D24N-C2  the spin-S ladder four independent ways -- order-parameter residue;
          the occupation-basis element of ``ladder_element`` against the dense
          |m>-basis matrix of ``spin_matrices`` at EVERY n <= 2S-1; multi-
-         quantum norms ||(S^-_x)^n|Om>||^2; and the soft-leg norm by actual
-         construction plus CROSS-MOMENTUM ORTHOGONALITY.  r2 probed only the
-         n = 0 element and its momentum loop was decorative (r2-critic
-         m4(i)-(ii)); both holes are closed here, with red mode
-         ``--red-ladder``.
-D24N-C3  the Ward residue is exactly Z_rho-linear, <h|Q_0^dag J^-_0|h> =
-         2i v_S(h).  Red mode ``--red-ward``.
+         quantum norms ||(S^-_x)^n|Om>||^2; the soft-leg norm by actual
+         construction; and (NEW in r4, replacing the r3 cross-momentum
+         orthogonality sub-gate, which was 0 == 0 for every input --
+         r3-critic M3) the TWO-MAGNON SAME-total-momentum overlap
+         <(Q^-_{k})^2 Om | (Q^-_{k+pi})^2 Om> = -2N*Z_rho, exact, against a
+         closed form derived independently of the code, sensitive to the
+         n >= 1 ladder elements.  Red mode ``--red-ladder``.
+D24N-C3  the Ward residue is exactly Z_rho-linear against the CHARGE-CREATED
+         soft leg, <h|Q_0^dag J^-_0|h> = 2i v_S(h).  Red mode ``--red-ward``.
+         A DISPLAY line prints the same residue in BOTH normalisations
+         (charge-created: 2i*Z_rho*J*sin h; (b)-asymptotic: 2i*sqrt(Z_rho)*
+         J*sin h = C3/sqrt(Z_rho), deductively C3 divided by C8's factor --
+         labelled DISPLAY, never gated, because it would be subsumed).
 D24N-C4  ground truth: the ansatz-free ring slopes equal 1/S inside the
          PRE-REGISTERED 0.08 band; ``decision_band`` is a required key.  No
          code red mode by design -- C4 is exercised by DATA mutation.
 D24N-C5  DISPLAY (deductively subsumed by C4): the frozen deviations.
-D24N-C6  ACCEPTANCE.  The band is NOT a constant here: it is DERIVED at
-         runtime as max_rows |error| * S from the data's own quoted
-         extrapolation error (0.0479 on the shipped data).  r2's 0.02 was
-         post-registered and TIGHTER than that error, so it rejected data
-         drawn inside its own error bars (r2-critic M3(b)(iii)); this cannot.
-         Plus the fitted exponent and the SYMBOLIC pin (2S)^p = 2S.  The
-         S = 1/2 degeneracy is PRINTED, never gated (r2-critic m4(iii)).
-         Red modes ``--red-frozen``, ``--red-power``, ``--red-halfpower``.
+D24N-C6  ACCEPTANCE (part 1) at the band DERIVED at runtime as
+         max_rows |error| * S from the data's own quoted extrapolation
+         error (0.0479 on the shipped data), plus the SYMBOLIC pin
+         (2S)^p = 2S (part 2, gated).  The r3 fitted-exponent gate is
+         REWORKED (r3-critic M2): r3 shipped a hand-chosen,
+         post-registered EXPONENT_FIT_BAND = 0.03, TIGHTER than the
+         derived band, while four document layers said "no acceptance
+         constant in the file" -- that claim was false and is retracted.
+         r4 derives the exponent band from the same error column,
+         band_p = [sum log(2S) / sum log^2(2S)] * log(1/(1-band)) =
+         0.0432 on the shipped data -- and the derivation PROVES the
+         fitted-exponent comparison is deductively subsumed by part 1 at
+         calibrated bands, so it is demoted to DISPLAY (the C5/X11
+         treatment), never gated.  A uniform shift inside the data's
+         quoted error now passes (m_shift34, m_shift40 pass; r3 rejected
+         both).  The S = 1/2 degeneracy is PRINTED, never gated.  Red
+         modes ``--red-frozen``, ``--red-power``, ``--red-halfpower``.
 D24N-C7  DISPLAY, unfalsifiable on this data's N in [60,480] (r2-critic m5).
-D24N-C8  the r3 amputation convention's leg-conversion constant:
-         Q^-_k|Om> = sqrt(Z_rho)|k>, with |k> verified to be an EIGENVECTOR
-         of the one-magnon block of H_S (residual, not expectation value).
-         Hence leg conversion alone predicts a_leg = Z_rho^(-1/2), which
-         ``--red-halfpower`` falsifies at the PRE-REGISTERED band.  Red mode
-         ``--red-legfactor``.
+D24N-C8  the leg-conversion constant, now on BOTH legs (r3-critic m1: r3
+         tested only the vacuum case): (i) vacuum -- Q^-_k|Om> =
+         sqrt(Z_rho)|k>, with |k> verified an EIGENVECTOR of the one-magnon
+         block of H_S (residual, not expectation); (ii) descendant --
+         ||Q^-_q|h>||^2 = Z_rho*N - 2 exactly (r3-critic X15), i.e.
+         Z_rho - 2/N per site: the conversion is exactly sqrt(Z_rho) ONLY in
+         the LSZ limit.  Red modes ``--red-legfactor`` (Z_rho instead of
+         sqrt(Z_rho)) and ``--red-descnorm`` (the r3 overclaim: "N-free per
+         site" at finite N, i.e. ||Q^-_q|h>||^2 = Z_rho*N).
+
+Constants remaining in the file, ALL declared (r3-critic M2 discipline —
+the r3 claim "there is no acceptance constant in the file" was FALSE and is
+retracted in all four layers; the honest statement is):
+  * DECISION_BAND = 0.08     -- pre-registered in the data file, checked;
+  * the C6 acceptance band and the DISPLAY exponent band -- DERIVED at
+    runtime from the data's error column;
+  * EXACT_TOL, 1e-10 in C8   -- machine tolerances on EXACT identities,
+    where the nearest competing hypothesis differs at O(1) (r3-critic n3);
+  * ROW_BAND_SANITY = 3.0    -- a declared robustness-GUARD multiplier
+    (r3-critic m2): a single row whose quoted error exceeds 3x the median
+    row error is rejected as corrupted.  It can only REJECT data, never
+    accept it, so it is a guard, not an acceptance constant.  On the true
+    data the worst row is 2.29x the median.
 
 The definition D24(d)3b asserts NO value for ``a_leg`` (open lemma AMP); the
 red modes falsify *candidates*, never the definition.  Every failure raises
@@ -53,10 +86,10 @@ import numpy as np
 import sympy as sp
 
 DECISION_BAND = 0.08     # pre-registered in spin1-bc-falsifier.json (C4/C5)
-EXPONENT_FIT_BAND = 0.03
 EXACT_TOL = 1.0e-12
 SPINS = (0.5, 1.0, 1.5, 2.0)
 LEGACY_R2_BAND = 0.02    # reported for continuity only; gates nothing
+ROW_BAND_SANITY = 3.0    # declared GUARD multiplier (can only reject); see docstring
 DEFAULT_DATA = (
     Path(__file__).resolve().parents[2] / "numerics" / "results" / "spin1-bc-falsifier.json"
 )
@@ -160,6 +193,17 @@ def inner(first: dict, second: dict) -> complex:
     return sum(np.conjugate(first[key]) * second[key] for key in first if key in second)
 
 
+def apply_charge(state: dict, momentum: float, sites: int, two_s: int,
+                 red_ladder: bool = False) -> dict:
+    """Q^-_k acting on a sparse state: sum_x e^{ikx} S^-_x."""
+    out: dict = {}
+    for x in range(sites):
+        phase = np.exp(1j * momentum * x)
+        lowered = apply_lowering(state, x, two_s, red_ladder)
+        out = combine(out, {c: phase * a for c, a in lowered.items()})
+    return out
+
+
 # --------------------------------------------------------------------------
 # D24N-C1 : the frozen constant is density blind; the matched one is not
 # --------------------------------------------------------------------------
@@ -209,40 +253,68 @@ def check_order_parameter_residue(red_ladder: bool) -> float:
                 state = apply_lowering(state, 0, two_s, red_ladder)
                 expected *= (quantum + 1) * (two_s - quantum)
                 worst = max(worst, abs(inner(state, state).real - expected))
-    # (iv) soft-leg norm by construction + cross-momentum orthogonality
+    # (iv) soft-leg norm by construction: ||Q^-_k|Om>||^2 / N = 2S at each k.
+    # The r3 sub-gate that paired this loop with a cross-momentum
+    # orthogonality test is DELETED: translation invariance makes those
+    # overlaps identically zero for ANY ladder element (r3-critic M3(b)(i)
+    # probed elements 1.0/3.7/-5.0/1e6 -- nothing moved), and the
+    # require(len(momenta) >= 3) that killed cB_onek was constant-true.
+    # Honest statement: a mutation that merely SHRINKS this loop reduces
+    # coverage and is not detected by any gate; each retained momentum's
+    # norm check is individually genuine (it moves under --red-ladder).
     for two_s in (1, 2, 3, 4):
         for sites in (6, 9):
             vacuum_state = {tuple([0] * sites): 1.0}
-            momenta = [2.0 * np.pi * j / sites for j in (0, 1, 2)]
-            require(len(momenta) >= 3,
-                    "D24N-C2 fewer than three commensurate momenta: the "
-                    "orthogonality gate would be vacuous")
-            charged_states = []
-            for momentum in momenta:
-                charged: dict = {}
-                for x in range(sites):
-                    phase = np.exp(1j * momentum * x)
-                    lowered = apply_lowering(vacuum_state, x, two_s, red_ladder)
-                    charged = combine(charged,
-                                      {c: phase * a for c, a in lowered.items()})
-                charged_states.append(charged)
+            for j in (0, 1, 2):
+                momentum = 2.0 * np.pi * j / sites
+                charged = apply_charge(vacuum_state, momentum, sites, two_s, red_ladder)
                 norm_squared = inner(charged, charged).real
                 worst = max(worst, abs(norm_squared / sites - two_s))
-            for i in range(len(momenta)):
-                for j in range(i + 1, len(momenta)):
-                    overlap = inner(charged_states[i], charged_states[j])
-                    worst = max(worst, abs(overlap) / sites)
+    # (v) NEW (r4, replacing the deleted no-op): two-magnon SAME-total-
+    # momentum overlap.  For even N and k2 = k1 + pi, the states
+    # (Q^-_{k1})^2|Om> and (Q^-_{k2})^2|Om> carry the SAME total momentum
+    # 2*k1 (mod 2pi), so their overlap is NOT forced to vanish by
+    # translation invariance; it is fixed by the ladder at n = 0 AND n = 1
+    # plus the coincidence combinatorics.  Closed form, derived on paper
+    # (r4 section 6.2), independent of this code:
+    #   <(Q_{k1})^2 Om,(Q_{k2})^2 Om>
+    #     = 4(2S)^2 sum_{x<y} (-1)^{x+y}  +  2*2S*(2S-1) * sum_x 1
+    #     = 4(2S)^2 (-N/2) + 2*2S*(2S-1)*N  =  -2*N*2S .
+    # This gate CAN fail: --red-ladder moves it at every 2S >= 2 (the
+    # coincidence term scales with the n = 1 element squared).
+    for two_s in (1, 2, 3, 4):
+        for sites in (6, 8):
+            vacuum_state = {tuple([0] * sites): 1.0}
+            k1 = 2.0 * np.pi / sites
+            k2 = k1 + np.pi
+            two_a = apply_charge(
+                apply_charge(vacuum_state, k1, sites, two_s, red_ladder),
+                k1, sites, two_s, red_ladder)
+            two_b = apply_charge(
+                apply_charge(vacuum_state, k2, sites, two_s, red_ladder),
+                k2, sites, two_s, red_ladder)
+            overlap = inner(two_a, two_b)
+            predicted = -2.0 * sites * two_s
+            worst = max(worst, abs(overlap - predicted))
     require(worst < EXACT_TOL, f"D24N-C2 ladder/soft-leg-norm error {worst:.3e}")
     return worst
 
 
 # --------------------------------------------------------------------------
-# D24N-C3 : the Ward residue is exactly linear in Z_rho
+# D24N-C3 : the Ward residue is exactly linear in Z_rho (charge-created leg)
 # --------------------------------------------------------------------------
-def check_ward_residue_scaling(red_ward: bool) -> float:
+def check_ward_residue_scaling(red_ward: bool) -> tuple[float, float, float]:
+    """Gate: <h|Q_0^dag J^-_0|h> = Z_rho * 2iJ sin h against the
+    CHARGE-CREATED leg (the normalisation clause (d)2 is quoted in).
+    Also returns the residue read against the (b)-asymptotic leg at the
+    largest spin, for the DISPLAY line: dividing by C8's exact conversion
+    sqrt(Z_rho) gives 2i*sqrt(Z_rho)*J sin h.  That value is DISPLAY only
+    -- as a gate it would be deductively subsumed by C3 + C8."""
     sites = 8
     coupling = 1.0
     worst = 0.0
+    display_cc = 0.0
+    display_asym = 0.0
     for two_s in (1, 2, 3, 4):
         bond = bond_matrix(two_s, coupling)
         for index in (1, 3):
@@ -271,9 +343,12 @@ def check_ward_residue_scaling(red_ward: bool) -> float:
             power = 2 if red_ward else 1
             predicted = (float(two_s) ** power) * 2j * coupling * np.sin(hard)
             worst = max(worst, abs(measured - predicted))
+            if two_s == 4 and index == 1:
+                display_cc = abs(measured)
+                display_asym = abs(measured) / np.sqrt(float(two_s))
     require(worst < EXACT_TOL,
             f"D24N-C3 Ward residue Z-scaling error {worst:.3e}")
-    return worst
+    return worst, display_cc, display_asym
 
 
 # --------------------------------------------------------------------------
@@ -307,17 +382,68 @@ def derive_accept_band(payload: dict) -> float:
     data's own ``error`` column at every spin, so it rejected perturbations
     inside the error bars.  This band is that column, in the checker's
     ``dev * S`` units -- no constant to tune.
+
+    Guards (all can only REJECT): zero band; missing error column; a band
+    so wide C4 would subsume C6; and (r4, r3-critic m2) a single corrupted
+    row -- any row whose |error|*S exceeds ROW_BAND_SANITY x the median row
+    value fails, so one inflated entry cannot silently loosen the gate
+    (r3-critic's mutant: one S=1/2 error -> 0.1579 gave band 0.0790 and
+    passed r3's one-sided guard; here it is 3.78x the median and dies).
     """
-    worst = 0.0
+    row_bands = []
     for row in payload["A_ring_summary"]:
         spin = float(row["S"])
         require("error" in row, "D24N-C6 data row has no quoted error column")
-        worst = max(worst, abs(float(row["error"])) * spin)
+        row_bands.append(abs(float(row["error"])) * spin)
+    worst = max(row_bands)
     require(worst > 0.0, "D24N-C6 derived acceptance band is zero")
+    median = float(np.median(row_bands))
+    require(median > 0.0, "D24N-C6 median row error is zero")
+    ratio = worst / median
+    require(ratio <= ROW_BAND_SANITY,
+            f"D24N-C6 corrupted error entry: worst row band {worst:.4f} is "
+            f"{ratio:.2f}x the median row band {median:.4f} "
+            f"(guard {ROW_BAND_SANITY}x)")
     require(worst < DECISION_BAND,
             f"D24N-C6 derived band {worst:.4f} is not tighter than the "
             f"pre-registered {DECISION_BAND}: C6 would be subsumed by C4")
     return worst
+
+
+def derive_exponent_band(accept_band: float) -> float:
+    """The fitted-exponent band, DERIVED from the same quoted-error column
+    (r4; r3-critic M2 fix demand, taken: "propagate the same error column
+    through the log fit").
+
+    A uniform relative slope shift delta moves the lstsq exponent by
+    exactly [sum_s log(2S_s) / sum_s log^2(2S_s)] * log(1/(1-delta)) over
+    the non-degenerate fit spins.  The worst shift the acceptance gate
+    admits is delta = accept_band (in dev*S units, dev*S = |relative
+    shift| to first order), and log(1/(1-b)) >= log(1+b), so this is the
+    two-sided worst case.  On the shipped data: 0.8805 * 0.04904 = 0.0432
+    -- WIDER than r3's hand-chosen 0.03, as calibration requires: no
+    perturbation inside the data's own quoted error can fail this
+    comparison.
+
+    DERIVING the band PROVES the fitted-exponent comparison is
+    deductively SUBSUMED by the acceptance gate at these calibrated
+    bands: part 1 requires |1 - mean_s * s| <= b at every fit spin, hence
+    |log(mean_s * s)| <= log(1/(1-b)), hence
+    |p_fit - 1| = |sum x_s log(mean_s*s)| / sum x_s^2
+                <= [sum x_s / sum x_s^2] * log(1/(1-b)) = this band.
+    So a require() on it can never fire on data that reached it -- it is
+    the C5 situation (r3-critic X11), and like C5 it is demoted to
+    DISPLAY (r4 section 6.1; the standing checker obligations demand the
+    subsumption be reported, not gated over).  r3's 0.03 gate did
+    independent work precisely BECAUSE it was miscalibrated.  The
+    symbolic pin (2S)^p = 2S remains the gated content of C6 part 2.
+    """
+    fit_spins = [s for s in SPINS if abs(2.0 * s - 1.0) > 1.0e-12]
+    design = [np.log(2.0 * s) for s in fit_spins]
+    ratio = sum(design) / sum(x * x for x in design)
+    band = ratio * np.log(1.0 / (1.0 - accept_band))
+    require(band > 0.0, "D24N-C6 derived exponent band is zero")
+    return float(band)
 
 
 def check_ground_truth(slopes: dict[float, list[float]]) -> float:
@@ -368,15 +494,19 @@ def check_acceptance(slopes: dict[float, list[float]],
     return worst
 
 
-def check_exponent(slopes: dict[float, list[float]]) -> tuple[float, str]:
-    """D24N-C6 part 2: fitted exponent (non-degenerate spins) + symbolic pin."""
+def check_exponent(slopes: dict[float, list[float]],
+                   exponent_band: float) -> tuple[float, str]:
+    """D24N-C6 part 2: fitted exponent (non-degenerate spins) + symbolic pin.
+
+    The fitted-exponent comparison is DISPLAY, not a gate: at the derived
+    band it is deductively subsumed by the acceptance gate (proof in
+    ``derive_exponent_band``), so a require() here could never fire on
+    data that reached it.  r3's hand-chosen EXPONENT_FIT_BAND = 0.03 is
+    deleted (r3-critic M2); the SYMBOLIC pin below is the gated content."""
     fit_spins = [s for s in SPINS if abs(2.0 * s - 1.0) > 1.0e-12]
     design = np.array([[np.log(2.0 * s)] for s in fit_spins])
     target = np.array([np.log(2.0 / float(np.mean(slopes[s]))) for s in fit_spins])
     exponent = float(np.linalg.lstsq(design, target, rcond=None)[0][0])
-    require(abs(exponent - 1.0) < EXPONENT_FIT_BAND,
-            f"D24N-C6 fitted exponent {exponent:.6f} is not 1 "
-            f"(band {EXPONENT_FIT_BAND})")
     p = sp.Symbol("p", real=True)
     for s in (1, sp.Rational(3, 2), 2):
         roots = sp.solve(sp.Eq((2 * s) ** p, 2 * s), p)
@@ -422,19 +552,28 @@ def check_half_power_route(payload: dict) -> float:
 
 
 # --------------------------------------------------------------------------
-# D24N-C8 : the r3 convention's leg-conversion constant
+# D24N-C8 : the leg-conversion constant, vacuum AND descendant legs
 # --------------------------------------------------------------------------
-def check_leg_conversion(red_legfactor: bool) -> tuple[float, float]:
-    """<k|Q^-_k|Om> = sqrt(Z_rho * N), with |k> the true one-magnon state.
+def check_leg_conversion(red_legfactor: bool,
+                         red_descnorm: bool) -> tuple[float, float, float]:
+    """(i) vacuum: <k|Q^-_k|Om> = sqrt(Z_rho * N), with |k> the true
+    one-magnon state -- |k> is not assumed: the one-magnon block of H_S is
+    built from the raw bond matrix and the plane wave is verified to be an
+    EIGENVECTOR with eigenvalue omega_S(k) = 2JS(1 - cos k) (residual norm,
+    not expectation).
 
-    |k> is not assumed: the one-magnon block of H_S is built from the raw
-    bond matrix and the plane wave is verified to be an EIGENVECTOR with
-    eigenvalue omega_S(k) = 2JS(1 - cos k) (residual norm, not expectation).
+    (ii) descendant (NEW in r4, r3-critic m1/X15): ||Q^-_q|h>||^2 =
+    Z_rho*N - 2 exactly, for q != h commensurate -- the conversion factor
+    on the leg the adjudication actually applies it to is sqrt(Z_rho) only
+    up to O(1/(Z_rho*N)), i.e. only in the LSZ limit.  ``--red-descnorm``
+    is the r3 overclaim ("exact, N-free per site" on every leg): predicted
+    Z_rho*N, off by exactly 2, dies here.
     """
     sites = 8
     coupling = 1.0
     worst_spectral = 0.0
     worst_overlap = 0.0
+    worst_descendant = 0.0
     for two_s in (1, 2, 3, 4):
         site_spin = two_s / 2.0
         bond = bond_matrix(two_s, coupling)
@@ -461,28 +600,39 @@ def check_leg_conversion(red_legfactor: bool) -> tuple[float, float]:
             energy = 2.0 * coupling * site_spin * (1.0 - np.cos(momentum))
             residual = hamiltonian @ wave - energy * wave
             worst_spectral = max(worst_spectral, float(np.linalg.norm(residual)))
-            charged: dict = {}
-            for x in range(sites):
-                phase = np.exp(1j * momentum * x)
-                lowered = apply_lowering(vacuum_state, x, two_s)
-                charged = combine(charged, {c: phase * a for c, a in lowered.items()})
+            charged = apply_charge(vacuum_state, momentum, sites, two_s)
             vector = np.array([charged.get(b, 0.0) for b in basis])
             overlap = abs(np.vdot(wave, vector))
             power = 1.0 if red_legfactor else 0.5
             predicted = (float(two_s) ** power) * np.sqrt(sites)
             worst_overlap = max(worst_overlap, abs(overlap - predicted))
+        # (ii) descendant leg: ||Q^-_q |h>||^2 = Z_rho*N - 2 (q != h)
+        for hard_index, soft_index in ((1, 3), (1, 2)):
+            hard = 2.0 * np.pi * hard_index / sites
+            soft = 2.0 * np.pi * soft_index / sites
+            one_magnon = {b: np.exp(1j * hard * x) / np.sqrt(sites)
+                          for x, b in enumerate(basis)}
+            descendant = apply_charge(one_magnon, soft, sites, two_s)
+            norm_squared = inner(descendant, descendant).real
+            predicted_norm = (float(two_s) * sites) if red_descnorm \
+                else (float(two_s) * sites - 2.0)
+            worst_descendant = max(worst_descendant,
+                                   abs(norm_squared - predicted_norm))
     require(worst_spectral < 1.0e-10,
             f"D24N-C8 plane wave is not an H_S one-magnon eigenvector "
             f"(residual {worst_spectral:.3e})")
     require(worst_overlap < 1.0e-10,
             f"D24N-C8 leg-conversion factor is not sqrt(Z_rho) "
             f"(error {worst_overlap:.3e})")
-    return worst_spectral, worst_overlap
+    require(worst_descendant < 1.0e-10,
+            f"D24N-C8 descendant-leg norm is not Z_rho*N - 2 "
+            f"(error {worst_descendant:.3e})")
+    return worst_spectral, worst_overlap, worst_descendant
 
 
 # --------------------------------------------------------------------------
 def main() -> None:
-    parser = argparse.ArgumentParser(description="D24(d)3 adjudication certificate (r3)")
+    parser = argparse.ArgumentParser(description="D24(d)3 adjudication certificate (r4)")
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA,
                         help="path to spin1-bc-falsifier.json (copies allowed)")
     parser.add_argument("--red-frozen", action="store_true",
@@ -497,6 +647,9 @@ def main() -> None:
                         help="ladder element wrong at n >= 1; death: D24N-C2")
     parser.add_argument("--red-legfactor", action="store_true",
                         help="leg conversion = Z_rho not sqrt(Z_rho); death: D24N-C8")
+    parser.add_argument("--red-descnorm", action="store_true",
+                        help="descendant-leg norm = Z_rho*N ('N-free per site' at "
+                             "finite N, the r3 overclaim); death: D24N-C8")
     arguments = parser.parse_args()
 
     exponent: float | None = 1.0
@@ -509,28 +662,35 @@ def main() -> None:
 
     frozen_jet, matched_jet = check_frozen_is_density_blind()
     ladder_error = check_order_parameter_residue(arguments.red_ladder)
-    ward_error = check_ward_residue_scaling(arguments.red_ward)
+    ward_error, residue_cc, residue_asym = check_ward_residue_scaling(arguments.red_ward)
     payload = load_payload(arguments.data)
     slopes = load_ring_slopes(payload)
     accept_band = derive_accept_band(payload)
+    exponent_band = derive_exponent_band(accept_band)
     truth_error = check_ground_truth(slopes)
     defect_size, deviations = check_defect(slopes)
     accept_error = check_acceptance(slopes, exponent, accept_band)
-    fitted_exponent, degeneracy_note = check_exponent(slopes)
+    fitted_exponent, degeneracy_note = check_exponent(slopes, exponent_band)
     derived_interval = resolving_interval(slopes, accept_band)
     frozen_interval = resolving_interval(slopes, DECISION_BAND)
     legacy_interval = resolving_interval(slopes, LEGACY_R2_BAND)
     half_power_gap = check_half_power_route(payload)
-    spectral_error, overlap_error = check_leg_conversion(arguments.red_legfactor)
+    spectral_error, overlap_error, descendant_error = check_leg_conversion(
+        arguments.red_legfactor, arguments.red_descnorm)
 
     def show(interval: tuple[float, float] | None) -> str:
         return "empty" if interval is None else f"[{interval[0]:.3f}, {interval[1]:.3f}]"
 
     print(f"D24N-C1 GUARD frozen_jet_coefficient={frozen_jet} matched={matched_jet}")
     print(f"D24N-C2 ladder x4 (residue, dense/occupation cross-check, multi-quantum "
-          f"norms, soft-leg norm + cross-momentum orthogonality), max_error="
-          f"{ladder_error:.3e}")
-    print(f"D24N-C3 Ward residue = Z_rho*2iJ sin h, max_error={ward_error:.3e}")
+          f"norms, soft-leg norm + two-magnon same-momentum overlap = -2N*Z_rho), "
+          f"max_error={ladder_error:.3e}")
+    print(f"D24N-C3 Ward residue = Z_rho*2iJ sin h against the CHARGE-CREATED leg, "
+          f"max_error={ward_error:.3e}")
+    print(f"D24N-C3 DISPLAY both normalisations at 2S=4, h=pi/4 (gates nothing; "
+          f"deductively C3 / C8): charge-created |residue|={residue_cc:.6f} "
+          f"(= Z_rho*2J sin h), (b)-asymptotic |residue|={residue_asym:.6f} "
+          f"(= sqrt(Z_rho)*2J sin h); equal only at Z_rho = 1")
     print(f"D24N-C4 ansatz-free slopes vs 1/S: max_rel_dev={truth_error:.4f} "
           f"(pre-registered band {DECISION_BAND})")
     print("D24N-C5 DISPLAY frozen-clause relative deviations at S=1/2,1,3/2,2: "
@@ -539,17 +699,25 @@ def main() -> None:
     print(f"D24N-C6 candidate max_rel_dev={accept_error:.4f} vs acceptance band "
           f"{accept_band:.4f} DERIVED from the data's own quoted error "
           f"(< pre-registered {DECISION_BAND}, so C6 is not subsumed by C4); "
-          f"fitted exponent={fitted_exponent:.4f} over 2S!=1 spins; symbolic "
-          f"(2S)^p=2S root p=1 at S=1,3/2,2; {degeneracy_note}")
+          f"symbolic (2S)^p=2S root p=1 at S=1,3/2,2; {degeneracy_note}")
+    print(f"D24N-C6 DISPLAY fitted exponent={fitted_exponent:.4f} vs 1, derived "
+          f"exponent band {exponent_band:.4f} (0.8805*log(1/(1-band)), same error "
+          f"column; gates nothing -- at calibrated bands this comparison is "
+          f"deductively subsumed by the acceptance gate, proof in "
+          f"derive_exponent_band; r3's 0.03 gate did independent work only "
+          f"because it was miscalibrated)")
     print(f"D24N-C6 resolving intervals for p: at the derived band "
           f"{show(derived_interval)}; at the pre-registered band "
           f"{show(frozen_interval)}; at r2's retired 0.02 band "
           f"{show(legacy_interval)} (reported, gates nothing)")
     print(f"D24N-C7 DISPLAY N-dependent half-power route gap={half_power_gap:.3e}")
-    print(f"D24N-C8 Q^-_k|Om> = sqrt(Z_rho)|k>: eigenvector residual="
-          f"{spectral_error:.3e}, overlap error={overlap_error:.3e}; so leg "
-          f"conversion alone gives a_leg = Z_rho^(-1/2), refuted by "
-          f"--red-halfpower at the PRE-REGISTERED band")
+    print(f"D24N-C8 vacuum leg Q^-_k|Om> = sqrt(Z_rho)|k>: eigenvector residual="
+          f"{spectral_error:.3e}, overlap error={overlap_error:.3e}; descendant leg "
+          f"||Q^-_q|h>||^2 = Z_rho*N - 2: error={descendant_error:.3e} (so the "
+          f"conversion is sqrt(Z_rho) exactly on the vacuum, and only in the LSZ "
+          f"limit on the descendant leg); leg conversion alone gives "
+          f"a_leg = Z_rho^(-1/2), refuted by --red-halfpower at the "
+          f"PRE-REGISTERED band")
     print("PASS: D24-VAL candidate a_leg = 1/(2 rho) matches; frozen a_leg = 1 and "
           "leg-conversion a_leg = Z_rho^(-1/2) both refuted; the D24(d)3b "
           "definition itself fixes no value (lemma AMP open)")

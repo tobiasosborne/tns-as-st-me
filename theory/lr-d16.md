@@ -462,7 +462,10 @@ left or right, it contributes exactly one to `N_R^{W_m}` or `N_T^{W_m}`.
 Since `𝒩_{W_m}` has non-negative integer spectrum,
 `𝒩_{W_m}²⪰𝒩_{W_m}`, and hence `G(m)≥1-o(1)` for every fixed `m`.  Thus
 `R_{W_m}²G(m)` cannot vanish and `η_m` grows at least linearly in `R_{W_m}`.
-The r1 D16 result named **(LR2′) is retracted**.
+The r1 D16 result named **(LR2′) is retracted**.  The bound is not rescued by
+its constant: `|Δ_W|≤2‖Q̂_W‖` is always available, whereas at `W=[4,9]` the
+measured `4R_Wε_W(t_-)≈10--12` exceeds the free bound `2‖Q̂_W‖=6` at five of
+six sampled times.  No constant is patched to make the estimate useful.
 
 Two unconditional facts about `G` remain: (i) `G` is non-increasing in `m`,
 because `𝒩_{W_m}` is a sum of
@@ -944,30 +947,29 @@ a D-number, a claim id, or a named computation defined in this file.
 "`converge.  The sum is over q∈spec Q̂_{W,c_0} and absent spectral values
 contribute zero.`", append:
 
-> *(LR1 is a theorem, not a hypothesis, whenever `𝔄` is separable, `α_t` is
-> strongly continuous, and `spec Q̂_{W,c_0}` is finite at each fixed `W` — in
-> particular for every finite-local-dimension spin chain in this campaign's
-> setting.  Proof: `theory/lr-d16.md` ⟨1⟩3, Lemma LR1-GEN.  It is retained in
-> the (LR) list only so that D27 reads as a self-contained package.)*
+> *(For any `T_n→∞` there is a subsequence along which clause 1 holds, whenever
+> `𝔄` is separable, `α_t` is strongly continuous, and `spec Q̂_{W,c_0}` is
+> finite at fixed `W`.  Clause 1 is retained because it existentially binds
+> the common sequence used by clauses 2--3; with that binder understood, the
+> substantive content of (LR) lies entirely in clauses 2--3.  In clause 2,
+> "tends to zero" means along this same common sequence.  Proof:
+> `theory/lr-d16.md` ⟨1⟩3 and ⟨1⟩6.⟨2⟩2, LR1-GEN.)*
 
-**MP-2 — `theory/memory-index.md`, ⟨1⟩7.⟨2⟩1.**  After the existing
-justification paragraph, append:
+**MP-2 — HOLD.**  Do not merge the r1 LR2′ mitigation: its antecedent is
+false for D16.  `M-INDEX-spec` is unaffected and unimproved; `M-INDEX-fin` is
+safe.  Lane-local cleanup proposed separately: `memory-index.md`
+⟨1⟩5.⟨2⟩1 should cite D27's clause-1 TPM display rather than D27(LR2), because
+it uses no dephasing limit.
 
-> *(LR2 may be weakened.  If instead of D27(LR2) one has only
-> **(LR2′)**: `|double-Cesàro average of Δ_{W_m}| ≤ η_m` with `η_m→0` along the
-> exhaustion, then this step holds at `W_m` up to `η_m`, ⟨2⟩2 carries the same
-> `η_m`, ⟨2⟩3 is untouched (it uses LR1 and LR3 only), and ⟨2⟩4's spatial
-> limit removes the error.  (IDX.2) and the support statement are therefore
-> unchanged.  See `theory/lr-d16.md` ⟨1⟩4.⟨2⟩5, ⟨2⟩7.)*
-
-**MP-3 — `claims/CLAIMS.md`, three proposed new rows** (statuses as
-adjudicated by the critic, not by this shard):
+**MP-3 — `claims/CLAIMS.md`: two PROVED rows; LR-D16 remains HOLD.**
 
 | id | statement | proposed status | depends-on | where-proved | where-tested |
 |---|---|---|---|---|---|
-| LR1-GEN | For any quantum spin system with separable quasi-local `𝔄`, strongly continuous `α_t`, and a window observable with finite spectrum at each fixed `W`, D27(LR1) holds: one sequence `T_n→∞` gives convergence of both Cesàro states and all double-Cesàro TPM laws, each a probability on `spec Q̂_W−spec Q̂_W ⊂ ℤ`.  Compactness plus a diagonal argument; no gap, no Lieb--Robinson velocity, no scattering, no property of `Ψ` beyond normalisation. | PROVED | D26, D27 | theory/lr-d16.md ⟨1⟩3, ⟨1⟩6.⟨2⟩2 | theory/checks/lr_d16_check.py LRD-C1 (green exit 0; `--red` exit 1) |
-| LR-D16-EDW | In D16, `h^{XXZ}_{x,x+1} ⪰ \tfrac{J}{2}(Δ−1)P^{DW}_x`, hence `H_{XXZ} ⪰ \tfrac{J}{2}(Δ−1)D` and `⟨Ψ,α_t(D)Ψ⟩ ≤ 2E_0/(J(Δ−1))` for all `t`, with `E_0=⟨Ψ,H_{XXZ}Ψ⟩` conserved and finite on a D17 packet.  Bounds the NUMBER of phase boundaries uniformly in time; bounds no length. | PROVED | D16 | theory/lr-d16.md ⟨1⟩5.⟨2⟩6 | theory/checks/lr_d16_check.py LRD-C4 (green 0; `--red-edw` 1) |
-| LR-D16 | For D16 and a D17 dressed-kink packet obeying (FN): D27(LR1) holds unconditionally; (LR2′) holds with rate `η_m=4R_{W_m}\sqrt{G(m)}` and suffices for every downstream use of D27(LR2) in memory-index; D27(LR3) holds **conditionally on (NR)**, `sup_t` of the escaped-content second moment at the SMALLEST window being finite, the `sup_m` having been removed unconditionally by the monotonicity lemma.  D27(LR2) verbatim is OPEN, reduced to the named residue (DPH).  The D16 feature that removes the ballistic failure mode is the exact degeneracy of the K1--K2 zero-energy kink family (K4 is NOT used). | SKETCH (r1 proposer; conditional on (NR); LR2 open) | D13(a), D14, D16, D17, D26, D27, K1, K2, K3, M-INDEX-spec | theory/lr-d16.md ⟨1⟩3--⟨1⟩5 | theory/checks/lr_d16_check.py LRD-C1--C6 (18/18 green, exit 0; four `--red` modes exit 1) |
+| LR1-GEN | For any quantum spin system with separable quasi-local `𝔄`, strongly continuous `α_t`, and finite-spectrum window observables, every prescribed `T_n→∞` has a subsequence on which both Cesàro states and all double-Cesàro TPM laws converge simultaneously for every fixed `W`; each limit is a probability on `spec Q̂_W−spec Q̂_W` (and under D26, on `ℤ`).  No gap, LR velocity, scattering, or property of `Ψ` beyond normalisation is used. | PROVED | D26, D27 | theory/lr-d16.md ⟨1⟩3, ⟨1⟩6.⟨2⟩2 | theory/checks/lr_d16_check.py C1(a,b): green 0; `--red c1-nonunitary`, `--red c1-noninteger` each exit 1 |
+| LR-D16-EDW | In D16, `h^{XXZ}_{x,x+1} ⪰ \tfrac{J}{2}(Δ−1)P^{DW}_x`, hence in infinite volume `H_{XXZ} ⪰ \tfrac{J}{2}(Δ−1)D` and `⟨Ψ,α_t(D)Ψ⟩ ≤ 2E_0/(J(Δ−1))` for all `t`, with `E_0=⟨Ψ,H_{XXZ}Ψ⟩` conserved and finite on a D17 packet.  Bounds the NUMBER of phase boundaries, not their length. | PROVED | D16 | theory/lr-d16.md ⟨1⟩5.⟨2⟩6 | theory/checks/lr_d16_check.py C4(a--c): green 0; `--red c4-wrong-gap`, `--red c4-kink-propagator`, `--red c4-sharp-calibration` each exit 1; finite open-chain dynamics uses `H_XXZ`, not `H_kink` |
+
+`LR-D16` remains **HOLD**: LR1 is unconditional; D16 LR2′ is withdrawn and
+LR2 remains open; LR3 holds only under repaired two-clause (NR).
 
 **MP-4 — `theory/TRIANGLE.md` / `HANDOFF.md` one-liner.**  "`M-INDEX-spec`
 still has no fully unconditional dynamical instance: for D16, LR1 is now
