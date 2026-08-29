@@ -1138,20 +1138,12 @@ the (LR)-for-D16 lane bd `tns-xf4`.  LD-C7(a) certifies only the 13
 sector ground energies at `L = 12`.  (r4, ace-ld-r3 m3: since D18(AD3)
 is jointly unsatisfiable with (K-TAIL) by LD-ID ⟨3⟩3, this fence and
 the ε-theorems apply to disjoint state classes; see the §0 Scope note.)
-(iv) *Cross-lane composition (recorded as such, r2 verdict §7 item 3;
-re-cited in r4 per ace-ld-r3 m5; NOT this shard's theorem).*
-`theory/lr-d16.md` ⟨1⟩5.⟨2⟩7 THEOREM (LRD-3) — in its repaired
-lr-d16-r2 form, `(NR)` now the two-clause `sup_m` statement — proves
-`(NR) ⟹ D27(LR3)` outright, with tail bound `2S_{NR}/M`.  Composing
-with this shard's ACE-LD-obst′(b) (`(M-ESC) ⟹ ¬D27(LR3)`) gives
-**`(M-ESC) ⟹ ¬(NR)` directly** — no appeal to lr-d16's ⟨1⟩5.⟨2⟩4
-monotonicity remark is needed (the r3 route through it is superseded,
-as are the lr-d16-r1 citations: lr-d16-r2 has adjudicated that lane).
-The constraint is attributed to the composition of the two lanes'
-critic passes, is transmitted to `tns-xf4` via MP-6 with the no-witness
-disclosure attached (lr-d16-r2 M4(b)3: a conditional with an empty
-antecedent constrains nothing until an (M-ESC) witness exists), and is
-not proved in this shard.
+(iv) *Cross-lane citation; ownership is in LR-D16.*  The incompatibility
+`(M-ESC) ⟹ ¬(NR)` is THEOREM **LRD-MESC-NR** of `theory/lr-d16.md`
+⟨1⟩5.⟨2⟩9 (claim **M-ESC-NR**).  This shard supplies only its exact
+dependency claim **ACE-LD-obst-prime** and does not restate the composition.
+The cited theorem carries the no-witness disclosure: no model or state
+realising (M-ESC) is exhibited in the corpus.
 
 **⟨2⟩7. QED (⟨1⟩5).**  □
 
@@ -1786,18 +1778,8 @@ this shard's own theorem):
 > that an (LR) proof can consume — noting that D18(AD3) is jointly
 > unsatisfiable with (K-TAIL) (ace-ld LD-ID ⟨3⟩3), so the
 > `θ_{tr} = 0` fence and the ε-theorems concern disjoint state
-> classes.  **Usable constraint (cross-lane composition — attributed
-> to the composition of the ace-ld and lr-d16 critic passes, proved in
-> neither shard alone; re-cited r4 per ace-ld-r3 m5):
-> `(M-ESC) ⟹ ¬(NR)`, now DIRECT — `theory/lr-d16.md` ⟨1⟩5.⟨2⟩7
-> THEOREM (LRD-3), in its repaired form (`theory/verdicts/lr-d16-r2.md`;
-> `(NR)` the repaired two-clause `sup_m` statement), proves
-> `(NR) ⟹ D27(LR3)` with tail bound `2S_{NR}/M`, and ACE-LD-obst′(b)
-> proves `(M-ESC) ⟹ ¬D27(LR3)`; no appeal to lr-d16 ⟨1⟩5.⟨2⟩4's
-> monotonicity remark is needed (the earlier route through it is
-> superseded).  Any (LR) route for D16 through the repaired (NR) is
-> therefore confined to the `θ_{tr} = 0` class from the start.
-> Disclosure, travelling with the constraint (ace-ld-r2 m7; lr-d16-r1
-> M2(b)1; lr-d16-r2 M4(b)3): no model or state realising `(M-ESC)` is
-> exhibited anywhere in this corpus — a conditional with an empty
-> antecedent constrains nothing until a witness exists.**
+> classes.  **Usable constraint:** cite THEOREM **LRD-MESC-NR** at
+> `theory/lr-d16.md` ⟨1⟩5.⟨2⟩9 (claim **M-ESC-NR**) for
+> `(M-ESC) ⟹ ¬(NR)`.  Do not restate its proof here.  The cited theorem
+> carries the required disclosure that no (M-ESC) model or state is
+> exhibited in the corpus.

@@ -740,8 +740,99 @@ shard.
 the low-energy kink states, and does not place D16 outside a ballistic class.
 The exhaustiveness/no-recoil upgrade is precisely K4 (CONJECTURE).
 
-**⟨2⟩9. QED** (LR3 proved from (NR); ⟨2⟩1--⟨2⟩5 and ⟨2⟩8 unconditional in
-the standing register; ⟨2⟩6 in the exact `LR-D16-EDW` register). □
+**⟨2⟩9 (THEOREM LRD-MESC-NR — cross-lane incompatibility).**
+
+**ASSUME.**  The following hypotheses hold for the **same** vector `Ψ`, cut
+`c_0`, padded exhaustion `W_m = [a_m,b_m] ↑ ℤ`, D27 clause-1 sequence
+`T_n → ∞`, fixed-window laws `p_{W_m}`, and D27 limit order.
+
+1. The D16 standing register (H1)--(H6) of ⟨1⟩2, including D26(INT), the D17
+   packet, (FN), and D27(LR1).
+2. H-MQG(1)--(3) and D27(LR2), i.e. the remaining hypotheses of the exact
+   `ACE-LD-obst-prime` row not already explicit in (H1)--(H6).
+3. **(M-ESC)** on this exhaustion:
+   `θ_{tr} := liminf_m
+   |ω^+_{W_m}(𝔛_{W_m})-ω^-_{W_m}(𝔛_{W_m})|/|W_m| > 0`.
+
+For this same exhaustion, `(NR)` means exactly the conjunction introduced at
+⟨2⟩7:
+
+1. `sup_{t∈ℝ}⟨Ψ,α_t(𝒩_{W_1})²Ψ⟩ < ∞`;
+2. `sup_m sup_{t_-<t_+}Σ_q
+   ‖α_{t_+}(𝒩_{W_1})E_{W_m,t_-}({q})Ψ‖² < ∞`.
+
+**PROVE.**  `(NR)` fails.  Equivalently, on every padded exhaustion in the
+joint register above on which (M-ESC) holds, at least one of these two bounds
+is infinite.
+
+**⟨3⟩1. (The transport obstruction gives `¬D27(LR3)` on this exhaustion.)**
+The exact claim row `ACE-LD-obst-prime` applies to the objects fixed in the
+ASSUME block and yields
+
+`sup_m Σ_{|ν|>M}(1+|ν|)p_{W_m}(ν) = ∞` for every `M`;
+
+hence D27(LR3) fails for this exhaustion.
+
+*Justification.*  Claim **ACE-LD-obst-prime** (`claims/CLAIMS.md`, status
+**PROVED** conditional): its hypotheses are H-MQG(1)--(3), D26(INT), the D27
+setting, D27(LR1)--(LR2), and (M-ESC), all listed above; its conclusion (b)
+is exactly `¬D27(LR3)`.  The row depends on D13, D17, D26, D27, and the exact
+claim row **M-INDEX-fin**.  No conclusion of `M-INDEX-spec` is consumed.
+
+**⟨3⟩2. (Assume `(NR)` for contradiction.)**
+
+**ASSUME.**  Both clauses of `(NR)` displayed above hold.
+
+**PROVE.**  A contradiction.
+
+*Justification.*  This is proof by contradiction applied to the conjunction
+defined at ⟨2⟩7; the exact DAG transcription of that conditional is claim
+**LR-D16-NR** (added with this theorem; proved at ⟨1⟩5.⟨2⟩1--⟨2⟩7).
+
+**⟨3⟩3. (`(NR)` gives D27(LR3) on the same exhaustion.)**  By
+THEOREM (LRD-3), the two bounds in ⟨3⟩2 give
+
+`sup_m Σ_{|ν|>M}(1+|ν|)p_{W_m}(ν) ≤ 2S_{NR}/M → 0`.
+
+Thus D27(LR3) holds for the same family `{p_{W_m}}`.
+
+*Justification.*  Exact claim **LR-D16-NR**: under (H1)--(H6), D27(LR1),
+and the repaired two-clause `(NR)`, D27(LR3) holds with tail bound
+`2S_{NR}/M`; its proof is ⟨1⟩5.⟨2⟩1--⟨2⟩7 and was independently re-derived
+in `theory/verdicts/lr-d16-r2.md` §4 item 3.  D27(LR3) is the definition at
+`definitions.md` D27(3).  The optional weak-convergence convenience clause is
+not used.
+
+**⟨3⟩4. (Contradiction.)**  Steps ⟨3⟩1 and ⟨3⟩3 respectively assert the
+negation and the truth of D27(LR3) for one and the same family
+`{p_{W_m}}`; they cannot both hold.
+
+*Justification.*  D27(3) fixes one predicate on the common exhaustion and
+common fixed-window laws; ⟨3⟩1 cites exact claim **ACE-LD-obst-prime**, and
+⟨3⟩3 cites exact claim **LR-D16-NR**.  Classical non-contradiction.
+
+**⟨3⟩5. (Discharge and universal scope.)**  Therefore the assumption in
+⟨3⟩2 is false, so `¬(NR)`.  Because the padded exhaustion in the theorem's
+ASSUME block was arbitrary, the implication holds for every padded exhaustion
+on which the joint register and (M-ESC) hold:
+
+`(M-ESC)  ⟹  ¬(NR)`.  **QED.** □
+
+*Justification.*  ⟨3⟩2--⟨3⟩4, implication introduction, and universal
+generalisation over the arbitrary padded exhaustion of D27.
+
+**Ownership and nonvacuity fence.**  This theorem belongs in `lr-d16.md`:
+`(NR)` is defined once at ⟨2⟩7 and is a D16-specific sufficient input for
+LR3.  `ACE-LD-obst-prime` remains the general obstruction; `ace-ld.md` must
+cite **LRD-MESC-NR**, not restate this proof.  No model or state satisfying
+(M-ESC) is exhibited in the corpus (the disclosure already carried by the
+exact `ACE-LD-obst-prime` row), so this is a conditional incompatibility, not
+a D16 counterexample and not evidence that either particular clause of `(NR)`
+fails on the selected D16 packet.
+
+**⟨2⟩10. QED** (LR3 proved from (NR); the cross-lane incompatibility proved
+by composition; ⟨2⟩1--⟨2⟩5 and ⟨2⟩8 unconditional in the standing register;
+⟨2⟩6 in the exact `LR-D16-EDW` register). □
 
 ---
 
