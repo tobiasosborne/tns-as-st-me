@@ -73,7 +73,10 @@ verdict F1(b)(iii), re-certified by LD-C7), so `(V-ch)` fails there:
 as FALSE: the r1 sentence "on the fixed-packet class of D28 the kink is
 ballistic" — D28(4) constrains only the *relative* velocity `v_M − v_K`, so
 D28's class contains the static-kink class and D16 realises it (verdict
-F1(b)(iv)).  Their correct proof steps that the r1 critic verified
+F1(b)(iv)).  *(r3 register note on this historical notice: "exactly
+flat" as a model statement is K1+K2 plus the K4 CONJECTURE — see
+⟨1⟩5.⟨2⟩6(iii) for the corrected form; the emptiness argument needs only
+the existence of the exactly stationary K1--K2 states, which is PROVED.)*  Their correct proof steps that the r1 critic verified
 (LD-STRADDLE, LD-CONE, LD-IN, LD-TPM, and the r1 obstruction's conclusion
 *on its own hypotheses*) are recorded in the r1 file history and the
 verdict; none is re-claimed here on an empty class, and no repaired
@@ -1277,81 +1280,119 @@ exact).
 ---
 
 ## 6. MERGE PROPOSALS (exact replacement text; orchestrator merges after
-the critic converges — nothing below is live)
+the critic converges — nothing below is live.  r3: MP-3(ii) is WITHDRAWN
+per r2 F1; the ACE-LD-eps row carries the r2 verdict §8(A) adjudicated
+scoping sentence verbatim; the obst row carries the M2 `O(1)` form and
+the m7/n1/M5 disclosures)
 
 **MP-1. New rows for `claims/CLAIMS.md`** (append after the AD3-ex row).
 Each row states its hypotheses in full, its conclusion as a conditional
 implication, and closes with a not-claimed enumeration (the adjudicated
-register of the M-INDEX-fin/M-INDEX-spec/AC-EX rows; verdict §6):
+register of the M-INDEX-fin/M-INDEX-spec/AC-EX rows):
 
 | id | statement (short) | status | depends on | proved in | tested in |
 |---|---|---|---|---|---|
-| ACE-LD-abs | Given (A1)--(A5) — unitary group, bounded self-adjoint `Q̂` with finite one-coset spectrum, mutually orthogonal dynamics-commuting channel projections resolving the vector, first-moment escape `\|\|(Q̂-q_ch)P_chΨ_t\|\|→0`, pairwise distinct channel charges — spectral diagonality holds: `\|\|E({q_ch})Ψ_t-P_chΨ_t\|\| ≤ Σ_{ch'}d_{ch'}^{-1}ε_{ch'}(t) → 0` with `t`-uniform constant (`≤ n` for coset charges); `N` channels, general on-site spin.  Distinct charges are NECESSARY (ACE-LD-nec): shared charge + two nonvanishing weights refutes the display for every claimed eigenvalue.  NOT claimed: any statement about a concrete model, any instantiation of (A4), or sharpness of the constant beyond the single spectral gap | PROVED (pending L6 loop) | — | theory/ace-ld.md ⟨1⟩1--⟨1⟩3 | theory/checks/ace_ld_check.py LD-C1--C4 (green exit 0; `--red` exit 1, 13 modes, exit paths logged) |
-| ACE-LD-eps | Under H-MQG(1)--(2) and the two named hypotheses (K-TAIL) (confined-core exponential tail clustering, rate `λ̃`, core `K`) and (K-Q) (sharp relative charge `q_φ`, defect `ε_Q`): at every finite window `W ⊇ K` with `c_0∈W`, `\|\|(Q̂_{W,c_0}−q_φ)φ\|\| ≤ ε_Q + 2C_Kλ̃^{d_W}/(1−λ̃)` (LD.4), `d_W` the D13(a) core-to-edge padding; with `t`-uniform data this gives (AD3-ex-ε): `limsup_t\|\|(Q̂_{W,c_0}−q_ch)P_chΨ_t\|\| ≤ Cλ̃^{d_W}` at fixed `W`, `→0` in the D18(AD4) order, plus ordered-limit inter-channel cross-term vanishing at rate `O(λ̃^{d_W})` (ACE-LD-ε-x) — the input AS ⟨1⟩7.⟨2⟩2 consumes.  Compatible with D27(LR3).  Hypothesis class inhabited: D16 static-kink sector states ((K-Q) exact by sector membership; (K-TAIL) at rate `q=Δ−√(Δ²−1)` certified by ED at `L=12`, ratios `0.2089/0.2087/0.2083` vs `q=0.208712`).  NOT claimed: the exact fixed-`W` (AD3-ex) (FALSE in D16 at every fixed `W` — defect strictly positive, decaying as `λ̃^{d_W}`); D18(AD3)'s weak-\* kink-eigenstate convergence or M-INDEX-spec's reduction clause; anything on transiting classes; an infinite-volume PROOF of (K-TAIL)/(K-Q) on any model; any vacuum-eigenstate statement | PROVED (conditional; pending L6 loop) | D13, D26, D27, M-INDEX-fin | theory/ace-ld.md ⟨1⟩4 | theory/checks/ace_ld_check.py LD-C7 (+ LD-C6 static contrast) |
-| ACE-LD-obst-prime | Under H-MQG(1)--(3), D26(INT), the D27 setting, D27(LR1)--(LR2), and (M-ESC) (mean tail transport `θ>0` per window site): the TPM first moments diverge linearly, `\|Σ_ννp_{W_m}\| ≥ 2sθ\|W_m\|(1−o(1))`, so D27(LR3) FAILS along every padded exhaustion and D27's `δx` is undefined there.  Contrapositive: (LR3) forces mean wall transport `o(\|W_m\|)`.  Mechanism (mean escape ⟹ `θ = p_tr`) uses only the mean tail densities — no variance hypothesis, no channel structure, no D28.  NOT claimed: any statement about D16 or any confined-kink class (`θ=0` there — the bd `tns-xf4` lane is NOT pre-empted); any statement about D28's packet class as such (D28(4) does not force transit); mass-defectiveness of weak limits (first-moment divergence only); the two-atom law as a theorem (numerically exhibited only, LD-C5) | PROVED (conditional; pending L6 loop) | D13, D17, D26, D27, M-INDEX-fin | theory/ace-ld.md ⟨1⟩5 | theory/checks/ace_ld_check.py LD-C5 (incl. the MI ⟨1⟩7.⟨2⟩2 identity gate), LD-C6 |
+| ACE-LD-abs | Given (A1)--(A5) — unitary group, bounded self-adjoint `Q̂` with finite one-coset spectrum, mutually orthogonal dynamics-commuting channel projections resolving the vector, first-moment escape `\|\|(Q̂-q_ch)P_chΨ_t\|\|→0`, pairwise distinct channel charges — spectral diagonality holds: `\|\|E({q_ch})Ψ_t-P_chΨ_t\|\| ≤ Σ_{ch'}d_{ch'}^{-1}ε_{ch'}(t) → 0` with `t`-uniform constant (`≤ n` for coset charges); `N` channels, general on-site spin.  Distinct charges are NECESSARY (ACE-LD-nec): shared charge + two nonvanishing weights refutes the display for every claimed eigenvalue.  NOT claimed: any statement about a concrete model, any instantiation of (A4), or sharpness of the constant beyond the single spectral gap | PROVED (pending L6 loop) | — | theory/ace-ld.md ⟨1⟩1--⟨1⟩3 | theory/checks/ace_ld_check.py LD-C1--C4 (green exit 0; `--red` exit 1, 21 modes, exit paths logged; every LD-C1 sub-gate armed, incl. orthogonality and resolution — r2 M4/m4 fixed) |
+| ACE-LD-eps | **Adjudicated scoping (verbatim, r2 verdict §8(A)).**  Proved only as the conditional implication: H-MQG(1)--(2), a finite core `K = [ℓ,r]`, a finite window `W = [a,b] ⊇ K` with cut `c_0 ∈ W` and padding `d_W = \min(ℓ−a, b−r)+1`, and a unit vector `φ` satisfying **(K-TAIL)** (same-side exponential tail clustering of the on-site deviations `D_x`, constants `C_K, λ̃`) and **(K-Q)** (`\|\|𝒬_{c_0}φ − q_φφ\|\| ≤ ε_Q`, where `𝒬_{c_0} = \lim_n Q̂_{W_n,c_0}` is the vector-valued lift of D13(c)'s exactly conserved `X_1`, `𝒬_{c_0} = 2s(X_1−c_0)`) `⟹` `\|\|(Q̂_{W,c_0} − q_φ)φ\|\| ≤ ε_Q + 2C_Kλ̃^{d_W}/(1−λ̃)`, and hence `dist(q_φ, κ_{W,c_0}+ℤ)` is bounded by the same quantity.  (K-TAIL) is equivalent, in the D9 kink class, to the statement that **no charge lies outside the core**: `\|\|𝒬_{c_0}φ − Q̂_{W,c_0}φ\|\| ≤ 2C_Kλ̃^{d_W}/(1−λ̃)`; it therefore **forces both tail vacua to be `χ=1` `S^z`-product states with `s ∈ spec S^z`**, and it is **jointly unsatisfiable with D18(AD3)'s clause that the free leg charge leaves the window** — so no state carrying an escaping leg of nonzero charge satisfies it, and on states that do satisfy it with `ε_Q = 0` and `t`-uniform data the ordered wall displacement is `δx = 0`.  NOT claimed: that (AD3-ex-ε) supplies AS ⟨1⟩7.⟨2⟩2's cross-term step (it does not — the hypothesis fails on that class); the exact fixed-`W` (AD3-ex); D18(AD3)'s weak-\* clause or M-INDEX-spec's reduction clause; any statement about generic injective-MPS vacua; any infinite-volume proof of (K-TAIL) or (K-Q) on any model; the existence of a sector-wide conserved charge operator (M-INDEX-LA-strong is REFUTED; M-INDEX-LA-folium is CONJECTURE).  The hypothesis class is inhabited: D16's exact zero-energy sector states satisfy (K-Q) exactly and (K-TAIL) at rate `λ̃ = q = Δ−√(Δ²−1)` (verified by ED at `L=12`, `\|\|D_xφ\|\|` ratios `0.2087` per site, in the ℤ₂-image of D13(a)'s orientation) | PROVED (conditional; pending L6 loop) | D13, D26, M-INDEX-fin | theory/ace-ld.md ⟨1⟩4 | theory/checks/ace_ld_check.py LD-C7 (gates (b)--(c) certify the conclusion's `λ̃^{d_W}` rate; gate (e) certifies the hypothesis (K-TAIL) itself, site-by-site — r2 n5 fixed) |
+| ACE-LD-obst-prime | Under H-MQG(1)--(3), D26(INT), the D27 setting, D27(LR1)--(LR2), and (M-ESC) (mean tail transport `θ_{tr}>0` per window site): the TPM first moments diverge linearly, `\|Σ_ννp_{W_m}\| ≥ 2sθ_{tr}\|W_m\|(1−o(1))`, so D27(LR3) FAILS along every padded exhaustion and D27's `δx` is undefined there.  Positive form (NOT a contrapositive; r2 M2): ⟨1⟩5.⟨2⟩3 gives directly that on any (LR) state the mean wall transport is uniformly bounded, `sup_m\|ω^+_{W_m}(𝔛_{W_m})−ω^-_{W_m}(𝔛_{W_m})\| ≤ (M_0+1)/(2s)`; in particular `θ_{tr} = 0`.  Disclosure (r2 n1): boundedness under (LR3) is the quantitative form of D27's own existence corollary; the genuine addition is the `M_0` tightness argument.  Mechanism (mean escape ⟹ `θ_{tr} = p_tr`) uses only the mean tail densities — no variance hypothesis, no channel structure, no D28.  NOT claimed: any statement about D16 or any confined-kink class (`θ_{tr}=0` there, because the K1--K2 family is exactly stationary (K4 exhaustion is CONJECTURE) and kink--magnon transport is bounded by `⟨N_T⟩/s` (M-quant-G) — the bd `tns-xf4` lane is NOT pre-empted); any statement about D28's packet class as such (D28(4) does not force transit); mass-defectiveness of weak limits (first-moment divergence only); the two-atom law as a theorem (numerically exhibited only, LD-C5).  **No model or state realising `(M-ESC)` is exhibited anywhere in this corpus** (r2 m7; independently confirmed, lr-d16-r1 M2(b)1) | PROVED (conditional; pending L6 loop) | D13, D17, D26, D27, M-INDEX-fin | theory/ace-ld.md ⟨1⟩5 | theory/checks/ace_ld_check.py LD-C5 (honest cell per r2 §8(B): incoming concentration and the two-atom support incl. the `ν=0` atom; identity/tail gates are disclosed consequences), LD-C6 (bounded-transport contrast on the kink+magnon battery — r3 rebuild of the r2 tautology) |
 
 *(Register/deps notes: row 1 carries NO depends-on — ACE-LD-abs is
-unconditional given its ASSUME, per verdict m5; M-INDEX-fin enters only
-the instance rows.  M-INDEX-spec is on no row — nothing here consumes it,
-per m5.  Statuses are bare L5 values; every qualifier lives in prose, per
-M4.)*
+unconditional given its ASSUME, per r1 verdict m5; M-INDEX-fin enters
+only the instance rows.  The eps row's depends-on is the r2 verdict
+§8(A) list (D13, D26, M-INDEX-fin); D27 is dropped from it — nothing in
+⟨1⟩4 consumes D27.  M-INDEX-spec is on no row.  Statuses are bare L5
+values; every qualifier lives in prose.)*
 
-**MP-2. Prose append to the `AD3-ex` row** (status stays **CONJECTURE** —
-verdict M4; append to the statement column):
+**MP-2. Prose append to the `AD3-ex` row** (status stays **CONJECTURE**;
+rewritten per r2 verdict M6(c) and §8(E) — the r2 draft's "the exact
+display is FALSE at every fixed `W`" was measured on a magnon-free zero
+mode that is not an (AD3-ex) vector and is withdrawn):
 
-> r2 update (theory/ace-ld.md): the exact display is FALSE at every fixed
-> `W` in the D16 instantiation — `min_q||(Q̂_W−q)Ψ|| > 0` on the sector
-> zero modes, decaying exactly as `λ̃^{d_W}` (`λ̃ = q = 0.2087` at
-> `Δ=2.5`; ace-ld r1 verdict §8 and checker LD-C7) — so only its
-> ε-version can hold at fixed windows.  That ε-version, (AD3-ex-ε), is
-> PROVED conditionally (row ACE-LD-eps) and suffices for AS ⟨1⟩7.⟨2⟩2's
-> cross-term step in the ordered limit.  On classes with mean transit
-> `θ>0` the companion hypothesis D27(LR) fails (row ACE-LD-obst-prime).
-> r1's proposed discharge under (E-TAIL)∧(V-ch) is withdrawn: that
-> conjunction is empty on every instantiated model (ace-ld-r1 F1).
+> r3 update (theory/ace-ld.md): D16's exact kink states are never
+> `Q̂_{W,c_0}` eigenvectors at finite `W` — the defect is
+> `min_q||(Q̂_W−q)Ψ|| = 4.45e-02 … 4.05e-04` decaying as `q^{d_W}`
+> (LD-C7) — so D18(AD3)'s "remaining local state is a kink charge
+> eigenstate" clause can hold at fixed `W` only in ε-form.  No in-class
+> (AD3-ex) vector is exhibited; **the exact display is not refuted, it
+> is unavailable.**  Regime split (by escaped charge, r2 §8(E)):
+> (AD3-ex) at fixed `W` asserts that the channel state becomes a `Q̂_W`
+> eigenvector while the leg charge sits OUTSIDE `W`.  Any route through
+> tail clustering proves the opposite regime: (K-TAIL) forces the
+> escaped charge to zero, whereupon both channels carry the same
+> conserved charge and `δx = 0` (ace-ld r2 F1; ace-ld.md ⟨1⟩4.⟨2⟩7).
+> So the sharpness of `Q̂_W` on a channel state must come from the
+> wall's own localisation at fixed `W` given an escaped leg, and no
+> route to that exists in the corpus.  The ε-version (AD3-ex-ε) is
+> PROVED conditionally (row ACE-LD-eps) but on the leg-free corner
+> ONLY; it does NOT supply AS ⟨1⟩7.⟨2⟩2's cross-term step.  r1's
+> proposed discharge under (E-TAIL)∧(V-ch) stays withdrawn (ace-ld-r1
+> F1).
 
 **MP-3. Gloss replacement in AS ⟨1⟩7's ASSUME block** (replacing the
 sentence "The missing derivation is recorded as named lemma ACE-LD (see
-HONEST STATUS): …" up to "…no step of this shard supplies."):
+HONEST STATUS): …" up to "…no step of this shard supplies.").  *(r3:
+clause (ii) of the r2 draft — the ordered-limit supply claim — is
+**WITHDRAWN as FALSE** per r2 F1 and is replaced by the honest
+statement; nothing else may reintroduce it.)*
 
-> The named lemma **ACE-LD** (theory/ace-ld.md, r2) prices this
-> hypothesis as follows.  (i) The exact display is FALSE at fixed `W` in
-> D16 (strictly positive defect, decaying as `λ̃^{d_W}`); it survives
-> only as the ε-version (AD3-ex-ε), PROVED under the named hypotheses
-> (K-TAIL)+(K-Q) (confined kink, sharp relative charge — the D16
-> static-kink class).  (ii) In the ordered limit that ⟨2⟩2 actually
-> operates in (fixed-window time limit first, `W↑ℤ` last), (AD3-ex-ε)
-> supplies the cross-term vanishing `|⟨Ψ_t,P_LE_W(S_T)Ψ_t⟩| = O(λ̃^{d_W})`
-> with coset-ball projections in place of the singletons; the fixed-`W`
-> exact form is not available and not needed.  (iii) What is supplied is
-> the KINK-eigenstate reading of D18(AD3) in ε-approximate norm form; the
-> weak-\* reading consumed by M-INDEX-spec's reduction clause is NOT
-> supplied and that row's adjudicated scoping is untouched.  (iv) On
-> packet classes whose kink transits with mean weight `θ>0`, D27(LR3) —
-> hence the T1 outcome-measure hypothesis of ACE.3 — fails
-> (ACE-LD-obst-prime); D28(4) itself does NOT force transit (it
-> constrains only `v_M−v_K`), and D16 lies in the confined complement.
-> *(Also flagged: ⟨2⟩1's `ν = q_T − q_in` orientation is opposite to the
-> frozen `ν = q_- − q_+` of notation.md/MI ⟨1⟩5.⟨2⟩3; only `|ν|` is
-> consumed downstream, but the display should be reconciled — ace-ld-r1
-> NOTE n1.)*
+> The named lemma **ACE-LD** (theory/ace-ld.md, r3) prices this
+> hypothesis as follows.  (i) D16's exact kink states are never `Q̂_W`
+> eigenvectors at finite `W` (defect `min_q||(Q̂_W−q)Ψ|| ∼ q^{d_W} > 0`,
+> LD-C7), so (AD3-ex)'s eigenstate clause can hold at fixed `W` only in
+> ε-form; no in-class (AD3-ex) vector is exhibited, and the exact
+> display is not refuted but unavailable.  (ii) The ε-form is PROVED
+> under (K-TAIL)+(K-Q) (row ACE-LD-eps) but is a theorem about the
+> OPPOSITE regime: `𝒬_{c_0} = 2s(X_1−c_0)` is the conserved D13(c)
+> charge, (K-TAIL) is "no charge escaped the core", and it is jointly
+> unsatisfiable with (AD3-ex)'s escaping-leg premise — **no step of
+> ace-ld supplies the cross-term vanishing this ASSUME consumes** (the
+> r2 claim to the contrary is retracted, ace-ld-r2 F1).  What ace-ld
+> does offer is LEMMA LD-MONO (⟨1⟩4.⟨2⟩7): an assumed ε-form (AD3-ex)
+> at one core-containing window propagates to every larger window up to
+> a uniform `2C_Kλ̃^{d_W}/(1−λ̃)`, using annulus clustering only —
+> compatible with a leg that has already escaped.  (iii) What would be
+> supplied on the leg-free corner is the KINK-eigenstate reading of
+> D18(AD3) in ε-approximate norm form; the weak-\* reading consumed by
+> M-INDEX-spec's reduction clause is NOT supplied and that row's
+> adjudicated scoping is untouched.  (iv) On packet classes whose kink
+> transits with mean weight `θ_{tr}>0`, D27(LR3) — hence the T1
+> outcome-measure hypothesis of ACE.3 — fails (ACE-LD-obst-prime);
+> D28(4) itself does NOT force transit (it constrains only `v_M−v_K`),
+> and D16 lies in the confined complement (K1+K2 stationarity + the
+> M-quant-G bound; K4 remains CONJECTURE).  *(Also flagged: ⟨2⟩1's
+> `ν = q_T − q_in` orientation is opposite to the frozen
+> `ν = q_- − q_+` of notation.md/MI ⟨1⟩5.⟨2⟩3; only `|ν|` is consumed
+> downstream, but the display should be reconciled — ace-ld-r1 NOTE
+> n1.)*
 
 **MP-4. `notation.md` additions** (collision-checked against the frozen
-table — no reuse of `q`, `σ`, `ρ`; verdict m6):
+table; r2 m3/n2 applied):
 
-| `𝒬_{c_0}φ` | relative-charge limit vector `lim_n Q̂_{W_n,c_0}φ` — exists on every (K-TAIL) state (a vector, not a sector operator; M-INDEX-LA-strong untouched) | theory/ace-ld.md ⟨1⟩4.⟨2⟩2 |
+| `𝒬_{c_0}φ` | the vector-valued lift of D13(c)'s conserved `X_1`: `𝒬_{c_0} = 2s(X_1−c_0)`; exists on every (K-TAIL) state as `lim_n Q̂_{W_n,c_0}φ` (a vector, not a sector operator; M-INDEX-LA-strong untouched) | theory/ace-ld.md ⟨1⟩4.⟨2⟩2, ⟨2⟩7 |
 | `(K-TAIL)`, `(K-Q)` | confined-core exponential tail clustering (core `K`, rate `λ̃`); sharp relative charge (`\|\|𝒬_{c_0}φ−q_φφ\|\|≤ε_Q`) | theory/ace-ld.md §0 |
-| `(M-ESC)`, `θ` | mean-tail-transport hypothesis `liminf_m \|ω^+−ω^-\|(𝔛_{W_m})/\|W_m\| = θ > 0` | theory/ace-ld.md §0, ⟨1⟩5 |
+| `(M-ESC)`, `θ_{tr}` | mean-tail-transport hypothesis `liminf_m \|ω^+−ω^-\|(𝔛_{W_m})/\|W_m\| = θ_{tr} > 0`.  *(Merged name `θ_{tr}`, r2 n2: the shard-local `θ` collides with the frozen twist variable `θ` of the `μ_∞^α` row (line 271); the merged symbol carries the subscript to avoid the overload.)* | theory/ace-ld.md §0, ⟨1⟩5 |
 
-**MP-5. L2 split (endorsing verdict m7, outside this lane).**  Move §3
+**MP-5. L2 split (endorsing r1 m7 / r2 m8, outside this lane).**  Move §3
 (⟨1⟩5, ACE-LD-obst′) to a shard `theory/ace-ld-obst.md` once the loop
 converges; it has a disjoint hypothesis set from ⟨1⟩4 and the split
 restores both files to the L2 band.
 
-**MP-6. Note to bd `tns-xf4` (transmit as a hint, not a constraint).**
-ACE-LD-obst′ is scoped to `θ > 0`; D16's exactly flat kink band
-(re-certified LD-C7 across all 13 sectors) puts it at `θ = 0`, outside the
-obstruction's class.  Usable hint: (LR3) for D16 hinges on kink
-confinement (band flatness), not on magnon dynamics; and (K-TAIL)+(K-Q)
-give the fixed-window ε-eigenvector structure (LD.4) that an (LR) proof
-can consume.
+**MP-6. Note to bd `tns-xf4`** (justification replaced per r2 M5(c);
+strengthened per r2 §7 item 3 — transmit a CONSTRAINT, attributed to the
+cross-lane composition, not this shard's own theorem):
+
+> ACE-LD-obst′ is scoped to `θ_{tr} > 0`.  D16 is outside its class:
+> every state in the closed span of the K1--K2 family is exactly
+> stationary (K1+K2 PROVED; `ker H_kink` exhaustion is K4, CONJECTURE),
+> and D17 kink--magnon packets have mean wall transport bounded by
+> `⟨N_T⟩/s` (M-quant-G), so `θ_{tr} = 0`; LD-C7(a) certifies only the
+> sector ground energies at `L=12`.  Usable hint: (LR3) for D16 hinges
+> on kink confinement, not on magnon dynamics; (K-TAIL)+(K-Q) give the
+> fixed-window ε-eigenvector structure (LD.4) that an (LR) proof can
+> consume.  **Usable constraint (cross-lane composition, ace-ld-r2 §7
+> item 3 — attributed to the composition of the ace-ld and lr-d16
+> critic passes, proved in neither shard alone): `(M-ESC) ⟹ (NR)
+> fails` — the first-moment `O(1)` bound of ace-ld ⟨1⟩5.⟨2⟩3 composed
+> with lr-d16 ⟨1⟩5.⟨2⟩4's second-moment monotonicity remark.  Any (LR)
+> route for D16 through a repaired (NR) is therefore confined to the
+> `θ_{tr} = 0` class from the start.**

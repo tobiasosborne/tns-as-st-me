@@ -1156,3 +1156,40 @@ to make the *exactness* hypotheses (2)--(3) physically plausible — an isolated
 exact band is not to be expected when a competing channel is open — so they
 belong to the justification of D28, not to its inferential content.  Adding
 or deleting them changes no step of `theory/ansatz-scattering.md`.
+
+---
+
+# Ansatz-conditioned two-magnon scattering — D31
+
+*Appended 2026-08-29 from `theory/ansatz-scattering-2m.md` §7 (merge proposal
+applied verbatim modulo this scaffolding), per `ansatz-scattering-2m-r6.md`
+R6-O1: the PROVED row `AC-EX-2M` depended on a D-number that existed only
+inside a proposals-only block.  No clause is edited.*
+
+## D31 (H-ACE2M: exact fixed-packet two-magnon data over one vacuum)
+
+Fix one translation-invariant injective canonical MPS tensor `A` and its D1 state/GNS triple `(ω_A,H_A,Ω_A)`. All constructions use this one vacuum representation; no D2(a) covariant vacuum family is required. Assume:
+
+1. A finite-range translation-invariant Hamiltonian generates the dynamics, is implemented in `H_A` by commuting
+   positive-energy time/lattice translations, and is normalized by `HΩ_A=0`, `ker H=ℂΩ_A`.  A conserved circle charge
+   grades the selected magnon by one unit and the construction lies in its charge-two sector.
+2. There is a finite-multiplicity scalar magnon band `ω∈C²(𝕋)`, isolated within the charge-one sector on clause 4's packet neighbourhoods, and a Gram-normalized translation-covariant **exact** map `Γ_M:L²(𝕋;ℂ^m)→H_A` with `HΓ_M=Γ_M(ω⊗1_m)`. The multiplicity is fixed; matrix-valued crossings are outside D31. Exactness is not a Rayleigh--Ritz conclusion.
+3. For each packet window, a compact-energy-momentum-supported spacetime-Schwartz filter of a charge-one local observable gives uniformly almost-local positive-energy-transfer creators with `a_{i,b}(n)=τ_n(a_{i,b}(0))`, `a_{i,b}(n)Ω_A=Γ_M(χ_i e_n⊗e_b)`, `e_n(k)=e^{-ikn}`.
+4. Packet amplitudes are finite sums of `C_c^∞` products.  The dispersion is `C^∞` on neighbourhoods `U_i` of compact
+   supports `K_i`; `V_i=ω'(K_i)` obey `dist(V_1,V_2)≥ε_v>0`, `dist(V_i,{0})≥ε_0>0`.  The latter nonzero-velocity clause is part of the campaign packet register but is used by no estimate in (A2M.1)--(A2M.2); only `ε_v` enters Cook/Gram.  Filters satisfy `χ_i=1` on `K_i`,
+   `supp χ_i⊂U_i`; companions satisfy `χ̃_i=1` on `supp χ_i`, `supp χ̃_i⊂U_i`; put `h_i=ωχ̃_i∈C^∞(𝕋)`.
+5. Supply an inventory `𝓡_inel` of every alternative propagating charge-two band tuple `r=(r_1,…,r_n)` expressible from
+   the stated exact band data, and set `θ_r(K):=inf_{Σp_j=K,Σq_{r_j}=2}Σ_jω_{r_j}(p_j)`.  Put `K_Σ=K_1+K_2` and
+   `I_2={(ω(k_1)+ω(k_2),k_1+k_2):k_i∈K_i}`.  For every `r∈𝓡_inel`, require
+   `ω(k_1)+ω(k_2)+η_inel<θ_r(k_1+k_2)` for one `η_inel>0` and all `k_i∈K_i`; equivalently, when applicable,
+   `sup_{(E,K)∈I_2}E+η_inel<Θ_inel`, `Θ_inel:=inf_{K∈K_Σ,r}θ_r(K)`; absent channels count as `+∞`.  Every charge-two
+   bound band in the supplied exact data is isolated by
+   `d_B:=inf_{k_i∈K_i,j}|ω(k_1)+ω(k_2)-E_{B,j}(k_1+k_2)|>0`; `P_B` is the sum of its joint spectral projections.
+   Bound bands are present but are not incoming/outgoing two-magnon channels.
+
+No clustering inequality is assumed.  D1(c,d) implies, for every `λ̃∈(λ_E,1)` and local `C,D` separated by `d_sep`,
+
+`|ω_A(CD)-ω_A(C)ω_A(D)|≤C_{A,λ̃}||C|| ||D||λ̃^{d_sep}`. **(D31-C2)**
+
+After uniformly almost-local truncation this implies (D31-C4) of `theory/ansatz-scattering-2m.md` ⟨1⟩3.  Both estimates
+are consequences, not hypotheses.  The theorem is fixed-packet only; a soft scale and its limit are not part of D31.
