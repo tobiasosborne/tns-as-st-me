@@ -166,6 +166,15 @@ missing lemma is true and worth proving.)
 equation (6).  Also §0 (S-IDX.2-source) + (SIDX.17), which import the D24
 normalisation into the same shard.
 
+> **ERRATUM (orchestrator, 2026-08-29, bd `tns-iu5`).**  The computation below
+> reads D24(d)3 as FROZEN, i.e. with the stipulation `𝔞_leg = 1`.  That
+> stipulation is withdrawn: D24(d)3b now fixes no value of `𝔞_leg(ρ)` at any
+> density, ML5-B predicts no number at any density, and the emptiness
+> conclusion drawn here does not survive — nonemptiness of `𝒮_W(ρ)` is OPEN
+> at every `ρ` (bd `tns-axg`).  "For **every** model in the class …  phase
+> slope `2χ`" is superseded by
+> `theory/verdicts/d24d3-adjudication-r5.md` §5.
+
 **(b) My computation.**  D24(d)3 + ML5-B(6) give, for **every** model in the
 class, `M_2 = 2iχ k M_1 + O(k²)`, i.e. phase slope `2χ`.  My (C-c)/(C-e)
 computations give slope `1/S` — `1.000000` at `S=1`, `0.666667` at `S=3/2`,

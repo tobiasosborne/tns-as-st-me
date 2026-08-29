@@ -689,7 +689,10 @@ S2-2body's compact-hard Taylor remainder and D24(b)'s product-packet norm give
 
 Thus `A∈C¹([0,ε_★];L²(I))`; a singleton family is relatively
 compact and has an equicontinuous first jet.  This uses the normalized
-multiplier amputation of D24(b), with no extra `ε^{-1}` factor.
+multiplier amputation of D24(b), with no extra `ε^{-1}` factor.  *(bd
+`tns-iu5` r4: this `S_phys`-valued amputation coincides with the D24(b)
+convention only in this shard's D6 register `ρ = 1/2`; it is not the D24(b)
+convention in general.)*
 
 This verifies `(SR)[A]` for the constructed-channel family, in ⟨1⟩8's schema
 convention: the family is a singleton, so both uniformity clauses of `(SR)`

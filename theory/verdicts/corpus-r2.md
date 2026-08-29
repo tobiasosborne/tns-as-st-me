@@ -175,7 +175,12 @@ charge-preserving edge dynamics stated in D22.
   `(e^{ik}-1)[-i chi/v_h][2iv_hM_1]` gives `2i chi kM_1+O(k^2)`.  Hypothesis 1
   now says explicitly that the two bounded remainders are exhaustive.  This is
   a valid conditional implication; nonemptiness/microscopic membership is not
-  proved.
+  proved.  *(bd `tns-iu5` r3: the same multiplication with the D24(d)3b
+  constant carried gives `2i𝔞_leg χ k M_1 + O(k²)`; `𝔞_leg` enters as a
+  nonzero constant factor and no step of this adjudication uses its value,
+  so the implication certified here survives verbatim under
+  reparametrisation.  Its displayed conclusion in `claims/CLAIMS.md` is
+  updated accordingly; the promotion is not reopened.)*
 * **B3.** The repaired transmitted and reflected calculations agree with
   M-quant and are cut independent after the stated leg subtraction.  The
   finite-time label argument has one minor missing density step: it must also

@@ -37,9 +37,14 @@ it; it is binding for r2). Headlines:
   CLAIMS row scoped + shard ERRATUM added; two-hard ⟨1⟩5 damaged;
   downstream audit = tns-uxr (P0). (2) **Frozen probe P2(b) η-gate is a
   code no-op** (both S1 critics independently): quote a0728bd as
-  P1+P2(a)-only until tns-9z4 unfreeze. (3) **Frozen 𝒮_W empty for
-  ρ≠1/2** (D24(d)3+ML5-B force slope 2 at every ρ vs PROVED 1/S) —
-  tns-iu5, blocks any D29/D30 merge.
+  P1+P2(a)-only until tns-9z4 unfreeze. (3) *repaired by retirement: clause 3
+  split, D24(b) convention fixed, `𝔞_leg(ρ)` OPEN (rows `D24-VAL`
+  conditional, `AMP` CONJECTURE); ML5-B now predicts no number at any
+  density; `𝒮_W(ρ)` nonemptiness open at every `ρ`*.  After
+  the merge, for every source with `M_1^O ≠ 0` the ML5-A membership test
+  through `𝔠_h` is undecidable until AMP or `tns-axg` closes, because
+  `𝔠_h` contains the open constant `𝔞_leg`; D24(e)'s counterexamples
+  remain decidable (`M_1^O = 0`, W14).
 - **NO shared-file merges performed** (critics not converged); all
   D29/D30/D31 proposals stay quarantined in the shards.
 

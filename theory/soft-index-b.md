@@ -1,5 +1,13 @@
 # S-INDEX (lane B) — the soft law as a constraint on limit points of the charge-created protocol datum
 
+> **ERRATUM (orchestrator, 2026-08-29, bd `tns-iu5`).**  D24(d) clause 3 is
+> split and the value of the soft-leg amputation constant `𝔞_leg(ρ)` is
+> RETIRED from the definition: `𝔞_leg(ρ)` is OPEN at every density, carried
+> as `claims/CLAIMS.md` rows `D24-VAL` (conditional) and `AMP` (CONJECTURE).
+> Flux/leg-density text in this shard that displays a value of the constant,
+> or the soft coefficient `2` off `ρ = 1/2`, is superseded.  Merged text of
+> record: `theory/verdicts/d24d3-adjudication-r5.md` §5.
+
 Status: **SKETCH** (self-status; only the L6 loop promotes).  Independent
 S1-B prover shard (Fable lane).  Lane discipline: this file is the only
 writable artifact of this lane; `theory/soft-index.md` (the codex lane) was

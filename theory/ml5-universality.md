@@ -1,5 +1,14 @@
 # ML5 — process independence, its exact hypothesis, and a local counterexample
 
+> **ERRATUM (orchestrator, 2026-08-29, bd `tns-iu5`).**  The soft-leg
+> amputation constant `𝔞_leg` of D24(d)3b is carried explicitly through this
+> shard: ML5-A's criterion and ML5-B's conclusion read `2i𝔞_leg χ`, and
+> `𝔞_leg` is OPEN at every density (rows `D24-VAL` conditional, `AMP`
+> CONJECTURE).  No step uses its value — `𝔞_leg ≠ 0` suffices — so both
+> promotions survive verbatim under reparametrisation; the frozen `2χ` is the
+> `𝔞_leg = 1`, `ρ = 1/2` register.  Merged text of record:
+> `theory/verdicts/d24d3-adjudication-r5.md` §5.
+
 Status: **REFUTED** for unrestricted process independence.  A four-site local
 source leaves the one-hard amplitude unchanged and changes the linear
 hard-plus-soft coefficient.  The repaired conditional results ML5-A and ML5-B
@@ -48,7 +57,7 @@ Define the contact first-jet functional
 \[
  \mathfrak c_h(O):=
  \left.\partial_kM_2^O(k,h)\right|_{k=0}
- -2i\,\chi(h,0)M_1^O(h).                                      \tag{3}
+ -2i\,\mathfrak{a}_{\mathrm{leg}}\,\chi(h,0)M_1^O(h).            \tag{3}
 \]
 
 **LEMMA ML5-A (repaired intercept-and-first-jet criterion).**
@@ -65,7 +74,8 @@ Define the contact first-jet functional
 **PROVE.** The factorisation
 
 \[
- M_2^O(k,h)=2i\chi k\,M_1^O(h)+O_{L²(I)}(k^2)                 \tag{4}
+ M_2^O(k,h)=2i\mathfrak{a}_{\mathrm{leg}}\chi k\,M_1^O(h)+O_{L²(I)}(k^2)
+                                                              \tag{4}
 \]
 
 holds on `𝒮` **if and only if both**
@@ -78,7 +88,8 @@ holds on `𝒮` **if and only if both**
 in `L²(I)` for every `O∈𝒮`.  Under (4a), the remainder obeys
 
 \[
- \|M_2^O(k,\cdot)-2i\chi kM_1^O\|_{L²(I)}\le K_O(ε)|k|².      \tag{4b}
+ \|M_2^O(k,\cdot)-2i\mathfrak{a}_{\mathrm{leg}}\chi kM_1^O\|_{L²(I)}
+                                     \le K_O(ε)|k|².          \tag{4b}
 \]
 
 The relative form of D24(b) additionally requires
@@ -139,9 +150,11 @@ adjudication).**
    fixed in D24(b).
 2. **Ward covariance.** Its descendant current residue factorizes as
    `2iv_h M_1^O(h)` for every `O∈𝒮_W`.
-3. **Kinematic LSZ normalization.** The external flux factor `L(k,h)` is
+3. **Kinematic LSZ normalization.** The external flux factor `L(k,h)` (the
+   D24(d)3a descendant quotient, defined for `k≠0`) is
    process independent, uniformly `C¹`, and
-   `L(0,h)=-iχ/v_h`.
+   `L(0,h)=𝔞_leg·(-iχ/v_h)` with the D24(d)3b amputation constant
+   `𝔞_leg≠0` OPEN.
 4. **Reduced-channel regularity in the target limit.** The orthogonal current
    channel contributes `O_{L²(I)}(k²)`, with its norm bounded by
    `C_I|k|²||M_1^O||_{L²(I)}`.  Fixed-volume ML4 does not prove this
@@ -152,11 +165,13 @@ adjudication).**
 **PROVE.** Every `O∈𝒮_W` obeys
 
 \[
- \boxed{M_2^O(k,h)=2i\chi k\,M_1^O(h)+O_{L²(I)}(k^2).}         \tag{5}
+ \boxed{M_2^O(k,h)=2i\mathfrak{a}_{\mathrm{leg}}\chi k\,M_1^O(h)
+        +O_{L²(I)}(k^2).}                                     \tag{5}
 \]
 
-The coefficient is the signed two-site Wigner displacement and is independent
-of the hard process within `𝒮_W`.
+The coefficient is the signed `2𝔞_leg`-site Wigner displacement and is
+independent of the hard process within `𝒮_W`; `two-site` is the `𝔞_leg = 1`,
+`ρ = 1/2` register.
 
 **⟨2⟩1. PROVE (descendant external leg).** Its contribution is
 
@@ -168,8 +183,8 @@ of the hard process within `𝒮_W`.
 Justification: hypothesis 2 and ML4 equation (11).
 
 **⟨3⟩2.** `e^{ik}-1=ik+O(k²)` and
-`L(k,h)=-iχ/v_h+O_I(k)`; since `v_h` is bounded away from zero on `I`, (6)
-equals `2iχ kM_1^O+O_{L²(I)}(k²)`.
+`L(k,h)=𝔞_leg·(-iχ/v_h)+O_I(k)`; since `v_h` is bounded away from zero on
+`I` and `𝔞_leg≠0`, (6) equals `2i𝔞_leg χ kM_1^O+O_{L²(I)}(k²)`.
 Justification: hypothesis 3, compactness of `I`, and Taylor's theorem.
 
 **⟨3⟩3. QED.**
@@ -180,8 +195,8 @@ hypothesis 5.  Hypothesis 1 states that these are **all** terms besides
 ⟨2⟩1.
 Justification: hypotheses 1, 4, and 5.  **⟨3⟩1. QED.**
 
-**⟨2⟩3. PROVE (5).** Add ⟨2⟩1 and ⟨2⟩2.  Its phase slope is `2χ`, so the
-Wigner displacement has signed value `2χ` sites.
+**⟨2⟩3. PROVE (5).** Add ⟨2⟩1 and ⟨2⟩2.  Its phase slope is `2𝔞_leg χ`, so
+the Wigner displacement has signed value `2𝔞_leg χ` sites.
 Justification: linearity and the definition of Wigner displacement as the
 momentum derivative of the scattering phase.  **⟨3⟩1. QED.**
 
@@ -323,7 +338,7 @@ Justification: inspection of the checker.  **⟨3⟩4. QED.** □
    zero-intercept-and-zero-first-jet criterion with the explicit `K_O` norm.
 3. **PROVED per `corpus-r2.md` adjudication (conditional implication):** ML5-B.  Under the exhaustive normed LSZ
    decomposition, Ward residue plus external flux kinematics gives the signed
-   Wigner coefficient `2χ`; reduced-channel regularity and the no-contact
+   Wigner coefficient `2𝔞_leg χ` with `𝔞_leg` OPEN (D24(d)3b); reduced-channel regularity and the no-contact
    hypothesis bound every remaining term.
 4. **CONJECTURE / future work:** deriving the exhaustive decomposition and
    no-contact condition for a useful microscopic covariant source class, and

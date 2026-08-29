@@ -65,7 +65,11 @@ An **ML4-admissible analytic amputation at fixed `N`** may multiply (3), on eith
 side, by operator families bounded and `C¹` for `|k|≤ε_I`.  This excludes a
 new `1/k` pole in the reduced (`1-P`) channel at that volume.  No
 volume-uniform constant is included in this definition; an infinite-volume
-use must assume its own packet-trace bound.
+use must assume its own packet-trace bound.  *(bd `tns-iu5` r4: D24(b)'s
+leg-normalisation convention is strictly narrower than this ML4-admissible
+class — D24(b) soft-leg envelopes must have `λ(0) = 1`; conclusions drawn
+here about ML4-admissible amputations do not transfer to D24(b) amplitudes
+unless they respect that restriction.)*
 
 **⟨2⟩1. PROVE.** The classes in (1) obey the function-space discipline of D3
 and D12, and (3) has a norm meaning before any plane-wave limit.

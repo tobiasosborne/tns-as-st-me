@@ -3,6 +3,14 @@
 
 # S-INDEX — the charge-created soft law as a constraint on protocol limits
 
+> **ERRATUM (orchestrator, 2026-08-29, bd `tns-iu5`).**  D24(d) clause 3 is
+> split and the value of the soft-leg amputation constant `𝔞_leg(ρ)` is
+> RETIRED from the definition: `𝔞_leg(ρ)` is OPEN at every density, carried
+> as `claims/CLAIMS.md` rows `D24-VAL` (conditional) and `AMP` (CONJECTURE).
+> Flux/leg-density text in this shard that displays a value of the constant,
+> or the soft coefficient `2` off `ρ = 1/2`, is superseded.  Merged text of
+> record: `theory/verdicts/d24d3-adjudication-r5.md` §5.
+
 ## 0. Statement
 
 The labels **D29(PROTO)** and **D30(TGT)** mean exactly the proposals in §7;

@@ -920,57 +920,210 @@ universality is refuted by the explicit counterexample in (e).*
 `‖O‖_μ := Σ_X e^{μ\,diam(X)}‖O_X‖ < ∞` for some `μ > 0`.  Local sources have
 finite `‖·‖_μ`.
 
-**(b) Amputated amplitudes.**  For a source `O`, `M_1^O(h)` is its amputated
-one-hard amplitude and `M_2^O(k,h)` its connected hard-plus-soft amplitude in
-the physical channel; both are linear in `O`, and both are measured as
-multipliers in `L²(I,dh)` for a fixed hard window `I = [a,b] ⋐ (0,π)`.
-Remainders are measured in `‖R_{S2}(k)‖_{L²(I)} ≤ C_I|k|²‖M_1^O‖_{L²(I)}`, or,
-for `f_ε(k) = ε^{-1/2}f(k/ε)`, as `O(ε²)` in the product packet norm.  Plane
+**(b) Amputated amplitudes, and the normalisation they are measured in.**
+For a source `O`, `M_1^O(h)` is its amputated one-hard amplitude and
+`M_2^O(k,h)` its connected hard-plus-soft amplitude in the physical channel;
+both are linear in `O`, and both are measured as multipliers in `L²(I,dh)`
+for a fixed hard window `I = [a,b] ⋐ (0,π)`.  Remainders are measured in
+`‖R_{S2}(k)‖_{L²(I)} ≤ C_I|k|²‖M_1^O‖_{L²(I)}`, or, for
+`f_ε(k) = ε^{-1/2}f(k/ε)`, as `O(ε²)` in the product packet norm.  Plane
 waves are generalised kernels inside `C_c^∞` packets (D3(a), D12(a′)).
 
-**(c) The contact first jet.**  With `χ(h,k) := sgn(v(h) − v(k))`,
+*Amputation and leg-normalisation convention.*  Both amplitudes are taken
+against asymptotic one-magnon kernels normalised by `⟨k|k′⟩ = 2πδ(k−k′)`,
+inside the corpus's packet discipline (D3(a); the `ℓ¹∩BV` packet class of
+D12(a′)).  That kernel is *constructed* in the fully polarised spin-`S`
+register, where it is `|k⟩ = Σ_x e^{ikx}|x⟩` (named computation D24N-C8 in
+`theory/checks/d24d3_normalization_check.py`, an exact one-magnon
+eigenvector of `H_S`); in any other register the existence of the
+asymptotic one-magnon kernel is claim `ML1` (CONJECTURE), and every
+statement about the (d)3b constant `𝔞_leg(ρ)` is scoped to a register
+where the kernel exists.  The **same** amputation is applied to the
+**same** hard leg in both.  The soft leg enters `M_2^O` as **one
+additional `δ`-normalised asymptotic magnon of momentum `k`, carrying
+unit leg weight** — not as a charge-created or current-created vector.
+This convention is strictly *narrower* than the ML4-admissible analytic
+amputation of `theory/ml4-ward-reduction.md` (which admits any bounded
+`C¹` multiplier family at fixed `N`): here every soft-leg envelope `λ(k)`
+must have `λ(0) = 1`.
 
-  `𝔠_h(O) := ∂_k M_2^O(k,h)|_{k=0} − 2i\,χ(h,0)\,M_1^O(h)`.
+This is a *convention*, not a theorem, and it is load-bearing.  A change of
+normalisation `M_1^O ↦ c\,M_1^O`, `M_2^O(k,·) ↦ c′(k)\,M_2^O(k,·)` with
+`c, c′(k) ≠ 0` (necessarily independent of `O`, by linearity above) leaves
+clauses (d)1, 4 and 5 invariant — clause 1 is a homogeneous statement in one
+amplitude, while clauses 4 and 5 are two-amplitude bounds whose existentially
+quantified constant `C_I` absorbs `c′/c` — while clause (d)2, whose residue
+is quoted against the charge-created soft leg (see (d)2), transforms as
+`c′/c`, and the (d)3a external flux factor and the (d)3b amputation constant
+transform as `L(k,h) ↦ (c′(k)/c)L(k,h)` and `𝔞_leg ↦ (c′(0)/c)\,𝔞_leg`.
+Fixing `c′(0)/c = 1` as above is what pins `𝔞_leg` against those rescalings,
+and (b) supplies it alone.  Clause (d)2 is *not* a second covariance anchor:
+read against the charge-created leg it is a cross-normalisation **membership**
+condition on the source — it ties `E^O_desc` to `2i v_h M_1^O` — and it is
+that, not a second fixing of the covariance freedom, which makes `𝔞_leg` a
+number rather than a name.  Without both, "`𝔞_leg = 1`" and
+"`𝔞_leg = 1/Z_ρ`" are statements about a convention and not about a model.
+What remains free does not move `𝔞_leg`: rescaling the source (both
+amplitudes are linear in `O`); any hard-leg amputation convention applied
+identically in both (it cancels in the (d)3a quotient); and any soft-leg
+envelope `λ(k)` with `λ(0) = 1`.
+
+Two consequences are recorded because they are used below.  (i) In the
+fully polarised spin-`S` ferromagnet the **charge-created** soft leg is
+*not* this convention's soft leg: `S^-_x|Ω⟩ = √(Z_ρ)\,|x⟩` on normalised
+one-flip states, hence `Q^-_k|Ω⟩ = √(Z_ρ)\,|k⟩` exactly on the vacuum
+(named computation D24N-C8, verified against the Hamiltonian's own
+one-magnon eigenvector), the two legs coinciding only at `ρ = 1/2`; on a
+descendant (one-hard-magnon) state the same conversion holds per site
+only up to `O(1/(Z_ρN))` — `‖Q^-_q|h⟩‖² = Z_ρN − 2` exactly for `q ≠ h` (D24N-C8) —
+becoming exactly `√Z_ρ` in the LSZ limit.  (ii) Because clause (d)2's
+residue is quoted against the charge-created leg while the (d)1 summand
+`E^O_desc` is measured against this convention's asymptotic leg, a
+soft-leg normalisation argument alone contributes exactly that conversion
+mismatch to `𝔞_leg` — `Z_ρ^{-1/2}` in the LSZ limit, and
+`(Z_ρ − 2/N)^{-1/2}` at finite `N` on the descendant leg (see (i)) — and not
+`Z_ρ^{-1}`; see the fence on lemma AMP in (d)3b.
+
+**(c) The contact first jet.**  With `χ(h,k) := sgn(v(h) − v(k))` and
+`𝔞_leg` the soft-leg amputation constant of (d)3b below (the forward
+reference is deliberate: `𝔠_h` is by definition the obstruction to the
+factorisation (d) predicts),
+
+  `𝔠_h(O) := ∂_k M_2^O(k,h)|_{k=0} − 2i\,𝔞_leg\,χ(h,0)\,M_1^O(h)`.
 
 **Criterion (ML5-A; status in the claims DAG).**  On a linear source class
 with `M_1^O ∈ L²(I)` and `M_2^O(k,·)` `C²` at `k=0` as an `L²(I)`-valued map,
 the factorisation
-`M_2^O(k,h) = 2iχ k M_1^O(h) + O_{L²(I)}(k²)` holds **if and only if both**
+`M_2^O(k,h) = 2i𝔞_leg χ k M_1^O(h) + O_{L²(I)}(k²)` holds **if and only if
+both**
 
   `M_2^O(0,·) = 0`  and  `𝔠_h(O) = 0`
 
 in `L²(I)`.  With
 `K_O(ε) := (1/2)sup_{|q|≤ε}‖∂_q²M_2^O(q,·)‖_{L²(I)}`, Taylor's theorem gives
 the exact control
-`‖M_2^O(k,·) − 2iχ kM_1^O‖_{L²(I)} ≤ K_O(ε)|k|²`.
+`‖M_2^O(k,·) − 2i𝔞_leg χ kM_1^O‖_{L²(I)} ≤ K_O(ε)|k|²`.
 The stronger relative bound used in D24(b) requires the additional uniform
 hypothesis `K_O(ε) ≤ C_I‖M_1^O‖_{L²(I)}`; it does not follow from `C²`
 regularity alone.  On an affine class both displayed zero conditions must
 hold on every source difference, and the base source must obey the full
 factorisation with the same stated norm control.
+**The criterion is constant-agnostic** — its proof (`ml5-universality.md`
+⟨1⟩2) evaluates at `k = 0` and differentiates once, and never uses the
+value of `𝔞_leg` (`𝔞_leg ≠ 0` suffices).  The counterexamples of (e) are
+likewise `𝔞_leg`-blind: both have `M_1^O = 0`, so the `𝔞_leg`-dependent term
+vanishes identically for every `𝔞_leg`, and neither (e) nor
+`theory/checks/ml4_check.py` needs an edit (bd `tns-iu5`).
 
-**(d) The Ward-covariant no-contact class `𝒮_W`.**  `𝒮_W` is the class of
-sources satisfying all five of:
-1. *Exhaustive normed LSZ decomposition* — in `L²(I)`, `M_2^O` is exactly the
-   sum of the descendant external-leg term, the orthogonal-current term, and
-   the direct source/contact term named below; there is no additional reduced
-   term, and the equality holds in the same packet norm as D24(b).
-2. *Ward covariance* — the descendant current residue factorises as
-   `2i v_h M_1^O(h)`;
-3. *Kinematic LSZ normalisation* — the external flux factor `L(k,h)` is
-   process independent, uniformly `C¹`, and `L(0,h) = −iχ/v_h`;
+**(d) The Ward-covariant no-contact class `𝒮_W(ρ)`.**  Fix a broken-symmetry
+tail density `ρ := ω_α(S^z) > 0` (`notation.md`'s `ρ`-row), and write
+`Z_ρ := 2ρ` for the order-parameter density (`notation.md`'s `Z_ρ`-row; in
+an su(2) model with a fully polarised α tail, `Z_ρ = ω_α([S^+_x, S^-_x])` —
+a special case, not a membership condition).  Under (S) at both tails,
+D26(INT), and the antisymmetric tail pair `ω_β(S^z) = −ω_α(S^z) = −ρ` —
+the load-bearing hypothesis of claim `M-IDX-density` — `2ρ ∈ ℤ`, so `Z_ρ`
+is then a positive integer.  `ρ = 0` is excluded: D26 admits it, but there
+is then no broken order parameter and no type-B soft leg.  In the fully
+polarised spin-`S` ferromagnet `ρ = S`.  Amplitudes below (`M_1^O`,
+`M_2^O`, and the clause-1 summand `E^O_desc`) are in the normalisation
+convention of (b); clause 2's residue display is quoted in the
+charge-created normalisation of `ml4-ward-reduction.md` (11), as stated in
+that clause; clause 3b is empty without (b).  `𝒮_W(ρ)` is the class of
+sources satisfying all five of (clause 3 has two parts; the *count* of
+conditions is deliberately unchanged, so `paper/main.tex:244`
+"five-condition" and the audit rows that quote it stay correct):
+1. *Exhaustive normed LSZ decomposition* — in `L²(I)`, `M_2^O` is exactly
+   the sum of the descendant external-leg term `E^O_desc`, the
+   orthogonal-current term, and the direct source/contact term named below;
+   there is no additional reduced term, and the equality holds in the same
+   packet norm as (b).
+2. *Ward covariance* — the descendant current residue, **quoted against
+   the charge-created soft leg `Q_0|h⟩` — the normalisation of
+   `ml4-ward-reduction.md` (11) — and not against (b)'s asymptotic
+   leg**, factorises as `2i v_h M_1^O(h)`.  The two legs differ by
+   `√Z_ρ` **in the LSZ limit**; at finite `N` the descendant leg carries
+   `√(Z_ρ − 2/N)` instead, since `‖Q^-_q|h⟩‖² = Z_ρN − 2` exactly for `q ≠ h`
+   ((b)(i); named computation D24N-C8(ii)).  That mismatch is part of
+   what clause 3b's constant records: against (b)'s asymptotic leg the
+   same residue reads `2i v_h M_1^O(h)/√Z_ρ` in that limit, the two
+   readings coinciding only at `ρ = 1/2`.  (This clause is *consistent*
+   at every density: its left-hand side is exactly `Z_ρ`-linear on the
+   fully polarised spin-`S` tail, `⟨h|Q_0^†J^-_0|h⟩ = 2i v_S(h)` with
+   `v_S(h) = Z_ρ J\sin h`; frozen `soft-current-recon.md` (R14) is its
+   `Z_ρ = 1` reading — named computation D24N-C3 in
+   `theory/checks/d24d3_normalization_check.py`, which displays the
+   residue in both normalisations and in both scopes.  Whether any given
+   `O` also makes the right-hand side match is a membership question,
+   which no computation here decides.  The alternative reading, against
+   (b)'s asymptotic leg, would be unsatisfiable by an `O`-independent
+   factor at every `ρ ≠ 1/2` — that is why this normalisation and not
+   that one.)
+3. *Kinematic LSZ normalisation*, in two parts:
+   **(3a) hypothesis** — the external flux factor
+   `L(k,h) := E^O_desc(k,h)/[(e^{ik}−1)\,2i v_h\,M_1^O(h)]` is well
+   defined by clauses 1--2 for `k ≠ 0` at every `h` with `M_1^O(h) ≠ 0`;
+   the hypothesis is that it extends to a process-independent, uniformly
+   `C¹` function on `{|k| ≤ ε} × I`, and `L(0,h)` denotes that extension's
+   value at `k = 0`.
+   **(3b) the profile of `L(0,h)`, and the OPEN amputation constant** —
+   `v_h\,L(0,h)/χ(h,0)` does not depend on `h` on `I`; equivalently
+   `L(0,h) = 𝔞_leg(ρ)·(−iχ(h,0)/v_h)` for some nonzero constant
+   `𝔞_leg(ρ)`.  **What this clause asserts is that `h`-profile — the
+   reciprocal LSZ energy denominator `[ω(h+k)−ω(h)]^{-1}k`, the corpus's
+   fixed provenance for `L` (`soft-current-recon.md` ⟨1⟩7,
+   `paper/main.tex:524--527`, `soft-index-b.md:808`) — and no value.**  By
+   (3a) `L` is a single class-level function, so `𝔞_leg(ρ)` is a datum of
+   the class `𝒮_W(ρ)` and not of any individual source; it is defined
+   only when that class is nonempty, and only in a register where the (b)
+   asymptotic one-magnon kernel is constructed (currently the fully
+   polarised spin-`S` family, D24N-C8; off that family, kernel existence
+   is claim `ML1`, CONJECTURE).  **This definition fixes no value of
+   `𝔞_leg(ρ)` at any density, `ρ = 1/2` included.**  As frozen, this clause
+   stipulated `𝔞_leg = 1`, which under the corpus's jet-identification
+   bridge **(α)** — the identification of the D24(d) soft multiplier's
+   jet with the two-body physical phase jet, an unproved bridge, row
+   `D24-VAL` — contradicts PROVED `S2-2body-S` at every `ρ ≠ 1/2` (bd
+   `tns-iu5`); that stipulation is withdrawn.  Two candidate readings are
+   carried in `claims/CLAIMS.md` and neither is part of this definition:
+   the conditional matched value `𝔞_leg(ρ) = 1/Z_ρ` (row `D24-VAL`,
+   proved as an implication from the bridge plus class membership), and
+   the open lemma **AMP** of the same value from a soft-leg amputation
+   mechanism (row `AMP`, CONJECTURE).  Fence on AMP: by (b)(ii) a leg
+   normalisation alone contributes `Z_ρ^{-1/2}` — the exact conversion,
+   in the LSZ limit, between clause 2's charge-created residue
+   normalisation and (b)'s asymptotic leg — **on the charge-created
+   reading of `E^O_desc`**, i.e. on the reading that the clause-1
+   descendant term is exactly the propagated charge-created leg with no
+   further dressing; and **under that reading and the same unproved
+   bridge (α) named above**, that value is refuted against the
+   ansatz-free two-magnon data at the pre-registered band, so AMP
+   requires — under those two hypotheses — a second factor `Z_ρ^{-1/2}`
+   from a different mechanism
+   (`theory/verdicts/d24d3-adjudication-r3.md` ⟨1⟩4; one-step form
+   `theory/verdicts/d24d3-adjudication-r4.md` §1.3).  At `ρ = 1/2` the two
+   candidate readings and the retired stipulation all coincide at `1`, so
+   the D6 displays of the soft coefficient `2` remain numerically
+   consistent with this clause; those displays rest on the contact/oracle
+   route (`oracle-bethe.md` O7–O9; `paper/main.tex:515–520`), not on this
+   clause;
 4. *Reduced-channel regularity* — the orthogonal current channel is
-   `O_{L²(I)}(k²)` in the stated target limit, with the relative norm bound of
-   D24(b).  Fixed-volume ML4 does not by itself supply a volume-uniform bound;
-5. **No direct soft contact** — the amputated source commutator/contact term is
-   bounded by `C_I|k|²‖M_1^O‖_{L²(I)}`.
+   `O_{L²(I)}(k²)` in the stated target limit, with the relative norm
+   bound of (b).  Fixed-volume ML4 does not by itself supply a
+   volume-uniform bound;
+5. **No direct soft contact** — the amputated source commutator/contact
+   term is bounded by `C_I|k|²‖M_1^O‖_{L²(I)}`.
 
 Hypotheses 1 and 5 are the extra LSZ/contact content beyond the fixed-volume
 Ward reduction, and by (c) the zero-intercept and zero-first-jet conditions
 are necessary, not cosmetic.  Symmetry-generated external-leg insertions are
 the intended seed, but **no nontrivial microscopic class has been proved to
-satisfy all five conditions**; nonemptiness in the target scattering register
-is part of the ML5-B future work.
+satisfy all five conditions**; nonemptiness in the target scattering
+register is part of the ML5-B future work.  The `tns-iu5` adjudication of
+clause 3 removed a *proof* that `𝒮_W(ρ)` is empty for `ρ ≠ 1/2` — as frozen,
+clause 3 forced soft slope `2` at every density, contradicting PROVED
+`S2-2body-S` given the jet-identification bridge — but it supplies no member
+and fixes no value of `𝔞_leg(ρ)`, so nonemptiness stays open at every `ρ`
+(bd `tns-axg`).
 
 **(e) The refuting source (a stated feature of the frozen conjecture).**  On
 four consecutive sites let

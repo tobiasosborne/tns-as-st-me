@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Deterministic certificates LD-C1..LD-C7 for the ACE-LD r3 shard.
+"""Deterministic certificates LD-C1..LD-C7 for the ACE-LD r4 shard.
 
-Spec: ``theory/ace-ld.md`` section 5 (CHECKER SPEC), r3.  House style:
+Spec: ``theory/ace-ld.md`` section 5 (CHECKER SPEC), r4.  House style:
 every violation raises ``CheckFailure`` (python3 -O safe, no bare assert);
-nothing is random.  Rebuilt after theory/verdicts/ace-ld-r2.md M3/M4 and
-the standing checker obligations of briefs/critic-protocol.md:
+nothing is random.  Rebuilt after theory/verdicts/ace-ld-r2.md M3/M4,
+repaired after theory/verdicts/ace-ld-r3.md M2/M3/m8, per the standing
+checker obligations of briefs/critic-protocol.md:
 
   * r2's LD-C6 (position-diagonal model) was a TAUTOLOGY (r2 M3): p_W =
     delta_0 for every state and every position-diagonal H.  It is
@@ -12,27 +13,39 @@ the standing checker obligations of briefs/critic-protocol.md:
     magnon added: the dynamics does NOT commute with Q_W (liveness gate),
     the TPM law is supported on a bounded nu-set, and the first moment
     stays bounded as |W| grows — against LD-C5's linear growth.
+    r4 (r3 M3): the first-moment gate is evaluated BEFORE the support
+    gate (so --red-c6-moving reaches it), its bound C6_MOM_BOUND is set
+    above the recorded t_+-sweep maximum (the r3 value 1.0 was tuned to
+    t_+ = 4: the GREEN model at t_+ = 20 gives 1.0712), and the sweep
+    itself is gated; --red-c6-weaktransit arms the support gate, which
+    the reorder would otherwise shadow.
   * LD-C5's identity gate (d) is IMPLIED by its concentration gate (a)
     (r2 M4: the gap is ~1e-11 and tracks the concentration defect) and
     its tail-floor gate (e) is IMPLIED by (b)+(c) (arithmetically 1>0.9).
-    Both are now DISCLOSED as consistency lines, not independent
-    evidence.  The genuinely two-branch content is certified separately
-    (LD-C5b, the dephasing WEDGE): in a straddling configuration the two
-    quantities gate (d) compares DISAGREE by ~6.08 — the pinching acts,
-    D27(LR2) measurably fails there, and (d)'s agreement in the
-    concentrated configuration is thereby shown to come from gate (a).
-    (An identity-with-D gate is deliberately NOT shipped: it reduces to
-    x = x against the same branch decomposition — the no-op pattern.)
-  * LD-C1's orthogonality and resolution sub-gates now each have a
+    Both are DISCLOSED as consistency lines, not independent evidence.
+    The genuinely two-branch content is certified separately (LD-C5b).
+    r4 (r3 M2): LD-C5b's wedge at (t_-, t_+) = (0, 300) certifies ONLY
+    that the pinching D acts; it is NOT the D27(LR2) quantity, which
+    averages over t_+ in [T,2T] AND t_- in [-2T,-T] (the V0 = 0
+    straddling packet has a LARGER t_-=0 defect, -8.3868, yet satisfies
+    LR2 exactly — registered as --red-c5b-nobarrier).  The LR2-failure
+    claim is now gated at D27's own double-Cesaro defect: measured
+    -3.3592, stable in T, mechanism = the backward-evolved packet stays
+    split across three window-charge branches (0.8563/0.0170/0.1267)
+    forever.  (An identity-with-D gate is deliberately NOT shipped: it
+    reduces to x = x against the same branch decomposition — the no-op
+    pattern; refusal certified by ace-ld-r3 n6.)
+  * LD-C1's orthogonality and resolution sub-gates each have a
     registered red mode (r2 M4/m4: previously no mode reached them).
-  * LD-C7 gains gate (e): (K-TAIL) itself, measured site-by-site
-    (r2 n5: the defect ratios certify the CONCLUSION's rate; gate (e)
-    certifies the HYPOTHESIS), in the Z2-flipped orientation of the ED
-    ground state (r2 m2), red-armed by --red-c7-orientation.
-  * NO blanket reachability claim is made.  The reachability TABLE is
-    printed by --table and recorded in the spec; gates that are
-    deductively subsumed and hence unreachable in-class are listed as
-    such, with the subsuming gate named.
+  * LD-C7 gate (e): (K-TAIL) itself, measured site-by-site (r2 n5), in
+    the Z2-flipped orientation of the ED ground state (r2 m2), red-armed
+    by --red-c7-orientation.  By Cauchy-Schwarz on the self-adjoint D_x
+    the on-site clause implies the off-diagonal clause, so (e) certifies
+    (K-TAIL) in full (ace-ld-r3 n1).
+  * NO blanket reachability claim is made.  The reachability TABLE and
+    the complete unreached-gate list (r3 M3) live in the spec, section 5
+    of theory/ace-ld.md; each unreached gate is listed with its
+    shadowing gate named.
 
 Batteries:
 
@@ -90,7 +103,19 @@ BAR_M = 10                     # tail threshold M in the LR3 moment
 C5B_HALF_W = 8                 # window |W| = 17
 C5B_WEDGE_MIN = 1.0            # |sum nu p - (<Q>_- - <Q>_+)| must exceed
 #                                this in the straddling configuration
-#                                (measured green value ~6.08)
+#                                (measured green value ~6.08).  Certifies
+#                                that D ACTS; NOT the D27(LR2) quantity
+#                                (r3 M2: --red-c5b-nobarrier passes this
+#                                gate at 8.3868 while satisfying LR2).
+# LD-C5b double-Cesaro gate (r4, r3 M2 fix: D27(LR2)'s own quantity)
+C5B_LR2_TS = (20.0, 40.0)      # Cesaro spans T; mean over t_+ in [T,2T],
+#                                t_- in [-2T,-T], C5B_LR2_GRID^2 points
+C5B_LR2_GRID = 9               # grid points per axis (matches r3 M2(b))
+C5B_LR2_MIN = 3.0              # |double-Cesaro defect| floor, keyed to the
+#                                measured -3.3592 (r3 M2: stable for
+#                                T = 20..200; NOT the t_-=0 value 6.083)
+C5B_LR2_STAB = 0.02            # |defect(T1) - defect(T2)| stability gate
+#                                (measured ~3e-5)
 # D16 battery
 D16_L = 12
 D16_DELTA = 2.5
@@ -110,7 +135,14 @@ C6_TPLUS = 4.0                 # protocol time
 C6_LIVE_MIN = 0.02             # 1 - p_0 at the LARGEST window must exceed
 C6_NU_MAX = 3                  # support gate: mass at |nu| > this ...
 C6_SUPPORT_TOL = 1e-9          # ... must be below this
-C6_MOM_BOUND = 1.0             # sum |nu| p <= this at EVERY window
+C6_SWEEP = (4.0, 20.0, 40.0, 200.0)   # t_+ sweep for the first-moment gate
+#                                (r4, r3 M3: the r3 bound 1.0 was tuned to
+#                                t_+ = 4 — the green model fires it at
+#                                t_+ = 20 with 1.0712)
+C6_MOM_BOUND = 1.2             # sum |nu| p <= this at EVERY window and
+#                                EVERY sweep time; set above the recorded
+#                                green sweep maximum 1.0712 (t_+ = 20,
+#                                W = [3,8]); sweep values logged
 
 
 class CheckFailure(Exception):
@@ -489,34 +521,104 @@ def check_c5(m: BarrierModel, log) -> None:
         + " -> ".join(f"{tv:.2f}(|W|={w})" for w, tv in moments))
 
 
+def _c5b_cesaro_defect(m: BarrierModel, span: float) -> float:
+    """The D27(LR2) double-Cesaro dephasing defect on m.psi0 (state at t=0):
+
+        mean over t_+ in [T, 2T], t_- in [-2T, -T]  of
+        <D_{W,t_-}(Q_W(t_+))> - <Q_W(t_+)>,   T = span,
+
+    on a C5B_LR2_GRID x C5B_LR2_GRID grid — the quantity D27(LR2) demands
+    to vanish as T -> infinity (r3 M2: the t_- = 0 defect is NOT it).
+    D_{W,t_-} dephases in the eigenbasis of Q_W(t_-): decompose the
+    backward-evolved state into clamp-charge branches at t_-, evolve each
+    branch to t_+, and sum the branch expectations of Q_W.
+    """
+    qv = m.clamp(C5B_HALF_W)
+    spec = np.arange(0.0, 2 * C5B_HALF_W + 2.0)
+    tms = np.linspace(-2.0 * span, -1.0 * span, C5B_LR2_GRID)
+    tps = np.linspace(1.0 * span, 2.0 * span, C5B_LR2_GRID)
+    total = 0.0
+    if m.evecs is not None:                      # eigenbasis fast path
+        V, E = m.evecs, m.evals
+        c0 = V.conj().T @ m.psi0
+        unp = {}
+        for tp in tps:
+            psi_p = V @ (np.exp(-1j * E * tp) * c0)
+            unp[tp] = float((psi_p.conj() @ (qv * psi_p)).real)
+        for tm in tms:
+            psi_m = V @ (np.exp(-1j * E * tm) * c0)
+            branches = [psi_m * (np.abs(qv - q) < 1e-9) for q in spec]
+            bmat = np.stack([b for b in branches
+                             if float(np.linalg.norm(b)) ** 2 > 1e-14],
+                            axis=1)
+            cb = V.conj().T @ bmat
+            for tp in tps:
+                bt = V @ (np.exp(-1j * E * (tp - tm))[:, None] * cb)
+                pinched = float(np.sum((np.abs(bt) ** 2) * qv[:, None]))
+                total += pinched - unp[tp]
+    else:                                        # flat model: evolve() cheap
+        for tm in tms:
+            psi_m = m.evolve(m.psi0, tm)
+            for tp in tps:
+                psi_p = m.evolve(m.psi0, tp)
+                unp = float((psi_p.conj() @ (qv * psi_p)).real)
+                pinched = 0.0
+                for q in spec:
+                    br = psi_m * (np.abs(qv - q) < 1e-9)
+                    if float(np.linalg.norm(br)) ** 2 < 1e-14:
+                        continue
+                    brt = m.evolve(br, tp - tm)
+                    pinched += float((brt.conj() @ (qv * brt)).real)
+                total += pinched - unp
+    return total / (len(tms) * len(tps))
+
+
+def _c5b_branch_weights(m: BarrierModel, tm: float):
+    """(left q=0, inside-W, right q=|W|) clamp-branch weights at time tm."""
+    qv = m.clamp(C5B_HALF_W)
+    psi_m = m.evolve(m.psi0, tm)
+    wl = float(np.sum(np.abs(psi_m[np.abs(qv) < 0.5]) ** 2))
+    wr = float(np.sum(
+        np.abs(psi_m[np.abs(qv - (2 * C5B_HALF_W + 1)) < 0.5]) ** 2))
+    return wl, 1.0 - wl - wr, wr
+
+
 def check_c5b(m: BarrierModel, log) -> None:
-    """Two-branch dephasing-WEDGE certificate (r2 M4 fix demand).
+    """Two-branch dephasing certificate (r2 M4; re-anchored per r3 M2).
 
     Green configuration: the packet centred ON the barrier, inside the
     |W|=17 window — the incoming state is spread over many window
     charges, so the D27(LR2) pinching D_{t_-} genuinely acts.
 
-    What is certified (and what deliberately is NOT): the exact identity
-    sum nu p = <Q>_{t_-} - <D_{t_-}(Q(t_+))> is ALGEBRA — certifying it
-    against the same branch decomposition would be the campaign's no-op
-    pattern (x = x) and is not done.  What IS gated is the WEDGE between
-    the two genuinely independent computations that LD-C5(d) compares:
+    Two gates, certifying two DIFFERENT things (r3 M2):
 
-        sum nu p          (from the TPM law)
-        <Q>_{t_-} - <Q>_{t_+}   (from the state, UNPINCHED)
+    (a) WEDGE, at the single pair (t_-, t_+) = (0, 300): the two
+        genuinely independent computations LD-C5(d) compares —
+        sum nu p (TPM law) vs <Q>_{t_-} - <Q>_{t_+} (unpinched) — must
+        disagree by more than C5B_WEDGE_MIN (measured ~6.08).  This
+        certifies that D ACTS on a two-branch state, hence that
+        LD-C5(d)'s agreement in the concentrated configuration is due to
+        gate (a) there.  It does NOT certify that D27(LR2) fails: LR2
+        averages over t_+ AND t_-, and --red-c5b-nobarrier (the V0 = 0
+        straddling packet) passes this gate at 8.3868 while satisfying
+        LR2 exactly (r3 M2(b)).
+    (b) D27(LR2) DOUBLE-CESARO DEFECT (the corrected LR2-failure gate):
+        |mean defect| must exceed C5B_LR2_MIN at every span in
+        C5B_LR2_TS, and be stable across spans within C5B_LR2_STAB
+        (measured: -3.3592 at T = 20 and 40; r3 M2(b) finds the same
+        value out to T = 200).  Mechanism (logged, r3 M2(b)): under
+        backward evolution the packet stays split across three
+        window-charge branches (left/in/right ~ 0.8563/0.0170/0.1267),
+        so the pinching never becomes trivial; the barrier bound state
+        is NOT the cause (projecting it out leaves -3.4116, r3 M2(b)).
 
-    In this configuration they must DISAGREE by more than C5B_WEDGE_MIN
-    (measured: ~6.08) — the dephasing defect has a nonvanishing DC part
-    here, i.e. D27(LR2) genuinely FAILS on a straddling state (measured
-    directly: the defect saturates, it does not Cesaro-decay).  Together
-    with LD-C5(d)'s agreement to 1e-4 in the concentrated configuration,
-    this proves the (d) comparison LIVE (it fails by O(6) on a two-branch
-    state and succeeds only by virtue of gate (a)'s concentration) and
-    exhibits the 'D acts' half of MI <1>7's mechanism that r2's LD-C5
-    could not show.  It does NOT certify MI <1>7.<2>2's averaged identity
-    on any two-branch state — on this one the identity's LR2 hypothesis
-    is false, which is the honest finding (LR2 is a hypothesis, not a
-    theorem).
+    Deliberately NOT shipped: an identity-with-D gate — the exact
+    identity sum nu p = <Q>_{t_-} - <D_{t_-}(Q(t_+))> is ALGEBRA, and
+    gating it against the same branch decomposition would be the
+    campaign's no-op pattern (x = x); refusal certified by r3 n6.
+    Also NOT claimed: MI <1>7.<2>2's averaged identity on any two-branch
+    state — on this one its LR2 hypothesis fails (now measured at LR2's
+    own quantity), which is the honest finding.
     """
     qv = m.clamp(C5B_HALF_W)
     law = m.tpm_law(C5B_HALF_W, m.psi0)
@@ -531,11 +633,34 @@ def check_c5b(m: BarrierModel, log) -> None:
             f"<Q>_- - <Q>_+ = {naive:+.4f} (|gap| = {wedge:.3e} <= "
             f"{C5B_WEDGE_MIN}) — the pinching does not act, so this is "
             "not a two-branch configuration")
-    log(f"LD-C5b dephasing wedge (straddling config, |W|={2*C5B_HALF_W+1}): "
-        f"sum nu p = {smom:+.4f} vs unpinched <Q>_- - <Q>_+ = {naive:+.4f}, "
-        f"wedge {wedge:.4f} > {C5B_WEDGE_MIN} — D genuinely acts; LR2 fails "
-        "pointwise AND on average here (measured), so LD-C5(d)'s agreement "
-        "in the concentrated configuration is due to gate (a), as disclosed")
+    defects = []
+    for span in C5B_LR2_TS:
+        d = _c5b_cesaro_defect(m, span)
+        require(abs(d) > C5B_LR2_MIN,
+                f"LD-C5b: D27(LR2) holds at its own quantity: double-Cesaro "
+                f"mean defect {d:+.3e} within {C5B_LR2_MIN} at T={span:.0f} "
+                "— 'D acts' does not imply 'LR2 fails' (r3 M2), and this "
+                "state is not an LR2-failure witness")
+        defects.append(d)
+    spread = max(defects) - min(defects)
+    require(spread < C5B_LR2_STAB,
+            f"LD-C5b: double-Cesaro defect not T-stable: values "
+            + ", ".join(f"{d:+.4f}" for d in defects)
+            + f" spread {spread:.3e} >= {C5B_LR2_STAB}")
+    w1 = _c5b_branch_weights(m, -2.0 * C5B_LR2_TS[-1])
+    w2 = _c5b_branch_weights(m, -400.0)
+    log(f"LD-C5b (straddling config, |W|={2*C5B_HALF_W+1}): wedge at "
+        f"(t_-,t_+)=(0,300): sum nu p = {smom:+.4f} vs unpinched "
+        f"{naive:+.4f}, wedge {wedge:.4f} > {C5B_WEDGE_MIN} — D genuinely "
+        "acts (not the LR2 quantity); D27(LR2) double-Cesaro defect "
+        + ", ".join(f"{d:+.4f} (T={t:.0f})"
+                    for d, t in zip(defects, C5B_LR2_TS))
+        + f", |defect| > {C5B_LR2_MIN} and T-stable — LR2 fails at its own "
+        "quantity (r3 M2 corrected number); mechanism: backward branch "
+        "weights left/in/right = "
+        f"{w1[0]:.4f}/{w1[1]:.4f}/{w1[2]:.4f} at t_-={-2*C5B_LR2_TS[-1]:.0f}, "
+        f"{w2[0]:.4f}/{w2[1]:.4f}/{w2[2]:.4f} at t_-=-400 — the split "
+        "persists; the bound state is not the cause (r3 M2(b))")
 
 
 # ------------------------------------------------------------- D16 battery --
@@ -635,15 +760,17 @@ class D16Model:
                          f"state (norm {n:.3e})")
         return states7, psi7 / n
 
-    def c6_laws(self):
-        """TPM laws of the kink+magnon state at every D16 window."""
+    def c6_laws(self, tplus: float = C6_TPLUS):
+        """TPM laws of the kink+magnon state at every D16 window, at
+        protocol time tplus (default C6_TPLUS; the LD-C6 first-moment
+        sweep passes the other C6_SWEEP times — r4, r3 M3)."""
         nd = self.L // 2
         states7, psi7 = self.magnon_state()
         _, H7 = self.sector(nd + 1)
         evals, evecs = np.linalg.eigh(H7)
 
         def evolve(v):
-            return evecs @ (np.exp(-1j * evals * C6_TPLUS)
+            return evecs @ (np.exp(-1j * evals * tplus)
                             * (evecs.T @ v.astype(complex)))
 
         out = []
@@ -673,52 +800,75 @@ class C6BarrierAdapter:
     """Runs the LD-C6 gates on a BARRIER-battery configuration.
 
     Used only by red modes: --red-c6-static (position-diagonal H — the r2
-    tautology; must die at the LIVENESS gate) and --red-c6-moving (the
-    transiting scattering model; must die at the SUPPORT gate).
+    tautology; must die at the LIVENESS gate), --red-c6-moving (the
+    transiting scattering model; must die at the FIRST-MOMENT gate after
+    the r4 reorder — measured 12.4024 at |W|=17, r3 M1(b)/M3), and
+    --red-c6-weaktransit (v0 = 10, |t|^2 ~ 0.037: the first moment passes
+    at |W|=17 so the SUPPORT gate is reached — arming the gate the r4
+    reorder would otherwise shadow, r3 M3).
+
+    The adapter's scattering protocol time is fixed (tpm_law uses BAR_T),
+    so the LD-C6 t_+ sweep re-checks the same cached laws on this
+    battery; every registered c6 mutant dies before the sweep anyway.
     """
 
-    def __init__(self, flat: bool):
-        self.base = BarrierModel(flat=flat, in_window=flat)
+    def __init__(self, flat: bool, v0: float = BAR_V0):
+        self.base = BarrierModel(v0=v0, flat=flat, in_window=flat)
+        self._laws = None
 
-    def c6_laws(self):
-        out = []
-        for half_w in BAR_HALF_WS:
-            law = self.base.tpm_law(half_w, self.base.psi0)
-            out.append((f"|W|={2 * half_w + 1}", 2 * half_w + 1, law))
-        return out
+    def c6_laws(self, tplus: float = C6_TPLUS):
+        del tplus                       # protocol time fixed; see docstring
+        if self._laws is None:
+            out = []
+            for half_w in BAR_HALF_WS:
+                law = self.base.tpm_law(half_w, self.base.psi0)
+                out.append((f"|W|={2 * half_w + 1}", 2 * half_w + 1, law))
+            self._laws = out
+        return self._laws
 
 
 def check_c6(m, log) -> None:
     """Bounded-transport contrast (r2 M3 rebuild: the r2 position-diagonal
     LD-C6 was a tautology — p_W = delta_0 for EVERY state under EVERY
-    position-diagonal H — and is replaced).
+    position-diagonal H — and is replaced.  r4, r3 M3: gate order and
+    the first-moment bound repaired — see below).
 
     Green model: the D16 battery with ONE MAGNON added (S^- on the up
     tail of the half-filled kink ground state), evolved in its S^z
-    sector.  The dynamics does NOT commute with Q_W.  Gates:
-    (a) LIVENESS at the largest window: 1 - p_0 >= C6_LIVE_MIN — mass
-        genuinely moves, so this battery CANNOT pass the way the r2
-        tautology did;
+    sector.  The dynamics does NOT commute with Q_W.  Gates, in order:
+    (a) BOUNDED FIRST MOMENT (evaluated FIRST — r4 reorder per r3 M3,
+        so --red-c6-moving reaches it): sum |nu| p <= C6_MOM_BOUND at
+        every window — non-extensive in |W| (the LR3 tail moment beyond
+        BAR_M is then 0 at every window by (b), since C6_NU_MAX < BAR_M:
+        stated, not separately gated — it is implied);
     (b) SUPPORT: TPM mass at |nu| > C6_NU_MAX below C6_SUPPORT_TOL at
         every window — one magnon transports a bounded charge, in
-        contrast to LD-C5's transit atom at nu = -|W|;
-    (c) BOUNDED FIRST MOMENT: sum |nu| p <= C6_MOM_BOUND at every window
-        — non-extensive in |W| (the LR3 tail moment beyond BAR_M is then
-        0 at every window by (b), since C6_NU_MAX < BAR_M: stated, not
-        separately gated — it is implied).
+        contrast to LD-C5's transit atom at nu = -|W| (reached by
+        --red-c6-weaktransit, whose first moment passes);
+    (c) LIVENESS at the largest window: 1 - p_0 >= C6_LIVE_MIN — mass
+        genuinely moves, so this battery CANNOT pass the way the r2
+        tautology did;
+    (d) t_+ SWEEP of the first moment (r4, r3 M3: the r3 bound 1.0 was
+        calibrated to t_+ = 4 and the GREEN model fired it at t_+ = 20
+        with 1.0712 — a time-tuned constant certifies nothing about
+        bounded transport): sum |nu| p <= C6_MOM_BOUND at every window
+        at EVERY t_+ in C6_SWEEP, with the sweep maximum logged;
+        C6_MOM_BOUND sits above the recorded sweep maximum.  (The
+        support and liveness gates stay at the protocol time t_+ = 4;
+        the sweep extends the MOMENT claim only — disclosed in spec.)
     """
     rows = m.c6_laws()
     live = None
     for label, _, law in rows:
+        mom = sum(abs(nu) * p for nu, p in law.items())
+        require(mom <= C6_MOM_BOUND,
+                f"LD-C6: first moment {mom:.4f} > {C6_MOM_BOUND} at "
+                f"W={label}")
         mass_out = sum(p for nu, p in law.items() if abs(nu) > C6_NU_MAX)
         require(mass_out < C6_SUPPORT_TOL,
                 f"LD-C6: TPM support not bounded at W={label}: mass "
                 f"{mass_out:.3e} at |nu| > {C6_NU_MAX} (transit-scale "
                 "transport — this is the LD-C5 side of the dichotomy)")
-        mom = sum(abs(nu) * p for nu, p in law.items())
-        require(mom <= C6_MOM_BOUND,
-                f"LD-C6: first moment {mom:.4f} > {C6_MOM_BOUND} at "
-                f"W={label}")
         p0 = sum(p for nu, p in law.items() if abs(nu) < 0.25)
         live = 1.0 - p0
     require(live is not None and live >= C6_LIVE_MIN,
@@ -726,13 +876,26 @@ def check_c6(m, log) -> None:
             f"{0.0 if live is None else live:.3e} < {C6_LIVE_MIN} at the "
             "largest window (the r2 tautology mode — a position-diagonal "
             "H gives p_W = delta_0 for every state)")
+    sweep_max, sweep_arg = 0.0, ""
+    for tplus in C6_SWEEP:
+        rows_t = rows if tplus == C6_TPLUS else m.c6_laws(tplus)
+        for label, _, law in rows_t:
+            mom = sum(abs(nu) * p for nu, p in law.items())
+            require(mom <= C6_MOM_BOUND,
+                    f"LD-C6: first moment {mom:.4f} > {C6_MOM_BOUND} at "
+                    f"W={label}, t_+={tplus:g} (sweep gate — the bound "
+                    "must hold across the recorded protocol times, r3 M3)")
+            if mom > sweep_max:
+                sweep_max, sweep_arg = mom, f"t_+={tplus:g}, W={label}"
     parts = []
     for label, _, law in rows:
         p0 = sum(p for nu, p in law.items() if abs(nu) < 0.25)
         mom = sum(abs(nu) * p for nu, p in law.items())
         parts.append(f"{label}: 1-p0={1 - p0:.3f}, sum|nu|p={mom:.3f}")
     log("LD-C6 bounded-transport contrast (kink+magnon, [H,Q_W] != 0): "
-        + "; ".join(parts))
+        + "; ".join(parts)
+        + f"; t_+ sweep {C6_SWEEP}: max sum|nu|p = {sweep_max:.4f} "
+        f"({sweep_arg}) <= {C6_MOM_BOUND}")
 
 
 def check_c7(m: D16Model, log) -> None:
@@ -868,12 +1031,32 @@ REGISTRY = {
     "c5b-concentrated": {"battery": "barrier2",
                          "build": lambda: BarrierModel(),
                          "must_break": {"LD-C5b"}, "must_pass": set()},
+    "c5b-nobarrier": {"battery": "barrier2",
+                      # r3 M2's separator state: the V0 = 0 straddling
+                      # packet PASSES the wedge gate (8.3868 at t_-=0,
+                      # LARGER than green's 6.0832) yet satisfies
+                      # D27(LR2) exactly — it must die at the
+                      # double-Cesaro gate, proving the corrected gate
+                      # separates 'D acts' from 'LR2 fails'
+                      "build": lambda: BarrierModel(v0=0.0, in_window=True),
+                      "must_break": {"LD-C5b"}, "must_pass": set()},
     "c6-static": {"battery": "c6",
                   "build": lambda: C6BarrierAdapter(flat=True),
                   "must_break": {"LD-C6"}, "must_pass": set()},
     "c6-moving": {"battery": "c6",
+                  # post-reorder (r4, r3 M3) the exit path is the
+                  # FIRST-MOMENT gate: 12.4024 at |W|=17
                   "build": lambda: C6BarrierAdapter(flat=False),
                   "must_break": {"LD-C6"}, "must_pass": set()},
+    "c6-weaktransit": {"battery": "c6",
+                       # v0 = 10: |t|^2 ~ 0.037, so the first moment
+                       # passes at |W|=17 (0.6361 <= 1.2) and the
+                       # SUPPORT gate is reached (mass 3.742e-02 at
+                       # |nu| > 3) — arms the gate the r4 reorder
+                       # shadows on every large-transit mutant (r3 M3)
+                       "build": lambda: C6BarrierAdapter(flat=False,
+                                                         v0=10.0),
+                       "must_break": {"LD-C6"}, "must_pass": set()},
     "c7-delta": {"battery": "d16",
                  "build": lambda: D16Model(delta=3.0),
                  "must_break": {"LD-C7"}, "must_pass": set()},

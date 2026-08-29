@@ -96,6 +96,10 @@ rule that can be applied mechanically).**
    sign is written `sgn(v_h − v_s)` in full — as O7, O8 and O9 already do — and
    `TRIANGLE.md` and the paper use only the spelled-out form.  Do not import
    `χ` as a sign into any other shard.
+   Recorded exception (2026-08-29, bd `tns-iu5` r3): D24(c)/(d) and the ML5
+   shards use the *argumented* channel sign `χ(h,k)` (registered below) and
+   abbreviate it `χ` inside their own displays; the bare-`χ` =
+   bond-dimension rule is unchanged everywhere else.
 3. **`T`** — a *decoration tuple* only inside `|ψ_Λ(T;·)⟩` and `ω_A[T]`
    (D1(e)); the *transitivity hypothesis* only as the parenthesised `(T)`
    (D9(d)); the kink--magnon *transmission probability* only with a momentum
@@ -128,6 +132,10 @@ part of what critic r2 should check.*
    **Schmidt/edge register space** `E_C := ℂ^χ` carries a tensor-label
    subscript and appears only in register positions such as `End(E_C)`,
    `→E_C`, or `E_C⊗E_C^*` (D19, D21).
+   Exception (bd `tns-iu5` r3): `E^O_desc`, with the literal word subscript
+   `desc` and an operator superscript, is the D24(d)1 descendant
+   external-leg term and is NOT a transfer map or a contraction of one.  It
+   is the only member of the `E` family carrying a word subscript.
 9. **`X`, `Y`, `Z`** (extends 7) — bare `X, Y, Z` are the Pauli matrices
    inside the explicit D23 comparison tensors and the contractions built from
    them (`A_b^x = a_bX`, `V_T = (I,Z,I,Z)`, `ℜ_{A_b,L}(S^z) → −Z/2`); the
@@ -143,6 +151,12 @@ part of what critic r2 should check.*
 12. **`T`** (extends 3) — with physical superscripts and a family parameter,
     `T_t`, `T_t^x`, `T^z`, it is the D23 injective `χ=2` trivial comparison
     tensor (`TRIV₂`); no other reading of `T` takes that position.
+13. **`𝔞`** — the fraktur `𝔞` carries a *Greek tail label* for the twisted
+    group algebra `𝔞_α`, `𝔞_β` of the asymptotic charge algebra (D4,
+    `notation.md`'s `𝔞_α` row), and a *word label* for the D24(d)3b soft-leg
+    amputation constant `𝔞_leg`.  There is no bare `𝔞`.  `𝔞_leg` is written
+    `𝔞_leg(ρ)` wherever more than one density is in play, and bare inside a
+    fixed-`ρ` display.
 
 All other symbols are unique.
 
@@ -241,7 +255,7 @@ SUPERSEDED in place rather than deleted).*
 | `Γ_2^C`, `W_2^C`, `h_C`, `h_{∂,C}`, `H_{C,+}` | length-two range map, its isometry, the parent bond term, the boundary term, and the half-chain parent Hamiltonian | definitions.md D23 |
 | `Ad(V_α(g))` | conjugation action `V(·)V^{-1}`; it carries no projective multiplier, but is **not** `[ω]`-blind as a representation (SPT-B'(iii)) | corner-a.md ⟨1⟩4.⟨2⟩4; theory/spt-rebuild.md ⟨1⟩3.⟨2⟩3 |
 | `𝖲` (SPT sense), `F_f(ξ;β,α)`, `F_f(g;β,α)`, `m_L`, `Δm_L` | **(SUPERSEDED by the 2026-08-26 rebuild)** the pre-rebuild SPT soft factor, soft form factor, and edge memory observable; the rebuilt objects are `𝕊_C`/`ℜ_C`, `F_{C,L}^{edge}`, and `ΔQ_edge`.  `𝖲(k_s;{q_i,v_i})` in the **Corner-C** sense (claim `S-general`) is a different object and is unaffected | definitions.md D20--D22 (rebuilt); Corner-C `𝖲`: definitions.md D25 |
-| `𝖲(k_s;{q_i,v_i})` | Corner-C proposed soft multiplier on the D24(d) class `𝒮_W`; existence and universality remain claim `S-general` (CONJECTURE) | definitions.md D25 |
+| `𝖲(k_s;{q_i,v_i})` | Corner-C proposed soft multiplier on the D24(d) class `𝒮_W(ρ)`; existence and universality remain claim `S-general` (CONJECTURE) | definitions.md D25 |
 
 **ML4 / ML5 / M-quant (added at the freeze with the summit shards).**
 
@@ -255,7 +269,11 @@ SUPERSEDED in place rather than deleted).*
 | `J^z_0`, `S^±` | the `z`-current and global raising/lowering operators of the exact Ward projection.  **The scalar form `P_{n,N}J^-_0 = \frac{2}{N-2n}Q_0J^z_0` holds ONLY at `n=1`** (ERRATUM 2026-08-28, bd `tns-uxr`): for `n≥2` it is REFUTED, because `J^z_0ψ ∉ ker S^+` when `‖J^+_0ψ‖≠0`.  The form valid at every `n` is `P_{n,N}J^-_0 = 2D_{n,N}A_n^{-1}J^z_0` with **`A_n := D_{n,N}^†D_{n,N}` on the FULL sector `ℋ_{n,N}`** (where `A_n` is non-scalar); in the highest-weight-restricted register `D_λ=Q_0|_{ker S^+}` one has `A_λ=(N-2n)𝟙` and the same string collapses back to the refuted display unless `J^z_0` is first projected, the correct hw-register form being `(1/m_λ)Q_0Π_{hw}J^z_0`, `m_λ=(N-2n)/2` | ml4-ward-reduction.md (8)--(11); `theory/checks/ml4_ward_n2_check.py`; `theory/verdicts/ml4-ward-n2-audit.md` §1.2 |
 | `‖O‖_μ`, `M_1^O`, `M_2^O` | exponentially-quasi-local source norm; amputated one-hard and hard-plus-soft amplitudes | definitions.md D24(a),(b) |
 | `𝔠_h(O)` | the contact first jet; ML5-A requires both `M_2^O(0)=0` and `𝔠_h(O)=0`, with the D24(c) second-derivative norm control | definitions.md D24(c) |
-| `𝒮_W` | the five-condition Ward/LSZ/no-contact source class in the repaired conditional ML5-B implication | definitions.md D24(d) |
+| `𝒮_W(ρ)` | the ρ-indexed five-condition Ward/LSZ/no-contact source class in the repaired conditional ML5-B implication; `ρ := ω_α(S^z) > 0`.  Written bare `𝒮_W` where the density is fixed or immaterial — the D24 section header, D25, the CLAIMS rows quantifying over the class (`S-general` and the corner-implication prose), `ml5-universality.md`, `HANDOFF.md`, and the Letter (`\mathcal{S}_W`) | definitions.md D24(d) |
+| `L(k,h)`, `L(0,h)` | D24(d)3a external flux factor: the descendant quotient `E^O_desc/[(e^{ik}−1)·2iv_h·M_1^O(h)]`, defined for `k ≠ 0` where `M_1^O(h) ≠ 0`; `L(0,h)` is the value at `k=0` of the hypothesised `C¹` extension.  D24(d)3b asserts its `h`-profile — the reciprocal LSZ energy denominator, whose provenance in the corpus (`soft-current-recon.md` ⟨1⟩7; `paper/main.tex:524–527`; `soft-index-b.md:808`) is written in the D6 register `ρ = 1/2` and fixes the profile, not the constant.  `L(0,h) = 𝔞_leg(ρ)·(−iχ(h,0)/v_h)`.  Normalisation-dependent: `L ↦ (c′/c)L` under D24(b)'s rescalings | definitions.md D24(d)3 |
+| `Z_ρ` | order-parameter density `2ρ`; for an su(2) model with a fully polarised α tail, `Z_ρ = ω_α([S^+_x, S^-_x])`.  Subscripted deliberately: bare `Z` stays Pauli-reserved (overload rule 9, unchanged) | definitions.md D24(d) |
+| `𝔞_leg(ρ)` | soft-leg amputation constant of D24(d)3b, `𝔞_leg(ρ) := i v_h L(0,h)/χ(h,0)`; a datum of the class `𝒮_W(ρ)`, defined only when that class is nonempty AND only in a register where the D24(b) asymptotic one-magnon kernel is constructed (currently the fully polarised spin-`S` family, D24N-C8; off it, kernel existence is claim ML1, CONJECTURE); constant in `k`, `h` and `O` but NOT in `ρ`.  Meaningful only in the D24(b) normalisation convention, which rescales it.  Value OPEN: conditionally matched `= 1/Z_ρ` by claim D24-VAL; asserted `= 1/Z_ρ` by the CONJECTURE row AMP (scoped, without the bridge); `= 1` as frozen (withdrawn).  Written bare `𝔞_leg` inside a fixed-`ρ` display (overload rule 13) | definitions.md D24(d)3b |
+| `E^O_desc` | descendant external-leg term of the D24(d)1 decomposition (fraktur `𝔈` avoided: `𝔈_W`, `𝔈_{A_α}`, `𝔈_{A_β}` are the window CP maps); not a transfer map — see overload rule 8 | definitions.md D24(d)1 |
 | `D`, `O_η` | the four-site refuting source; `M_1` fixed, linear soft coefficient shifted | definitions.md D24(e) |
 | `V_int` | four-site ML5-A intercept counterexample: `M_1=0`, zero first jet, nonzero `M_2(0)` | definitions.md D24(e) |
 | `χ(h,k)` | `sgn(v(h)−v(k))` — the *spelled-out* channel sign (see overload 2) | ml5-universality.md ⟨1⟩1 |

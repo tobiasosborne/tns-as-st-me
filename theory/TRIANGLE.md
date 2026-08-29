@@ -21,7 +21,7 @@ quantization `2ρ∈ℤ` (M-IDX-density, PROVED), and the ansatz-conditioned
 existence half of D18(AD1)+(AD2) (AC-EX, PROVED conditional on D28).  The
 sector-wide total-charge operator is REFUTED (M-INDEX-LA-strong); statuses
 and exact scoping live in `claims/CLAIMS.md`, never here.
-Universality of the soft coefficient is scoped to `𝒮_W` (D24(d)).
+Universality of the soft coefficient is scoped to `𝒮_W(ρ)` (D24(d)).
 *Integrability* (bd `tns-e50`): no theorem hypothesis mentions integrability.  Bethe is **verification only**:
 `oracle-bethe.md` supplies O1--O10 as an oracle the derivations must match, and `ml2-completeness.md` proves two-body
 completeness from the D6 swap algebra by direct Jacobi diagonalisation, not from assumed completeness.
@@ -212,10 +212,10 @@ single ordered-branch factor `(1−S_{12})|P_{12}⟩` (R8), and **ML2 makes the 
 **SCOPE — read before quoting.**  The shard derives the **exact two-body soft expansion of the physical scattering
 multiplier**, with its remainder bounds, and the derivation of the coefficient `2` from the local current/contact
 structure of M1.  It is **not** by itself a process-independent, symmetry-derived soft theorem: that additionally needs
-ML3, repaired ML4 (§2.5), and membership in `𝒮_W` (D24(d)), outside which universality is
+ML3, repaired ML4 (§2.5), and membership in `𝒮_W(ρ)` (D24(d)), outside which universality is
 FALSE.  `soft-current-recon.md` ⟨1⟩6 boxes the corresponding conditional statement — `M_2 = 𝖲(k_s)M_1 + R_{S2}` with
 `𝖲(k_s) = 2ik_s` and `‖R_{S2}(k_s,·)‖_{L²(I)} ≤ C_I|k_s|²‖M_1‖_{L²(I)}`, hence `o(|k_s|)` in hard-wave-packet norm — as
-**SKETCH**, conditional on wave operators (ML1) and the amputation convention.  The
+**SKETCH**, conditional on wave operators (ML1) and the amputation convention *(the D24(b) convention, now displayed; in this D6 register the coefficient is `2`; on the general class the same statement carries `2𝔞_leg(ρ)` with `𝔞_leg(ρ)` OPEN, D24(d)3b)*.  The
 exact S2-2body row is PROVED; this broader factorisation is not.  *Shards:* `soft-current-recon.md` ⟨1⟩1--⟨1⟩5 (derivation) + `oracle-bethe.md`
 ⟨1⟩3 (verification) + `ml2-completeness.md` (completeness).  *Checkers:* `soft_current_recon_check.py` (max form-factor
 residual `1.56·10^{-14}`, quadratic-phase fit error `2.17·10^{-10}`), `oracle_bethe_check.py`,
@@ -251,10 +251,10 @@ obeying the Adler zero `𝖲 → 0` as `k_s → 0` with leading term linear in `
 **The universality class is part of the conjecture.**  Universality over *unrestricted* local sources is **REFUTED**:
 `ml5-universality.md` ⟨1⟩4 exhibits a four-site local `D` such that `O_η = S^-_0 + ηD` leaves `M_1` untouched while
 shifting the linear soft coefficient by `2iη(1−e^{-3ih})` (D24(e); checked, `ml4_check.py`).  What is frozen is therefore:
-**`𝖲` is conjectured universal on the Ward-covariant, no-contact class `𝒮_W` of D24(d)**.  Repaired ML5-A requires both
+**`𝖲` is conjectured universal on the Ward-covariant, no-contact class `𝒮_W(ρ)` of D24(d)**.  Repaired ML5-A requires both
 `M_2^O(0)=0` and `𝔠_h(O)=0`, with D24(c)'s second-derivative norm control.  The counterexample is a
 *stated feature* of the conjecture: it is what makes the reduced-channel and
-no-contact conditions 4--5 of `𝒮_W` necessary rather than cosmetic.
+no-contact conditions 4--5 of `𝒮_W(ρ)` necessary rather than cosmetic.
 
 **Status CONJECTURE.**  Corner A does not supply this edge (§6.1).  Its **exact** outstanding obligations are the six
 missing lemmas of `soft-current-recon.md` ⟨1⟩7, as adjudicated at the freeze below.  Nothing may be asserted about
@@ -525,7 +525,7 @@ of D24(e), which leaves `M_1` fixed and shifts the linear soft coefficient — s
 source-class hypothesis. **Live obligations:** ML1; ML3 including a
 packet-smeared infinite-volume estimate that controls `k=Θ(1/N)`; ML4 for two
 hard magnons into a three-magnon channel; repaired ML5-B's exhaustive LSZ
-decomposition; microscopic `𝒮_W` membership; and ML6 remainder/limit control.
+decomposition; microscopic `𝒮_W(ρ)` membership; and ML6 remainder/limit control.
 No `n=1` process-independent edge is currently closed.  Only G0(e)'s oracle
 O1 consequence is PROVED along this edge.
 
