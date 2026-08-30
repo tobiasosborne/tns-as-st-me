@@ -965,19 +965,43 @@ soft, not the two null integrals of \eqref{eq:da-arrows}.
 \texttt{theory/lanes/reduction/q1-gauss.md} \S1--\S3 and
 \texttt{theory/lanes/reduction/q4-adversarial-defs.md} \S5}{---}{\texttt{theory/verdicts/reduction-defs-adjudication-r1.md} (N2)}
 
-\subsubsection*{The honest converse: the bond-implementer package does not
-transplant}
+\subsubsection*{The two instantiations compared: same definitional scheme,
+different theories}
 
-Equation \eqref{eq:da-telescope} is the one continuum-facing statement of the
-symmetry corner that survives intact. The rest of the package does not, and the
-failure is not a matter of technical difficulty: no limit sequence inside the
-bond-implementer definition repairs it, because four separate pieces of
-structure are wrong. Displaying them is the point.
+A correction of record is required here (adjudication amendment r1a, owner
+ruling 2026-08-30). The hostile lane originally graded the comparison below
+as a \emph{failure of the definition} --- ``the bond-implementer package does
+not transplant, and no limit sequence inside the definition repairs it.''
+That grading was a category error, and the asymptotic-symmetry corner is in
+fact the part of the campaign whose definitional correspondence with the
+accepted continuum notion is \emph{immediate}. The accepted definition of an
+asymptotic symmetry is a scheme, not an algebra: take the transformations
+compatible with the asymptotic structure, quotient by those acting trivially
+there, implement the survivors as boundary-supported operators, and read off
+the charge algebra together with whatever central or projective extension it
+carries. The campaign's symmetry corner \emph{is} this scheme, applied to a
+spin chain --- and the Gauss-telescope nucleus above is the \emph{same}
+scheme applied to the rotor theory, where it produces the boundary Gauss
+algebra. The scheme commutes with the change of theory; the resulting
+algebras differ because the theories differ. A spin chain does not contain a
+photon's edge modes, and no definition of asymptotic symmetry should
+manufacture one; in particular, asking a fixed finite-dimensional virtual
+bond to carry the rotor relation $[E,U]=U$ is not a test any theory-side
+definition could be expected to pass, because the limit in question is taken
+in the \emph{theory} (put a rotor on each link), after which the scheme
+delivers the correct algebra --- as the nucleus shows, exactly, at finite
+spacing.
+
+The table below therefore stands, reread: it catalogues how the two
+\emph{theories'} asymptotic data differ under the one common scheme. These
+are scope notes for anyone tempted to identify the spin-chain algebra with
+the QED edge algebra --- a claim the campaign never made --- and not
+failures of any definition.
 
 \begin{center}
 \begin{tabular}{@{}p{0.20\textwidth}p{0.74\textwidth}@{}}
 \toprule
-\textbf{what fails} & \textbf{why, at the level of the definition} \\
+\textbf{what differs} & \textbf{how the two theories' asymptotic data differ} \\
 \midrule
 the quotient &
 The campaign divides the symmetry group by
@@ -1005,12 +1029,13 @@ contained in the definition as written, and the eventually-constant profile
 class, which has only two ends, cannot encode an angular function at all. \\
 \midrule
 spectrum &
-Compact electric flux is unbounded and integer valued. A fixed
-finite-dimensional bond cannot realise the rotor algebra: $[E,U]=U$ makes the
-unitary $U$ shift every flux eigenvalue up by one, which no finite spectrum
-admits. A genuine limit would need $\chi\to\infty$, a boundary-surface tensor
-product, and a proved convergence of the flux algebra. None of this is in the
-definition. \\
+Compact electric flux is unbounded and integer valued, and $[E,U]=U$ shifts
+every flux eigenvalue, which no finite spectrum admits --- so the two
+theories' boundary algebras are simply non-isomorphic at any finite $\chi$.
+This is theory content, not a definitional defect: the rotor algebra lives on
+the gauge links of the rotor theory, and the same scheme produces it there
+(the nucleus above), while on a spin chain it produces the finite virtual
+algebra, which is the correct answer for that theory. \\
 \midrule
 the extra datum &
 Abelian electric boundary charges commute; the finite electric boundary algebra
@@ -1036,20 +1061,25 @@ bona fide operator, a non-decaying profile must be defined by a limiting action,
 a distributional kernel is not itself an admissible operator --- and not
 definitional equality.
 
-\begin{observation}[Verdict for the Gauss corner]
+\begin{observation}[Verdict for the symmetry corner (amended r1a)]
 \label{obs:da-verdict-gauss}
-There is a real quantitative nucleus and it should be stated as exactly what it
-is: on the physical subspace, regional matter charge equals oriented cut-link
-electric flux, exactly at finite spacing, with the same orientation as the
-campaign's two bond insertions; and the weighted version splits the boundary
-charge into a hard matter term and a gradient term which, under the ordered
-limits, become the accepted hard and soft charges. This is a connection to
-accepted continuum electrodynamics, not an analogy. It is \emph{not} an
-instantiation of the bond-implementer definition, which fails on quotient,
-locality, boundary multiplicity and spectrum, nor of the profile classes, nor
-of the modulated charge, which supplies the hard Noether part only. And it
-would still require a separate scattering and reduction argument to reach the
-Weinberg pole.
+The asymptotic-symmetry corner is the part of the campaign whose
+correspondence with the accepted continuum notion is definitionally
+immediate: the scheme --- boundary-supported implementers of the
+transformations that survive the quotient by trivially-acting ones, with the
+charge algebra and its extension read off --- is the accepted definition,
+and it instantiates correctly on both theories. On the rotor theory it
+yields, exactly at finite spacing, the Gauss nucleus: regional matter charge
+equals oriented cut-link electric flux, with the same orientation as the
+campaign's two bond insertions, and the weighted boundary charge splits into
+a hard matter term and a gradient term that flow, under the ordered limits,
+to the accepted hard and soft charges. This is a connection to accepted
+continuum electrodynamics, not an analogy. The honest residual scope notes:
+the two theories' asymptotic \emph{algebras} are different objects and must
+not be identified (the table above); the one-dimensional profile classes need
+their stated angular replacements in three dimensions; the modulated matter
+charge supplies the hard Noether part only; and reaching the Weinberg pole
+still requires a separate scattering and reduction argument.
 \end{observation}
 
 \subsubsection*{The memory verdict: correct rotor arithmetic, wrong observable}
@@ -1353,11 +1383,15 @@ asymptotic-state domain the continuum theorems use. The conditional implication
 built on it remains correct as an implication; it is not presently a nonvacuous
 continuum-style soft theorem, and must never be described as one. \\
 \midrule
-fatal &
+withdrawn (r1a) &
 the bond implementer as a QED boundary charge &
-Wrong quotient, wrong locality, wrong boundary multiplicity, wrong spectrum, as
-displayed above. No limit sequence inside the definition yields the unbounded
-integer flux algebra or the allowed-modulo-trivial gauge quotient. \\
+Originally graded fatal; reclassified as a category error by the r1a
+amendment (owner ruling 2026-08-30). The finding tested the spin-chain
+algebra against the job of being the QED edge algebra, which no one claimed;
+the definitional \emph{scheme} of the symmetry corner is the accepted one
+and instantiates correctly on both theories (the Gauss nucleus). What
+survives of the finding is the scope note that the two theories' asymptotic
+algebras are non-isomorphic and must not be identified. \\
 \midrule
 fatal &
 the integrality-plus-counting package as generic memory &
@@ -1414,9 +1448,12 @@ presented as the generic gauge-field case. \\
 
 \begin{observation}[What survived the hostile hunt]
 \label{obs:da-survivors}
-The summary sentence is the one worth remembering: \emph{every definition is
-internally exact lattice mathematics; what fails are three continuum-facing
-identifications.} Specifically, the wall coordinate survives narrowly as a
+The summary sentence, as amended at r1a, is the one worth remembering:
+\emph{every definition is internally exact lattice mathematics; the
+asymptotic-symmetry corner is definitionally the accepted scheme, correctly
+instantiated; what fails are two continuum-facing identifications} --- the
+counting package as generic radiative memory, and the no-contact class as a
+continuum asymptotic-state domain. Specifically, the wall coordinate survives narrowly as a
 centred rigid-soliton collective coordinate; the spectral dress survives as
 exact endpoint-jump and Fourier-residue kinematics at fixed window with an
 integrable rate; the integrality clause survives as the correct compact circle
@@ -1441,15 +1478,18 @@ conservation law; a \emph{finite-window Fourier response} for the spectral
 dress; \emph{compact-charge measurement statistics} for the integrality and
 counting package; and \emph{conditional exact-band scattering} for the
 asymptotic-state construction. ``Memory'' is defensible in the magnonics sense
-only, as in \cref{obs:da-memory-name}. Absent the missing bridges, the campaign
-may not describe the counting package as generic electromagnetic or
-gravitational radiative memory, may not use boundary-charge or asymptotic-gauge
-language for the bond implementer, and may not present the conditional
+only, as in \cref{obs:da-memory-name}. ``Asymptotic symmetry'' remains the
+correct name for the symmetry corner without restriction (amendment r1a): the
+corner is the accepted definitional scheme, correctly instantiated, and the
+only rule there is not to identify the spin-chain algebra with a gauge
+theory's edge algebra --- a claim never made. Absent the missing bridges, the
+campaign may not describe the counting package as generic electromagnetic or
+gravitational radiative memory, and may not present the conditional
 factorisation implication as a nonvacuous continuum-style soft theorem. Three
-bridges would lift these restrictions, and only these three: a reconstruction
-theorem tying the charge ledger to the field-side memory; an exhibited
-microscopic member of the no-contact class; and a centring amendment to the wall
-coordinate.
+bridges would lift the remaining restrictions, and only these three: a
+reconstruction theorem tying the charge ledger to the field-side memory; an
+exhibited microscopic member of the no-contact class; and a centring
+amendment to the wall coordinate.
 \end{observation}
 
 \provenance{D4, D5, D12, D13, D24, D26, D27, ML5-B, D24-VAL, S-general}{\cref{sec:corner-a},

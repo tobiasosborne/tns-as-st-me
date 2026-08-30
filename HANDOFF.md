@@ -137,11 +137,15 @@ verdicts concur; adjudicated in
 counting statistics, NOT radiative memory (Maxwell counterexample: soft
 endpoint shift with δ₀ matter TPM); missing reconstruction theorem
 (charge ledger ↔ bond/potential-side field memory — exactly where
-framing.md said memory lives) → new P1 bead. (N2, FATAL to a QED reading
-of D4) finite-χ bond algebra ≠ compact-QED boundary Gauss algebra under
-ANY limit sequence; what survives EXACT at finite spacing: (WI) = the
-constant-profile Gauss telescope on H_phys, with a [physical argument]
-arrow to Strominger's Q_hard+Q_soft. (N3) D24(d)'s class is a bootstrap
+framing.md said memory lives) → new P1 bead. (N2 — **WITHDRAWN at r1a, TJO ruling**: the
+finite-χ complaint was a category error; corner A is the accepted
+definitional SCHEME of asymptotic symmetry, correctly instantiated on both
+theories — "the only part which is obviously correct" (TJO). The Gauss
+nucleus stands EXACT at finite spacing: (WI) = the constant-profile Gauss
+telescope on H_phys, with a [physical argument] arrow to Strominger's
+Q_hard+Q_soft. Surviving scope note only: the two theories' asymptotic
+ALGEBRAS are non-isomorphic and must not be identified — a claim never
+made. Fatal count drops to two: N1 memory naming, N3 S_W bootstrap.) (N3) D24(d)'s class is a bootstrap
 (conditions restate the factorization) — tns-axg now framing-critical.
 (N4) D24(b) IS the accepted LSZ leg definition; the D29 fixed-time datum
 is pre-asymptotic, equal to it only on the separated class (proved), else

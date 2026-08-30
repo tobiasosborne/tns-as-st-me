@@ -92,3 +92,38 @@ generic radiative-memory reading (N1).
 4. Labbook shard 18 + docs/reduction-limits.md absorb the four Q-lane
    verdicts (integration lane dispatched 2026-08-30).
 5. No claim status changes: audited and none required.
+
+## 5. AMENDMENT r1a (TJO ruling, 2026-08-30): N2 reclassified
+
+TJO: "The asymptotic symmetries is the only part of this which is
+*obviously* correct. The comment about finite χ is meaningless."
+
+Ruling accepted and adopted. **N2 is withdrawn as a FATAL definitional
+finding and reclassified as a CATEGORY ERROR in the audit itself**, for the
+following reason. The accepted continuum definition of asymptotic symmetry
+is a SCHEME, not an algebra: transformations compatible with the asymptotic
+structure, modulo those acting trivially there, implemented as
+boundary-supported operators, with the charge algebra and its
+central/projective extension read off. Corner A IS this scheme applied to a
+spin chain, and Q1's Gauss nucleus IS the same scheme applied to the rotor
+theory, where it yields the boundary Gauss algebra exactly at finite
+spacing. The scheme commutes with the change of theory; the algebras differ
+because the theories differ (a spin chain contains no photon edge modes).
+The finite-χ spectral remark ([E,U]=U impossible at finite χ) tested D4's
+spin-chain algebra against the job of being QED's edge algebra — a job no
+campaign statement ever assigned it — and "no limit sequence inside D4" was
+a meaningless demand, since the limit is taken in the THEORY, after which
+the scheme delivers the correct algebra.
+
+Consequences: (i) the labbook shard-18 subsection is reframed accordingly
+(the five-row table survives as SCOPE NOTES on the non-isomorphism of the
+two theories' asymptotic algebras — true, and not a definitional failure);
+(ii) the naming discipline of §4 item 1 is NARROWED: "asymptotic symmetry"
+remains the correct, unrestricted name for corner A; the surviving
+restrictions concern only the memory naming (N1) and the soft-theorem
+class (N3); (iii) the fatal count of the hostile lane drops from three to
+two; (iv) Q1's positive nucleus is PROMOTED in emphasis: it is the
+definitional correspondence, exact at finite spacing on the physical
+subspace, and belongs in any external presentation of corner A. The
+q4-adversarial-defs.md lane file is a lane record and is not edited; this
+amendment supersedes its D4-QED rat and its §5.2 verdict.

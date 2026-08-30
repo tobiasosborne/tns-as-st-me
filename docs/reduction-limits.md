@@ -832,11 +832,17 @@ One-record rule: **the lane files hold the detail**, this is only the index.
 | Q1 | `theory/lanes/reduction/q1-gauss.md` | D3/D4/D10/(WI) vs the Gauss law and the asymptotic charge | (WI) **DOES** match the constant-profile Gauss telescope on `H_phys`, exactly at finite spacing; D3, D4, D10 **DO NOT** reduce as written |
 | Q2 | `theory/lanes/reduction/q2-memory-defs.md` | do D13/D26/D27 discretize electromagnetic memory? | D26 is the *same* compact-U(1) coset theorem, transplanted from link flux to on-site matter charge; D13 and D27 are a **different object** — a charge-transport/interface ledger |
 | Q3 | `theory/lanes/reduction/q3-soft-defs.md` | fixed-time insertions vs asymptotic soft legs | D24(b) **IS** the accepted LSZ-type definition; D29 is pre-asymptotic and coincides with it (zero remainder) only on `D29-HS-SEP`, differing at `O(k_s)=O(ε)` otherwise |
-| Q4 | `theory/lanes/reduction/q4-adversarial-defs.md` | hostile correspondence hunt | three FATAL continuum-facing identification failures (`S_W`, D4, D26+D27), four MAJORs, two minors; every definition survives as internally exact lattice mathematics |
+| Q4 | `theory/lanes/reduction/q4-adversarial-defs.md` | hostile correspondence hunt | as adjudicated at r1a: TWO fatal continuum-facing identification failures (`S_W`, D26+D27), four MAJORs, two minors; the D4-QED rat is WITHDRAWN as a category error (see amendment); every definition survives as internally exact lattice mathematics |
 
-Adjudication: `theory/verdicts/reduction-defs-adjudication-r1.md` (bd `tns-1gf`).
-It classifies N1–N5 as genuinely new, records the already-fenced items, and
-issues the action list. **No claim status changed; none needed changing.**
+Adjudication: `theory/verdicts/reduction-defs-adjudication-r1.md` (bd `tns-1gf`),
+including **amendment r1a (TJO ruling)**: the asymptotic-symmetry corner is
+the accepted definitional SCHEME (boundary implementers modulo trivially
+acting, charge algebra + extension), correctly instantiated on both theories;
+the finite-`χ` spectral complaint tested the spin-chain algebra against a job
+(being QED's edge algebra) no one assigned it, and the limit lives in the
+THEORY, where the scheme commutes with it. The adjudication classifies N1–N5
+as genuinely new, records the already-fenced items, and issues the action
+list. **No claim status changed; none needed changing.**
 
 ### The nucleus that survives (Q1)
 
@@ -854,17 +860,21 @@ after the spacelike-to-null deformation. At finite spacing `Q^∇` is a *gradien
 term, not a soft-photon operator. Caveat that must travel with it: the
 modulated matter rotation alone is **not** boundary-only when `dε ≠ 0`.
 
-### The three fatal identification failures (Q4)
+### The fatal identification failures (Q4, as amended at r1a)
 
 1. **`S_W` / D24(d).** Source-dependent class, selected by conditions that
    substantially restate the desired factorization, with no proved microscopic
    member. `ML5-B` stays a correct conditional implication; it is not a
    nonvacuous continuum-style soft theorem, and raises the stakes of `tns-axg`.
-2. **D4 as a QED boundary charge.** Wrong quotient (state-level `PGL` kernel vs
-   allowed/trivial), wrong locality (virtual insertion vs boundary-link
-   observable), wrong boundary multiplicity (two endpoints vs `O(R²/a²)`
-   samples → function group on `S²`), wrong spectrum (`[E,U]=U` cannot be
-   realised on finite `χ`). No limit sequence inside D4 repairs any of them.
+2. **[WITHDRAWN at r1a] D4 as a QED boundary charge.** The original fatal
+   grading was a category error: no campaign statement identified the
+   spin-chain bond algebra with QED's edge algebra, and the definitional
+   scheme of corner A instantiates correctly on both theories (the nucleus
+   above). What survives is a scope note: the two theories' asymptotic
+   algebras are non-isomorphic (state-level `PGL` kernel vs allowed/trivial
+   quotient; virtual insertion vs boundary-link observable; two endpoints vs
+   a function group on `S²`; finite spectrum vs the rotor's `[E,U]=U`) and
+   must not be identified.
 3. **D26+D27 as generic radiative memory.** A separated free Maxwell radiative
    sector can carry `∫du F_uz^(0) = ΔA_z ≠ 0` while its matter-charge TPM law is
    `δ_0`; replacing the observable by the field shift destroys (INT); photon
@@ -882,9 +892,11 @@ Safe names: **collective-coordinate charge ledger**; **finite-window Fourier
 response**; **compact-charge measurement statistics**; **conditional exact-band
 scattering**. "Memory" is defensible in the **magnonics sense only** — §3.1's
 clean `δx = −N_T/s → V_DW = −(ρ²/2)V_g` reduction is what licenses it. Without
-the missing bridges: no generic radiative/gravitational memory language, no
-QED-boundary-charge or asymptotic-gauge language for D4, no nonvacuous
-continuum-style soft theorem from `ML5-B`.
+the missing bridges: no generic radiative/gravitational memory language, and
+no nonvacuous continuum-style soft theorem from `ML5-B`. Per amendment r1a,
+"asymptotic symmetry" remains the correct, unrestricted name for corner A —
+the only rule there is not to identify the spin-chain algebra with a gauge
+theory's edge algebra, a claim never made.
 
 ### Owed
 
