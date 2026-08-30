@@ -1,0 +1,510 @@
+% SHARD-ID: LB-05-KINK-MODEL
+% SHARD-TITLE: Memory observables and the exactly solvable kink model
+% SHARD-SOURCES: definitions.md D13--D18 (Corner B block, promoted at the
+%   2026-08-26 freeze from theory/corner-b-draft.md sections 2--4, where the
+%   same objects carry the historical labels Bd1--Bd7); theory/corner-b-draft.md
+%   sections 1.1--1.4, 2, 3; theory/memory-quantization.md section 2;
+%   theory/mq-e.md section 3; claims/CLAIMS.md rows K1, K2, K3, K4.
+% SHARD-CLAIMS: D13, D14, D15, D16, D17, D18; K1, K2, K3, K4.
+
+\section{Memory observables and the exactly solvable kink model}
+\label{sec:kink-model}
+
+This section fixes the observable whose change \emph{is} the memory effect, the
+bookkeeping that says what has left the observation window, the scattering data
+of a magnon hitting a domain wall, and the one microscopic model in which all of
+this can be computed by hand: the easy-axis $XXZ$ chain with its exact
+zero-energy kink family. It closes with the hypothesis package on scattering
+theory (called \emph{H-AD}) on which almost every quantitative memory statement
+of \cref{sec:memory-quantization} is conditional.
+
+Throughout, $s>0$ is the calibration constant of the wall observable: the two
+asymptotic vacua carry $S^z$-densities $+s$ on the left and $-s$ on the right,
+so that moving the wall by one lattice site moves $2s$ units of charge across a
+fixed cut. In every concrete statement below the model is the spin-$1/2$ chain
+and $s=1/2$.
+
+\begin{remark}[The calibration constant is a density, not an on-site dimension]
+\label{rem:s-fence}
+It is tempting to read $s$ through the familiar gloss $d=2s+1$ relating a site
+spin to its on-site dimension. That gloss is the fully polarised special case
+only. What the definitions below actually use, and what the general theorems of
+\cref{sec:memory-index} assume under the name H-MQG(2), is that $s$ equals the
+common tail density $\rho$ of the two vacua. No result quoted in this labbook
+assumes any relation between that density and the on-site dimension.
+\end{remark}
+
+\subsection{The memory observables}
+
+\begin{definition}[Windowed wall position, and its spectral and dynamical
+dresses]
+\label{def:memory-observables}
+Let $W=[a,b]\subset\Z$ be a finite window in a chain whose $S^z$-vacuum
+densities are $s_\alpha=+s$ at $-\infty$ and $s_\beta=-s$ at $+\infty$.
+
+\smallskip
+\noindent\textbf{(a) The windowed wall-position observable (the frozen
+definition).} Put
+\begin{equation}
+  \wallX_W \;:=\; a-1+\frac{1}{2s}\sum_{x=a}^{b}\bigl(S^z_x+s\bigr)
+  \;\in\;\alg_{\mathrm{loc}},
+  \label{eq:wallX}
+\end{equation}
+normalised so that $\wallX_W=m$ on a sharp wall sitting at the bond
+$(m\,|\,m+1)$ with no other content inside $W$. The \emph{spatial memory} of an
+event running from $t_i$ to $t_f$ is
+\begin{equation}
+  \delta x \;:=\; \varrho_{t_f}(\wallX_W)-\varrho_{t_i}(\wallX_W).
+  \label{eq:deltax}
+\end{equation}
+Because $\wallX_W\in\alg_{\mathrm{loc}}$ unconditionally, $\delta x$ exists on
+all of $\alg^*$ and at finite volume, with no asymptotic hypothesis and no
+order-of-limits clause. For $\delta x$ to \emph{mean} a wall displacement one
+needs two further geometric conditions: (i) the wave packet lies outside $W$ at
+$t\in\{t_i,t_f\}$ up to $\varepsilon$, and (ii) the kink core is padded away
+from both edges of $W$. If $d_W$ denotes the minimum core-to-edge distance, then
+for every $\tilde\lambda\in(\lambda_E,1)$ the transfer-operator estimate of the
+MPS setting (\cref{sec:mps-setting}) gives the tail bound
+$C_{\tilde\lambda}\tilde\lambda^{d_W}$. A bare
+$O(e^{-(b-a)/\xi_c})=O(\lambda_E^{\,b-a})$ is \emph{not} valid, because the
+transfer operator may have a Jordan block at modulus $\lambda_E$. Clause (a) is
+the definition the campaign freezes; (b) and (c) below are corollary
+characterisations, not competing definitions.
+
+\smallskip
+\noindent\textbf{(b) The spectral dress.} With $m_x(t):=\varrho_t(S^z_x)$ and
+the DC weight
+\begin{equation}
+  D(x)\;:=\;\lim_{\omega\to0}\int dt\,e^{i\omega t}\,\dot m_x(t)
+  \;=\;m_x(+\infty)-m_x(-\infty),
+\end{equation}
+set $\delta x^{\mathrm{spec}}:=\frac{1}{2s}\sum_{x\in W}D(x)$. This is
+identically equal to (a) --- the same observable in a Fourier dress --- and it
+requires $\dot m_x\in L^1(dt)$ for each $x\in W$. The limit $\omega\to0$ must be
+taken at fixed $x$ and fixed $W$, \emph{after} the thermodynamic limit;
+interchanging $\omega\to0$ with $|W|\to\infty$ destroys the identity.
+
+\smallskip
+\noindent\textbf{(c) The dynamical dress, and its trap.} With the first-moment
+wall coordinate
+\begin{equation}
+  X_1(t)\;:=\;\sum_{x>0}\frac{\varrho_t(S^z_x)+s}{2s}
+  \;-\;\sum_{x\le0}\frac{s-\varrho_t(S^z_x)}{2s},
+  \label{eq:X1}
+\end{equation}
+convergent on the class of \cref{def:l1-kink-class}, and with
+$V_\pm:=\lim_{t\to\pm\infty}\dot X_1(t)$, set
+\begin{equation}
+  \delta x^{\mathrm{dyn}}\;:=\;\lim_{t\to+\infty}\bigl[X_1(t)-V_+t\bigr]
+  \;-\;\lim_{t\to-\infty}\bigl[X_1(t)-V_-t\bigr].
+\end{equation}
+This requires the thermodynamic limit \emph{before} $t\to\pm\infty$, and is
+meaningless on a ring. \textbf{The trap:} $X_1$ is the regularised total
+magnetisation, which is exactly conserved, so $\delta x^{\mathrm{dyn}}\equiv0$
+unless the asymptotic leg charges of \cref{def:leg-content} are subtracted
+first --- that is, unless the scattering hypothesis \cref{def:h-ad} is invoked.
+Clause (a) performs that subtraction geometrically, by windowing, and needs no
+such hypothesis.
+\end{definition}
+
+\provenance{D13 (historical label Bd1--Bd3)}%
+{\texttt{definitions.md} D13; derivation and discussion in
+ \texttt{theory/corner-b-draft.md} \S2--\S3}%
+{\texttt{theory/checks/mquant\_check.py} (operator and finite-time flux
+ residues)}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{remark}[Why (a) is the selected observable]
+\label{rem:why-a}
+All three dresses answer the same physical question, but only (a) is a bounded
+local observable that exists at finite volume and finite time with no
+asymptotic input. Dress (b) is convenient for reporting a measured
+magnetisation history; dress (c) is what one would write down naively as ``the
+asymptotic trajectory of the magnetisation centroid'', and it returns
+identically zero. Explicitly, on the class of \cref{def:l1-kink-class},
+\begin{equation}
+  X_1(t)\;=\;\underbrace{x_{\mathrm{wall}}(t)}_{\text{(a) in the }L\to\infty
+  \text{ limit}}\;+\;\frac{1}{2s}\sum_{\mathrm{legs}}q_{\mathrm{leg}}(t),
+  \qquad q_{\mathrm{leg}}=-1\ (\text{left}),\ +1\ (\text{right}),
+\end{equation}
+so (c) equals (a) only after the asymptotic leg charges have been removed.
+\end{remark}
+
+\begin{definition}[Asymptotic leg content: transmitted and reflected magnon
+number]
+\label{def:leg-content}
+For a state $\varrho$ in the $\ell^1$ kink class $\Kk^{(1)}_{\alpha\beta}$ of
+\cref{def:l1-kink-class} and a window $W=[a,b]$, put
+\begin{equation}
+  N_R\;:=\;\frac{1}{2s}\sum_{x<a}\bigl(s-\varrho(S^z_x)\bigr),
+  \qquad
+  N_T\;:=\;\frac{1}{2s}\sum_{x>b}\bigl(\varrho(S^z_x)+s\bigr),
+  \label{eq:legs}
+\end{equation}
+both convergent on $\Kk^{(1)}$. For a one-magnon initial state
+$N_R+N_T+N_W=1$, where $N_W$ is the weight remaining inside $W$. For a packet
+with momentum amplitude $\varphi$,
+\begin{equation}
+  \braket{N_T}\;=\;\int_{-\pi}^{\pi}\frac{dk}{2\pi}\,|\varphi(k)|^2\,T(k),
+  \label{eq:packet-average}
+\end{equation}
+a \emph{packet average} of the transmission probability of
+\cref{def:scattering-data}, and \textbf{not} $T(\braket{k})$. The difference is
+$\tfrac12T''(\braket{k})\sigma_k^2$ and is largest exactly in the soft region,
+where $T$ bends most.
+\end{definition}
+
+\provenance{D14 (historical label Bd4)}%
+{\texttt{definitions.md} D14; \texttt{theory/corner-b-draft.md} \S3(d)}%
+{---}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{definition}[Kink--magnon scattering data]
+\label{def:scattering-data}
+Work in the kink sector $\Kk_{\uparrow\downarrow}$ with one magnon present. At
+magnon momentum $k\in(0,\pi)$ the stationary scattering solutions define
+$r(k)$ and $t(k)$ through the asymptotics: an incoming $\downarrow$-magnon of
+momentum $k$ in the $\uparrow$ region goes to
+\[
+  r(k)\cdot(\downarrow\text{-magnon, momentum }-k,\ \uparrow\text{ region})
+  \;+\;t(k)\cdot(\uparrow\text{-magnon, momentum }k,\ \downarrow\text{ region}).
+\]
+Put $T(k):=|t(k)|^2$ and $R(k):=|r(k)|^2$, so that $T+R=1$, and let
+$\delta_t(k):=\arg t(k)$ be the \emph{kink--magnon transmission phase}, fixed
+continuous with $\delta_t\to0$ at the point where $t\to1$. The derivative
+$d\delta_t/dk$ is the spatial (Wigner--Eisenbud) shift of the \emph{transmitted
+magnon}. It is a smooth, non-quantised function of $k$ and $\Delta$, and it is
+\textbf{not} the wall displacement \eqref{eq:deltax}. Keeping these two apart is
+the whole content of the refutation opening
+\cref{sec:memory-quantization}.
+\end{definition}
+
+\provenance{D15 (historical label Bd5)}%
+{\texttt{definitions.md} D15; \texttt{theory/corner-b-draft.md} \S5.3}%
+{---}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\subsection{The easy-axis $XXZ$ kink model}
+
+\begin{definition}[The easy-axis $XXZ$ kink model and its exact conventions]
+\label{def:kink-model}
+Fix $J>0$ and $\Delta>1$, and let
+\begin{align}
+  h^{XXZ}_{x,x+1}&:=-J\Bigl[S^x_xS^x_{x+1}+S^y_xS^y_{x+1}
+    +\Delta\bigl(S^z_xS^z_{x+1}-\tfrac14\bigr)\Bigr],
+  \label{eq:hxxz}\\
+  \omega(k)&=J(\Delta-\cos k),\qquad v(k)=J\sin k,\qquad
+  \omega_{\mathrm{gap}}=J(\Delta-1).
+  \label{eq:dispersion}
+\end{align}
+Here $\Delta$ is the same anisotropy as the ratio $J_z/J_\perp$ of the symbol
+table; the two conventions agree. At $\Delta=1$ this reduces to the isotropic
+ferromagnet used in \cref{sec:two-magnon}. Every ``soft'' statement in this
+model is a low-frequency expansion \emph{about the gap}, not about zero energy.
+
+The symmetry is $G=U(1)\rtimes\Z_2$, with $U(1)$ generated by $S^z$ (unbroken)
+and $\Z_2$ the $\pi$-rotation about $S^x$ (broken). The vacua are
+$\Omega_{\mathrm{vac}}=\{\uparrow,\downarrow\}$, both exact injective product
+states with bond dimension $\chi=1$.
+
+\smallskip
+\noindent\textbf{Kink normalisation.} Put
+\begin{equation}
+  h^{\mathrm{kink}}_{x,x+1}:=h^{XXZ}_{x,x+1}
+  +\frac{J}{2}\sqrt{\Delta^2-1}\,\bigl(S^z_x-S^z_{x+1}\bigr),
+  \qquad
+  H_{\mathrm{kink}}:=\sum_x h^{\mathrm{kink}}_{x,x+1}.
+  \label{eq:hkink}
+\end{equation}
+The added field is a telescoping boundary term:
+$H_{\mathrm{kink}}$ and $H_{XXZ}$ generate the \textbf{same} derivation on the
+quasi-local algebra $\alg$ (\cref{lem:K3}), so every dynamical statement made
+with $H_{\mathrm{kink}}$ is a statement about the pure $XXZ$ chain, and
+$H_{\mathrm{kink}}$ serves only to normalise the kink to zero energy.
+
+\smallskip
+\noindent\textbf{Kink coordinates.} Put
+\begin{equation}
+  q\;:=\;\Delta-\sqrt{\Delta^2-1}\;\in\;(0,1),
+  \qquad\text{equivalently}\qquad
+  \Delta=\frac{q+q^{-1}}{2}.
+  \label{eq:qdef}
+\end{equation}
+The exact zero-energy product family is
+\begin{equation}
+  \ket{K(z)}\;=\;\bigotimes_{n\in\Z}
+  \bigl(\ket{\uparrow}_n+z\,q^{\,n}\ket{\downarrow}_n\bigr),
+  \qquad z\in\C\setminus\{0\},
+  \label{eq:kink-family}
+\end{equation}
+and writing $z=q^{-x_0}e^{i\phi}$ exhibits the conjugate pair $(x_0,\phi)$ with
+$x_0\in\R$ the kink centre and $\phi$ the residual $U(1)$ phase. The crossover
+momentum of the model is $k_*:=1/(4(\Delta-1))$.
+\end{definition}
+
+\provenance{D16 (historical label Bd6, with \S1.1--\S1.2 of the Corner B draft)}%
+{\texttt{definitions.md} D16; \texttt{theory/corner-b-draft.md} \S1.1--\S1.2}%
+{\texttt{theory/checks/mq\_e\_check.py};
+ \texttt{theory/checks/lr\_d16\_check.py}}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{definition}[The $\ell^1$ kink class]
+\label{def:l1-kink-class}
+$\Kk^{(1)}_{\alpha\beta}\subset\Kk_{\alpha\beta}$ is the set of states
+$\varrho$ in the kink sector (\cref{sec:corner-a}) satisfying
+\begin{equation}
+  \sum_{x<0}\bigl|\varrho(S^z_x)-s_\alpha\bigr|
+  +\sum_{x>0}\bigl|\varrho(S^z_x)-s_\beta\bigr|<\infty,
+  \label{eq:l1class}
+\end{equation}
+together with the additional first-moment condition
+$\sum_x|x|\,\bigl|\varrho(S^z_x)-s_{\alpha/\beta}\bigr|<\infty$ whenever the
+first moment $X_1$ of \cref{def:memory-observables}(c) is used. The bare kink
+sector requires only weak-$*$ convergence to the two vacua, which is too weak
+for the half-infinite charge to exist; $\Kk^{(1)}$ is the function-space
+refinement on which \cref{def:memory-observables}(c) and \cref{def:leg-content}
+converge.
+
+Two properties are load-bearing. The class is preserved by the dynamics on
+finite time intervals, by Lieb--Robinson quasi-locality. It is \textbf{not}
+preserved by the limit $k\to0$: a plane-wave magnon is not $\ell^1$.
+\textbf{Every soft statement about memory must therefore fix the packet first
+and take $k\to0$ afterwards; the two limits do not commute.}
+\end{definition}
+
+\provenance{D17 (historical label Bd7)}%
+{\texttt{definitions.md} D17; \texttt{theory/corner-b-draft.md} \S1.3}%
+{---}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\subsection{The scattering hypothesis}
+
+\begin{definition}[Hypothesis (H-AD): wave operators, channels, and local
+decay]
+\label{def:h-ad}
+Fix a conserved regularised-charge sector of a finite-range $U(1)$-invariant
+dynamics, free left and right one-particle channel spaces $\Hilb_L,\Hilb_R$
+with $\Hilb_{\mathrm{as}}:=\Hilb_L\oplus\Hilb_R$, a channel Hamiltonian
+$H_{\mathrm{as}}$, an identification map $J$, and channel projections
+$P_L,P_T$. The sector satisfies \textbf{(H-AD)} for a selected
+one-kink/one-magnon scattering vector if and only if all four clauses hold.
+
+\smallskip
+\noindent\textbf{(AD1) Wave operators and completeness.} The strong limits
+\begin{equation}
+  W_\pm\;:=\;\operatorname*{s-lim}_{t\to\pm\infty}
+  e^{itH}\,J\,e^{-itH_{\mathrm{as}}}
+  \label{eq:AD1}
+\end{equation}
+exist as isometries with common range $\Hilb_{\mathrm{sc}}$, and the physical
+sector decomposes orthogonally as
+$\Hilb=\Hilb_b\oplus\Hilb_{\mathrm{sc}}$, where $\Hilb_b$ contains spatially
+localised bound states. There is no further propagating channel.
+
+\smallskip
+\noindent\textbf{(AD2) The selected scattering vector.} The vector is
+$\Psi=W_-(\varphi,0)$ with $\varphi\in\Hilb_L$; it has no $\Hilb_b$ component,
+and $W_+^*\Psi=(\varphi_R,\varphi_T)$. On $\Hilb_{\mathrm{sc}}$ define
+\begin{equation}
+  N_T\;:=\;W_+P_TW_+^*,\qquad \braket{N_T}\;:=\;\norm{\varphi_T}^2 .
+  \label{eq:AD2}
+\end{equation}
+For an on-shell diagonal scattering matrix,
+$\braket{N_T}=\int(dk/2\pi)\,|\varphi(k)|^2T(k)$; it is a packet average, not
+in general $T$ evaluated at the mean momentum.
+
+\smallskip
+\noindent\textbf{(AD3) Channel charges and local decay.} The incoming left leg
+has charge $q_{\mathrm{in}}$ relative to the left vacuum, and each outgoing leg
+has a stated charge $q_{\mathrm{out}}$ relative to its own vacuum. For every
+fixed window containing the kink, the free leg charge and the non-bound
+dressing leave the window as $t\to\pm\infty$; the remaining local state is a
+kink charge eigenstate, and the increasing-window limit of
+\cref{def:memory-observables}(a) exists on it.
+
+\smallskip
+\noindent\textbf{(AD4) Order of limits.} The infinite-volume dynamics and the
+wave operators are formed before $t\to\pm\infty$; the fixed-window scattering
+limits are formed before the window is increased to $\Z$.
+
+\smallskip
+(H-AD) is narrower than general many-body asymptotic completeness and remains
+an explicit hypothesis unless a separate theorem supplies AD1--AD4. It is a
+coherent Hilbert-space statement: reflected and transmitted superpositions are
+retained, and are not replaced in norm by classical mixtures.
+\end{definition}
+
+\provenance{D18}%
+{\texttt{definitions.md} D18; used as the standing hypothesis in
+ \texttt{theory/memory-quantization.md} \S2 and
+ \texttt{theory/memory-quantization-general.md} H-MQG(5)}%
+{\texttt{theory/checks/mq\_e\_check.py} (discharges AD1--AD4 for the projected
+ component only)}%
+{\texttt{theory/verdicts/corpus-r2.md};
+ \texttt{theory/verdicts/blitz-mq-e-r1.md}}
+
+\begin{remark}[This hypothesis is load-bearing everywhere downstream]
+\label{rem:h-ad-load-bearing}
+It is worth saying plainly: \cref{def:h-ad} is the single hypothesis that
+carries the quantitative half of the memory corner. The conditional
+quantization theorem for the spin-$1/2$ chain, its compact-group
+generalisation, the reduction of the dynamical dress
+\cref{def:memory-observables}(c) to the windowed observable
+\cref{def:memory-observables}(a), and the channel reading of the charge ledger
+all assume it. It is currently \emph{proved} only for the projected
+three-wall component of the spin-$1/2$ model (\cref{sec:memory-quantization}),
+and remains open for the unprojected chain. Nothing in the flux identity
+\eqref{eq:flux-identity} or in the finite-time label rigidity of
+\cref{thm:B3} uses it.
+\end{remark}
+
+\begin{remark}[The superseded first formulation]
+\label{rem:h-ad-r1}
+An earlier version of this hypothesis required the in and out states to be
+norm-close to a convex mixture of product configurations. That condition is
+withdrawn, and for a good reason. For
+$\ket{\psi_{\mathrm{out}}}=r\ket{R}+t\ket{T}$ with $rt\neq0$ and orthogonal
+separated channels, the pure density matrix retains the cross terms
+$r\bar t\ket{R}\bra{T}+\bar r t\ket{T}\bra{R}$, whose norm distance from the
+diagonal mixture does not vanish. Clause (AD3) uses local decay without
+discarding this coherence, and the variance statement in
+\cref{sec:memory-quantization} depends on that choice.
+\end{remark}
+
+\subsection{Four exact facts about the kink model}
+
+The next three lemmas are elementary and completely explicit; together they say
+that the model of \cref{def:kink-model} is frustration-free, that its kink
+family \eqref{eq:kink-family} is an exact zero-energy manifold, and that the
+boundary field used to arrange this is dynamically invisible. The fourth
+statement --- that this manifold exhausts the zero-energy states and is flat ---
+is what one would need for a genuinely inertia-free wall, and it is only a
+conjecture.
+
+\begin{lemma}[The kink bond is positive, with an explicit kernel]
+\label{lem:K1}
+\statusProved\ \ For the model of \cref{def:kink-model},
+$h^{\mathrm{kink}}_{x,x+1}\succeq0$ with spectrum $\{0,0,0,J\Delta\}$, and
+\begin{equation}
+  \ker h^{\mathrm{kink}}_{x,x+1}
+  =\operatorname{span}\bigl\{\ket{\uparrow\uparrow},\ \ket{\downarrow\downarrow},
+  \ \ket{\uparrow\downarrow}+q^{-1}\ket{\downarrow\uparrow}\bigr\},
+  \label{eq:K1-kernel}
+\end{equation}
+with $q$ as in \eqref{eq:qdef}.
+\end{lemma}
+
+\noindent\emph{Idea of proof.} The bond term is block diagonal in the $S^z$
+basis. The states $\ket{\uparrow\uparrow}$ and $\ket{\downarrow\downarrow}$
+have zero diagonal entry by the $-\tfrac14$ subtraction in \eqref{eq:hxxz} and
+are not connected to anything. On the remaining domain-wall block spanned by
+$(\ket{\uparrow\downarrow},\ket{\downarrow\uparrow})$ the matrix is, in units
+of $J$,
+\begin{equation}
+  \begin{pmatrix}\Delta/2+C & -1/2\\[2pt] -1/2 & \Delta/2-C\end{pmatrix},
+  \qquad C=\tfrac12\sqrt{\Delta^2-1},
+  \label{eq:K1-block}
+\end{equation}
+whose determinant is $\bigl(\Delta^2/4-C^2\bigr)-1/4=0$ and whose trace is
+$\Delta>0$. A rank-one positive semidefinite $2\times2$ matrix has eigenvalues
+$0$ and $J\Delta$, and the null vector is the one displayed in
+\eqref{eq:K1-kernel}. \hfill$\square$
+
+\provenance{K1}%
+{\texttt{theory/corner-b-draft.md} \S1.2, steps (1.1)--(1.3), named computation
+ K1-2x2}%
+{recorded finite-matrix computation; scratch cross-check
+ $\max\norm{h^{\mathrm{kink}}v}\le1.2\times10^{-11}$ for
+ $\Delta\in\{1.5,2,4,8\}$}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{lemma}[The product family is annihilated bond by bond]
+\label{lem:K2}
+\statusProved\ \ Every vector $\ket{K(z)}$ of \eqref{eq:kink-family},
+$z\in\C\setminus\{0\}$, lies in the kernel of every bond term
+$h^{\mathrm{kink}}_{x,x+1}$. In particular the whole family has exactly zero
+energy for $H_{\mathrm{kink}}$, and the model is frustration-free.
+\end{lemma}
+
+\noindent\emph{Idea of proof.} The two-site factor of $\ket{K(z)}$ at the bond
+$(n,n+1)$ is $(\ket{\uparrow}+a\ket{\downarrow})\otimes
+(\ket{\uparrow}+b\ket{\downarrow})$ with $a=zq^{\,n}$ and $b=zq^{\,n+1}=qa$.
+Its domain-wall component is $b\ket{\uparrow\downarrow}+a\ket{\downarrow\uparrow}
+\propto\ket{\uparrow\downarrow}+q^{-1}\ket{\downarrow\uparrow}$, which is
+precisely the null vector \eqref{eq:K1-kernel} of \cref{lem:K1}; the two
+aligned components lie in the kernel as well. Since a product vector is
+annihilated by a bond term whenever its two-site factor is, every bond term
+annihilates $\ket{K(z)}$. \hfill$\square$
+
+\provenance{K2}%
+{\texttt{theory/corner-b-draft.md} \S1.2, steps (1.1)--(1.2)}%
+{recorded local residual computation}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{lemma}[The boundary field telescopes and is dynamically invisible]
+\label{lem:K3}
+\statusProved\ \ $H_{\mathrm{kink}}$ and $H_{XXZ}$ generate the same derivation
+on the quasi-local algebra $\alg$. The added field of \eqref{eq:hkink} shifts
+the energy of each superselection sector by the constant
+$\tfrac{J}{2}\sqrt{\Delta^2-1}\,(s_\alpha-s_\beta)$ and does nothing else.
+\end{lemma}
+
+\noindent\emph{Idea of proof.} For a local observable $O$ supported in a finite
+set $\Lambda$, the field contributes
+$\sum_x\bigl[S^z_x-S^z_{x+1},O\bigr]$, which telescopes to
+$\bigl[S^z_{-M}-S^z_{M+1},O\bigr]=0$ for any $M$ with
+$\Lambda\subset(-M,M)$. The same computation runs unchanged in infinite volume,
+because only finitely many commutators are nonzero for a fixed local $O$; the
+sum is not a conditionally convergent rearrangement. Note the contrast with
+finite volume: on a finite open chain of $N$ sites the two Hamiltonians differ
+by the genuine boundary operator
+$\tfrac{J}{2}\sqrt{\Delta^2-1}\,(S^z_1-S^z_N)$, so a finite-chain certificate
+must use the $H_{XXZ}$ propagator (see \cref{sec:local-relaxation}).
+\hfill$\square$
+
+\provenance{K3}%
+{\texttt{theory/corner-b-draft.md} \S1.2, steps (1.1)--(1.2), using the
+ finite-support register of the Noether setting (\cref{sec:symmetry-noether})}%
+{direct finite-support telescoping;
+ \texttt{theory/checks/lr\_d16\_check.py} C4(c) finite-chain calibration}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{conjecture}[Thermodynamic uniqueness and flatness of the kink band]
+\label{conj:K4}
+\statusConjecture\ \ Let $\mathcal S_M$ be the sector of fixed regularised
+magnetisation $M$ inside $\Kk_{\uparrow\downarrow}$. Then $\mathcal S_M$
+contains exactly one zero-energy state of $H_{\mathrm{kink}}$, and these states
+are degenerate across all $M$. Consequently the kink has no dispersion, no
+effective mass and no recoil velocity: its translation modulus is rigidly
+locked to the conserved $U(1)$ charge.
+\end{conjecture}
+
+\noindent\emph{Evidence, and what is missing.} Frustration-freeness
+(\cref{lem:K1}) gives $E\ge0$, and \cref{lem:K2} exhibits states of energy
+exactly $0$, so existence is settled. Uniqueness per sector has been verified
+only in finite volume: exact diagonalisation at $N=12$, $\Delta=3$, for every
+$m=0,\dots,12$, gives a ground energy $E_0=0$ to $10^{-13}$, unique in each
+sector, and a first excited energy $E_1=2.03407417$ in every sector --- the
+magnon gap $J(\Delta-1)=2$ plus a finite-size boundary shift. A proof of
+uniqueness in the thermodynamic limit is an open interface requirement, and no
+statement about absence of recoil, about a unique kink torsor, or about all
+$\Delta$ may cite this conjecture as proved.
+
+\provenance{K4}%
+{\texttt{theory/corner-b-draft.md} \S1.2 (statement only; no proof)}%
+{finite $N=12$ exact-diagonalisation evidence only}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{remark}[Why the lattice trades momentum for charge]
+\label{rem:momentum-for-charge}
+On the lattice, translation is not a symmetry \emph{within} a magnetisation
+sector: translating a kink changes the regularised $S^z$. Momentum
+conservation for the wall is therefore traded for charge conservation, and this
+is what makes the displacement quantized rather than continuous once
+\cref{def:h-ad} supplies channels. The continuum easy-plane counterpart
+behaves oppositely --- there the wall is inertial, its modulus is locked to no
+charge, and the displacement is a continuous function of the magnon intensity.
+The dichotomy ``charge-locked gives quantized memory, charge-free gives
+continuous memory'' is the sharpest physical statement of this section, and it
+is taken up again in \cref{sec:memory-quantization}.
+\end{remark}

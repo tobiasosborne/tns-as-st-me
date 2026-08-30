@@ -1,0 +1,580 @@
+% SHARD-ID: LB-09-TWO-MAGNON
+% SHARD-TITLE: The two-magnon sector: Bethe oracle and the exact soft slope
+% SHARD-SOURCES: definitions.md D6--D8; theory/oracle-bethe.md;
+%   theory/soft-current-recon.md; theory/ml2-completeness.md;
+%   theory/spin-s-twomagnon.md; claims/CLAIMS.md rows S2, S2-2body,
+%   S2-2body-S, OR1, OR2, N1, ML2
+% SHARD-CLAIMS: D6, D7, D8, OR2, ML2, S2, S2-2body, S2-2body-S, OR1, N1
+
+\section{The two-magnon sector: Bethe oracle and the exact soft slope}
+\label{sec:two-magnon}
+
+Everything else in this labbook is an attempt to say something general. This
+section is the opposite: it is the one place where the campaign has a model it
+can solve exactly, and where a proposed soft law can therefore be checked
+against arithmetic rather than against intuition. The model is the isotropic
+Heisenberg ferromagnet on a chain. Its fully polarised state is an exact
+ground state, its one-magnon sector is a free hopping problem, and its
+two-magnon sector reduces --- fibre by fibre in the total momentum --- to a
+half-line Jacobi matrix with a single boundary defect. Nothing in this section
+needs integrability as a hypothesis: every statement below is obtained by
+writing down the lattice eigenvalue equations and solving them.
+
+Three features of this referee should be kept in mind while reading.
+
+First, the magnon dispersion is quadratic at small momentum,
+$\omega(k)=J(1-\cos k)$, so ``soft'' here means small \emph{momentum}, and the
+energy variable is a bad coordinate: the phase is analytic in $k_s$ and only
+Puiseux (half-integer powers of $\omega_s$) in the energy. Statements are
+therefore always organised in momentum.
+
+Second, what is exactly true in the soft limit is weaker than the field-theory
+slogan. The two-magnon scattering ratio tends to one as the soft momentum
+vanishes --- Dyson's decoupling of a zero-momentum magnon --- but this is a
+plain limit, not an Adler zero: no theorem here says that a soft insertion is
+annihilated, only that the connected amplitude becomes the identity, with a
+computable first-order departure.
+
+Third, that first-order departure is the campaign's actual number. On the
+physical outgoing/incoming channel the phase behaves as
+$\delta_{\mathrm{phys}}=2\,\sgn(v_h-v_s)\,k_s+O(k_s^2)$ for spin $1/2$, and,
+in the exact generalisation to every site spin $S$, as
+$\sgn(v_h-v_s)\,k_s/S+O(k_s^2)$. The slope $1/S$ is the sharpest exactly
+proved statement the campaign owns.
+
+\subsection{The oracle model and its conventions}
+
+The next three definitions are frozen: they are the shared vocabulary of every
+later two-magnon statement, and they are reproduced here in full so that this
+document can be read without opening the definitions file.
+
+\begin{definition}[The Heisenberg-ferromagnet oracle model and its bases]
+\label{def:fm-oracle-model}
+On the infinite chain --- or on a periodic ring of $N$ sites, whenever finite
+volume is stated --- put $\bm{S}_x=\bm{\sigma}_x/2$, take $J>0$, and let
+\begin{equation}
+  H=\sum_x h_{x,x+1}
+   =-J\sum_x\Bigl(\bm{S}_x\cdot\bm{S}_{x+1}-\tfrac14\Bigr),
+  \qquad
+  h_{x,x+1}=\tfrac{J}{2}\bigl(1-P_{x,x+1}\bigr),
+\end{equation}
+where $P_{x,x+1}$ swaps the two spins. The vacuum is the fully polarised state
+$\ket{\Omega}=\ket{\uparrow\uparrow\cdots}$. The coordinate bases are
+$\ket{x}=S^-_x\ket{\Omega}$ and $\ket{x,y}=S^-_xS^-_y\ket{\Omega}$ with $x<y$.
+Lattice momenta lie in $(-\pi,\pi]$, we write $z(k)=e^{ik}$, and
+\begin{equation}
+  \ket{k}_N=N^{-1/2}\sum_{x=0}^{N-1}e^{ikx}\ket{x},
+  \qquad k=2\pi n/N .
+\end{equation}
+On the infinite chain the same sum denotes the delta-normalised generalised
+state. The symbols $\omega(k)$ and $v(k)=d\omega/dk$ denote the one-magnon
+energy and group velocity derived from this $H$.
+\end{definition}
+\provenance{D6}{\texttt{definitions.md} D6 (FROZEN --- not editable without
+reopening the oracle review loop)}{\texttt{theory/checks/oracle\_bethe\_check.py}}%
+{\texttt{theory/verdicts/oracle-bethe-r2.md}}
+
+\begin{definition}[Ordered-coordinate Bethe wave and the scattering convention]
+\label{def:bethe-convention}
+In the chamber $x<y$ the two-magnon coordinate Bethe wave is
+\begin{equation}
+  \psi(x,y)=A_{12}\,e^{i(k_1x+k_2y)}+A_{21}\,e^{i(k_2x+k_1y)},
+\end{equation}
+and one sets
+\begin{equation}
+  S_{12}(k_1,k_2):=\frac{A_{12}}{A_{21}},
+  \qquad
+  S_{21}:=\frac{A_{21}}{A_{12}},
+\end{equation}
+while $E(k_1,k_2)$ denotes the corresponding scattering energy. For real wave
+packets with $v(k_2)>v(k_1)$ and the $k_2$ packet initially on the left,
+$A_{21}$ is the \emph{incoming} coefficient and $A_{12}$ the \emph{outgoing}
+one; reversing the channel convention gives $S_{21}=S_{12}^{-1}$. The rapidity
+is
+\begin{equation}
+  \lambda(k):=\tfrac12\cot(k/2).
+\end{equation}
+Whenever $S_{12}=e^{i\delta}$ is expanded at a point where $S_{12}=1$, the
+symbol $\delta$ means the unique continuous real branch vanishing at that
+point. For a two-magnon bound state we write $K:=k_1+k_2$ for the total
+momentum, $r:=y-x$ for the separation, $f_r$ for the relative-coordinate wave,
+$t$ for its geometric decay factor, $\eta:=-\log\abs{t}$, and $E_b(K)$ for its
+energy.
+\end{definition}
+\provenance{D7}{\texttt{definitions.md} D7 (FROZEN)}%
+{\texttt{theory/checks/oracle\_bethe\_check.py}}%
+{\texttt{theory/verdicts/oracle-bethe-r2.md}}
+
+\begin{definition}[The soft limit of the Bethe oracle]
+\label{def:bethe-soft-limit}
+The hard momentum $k_h\in(0,\pi)$ is held fixed while the \emph{signed} soft
+momentum $k_s\to0$. Write $\omega_h:=\omega(k_h)$, $v_h:=v(k_h)$,
+$\omega_s:=\omega(k_s)$, $v_s:=v(k_s)$, and $\sigma:=\sgn(k_s)$ when a
+one-sided energy expansion is used. On this half-zone $v_h>v_s$ for all
+sufficiently small $\abs{k_s}$, so the ratio $S_{12}$ of
+\cref{def:bethe-convention} is the physical outgoing/incoming ratio there. A
+simultaneous limit of $k_h$ and $k_s$, or a hard momentum outside this
+half-zone, is \emph{not} included unless explicitly stated.
+\end{definition}
+\provenance{D8}{\texttt{definitions.md} D8, FROZEN-AS-AMENDED: the naming of
+$\omega_h,v_h,v_s$ and the remark that $v_h>v_s$ for small $\abs{k_s}$ were
+added in oracle round r2 and break no consumer}%
+{\texttt{theory/checks/oracle\_bethe\_check.py}}%
+{\texttt{theory/verdicts/oracle-bethe-r2.md} (residue 3)}
+
+The exact solution of the model, in this vocabulary, is the following block of
+facts. They are used repeatedly below and are stated once here.
+
+\begin{oracle}[Exact one- and two-magnon data of the ferromagnet]
+\label{thm:bethe-oracle-facts}
+\statusProved\ Under \cref{def:fm-oracle-model,def:bethe-convention}:
+\begin{align}
+  \omega(k)&=J(1-\cos k), & v(k)&=J\sin k, \\
+  E(k_1,k_2)&=\omega(k_1)+\omega(k_2)=J(2-\cos k_1-\cos k_2), & &
+\end{align}
+the exact coefficient ratio in the ordered chamber is
+\begin{equation}
+  S_{12}(k_1,k_2)
+  =-\,\frac{e^{i(k_1+k_2)}-2e^{ik_1}+1}{e^{i(k_1+k_2)}-2e^{ik_2}+1}
+  =\frac{\lambda_1-\lambda_2+i}{\lambda_1-\lambda_2-i},
+  \label{eq:exact-ratio-half}
+\end{equation}
+with $\lambda_j=\lambda(k_j)$, and it has unit modulus for real momenta; and
+there is, up to scale, exactly one two-magnon bound state per total momentum,
+\begin{equation}
+  f_r=t^{\,r-1},\qquad t=\cos(K/2),\qquad E_b(K)=J\sin^2(K/2),
+  \label{eq:bound-band}
+\end{equation}
+for $0<\abs{K}\le\pi$, degenerating at $K=0$ into a non-normalisable threshold
+resonance.
+\end{oracle}
+\provenance{oracle facts O1--O5 of \texttt{theory/oracle-bethe.md} (these have
+no separate row in \texttt{claims/CLAIMS.md}; the campaign rows that consume
+them are OR1 and OR2)}{\texttt{theory/oracle-bethe.md} steps (1.1)--(1.2),
+collected at (1.4)}{\texttt{theory/checks/oracle\_bethe\_check.py}}%
+{\texttt{theory/verdicts/oracle-bethe-r2.md}}
+
+\emph{Idea of proof.} For two spin halves $P=2\bm{S}_1\cdot\bm{S}_2+1/2$, so
+each bond term is $\tfrac{J}{2}(1-P)$, has eigenvalues $0$ and $J$, and
+annihilates any parallel pair; hence $H\ket{\Omega}=0$ and $H\ge0$. Acting on
+one overturned spin leaves a nearest-neighbour hopping problem, which the
+Fourier states diagonalise. For two overturned spins the bond algebra gives a
+free equation away from contact --- whence energy additivity --- and a single
+modified equation at $y=x+1$; substituting the two-plane-wave form into that
+one contact equation gives a linear relation between $A_{12}$ and $A_{21}$,
+and hence \cref{eq:exact-ratio-half}. In a fixed total-momentum fibre the
+relative equation is a constant-coefficient second-order recursion whose two
+characteristic roots multiply to one; square summability therefore selects the
+single root inside the unit disc, and matching the $r=1$ equation fixes both
+the decay factor and the energy in \cref{eq:bound-band}.
+
+\subsection{Soft decoupling: what is actually true in the limit}
+
+\begin{oracle}[A zero-momentum magnon decouples]
+\label{thm:soft-decoupling}
+\statusProved\ On the half-zone of \cref{def:bethe-soft-limit} --- fixed
+$k_h\in(0,\pi)$, signed $k_s\to0$ ---
+\begin{equation}
+  \lim_{k_s\to0^+}S_{12}(k_s,k_h)
+  =\lim_{k_s\to0^-}S_{12}(k_s,k_h)=1 .
+\end{equation}
+\end{oracle}
+\begin{scope}
+This is a plain limit and nothing more. It says that the connected two-magnon
+amplitude degenerates to the identity as the soft leg becomes a zero mode; it
+is explicitly \emph{weaker} than an Adler-zero theorem, since it asserts no
+vanishing of a soft insertion, no factorisation, and no statement about any
+process other than exact two-magnon scattering in this model. The rate at
+which the limit is approached --- the content of
+\cref{thm:two-body-soft,thm:spin-s-slope} --- is a separate statement.
+\end{scope}
+\provenance{OR2 (oracle fact O6)}{\texttt{theory/oracle-bethe.md} step
+(1.3).(2).2}{\texttt{theory/checks/oracle\_bethe\_check.py}; the recorded run
+gives $\abs{S_{12}-1}=2.966\cdot10^{-16}$ at the sampled soft
+points}{\texttt{theory/verdicts/oracle-bethe-r2.md}}
+
+\emph{Idea of proof.} Put $k_s=0$ in \cref{eq:exact-ratio-half}. The numerator
+becomes $e^{ik_h}-1$ and the denominator $1-e^{ik_h}$; the outer minus sign
+turns their ratio into $1$, and the denominator is nonzero because $k_h$ is
+fixed inside $(0,\pi)$. The statement is thus simply $S_{12}-1\to0$, obtained
+by subtracting the identity amplitude, with no low-energy theorem involved.
+
+\subsection{Completeness of the two-magnon sector}
+
+The soft expansions below are statements about a distinguished channel inside
+a Hilbert space. They are only meaningful once one knows what else that space
+contains. That is the content of the next theorem, which is proved by direct
+diagonalisation and, deliberately, without assuming that Bethe states are
+complete.
+
+\begin{theorem}[Complete two-magnon resolution, without assumed Bethe completeness]
+\label{thm:two-magnon-completeness}
+\statusProved\ Assume \cref{def:fm-oracle-model,def:bethe-convention,def:bethe-soft-limit},
+$J>0$, and, in finite volume, $N>3$.
+\begin{enumerate}
+\item \emph{Finite ring.} Every nonzero two-magnon Bethe vector on the
+  $N$-site ring is one of the real-pair, complex-pair (two-string), or
+  $SU(2)$-descendant vectors classified in the proof. For even $N$ the
+  singular completion supplies exactly one further vector, the normalised
+  contact state
+  \begin{equation}
+    \ket{\chi_\pi}=N^{-1/2}\sum_x(-1)^x\ket{\{x,x+1\}},
+    \qquad H\ket{\chi_\pi}=J\ket{\chi_\pi},
+    \label{eq:singular-vector}
+  \end{equation}
+  of total momentum $\pi$, which carries the compactified rapidity pair
+  $\{+i/2,-i/2\}$ and has no finite two-plane-wave normalisation. The formal
+  coincident solutions are identically zero vectors and supply nothing. The
+  physical vectors number exactly $N(N-1)/2$ and can be normalised to an
+  orthonormal eigenbasis.
+\item \emph{Infinite chain.} The two-magnon Hilbert space is the orthogonal
+  sum of the scattering representation of \cref{def:bethe-convention} and one
+  bound-magnon band. In the centre-momentum chart, with $c=\cos(K/2)$, the
+  fibre is the half-line Jacobi operator
+  \begin{equation}
+    (h_Kf)_1=Jf_1-Jcf_2,\qquad
+    (h_Kf)_r=2Jf_r-Jc(f_{r-1}+f_{r+1})\quad(r\ge2),
+    \label{eq:jacobi-fibre}
+  \end{equation}
+  the generalised eigenfunctions and energies are
+  \begin{align}
+    \Psi^{\mathrm{sc}}_{Kq}(x,x+r)
+      &=\frac{e^{iK(x+r/2)}}{2\pi}\bigl[S(K,q)e^{iqr}+e^{-iqr}\bigr],
+      & 0&<q<\pi, \label{eq:psi-sc}\\
+    S(K,q)&=\frac{c-e^{-iq}}{e^{iq}-c},
+      & E(K,q)&=J(2-2c\cos q), \label{eq:S-fibre}\\
+    \Psi^{\mathrm{b}}_{K}(x,x+r)
+      &=\frac{e^{iK(x+r/2)}}{\sqrt{2\pi}}\sqrt{1-c^2}\;c^{\,r-1},
+      & E_b(K)&=J\sin^2(K/2), \label{eq:psi-b}
+  \end{align}
+  and for every chamber vector $\psi$ the resolution of the identity holds:
+  \begin{equation}
+    \norm{\psi}^2
+    =\int_{-\pi}^{\pi}\!dK\int_0^\pi\!dq\;
+      \abs{\braket{\Psi^{\mathrm{sc}}_{Kq},\psi}}^2
+    +\int_{-\pi}^{\pi}\!dK\;
+      \abs{\braket{\Psi^{\mathrm{b}}_{K},\psi}}^2 .
+    \label{eq:plancherel}
+  \end{equation}
+  The Plancherel measures are $dK\,dq/(2\pi)^2$ and $dK/(2\pi)$ for the
+  unnormalised kernels. The spectrum on this sector is purely absolutely
+  continuous; the bound state of \cref{eq:bound-band} becomes a band, present
+  for every $K\ne0$ and degenerating at $K=0$ into a threshold resonance.
+\item \emph{Consequence.} The finite-volume expansion of the charge-created
+  state in the Bethe family is therefore \emph{unconditional}, with the
+  singular class separated explicitly: for the charge $Q_{k_s}=\sum_xe^{ik_sx}S^-_x$,
+  \begin{equation}
+    Q_{k_s}\ket{k_h}_N
+    =\sum_{B}c_B\ket{B}
+     +\mathbf 1\{2\mid N,\ k_s+k_h\equiv\pi\}\;
+      2i\cos\!\bigl(\tfrac{k_h-k_s}{2}\bigr)\ket{\chi_\pi},
+    \label{eq:charge-expansion}
+  \end{equation}
+  the sum running over the normalised real, string and descendant states of
+  the fibre. At $k_s=0$ the expansion collapses onto the single
+  root-at-infinity descendant $Q_0\ket{k_h}_N/\sqrt{N-2}$.
+\end{enumerate}
+\end{theorem}
+\begin{scope}
+This is a generalised-eigenfunction (Plancherel) statement. It does \emph{not}
+construct M\o{}ller operators and does \emph{not} prove asymptotic
+completeness in the scattering-theoretic sense; that is the separate content
+of \cref{thm:two-magnon-wave-operators} in
+\cref{sec:wave-operators}. Nothing here is claimed for three or more magnons.
+\end{scope}
+\provenance{ML2}{\texttt{theory/ml2-completeness.md} steps (1.1)--(1.7); the
+finite-ring count is (1.3)--(1.4), the infinite-chain resolution (1.5), the
+charge-expansion consequence (1.6)}%
+{\texttt{theory/checks/ml2\_completeness\_check.py}: eleven ring sizes,
+maximum spectral mismatch $8.882\cdot10^{-15}$, eigenvector residual
+$4.044\cdot10^{-14}$, projector error $4.640\cdot10^{-14}$, singular-overlap
+error $6.280\cdot10^{-15}$}{\texttt{theory/verdicts/ml2-r2.md} (PASS, 10/10
+mutants killed)}
+
+\emph{Idea of proof.} Translation invariance fibres the two-magnon sector by
+total momentum. On the ring one counts the relative basis vectors in each
+fibre --- allowing for the identification of a pair with its reflection and
+for the special self-opposite separation at even $N$ --- and the dimensions
+sum to $N(N-1)/2$. In each fibre the Hamiltonian is a real Jacobi matrix whose
+interior recursion is the free one and whose first row carries the contact
+defect; its eigenvalue problem is solved through the Chebyshev-like
+polynomials of the recursion, and the resulting characteristic equation is
+matched, root by root, with the Bethe quantisation condition. The formal
+coincident roots are shown to produce identically vanishing coordinate waves,
+and at even $N$ the $K=\pi$ fibre is diagonal, producing the singular contact
+vector \cref{eq:singular-vector} explicitly rather than as a limit of
+two-plane-wave states. On the infinite chain the same fibration gives the
+half-line Jacobi operator \cref{eq:jacobi-fibre}; a direct unit-circle
+integration of the scattering waves against each other yields the fibre
+completeness identity
+$\delta_{rs}=\int_0^\pi\frac{dq}{2\pi}\overline{w_q(r)}w_q(s)+(1-c^2)c^{\,r+s-2}$,
+in which the bound term is exactly the residue at the pole $z=c$; combining
+this with Fourier--Plancherel in the centre coordinate gives
+\cref{eq:plancherel}. Absolute continuity follows because the energy maps
+$E(K,q)$ and $E_b(K)$ have nonvanishing gradient off a Lebesgue-null set.
+Finally, Parseval in the resulting orthonormal fibre basis, together with the
+explicit overlap of the charge-created state with $\ket{\chi_\pi}$, gives
+\cref{eq:charge-expansion}.
+
+\subsection{The two-body soft theorem}
+
+We can now state the soft law of the spin-$1/2$ ferromagnet in the form the
+campaign uses. The point of the derivation is that it does \emph{not} go
+through the closed Bethe ratio: it uses only the local current and the single
+contact equation, so the closed formula of \cref{thm:bethe-oracle-facts} is
+available afterwards as an independent check rather than as an input.
+
+\begin{theorem}[Two-body soft expansion for the spin-half ferromagnet]
+\label{thm:two-body-soft}
+\statusProved\ Assume \cref{def:fm-oracle-model,def:bethe-convention,def:bethe-soft-limit}
+with $k_h$ fixed, $0<\abs{k_h}<\pi$, and signed $k_s\to0$. Let
+$S_{\mathrm{phys}}$ be the physical outgoing/incoming ratio --- that is,
+$S_{12}$ when $\sgn(v_h-v_s)=+1$ and $S_{21}=S_{12}^{-1}$ when
+$\sgn(v_h-v_s)=-1$ --- and let $\delta_{\mathrm{phys}}$ be its continuous
+phase vanishing at $k_s=0$. Then
+\begin{align}
+  \delta_{\mathrm{phys}}
+    &=2\,\sgn(v_h-v_s)\,k_s+\frac{\abs{v_h}}{\omega_h}k_s^2+R_\delta,
+    \label{eq:delta-phys}\\
+  S_{\mathrm{phys}}
+    &=1+2i\,\sgn(v_h-v_s)\,k_s
+      +\Bigl[\,i\frac{\abs{v_h}}{\omega_h}-2\Bigr]k_s^2+R_S ,
+    \label{eq:S-phys}
+\end{align}
+where the quadratic coefficient has the equivalent invariant forms
+\begin{equation}
+  \frac{\abs{v_h}}{\omega_h}=\frac{2J-\omega_h}{\abs{v_h}}
+  =\sqrt{\frac{2J-\omega_h}{\omega_h}},
+  \qquad\text{and }=\cot(k_h/2)\ \text{ on the half-zone of \cref{def:bethe-soft-limit}.}
+\end{equation}
+The remainders are uniform on compact hard sets: for $0<a<b<\pi$ there are
+finite explicit constants $C_\delta(a,b)$, $C_S(a,b)$, of size $O(a^{-2})$ as
+$a\downarrow0$ at fixed $b$, with
+$\abs{R_\delta}\le C_\delta(a,b)\abs{k_s}^3$ and
+$\abs{R_S}\le C_S(a,b)\abs{k_s}^3$ on the compactum
+$\{\abs{k_s}\le\varepsilon_{ab},\ a\le\abs{k_h}\le b\}$.
+\end{theorem}
+\begin{scope}
+The theorem is about the exact connected two-magnon multiplier of this model.
+It does \emph{not} promote a process-independent soft theorem, and asserts
+nothing about amplitudes generated by an arbitrary quasi-local hard process:
+that would be the universality statement discussed in \cref{sec:universality}
+and it is not established here. It is generalised --- not replaced --- by
+\cref{thm:spin-s-slope}.
+\end{scope}
+\provenance{S2-2body}{\texttt{theory/soft-current-recon.md} steps (1.1)--(1.5)
+together with \texttt{theory/oracle-bethe.md} step (1.3)}%
+{\texttt{theory/checks/soft\_current\_recon\_check.py} (maximum operator and
+form-factor residual $1.560\cdot10^{-14}$, quadratic-phase fit error
+$2.167\cdot10^{-10}$), \texttt{oracle\_bethe\_check.py},
+\texttt{ml2\_completeness\_check.py}, and the numerics scan
+\texttt{fm-displacement-scan}}{\texttt{theory/verdicts/corpus-r2.md}
+adjudication}
+
+\emph{Idea of proof.} Write the complexified broken charge and its current,
+\begin{equation}
+  Q_k=\sum_xe^{ikx}S^-_x,\qquad
+  j^-_{x,x+1}=-[h_{x,x+1},S^-_x]=\tfrac{J}{2}(S^-_{x+1}-S^-_x)P_{x,x+1},
+  \qquad J^-_k=\sum_xe^{ikx}j^-_{x,x+1},
+\end{equation}
+so that $[H,Q_k]=(e^{ik}-1)J^-_k$. Acting with $Q_{k_s}$ on a hard magnon
+produces a two-magnon state whose two ordered-chamber coefficients are
+\emph{equal}; an on-shell scattering eigenstate has instead the ratio
+$S_{12}$. The exact mismatch is a single branch term,
+\begin{equation}
+  Q_{k_s}\ket{k_h}_N-\ket{B^{\mathrm{in}}}=(1-S_{12})\ket{P_{12}},
+  \label{eq:R8-mismatch}
+\end{equation}
+with $\ket{P_{12}}=N^{-1/2}\sum_{x<y}e^{i(k_sx+k_hy)}\ket{x,y}$. Now the soft
+expansion is obtained without any closed formula: normalise the incoming
+coefficient to one, call the unknown outgoing coefficient $s(k_s,k_h)$, and
+impose only that the contact bond residual vanish. With $z_s=e^{ik_s}$ and
+$z_h=e^{ik_h}$ this is one linear equation,
+\begin{equation}
+  (2z_h-z_sz_h-1)\,s+(2z_s-z_sz_h-1)=0 ,
+  \label{eq:contact-equation}
+\end{equation}
+which for fixed $k_h$ has a unique solution analytic at $k_s=0$; expanding it
+gives $s=1+2ik_s+[i\cot(k_h/2)-2]k_s^2+O(k_s^3)$, and taking the continuous
+logarithm gives the phase. All hard-momentum dependence cancels from the
+linear coefficient. Compactness of the hard set keeps $\abs{z_h-1}$ bounded
+below, which is what makes Taylor's remainder uniform. Finally the current
+identity supplies the mechanism behind the number $2$: at zero soft momentum
+\begin{equation}
+  \bra{k_h}Q_0^{\dagger}J^-_0\ket{k_h}_N=2iJ\sin k_h=2i\,v_h ,
+  \label{eq:ward-residue}
+\end{equation}
+so a hard external-pole reduction, which divides by the linear energy shift
+$v_hk_s$, cancels the hard velocity and leaves the coefficient $2$.
+
+\begin{remark}[The number $2$ is a displacement, not a scattering length]
+\label{rem:not-a-scattering-length}
+The magnitude of the linear coefficient in \cref{eq:delta-phys} is the
+two-site Wigner phase-slope, i.e.\ a spatial-displacement coefficient of the
+soft packet, and its sign is the channel label $\sgn(v_h-v_s)$; the number is
+not hard-momentum-independent in an invariant sense, and only the half-zone of
+\cref{def:bethe-soft-limit} reduces it to $+2$. It is also not a scattering
+length: in the joint soft limit $k_1=\varepsilon x$, $k_2=\varepsilon y$ with
+$x\ne y$, the phase obeys $\delta_{12}/\varepsilon\to 2xy/(y-x)$, which
+vanishes but is not a constant multiple of $k_1-k_2$, so no nonzero
+relative-momentum scattering length exists. Two further boundary facts are
+worth recording: as $k_h\downarrow0$ the quadratic coefficient diverges like
+$2/k_h$, so truncation requires $\abs{k_s}\ll k_h$; and as $k_h\to\pi$ the
+algebraic ratio stays regular but the kinematic ordering $v_h>v_s$ degenerates,
+requiring $k_s\ll\pi-k_h$.
+\end{remark}
+
+\begin{remark}[Momentum is the good coordinate]
+\label{rem:puiseux}
+In the energy variable the same expansion is only Puiseux and remembers the
+sign of the soft momentum through $\sigma=\sgn(k_s)$:
+\begin{equation}
+  \delta_{12}=2\sigma\sqrt{2\omega_s/J}
+    +\frac{2v_h}{J\omega_h}\,\omega_s+O(\omega_s^{3/2}),
+\end{equation}
+with an explicit compact remainder bound. Both signed momentum limits give one,
+but the energy coordinate forgets $\sigma$ and the connected term is
+$O(\sqrt{\omega_s})$ rather than a Taylor series.
+\end{remark}
+
+\begin{refutedclaim}[The old label ``$S2$'' for the minimal two-body core]
+\label{ref:s2-label}
+\statusRefuted\ The identifier $S2$ was withdrawn --- purely as a
+duplicate-status guard, so that one statement does not carry two rows --- and
+its content is \cref{thm:two-body-soft}, which is the row that is proved.
+\end{refutedclaim}
+\provenance{S2 (superseded label; use S2-2body)}{---}{---}%
+{superseded by the S2-2body row of \texttt{claims/CLAIMS.md}}
+
+\subsection{The exact soft slope at every site spin}
+
+The spin-$1/2$ result above turns out not to be an accident of $SU(2)$
+spin-half algebra. The next theorem is the campaign's sharpest exact
+statement.
+
+\begin{theorem}[Exact two-magnon ratio and soft slope at every site spin]
+\label{thm:spin-s-slope}
+\statusProved\ Let $S\in\{1/2,1,3/2,\dots\}$, $J>0$, and take on the infinite
+chain the fully polarised ferromagnet
+\begin{equation}
+  H_S=-J\sum_x\bigl(\bm{S}_x\cdot\bm{S}_{x+1}-S^2\bigr).
+\end{equation}
+Use the ordered chamber, Fourier sign, and coefficient ratio
+$S_{12}=A_{12}/A_{21}$ of \cref{def:bethe-convention}. Put $z_j=e^{ik_j}$ and
+\begin{equation}
+  a:=1+z_1z_2,\qquad b:=z_1+z_2,\qquad \mu:=(2S-1)a+b .
+\end{equation}
+On the regular scattering domain --- real $k_1,k_2\in(-\pi,\pi]$ with
+$k_1\ne k_2 \pmod{2\pi}$, $ab\ne0$, and $z_2\mu-Sab\ne0$ --- the two-magnon
+eigenvalue equation \emph{by itself} fixes
+\begin{equation}
+  \boxed{\;S_{12}(k_1,k_2)=\frac{S\,ab-z_1\mu}{z_2\mu-S\,ab}\;}
+  \label{eq:spin-s-ratio}
+\end{equation}
+with $\abs{S_{12}}=1$ and $S_{12}(k_2,k_1)=S_{12}(k_1,k_2)^{-1}$. Setting
+$k_1=k_s$, $k_2=k_h$ with $0<\abs{k_h}<\pi$ fixed and signed $k_s\to0$, and
+using the dispersion $\omega_S(k)=2JS(1-\cos k)$, $v_S(k)=2JS\sin k$ and the
+physical channel rule of \cref{def:bethe-convention}, the physical phase
+obeys, locally uniformly on compact hard sets on which the channel is fixed,
+\begin{equation}
+  \delta_{\mathrm{phys}}(k_s,k_h)=\frac{\sgn(v_h-v_s)}{S}\,k_s+O(k_s^2),
+  \qquad
+  S_{\mathrm{phys}}=1+i\,\frac{\sgn(v_h-v_s)}{S}\,k_s+O(k_s^2),
+\end{equation}
+so that
+\begin{equation}
+  \boxed{\;
+   \left.\frac{\partial\delta_{\mathrm{phys}}}{\partial k_s}\right|_{k_s=0}
+   =\frac{\sgn(v_h-v_s)}{S}\;}
+  \label{eq:soft-slope-law}
+\end{equation}
+which on the half-zone of \cref{def:bethe-soft-limit} is exactly $1/S$. At
+$S=1/2$ the ratio \cref{eq:spin-s-ratio} collapses to
+\cref{eq:exact-ratio-half} and the slope to $2\sgn(v_h-v_s)$, recovering
+\cref{thm:two-body-soft}.
+\end{theorem}
+\begin{scope}
+No integrability hypothesis and no Bethe completeness are used: the two-body
+wave is validated by direct substitution into every configuration class. What
+is proved is the exact \emph{unit-charge two-body} slope, and only that. The
+theorem does not prove endpoint ($k_h\to0,\pi$) or equal-velocity limits; it
+does not prove Bethe completeness at spin $S$; it does not prove a
+process-independent soft theorem; it does not prove the memory half of the
+triangle (see \cref{sec:memory-index}); it says nothing about a hard
+excitation of charge larger than one; and it therefore does not promote the
+combined slope-and-memory conjecture, which remains a conjecture.
+\end{scope}
+\provenance{S2-2body-S}{\texttt{theory/spin-s-twomagnon.md}, steps
+(1.1)--(1.5)}{\texttt{theory/checks/spin\_s\_slope\_check.py} (the \texttt{--red}
+mutation replaces $2S-1$ by $2S+1$ in $\mu$ and must fail);
+\texttt{numerics/results/spin1-bc-falsifier.json};
+\texttt{numerics/results/spin1-bc-crosscheck.json}}%
+{\texttt{theory/verdicts/spin-s-r1.md} (PASS)}
+
+\emph{Idea of proof.} In occupation variables $n_x=S-S^z_x$ the Hamiltonian is
+$H_S=2JS\sum_xn_x-J\sum_xn_xn_{x+1}-\tfrac{J}{2}\sum_x(S^+_xS^-_{x+1}+S^-_xS^+_{x+1})$.
+For $S\ge1$ the two-magnon sector has two independent amplitudes: the
+separated wave $\psi(x,y)$ on $x<y$ and a genuine double-occupancy amplitude
+$d(x)$. There are therefore three exact coordinate equations --- separated,
+adjacent, and doubly occupied --- and, with $g=\sqrt{S(2S-1)}$, they read
+\begin{align}
+  E\psi(x,y)&=4JS\psi(x,y)-JS\bigl[\psi(x-1,y)+\psi(x+1,y)+\psi(x,y-1)+\psi(x,y+1)\bigr],\\
+  E\psi(x,x+1)&=J(4S-1)\psi(x,x+1)-JS\bigl[\psi(x-1,x+1)+\psi(x,x+2)\bigr]
+    -Jg\bigl[d(x)+d(x+1)\bigr],\\
+  E\,d(x)&=4JS\,d(x)-Jg\bigl[\psi(x-1,x)+\psi(x,x+1)\bigr].
+\end{align}
+One takes the unsymmetrised two-plane-wave extension
+$\Psi(x,y)=Az_1^xz_2^y+Bz_2^xz_1^y$ on all of $\Z^2$, together with
+$d(x)=\rho(z_1z_2)^x$. The separated equation fixes the energy additively; the
+double-occupancy equation determines $\rho$ in terms of the amplitudes; and
+eliminating $\rho$ from the adjacent equation leaves the single contact
+relation $W\mu=S\Sigma ab$ with $\Sigma=A+B$ and $W=Az_2+Bz_1$, which is
+exactly \cref{eq:spin-s-ratio}. Unitarity follows by writing the ratio in
+centre/relative variables, where it takes the form $n/(-\bar n)$.
+Differentiating $\log S_{12}$ at $z_1=1$ gives $i/S$, whence the slope.
+
+One trap deserves recording, because it is what makes the answer $1/S$ rather
+than $2$: the free extension $\Psi$ is \emph{not} symmetric across the
+diagonal unless $A=B$, so one may not replace $\Psi(x+1,x)$ by $\Psi(x,x+1)$
+when extending the separated equation to coincident arguments. That illicit
+replacement collapses the two contact conditions into the spin-half one and
+falsely yields slope $2$ at every $S$. The valid argument keeps the extension
+unsymmetrised, introduces $d(x)$ as an independent physical amplitude, and
+imposes both contact equations.
+
+\subsection{Consistency with the oracle, and the pending numerical test}
+
+\begin{proposition}[The reconstruction agrees with the passed oracle]
+\label{thm:oracle-consistency}
+\statusProved\ On the half-zone of \cref{def:bethe-soft-limit}, the expansion
+obtained from the local current and the single contact equation
+\cref{eq:contact-equation} agrees term by term --- including the sign
+convention and the value $2$ of the linear coefficient there --- with the
+independently derived closed-form expansions \cref{eq:delta-phys,eq:S-phys} of
+the Bethe oracle.
+\end{proposition}
+\begin{scope}
+This establishes the equality of two formulas, obtained by two independent
+routes. It does not establish process universality: agreement of the
+contact-equation route with the closed Bethe route says nothing about
+amplitudes generated by other hard processes.
+\end{scope}
+\provenance{OR1}{\texttt{theory/soft-current-recon.md} step
+(1.5).(2).1}{\texttt{theory/checks/oracle\_bethe\_check.py},
+\texttt{theory/checks/soft\_current\_recon\_check.py}}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\begin{conjecture}[Excitation-ansatz amplitudes reproduce the Bethe phase]
+\label{conj:excitation-ansatz-bethe}
+\statusConjecture\ In a variational matrix-product excitation-ansatz
+computation of two-magnon scattering in the model of
+\cref{def:fm-oracle-model}, the extracted magnon amplitudes reproduce the
+exact Bethe ratio $S(k)$ as $k\to0$.
+\end{conjecture}
+\begin{scope}
+This numerical test has not been run. It is stated so that the tensor-network
+side of the campaign (\cref{sec:numerics}) has an unambiguous, falsifiable
+target inherited from \cref{thm:two-body-soft}; no evidence for it is claimed
+here.
+\end{scope}
+\provenance{N1}{---}{--- (not yet run)}{---}

@@ -1,0 +1,241 @@
+% SHARD-ID: LB-00-OVERVIEW
+% SHARD-TITLE: Overview -- the lattice infrared triangle
+% SHARD-SOURCES: HANDOFF_MPS_SOFT_THEOREM.md; PRD.md; paper/skeleton.md;
+%   HANDOFF.md; claims/CLAIMS.md (statuses quoted, not restated); CLAUDE.md
+%   (laws L1--L10); labbook/WRITING-GUIDE.md
+% SHARD-CLAIMS: none owned.  This shard states no theorem and therefore
+%   carries no provenance block; every result it mentions is named in
+%   English and cross-referenced to the section that owns it.
+
+\section{Overview: the lattice infrared triangle}
+\label{sec:overview}
+
+\subsection{What the continuum triangle is}
+
+In four-dimensional quantum field theory three families of statements that
+look unrelated turn out to be one statement seen from three sides. The first
+family is the \emph{soft theorems}: when one massless quantum in a scattering
+process has its frequency taken to zero, the amplitude factorises into a
+universal kinematic multiplier times the amplitude without that quantum. The
+second is the \emph{asymptotic symmetries}: transformations that act
+nontrivially on the data at null or spatial infinity, taken modulo those that
+die off there, form a genuine symmetry group of the theory rather than a
+gauge redundancy. The third is the \emph{memory effects}: after a burst of
+radiation has passed, detectors do not return to their initial configuration
+but retain a permanent, zero-frequency offset. The triangle is the assertion
+that the soft theorem is the Ward identity of the asymptotic symmetry, and
+that the memory is the Fourier-zero-mode content of the same Ward identity.
+Each edge is a change of variables, not a new physical input.
+
+Two features of that story matter for what follows. First, the triangle is,
+in the continuum, a family of formal relations: the asymptotic symmetry
+algebra is defined through boundary conditions at infinity whose function
+spaces are delicate, and the soft factorisation is an all-orders statement
+about an S-matrix that is not itself constructed. Second, there are two quite
+different versions of it. The version usually advertised is the gauge one
+(photons, gravitons), in which the soft factor has a $1/\omega$ pole because
+a massless mediator is exchanged. The version relevant here is the
+\emph{global} one: the soft-pion, or Goldstone, triangle, in which the soft
+factor has no pole at all but an \emph{Adler zero} --- it vanishes linearly
+as the momentum goes to zero, because the zero-momentum Goldstone mode is
+exactly a global symmetry rotation of the vacuum and therefore acts trivially.
+
+\subsection{Why the lattice version must be the Goldstone one}
+
+This campaign asks whether the triangle is a theorem anywhere, and answers
+the question on a one-dimensional quantum spin chain written in
+matrix-product-state (MPS) language. There the three corners become finite,
+checkable statements about tensors: the symmetry acts on-site, the vacua are
+injective MPS, the excitations are ansatz vectors, and the Ward identity is
+an exact algebraic rearrangement of a tensor network.
+
+The gauge triangle has no home here. A one-dimensional lattice spin system
+carries no massless gauge mediator --- the natural candidate, the Schwinger
+model, confines and gives its photon a mass --- so there is no mechanism for
+a $1/\omega$ pole, and any claim of one in this setting is simply wrong. The
+correct antecedent is the global-symmetry triangle: the soft object is a
+Goldstone-like magnon, the expected behaviour is an Adler zero, and the
+leading soft datum is a \emph{slope} rather than a residue. Two further
+structural facts fix the setting. Mermin--Wagner and Coleman forbid
+continuous type-A symmetry breaking in a one-dimensional ground state, so the
+triangle must live either on a type-B Goldstone (the isotropic Heisenberg
+ferromagnet, exact product vacuum, magnon dispersion $\omega\sim k^2$, exact
+Bethe scattering data available as an independent oracle) or on a discretely
+broken symmetry (the easy-axis XXZ ferromagnet, two product vacua, domain
+walls, gapped magnons, so that ``soft'' means a low-frequency expansion about
+the gap). And there are no boosts on a lattice, so the universal factor
+cannot take a Lorentz-covariant form; its correct dependence on the legs'
+group velocities is part of the problem rather than an obstacle to it.
+
+The two model classes are used throughout. The ferromagnetic chain supplies
+exact magnons and an exact two-body scattering matrix; the easy-axis chain
+supplies exact kinks and a wall-position observable whose displacement is the
+memory. Neither model alone exhibits every corner, and that tension is
+structural: it is respected in what follows, not papered over.
+
+\subsection{The four headline findings}
+
+\paragraph{(i) Memory quantization needs no scattering theory.}
+The naive expectation, inherited from the continuum, is that the memory is
+quantized because it is the zero-frequency limit of a soft factor, so that
+one must first have a soft theorem and an S-matrix before one can say
+anything about the permanent displacement. That expectation is wrong here,
+and its failure is the campaign's most robust positive result. Fix a finite
+window $W=[a,b]$ of the chain, a cut $c_0\in W$, and the windowed
+wall-position observable
+\begin{equation}
+  \wallX_W \;=\; a-1+\frac{1}{2s}\sum_{x=a}^{b}\bigl(S^z_x+s\bigr),
+  \qquad
+  \Qhat_{W,c_0} \;=\; 2s\bigl(\wallX_W-c_0\bigr),
+  \label{eq:ov-window-charge}
+\end{equation}
+where $\pm s$ are the charge densities of the two vacua. If the on-site
+charge merely generates a circle --- that is, if $e^{2\pi i S^z_x}$ is a
+scalar, which holds for every spin-$S$ chain --- then the spectrum of
+$\Qhat_{W,c_0}$ lies in a single coset of $\Z$, and the increment recorded by
+measuring this same observable before and after an event is an
+\emph{integer}. No wave operators, no channel inventory, no completeness, no
+gap, no Lieb--Robinson velocity: the offsets at the two measurement times are
+the same number and cancel. This is the finite-window memory-index theorem
+(\cref{sec:memory-index}), and it is unconditional. Its infinite-volume
+companion --- that every ordered limit law of the measurement protocol is a
+probability distribution supported on $\Z$, with
+$\delta x=-(2s)^{-1}\sum_\nu \nu\,p_\nu$ --- is proved as a conditional
+implication whose hypotheses are relaxation hypotheses on the charge history,
+never scattering hypotheses; and one of those hypotheses turns out to be a
+free theorem, provable from separability of the algebra and strong continuity
+of the dynamics alone (\cref{sec:local-relaxation}). Symmetry, not dynamics,
+does the quantizing.
+
+\paragraph{(ii) Scattering only computes the value.}
+What the quantized ledger does not supply is the number multiplying it. That
+number is on-shell data, and it is obtained by honest two-body scattering.
+For the fully polarised bilinear ferromagnet at every site spin
+$S\in\{\tfrac12,1,\tfrac32,\dots\}$ the exact two-magnon ratio in the regular
+channel is computed directly from the separated, double-occupancy and
+adjacent equations, with no integrability or completeness assumed, and the
+physical phase has the exact soft slope
+\begin{equation}
+  \left.\partial_{k_s}\delta_{\mathrm{phys}}\right|_{k_s=0}
+  \;=\;\frac{\sgn(v_h-v_s)}{S}.
+  \label{eq:ov-slope}
+\end{equation}
+This is the exact spin-$S$ two-magnon slope theorem (\cref{sec:two-magnon}),
+\statusProved. The same value reaches the protocol datum only through an
+identification step that is itself proved on a displayed
+separated-preparation subclass (\cref{sec:soft-index}): the value is
+transported into the infrared statement by matching, never installed by
+stipulation. The division of labour is the campaign's spine sentence:
+\emph{symmetry quantizes the infrared data; the excitation ansatz supplies
+the kinematics; dynamics only picks the values.}
+
+\paragraph{(iii) The naive universality conjecture is refuted.}
+The brief's Conjecture~M --- that the wall displacement equals the
+zero-frequency limit of the soft factor, a lattice Braginsky--Thorne relation
+--- is \statusRefuted{} as literally stated (\cref{sec:memory-quantization}).
+What survives is weaker and sharper: an exact identity expressing the
+displacement as the finite-time direct-current weight of the \emph{physical}
+boundary current, and a conditional charge-bookkeeping law. Independently,
+the stronger claim that the soft factorisation is universal over unrestricted
+local or quasi-local sources is also \statusRefuted{}
+(\cref{sec:universality}): an explicit four-site source leaves the one-hard
+amplitude untouched while shifting the linear soft coefficient. Universality
+survives only relative to a named class of sources with no contact term, and
+even there the class constant is left open by the factorisation argument
+itself. These refutations are presented here as results, with the surviving
+weaker statements attached, because a sharp refutation plus its survivor is
+worth more than a pile of analogies.
+
+\paragraph{(iv) An SPT rigidity dichotomy.}
+When the symmetry is realised projectively on the virtual space --- the
+one-dimensional symmetry-protected-topological (SPT) situation --- the
+campaign separates two kinds of infrared coefficient
+(\cref{sec:spt}). Registered \emph{edge} residues are rigid: in a fixed
+Schmidt/edge register the compensated group residue is the projective
+representation itself, the Hermitian residue has spectrum congruent to a
+fixed offset modulo $\Z$, and its irreducible dimension is bounded below by
+the minimal dimension of a projective irreducible representation of the
+class. Normalised \emph{bulk} coefficients are not rigid: along a path with a
+common gap and continuous external data they vary continuously, and become
+topological only after a separate local-constancy argument that is not
+supplied. Quantized edge residue, drifting bulk coefficient --- that
+dichotomy, rather than a blanket ``the class appears in all soft data'', is
+what the analysis supports.
+
+\subsection{How to read this document}
+
+Every result in this labbook is stated under a descriptive English name and
+carries a coloured status tag. The five tags, and exactly what each asserts,
+are:
+
+\begin{description}
+  \item[\statusProved] a structured proof exists and survived the capped
+    hostile review round with no open fatal or major objection on the
+    promoted statement.
+  \item[\statusProvedConditional] the same, but what is proved is an
+    implication. The antecedent is displayed inside the statement; it is
+    never moved into a footnote and never assumed away.
+  \item[\statusSketch] an argument exists and its gaps are named. The
+    statement says precisely what is established and what is missing.
+  \item[\statusConjecture] a precise statement with no proof. Whatever
+    evidence exists --- a numerical falsifier that was survived, an oracle
+    agreement --- is described as evidence and not as proof.
+  \item[\statusRefuted] false as stated. The mechanism that kills it is
+    given, together with the weaker statement that survives.
+\end{description}
+
+Immediately after each definition, theorem, conjecture or refutation a small
+grey \emph{provenance block} records four things: the campaign identifier
+used in the repository's claims file, the file and proof step where the
+statement is established, the checker or numerical experiment that tests it
+(or a dash, if none does), and the review record. That block is the only
+place in this document where campaign identifiers carry weight. The prose
+never argues from an identifier; it argues from named results and
+cross-references.
+
+Because the campaign has accumulated a large private vocabulary ---
+claim identifiers, numbered definitions, named hypotheses in parentheses ---
+\cref{sec:dictionary} is a complete dictionary. Every identifier that appears
+anywhere in the campaign's claim ledger is listed there with a plain-English
+gloss and a pointer to the section that owns it. A reader who meets an
+unfamiliar tag in a provenance block should look it up there and nowhere
+else; in particular, this document is meant to be readable front to back
+without ever opening the repository.
+
+The remaining sections follow the logical order rather than the historical
+one. \Cref{sec:mps-setting,sec:symmetry-noether} fix the setting and the
+lattice Noether pair; \cref{sec:corner-a} is the asymptotic-symmetry corner;
+\cref{sec:kink-model,sec:memory-quantization,sec:memory-index,sec:local-relaxation}
+build the memory corner, from the kink model through the quantization theorem
+to the relaxation hypotheses it rests on;
+\cref{sec:two-magnon,sec:wave-operators,sec:soft-index,sec:universality} build
+the soft corner, from exact two-body data through wave operators to the soft
+index and the universality class; \cref{sec:spt} is the rigidity dichotomy;
+\cref{sec:two-plus-one} records what generalises to two spatial dimensions;
+\cref{sec:negative-results} collects the refutations and obstructions in one
+place; \cref{sec:numerics} the numerical instruments; and
+\cref{sec:triangle-status} states, corner by corner and edge by edge, exactly
+where the triangle stands.
+
+\subsection{The honesty contract}
+
+One rule governs this document above all others: \textbf{every status written
+here matches the campaign's claim ledger exactly}. A conditional theorem is
+labelled conditional and displays its condition. A statement whose proof
+holds only on a restricted register, a restricted packet class, a projected
+component, or a single model says so in the statement itself, not in a
+remark. Nothing is rounded up: a sketch is never described as ``essentially
+proved'', a survived falsifier is never described as a verification, and a
+theorem about an ansatz-conditioned construction is never described as a
+theorem about the true model. Where a claim was once stated more strongly and
+has since been narrowed --- and there are several such cases, including one
+projection identity that is exact for a single magnon and false for two ---
+the erratum is written out rather than quietly absorbed.
+
+The reason for the rule is not decorum. The campaign's one non-negotiable
+constraint is that it must never carry a label stronger than its evidence: a
+claim resting at sketch or conjecture indefinitely costs nothing, whereas a
+single mislabelled statement would make the whole ledger worthless. This
+labbook inherits that constraint, and any commit that changes a status in the
+ledger is required to change the corresponding statement here in the same
+breath.

@@ -1,0 +1,815 @@
+% SHARD-ID: LB-01-DICTIONARY
+% SHARD-TITLE: The reader's dictionary
+% SHARD-SOURCES: claims/CLAIMS.md (every row id); definitions.md (D1--D28,
+%   D31, and the section headings); theory/soft-index-r2.md sec.7 (the
+%   proposed D29/D30); theory/proto-lsz-match.md (the (D29-HS-SEP) class);
+%   theory/memory-quantization-general.md (H-MQG(1)--(5), H-AD-G);
+%   notation.md; theory/TRIANGLE.md; HANDOFF_MPS_SOFT_THEOREM.md
+% SHARD-CLAIMS: this shard is the registry for EVERY claim id and every
+%   D-number.  It owns none of them mathematically; each entry points at the
+%   section that states the result in full.
+
+\section{The reader's dictionary}
+\label{sec:dictionary}
+
+This section exists so that no other section needs a glossary. Every
+identifier the campaign uses --- the claim tags that appear in provenance
+blocks, the numbered definitions, and the named hypotheses that appear in
+parentheses inside theorem statements --- is listed here exactly once, with a
+one- or two-sentence explanation in plain English and a pointer to the
+section that states the object in full. Nothing here is a proof, and nothing
+here carries a status: statuses live with the statements.
+
+The registry is in three parts, each ordered so that an unfamiliar tag can be
+found by eye. \Cref{tab:dict-claims} lists the claim identifiers
+alphabetically. \Cref{tab:dict-defs} lists the numbered definitions in
+numerical order, which is also their logical order.
+\Cref{tab:dict-hyps} lists the named hypotheses, protocols and imported
+technical terms alphabetically, ignoring the parentheses that usually
+surround them.
+
+A note on reading the names. Claim identifiers are historical: they were
+assigned as lanes of work opened, not as a taxonomy, so a prefix is a weak
+hint and never a promise. A suffix such as \texttt{-r1} or \texttt{-r2} marks
+a revision round, and a row whose identifier ends in \texttt{-r1} is
+frequently the withdrawn form of a statement whose repaired form lives
+elsewhere. A prime, as in \texttt{SPT-E'}, marks a rebuilt row that supersedes
+the unprimed one of the same name.
+
+\subsection{Claim identifiers}
+
+{\footnotesize
+\begin{longtable}{@{}p{0.235\textwidth}p{0.585\textwidth}p{0.14\textwidth}@{}}
+\caption{Every claim identifier in the campaign's claim ledger, with a
+plain-English gloss and the section that owns the statement.}
+\label{tab:dict-claims}\\
+\toprule
+\textbf{identifier} & \textbf{what it says, in English} & \textbf{owned by}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{identifier} & \textbf{what it says, in English} & \textbf{owned by}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{A-INDEX-PEPS} & Selection rule for string endpoints in a
+fixed-point tensor network with anyonic string operators: an endpoint can
+only move the boundary label along an allowed fusion channel. Conditional on
+displayed typing hypotheses for the tensor network. & \cref{sec:two-plus-one}\\
+
+\texttt{A-INDEX-TC-fin} & The exact toric-code version of the same statement:
+a ribbon operator with one endpoint inside a disk shifts the disk's
+electric/magnetic label by exactly the ribbon's type, and a closed probe reads
+off the braiding character. & \cref{sec:two-plus-one}\\
+
+\texttt{A1} & The unbroken-symmetry endpoint theorem: half-infinite symmetry
+strings act on states exactly as single virtual bond insertions, they are not
+implemented by any strongly convergent operator sequence unless the virtual
+representation is scalar, and the endpoint data form a projective-linear
+torsor. & \cref{sec:corner-a}\\
+
+\texttt{A2} & The broken-symmetry counterpart: every finite string stays in
+the vacuum sector, but the half-infinite limit exists only weakly and lands
+in a disjoint kink sector --- a sector jump. Vacuum pairs are classified by a
+double coset. & \cref{sec:corner-a}\\
+
+\texttt{A2-orbit-r1} & The withdrawn first-round form of the classification,
+which named the coset space $(G_L\times G_R)/G_{\mathrm{diag}}$ as the orbit
+of vacuum pairs. Refuted. & \cref{sec:negative-results}\\
+
+\texttt{AC-EX} & Existence of kink--magnon wave operators built from exact
+ansatz band data, and the resulting transmitted-channel projection.
+Conditional on a displayed two-cluster hypothesis that no model has been shown
+to satisfy. & \cref{sec:local-relaxation}\\
+
+\texttt{AC-EX-2M} & The two-magnon counterpart over a single vacuum: the
+fixed-packet wave operators exist, are isometries, and their product is
+exactly multiplication by the physical scattering multiplier. Conditional, but
+the hypotheses are instantiated on the ferromagnet. & \cref{sec:wave-operators}\\
+
+\texttt{AC-EX-2M-D29} & The interface between those wave operators and the
+fixed-time measurement protocol. Establishes a compactness statement and a
+creator-choice theorem, and records precisely why neither closes the
+identification. & \cref{sec:wave-operators}\\
+
+\texttt{ACE-LD-abs} & Abstract spectral diagonality: if a vector splits into
+channels with distinct charges and each channel's charge escapes in first
+moment, then the charge's spectral projections asymptotically agree with the
+channel projections. Distinct charges are necessary. & \cref{sec:local-relaxation}\\
+
+\texttt{ACE-LD-eps} & Quantitative index bound: a state whose deviations from
+the two tail vacua decay exponentially away from a finite core is an
+approximate eigenvector of the window charge, with an explicit error. Two
+forced consequences are proved, one of them an incompatibility. & \cref{sec:local-relaxation}\\
+
+\texttt{ACE-LD-nec} & The necessity half of the abstract diagonality result:
+two channels sharing a charge refute the displayed identity, so the
+distinct-charge hypothesis cannot be dropped. & \cref{sec:local-relaxation}\\
+
+\texttt{ACE-LD-obst-prime} & The mean-escape obstruction: if the wall's mean
+transport grows with the window, the tightness clause of the relaxation
+hypothesis fails and the ordered displacement is undefined. Its positive form
+bounds mean transport on any relaxing state. & \cref{sec:local-relaxation}\\
+
+\texttt{ACE-LD-sharp} & Sharp on-site charge: a kink state with exponentially
+decaying tail deviations forces both vacua to have zero on-site charge
+variance, hence the tail density is an on-site eigenvalue. A spin-1 chain
+with density $1/2$ therefore admits no such state. & \cref{sec:local-relaxation}\\
+
+\texttt{AD3-ex} & The named local-decay hypothesis used by the kink--magnon
+wave-operator theorem: at each fixed window, the charge measured in a channel
+converges to that channel's projection before the window is enlarged. Assumed,
+never proved. & \cref{sec:local-relaxation}\\
+
+\texttt{AMP} & The soft-leg amputation conjecture: amputating a
+charge-created soft leg should contribute the per-site order-parameter density
+to the external flux, fixing the class constant without the jet-identification
+bridge. Currently an obstruction rather than a theorem. & \cref{sec:universality}\\
+
+\texttt{B3} & Finite-time rigidity of the vacuum-pair label, plus the exact
+charge ledger $2s\,\delta x+(q_{\mathrm{out}}-q_{\mathrm{in}})=0$ for a
+separated scattering event. & \cref{sec:memory-quantization}\\
+
+\texttt{Bc} & The ``two 2s'' conjecture: the soft phase slope and the memory
+channel quantum may be one and the same charge datum
+$\lvert q_{\mathrm{hard}}\rvert/s$. Its falsifier has been survived, not
+passed into a proof. & \cref{sec:memory-quantization}\\
+
+\texttt{D24-VAL} & The conditional matched value of the amputation constant:
+given a jet-identification bridge and the existence of a class member, the
+constant is $1/(2S)$ at the tested spins. The implication is a theorem; its
+antecedents are not. & \cref{sec:universality}\\
+
+\texttt{FUSION-SOFT} & The windowed, momentum-space corollary of the
+categorical selection rule --- the same selection statement read in a
+Fourier/window topology, not an independent result. & \cref{sec:two-plus-one}\\
+
+\texttt{G0} & The Goldstone and lattice-Noether theorem: the zero-momentum
+Goldstone tensor is pure gauge exactly on unbroken directions; an exact
+finite-window boundary identity; and the exact lattice continuity equation for
+any finite-range invariant Hamiltonian. & \cref{sec:corner-a}\\
+
+\texttt{G0-soft-r1} & The withdrawn overclaim that the kinematic factor
+$(e^{ik}-1)$ is a universal soft factor forcing a hard-independent linear
+coefficient. Hard data can enter at first order. & \cref{sec:negative-results}\\
+
+\texttt{K1} & The kink bond operator of the easy-axis model is positive, with
+an explicitly computed kernel. & \cref{sec:kink-model}\\
+
+\texttt{K2} & Every neighbouring factor of the exact kink family lies in that
+kernel, so the family is annihilated bond by bond --- these are exact
+zero-energy kinks. & \cref{sec:kink-model}\\
+
+\texttt{K3} & The boundary field of the kink Hamiltonian telescopes away
+outside any local observable, so the quasi-local derivation is unchanged. & \cref{sec:kink-model}\\
+
+\texttt{K4} & Conjectured thermodynamic uniqueness and flatness: exactly one
+zero-energy kink per regularised-charge sector, with no recoil. Only
+finite-volume evidence exists. & \cref{sec:kink-model}\\
+
+\texttt{LD-ID} & The window-charge identity: the regularised window charge is
+literally the windowed lift of the conserved first-moment wall coordinate, no
+offset and no factor. Its corollaries kill the escaping-leg loophole class. & \cref{sec:local-relaxation}\\
+
+\texttt{LR-D16-EDW} & Energy bounds the \emph{number} of domain walls in the
+easy-axis model uniformly in time. It says nothing about their length, and so
+does not supply the tightness clause. & \cref{sec:local-relaxation}\\
+
+\texttt{LR-D16-NR} & A repaired two-clause no-runaway condition implies the
+tightness clause of the relaxation hypothesis, with an explicit tail bound. & \cref{sec:local-relaxation}\\
+
+\texttt{LR1-GEN} & Clause one of the relaxation hypothesis is a free theorem:
+separability of the algebra, strong continuity of the dynamics, and finiteness
+of the window charge's spectrum already give a common subsequence along which
+all the averaged states and protocol laws converge. & \cref{sec:memory-index}\\
+
+\texttt{M} & The brief's literal memory conjecture --- displacement equals the
+direct-current limit of the soft factor. Refuted; the surviving candidates are
+the physical-current flux identity and a conditional quantization law. & \cref{sec:memory-quantization}\\
+
+\texttt{M-ESC-NR} & Composition of two conditional rows: mean escape and the
+no-runaway condition cannot both hold, so at least one no-runaway bound is
+infinite on an escaping state. & \cref{sec:local-relaxation}\\
+
+\texttt{M-flux} & The displacement equals the finite-time direct-current
+weight of the \emph{physical} boundary current --- an exact identity, and the
+surviving half of the refuted memory conjecture. & \cref{sec:memory-quantization}\\
+
+\texttt{M-IDX-density} & A Lieb--Schultz--Mattis-flavoured by-product: for a
+circle-covariant injective MPS vacuum pair with opposite tail densities, the
+density obeys $2\rho\in\Z$. The antisymmetry of the pair is load-bearing. & \cref{sec:memory-index}\\
+
+\texttt{M-INDEX-2D-fin} & The finite two-dimensional window-integrality
+theorem: on a disk or annulus the escaped increment of the measurement
+protocol is an integer, with no assumption that the two measured observables
+commute. & \cref{sec:two-plus-one}\\
+
+\texttt{M-INDEX-2D-spec} & The conditional two-dimensional limit law. Its
+extra relaxation hypotheses are assumed and no nonzero model instance is
+exhibited, which caps its status. & \cref{sec:two-plus-one}\\
+
+\texttt{M-INDEX-fin} & The finite-window memory-index theorem: the window
+charge has spectrum in one coset of $\Z$, and the protocol's escaped
+increment is an integer because the two fixed-window offsets cancel. & \cref{sec:memory-index}\\
+
+\texttt{M-INDEX-LA-folium} & In the representation generated by the bare kink,
+the circle symmetry is implemented by a strongly continuous unitary group
+whose generator is pure point with spectrum in one coset of $\Z$. A statement
+about implementers, not a limit of window charges. & \cref{sec:memory-index}\\
+
+\texttt{M-INDEX-LA-strong} & The withdrawn operator form: existence of a
+self-adjoint regularised total charge in every kink representation. Refuted by
+two independent mechanisms. & \cref{sec:memory-index}\\
+
+\texttt{M-INDEX-spec} & The ordered-limit memory law: under the circle-charge
+and relaxation hypotheses, every subsequential limit of the protocol law is a
+probability on $\Z$ and $\delta x=-(2s)^{-1}\sum_\nu\nu p_\nu$. & \cref{sec:memory-index}\\
+
+\texttt{M-INDEX-torus} & The higher-rank version: for a common effective
+central torus the joint escaped-charge vector lies in the central weight
+lattice, hence in $\Z^r$ in primitive coordinates. & \cref{sec:memory-index}\\
+
+\texttt{M-quant} & The conditional memory law for the easy-axis kink model:
+assuming asymptotic completeness, the displacement operator has spectrum in
+$\{0,-1/s\}$ with Bernoulli variance. & \cref{sec:memory-quantization}\\
+
+\texttt{M-quant-G} & The same law for an arbitrary compact symmetry group and
+arbitrary bond dimension, proved as a conditional implication with the channel
+charges displayed. & \cref{sec:memory-quantization}\\
+
+\texttt{M-SCOPE-center} & The scope theorem: which symmetry directions can
+carry a calibrated memory at all. Tail-density jumps descend to the Lie
+algebra of the effective unbroken centre; semisimple directions and finite
+groups supply none. & \cref{sec:memory-index}\\
+
+\texttt{M-tk} & The exact transmission amplitude on the projected component of
+the kink model, and its soft behaviour $T(k)=16(\Delta-1)^2k^2+O(k^4)$ --- the
+memory Adler zero. & \cref{sec:memory-quantization}\\
+
+\texttt{ML1} & The canonical two-magnon decomposition into a scattering
+summand and a bound band, with incoming and outgoing maps that are isometries
+onto the same summand and whose product is multiplication by the physical
+multiplier. & \cref{sec:wave-operators}\\
+
+\texttt{ML1-D31-kernel} & Generalised kernels obtained by transporting a
+rigging through the exact band isometry. Two named defects keep it at sketch:
+a hypothesis mismatch and a rigging that is not preserved. & \cref{sec:wave-operators}\\
+
+\texttt{ML2} & Complete two-magnon resolution by direct Jacobi
+diagonalisation, with no assumed Bethe completeness: the finite ring's count
+is exact and the infinite chain is scattering states plus one bound band. & \cref{sec:two-magnon}\\
+
+\texttt{ML3} & Conjectured regularity of the packet-smeared infinite-volume
+current form factor, which must control momenta of order $1/N$ and exclude
+physical soft poles. & \cref{sec:wave-operators}\\
+
+\texttt{ML4} & The one-hard-magnon Ward reduction. What is established is an
+off-shell analytic interpolation at fixed volume; the on-shell,
+packet-smeared, infinite-volume estimate is open, and the first physical
+momentum sequence already refutes volume uniformity. & \cref{sec:wave-operators}\\
+
+\texttt{ML4-A} & The abstract matching-plus-regularity cancellation lemma that
+turns a first-order bound into a second-order one. & \cref{sec:wave-operators}\\
+
+\texttt{ML4-Ward} & The exact finite-sector Ward projection identity, together
+with the erratum that its convenient scalar form is valid for one magnon only
+and false for two, and the register-dependent correction. & \cref{sec:wave-operators}\\
+
+\texttt{ML5} & Unrestricted local or quasi-local universality of the soft
+factorisation is false; an explicit four-site source is the counterexample. & \cref{sec:universality}\\
+
+\texttt{ML5-A} & The repaired criterion: factorisation holds for a source
+exactly when its connected amplitude vanishes at zero momentum and its contact
+first jet vanishes. The criterion is agnostic about the value of the class
+constant. & \cref{sec:universality}\\
+
+\texttt{ML5-B} & On the no-contact class, the connected hard-plus-soft
+amplitude is linear in the soft momentum and proportional to the one-hard
+amplitude. This fixes the \emph{shape} of the factorisation and no number. & \cref{sec:universality}\\
+
+\texttt{ML6} & Conjectured control of the order in which volume, packet width
+and soft momentum limits are taken, and of the bound and off-shell channels. & \cref{sec:wave-operators}\\
+
+\texttt{ML6-HS-SEP} & The proved special case: on the separated packet class,
+one displayed order of limits removes the entire bound, string and
+off-selected weight, and every limit equals the packet average of the
+multiplier. & \cref{sec:wave-operators}\\
+
+\texttt{Mq-AD3} & The projected component of the easy-axis kink model
+satisfies the asymptotic-completeness hypothesis. Proved for the projection,
+not for the full chain. & \cref{sec:memory-quantization}\\
+
+\texttt{Mq-E} & The explicit unitary equivalence between the projected
+kink--magnon component and a Fano graph, identifying the incoming, reflected
+and transmitted legs and their kink bonds. & \cref{sec:memory-quantization}\\
+
+\texttt{N1} & Numerics conjecture, not yet run: excitation-ansatz magnon
+amplitudes should reproduce the Bethe scattering matrix as the momentum goes
+to zero. & \cref{sec:numerics}\\
+
+\texttt{N2} & The recorded easy-axis wavepacket scan agrees with the
+conditional quantization expectation at the measured precision. Numerical
+evidence, not a theorem. & \cref{sec:memory-quantization}\\
+
+\texttt{NO-CAT-SOFT} & The recorded fence that categorical data fix no Taylor
+coefficient inside an allowed channel: a gapless input is needed for that. & \cref{sec:negative-results}\\
+
+\texttt{O1}--\texttt{O10} & The Bethe oracle facts: independently recomputed
+exact statements about the ferromagnet's two-magnon data, used to check the
+campaign's own derivations and never as premises for them. & \cref{sec:two-magnon}\\
+
+\texttt{OR1} & The oracle cross-check: the campaign's reconstructed soft
+expansion agrees with the oracle term by term. This proves the two formulas
+equal, not that either is universal. & \cref{sec:two-magnon}\\
+
+\texttt{OR2} & The oracle fact that the two-magnon amplitude tends to one from
+either side --- a plain limit, weaker than an Adler-zero theorem. & \cref{sec:two-magnon}\\
+
+\texttt{S-A1} & The load-bearing sketch box attached to the unbroken endpoint
+theorem: the split property, needed for a genuine edge Hilbert space
+realisation. & \cref{sec:corner-a}\\
+
+\texttt{S-A2} & The load-bearing sketch box attached to the broken case:
+uniformity over a continuous vacuum manifold. & \cref{sec:corner-a}\\
+
+\texttt{S-general} & The $n$-leg lattice soft theorem as a conjecture: an
+$(n{+}1)$-point amplitude equals a soft multiplier times the $n$-point
+amplitude plus a controlled remainder, universal only on the repaired
+no-contact class. & \cref{sec:universality}\\
+
+\texttt{S-IDX-D29-value-HS-SEP} & On the separated-preparation subclass, the
+protocol's scalar datum has phase slope $\sgn(v_h-v_s)/S$; the number enters
+only through the two-body slope theorem. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-fin-G} & The finite soft-index identity for an arbitrary compact
+Lie symmetry on any finite graph or periodic lattice, root by root, in both
+Ward registers, with the normalised index exactly one. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-fin-r2} & The same identity in its original setting: a finite
+ring with $SU(2)$ symmetry, both registers displayed, and the charge-created
+row ratio exactly one. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-G-label} & Sector-label integrality: a charge component spanning
+a character line of the unbroken centre shifts the central character by a
+fixed amount, giving an integer label on every cocharacter. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-HR-value-r2} & A value instance built from the constructed
+scattering channel rather than from the protocol: its packet average has the
+same slope. Explicitly not a protocol instance. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-MATCH-HS-SEP} & The matching theorem: on the separated
+subclass the fixed-time protocol readout converges to the integral of the
+physical multiplier, with zero remainder. This is the step that transports an
+on-shell number into the infrared statement. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-PROTO-SCALAR-HS-SEP} & The exact scalar factorisation of the
+protocol datum on the same subclass, with a soft factor $(e^{ik}-1)$ and a
+quotient that extends continuously through zero momentum. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-spec-r2} & The conditional value statement for the general
+protocol: adding a class-membership antecedent and a matching hypothesis
+yields slope $\sgn(v_h-v_s)/S$ and the matched amputation constant. Sketch. & \cref{sec:soft-index}\\
+
+\texttt{S-IDX-spec-struct-r2} & The structural half of the same: under an
+uninstantiated decomposition hypothesis, every limit point is linear in the
+soft momentum and has an Adler zero. The constant is left open. & \cref{sec:soft-index}\\
+
+\texttt{S2} & A superseded label for the minimal two-magnon core, withdrawn so
+that one statement does not carry two statuses. & \cref{sec:negative-results}\\
+
+\texttt{S2-2body} & The spin-$\tfrac12$ two-body soft expansion with cubic
+remainders, derived from the local current and contact equations and matching
+the oracle. & \cref{sec:two-magnon}\\
+
+\texttt{S2-2body-S} & The exact regular-channel ratio at every site spin $S$,
+fixed without any integrability assumption, giving the soft slope
+$\sgn(v_h-v_s)/S$. & \cref{sec:two-magnon}\\
+
+\texttt{SHAPE-FLAT} & Isotopy flatness at a fixed point: two string paths with
+the same resolved endpoints, related by contractible local moves, give the
+same endpoint morphism. A path around another insertion is outside the
+hypothesis. & \cref{sec:two-plus-one}\\
+
+\texttt{SPT-B'} & Normalised finite, thermodynamic and soft coefficients vary
+\emph{continuously} along a common-gap path with continuous external data, and
+become topological only after a separate local-constancy argument. & \cref{sec:spt}\\
+
+\texttt{SPT-B-mult} & For ordered closed symmetry insertions the endpoint
+action is a representation tensored with its conjugate, so the projective
+multipliers cancel exactly and the closed register is rephasing-invariant. & \cref{sec:spt}\\
+
+\texttt{SPT-B-r1} & The withdrawn claim that closed adjoint contractions are
+pointwise blind to the projective class. Refuted by explicit examples. & \cref{sec:spt}\\
+
+\texttt{SPT-D'} & Ordered registered endpoint products realise the cocycle;
+for a compact semisimple Lie algebra the infinitesimal cocycle is a coboundary
+and is removed only in a stated phase section. & \cref{sec:spt}\\
+
+\texttt{SPT-E'} & The edge-residue theorem: in a fixed Schmidt/edge register
+the compensated group residue is the projective representation, the Hermitian
+residue is centred and phase-gauge invariant with spectrum congruent modulo
+$\Z$, and its irreducible dimension is bounded below by the class. & \cref{sec:spt}\\
+
+\texttt{SPT-E-AKLT} & The exact registered partial-charge compression for the
+anisotropic AKLT family, with its explicit family limit. & \cref{sec:spt}\\
+
+\texttt{SPT-M'} & The boundary-window memory theorem in the SPT setting:
+the protocol's memory change is an integer at every finite length
+unconditionally, and every ordered limit law is a probability on $\Z$ under
+the displayed relaxation clauses. & \cref{sec:spt}\\
+
+\texttt{SPT-M'-ch} & The optional channel corollary: given a physical edge
+split and definite channel charges, the edge charge change is minus the bulk
+change and fixed-system differences are integral. & \cref{sec:spt}\\
+
+\texttt{SPT-M'-dyn} & The conjectured dynamical instance: for an explicit open
+AKLT-like boundary Hamiltonian, an edge-changing magnon reflection amplitude
+is nonzero on an open momentum interval. & \cref{sec:spt}\\
+
+\texttt{SPT-nogo} & The withdrawn all-orders claim that the projective class
+can appear in no coefficient whatsoever. Refuted: only the infinitesimal
+cocycle class is trivialised. & \cref{sec:spt}\\
+
+\texttt{SPT-T'} & Twisting relations for a registered endpoint, obtained by
+eliminating the composite implementer; a physical observable remains
+conditional on the edge hypotheses. & \cref{sec:spt}\\
+
+\texttt{WI} & The truncated-symmetry (window Ward) identity: applying the
+symmetry only on an interval leaves exactly two virtual insertions, one at
+each boundary bond, the bulk having telescoped. Everything in the
+asymptotic-symmetry corner descends from it. & \cref{sec:corner-a}\\
+\end{longtable}
+}
+
+\subsection{Numbered definitions}
+
+{\footnotesize
+\begin{longtable}{@{}p{0.10\textwidth}p{0.72\textwidth}p{0.14\textwidth}@{}}
+\caption{The numbered definitions. These are the campaign's single source for
+every symbol and every convention; a section that uses one restates it in
+full rather than pointing at it.}
+\label{tab:dict-defs}\\
+\toprule
+\textbf{number} & \textbf{what it fixes} & \textbf{owned by}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{number} & \textbf{what it fixes} & \textbf{owned by}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{D1} & The setting: the quasi-local algebra of the chain, uniform
+injective MPS tensors and their transfer matrix, the decorated window vectors
+(including insertions on the two edge bonds), and the two-sided half-line
+decorations. & \cref{sec:mps-setting}\\
+
+\texttt{D2} & On-site symmetry, a covariant family of vacua, the intertwining
+relation, the phase and multiplier cocycles it generates, normal ordering, and
+the smoothness hypothesis. & \cref{sec:mps-setting}\\
+
+\texttt{D3} & The function-space discipline for symmetry profiles: finitely
+supported, eventually constant, or of finite total variation. A plane wave is
+in none of them and is admitted only inside displayed limits. & \cref{sec:mps-setting}\\
+
+\texttt{D4} & Bond implementers on padded windows, the effective asymptotic
+symmetry group, and the twisted group algebra of asymptotic charges. & \cref{sec:mps-setting}\\
+
+\texttt{D5} & The excitation ansatz, its kink-sector form with different vacua
+on the two sides, and the null directions of its tangent-space gauge freedom. & \cref{sec:mps-setting}\\
+
+\texttt{D6} & The Heisenberg ferromagnet used as an oracle model: Hamiltonian,
+vacuum, coordinate and momentum bases, dispersion. Frozen. & \cref{sec:two-magnon}\\
+
+\texttt{D7} & The ordered-coordinate two-magnon Bethe wave, the coefficient
+ratio that defines the scattering amplitude, the incoming/outgoing convention
+tied to group velocities, and the rapidity. Frozen. & \cref{sec:two-magnon}\\
+
+\texttt{D8} & The soft limit convention: hard momentum fixed in a half-zone,
+signed soft momentum sent to zero, and the resulting identification of the
+ratio as the physical outgoing/incoming amplitude. Frozen as amended. & \cref{sec:two-magnon}\\
+
+\texttt{D9} & Vacuum and kink superselection sectors defined by factorised
+boundary conditions at the two infinities, the endpoint torsor, and the
+double-coset label of a vacuum pair. & \cref{sec:mps-setting}\\
+
+\texttt{D10} & The lattice Noether pair: on-site charge density, the cut
+current defined as a commutator of the Hamiltonian with a half-infinite
+charge, and the modulated charge and current. & \cref{sec:mps-setting}\\
+
+\texttt{D11} & The Goldstone tensor as the derivative of the symmetry action
+on the vacuum tensor, its identification with a soft charge insertion, and the
+count of independent Goldstone directions. & \cref{sec:mps-setting}\\
+
+\texttt{D12} & The precise senses in which the ansatz gauge remainder vanishes
+--- a bound on the remainder, not an identity --- together with the corrected
+profile classes for which the summation-by-parts identity converges. & \cref{sec:mps-setting}\\
+
+\texttt{D13} & The memory observables: the windowed wall position
+\eqref{eq:ov-window-charge}, the spatial memory as its change across an event,
+and the conserved first-moment wall coordinate. & \cref{sec:kink-model}\\
+
+\texttt{D14} & Asymptotic leg content: the transmitted and reflected magnon
+numbers as sums of tail deviations, and the fact that the expected transmitted
+number is a packet \emph{average} of the transmission probability. & \cref{sec:kink-model}\\
+
+\texttt{D15} & Kink--magnon scattering data: reflection and transmission
+amplitudes, the transmission probability, and the transmission phase whose
+derivative is a Wigner--Eisenbud shift and is \emph{not} the wall
+displacement. & \cref{sec:kink-model}\\
+
+\texttt{D16} & The easy-axis XXZ kink model with all its conventions: bond
+term, dispersion, gap, anisotropy, the two exact product vacua, and the
+symmetry group with its broken reflection. & \cref{sec:kink-model}\\
+
+\texttt{D17} & The summable kink class: states whose tail deviations from the
+two vacua are absolutely summable, on which the half-infinite charge and the
+leg content converge. Not preserved by the soft limit. & \cref{sec:kink-model}\\
+
+\texttt{D18} & The asymptotic-completeness hypothesis: existence of wave
+operators, channel projections, a completeness decomposition, and local decay,
+in a displayed order of limits. & \cref{sec:kink-model}\\
+
+\texttt{D19} & Soft profiles, the fixed Schmidt/edge register defined before
+any matrix element is taken, the bulk and edge profile families, and the order
+in which the limits are taken. & \cref{sec:spt}\\
+
+\texttt{D20} & Operator-valued soft insertions, the scalar form factors built
+from them, the continuity requirements on all external data along a path, and
+the Hermitian modulated charge. & \cref{sec:spt}\\
+
+\texttt{D21} & The endpoint module and its shifted charge lattice, the
+distinction between the edge register and the padded-window matrix module, and
+the hypothesis that identifies the register with a physical edge space. & \cref{sec:spt}\\
+
+\texttt{D22} & Twists and ordered endpoint products, the phase relation
+obeyed by conjugation at one endpoint, and the boundary-window edge-memory
+protocol. & \cref{sec:spt}\\
+
+\texttt{D23} & The exact comparison tensors: the AKLT tensor, a
+same-phase anisotropic path, an exactly injective trivial-phase tensor, and
+the boundary Hamiltonians used for the dynamical test. & \cref{sec:spt}\\
+
+\texttt{D24} & The universality apparatus: the source classes, the
+normalisation in which amputated amplitudes and remainders are measured, the
+contact first jet, the five-clause no-contact class $\classSW(\rho)$, and the
+explicit refuting source. & \cref{sec:universality}\\
+
+\texttt{D25} & The name and arguments of the soft multiplier $\softS$
+appearing in the $n$-leg conjecture. Naming it does not strengthen its status. & \cref{sec:universality}\\
+
+\texttt{D26} & The circle-integral condition on the on-site charge: the
+on-site symmetry closes into a scalar at $2\pi$, equivalently the charge
+spectrum lies in one coset of $\Z$. True of every spin-$S$ chain. & \cref{sec:memory-index}\\
+
+\texttt{D27} & Local relaxation of the charge history: one common sequence
+along which the time-averaged states and protocol laws converge, plus the two
+substantive clauses --- a convergence clause and a tightness clause --- that
+carry the real content. & \cref{sec:memory-index}\\
+
+\texttt{D28} & The exact fixed-packet kink--magnon band data: a covariant
+positive-energy realisation of the kink folium, an exact band map rather than
+a variational one, velocity separation, and the displayed two-cluster
+inequality. & \cref{sec:local-relaxation}\\
+
+\texttt{D29} & \emph{Proposed, quarantined.} The windowed, packet-smeared,
+charge-created ratio datum: a finite-ring protocol that prepares a hard
+magnon packet, inserts one scale-tied soft charge packet, evolves, and reads
+off a row ratio in a labelled momentum window. & \cref{sec:soft-index}\\
+
+\texttt{D30} & \emph{Proposed, quarantined.} The regularity-only target
+condition attached to that protocol. It constrains the limit's smoothness and
+cannot by itself supply any value. & \cref{sec:soft-index}\\
+
+\texttt{D31} & The exact fixed-packet two-magnon band data over a single
+vacuum: an exact magnon band map, almost-local momentum-filtered creators,
+packet supports with separated velocities, and an inventory of competing
+channels with spectral margins. & \cref{sec:wave-operators}\\
+\end{longtable}
+}
+
+\subsection{Named hypotheses, protocols, and imported terms}
+
+{\footnotesize
+\begin{longtable}{@{}p{0.235\textwidth}p{0.585\textwidth}p{0.14\textwidth}@{}}
+\caption{Hypotheses that appear by name inside theorem statements, together
+with the protocols and standard scattering-theory terms the campaign imports.}
+\label{tab:dict-hyps}\\
+\toprule
+\textbf{name} & \textbf{what it says, in English} & \textbf{owned by}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{name} & \textbf{what it says, in English} & \textbf{owned by}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{(2D-INT)} & The two-dimensional form of the circle-charge condition:
+the selected on-site charge has spectrum in one coset of $\Z$ on the planar
+lattice. & \cref{sec:two-plus-one}\\
+
+\texttt{(2M-1P)} & A one-particle property required of a candidate creator
+family before it can be treated as an asymptotic creator. & \cref{sec:wave-operators}\\
+
+\texttt{(ACE2M-LSZ)} & The creator-choice theorem: at fixed soft scale, an
+admissible asymptotic creator family with disjoint velocity support may be
+replaced by another without changing any connected on-shell pairing. It does
+\emph{not} apply to a fixed-time inserted charge. & \cref{sec:wave-operators}\\
+
+\texttt{(ACE2M-SR)} & The uniformity hypothesis the same interface would need.
+No instance of it has been verified for the fixed-time protocol family. & \cref{sec:wave-operators}\\
+
+Adler zero & The statement that a soft amplitude \emph{vanishes} at zero
+momentum, linearly, rather than having a pole --- the signature of a
+spontaneously broken global symmetry. This, and not a $1/\omega$ pole, is what
+a lattice soft theorem can assert. & \cref{sec:universality}\\
+
+Bethe oracle & The exact two-magnon solution of the ferromagnet, recomputed
+independently and used only to check the campaign's derivations. An oracle is
+never a premise of a campaign proof. & \cref{sec:two-magnon}\\
+
+Ces\`aro states & The time-averaged states over a late window and an early
+window, whose difference the measurement protocol compares. Averaging, rather
+than pointwise-in-time limits, is what makes the convergence clause provable. & \cref{sec:memory-index}\\
+
+Cook limits & The standard construction of wave operators as strong limits of
+the free-to-interacting comparison, controlled by an integrable derivative
+estimate. Every Cook estimate in this campaign is at fixed packets and none is
+uniform in the soft scale. & \cref{sec:wave-operators}\\
+
+\texttt{(D28-C)} & The displayed two-sided two-cluster inequality on which the
+kink--magnon wave-operator theorem rests. It is the load-bearing hypothesis
+and is unverified on any model. & \cref{sec:local-relaxation}\\
+
+\texttt{(D29-den)} & A pair of assumed bounds --- a lower bound on the
+selected denominator and an upper bound on the numerator --- under which the
+protocol data are compact. Both are assumptions, not derivations. & \cref{sec:soft-index}\\
+
+\texttt{(D29-HS-SEP)} & The separated-preparation subclass of the protocol: the
+two packets are prepared far apart and the settling time is long enough that a
+displayed Schwartz-seminorm estimate closes. This is the class on which the
+matching theorem is proved. & \cref{sec:soft-index}\\
+
+\texttt{(D29-order)} & The mandated order in which the protocol's limits are
+taken: volume, then time, then window and width, then the soft scale. & \cref{sec:soft-index}\\
+
+\texttt{(E-LR2)}, \texttt{(E-LR3)} & The two substantive relaxation clauses in
+the SPT boundary-window setting: a convergence clause and a tightness clause,
+assumed and not derived. & \cref{sec:spt}\\
+
+Fano graph & The exactly solvable one-particle graph --- two half-line legs
+joined through a resonant site --- to which the projected kink--magnon
+component is unitarily equivalent, and from which the transmission amplitude
+is read off. & \cref{sec:memory-quantization}\\
+
+Haag--Ruelle & The standard construction of asymptotic particle states from
+almost-local, energy-momentum-filtered creators acting on the vacuum. The
+campaign's fixed-time inserted charge is deliberately \emph{not} of this form,
+and that mismatch is an open interface. & \cref{sec:wave-operators}\\
+
+\texttt{H-ACE} & Shorthand for the exact fixed-packet kink--magnon band data
+listed under D28. & \cref{sec:local-relaxation}\\
+
+\texttt{H-ACE2M} & Shorthand for the exact fixed-packet two-magnon band data
+listed under D31. Unlike its kink counterpart it is instantiated on the
+ferromagnet. & \cref{sec:wave-operators}\\
+
+\texttt{(H-AD)} & Shorthand for the four-clause asymptotic-completeness
+hypothesis of D18: wave operators and completeness, channel projections, local
+decay, and the order in which windows are enlarged. & \cref{sec:kink-model}\\
+
+\texttt{H-AD-edge} & The corresponding hypothesis at a boundary: asymptotic
+channel structure for an open chain with an edge. Assumed by the optional SPT
+channel corollary. & \cref{sec:spt}\\
+
+\texttt{H-AD-G} & The same four-clause hypothesis for a selected kink packet
+with the channel charges fixed to one incoming leg of charge $-1$, one
+reflected leg of charge $-1$, and one transmitted leg of charge $+1$. & \cref{sec:memory-quantization}\\
+
+\texttt{H-dress} & The hypothesis that dressed endpoint overlaps are nonzero
+with endpoint separation taken first --- what is needed to turn a registered
+endpoint statement into a physical one. & \cref{sec:spt}\\
+
+\texttt{H-MQG(1)--(5)} & The standing register of the general memory law:
+(1)~a covariant family of injective MPS vacua and a fixed kink sector;
+(2)~a common unbroken circle direction with tail densities $\pm s$, $s>0$;
+(3)~a translation-invariant, finite-range, invariant Hamiltonian with
+stationary vacua; (4)~a fixed wave packet in the summable kink class, no plane
+waves; (5)~the asymptotic hypothesis \texttt{H-AD-G} with its displayed
+channel charges. & \cref{sec:memory-quantization}\\
+
+\texttt{H-soft-p} & The extra regularity assumed when a derivative of a soft
+coefficient, rather than the coefficient itself, is asserted to have a limit. & \cref{sec:spt}\\
+
+\texttt{H-split} & The hypothesis that the half-chain low-energy subspace
+splits normally, so that the fixed edge register may be read as a physical
+edge Hilbert space. Every ``physical edge'' statement is conditional on it. & \cref{sec:spt}\\
+
+\texttt{(INT)} & The circle-integral condition of D26 --- the single
+arithmetic input behind every integrality statement in the memory corner. & \cref{sec:memory-index}\\
+
+\texttt{(IT)} & The intertwining relation: applying the on-site symmetry to an
+injective MPS tensor is the same as conjugating it by a projective
+representation on the virtual space, up to a phase. The fundamental theorem of
+MPS supplies it; the whole Ward apparatus rests on it. & \cref{sec:symmetry-noether}\\
+
+\texttt{(K-Q)} & The hypothesis that a state is an approximate eigenvector of
+the limiting relative charge, with a displayed error. & \cref{sec:local-relaxation}\\
+
+\texttt{(K-TAIL)} & The hypothesis that a state's on-site deviations from the
+two tail vacua have exponentially decaying two-point data away from a finite
+core. It is satisfiable --- the exact zero-energy kinks satisfy it --- and it
+is incompatible with an escaping charged leg. & \cref{sec:local-relaxation}\\
+
+$\lambda$--$D$ chain & The running non-integrable model of the numerics: a
+spin-1 chain with single-ion anisotropy $D$ and exchange anisotropy, whose
+phase diagram contains N\'eel, Haldane and large-$D$ phases. Chosen precisely
+because integrability-free hypotheses should be tested on a non-integrable
+model. & \cref{sec:numerics}\\
+
+$\aleg(\rho)$ & The soft-leg amputation constant: the one number the
+no-contact factorisation leaves undetermined. It is defined only relative to a
+fixed normalisation convention, and rescaling that convention rescales it. & \cref{sec:universality}\\
+
+\texttt{(LR)} & The local-relaxation hypothesis of D27, in three clauses. Its
+first clause is a theorem; the content is entirely in the other two. & \cref{sec:memory-index}\\
+
+\texttt{(LR1$_{2D}$)--(LR3$_{2D}$)} & The planar analogues of those three
+clauses. The first is again free; the other two are assumed, with no nonzero
+model instance exhibited. & \cref{sec:two-plus-one}\\
+
+LSZ reduction & The standard passage from correlation functions to on-shell
+amplitudes by amputating external legs. The campaign needs an
+\emph{exhaustive} normed version of it, and that requirement is one of the
+live obligations on the soft edge. & \cref{sec:wave-operators}\\
+
+M1 and M2 & The two model classes of the brief: M1 is the isotropic
+spin-$\tfrac12$ Heisenberg ferromagnet (type-B Goldstone, exact product
+vacuum, exact magnons, no kinks); M2 is the easy-axis XXZ ferromagnet (two
+product vacua, kinks, gapped magnons). Neither alone exhibits every corner. & \cref{sec:overview}\\
+
+\texttt{(M-ESC)} & Mean escape: the hypothesis that the wall's averaged
+transport grows proportionally to the window size. No model or state realising
+it has been exhibited anywhere in the campaign. & \cref{sec:local-relaxation}\\
+
+\texttt{(MATCH-S)} & The matching hypothesis identifying the fixed-time
+protocol readout with the on-shell multiplier to first order. It contains no
+number; the number arrives afterwards, from two-body scattering. Proved on the
+separated subclass. & \cref{sec:soft-index}\\
+
+\texttt{(NR)} & The two-clause no-runaway condition: a uniform second-moment
+bound and a uniform conditional bound on the window's charge content. It is
+sufficient for the tightness clause and is itself unproved. & \cref{sec:local-relaxation}\\
+
+\texttt{(PROTO-LSZ)} & The one uninstantiated hypothesis on which the general
+soft limit law still rests: that the limit datum decomposes exhaustively into
+a descendant term of the expected shape plus orthogonal, direct-contact and
+boundary terms that are of second order. & \cref{sec:soft-index}\\
+
+\texttt{(PT1)--(PT4)} & The displayed typing hypotheses for the planar
+tensor-network selection theorem; the fourth is needed only for the
+instrument-normalisation clause. & \cref{sec:two-plus-one}\\
+
+\texttt{(S)} & The smoothness hypothesis: when the symmetry group is a Lie
+group, the vacuum tensor and the virtual representation admit continuously
+differentiable local sections through the identity. Stated wherever used. & \cref{sec:mps-setting}\\
+
+$\classSW(\rho)$ & The Ward-covariant no-contact class of sources: the
+five-clause class on which the soft factorisation survives. Membership is open
+at every density --- no microscopic member has been exhibited --- so every
+statement about the class is currently a constraint on future work. & \cref{sec:universality}\\
+
+\texttt{(SEP)} & The displayed separation estimate defining the
+separated-preparation subclass: preparation distance, settling time and packet
+seminorms are tied together so that a stationary-phase remainder vanishes. & \cref{sec:soft-index}\\
+
+\texttt{(T)} & Transitivity: the hypothesis that the symmetry group acts
+transitively on the vacuum labels. Without it, the vacuum-pair classification
+is made orbit by orbit. & \cref{sec:mps-setting}\\
+
+\texttt{tns-\dots} & Tracker identifiers for open lanes of work, quoted in
+some statements to say where an acknowledged gap is being pursued. They name
+tasks, never results. & \cref{sec:triangle-status}\\
+
+TPM protocol & The two-projective-measurement protocol: measure the windowed
+charge once before the event and once after, using the \emph{same} window,
+cut and background both times, and record the difference. Because the two
+measurements use the same observable, their spectral offsets cancel; no
+assumption that the two Heisenberg observables commute is needed. This
+protocol is the operational definition of ``memory'' throughout. & \cref{sec:memory-index}\\
+
+Wigner--Eisenbud shift & The spatial shift of a transmitted wavepacket given
+by the derivative of the transmission phase. It is smooth and non-quantised
+and must not be confused with the wall displacement. & \cref{sec:kink-model}\\
+
+$Z_\rho$ & The per-site order-parameter density $2\rho$ appearing in the
+leg-conversion computation. The exact conversion factor supplies only
+$Z_\rho^{-1/2}$, which is why the amputation conjecture needs a second,
+non-leg mechanism. & \cref{sec:universality}\\
+\end{longtable}
+}

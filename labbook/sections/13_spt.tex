@@ -1,0 +1,978 @@
+% SHARD-ID: LB-13-SPT
+% SHARD-TITLE: Symmetry-protected topology: edge residues, twists, and the
+%              rigidity dichotomy
+% SHARD-SOURCES: definitions.md D19--D23; claims/CLAIMS.md (SPT status
+%              annotation block and the SPT rows); theory/spt-rebuild.md;
+%              theory/spt-tpm.md; theory/verdicts/corpus-r2.md, corpus-r3.md,
+%              corpus-r4.md, blitz-spt-tpm-r1.md
+% SHARD-CLAIMS: SPT-B-r1, SPT-nogo, SPT-B-mult, SPT-B', SPT-E-AKLT, SPT-E',
+%              SPT-T', SPT-D', SPT-M', SPT-M'-ch, SPT-M'-dyn;
+%              definitions D19, D20, D21, D22, D23
+
+% --- shard-local semantic macros (see WRITING-GUIDE rule 10) ---------------
+\newcommand{\sptTransfer}{\mathbb{E}}        % transfer contraction of a local operator
+\newcommand{\sptComp}{\mathcal{C}}           % normalised boundary transfer compression
+\newcommand{\sptResid}{\mathfrak{R}}       % Hermitian registered edge residue
+\newcommand{\sptSend}{\mathbb{S}}            % compensated endpoint-soft operator
+\newcommand{\sptPad}{\mathcal{M}}         % padded-window matrix module
+\newcommand{\sptDeph}{\mathcal{D}}           % pinching / dephasing map of a PVM
+\newcommand{\sptBulk}{\mathfrak{F}}       % operator-valued bulk soft insertion
+
+
+
+\section{Symmetry-protected topology: edge residues, twists, and the rigidity
+dichotomy}\label{sec:spt}
+
+A one-dimensional gapped chain with an on-site symmetry group $G$ carries a
+discrete label that no local symmetric deformation can change: the class
+$[\omega]\in H^{2}(G,U(1))$ of the multiplier by which the symmetry acts on
+the virtual bond space of its matrix-product description
+(\cref{sec:corner-a}). This section reports what happened when we asked
+whether that label leaves a fingerprint in \emph{soft} data --- the
+coefficients that survive when a symmetry insertion is smeared over a window
+whose width is then sent to infinity. The hope was a novel prediction: a soft
+amplitude that is quantised by the symmetry-protected class in the same way
+that a soft graviton amplitude is fixed by an asymptotic charge.
+
+The hope, in the two forms in which we first wrote it down, is false, and the
+falsity is instructive. The first form said that a closed bulk symmetry
+insertion cannot see $[\omega]$ at all, because its two endpoint multipliers
+cancel. The cancellation is real, but the inference is not: what is left after
+the multipliers cancel is the honest adjoint representation $\Ad(V)$, and
+adjoint representations of projective and linear lifts are genuinely
+different objects. The second form said, in the opposite direction, that
+$[\omega]$ can never appear in any soft coefficient, at any order. That
+argument leaned on Whitehead's lemma, which trivialises only the
+\emph{infinitesimal} central cocycle of a compact semisimple Lie algebra; it
+says nothing about the dimension of an endpoint module, its integrality
+weights, or the behaviour of finite group elements. Both statements are
+recorded below as refutations, because knowing exactly how each died is what
+fixed the correct statement.
+
+What survives is a dichotomy between the bulk and an unpaired endpoint.
+Closed bulk insertions have no projective multiplication anomaly and their
+normalised coefficients are ordinary continuous transfer data: along a path of
+symmetric injective tensors with a common transfer gap, they move
+continuously, and continuity is not quantisation. An explicit computation on
+the anisotropic Affleck--Kennedy--Lieb--Tasaki (AKLT) family makes this
+concrete --- a natural bulk soft-charge coefficient runs from $1/8$ to
+$0.2401\ldots$ inside a single nontrivial phase. An unpaired half-chain
+endpoint behaves quite differently. Its registered residue is an operator on a
+fixed finite-dimensional module that carries the projective action, its
+spectrum lies in a lattice shifted by the class, and on the same AKLT family
+where the bulk coefficient runs, the residue is exactly $-Z/2$ throughout.
+That rigidity is the honest topological content.
+
+The last part of the section reports the memory statement. It is deliberately
+modest and deliberately honest. A two-projective-measurement (TPM) protocol on
+a boundary window records an integer at every finite window length, before any
+limit, for a reason that is generic circle-charge arithmetic: the same window
+and the same normal-ordering offset are used at both readouts, so the offset
+cancels in the difference. The symmetry-protected class does not enter that
+arithmetic. It enters the \emph{interpretation}: it is what guarantees that
+the boundary hosting the protocol carries a projective module of dimension at
+least $d_\omega$, and hence has the capacity to store a nonzero outcome.
+Whether an actual dynamics writes a nonzero outcome into that capacity is a
+separate, still open, question, and is stated below as a conjecture with its
+missing steps named.
+
+\subsection{The registered objects}
+
+Everything in this section is stated first on a finite-dimensional register
+built from the transfer operator, and only afterwards --- and only under an
+explicitly displayed hypothesis --- transported to a physical half-chain
+Hilbert space. That discipline is what the five definitions below install. It
+matters because the object one is tempted to call ``the edge'' has at least
+three inequivalent meanings (a Schmidt register, a padded-window matrix
+algebra, and a physical low-energy subspace), and conflating them was the
+source of the first round of errors.
+
+\begin{definition}[Soft profiles, the Schmidt/edge register, and the order of
+limits]\label{def:soft-registers}
+Let $C$ be an injective left-canonical tensor in the sense of
+\cref{sec:mps-setting}, with strictly positive right fixed point $r>0$. For an
+operator $O$ supported on the first $n$ sites of a half-chain, write
+$\sptTransfer_O$ for its transfer contraction through those sites and define the
+\emph{normalised boundary transfer compression}
+\begin{equation}
+  \sptComp_C^{(n)}(O) \;:=\; r^{-1/2}\,\sptTransfer_O(r)\,r^{-1/2}
+  \;\in\;\operatorname{End}(E_C),
+  \qquad E_C:=\C^{\chi},
+  \label{eq:spt-compression}
+\end{equation}
+so that $\sptComp_C^{(n)}(I)=I$. We call $E_C$ the \emph{Schmidt/edge register}.
+It is a fixed finite-dimensional space, defined \emph{before} any scalar
+matrix element and before any limit. It is not the padded-window matrix module
+of \cref{def:endpoint-module}, and its identification with a physical edge
+Hilbert space is the separate hypothesis (H-split) stated there.
+
+Fix once and for all the bump function $\varphi(y)=c_\varphi\,
+e^{-1/(1-y^{2})}$ for $\abs{y}<1$ and $\varphi(y)=0$ otherwise, with
+$c_\varphi>0$ chosen so that $\int\abs{\varphi}^{2}=1$. The three profile
+families used below are
+\begin{align}
+  f^{\mathrm{bulk}}_{L,\kappa}(x)
+    &= Z_{L,\kappa}^{-1/2}\,\varphi(x/L)\,e^{i\kappa x/L},
+  &Z_{L,\kappa}&=\sum_x\abs{\varphi(x/L)}^{2},
+  \label{eq:spt-bulk-profile}\\
+  f^{\mathrm{edge}}_{L}
+    &= \mathbf 1_{[0,L-1]},
+  \label{eq:spt-edge-profile}
+\end{align}
+and, for a finite group, the endpoint profile $g^{\mathrm{edge}}_L(x)=g$ for
+$0\le x<L$ and $g^{\mathrm{edge}}_L(x)=e$ otherwise, applied through the
+normal-ordered on-site operator $\check u_C(g)=e^{-i\theta_C(g)}u(g)$ so that
+no extensive phase survives. Every object at finite $L$ is strictly local.
+
+The \emph{order of limits} is fixed and is part of every statement below:
+take $N\to\infty$ at fixed $L$ with $N-L\to\infty$; normalise the packet
+states at that fixed $L$; take scattering or time limits if any are present;
+and only then let $L\to\infty$, so that the associated momentum scale
+$k_L\sim L^{-1}$ tends to zero. For a finite group $G$ the last operation is a
+large-window endpoint/string limit only. It is not an infinitesimal group
+limit and not a momentum-soft limit, and it must not be described as one.
+\end{definition}
+
+\provenance{D19}{\texttt{definitions.md} D19; \texttt{theory/spt-rebuild.md}
+step (1.2).(2.2)--(2.3)}{\texttt{theory/checks/spt\_rebuild\_check.py} S-C2,
+S-C4}{\texttt{theory/verdicts/corpus-r2.md} (defect S1);
+\texttt{corpus-r4.md}}
+
+\begin{definition}[Operator-valued soft insertions and their scalar form
+factors]\label{def:soft-insertions}
+Fix normalised finite-dimensional bulk channel registers $K_{\mathrm{in}},
+K_{\mathrm{out}}$ and packet embeddings $W^{N,L}_{\mathrm{in/out}}$ into a
+finite chain, and define the operator-valued bulk insertion
+\begin{equation}
+  \sptBulk^{\mathrm{bulk}}_{N,L}(\xi)
+   := \bigl(W^{N,L}_{\mathrm{out}}\bigr)^{\dagger}\,
+      Q[f^{\mathrm{bulk}}_{L,\kappa};\xi]\,
+      W^{N,L}_{\mathrm{in}}
+   \;\in\;\Hom(K_{\mathrm{in}},K_{\mathrm{out}}).
+  \label{eq:spt-bulk-insertion}
+\end{equation}
+Along a path of tensors, every external tensor, channel embedding,
+tangent-space gauge fixing, Gram normalisation, and differentiated profile
+entering \eqref{eq:spt-bulk-insertion} is \emph{required} to be continuous in
+the path parameter, and $C^{p}$ whenever a coefficient through order $p$ is
+asserted. These are hypotheses on the external data, not consequences of the
+tensor path.
+
+The modulated charge $Q[f;\xi]$ of \cref{sec:symmetry-noether} is
+anti-Hermitian, so put $Q^{H}[f;\xi]:=-iQ[f;\xi]$. On the edge register define
+the Hermitian residue and the compensated group residue
+\begin{equation}
+  \sptResid_{C,L}(\xi):=\sptComp_C\bigl(Q^{H}[f^{\mathrm{edge}}_L;\xi]\bigr),
+  \qquad
+  \sptSend^{\mathrm{comp}}_{C,L}(g),
+  \label{eq:spt-residues}
+\end{equation}
+where $\sptSend^{\mathrm{comp}}_{C,L}(g)$ is the decorated contraction of the
+normal-ordered string $\check U_{C,[0,L-1]}(g)$ with $V_C(g)^{-1}$ inserted at
+the remote cut, viewed on the dual left-edge register. That insertion cancels
+the far endpoint left by the Ward identity of \cref{sec:symmetry-noether}; the
+\emph{uncompensated} string overlap is a different object and may decay to
+zero. Soft residues are operator-norm limits taken in the order of
+\cref{def:soft-registers}. Scalar form factors are only matrix elements of
+those operators, for instance
+\begin{equation}
+  F^{\mathrm{edge}}_{C,L}(e',e;\xi)
+   = \braket{e'|\sptResid_{C,L}(\xi)|e},
+  \label{eq:spt-form-factor}
+\end{equation}
+and a scalar is never declared to be algebra-valued.
+
+Thermodynamic limits are uniform only on compact tensor paths carrying a
+common transfer bound. A coefficient through order $p$ carries the hypothesis
+(H-soft-$p$): the soft limit is uniform through $p$ derivatives. Any statement
+about scattering carries in addition the wave-operator and
+asymptotic-completeness hypotheses required by \cref{sec:memory-index};
+transfer continuity supplies neither.
+\end{definition}
+
+\provenance{D20}{\texttt{definitions.md} D20;
+\texttt{theory/spt-rebuild.md} steps (1.2).(2.4)--(2.6)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C3, S-C6}%
+{\texttt{theory/verdicts/corpus-r2.md} (defect S1)}
+
+\begin{definition}[The endpoint module, the shifted charge lattice, and the
+physical-edge hypothesis]\label{def:endpoint-module}
+The unconditional object is the Schmidt/edge register $E_C=\C^{\chi}$,
+carrying the projective action $V_C(g)$ with multiplier $\omega_C$. It is
+distinct from the padded-window matrix module of \cref{sec:corner-a},
+\begin{equation}
+  \sptPad_\chi(C)\;\cong\;M_\chi(\C)\;\cong\;E_C\otimes E_C^{*}.
+  \label{eq:spt-padded-module}
+\end{equation}
+Under left multiplication $V_C(g)$ acts on the first tensor factor with the
+dual factor a spectator, so $\sptPad_\chi(C)$ is exactly $\chi$ copies of the
+$E_C$ projective module. This multiplicity distinction changes none of the
+dimension bounds below. Write $d_\omega$ for the minimal dimension of an
+$\omega$-projective irreducible representation; a nontrivial class has
+$d_\omega>1$, since a one-dimensional multiplier is a coboundary.
+
+\smallskip
+\noindent\textbf{Hypothesis (H-split).} The half-chain ground or low-energy
+subspace admits a normal split realisation together with an isometry
+$J_C:E_C\to H_{\mathrm{edge}}$ intertwining the Schmidt/edge action $V_C$ with
+the physical half-chain symmetry, in such a way that registered local
+contractions converge to the corresponding compressed physical operators.
+(H-split) is a statement about $E_C$ and not about all $\chi^{2}$
+padded-window matrices. It is the explicit form of the missing
+normality/infinite-volume Schmidt step flagged in \cref{sec:corner-a}.
+
+\smallskip
+Suppose the identity component of the compact group $G$ contains a circle, and
+let the universal cover of that component have kernel $Z$. Assume that a lift
+normalised compatibly with the full group and with the physical vacuum charge
+fixes a class-invariant central character $\nu_\omega:Z\to U(1)$. If the
+lifted $2\pi$ path of a circle generator $\xi$ ends at $z_\xi\in Z$, the raw
+lift offset $q_\omega(\xi)\in\R/\Z$ is defined by
+$e^{2\pi i q_\omega(\xi)}=\nu_\omega(z_\xi)$. Set
+\begin{equation}
+  X^{\circ}_C(\xi):=X_C(\xi)-\operatorname{Tr}\bigl(rX_C(\xi)\bigr)I,
+  \qquad
+  \bar q_C(\xi):=-i\,\operatorname{Tr}\bigl(rX_C(\xi)\bigr),
+  \label{eq:spt-centering}
+\end{equation}
+and $q^{\circ}_{\omega,C}(\xi):=q_\omega(\xi)-\bar q_C(\xi)\bmod\Z$. The
+Hermitian registered endpoint charge is
+\begin{equation}
+  Q_{\mathrm{edge}}(\xi):=-i\,X^{\circ}_C(\xi),
+  \qquad\text{with}\qquad
+  \spec Q_{\mathrm{edge}}(\xi)\subset q^{\circ}_{\omega,C}(\xi)+\Z .
+  \label{eq:spt-shifted-lattice}
+\end{equation}
+Under the phase-gauge change $V_C(\exp(\varepsilon\xi))\mapsto
+e^{ia\varepsilon}V_C(\exp(\varepsilon\xi))$, both $q_\omega$ and $\bar q_C$
+shift by $a$, while $X^{\circ}_C$, $Q_{\mathrm{edge}}$, and
+$q^{\circ}_{\omega,C}$ are unchanged. In the centered phase gauge
+$\operatorname{Tr}(rX_C)=0$ the centered and raw offsets coincide. For $SO(3)$ that gauge
+gives the two offsets $1/2$ and $0\bmod\Z$; for the explicit $O(2)$ comparison
+pair, the reflection pins the same two alternatives, AKLT having $V(2\pi)=-I$
+and centered offset $1/2$, the large-$D$ product having $V(2\pi)=I$ and
+centered offset $0$. The full global group and the $2\pi$ loop are part of
+this statement: $U(1)$ alone does not protect the offset.
+\end{definition}
+
+\provenance{D21}{\texttt{definitions.md} D21;
+\texttt{theory/spt-rebuild.md} steps (1.2).(2.7)--(2.8)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C4, S-C5, and the
+phase-gauge red mutant}{\texttt{theory/verdicts/corpus-r2.md} (defects S1,
+S5); \texttt{corpus-r4.md}}
+
+\begin{definition}[Twists, ordered endpoint products, and boundary-window edge
+memory]\label{def:twist-memory}
+A finite $g$-twist is a string on an interval and therefore has \emph{two}
+endpoints. A single registered endpoint carries $V(g)$ and the other carries
+the inverse/dual multiplier, so that all gauge phases cancel globally. A
+physical endpoint observable requires both (H-split) and the dressing
+hypothesis
+
+\smallskip
+\noindent\textbf{Hypothesis (H-dress).} the endpoint operators have nonzero
+transfer overlap with the relevant virtual sectors, and the endpoint
+separation is sent to infinity before any other limit.
+
+\smallskip
+For commuting $g,h$, conjugation at one endpoint gives
+\begin{equation}
+  V(h)V(g)V(h)^{-1}=e^{\,i[\omega(h,g)-\omega(g,h)]}\,V(g),
+  \label{eq:spt-slant-def}
+\end{equation}
+with the other endpoint compensating the phase, and ordered endpoint-soft
+operators obey $\sptSend(h)\sptSend(g)=e^{i\omega(h,g)}\sptSend(hg)$ in the registered
+module.
+
+For the channel-free operational register, use the boundary window
+$f^{\mathrm{edge}}_L=\mathbf 1_{[0,L-1]}$ of \cref{def:soft-registers} and the
+local Hermitian charge
+$Q^{\partial}_{L}:=Q^{H}[f^{\mathrm{edge}}_L;\xi]$ of
+\cref{def:soft-insertions}. Let $E_{L,t}$ be the spectral resolution of
+$\alpha^{+}_t(Q^{\partial}_{L})$. The boundary two-projective-measurement
+(TPM) law records the escaped charge $\nu=q_--q_+$ and the edge-memory change
+$m=q_+-q_-=-\nu$ through
+\begin{equation}
+  p_{L;t_-,t_+}(\nu)
+   :=\sum_{q}\norm{E_{L,t_+}(\{q-\nu\})\,E_{L,t_-}(\{q\})\,\Psi}^{2}.
+  \label{eq:spt-tpm-law}
+\end{equation}
+The hypothesis (E-LR) consists of three clauses. \emph{(E-LR1)}: one common
+sequence $T_n\to\infty$ gives, for every fixed $L$, weak-$*$ limits of the
+positive- and negative-time Ces\`aro states and limits of all double-Ces\`aro
+TPM weights. \emph{(E-LR2)}: writing
+$\sptDeph_{L,t_-}(A):=\sum_q E_{L,t_-}(\{q\})\,A\,E_{L,t_-}(\{q\})$, the
+double-Ces\`aro average of
+$\braket{\Psi,[\sptDeph_{L,t_-}(Q^{\partial}_L(t_+))-Q^{\partial}_L(t_+)]\Psi}$
+tends to zero for every fixed $L$. \emph{(E-LR3)}: writing $p_L$ for the
+fixed-window time limit,
+\begin{equation}
+  \lim_{M\to\infty}\ \sup_{L}\ \sum_{\abs{\nu}>M}(1+\abs{\nu})\,p_L(\nu)=0 .
+  \label{eq:spt-elr3}
+\end{equation}
+Optionally one may require $p_L\Rightarrow p$; that clause selects a unique
+limit law and a unique first moment. Dynamics is formed first, fixed-$L$ time
+limits second, and $L\to\infty$ last. This operational law is distinct from
+the channel operator below and assumes no wave operator and no channel
+inventory.
+
+Finally, under the separate hypothesis (H-AD-edge) --- asymptotic wave
+operators exist, bulk packets separate from the edge, and the total charge
+decomposes as $Q_{\mathrm{tot}}=Q_{\mathrm{edge}}+Q_{\mathrm{bulk}}$ on each
+channel --- define the channel edge-memory operator
+\begin{equation}
+  \Delta Q_{\mathrm{edge}}
+   := W_+^{\dagger}Q_{\mathrm{edge}}W_+ - W_-^{\dagger}Q_{\mathrm{edge}}W_- .
+  \label{eq:spt-channel-memory}
+\end{equation}
+Three words are used with fixed meanings. \emph{Protected} refers to the
+projective edge module and its degeneracy; \emph{quantised} refers to channel
+eigenvalues of \eqref{eq:spt-channel-memory}, not to arbitrary expectation
+values; \emph{permanent} additionally requires isolated charge-preserving edge
+dynamics after the packet has departed. Protection does not force any
+particular reflection matrix element to be nonzero. Neither (H-AD-edge) nor
+the operator \eqref{eq:spt-channel-memory} is part of the operational TPM
+theorem of \cref{thm:spt-memory}.
+\end{definition}
+
+\provenance{D22}{\texttt{definitions.md} D22;
+\texttt{theory/spt-rebuild.md} steps (1.2).(2.9)--(2.10);
+\texttt{theory/spt-tpm.md} hypothesis set (T1)--(T4)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C5; the finite TPM arithmetic
+is inherited from the red-capable memory-index checker}%
+{\texttt{theory/verdicts/corpus-r3.md};
+\texttt{theory/verdicts/blitz-spt-tpm-r1.md}}
+
+\begin{definition}[Exact comparison tensors and their boundary
+Hamiltonians]\label{def:comparison-tensors}
+In the Cartesian spin-one basis the AKLT tensor is $A^{a}=\sigma_a/\sqrt3$,
+equivalently $A^{0}=Z/\sqrt3$ and $A^{\pm1}=\sqrt{2/3}\,\sigma_{\pm}$. Its
+$D_2$ virtual operators are Pauli matrices and carry the nontrivial class. The
+symmetric same-phase deformation path is
+\begin{equation}
+  A_b^{x}=a_b X,\quad A_b^{y}=a_b Y,\quad A_b^{z}=b Z,
+  \qquad a_b=\sqrt{\tfrac{1-b^{2}}{2}},\quad 0<b<1,
+  \label{eq:spt-aklt-path}
+\end{equation}
+with the isotropic AKLT point at $b=1/\sqrt3$.
+
+The exact normalised injective trivial tensor at bond dimension $\chi=2$ is
+\begin{equation}
+  T_t^{x}=\begin{pmatrix}0 & t\sqrt3/2\\ t/2 & 0\end{pmatrix},
+  \qquad T_t^{y}=0,
+  \qquad T_t^{z}=\operatorname{diag}\Bigl(
+     \sqrt{1-\tfrac{t^{2}}{4}},\ \sqrt{1-\tfrac{3t^{2}}{4}}\Bigr),
+  \qquad 0<t\le1,
+  \label{eq:spt-triv-tensor}
+\end{equation}
+with $\theta=(1,-1,-1,1)$ and $V_T=(I,Z,I,Z)$ on $(e,R_x,R_y,R_z)$; here $V_T$
+is an honest linear representation. At $t=1$ the right fixed point is
+$r=\operatorname{diag}(3/4,1/4)$, the transfer spectrum is
+$\{1,\sqrt3/2,0,0\}$, and the length-two words have rank four; as $t\downarrow0$
+the family tends symmetrically to $\ket{z}^{\otimes\infty}$. The $O(2)$
+Lie-charge trivial comparator is instead the $\chi=1$ product tensor $P^{z}=1$;
+it is not an $SO(3)$ comparator, and no fictitious $SO(3)$-symmetric trivial
+$\chi=2$ spin-one tensor is used.
+
+For any such tensor $C$ set
+\begin{equation}
+  \Gamma_2^{C}(\ket{i}\otimes\ket{j})=\sum_{s,t}(C^{s}C^{t})_{ij}\ket{s,t},
+  \qquad
+  W_2^{C}=\Gamma_2^{C}\bigl[(\Gamma_2^{C})^{\dagger}\Gamma_2^{C}\bigr]^{-1/2},
+  \qquad
+  h_C=I-W_2^{C}(W_2^{C})^{\dagger},
+  \label{eq:spt-parent-terms}
+\end{equation}
+and let the half-chain parent Hamiltonian be
+$H_{C,+}=h_{\partial,C}+\sum_{x\ge0}\tau_x(h_C)$. For AKLT one has
+$h_C=P^{(S=2)}$ and $h_{\partial,A}=0$. For $T=T_1$ one takes
+$h_{\partial,T}=W_2^{T}\bigl(\mu\ket{1}\bra{1}\otimes I\bigr)(W_2^{T})^{\dagger}$
+with $\mu>0$; it is $D_2$-symmetric and selects the one-dimensional
+trivial-character edge. For the $\chi=1$ $O(2)$ product comparator,
+$h_P=I-\ket{zz}\bra{zz}$ and $h_{\partial,P}=0$.
+
+The model referred to by the dynamical conjecture of \cref{conj:spt-dyn} is
+narrowed to the Hamiltonian already supplied here, with no additional
+unspecified boundary term:
+\begin{equation}
+  H_{A,+}^{\mathrm{dyn}}:=H_{A,+}
+   = h_{\mathrm{mag\text{-}edge}}+\sum_{x\ge1}P^{(S=2)}_{x,x+1},
+  \qquad
+  h_{\mathrm{mag\text{-}edge}}:=P^{(S=2)}_{0,1}
+   =\tfrac16\bigl(\mathbf S_0\!\cdot\!\mathbf S_1+2\bigr)
+            \bigl(\mathbf S_0\!\cdot\!\mathbf S_1+1\bigr).
+  \label{eq:spt-dyn-hamiltonian}
+\end{equation}
+The conjectured reflection matrix is thus the one for this specific open AKLT
+half-chain, not for an unnamed extra coupling.
+\end{definition}
+
+\provenance{D23}{\texttt{definitions.md} D23;
+\texttt{theory/spt-rebuild.md} step (1.2).(2.1)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C1, S-C5}%
+{\texttt{theory/verdicts/corpus-r2.md} (defects S4, S5)}
+
+\subsection{Two claims that died}
+
+\begin{refutedclaim}[Pointwise blindness of closed bulk
+insertions]\label{ref:bulk-blindness}
+\statusRefuted\ \textbf{Withdrawn statement.} Closed bulk contractions built
+only from the adjoint action $\Ad(V)$ are pointwise blind to the class
+$[\omega]$, so no closed bulk soft coefficient can distinguish a projective
+from a linear lift.
+
+\textbf{Why it is false.} The multiplier does cancel in $\Ad(V)$
+(\cref{thm:multiplier-cancellation}), but the surviving adjoint
+\emph{representation} is not the same object for the two lifts. For the finite
+group $D_2$, conjugation by the Pauli projective representation decomposes
+$M_2(\C)$ into all four one-dimensional characters exactly once, with
+multiplicities $(1,1,1,1)$; conjugation by the scalar trivial representation
+gives four copies of the trivial character, $(4,0,0,0)$. The closed scalar
+$\operatorname{Tr}\Ad(V(R_x))$ is accordingly $0$ in the first case and $4$ in the second.
+An explicit $\chi=2$ trivial comparator has multiplicities $(2,0,2,0)$ with
+$\operatorname{Tr}\Ad(V(R_y))=4$ against $0$ for the projective lift. These are closed
+$\Ad(V)$-only numbers that separate the classes, which is precisely what the
+withdrawn statement forbade.
+
+\textbf{What survives.} The correct residue of the argument is
+\cref{thm:multiplier-cancellation}: a closed insertion has no projective
+\emph{failure of multiplication}, and closed bulk amplitudes are invariant
+under rephasing the lift. Nothing follows about the isomorphism type of
+$\Ad(V)$, and \cref{thm:bulk-continuity} states exactly what the surviving
+coefficients are: continuous, deformable transfer data.
+\end{refutedclaim}
+
+\provenance{SPT-B-r1}{disproved in \texttt{theory/spt-rebuild.md} step
+(1.3).(2.3)}{\texttt{theory/checks/spt\_rebuild\_check.py} S-C2}%
+{\texttt{theory/verdicts/corpus-r2.md} (objection S2, conceded)}
+
+\begin{refutedclaim}[The all-orders edge no-go]\label{ref:spt-nogo}
+\statusRefuted\ \textbf{Withdrawn statement.} The class $[\omega]$ cannot
+appear in any soft coefficient at any order, an edge residue included, because
+Whitehead's lemma trivialises the relevant cocycle.
+
+\textbf{Why it is false.} Whitehead's lemma supports only the narrow
+statement that an infinitesimal central cocycle for a compact semisimple Lie
+algebra is cohomologically trivial and can be gauged away in a chosen phase
+section. It removes a coboundary; it does not erase the dimension, the
+weights, the Casimir data, or the integrability class of a representation, and
+it says nothing at all about finite group elements or about a global
+$2\pi$ loop. The counterexample is explicit and exact: on the anisotropic AKLT
+family the registered edge residue is $-\tfrac12[1-(2b^{2}-1)^{L}]Z$ at every
+finite window length, with limit $-Z/2$ and residue spectrum
+$\{-\tfrac12,+\tfrac12\}$, while the trivial $O(2)$ product edge has residue
+$0$. A half-integral quantised soft coefficient therefore exists, and it is
+correlated with the class.
+
+\textbf{What survives.} The bulk no-go concerns a bulk projective multiplier
+and its topological interpretation, not all coefficient data. The edge residue
+is itself a quantised coefficient; see \cref{thm:aklt-residue,thm:edge-residue}.
+\end{refutedclaim}
+
+\provenance{SPT-nogo}{\texttt{theory/spt-rebuild.md} step (1.4)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C4}%
+{\texttt{theory/verdicts/corpus-r2.md} (objections S3, T8)}
+
+\subsection{What survives in the bulk}
+
+\begin{theorem}[Closed symmetry insertions carry no projective
+multiplier]\label{thm:multiplier-cancellation}
+\statusProved\ Consider ordered closed on-site symmetry insertions in the
+setting of \cref{def:soft-registers,def:soft-insertions}, with every external
+leg in a fixed normalised bulk register and no string endpoint. Then the
+endpoint action appearing in a closed contraction is the doubled action
+$V(g)\otimes\bar V(g)$, equivalently $\Ad(V(g))$, and the projective
+multipliers cancel exactly:
+\begin{equation}
+  \bigl(V(h)\otimes\bar V(h)\bigr)\bigl(V(g)\otimes\bar V(g)\bigr)
+  =\omega(h,g)\,\bar\omega(h,g)\;V(hg)\otimes\bar V(hg)
+  = V(hg)\otimes\bar V(hg).
+  \label{eq:spt-multiplier-cancel}
+\end{equation}
+Consequently the projective failure of multiplication of a closed insertion is
+identically one, and closed bulk amplitudes are invariant under rephasing a
+fixed lift, $V(g)\mapsto\lambda(g)V(g)$.
+\end{theorem}
+
+\begin{scope}
+The theorem says nothing about the isomorphism type of the honest
+representation $\Ad(V)$, and in particular does not imply that closed bulk
+data are blind to the class; see \cref{ref:bulk-blindness}. It applies to
+insertions with no string endpoint: a hidden endpoint violates the register
+hypothesis and makes the object an edge or twist amplitude by definition.
+\end{scope}
+
+\emph{Idea of proof.} A finite on-site symmetry string on a bulk interval
+telescopes, by the Ward identity of \cref{sec:symmetry-noether}, to exactly
+$V(g)^{-1}$ at one boundary bond and $V(g)$ at the other. In a closed
+contraction those two factors appear together as $V(g)\otimes\bar V(g)$, on
+which a rephasing acts trivially. Ordered multiplication then produces
+$\omega(h,g)\bar\omega(h,g)=\abs{\omega(h,g)}^{2}=1$, which is
+\eqref{eq:spt-multiplier-cancel}. The same conclusion holds before any tensor
+contraction, because the truncated on-site physical operators themselves
+multiply honestly, with no projective scalar; for noncommuting elements only
+the ordinary group commutator can survive.
+
+\provenance{SPT-B-mult}{\texttt{theory/spt-rebuild.md} step (1.3).(2.1)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C2}%
+{\texttt{theory/verdicts/corpus-r2.md} (promotion adjudicated)}
+
+\begin{theorem}[Normalised bulk coefficients are continuous, not
+topological]\label{thm:bulk-continuity}
+\statusProved\ Let $t\in I\mapsto A(t)$ be a compact path of injective
+canonical tensors, all covariant under the same on-site group $G$, with a
+common transfer bound $\sup_t\lambda_E(t)<\tilde\lambda<1$. Assume every
+external leg sits in a fixed normalised bulk register with no string endpoint
+and uniformly positive Gram matrices, and that the external tensors, channel
+embeddings, tangent-space gauge fixings, Gram normalisations, and profiles are
+continuous in $t$ --- and $C^{p}$, together with every differentiated profile,
+whenever a coefficient of order $p$ is asserted. Assume the profiles are the
+bulk packets of \cref{def:soft-registers} or any finite-support, no-net-jump
+profiles, and assume (H-soft-$p$) whenever a soft coefficient is asserted.
+Then every finite-window normalised scalar coefficient, and every
+thermodynamic or soft coefficient covered by those uniform hypotheses, is
+continuous in $t$, and is $C^{p}$ when the data and (H-soft-$p$) are.
+Consequently a bulk scalar coefficient is a symmetry-protected invariant
+\emph{only} if it is separately shown to be locally constant on every
+symmetric injective component; multiplier cancellation alone does not supply
+that proof, and bulk numbers may distinguish inequivalent $\Ad(V)$
+representation types and may correlate with $[\omega]$ through deformable
+non-universal data.
+\end{theorem}
+
+\begin{scope}
+The theorem does not assert that AKLT and trivial bulk amplitudes are equal,
+and it does not say that complete bulk tomography cannot identify the phase.
+It also does not say that every coefficient varies: a locally constant bulk
+representation invariant may well exist, but it needs its own proof.
+Continuity is not local constancy, and the theorem must not be read as a
+no-go. Only compact subpaths with a common transfer bound are used; the
+trivial family of \cref{def:comparison-tensors} loses injectivity at its
+product endpoint, and no statement here crosses that endpoint.
+\end{scope}
+
+\emph{Idea of proof.} At finite chain length and finite window, an
+unnormalised contraction is a polynomial in the entries of $A(t)$, its
+conjugate, the external tensors, the embeddings, the gauge-fixed
+representatives, and the profiles, all of which are continuous (respectively
+$C^{p}$) by hypothesis. Normalisation multiplies by inverse square roots of
+finite Gram matrices, which is continuous by the functional calculus because
+the smallest Gram eigenvalue is bounded away from zero. On the compact path
+the isolated fixed-point projection $P_t$ is continuous and the common
+spectral separation yields a uniform bound
+$\norm{\sptTransfer_t^{m}-P_t}\le C_{\tilde\lambda}\tilde\lambda^{m}$, so the
+thermodynamic contractions converge uniformly in $t$, and a uniform limit of
+continuous functions is continuous. Under (H-soft-$p$) the same argument
+applies to the first $p$ derivatives.
+
+That continuity is not vacuous, and the campaign exhibits an actual
+deformation inside one fixed nontrivial phase. With the specified bulk packet,
+define
+\begin{equation}
+  C_{\mathrm{bulk}}(b)
+   :=\lim_{L\to\infty}
+     \frac{\bigl\langle Q[f^{\mathrm{bulk}}_{L,\kappa};S^{z}]^{\dagger}
+                        Q[f^{\mathrm{bulk}}_{L,\kappa};S^{z}]\bigr\rangle_c}
+          {\sum_x\abs{f^{\mathrm{bulk}}_{L,\kappa}(x+1)
+                     -f^{\mathrm{bulk}}_{L,\kappa}(x)}^{2}},
+  \label{eq:spt-bulk-coefficient}
+\end{equation}
+equivalently, in terms of the kernel
+$S^{(b)}_{zz}(k)=\sum_{n\in\Z}e^{ikn}\braket{S^{z}_0S^{z}_n}_c$, the limit
+$\lim_{k\to0}S^{(b)}_{zz}(k)/[2(1-\cos k)]$. Transfer contraction on the
+family \eqref{eq:spt-aklt-path} gives $\braket{(S^{z}_0)^{2}}=1-b^{2}$ and
+$\braket{S^{z}_0S^{z}_n}_c=-(1-b^{2})^{2}(2b^{2}-1)^{n-1}$ for $n\ge1$, whence
+\begin{equation}
+  C_{\mathrm{bulk}}(b)=\frac{b^{2}}{4(1-b^{2})} .
+  \label{eq:spt-bulk-value}
+\end{equation}
+Thus $C_{\mathrm{bulk}}(1/\sqrt3)=1/8$ while
+$C_{\mathrm{bulk}}(0.7)=0.240196078431\ldots$, even though $V(R_x)$ and
+$V(R_z)$ remain the same anticommuting Pauli pair and $[\omega]$ is fixed
+along the path. The coefficient \eqref{eq:spt-bulk-coefficient} is therefore
+not topological, and no other raw coefficient is promoted merely because it
+happens to be written using $\Ad(V)$.
+
+\provenance{SPT-B'}{\texttt{theory/spt-rebuild.md} steps (1.3).(2.2)--(2.3)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C2, S-C3 (Fourier kernel at
+$k=10^{-3}$ and the direct packet at $L=2048$, $\kappa=1.3$)}%
+{\texttt{theory/verdicts/corpus-r3.md} (promotion adjudicated)}
+
+\subsection{The endpoint is rigid}
+
+\begin{theorem}[The exact AKLT-family edge residue]\label{thm:aklt-residue}
+\statusProved\ For the anisotropic AKLT family \eqref{eq:spt-aklt-path}, the
+Hermitian registered partial-charge compression of
+\cref{def:soft-insertions}, evaluated on the boundary window
+$f^{\mathrm{edge}}_L$ and the circle generator $S^{z}$, is exactly
+\begin{equation}
+  \sptResid_{A_b,L}(S^{z})
+   = -\tfrac12\bigl[1-(2b^{2}-1)^{L}\bigr]\,Z
+   \qquad\xrightarrow[L\to\infty]{}\qquad -\tfrac{Z}{2}.
+  \label{eq:spt-aklt-residue}
+\end{equation}
+The residue spectrum is $\{-\tfrac12,+\tfrac12\}$ at every point of this
+nontrivial path.
+\end{theorem}
+
+\begin{scope}
+This is an exact statement about equation \eqref{eq:spt-aklt-residue} and its
+AKLT-family limit, and nothing more. It is a registered transfer computation,
+not a scattering amplitude and not a statement about a physical edge Hilbert
+space; the latter needs (H-split). It does not assert that a
+magnon-to-edge transition matrix element is nonzero.
+\end{scope}
+
+\emph{Idea of proof.} On the family \eqref{eq:spt-aklt-path} the right fixed
+point is $r=I/2$, the boundary charge insertion contracts to
+$\sptTransfer_{S^{z}}(r)=-(1-b^{2})Z/2$, and the charge transfer channel acts as
+$\sptTransfer_b(Z)=(2b^{2}-1)Z$. Summing sites $0,\dots,L-1$ and applying the
+register normalisation $r^{-1/2}(\cdot)r^{-1/2}=2(\cdot)$ turns the sum into
+the geometric series
+$-(1-b^{2})\sum_{n=0}^{L-1}(2b^{2}-1)^{n}Z=-\tfrac12[1-(2b^{2}-1)^{L}]Z$,
+which converges because $\abs{2b^{2}-1}<1$. At the isotropic point the
+convergence factor is $(-1/3)^{L}$. The comparison case is equally exact: the
+$O(2)$ product tensor has $S^{z}_x\ket{z}=0$ at every site, hence zero
+residue.
+
+\provenance{SPT-E-AKLT}{\texttt{theory/spt-rebuild.md} step (1.4).(2.4),
+equation (4.1)}{\texttt{theory/checks/spt\_rebuild\_check.py} S-C4 (finite
+window formula and direct eigenvalues at $L=1,2,4,8,24,64$)}%
+{\texttt{theory/verdicts/corpus-r2.md} (promotion adjudicated)}
+
+\begin{theorem}[The registered endpoint residue and the shifted charge
+lattice]\label{thm:edge-residue}
+\statusProved\ Work in the unbroken, normal-ordered setting of
+\cref{def:soft-registers,def:soft-insertions,def:endpoint-module,def:comparison-tensors},
+and for the Lie-charge clauses assume the operator-norm convergence of the
+residues \eqref{eq:spt-residues}. Then, in the fixed Schmidt/edge register
+$E_C$ with the declared dual-left orientation:
+\begin{enumerate}
+\item the \emph{compensated} endpoint group residue is
+  $\sptSend_C(g)=V_C(g)$, and the registered Lie residue is the compression of
+  the Hermitian partial charge, equal to the centered operator
+  $\sptResid_C(\xi)=Q_{\mathrm{edge}}(\xi)=-iX^{\circ}_C(\xi)$; scalar edge
+  form factors are its matrix elements
+  \eqref{eq:spt-form-factor};
+\item every irreducible summand of the endpoint is $\omega_C$-projective, so a
+  protected summand has dimension at least $d_\omega$, and $d_\omega>1$
+  whenever $[\omega_C]\ne0$;
+\item at a fixed tensor, $\spec Q_{\mathrm{edge}}(\xi)\subset
+  q^{\circ}_{\omega,C}(\xi)+\Z$, and both $Q_{\mathrm{edge}}$ and its centered
+  offset are invariant under rephasing the virtual lift;
+\item the padded-window module is
+  $\sptPad_\chi(C)\cong E_C\otimes E_C^{*}$, that is, $\chi$ copies of the
+  $E_C$ projective module, which changes none of the bounds above.
+\end{enumerate}
+A statement about a \emph{physical} half-chain edge Hilbert space is
+conditional on (H-split); under it, $J_C\sptSend_C(g)J_C^{\dagger}$ and
+$J_C\sptResid_C(\xi)J_C^{\dagger}$ are the corresponding physical edge
+operators.
+\end{theorem}
+
+\begin{scope}
+No deformation constancy of the centered offset is claimed: clause (iii) is
+lift-gauge invariance at a fixed tensor, not local constancy along a path.
+The theorem protects the module and its degeneracy, not any chosen nonzero
+transition amplitude, and it supplies a quantised residue spectrum together
+with selection rules rather than dynamics. The offset is absolute only once
+the full global group and the $2\pi$ loop have been fixed; $U(1)$ alone does
+not protect it. The conclusion about the compensated string carries no
+implication for the uncompensated string overlap, which may decay to zero.
+\end{scope}
+
+\emph{Idea of proof.} Applying the normal-ordered string
+$\check U_{[0,L-1]}(g)$ pulls it through the tensors and leaves $V(g)^{-1}$ at
+the physical boundary and $V(g)$ at the remote cut; the prescribed $V(g)^{-1}$
+insertion in $\sptSend^{\mathrm{comp}}_{C,L}$ cancels the remote factor exactly,
+and the dual left-edge orientation fixes the surviving factor as $V_C(g)$.
+For the Lie residue the derivative at the identity is taken at each fixed $L$
+first; differentiating the Ward identity in the same orientation and applying
+the normalised compression yields
+$-i[X_C(\xi)-\operatorname{Tr}(rX_C(\xi))I]=-iX^{\circ}_C(\xi)$, where the subtraction is
+forced by $\sptComp_C(I)=I$ and is exactly what makes the answer invariant under
+rephasing. Clause (ii) is the projective multiplication law
+$V(h)V(g)=e^{i\omega(h,g)}V(hg)$ on $E_C$ together with the observation that a
+one-dimensional projective irreducible representation would exhibit its
+multiplier as a coboundary. Clause (iii) follows because the lifted $2\pi$
+loop acts both as $e^{2\pi i q_{\mathrm{raw}}}$ and as $\nu_\omega(z_\xi)$, so
+each raw eigenvalue differs from $q_\omega(\xi)$ by an integer; centering
+subtracts $\bar q_C$ from every eigenvalue and shifts $q_\omega$ by the same
+amount under a rephasing. For $SO(3)$ the nontrivial lift to $SU(2)$ sends the
+nontrivial central element to $-1$, giving $q_\omega=1/2\bmod\Z$, and the
+trivial lift gives $0$; the $O(2)$ pair reproduces the same alternatives
+directly from $V_A(2\pi)=-I$ and $V_P(2\pi)=I$. Clause (iv) is the padded-window
+injectivity statement of \cref{sec:corner-a}, in which $V_C(g)$ acts on the
+first tensor factor with the dual factor a spectator. The exact instance
+\eqref{eq:spt-aklt-residue} of \cref{thm:aklt-residue} shows the whole picture
+is nonvacuous: the residue is rigid where the bulk coefficient
+\eqref{eq:spt-bulk-value} runs.
+
+\provenance{SPT-E'}{\texttt{theory/spt-rebuild.md} step (1.4),
+clauses (i)--(iv)}{\texttt{theory/checks/spt\_rebuild\_check.py} S-C4, S-C5,
+and the phase-gauge red mutant (uncentered generator after a nontrivial
+rephasing must fail)}{\texttt{theory/verdicts/corpus-r4.md} (final
+promotion)}
+
+\subsection{Twists and ordered endpoint products}
+
+\begin{theorem}[Twist endpoints carry the slant
+character]\label{thm:twist-slant}
+\statusProved\ Adopt the normalised cocycle convention
+$V(h)V(g)=e^{i\omega(h,g)}V(hg)$ and the twist setting of
+\cref{def:twist-memory}. On one registered endpoint,
+\begin{equation}
+  V(h)V(g)V(h)^{-1}
+   =e^{\,i[\omega(h,g)-\omega(hgh^{-1},h)]}\,V(hgh^{-1}),
+  \label{eq:spt-conjugation}
+\end{equation}
+and for $h$ in the centraliser of $g$ this reduces to the slant character
+\eqref{eq:spt-slant-def}, the $H^{2}$ commutator. The other endpoint carries
+the inverse phase.
+\end{theorem}
+
+\begin{scope}
+Only a relative two-endpoint charge, or a dressed string correlator, is gauge
+invariant; a single endpoint phase is not an observable. A \emph{physical}
+observable is conditional on both (H-split) and (H-dress). The old
+unqualified one-endpoint formula for a general group is withdrawn:
+\eqref{eq:spt-slant-def} is restricted to commuting elements, and the general
+case is \eqref{eq:spt-conjugation}.
+\end{scope}
+
+\emph{Idea of proof.} Write the projective law twice, as
+$V(h)V(g)=e^{i\omega(h,g)}V(hg)$ and
+$V(hgh^{-1})V(h)=e^{i\omega(hgh^{-1},h)}V(hg)$, and eliminate the common
+factor $V(hg)$; this is \eqref{eq:spt-conjugation}, and setting $hgh^{-1}=g$
+gives \eqref{eq:spt-slant-def}. A finite physical twist has two endpoints and
+the combined action is honest, so the second endpoint necessarily carries the
+inverse multiplier. An endpoint matrix element is physical only when its
+dressing has nonzero transfer overlap, which is (H-dress).
+
+\provenance{SPT-T'}{\texttt{theory/spt-rebuild.md} step (1.5).(2.1),
+equations (5.1)--(5.2)}{---}%
+{\texttt{theory/verdicts/corpus-r3.md} (promotion adjudicated; objection S7)}
+
+\begin{theorem}[Ordered endpoint-soft products realise the
+cocycle]\label{thm:cocycle-realisation}
+\statusProved\ With the finite-group endpoint profiles and compensated
+endpoint contractions of \cref{def:soft-registers,def:soft-insertions}, taking
+the thermodynamic limit and then $L\to\infty$ while retaining the fixed
+endpoint register, the ordered endpoint-soft operators satisfy
+\begin{equation}
+  \sptSend_C(h)\,\sptSend_C(g)=e^{\,i\omega_C(h,g)}\,\sptSend_C(hg)
+  \qquad\text{in }\operatorname{End}(E_C).
+  \label{eq:spt-cocycle}
+\end{equation}
+For a compact semisimple Lie group, differentiating \eqref{eq:spt-cocycle}
+near the identity yields an infinitesimal central cocycle that is
+cohomologically trivial and can be gauged away; in the phase convention where
+that coboundary has been removed, the ordinary Lie bracket is displayed. The
+torsion class survives in finite and large transformations and in global
+integrability data.
+\end{theorem}
+
+\begin{scope}
+The invariant information is the projective module, or a relative endpoint
+composition --- not a gauge-invariant phase of one scalar matrix element.
+Physical use of \eqref{eq:spt-cocycle} carries both (H-split) and (H-dress).
+Removing the infinitesimal coboundary in a chosen phase section does not
+identify half-integer and integer modules, and this statement is not the
+continuum double-soft scattering theorem of the gauge-theory literature; the
+mechanisms there (a massless current pole and its associated anomalous term)
+have no counterpart in these gapped registered form factors.
+\end{scope}
+
+\emph{Idea of proof.} Each single endpoint-soft limit equals $V_C(\cdot)$ by
+clause (i) of \cref{thm:edge-residue}, and their ordered product is
+\eqref{eq:spt-cocycle} by the defining projective multiplication law.
+Rephasing changes $\omega$ by a coboundary and conjugates no physical
+two-endpoint observable, so the class and the module are invariant. The
+Lie-algebra clause is Whitehead's lemma, used only in the narrow sense
+described in \cref{ref:spt-nogo}: the infinitesimal central cocycle is a
+coboundary, and a phase-section change removes it, without any claim that it
+vanishes in every section.
+
+\provenance{SPT-D'}{\texttt{theory/spt-rebuild.md} step (1.5).(2.2),
+equation (5.3)}{\texttt{theory/checks/spt\_rebuild\_check.py} S-C5}%
+{\texttt{theory/verdicts/corpus-r3.md} (promotion adjudicated; objection S3)}
+
+\subsection{Boundary-window memory}
+
+\begin{theorem}[Boundary-window memory is integral without scattering
+theory]\label{thm:spt-memory}
+\statusProved\ (the finite clause unconditionally; the ordered-limit clause as
+a conditional implication on (E-LR2)--(E-LR3)). Take the boundary windows of
+\cref{def:soft-registers} and the Hermitian normal-ordered charge
+$Q^{\partial}_L$ of \cref{def:soft-insertions}, a strongly continuous
+half-chain automorphic dynamics, and a unit preparation $\Psi$. Assume the
+integral-circle condition of \cref{sec:memory-index}: the selected
+normal-ordered Hermitian one-site charge has spectrum in $\kappa+\Z$ for some
+$\kappa\in[0,1)$. Then:
+\begin{enumerate}
+\item \emph{(Finite, unconditional.)} At every finite $L$ there is
+  $\kappa_L\in\R/\Z$ with $\spec Q^{\partial}_L(t)\subset\kappa_L+\Z$ for all
+  $t$; the TPM law \eqref{eq:spt-tpm-law} is a probability law; and every
+  escaped-charge outcome $\nu$ and edge-memory outcome $m=-\nu$ lies in $\Z$.
+  No commutativity of the two Heisenberg observables $Q^{\partial}_L(t_-)$ and
+  $Q^{\partial}_L(t_+)$ is assumed.
+\item \emph{(Ordered limit, conditional on (E-LR2)--(E-LR3).)} With the
+  common sequence supplied by the general common-subsequence theorem of
+  \cref{sec:memory-index}, every ordered limit-point law is a probability on
+  $\Z$, and along that subsequence its first moment is the ordered
+  boundary-window charge change,
+  \begin{equation}
+    \sum_m m\,r(m)
+     =\lim_{j}\Bigl[\omega^{+}_{L_j}\bigl(Q^{\partial}_{L_j}\bigr)
+                   -\omega^{-}_{L_j}\bigl(Q^{\partial}_{L_j}\bigr)\Bigr],
+    \qquad r(m):=p(-m).
+    \label{eq:spt-memory-ledger}
+  \end{equation}
+  Under the optional full-sequence convergence clause, the limit law and the
+  value in \eqref{eq:spt-memory-ledger} are unique.
+\end{enumerate}
+Adding (H-split) and \cref{thm:edge-residue} supplies the physical
+projective-edge and capacity interpretation, and nothing else.
+\end{theorem}
+
+\begin{scope}
+No wave operator, channel inventory, definite channel charge, nonzero
+amplitude, or permanence is assumed or proved anywhere in this theorem;
+(H-AD-edge) and (H-dress) are not used. Charge conservation is needed only to
+read the first moment as a current flow, never for the quantisation. The
+support is all of $\Z$, not $\{-1,0,+1\}$, unless a separate edge-doublet
+confinement theorem is supplied. The ordered mean
+\eqref{eq:spt-memory-ledger} is an ordinary probability average and need not
+be an integer even though every outcome is. A projective measurement history
+is \emph{not} the spectral measure of the operator difference
+$Q^{\partial}_L(t_+)-Q^{\partial}_L(t_-)$. The clauses (E-LR2) and (E-LR3) are
+assumed, not derived, and no nonzero model instance of them is exhibited.
+
+One point of intellectual honesty is worth stating explicitly, because the
+critic made it and it is easy to lose. The support half of this theorem is
+generic circle-charge arithmetic: it holds for any integral circle charge and
+any automorphic dynamics, and by itself it diagnoses no
+symmetry-protected phase. The symmetry-protected content enters only through
+the interpretation supplied by (H-split) and \cref{thm:edge-residue} --- that
+the boundary hosting the protocol carries an $\omega_C$-projective module with
+a shifted charge lattice and a capacity of dimension at least $d_\omega$.
+\end{scope}
+
+\emph{Idea of proof.} The finite clause is offset cancellation. Each on-site
+charge has spectrum in $\kappa+\Z$; the different-site terms commute, so
+$Q^{\partial}_L=\sum_{x=0}^{L-1}S^{z}_x$ has spectrum in $L\kappa+\Z$, and
+that coset is preserved at every time because a $C^{*}$-automorphism preserves
+spectrum. Every weight in \eqref{eq:spt-tpm-law} is a squared norm, hence
+nonnegative, and summing over the final and then the initial resolution gives
+total mass one by two applications of Parseval, with no interchange of the two
+noncommuting projections. Since both readouts use the \emph{same} window, the
+same profile, the same normal ordering, and the same observable, both $q_-$
+and $q_+$ lie in the common coset $\kappa_L+\Z$, so their difference is an
+integer before any limit is taken. For the ordered clause, a lemma identifies
+the finite-window TPM mean as the pinched difference
+$\braket{Q^{\partial}_L(t_-)}-\braket{\sptDeph_{L,t_-}(Q^{\partial}_L(t_+))}$.
+Clause (E-LR1), supplied as a theorem by the general common-subsequence
+result, provides one time sequence good for all $L$; (E-LR2) drives the
+dephasing defect to zero, converting that mean into the difference of the two
+Ces\`aro states; and (E-LR3) supplies tightness and uniform integrability, so
+that Prokhorov extraction on the closed set $\Z$ retains total mass, integer
+support, and the first moment across the spatial limit.
+
+\provenance{SPT-M', D26, M-INDEX-fin, M-INDEX-spec, LR1-GEN}%
+{\texttt{theory/spt-tpm.md} steps (1.1)--(1.7); the finite theorem at step
+(1.1), the ordered theorem at steps (1.3)--(1.4), the dependency audit at step
+(1.6)}{finite arithmetic inherited from the red-capable finite memory-index
+checker \texttt{theory/checks/memory\_index\_check.py} IDX-C1, IDX-C2;
+no gate bears on (E-LR2)--(E-LR3)}%
+{\texttt{theory/verdicts/blitz-spt-tpm-r1.md} (0 fatal, 0 major; records that
+the support theorem is generic circle-charge arithmetic and not by itself a
+symmetry-protected diagnostic)}
+
+\begin{corollary}[Channel bookkeeping for the edge charge]\label{thm:spt-channel}
+\statusProvedConditional\ Assume (H-split), (H-AD-edge), conservation of the
+selected charge, and asymptotic channels with definite bulk and edge charges.
+Then the channel edge-memory operator \eqref{eq:spt-channel-memory} obeys
+\begin{equation}
+  \Delta Q_{\mathrm{edge}}
+   = -\bigl(Q_{\mathrm{bulk,out}}-Q_{\mathrm{bulk,in}}\bigr),
+  \label{eq:spt-channel-ledger}
+\end{equation}
+and fixed-system channel differences are integral. For the restricted AKLT
+edge doublet they lie in $\{-1,0,+1\}$.
+\end{corollary}
+
+\begin{scope}
+This is an \emph{optional} corollary. It is the former channel form of the
+memory statement, retained unchanged, and it is not part of
+\cref{thm:spt-memory}, whose arithmetic uses none of its four hypotheses. It
+quantises post-selected channel eigenvalues; superposed or mixed expectation
+values remain continuous. The restriction of the support to $\{-1,0,+1\}$
+holds only after restricting to the channel edge multiplet, and is not
+available for the operational protocol.
+\end{scope}
+
+\emph{Idea of proof.} Under (H-AD-edge) the asymptotic total charge splits as
+$Q_{\mathrm{tot}}=Q_{\mathrm{edge}}+Q_{\mathrm{bulk}}$ on each channel.
+Conservation of the total charge across the scattering process then rearranges
+into \eqref{eq:spt-channel-ledger}. Integrality of the fixed-system channel
+differences is the same shifted-lattice arithmetic as clause (iii) of
+\cref{thm:edge-residue}: both channels sit in the same coset
+$q^{\circ}_{\omega,C}+\Z$, so the common offset cancels in the difference. For
+the AKLT edge doublet the two available edge eigenvalues are $\pm\tfrac12$ by
+\cref{thm:aklt-residue}, and their differences are $\{-1,0,+1\}$.
+
+\provenance{SPT-M'-ch}{\texttt{theory/spt-rebuild.md} step (1.6).(2.1),
+retained as an optional corollary}{--- (the dynamical follow-on is tracked as
+\texttt{tns-cpq})}{\texttt{theory/verdicts/corpus-r3.md} (conditional status
+inherited from the adjudication of the former channel claim)}
+
+\begin{conjecture}[A nonzero edge-changing magnon reflection for the open AKLT
+half-chain]\label{conj:spt-dyn}
+\statusConjecture\ For the specific open AKLT parent Hamiltonian
+\eqref{eq:spt-dyn-hamiltonian}, with boundary-magnon coupling
+$h_{\mathrm{mag\text{-}edge}}=P^{(S=2)}_{0,1}$ and no additional unspecified
+boundary term, at least one symmetry-allowed edge-changing magnon reflection
+amplitude is nonzero on an open interval of momenta, and the resulting
+boundary-window history leaves a nonzero post-selected charge memory in the
+sense of \cref{thm:spt-memory}.
+\end{conjecture}
+
+\begin{scope}
+The missing steps are named exactly: half-chain wave operators, the hypothesis
+(H-AD-edge) for the scattering-channel identification, the on-shell reflection
+matrix for \eqref{eq:spt-dyn-hamiltonian}, and nonvanishing of the relevant
+matrix element. None of these is supplied. The conjecture also does not claim
+nonzero edge-changing reflection at every momentum; it does not claim vanishing
+memory for every trivial boundary, since an accidental trivial edge mode can
+store memory perfectly well; it does not claim quantisation of an
+unconditioned expectation value; and it does not claim permanence without an
+isolated charge-preserving edge after the packet has departed. A zero
+edge-changing channel in the planned numerics would refute this
+model-specific conjecture and would refute nothing in
+\cref{thm:edge-residue}; a nonzero channel for the trivial comparator would
+demonstrate accidental boundary memory and would refute only a revived
+``trivial implies zero'' claim.
+\end{scope}
+
+The evidence is structural rather than dynamical. \Cref{thm:edge-residue}
+guarantees a protected edge module of dimension at least $d_\omega$ with the
+half-integral residue spectrum computed exactly in \cref{thm:aklt-residue}, so
+the capacity to record a nonzero outcome certainly exists; symmetric local
+edge terms cannot replace that module by a unique symmetric state. What
+topology does not do is force any particular reflection matrix element to be
+nonzero, and the campaign has been careful never to let the existence of a
+capacity be read as the existence of a signal. The pre-registered numerical
+protocol for deciding the conjecture --- open chains of $48$, $64$ and $96$
+sites, incoming one-magnon packets centred at least twelve correlation lengths
+from the edge, with a probability-conservation defect below $5\times10^{-3}$, a
+per-channel edge charge budget below the same threshold, finite-size drift
+below $10\%$ between $N=64$ and $N=96$, and a channel counted as nonzero only
+if its probability exceeds twenty-five times the combined truncation and
+finite-size error at three adjacent momenta --- is recorded with the shard and
+is discussed in \cref{sec:numerics}.
+
+\provenance{SPT-M'-dyn}{\texttt{theory/spt-rebuild.md} step (1.6).(2.2);
+model fixed by \texttt{definitions.md} D23, equation
+\eqref{eq:spt-dyn-hamiltonian}}{--- (follow-on \texttt{tns-cpq}; the
+pre-registered gates are in \texttt{theory/spt-rebuild.md} step (1.7).(2.4))}%
+{\texttt{theory/verdicts/corpus-r2.md} (HOLD; objection S6)}

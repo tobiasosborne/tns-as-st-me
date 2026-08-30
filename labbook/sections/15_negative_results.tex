@@ -1,0 +1,806 @@
+% SHARD-ID: LB-15-NEGATIVE-RESULTS
+% SHARD-TITLE: Negative results — refutations, obstructions, and dead ends
+% SHARD-SOURCES: claims/CLAIMS.md (all REFUTED rows: A2-orbit-r1, G0-soft-r1,
+%   S2, ML5, M, SPT-B-r1, SPT-nogo, M-INDEX-LA-strong); theory/amp.md;
+%   theory/dh-hunt.md; theory/dh-semiclassical.md; theory/cat-hunt.md;
+%   theory/soft-2d-hunt.md (NO-CAT-SOFT, §3 and the honest-status list);
+%   theory/corner-a-kinks.md (1.9); theory/corner-a-goldstone.md (1.6.2.7);
+%   theory/ml5-universality.md (1.4); theory/corner-b-draft.md (§10);
+%   theory/spt-rebuild.md (1.3.2.3, 1.4); theory/memory-index.md (1.3, 1.12);
+%   theory/verdicts/w21-joint-critic.md (W6-O2, item 6); HANDOFF.md
+% SHARD-CLAIMS: the refutation ledger (A2-orbit-r1, G0-soft-r1, S2, ML5, M,
+%   SPT-B-r1, SPT-nogo, M-INDEX-LA-strong — summary entries only, detailed
+%   environments owned by the sections cross-referenced below) and the three
+%   negatives owned here: the amputation obstruction (AMP / AMP-OBS, D24(b),
+%   D24(d)), the Duistermaat--Heckman hunt and its semiclassical survivor,
+%   and the no-categorical-soft-theorem fence (NO-CAT-SOFT) with its
+%   operator/categorical split.
+
+\section{Negative results: refutations, obstructions, and dead ends that shaped the campaign}
+\label{sec:negative-results}
+
+% --- shard-local semantic macros (not in main.tex's preamble) -------------
+\newcommand{\Irrsimple}{\operatorname{Irr}}    % simple objects of a fusion category
+\newcommand{\Funcat}{\operatorname{Fun}}       % category of module functors
+\newcommand{\Dendp}{\mathcal{D}_{\mathcal{M}}} % endpoint category on register M
+
+The campaign's constitution treats a sharp refutation, delivered together with
+the weaker statement that survives it, as a result in its own right: a pile of
+suggestive analogies is worth less than one clean demonstration that a
+tempting statement is false. That rule has been applied often enough that the
+negative outcomes now form a body of knowledge of their own, and this chapter
+collects them in one place so that no reader — and no later session — walks a
+dead end twice.
+
+Two kinds of material appear here. The first is a ledger of every withdrawn
+claim: the statement as it was once made, the mechanism that killed it, and
+what remains true. Each of those claims belongs to a positive chapter, where
+it is presented in full alongside the repaired result it forced; the entries
+below are two-to-four-sentence summaries with cross-references, so that this
+chapter can be read on its own as the campaign's ``what is false'' list. The
+second is the set of negative results owned by this chapter, which have no
+positive home: an obstruction theorem about the soft-leg amputation constant,
+a fully mapped and closed search for an equivariant-localisation mechanism,
+and a no-go fence separating what a fusion category can and cannot fix.
+
+One procedural point must be stated once, because it governs the provenance
+blocks throughout. Under the campaign's process rules a negative result earns
+no adversarial review rounds: it is recorded, its checker (if any) is run, and
+the line is closed. Consequently the ``reviewed in'' field of every statement
+below is empty, and none of these statements carries a \statusProved tag. The
+absence of a review artifact is deliberate and is not a defect; where a
+verdict file does exist for a neighbouring positive row it is named, and
+nowhere else.
+
+\subsection{The refutation ledger}
+\label{sub:refutation-ledger}
+
+\paragraph{The vacuum-pair orbit label.} \statusRefuted{} The first form of
+the asymptotic-symmetry orbit statement asserted that the set of vacuum pairs
+is the orbit $\A = (G_L \times G_R)/G_{\mathrm{diag}}$, labelled by the class
+$[g_L g_R^{-1}]$. This is false: $G_L \times G_R$ acts componentwise on
+$\Omega_{\mathrm{vac}} \times \Omega_{\mathrm{vac}}$, so the stabiliser of a
+pair $(\alpha',\beta')$ is $H_{\alpha'} \times H_{\beta'}$ and the space is
+$(G/H_\alpha) \times (G/H_\alpha)$, not a quotient of $G \times G$ by the
+diagonal; the proposed label is not invariant under the global diagonal
+symmetry and was withdrawn. What survives is stronger and cleaner: modulo the
+diagonal symmetry the complete invariant of a vacuum pair is the double coset
+$\mathfrak{d}(\alpha_L,\alpha_R) = H_\alpha\, g_L^{-1} g_R\, H_\alpha \in
+H_\alpha \backslash G / H_\alpha$, which for $G=SU(2)$, $H_\alpha=U(1)$ is the
+relative angle $\cos\theta = \hat n_L \cdot \hat n_R$; the classification
+additionally carries the transitivity hypothesis explicitly, since covariance
+of the vacuum family does not imply it. See \cref{sec:corner-a}.
+
+\provenance{A2-orbit-r1 (refuted); repaired statement A2(e)}%
+{disproved in \texttt{theory/corner-a-kinks.md} step (1.9).(2.5).(3.3)}%
+{\texttt{theory/checks/corner\_a\_check.py} C7}{---}
+
+\paragraph{The universal soft factor and its Adler zero.} \statusRefuted{}
+The first form of the Goldstone-tensor corollary called the kinematic factor
+$e^{ik}-1$ a \emph{universal} soft factor, and inferred from it both an Adler
+zero and the hard-independent linear coefficient of the two-magnon oracles.
+Both inferences are withdrawn. In a matrix element the operator identity says
+only
+\begin{equation}
+  \bra{\mathrm{out}}[H,Q_k]\ket{\mathrm{in}}
+  = (e^{ik}-1)\,\bra{\mathrm{out}}J_k\ket{\mathrm{in}},
+\end{equation}
+so all dependence on the Hamiltonian, on the symmetry direction, on the vacuum
+and on the hard legs sits inside $\bra{\mathrm{out}}J_k\ket{\mathrm{in}}$: if
+that matrix element is $C_{\mathrm{hard}} + O(k)$ then hard data enter at
+order $k$, and if it carries a $1/k$ infrared singularity there is no zero at
+all. The factor is also convention-dependent — the kernel $e^{-ikx}$ gives
+$e^{-ik}-1$, and reversing the current's orientation flips it — so its
+independence of $H$ is the tautology that a discrete difference was factored
+out \emph{after} an $H$-dependent current had been defined. The exact
+finite-window summation-by-parts identity survives untouched, and what the
+argument does rederive is the one-magnon oracle only. See
+\cref{sec:corner-a}.
+
+\provenance{G0-soft-r1 (refuted); surviving statement G0(c)--(e)}%
+{withdrawn in \texttt{theory/corner-a-goldstone.md} step (1.6).(2.7)}{---}{---}
+
+\paragraph{The superseded two-body label.} \statusRefuted{} This entry is
+bookkeeping rather than mathematics, and is listed only because the claims DAG
+records it with the same tag as a genuine falsehood. The old label for the
+minimal two-magnon core was withdrawn so that a single mathematical statement
+could not carry two statuses at once; the content it named is alive and proved
+under its current label, and is generalised to every spin by the exact
+regular-channel ratio. Nothing was retracted here except a name. See
+\cref{sec:universality}.
+
+\provenance{S2 (withdrawn label); live content S2-2body, S2-2body-S}{---}{---}{---}
+
+\paragraph{Unrestricted soft universality.} \statusRefuted{} The claim that
+the soft factorisation holds for every local or quasi-local source is false,
+and the counterexample is explicit and four sites wide. With
+\begin{equation}
+  D := S^-_0 S^-_1 - S^-_1 S^-_2 + S^-_2 S^-_3 - S^-_0 S^-_3,
+  \qquad
+  O_\eta := S^-_0 + \eta D,
+\end{equation}
+every $O_\eta$ is local; because $D\ket{\Omega}$ lies in the two-magnon sector
+it leaves the one-magnon amplitude $M_1^{O_\eta}(h)$ completely independent of
+$\eta$, while the two-magnon amplitude acquires the first jet
+\begin{equation}
+  M_2^{O_\eta}(k,h) = \eta\bigl\{ 2i\,(1-e^{-3ih})\,k + O_I(k^2) \bigr\}.
+\end{equation}
+On any hard packet supported where $1-e^{-3ih} \neq 0$ the parameter $\eta$
+therefore moves the linear soft coefficient without moving the hard process at
+all, so no process-independent coefficient can exist on the unrestricted local
+class. The surviving statements are the repaired criterion — process
+independence holds exactly when the source's amputated commutator has
+vanishing first jet — and the conditional factorisation on the restricted
+class $\classSW(\rho)$, whose conclusion fixes a \emph{shape} and not a
+number. See \cref{sec:universality}.
+
+\provenance{ML5 (refuted); surviving statements ML5-A, ML5-B}%
+{\texttt{theory/ml5-universality.md} step (1.4)}%
+{\texttt{theory/checks/ml4\_check.py}, the $O_\eta$ obstruction}{---}
+
+\paragraph{Memory as the direct-current limit of the soft factor.}
+\statusRefuted{} The brief's memory conjecture, read literally — the wall
+displacement equals the zero-frequency limit of the soft factor, summed over
+the event — is false in the easy-axis chain. Two independent reasons kill it:
+conditional charge bookkeeping fixes the same displacement coefficient for
+every momentum, every anisotropy and every packet once the scattering channels
+exist, whereas any soft-factor expression varies with all three; and the
+displacement is entirely insensitive to the transmission phase, since a purely
+transmitting wall with vanishing phase still displaces by exactly $-1/s$. The
+soft factor is a phase, the memory quantum is a charge. What survives is the
+exact flux statement — the displacement is the finite-time direct-current
+weight of the \emph{physical} boundary current — together with the conditional
+quantisation statement, into which soft data enter only through the
+transmission probability $T(k)$; no reading of virtual or bond data is
+claimed. See \cref{sec:memory-quantization}.
+
+\provenance{M (refuted); surviving statements M-flux, M-quant (conditional)}%
+{\texttt{theory/memory-quantization.md} §1; \texttt{theory/corner-b-draft.md} §§2, 6, 10}%
+{\texttt{theory/checks/mquant\_check.py} (flux residues plus an empirical scan only)}{---}
+
+\paragraph{Pointwise blindness of closed adjoint contractions.}
+\statusRefuted{} An early symmetry-protected-phase argument claimed that
+closed contractions built only from the adjoint action $\Ad(V)$ of the virtual
+symmetry are pointwise blind to the cohomology class $[\omega]$. They are not.
+For the two-element group with Pauli-projective virtual action the adjoint
+representation decomposes into four distinct characters, with multiplicities
+$(1,1,1,1)$, whereas the scalar-trivial lift gives four copies of the trivial
+character, $(4,0,0,0)$; the closed scalar $\operatorname{Tr}\Ad(V(R_x))$ is
+then $0$ in the first case and $4$ in the second. What survives is the exact
+multiplier cancellation for ordered closed insertions, where the endpoint
+action is $V(g) \otimes \bar V(g)$ and the projective phases cancel identically,
+together with the continuity statement for normalised coefficients — which
+becomes topological only after a separate local-constancy proof, since
+continuity does not imply local constancy. See \cref{sec:spt}.
+
+\provenance{SPT-B-r1 (refuted); surviving statements SPT-B-mult, SPT-B'}%
+{disproved in \texttt{theory/spt-rebuild.md} step (1.3).(2.3)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C2}{---}
+
+\paragraph{The all-orders cohomology no-go.} \statusRefuted{} The companion
+early claim was that the cohomology class can appear in no coefficient at all,
+an edge residue included. This over-read Whitehead's lemma, which trivialises
+only the \emph{infinitesimal} central cocycle of a compact semisimple Lie
+algebra and only in a stated phase section; it never erases the dimension, the
+weights, the Casimir data or the integrability class of a representation, so
+global edge weights and module dimensions survive. What remains true is the
+narrow version: in the registered endpoint the infinitesimal cocycle is a
+coboundary and is gauged away in the stated phase convention, while the edge
+residue itself is the centred, phase-gauge-invariant charge whose spectrum
+lies in a fixed coset of $\Z$ and whose irreducible module has dimension at
+least $d_\omega$. See \cref{sec:spt}.
+
+\provenance{SPT-nogo (refuted); surviving statements SPT-D', SPT-E'}%
+{\texttt{theory/spt-rebuild.md} step (1.4)}%
+{\texttt{theory/checks/spt\_rebuild\_check.py} S-C4}{---}
+
+\paragraph{A sector-wide regularised total charge.} \statusRefuted{} It was
+claimed that the kink hypotheses together with integrality force the existence
+of a self-adjoint regularised total charge operator in every kink
+representation. They do not. The decisive counterexample is a product state in
+a kink sector whose on-site deviations decay only polynomially: with
+$\varepsilon_n = (n+1)^{-1/2}$ the accumulated variance
+$V_N = \sum_{n \le N}\varepsilon_n^2$ diverges, the window-charge distribution
+spreads with $\sup_k P(L_N = k) \le C V_N^{-1/2}$, and hence
+$\braket{\Omega_\varrho, (\Qhat_{W_N,c_0} - i)^{-1}\Omega_\varrho} \to 0$,
+which no self-adjoint limit can produce, since for any self-adjoint $\Qhat$
+the imaginary part of that resolvent expectation is strictly positive. The
+mean-controlling hypothesis governs first moments, not charge fluctuations,
+and hence not implementability. A second, on-folium mechanism reaches the same
+conclusion for a nonscalar virtual circle action, but it is a strengthening
+under strictly more hypotheses, not an independent proof of the same
+statement. What survives is that the relative window charge exists as a
+\emph{limit vector} on states with exponentially clustering tails, where it
+coincides with the exactly conserved first-moment wall coordinate; no
+sector-wide operator is constructed anywhere in the corpus. See
+\cref{sec:memory-index}.
+
+\provenance{M-INDEX-LA-strong (refuted); surviving statements LD-ID, ACE-LD-eps}%
+{\texttt{theory/memory-index.md} step (1.3) (fluctuation counterexample, off-folium; alone sufficient) and step (1.12) (nonscalar virtual circle, on-folium; a strengthening under additional hypotheses)}%
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C3, IDX-C8}{---}
+
+\begin{remark}[Partial refutations that live inside proved rows]
+Three further negative findings are not listed above because they are
+corrections \emph{within} statements that are otherwise proved, and are
+presented with those statements rather than here: the two-magnon Ward
+projection erratum, where a scalar-normalised projection formula holds at one
+magnon only and its register-dependent correction is non-scalar at two or more
+(\cref{sec:wave-operators}); the withdrawal of the raw half-line displacement
+formula in favour of the leg-subtracted event identity $2s\,\delta x +
+(q_{\mathrm{out}} - q_{\mathrm{in}}) = 0$ (\cref{sec:memory-quantization});
+and the refutation of the fully polarised product-state form of the tail vacua
+under the general kink hypotheses, which survives only when the tail density is
+a simple on-site eigenvalue (\cref{sec:local-relaxation}). Each is recorded as
+an erratum next to the theorem it scopes.
+\end{remark}
+
+\subsection{The amputation obstruction: the class fixes only a square root}
+\label{sub:amputation-obstruction}
+
+The remainder of this chapter presents the negatives that have no positive
+home. The first is the sharpest of them, because it names precisely what a
+future proof must supply.
+
+\begin{definition}[Soft-leg amputation constant]
+\label{def:amputation-constant}
+Work at a fixed tail density $\rho > 0$, put $Z_\rho := 2\rho$, and assume the
+restricted source class $\classSW(\rho)$ is nonempty and the asymptotic
+one-magnon kernel exists. Fix the normalisation convention in which the hard
+leg is amputated identically in the one-magnon amplitude $M_1^O$ and the
+two-magnon amplitude $M_2^O$, while the extra soft leg of $M_2^O$ is a
+unit-weight, delta-normalised asymptotic magnon. Decompose $M_2^O$ into a
+descendant term $E^O_{\mathrm{desc}}$, an orthogonal-current term and a
+direct/contact term, the last two bounded by $O(k^2)$; fix the descendant
+current residue in the charge-created normalisation to $2iv_h M_1^O(h)$; and
+for $k \neq 0$ define the descendant quotient
+\begin{equation}
+  L(k,h) := \frac{E^O_{\mathrm{desc}}(k,h)}{(e^{ik}-1)\,2iv_h\,M_1^O(h)},
+\end{equation}
+assumed to have a process-independent, uniformly $C^1$ extension to $k=0$.
+The \emph{soft-leg amputation constant} $\aleg(\rho) \neq 0$ is then defined by
+the value of that extension,
+\begin{equation}
+  L(0,h) = \aleg(\rho)\,\frac{-i\chi(h,0)}{v_h},
+  \label{eq:aleg-defn}
+\end{equation}
+with $\chi$ the channel sign. In this convention the conditional
+factorisation theorem reads $M_2^O(k,h) = 2i\,\aleg(\rho)\,\chi\,k\,M_1^O(h)
++ O_{L^2(I)}(k^2)$, which contains no number at any density.
+\end{definition}
+
+\provenance{D24(b), D24(d)1--3, D24(d)3b; consumers ML5-B, D24-VAL, AMP}%
+{\texttt{definitions.md} D24; \texttt{theory/amp.md} §1}%
+{\texttt{theory/checks/d24d3\_normalization\_check.py} D24N-C1--C3 (kinematics of the conclusion, not its constant)}%
+{\texttt{theory/verdicts/d24d3-adjudication-r5.md} §5 is the merged text of record for the clause repair}
+
+The natural hope was that this constant is fixed by the definition of the
+universality class, with the physically expected value $\aleg(\rho) = 1/Z_\rho$
+following from a careful accounting of how a charge-created soft leg is
+converted into an asymptotic one. That hope is refuted at the level of
+derivability.
+
+\begin{refutedclaim}[The universality class fixes the amputation constant]
+\label{ref:amputation}
+Withdrawn statement: the normalisation conventions and analytic relations
+defining the class $\classSW(\rho)$ determine the value of $\aleg(\rho)$, and
+in particular force $\aleg(\rho) = 1/Z_\rho$. This is false. Those relations
+determine $\aleg(\rho)$ only up to the constraint $\aleg(\rho) \neq 0$
+together with process independence; on the charge-created reading they supply
+exactly one factor $Z_\rho^{-1/2}$, and the remaining scalar is free. The
+statement is neither proved nor physically refuted — it is undecidable from
+the present hypotheses, and a completed proof requires a genuinely new
+dynamical input, displayed in \eqref{eq:amp-missing} below.
+\end{refutedclaim}
+
+\emph{Mechanism.} Three independent steps close the question. The first is an
+exact leg-conversion computation. On a fully polarised tail with $Z_\rho = 2S$,
+the charge-created soft leg on the vacuum and the descendant vector
+$u_N := Q^-_q\ket{h}$ built on a hard magnon at a commensurate momentum satisfy,
+on a finite ring,
+\begin{equation}
+  Q^-_k\ket{\Omega} = \sqrt{Z_\rho}\,\ket{k},
+  \qquad
+  \norm{u_N}^2 = Z_\rho N - 2 .
+  \label{eq:leg-conversion}
+\end{equation}
+The rank-one orthogonal projection onto the descendant line must then be read
+in the normalised register:
+\begin{equation}
+  P_N w_N
+  = u_N \frac{\braket{u_N,w_N}}{Z_\rho N - 2}
+  = \frac{u_N}{\sqrt{Z_\rho N - 2}}\;
+    \frac{\braket{u_N,w_N}}{\sqrt{Z_\rho N - 2}} .
+  \label{eq:amp-projection}
+\end{equation}
+The first square root normalises the \emph{vector}; only the second is the
+amplitude coefficient against that normalised vector. Counting both as
+amplitude factors changes register mid-equation, and that mutation is
+registered as an explicit failing mode of the checker. Removing the common
+finite-ring delta-normalisation leaves the exact descendant conversion factor
+$(Z_\rho - 2/N)^{-1/2}$, so that
+\begin{equation}
+  \lim_{N\to\infty}\bigl(Z_\rho - 2/N\bigr)^{-1/2} = Z_\rho^{-1/2},
+  \qquad
+  \bigl(Z_\rho - 2/N\bigr)^{-1/2}
+  = Z_\rho^{-1/2}\Bigl[1 + \frac{1}{Z_\rho N} + O(N^{-2})\Bigr].
+\end{equation}
+The finite-size mismatch is therefore a vanishing correction, not a surviving
+second factor.
+
+The second step checks the four operations that might have supplied a second
+factor, and finds that none does. The descendant projection is already
+exhausted by \eqref{eq:amp-projection}. Windowed-charge smearing is linear and
+supplies no density-dependent scalar, since the packet register fixes
+delta-normalised kernels and soft envelopes with value $1$ at $k=0$; a
+constant envelope $Z_\rho^{-1/2}$ would change that value and would be a
+forbidden second leg rescaling rather than a new mechanism. The two
+normalisation anchors remove a rescaling freedom and impose the Ward residue
+as a membership condition, but neither evaluates $L(0,h)$. And the finite-ring
+mismatch vanishes, as just displayed. The one remaining place where a new
+mechanism could live is the descendant propagation itself, which the class
+definition asserts to exist and to have a $C^1$ quotient without ever
+specifying a map whose normalised residue could be evaluated.
+
+The third step makes the underdetermination explicit at the level of the
+relations. Fix a compact hard window on which $v_h \neq 0$ and the channel
+sign is constant, choose a nonzero profile $m \in L^2(I)$, and for any
+$a \in \C\setminus\{0\}$ consider the source-linear package
+\begin{align}
+  M_1(h) &= c\,m(h), &
+  R(h) &= c\,2iv_h\,m(h), &
+  L_a(k,h) &= a\,\frac{-i\chi}{v_h}, \notag\\
+  E_{\mathrm{desc},a}(k,h) &= (e^{ik}-1)\,L_a(k,h)\,R(h), &
+  M_{2,a} &= E_{\mathrm{desc},a}, &
+  &\text{other terms } = 0 .
+\end{align}
+Every clause of the class definition holds exactly: the decomposition is
+trivial, the remainder bounds hold with zero remainder, the Ward residue is
+$R = 2iv_h M_1$, and the descendant quotient is exactly $L_a$, with
+$iv_h L_a(0,h)/\chi = a$. Two distinct values of $a$ leave $M_1$, the Ward
+residue, the packet measure and the leg convention unchanged while changing
+$L$ and $M_2$, so they are not related by any normalisation covariance. Hence
+every nonzero constant is admitted by the displayed relations.
+
+\emph{What a completed amputation proof must supply.} Granting the
+charge-created reading of the descendant term, factor the class datum as
+\begin{equation}
+  \aleg(\rho) = Z_\rho^{-1/2}\,\bigl[\sqrt{Z_\rho}\,\aleg(\rho)\bigr] ,
+\end{equation}
+where the leg conversion \eqref{eq:leg-conversion} fixes the first factor and
+the class definition constrains the bracket only to be nonzero and
+process-independent. The desired value is therefore equivalent to the single
+additional equation
+\begin{equation}
+  \sqrt{Z_\rho}\,\aleg(\rho) = Z_\rho^{-1/2} .
+  \label{eq:amp-missing}
+\end{equation}
+Any proof of \eqref{eq:amp-missing} must be a post-conversion
+descendant-propagation or LSZ residue theorem, stated after both sides are
+already expressed against the same delta-normalised soft leg; it is not a leg
+normalisation, and no clause of the present definition supplies it. Every
+candidate argument must be checked against the exact leg-conversion
+computation \eqref{eq:leg-conversion}, or it double-counts the leg.
+
+\begin{scope}[What is and is not decided]
+\label{scope:amputation}
+The obstruction is at relation level: it exhibits packages satisfying the
+displayed algebraic and analytic relations for every nonzero constant, and it
+does not construct a microscopic local source, so it is not a physical
+counterexample and does not refute the value $1/Z_\rho$ in a future nonempty
+class. A separate, strictly conditional falsifier does bear on the
+leg-normalisation-only value: assuming both the charge-created reading of the
+descendant term and the jet-identification bridge that equates the class
+multiplier's jet with the two-body physical phase jet, a pure-leg proof
+predicts the jet $2/\sqrt{2S}$, whose scaled deviations against the
+ansatz-free two-magnon data are $0.0004$, $0.4158$, $0.7347$ and $1.0033$ at
+$S = 1/2, 1, 3/2, 2$, i.e.\ margins of $5.2$, $9.2$ and $12.5$ times the
+pre-registered band of $0.08$ at the three non-degenerate spins. Neither
+antecedent is proved, and without them a two-magnon phase slope and an
+amputation constant are not comparable at all; the relation-level obstruction
+above uses neither. Finally, both candidate value rows remain vacuous or
+unknown in a further sense: nonemptiness of the class is open at every
+density, so they constrain future work — any member ever exhibited must carry
+the stated value — rather than supplying evidence now.
+\end{scope}
+
+\provenance{AMP \statusConjecture; the obstruction is recorded as the proposed row AMP-OBS; inputs D24(b), D24(d)}%
+{\texttt{theory/amp.md} steps (1.1)--(1.4); the honest disposition is step (1.4).(2.2)}%
+{\texttt{theory/checks/amp\_check.py} AMP-C1--C3 with the registered failing modes \texttt{-{}-red-double-count} and \texttt{-{}-red-pure-leg}; AMP-C4 is the conditional falsifier only; \texttt{theory/checks/d24d3\_normalization\_check.py} D24N-C8 (leg-conversion constant), D24N-C6 \texttt{-{}-red-halfpower}}%
+{--- (no review round: negative results earn none by design; the claims DAG keeps AMP at conjecture)}
+
+\subsection{The Duistermaat--Heckman hunt, fully mapped}
+\label{sub:dh-hunt}
+
+The second negative is a closed search. Its target was attractive enough to be
+worth stating precisely: the memory law produced by the two-time measurement
+protocol is an atomic probability measure on $\Z$, and exact integrality
+statements of that kind are exactly what equivariant localisation delivers in
+symplectic geometry. If the Duistermaat--Heckman theorem — exactness of
+stationary phase for a Hamiltonian torus action, equivalently the statement
+that the pushforward of Liouville measure under the moment map is piecewise
+polynomial — could be applied to the outcome law, the campaign would gain both
+the support and the weights from geometry alone. It cannot, and this
+subsection records why in enough detail that the route need not be reopened.
+
+\begin{definition}[The two objects that were to be identified]
+\label{def:dh-objects}
+The \emph{Duistermaat--Heckman law} of a compact Hamiltonian $T$-manifold
+$(M,\varpi,\mu)$ is the pushforward $\mu_*(\mathrm{vol}_\varpi)$ of Liouville
+measure by the moment map: it depends on the manifold, its symplectic form,
+the torus action and the moment map, and on nothing else. The \emph{memory
+outcome law} is $p_W = \sum_{\nu \in \Z} p_W(\nu)\,\delta_\nu$, where each
+weight is a matrix element of a product of two spectral projections of the
+same windowed charge at two different times, followed by an ordered window and
+Ces\`aro limit; it depends on the state, on the dynamics, on the back-action
+of the first measurement, and on the limit order.
+\end{definition}
+
+\begin{refutedclaim}[The memory outcome law is a Duistermaat--Heckman measure]
+\label{ref:dh-law}
+Withdrawn statement: the escaped-charge law of the memory protocol is the
+Duistermaat--Heckman measure of a natural Hamiltonian torus space, so that its
+integer support and its weights follow from equivariant localisation. No
+candidate identification survives. The two objects have different types; the
+one construction that produces atoms does so only by inserting the desired
+atoms and their volumes by hand; and every route that reaches the soft
+coefficient consumes the representation-theoretic or scattering data it was
+meant to produce.
+\end{refutedclaim}
+
+\emph{Mechanism, candidate by candidate.} Six natural routes were worked to
+their stopping points.
+
+\begin{center}
+\begin{tabular}{@{}p{0.30\textwidth}p{0.62\textwidth}@{}}
+\toprule
+route & why it stops \\
+\midrule
+the memory law as a localisation measure &
+a Duistermaat--Heckman measure on a positive-dimensional Hamiltonian torus
+manifold is a continuous, piecewise-polynomial pushforward, while the outcome
+law is atomic and state- and dynamics-dependent \\[2pt]
+weight-multiplicity asymptotics &
+the projective law takes the weight multiplicities as its Dirichlet
+parameters, so it consumes them rather than producing them \\[2pt]
+localisation for the soft coefficient &
+the internal circle acts on a one-magnon band by a scalar character, so the
+whole band is fixed and $k_s = 0$ is not an isolated fixed locus \\[2pt]
+wall crossing as phase rigidity &
+localisation walls are critical moment values inside one fixed space, whereas
+the phase-diagram sweep changes the Hamiltonian, the tensor and the symplectic
+data themselves \\[2pt]
+convexity and integral vertices &
+integral vertices do not make interior moment values integral: already on the
+one-qubit sphere the moment map fills $[-\tfrac12,\tfrac12]$ \\[2pt]
+the kink K\"ahler cylinder &
+in two dimensions the moment-map identity alone gives the answer, so
+localisation performs no inference \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The second route deserves its exact computation, because it kills the premise
+cleanly. Take two spin-$\tfrac12$ sites, $V = (\C^2)^{\otimes 2}$, with circle
+generator $Q = S^z_1 + S^z_2$, so that $V = V_{-1} \oplus V_0 \oplus V_{+1}$
+with dimensions $(1,2,1)$; let $M = \mathbb{P}(V) = \mathbb{CP}^3$ carry
+normalised Fubini--Study measure and the moment map
+$\mu([v]) = \braket{v,Qv}/\braket{v,v}$. The normalised weight-counting law and
+the localisation law are then
+\begin{equation}
+  \eta_{\mathrm{wt}}
+  = \tfrac14\delta_{-1} + \tfrac12\delta_{0} + \tfrac14\delta_{+1},
+  \qquad
+  \mathrm{d}\eta_{\mathrm{DH}}(x)
+  = \tfrac32\,(1-\abs{x})^2\,\mathbf{1}_{[-1,1]}(x)\,\mathrm{d}x ,
+  \label{eq:dh-cp3}
+\end{equation}
+the second obtained by writing the block fractions of a Fubini--Study random
+ray as a Dirichlet vector with parameters $(1,2,1)$ and integrating out the
+neutral block. They are not the same measure, and not merely by normalisation:
+the first is supported on three points and the second is absolutely
+continuous, and their second moments are $\tfrac12$ and $\tfrac{1}{10}$
+respectively. The general statement is the same in every torus
+representation $V = \bigoplus_\lambda V_\lambda$: the block fractions
+$(p_\lambda)$ are Dirichlet with parameters $\dim V_\lambda$ and
+$\mu_T = \sum_\lambda p_\lambda \lambda$, so the density is a spline whose
+inputs already include every multiplicity.
+
+The third route fails for a structural reason worth stating on its own. The
+internal circle acts on a one-magnon state by its charge character, which is
+projectively trivial, so the entire one-magnon band is fixed rather than a
+point; on a finite ring the translation symmetry is the cyclic group and has
+no infinitesimal generator; and in infinite volume the Brillouin circle labels
+irreducible translation characters and is not a Hamiltonian circle action on a
+compact phase space. The two meanings of ``stationary phase'' also fail to
+meet: localisation needs a phase that is a moment map, while the scattering
+estimates use $t\omega(k) - kx$ plus an on-shell scattering phase, and no
+definition in the corpus turns a dispersion relation into an internal-charge
+moment map. Finally, the soft coefficient is not a symmetry-only integral at
+all: multiplying the Hamiltonian by a constant leaves the projective symmetry
+geometry unchanged while rescaling the current-velocity residue $2iv_S(h)$.
+
+The sixth route is instructive because it \emph{succeeds} and thereby shows
+what success would be worth. On a two-dimensional Hamiltonian circle manifold
+with coordinates $(x_0,\varphi)$, invariant form $\varpi = \Omega(x_0)\,
+\mathrm{d}x_0 \wedge \mathrm{d}\varphi$ and moment map $\mu(x_0)$, the defining
+identity $\mathrm{d}\mu = \iota_{\partial_\varphi}\varpi$ gives
+$\mu'(x_0) = -\Omega(x_0)$, hence a constant pushforward density and
+\begin{equation}
+  \int_{x_0}^{x_0+1}\!\!\int_0^{2\pi} \varpi
+  = 2\pi\bigl[\mu(x_0) - \mu(x_0+1)\bigr] .
+\end{equation}
+With the calibration $\abs{\Delta\mu} = 2s$ the area per lattice translation is
+$4\pi s$ and the position quantum is $1/(2s)$ — the right answer, obtained by
+integrating the defining identity and nothing more. That is geometric
+interpretation, not inference, and it was pre-registered as the
+reproduction-only failure mode before the hunt began.
+
+\begin{observation}[The coadjoint-orbit soft-phase envelope]
+\label{obs:sc-envelope}
+One genuinely new result did survive the hunt, on the phase rather than on the
+weights. Write the classical spin phase space as a product of coadjoint orbits
+$P_S = \prod_x \mathcal{O}_S$ with $\mathcal{O}_S \cong S^2$ and form
+$\Omega_S = S\sum_x \omega_{\mathrm{KKS},x}$, so that the effective
+semiclassical parameter is $1/S$. Put $p = (k_s+k_h)/2$, $q = (k_s-k_h)/2$,
+$c_p = \cos p$, $c_q = \cos q$, $s_q = \sin q$, and in the regular chamber
+$c_p s_q \neq 0$ set
+\begin{equation}
+  F = \frac{c_q\,(c_p - c_q)}{c_p\,s_q},
+  \qquad
+  d = -1 + \frac{c_q}{c_p} .
+\end{equation}
+Then the exact two-magnon contact phase, taken on the continuous branch with
+$\delta_S(0,k_h) = 0$, is
+\begin{equation}
+  \delta_S(k_s,k_h) = 2\arctan\!\Bigl(\frac{F}{2S+d}\Bigr)
+  = \frac{F}{S} + \frac{G}{S^2} + \frac{H}{S^3} + O(S^{-4}),
+  \qquad
+  G = -\frac{Fd}{2},
+  \quad
+  H = \frac{Fd^2}{4} - \frac{F^3}{12},
+  \label{eq:sc-envelope}
+\end{equation}
+with every function fixed before any comparison and no fitted coefficient
+anywhere. At $k_s = 0$ one has $c_p = c_q$, hence $F(0,k_h) = 0$,
+$\partial_{k_s}F(0,k_h) = 1$ and $d(0,k_h) = 0$, so $G = O(k_s^2)$ and
+\begin{equation}
+  \partial_{k_s}\delta_S(0,k_h) = \frac{1}{S} :
+\end{equation}
+the proved finite-spin soft slope is exactly the leading semiclassical phase,
+and the first subleading term cannot renormalise the linear soft coefficient.
+\end{observation}
+
+\emph{Status and evidence.} This is a speculative result about the large-spin
+envelope of the two-magnon phase, not a second proof of the finite-spin slope:
+\eqref{eq:sc-envelope} reparameterises the exact contact ratio that the proved
+two-body theorem already supplies, and its new content is that the hierarchy
+is visible and testable. Eight frozen soft-window rows at $S \in \{1/2,1\}$
+and $k_s \le 0.12$, previously compared only with the full exact answer, agree
+with the truncation $F/S + G/S^2$ to within $2.62\%$ in the worst row — the
+softest-momentum row at $S = 1/2$ — inside the declared $3\%$ descriptive
+gate, and adding the parameter-free $G/S^2$ term reduces the error of every
+one of them by at least $89.8\%$. An independent exact-diagonalisation
+sequence on an eighteen-site ring, running through $S = 8$ and computed from
+finite-volume level displacements rather than from the closed-form contact
+ratio, lies inside the derived pointwise remainder bound at every spin, with
+second-order residuals decreasing monotonically and $\max_S S^3\abs{\text{error}}
+= 0.0089$. Identifying $G$ with any particular fluctuation determinant is
+speculative and is not needed; the checked statement is only that $G/S^2$ is
+the first subleading contact correction of exactly that size.
+
+\begin{scope}[No localisation law for the outcome probabilities]
+\label{scope:dh-weights}
+The envelope result does not extend to the memory weights, and the negative
+verdict there is sharp. The one-magnon protocol holds the escaped charge at
+order one rather than letting a highest weight grow, so the usual
+semiclassical bridge has the wrong limit: dividing the escaped integer by the
+spin or by the window size collapses the law to a point mass at zero, while
+declining to divide leaves an atomic law rather than a continuous density. The
+frozen memory data confirm the split. Thirteen memory rows at
+$S \in \{1/2,1,3/2\}$ have displacement-per-unit-time within $2.69\%$ of
+$-1/S$, well inside the file's declared band — but that shared $1/S$ is the
+kinematic conversion from one unit of transmitted charge to wall displacement,
+not a geometric volume; the transmission weights themselves vary with the
+anisotropy, the packet momentum, the packet quality and the trapped mass, and
+neither the envelope nor any localisation volume predicts them. The
+independent probe puts at least $0.99601$ of its final weight on a single
+outcome with zero off-lattice mass, which tests exact support and late-time
+channel concentration, again not a density. There is a real asymptotic
+statement in the neighbourhood — the normalised weight multiplicities of the
+line-bundle family $H^0(M,\mathcal{O}(n))$ do converge to the density in
+\eqref{eq:dh-cp3} — but that is a normalised-trace multiplicity family, and
+substituting it for the measured law would change the experiment; inserting
+the transmission probability as an equivariant weight would insert the answer.
+The absence of one further artifact should be noted explicitly: the hunt shard
+deliberately has \emph{no} checker, since verification machinery is not built
+for a terminal negative side-result, whereas the surviving envelope does carry
+one.
+\end{scope}
+
+\provenance{no claims-DAG row (negative lane record, plus a speculative companion-paper result)}%
+{\texttt{theory/dh-hunt.md} §§1--5 (the six verdicts and the exact projective computation); \texttt{theory/dh-semiclassical.md} §§1--4 (the envelope, the error model and the data comparisons)}%
+{\texttt{theory/checks/dh\_semiclassical\_check.py} DHSC-C0--C4 with failing modes \texttt{-{}-red wrong-leading} and \texttt{-{}-red drop-fluctuation}; no checker exists for \texttt{theory/dh-hunt.md} by design}%
+{---}
+
+\subsection{The no-categorical-soft-theorem fence}
+\label{sub:no-cat-soft}
+
+The third negative fixes the boundary between what a fusion category can
+determine and what it cannot. It matters because the two-dimensional lane's
+positive selection theorem is genuinely categorical, and it would be easy to
+over-read that success as a categorical soft theorem.
+
+\begin{definition}[Endpoint register and endpoint form factor]
+\label{def:endpoint-register}
+Let $\mathcal{C}$ be a finite unitary fusion category represented by exact
+matrix-product operators, and let $\mathcal{M}$ be the chosen indecomposable
+module category recording the boundary or phase register. The category of
+topological endpoint charges on that register is the dual category
+$\Dendp := \Funcat_{\mathcal{C}}(\mathcal{M},\mathcal{M})$; a statement
+assigning endpoint labels from $\mathcal{C}$ alone is not invariantly typed. Let
+$P_a$ project onto the simple sector $a \in \Irrsimple(\Dendp)$, and call an
+endpoint operator \emph{pure of type $x$} when its intertwiner is resolved into
+a single simple $x$. Writing $T_x(k;w)$ for a windowed, momentum-resolved
+endpoint family, its allowed block in a one-dimensional fusion space
+factorises as
+\begin{equation}
+  F^{x}_{ba}(k;w) = f^{x}_{ba}(k;w)\,I^{x}_{ba},
+  \label{eq:endpoint-formfactor}
+\end{equation}
+where the intertwiner $I^{x}_{ba}$ is categorical while the scalar form factor
+$f^{x}_{ba}$ depends on the endpoint tensor, the window, the Hamiltonian, the
+external states and the normalisation.
+\end{definition}
+
+The selection half is a theorem: a pure endpoint of type $x$ satisfies
+$P_b T_x P_a = 0$ unless the fusion multiplicity $N_{xa}^{\,b}$ is positive,
+and a nonzero block carries a channel vector $\mu \in \Hom(b, x \otimes a)$, so
+the fine categorical datum is the resolved fusion event $(x,a\to b;\mu)$ rather
+than any difference of labels; when $x$ is invertible the target is unique and
+the index lives in $\Inv(\Dendp)$, while for general $x$ the maximal
+group-valued shadow is the universal grading, $\abs{b}\abs{a}^{-1} = \abs{x}$.
+The Ising algebra shows why the coarse statement cannot be improved: $\sigma$
+has quantum dimension $\sqrt2$ and $\sigma \otimes \sigma = 1 \oplus \psi$ has
+two fine targets, so there is no canonical subtraction, yet $\sigma$ still
+carries a definite odd universal degree. None of this fixes a number inside an
+allowed channel.
+
+\begin{refutedclaim}[A fusion category fixes a soft coefficient]
+\label{ref:no-cat-soft}
+Withdrawn statement: the categorical data of an endpoint — its type, its
+source and target sectors, its fusion channel, its support geometry and the
+exact homogeneous pulling-through and intertwiner equations — determine the
+soft behaviour of its form factor, in particular an Adler zero or a universal
+linear coefficient. This is false, and sharply so: fix all of that data
+together with the value $T_x(0) \neq 0$ of a nonzero analytic family near
+$k=0$; then no positive-order Taylor coefficient of the allowed form factor
+follows. Categorical data give selection rules, not derivatives.
+\end{refutedclaim}
+
+\emph{Mechanism.} Sector projection and every pulling-through or intertwiner
+equation are linear and homogeneous in the endpoint tensor, so for any analytic
+scalar $c$ with $c(0) = 1$ the family
+\begin{equation}
+  \widetilde T_x(k) = c(k)\,T_x(k)
+\end{equation}
+has the same endpoint type, the same sectors, the same channel, the same
+support, the same zero-momentum operator and the same homogeneous equations.
+Choosing $c(k) = e^{i\alpha k^n}$ preserves the norm and every derivative below
+order $n$ while changing the $n$-th derivative by $i\alpha\,n!\,T_x(0)$, and
+$\alpha$ is arbitrary; imposing norm preservation therefore still leaves an
+arbitrary phase jet. Without fixing $T_x(0)$ the conclusion is even simpler:
+$I^{x}_{ba}$ and $k\,I^{x}_{ba}$ obey the same homogeneous categorical
+equations in an allowed one-dimensional channel. Fusion data force an exact
+zero only in the \emph{forbidden} blocks of the selection rule; in an allowed
+block they force neither a zero nor a nonzero constant. An exact
+stabiliser-code computation makes the freedom concrete rather than formal: on a
+single plaquette, dressing a string operator with a slowly varying scalar phase
+profile of wavelength $1/k$ leaves the endpoint syndrome, the fusion channel
+and the amplitude magnitude untouched while giving the amplitude the arbitrary
+first jet
+\begin{equation}
+  \partial_k A_{\mathrm{ph}}(0) = i\lambda\,(s_0 + s_1 + 2c) .
+\end{equation}
+
+\emph{Why gapless input is the missing ingredient.} The failure is not an
+accident of bookkeeping; it identifies precisely what ordinary soft theorems
+use and this setting lacks. A massive anyon stays separated from the ground
+register by a positive energy as $k \to 0$, so the limit here is a
+long-wavelength limit of the chosen source rather than an energetic
+soft-particle limit. What gives a soft theorem its force is a gapless on-shell
+state together with a Ward identity or factorisation statement, and neither a
+finite tube algebra nor a non-invertible pulling-through relation contains a
+current zero mode. A fusion category with a gap can therefore be expected to
+supply selection rules and no coefficient; supplying a coefficient requires
+naming a gapless edge Hamiltonian and its current algebra as new input, which
+is a separate work order and must not be advertised as determined by the bulk
+category.
+
+\begin{scope}[Strength of the no-go]
+\label{scope:no-cat-soft}
+This is a data-insufficiency theorem, not a theorem about every possible
+normalisation convention: a convention can remove the scalar freedom, but the
+convention is then extra kinematic data and still fixes no measurable magnitude
+response. The witness varies the momentum-dependent probe family and is not a
+pair of fully specified Hamiltonian or tensor-network models with one fixed
+normalised protocol. No claim is made that every gapped response starts at
+order $k$: a constant term, an arbitrary analytic correction, or a
+convention-dependent phase is compatible with the categorical data, and the
+conclusion is the absence of a category-universal coefficient, not a universal
+order of vanishing. Under the negative-result rule this fence is deliberately
+kept out of the claims DAG; it is carried instead inside the ``not claimed''
+list of the conditional selection theorem it fences, whose statement asserts no
+Taylor coefficient inside an allowed channel.
+\end{scope}
+
+\begin{observation}[The fusion datum is categorical, the Ward operator is Lie]
+\label{obs:cat-lie-split}
+The companion finding of the same hunt is a clean split of the campaign's
+machinery by what each half actually consumes. On the categorical side stand
+the sector or tube projector and its selection rule, the universal grading
+shadow, and — for an \emph{invertible} on-site string, where locality permits
+the conjugation $U_R^\dagger H U_R - H$ to be written as a sum of two endpoint
+defects — the finite string endpoint identity. On the Lie side stand the Ward
+relation $D^\dagger J\psi = R\psi$ and the invertibility and scalar ladder
+value of the Gram operator $D^\dagger D$, neither of which follows from fusion
+data. The witness is elementary and exact: in a two-dimensional register the
+operators $D$, $J_1 = D$ and $J_3 = 3D$ all carry the same odd categorical
+covariance, yet their projected vectors differ by $1:3$, and replacing $D$ by
+$2D$ changes the Gram value by $1:4$ without changing any category datum. A
+non-invertible string has no conjugation at all, so its pulling-through
+equation continues the string-endpoint half and not the current-zero-mode half.
+Accordingly the sector-label theorem is the categorical half of the campaign,
+and the normalised Gram-inverse current theorem is genuinely Lie-algebraic
+under the hypotheses presently known.
+\end{observation}
+
+\emph{Deliberately unpromoted.} Neither this observation nor the categorical
+selection theorem behind it is proposed for the Letter. The hunt's own honest
+assessment is that any corpus row derived from it would have to enter at sketch
+status, because the artifact has not undergone the campaign's capped hostile
+review — and by the negative-results rule it does not get one. The material is
+therefore parked as companion-paper content, alongside the semiclassical
+envelope of \cref{sub:dh-hunt}, pending an explicit decision by the campaign
+owner; the joint critic's disposition is the same, recording the fence as a
+scope statement and a lane record rather than a claim. What did travel from
+this lane into the claims DAG is only the conditional selection theorem on the
+two-dimensional register, which carries this fence in its own scope.
+
+\provenance{no claims-DAG row (negative lane record and unpromoted companion material); the fence is carried inside A-INDEX-PEPS's not-claimed list}%
+{\texttt{theory/soft-2d-hunt.md} §3 (the no-go and its probe-family fence) and §4 (the exact stabiliser patch); \texttt{theory/cat-hunt.md} §§2--3, §5.3 (the operator/categorical split) and §9 (honest status)}%
+{\texttt{theory/checks/cat\_hunt\_check.py} CATH-C0--C4 with failing mode \texttt{-{}-red missing-ising-channel}; \texttt{theory/checks/soft\_2d\_hunt\_check.py} S2DH gates}%
+{--- (the joint critic \texttt{theory/verdicts/w21-joint-critic.md} W6-O2 fenced the statement's strength and directed that it not be promoted; it adjudicated the neighbouring positive rows, not this negative one)}
+
+\subsection{What the negatives have in common}
+\label{sub:negative-synthesis}
+
+Read together, the ledger and the three obstructions show one pattern, and it
+is worth naming because it predicts where the next dead end will be. Every
+failed universality in this campaign was a statement trying to obtain a
+\emph{number} from symmetry alone. The withdrawn orbit label wanted a complete
+invariant from a group quotient, and got one only after the diagonal action was
+taken seriously and the answer turned out to be a double coset. The withdrawn
+soft factor wanted a hard-independent coefficient from a kinematic difference,
+and lost it as soon as one asked what sits inside the current matrix element.
+The unrestricted universality claim wanted one coefficient for every local
+source, and a four-site operator moved that coefficient while leaving the hard
+process fixed. The literal memory conjecture wanted a displacement from a
+phase, when the displacement is a charge. The amputation conjecture wants a
+value from a normalisation, and normalisation supplies exactly one square root
+of it. The localisation hunt wanted outcome probabilities from a volume, and
+volumes consume multiplicities rather than producing them. The categorical hunt
+wanted a Taylor coefficient from fusion, and fusion is blind to any scalar
+dressing that is trivial at zero momentum.
+
+The surviving architecture is the complement of that list, and it is exactly
+what the positive chapters prove. Symmetry — group-theoretic, categorical, or
+cohomological — delivers structure: which sectors exist, which transitions are
+allowed, which observables are quantised, and in what coset their spectrum
+lies. Dynamics delivers values: the two-body contact equation gives the soft
+slope $1/S$, the current and channel velocity give the residue $2iv_h$, and the
+scattering problem gives the transmission weights. Every proved statement in
+this labbook respects that division of labour, and every refuted one violated
+it. The practical rule extracted from the negatives is therefore simple: when a
+proposed theorem promises a number, one should be able to point at the
+dynamical input that carries it — and if the only inputs are a group, a
+category, a class definition or a volume, the number is not there.

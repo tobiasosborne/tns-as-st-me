@@ -58,6 +58,15 @@ serious model illustrating the memory effect**.
 - **L10 — Honest verdicts.** A sharp refutation with the surviving weaker
   statement beats a pile of analogies. Structural tensions in §5 of the brief
   are respected, not papered over.
+- **L11 — Labbook lockstep** (TJO directive 2026-08-30). `labbook/` is the
+  complete human-readable LaTeX record of the campaign: all definitions
+  restated in full, every result with a descriptive name, full hypotheses,
+  honest status, provenance, and numerics figures. NO campaign acronyms may
+  be load-bearing in its prose; NO verbatim environments. Any commit that
+  changes `claims/CLAIMS.md`, `definitions.md`, or lands a numerics result
+  MUST update the owning labbook shard in the same commit.
+  `scripts/check-labbook.sh` is the gate; it runs at session close. Style
+  contract: `labbook/WRITING-GUIDE.md`.
 
 ## Layout
 
@@ -68,6 +77,7 @@ serious model illustrating the memory effect**.
     theory/       TRIANGLE.md + proof shards + critic verdicts
     numerics/     Julia (TensorKit-first), tests in numerics/test/
     paper/        main.tex, appendices, figures/
+    labbook/      sharded LaTeX labbook — the readable record (L11 lockstep)
     docs/         framing.md, novelty-sweep.md, worklog.md
 
 
@@ -98,7 +108,9 @@ bd close <id>         # Complete work
 **MANDATORY WORKFLOW:**
 
 1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
+2. **Run quality gates** (if code changed) - Tests, linters, builds; ALWAYS
+   `scripts/check-labbook.sh` + `cd labbook && make` if claims/definitions/
+   numerics changed (L11)
 3. **Update issue status** - Close finished work, update in-progress items
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash

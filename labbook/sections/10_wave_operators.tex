@@ -1,0 +1,805 @@
+% SHARD-ID: LB-10-WAVE-OPERATORS
+% SHARD-TITLE: Two-magnon wave operators, the Ward projection, and its erratum
+% SHARD-SOURCES: theory/ml1-wave-operators.md; theory/ml4-ward-reduction.md;
+%   theory/ml6-hs-sep.md; theory/ansatz-scattering-2m.md; definitions.md D31;
+%   claims/CLAIMS.md rows ML1, ML1-D31-kernel, ML3, ML4, ML4-A, ML4-Ward,
+%   ML6, ML6-HS-SEP, AC-EX-2M, AC-EX-2M-D29
+% SHARD-CLAIMS: ML1, ML1-D31-kernel, ML4-Ward, ML4-A, ML4, ML3, ML6,
+%   ML6-HS-SEP, AC-EX-2M, AC-EX-2M-D29, D31
+
+\section{Two-magnon wave operators, the Ward projection, and its erratum}
+\label{sec:wave-operators}
+
+The previous section resolved the two-magnon Hilbert space spectrally. That is
+not yet scattering theory: a Plancherel decomposition tells you what the
+generalised eigenfunctions are, not that a wave packet prepared as two free
+magnons in the far past actually converges to one of them. This section builds
+the missing time-dependent layer, and then reports honestly on what happens
+when one tries to turn a symmetry (Ward) identity into a soft theorem at finite
+volume. The centre of gravity of the section is an erratum: a projected Ward
+identity that looked exact turned out to hold at one overturned spin only. The
+repair is displayed, the mechanism is named, and the downstream audit is
+recorded. That kind of entry is what this labbook is for.
+
+\subsection{The canonical two-magnon wave operators}
+
+\begin{theorem}[Canonical two-magnon wave operators for the ferromagnet]
+\label{thm:two-magnon-wave-operators}
+\statusProved\ Assume \cref{def:fm-oracle-model,def:bethe-convention,def:bethe-soft-limit}
+and $J>0$. In the centre/relative chart put
+\begin{equation}
+  \mathcal{C}:=(-\pi,\pi]\times(0,\pi),\qquad c(K):=\cos(K/2),\qquad
+  k_1:=K/2-q,\quad k_2:=K/2+q,
+\end{equation}
+understood on the momentum torus, with $E(K,q)=J(2-2c(K)\cos q)$ and
+$E_b(K)=J(1-c(K)^2)$. Let $\Sigma_{\mathrm{bad}}\subset\overline{\mathcal{C}}$
+be the union of $q\in\{0,\pi\}$, of $K=\pi$, and of the curves on which either
+$k_i\in\{0,\pi\}$; call a \emph{regular packet} any finite sum of smooth
+compactly supported product packets whose support has positive distance from
+$\Sigma_{\mathrm{bad}}$. Write
+$\Hilb_{\mathrm{ch}}:=L^2(\mathcal{C},dK\,dq)$ and
+$\Hilb_{b,\mathrm{ch}}:=L^2((-\pi,\pi],dK)$. Then there are canonical maps
+$W_\pm:\Hilb_{\mathrm{ch}}\to\Hilb_2$ with the following properties.
+\begin{enumerate}
+\item $W_\pm$ are isometries with the same range $\Hilb_{\mathrm{sc}}$, and
+  the two-magnon space splits orthogonally as
+  $\Hilb_2=\Hilb_{\mathrm{sc}}\oplus\Hilb_b$ with
+  $\Hilb_b\simeq\Hilb_{b,\mathrm{ch}}$.
+\item They intertwine time and lattice translations, and
+  \begin{equation}
+    W_+^{*}W_-=M_{S_{\mathrm{phys}}},
+    \label{eq:wpwm}
+  \end{equation}
+  multiplication by the physical outgoing/incoming ratio, which in this chart
+  equals $S_{12}$ away from $K=\pi$ and has $\abs{S_{\mathrm{phys}}}=1$.
+  Concretely $W_-=\mathcal{U}_{\mathrm{sc}}^{*}$ and
+  $W_+=\mathcal{U}_{\mathrm{sc}}^{*}M_{S_{\mathrm{phys}}^{-1}}$, where
+  $\mathcal{U}_{\mathrm{sc}}$ is the coefficient map against the
+  delta-normalised scattering kernels \cref{eq:psi-sc}.
+\item On every regular packet they are the strong time-dependent M\o{}ller
+  limits
+  \begin{equation}
+    W_\pm F=\operatorname*{s-lim}_{t\to\pm\infty}e^{itH}\,I\,e^{-itE}F ,
+    \label{eq:moller}
+  \end{equation}
+  for the canonical two-lowering identification $I$; so the limits exist and
+  are isometric on precisely the packet class the campaign asked for.
+\item In each relative-coordinate fibre with $K\ne0$ there is exactly one
+  normalised bound eigenvector,
+  $b_K(r)=\sqrt{1-c(K)^2}\,c(K)^{r-1}$ for $r\ge1$, of energy $E_b(K)$; at
+  $K=0$ it degenerates into a threshold resonance and is not an $\ell^2$
+  vector. No bound vector lies in either wave-operator range.
+\item The one-magnon scattering space is
+  $\Hilb_1=\ell^2(\Z)\simeq L^2(\mathbb{T},dk/2\pi)$; its incoming and
+  outgoing maps coincide with the Fourier spectral map and are unitary.
+\end{enumerate}
+The union of regular packet spaces is dense in $\Hilb_{\mathrm{ch}}$, so the
+compatible local isometries glue canonically to the global maps.
+\end{theorem}
+\begin{scope}
+The time-dependent assertion is made only on regular packets. The extension
+across $\Sigma_{\mathrm{bad}}$ --- equal velocities, one-particle endpoints,
+the $K=\pi$ line --- is abstract, obtained by density from the isometries; no
+endpoint or equal-velocity time-dependent statement is claimed, and no
+incoming bound-pair channel is constructed. The bound band is a separate
+stable composite channel, not a two-free-magnon channel.
+\end{scope}
+\provenance{ML1}{\texttt{theory/ml1-wave-operators.md} steps (1.1)--(1.7):
+canonical spaces (1.2), stationary isometries and multiplier (1.3),
+identification with the M\o{}ller limits and dense gluing (1.4), bound
+isolation and one-magnon channel (1.5)}%
+{\texttt{theory/checks/ml1\_ml6\_check.py} --- which checks only the explicit
+fibre arithmetic, \emph{not} wave-operator existence}%
+{\texttt{theory/verdicts/blitz-ml1-ml6-r1.md} (no fatal or major objection on
+this row)}
+
+\emph{Idea of proof.} The centre Fourier transform carries the chamber
+$\{x<y\}$ to a direct integral of the half-line Jacobi fibres
+\cref{eq:jacobi-fibre}, which differ from the free constant-coefficient
+half-line operator only in the first diagonal entry. The Plancherel resolution
+\cref{eq:plancherel} of \cref{thm:two-magnon-completeness} makes the pair of
+coefficient maps against the scattering and bound kernels a unitary onto
+$\Hilb_{\mathrm{ch}}\oplus\Hilb_{b,\mathrm{ch}}$ conjugating $H$ to
+multiplication by $E$ and $E_b$; the two summands are therefore closed,
+orthogonal and reducing, and exhaust $\Hilb_2$. In the chart the velocity
+difference is $v(k_2)-v(k_1)=2J\cos(K/2)\sin q$, positive off the null line
+$K=\pi$, so the incoming/outgoing labelling of the two relative branches is
+fixed almost everywhere, giving the stationary maps and \cref{eq:wpwm}. To
+identify these stationary maps with the time-dependent limits
+\cref{eq:moller}, cover the compact support of a regular packet by finitely
+many product rectangles, on each of which the two velocity supports have a
+positive separation and all symbols are smooth; on each rectangle the
+fixed-packet Cook construction of \cref{thm:ac-ex-2m} applies and its limit
+agrees with the stationary map. Overlapping rectangles therefore agree, the
+finite sum reproduces the packet, and density of the regular class extends
+everything uniquely.
+
+\subsection{Generalised one-magnon kernels beyond the product vacuum}
+
+The wave operators above live on the exactly solvable ferromagnet. To carry
+the same language to a general matrix-product vacuum one needs an abstract
+hypothesis package, which the campaign calls $D31$. It is used twice in this
+section, so it is stated here in full.
+
+\begin{definition}[Exact fixed-packet two-magnon data over one vacuum]
+\label{def:d31}
+Fix one translation-invariant injective canonical matrix-product tensor $A$
+and its state and GNS triple $(\omega_A,\Hilb_A,\Omega_A)$. All constructions
+use this one vacuum representation; no covariant family of vacua is required.
+Assume:
+\begin{enumerate}
+\item \emph{Dynamics and grading.} A finite-range translation-invariant
+  Hamiltonian generates the dynamics, is implemented in $\Hilb_A$ by commuting
+  positive-energy time and lattice translations, and is normalised by
+  $H\Omega_A=0$, $\ker H=\C\Omega_A$. A conserved circle charge grades the
+  selected magnon by one unit, and the construction lies in its charge-two
+  sector.
+\item \emph{An exact band.} There is a finite-multiplicity scalar magnon band
+  $\omega\in C^2(\mathbb{T})$, isolated within the charge-one sector on the
+  packet neighbourhoods of clause 4, and a Gram-normalised
+  translation-covariant \emph{exact} map
+  $\Gamma_M:L^2(\mathbb{T};\C^m)\to\Hilb_A$ with
+  $H\Gamma_M=\Gamma_M(\omega\otimes1_m)$. The multiplicity is fixed;
+  matrix-valued band crossings are outside the definition. Exactness is a
+  hypothesis, not a Rayleigh--Ritz conclusion.
+\item \emph{Filtered creators.} For each packet window, a spacetime-Schwartz
+  filter of compact energy and momentum support, applied to a
+  charge-one local observable, gives uniformly almost-local creators of
+  positive energy transfer, translation-covariant as
+  $a_{i,b}(n)=\tau_n(a_{i,b}(0))$, and acting on the vacuum as
+  $a_{i,b}(n)\Omega_A=\Gamma_M(\chi_ie_n\otimes e_b)$ with
+  $e_n(k)=e^{-ikn}$.
+\item \emph{Packets.} Packet amplitudes are finite sums of $C_c^\infty$
+  products. The dispersion is $C^\infty$ on neighbourhoods $U_i$ of the
+  compact supports $K_i$; the velocity sets $V_i=\omega'(K_i)$ obey
+  $\dist(V_1,V_2)\ge\varepsilon_v>0$ and $\dist(V_i,\{0\})\ge\varepsilon_0>0$.
+  This last nonzero-velocity clause belongs to the campaign's packet register
+  but enters no estimate of the theorem below; only $\varepsilon_v$ does.
+  Filters satisfy $\chi_i=1$ on $K_i$ and $\supp\chi_i\subset U_i$; companion
+  filters satisfy $\tilde\chi_i=1$ on $\supp\chi_i$ and
+  $\supp\tilde\chi_i\subset U_i$; and $h_i=\omega\tilde\chi_i\in C^\infty(\mathbb{T})$.
+\item \emph{A spectral inventory with margins.} Supply an inventory
+  $\mathcal{R}_{\mathrm{inel}}$ of every alternative propagating charge-two
+  band tuple $r=(r_1,\dots,r_n)$ expressible from the stated exact band data,
+  and set $\theta_r(K):=\inf\{\sum_j\omega_{r_j}(p_j):\sum_jp_j=K,\ \sum_jq_{r_j}=2\}$.
+  With $I_2=\{(\omega(k_1)+\omega(k_2),k_1+k_2):k_i\in K_i\}$, require for
+  every $r$ that $\omega(k_1)+\omega(k_2)+\eta_{\mathrm{inel}}<\theta_r(k_1+k_2)$
+  for one $\eta_{\mathrm{inel}}>0$ and all $k_i\in K_i$; absent channels count
+  as $+\infty$. Every charge-two bound band in the supplied exact data is
+  isolated, $d_B:=\inf_{k_i\in K_i,j}\abs{\omega(k_1)+\omega(k_2)-E_{B,j}(k_1+k_2)}>0$,
+  and $P_B$ denotes the sum of its joint spectral projections; bound bands are
+  present but are not incoming or outgoing two-magnon channels.
+\end{enumerate}
+No clustering inequality is assumed. Injectivity of $A$ already implies, for
+every $\tilde\lambda$ between the transfer-spectrum gap and $1$ and for local
+$C,D$ separated by $d_{\mathrm{sep}}$,
+\begin{equation}
+  \abs{\omega_A(CD)-\omega_A(C)\,\omega_A(D)}
+  \le C_{A,\tilde\lambda}\norm{C}\norm{D}\,\tilde\lambda^{\,d_{\mathrm{sep}}},
+  \label{eq:d31c2}
+\end{equation}
+and, after uniformly almost-local truncation, the four-operator version used
+below. Both are consequences, not hypotheses. The package is fixed-packet
+only: a soft scale and its limit are no part of it.
+\end{definition}
+\provenance{D31 (H-ACE2M)}{\texttt{definitions.md} D31, appended from
+\texttt{theory/ansatz-scattering-2m.md} §7 with no clause edited}%
+{\texttt{theory/checks/ansatz\_scattering\_2m\_check.py} corroborates only the
+clustering identity \cref{eq:d31c2} on AKLT}%
+{\texttt{theory/verdicts/ansatz-scattering-2m-r6.md} (the merge that gave the
+clause set a numbered home)}
+
+\begin{theorem}[Rigged generalised one-magnon kernels]
+\label{thm:d31-kernel}
+\statusSketch\ Assume \cref{def:d31} with multiplicity $m$, and rig the
+one-magnon space as
+$C^\infty(\mathbb{T};\C^m)\subset L^2(\mathbb{T},dk/2\pi;\C^m)\subset\mathcal{D}'(\mathbb{T};\C^m)$.
+Transporting this rigging through the Gram-normalised exact band isometry
+$\Gamma_M$ is intended to produce generalised kernels $\ket{k,b}$,
+$1\le b\le m$, unique up to a measurable unitary change of multiplicity frame,
+with
+\begin{equation}
+  \Gamma_Mf=\sum_b\int\frac{dk}{2\pi}f_b(k)\ket{k,b},
+  \qquad
+  \braket{k,b\,|\,k',b'}=2\pi\delta(k-k')\delta_{bb'},
+  \qquad
+  H\ket{k,b}=\omega(k)\ket{k,b},
+\end{equation}
+and with packets built from these kernels being exactly the one-particle legs
+carried by the two-magnon wave operators, at the unit external-leg weight the
+campaign's amplitude convention stipulates.
+\end{theorem}
+\begin{scope}
+Two named gaps stand between this and a theorem, and both were raised by the
+critic.
+\begin{itemize}
+\item \emph{Hypothesis binding.} The step identifying the kernels with the
+  filtered creator legs uses clauses 3 and 4 of \cref{def:d31}, whereas the
+  argument's own \textsc{assume} binds only clauses 1 and 2. Either the full
+  package must be assumed, or the theorem must be split into a
+  clause-1-and-2 part and a creator-leg part.
+\item \emph{The rigging is the wrong one.} The global $C^\infty$ rigging is
+  not preserved by multiplication by the dispersion, which \cref{def:d31} only
+  requires to be $C^2$. The fix is to rig by $C^2$ instead, or to use a local
+  rigging.
+\end{itemize}
+Either way the statement is conditional on \cref{def:d31}, and it asserts
+nothing whatsoever about a merely variational excitation band.
+\end{scope}
+\provenance{ML1-D31-kernel}{\texttt{theory/ml1-wave-operators.md} step (1.6);
+the defective leaves are the creator-leg identification and the choice of
+rigging}{---}{\texttt{theory/verdicts/blitz-ml1-ml6-r1.md} (two major
+objections, both named above)}
+
+\subsection{The finite-sector Ward projection, and its erratum}
+
+We now turn to the symmetry side. On a ring, in the sector $\Hilb_{n,N}$ with
+$n$ overturned spins, write $S^\pm$ for the global spin raising and lowering
+operators, $J^a_0$ for the three zero-momentum current components,
+$D_{n,N}:=Q_0|_{\Hilb_{n,N}}$ for the restricted charge, and
+$A_n:=D_{n,N}^{\dagger}D_{n,N}$. On a subspace where $A_n$ is invertible put
+\begin{equation}
+  P_{n,N}:=D_{n,N}A_n^{-1}D_{n,N}^{\dagger},
+  \qquad
+  R_{n,N}:=(1-P_{n,N})J^-_0 ,
+  \label{eq:descendant-projector}
+\end{equation}
+so that $P_{n,N}$ is the orthogonal projection onto the whole descendant
+subspace and $R_{n,N}$ is the part of the current orthogonal to it.
+
+\begin{theorem}[Exact Ward projection in every finite sector]
+\label{thm:ml4-ward}
+\statusProved\ On $\Hilb_{n,N}$,
+\begin{equation}
+  D_{n,N}^{\dagger}J^-_0=2J^z_0+J^-_0S^+ .
+  \label{eq:ward-8}
+\end{equation}
+On the highest-weight subspace $\ker S^+$ with $n<N/2$ the norm identity
+\begin{equation}
+  D_{n,N}^{\dagger}D_{n,N}=(N-2n)\,\mathbf 1
+  \qquad\text{holds on }\ker S^+ ,
+  \label{eq:ward-norm}
+\end{equation}
+and on any subspace where $A_n$ is invertible the general polar formula is
+\begin{equation}
+  P_{n,N}J^-_0=D_{n,N}A_n^{-1}\bigl(2J^z_0+J^-_0S^+\bigr).
+  \label{eq:ward-polar}
+\end{equation}
+For one hard magnon of nonzero ring momentum $h$ this gives
+\begin{equation}
+  P_{1,N}J^-_0\ket{h}_N=\frac{2i\,v(h)}{N-2}\,Q_0\ket{h}_N ,
+  \label{eq:ward-onehard}
+\end{equation}
+and the same identity holds diagonally for every hard packet supported away
+from $h=0$.
+\end{theorem}
+\begin{scope}
+These four statements are exact and were independently re-verified after the
+erratum below. What they do \emph{not} give is a soft theorem: the
+complementary vector $(1-P_{1,N})J^-_0\ket{h}_N$ is nonzero for generic $h$,
+so the zero-momentum current is not velocity times total charge, and the Ward
+identity computes the leading projection only.
+\end{scope}
+\provenance{ML4-Ward}{\texttt{theory/ml4-ward-reduction.md} step (1.3)
+together with its erratum note}%
+{\texttt{theory/checks/ml4\_check.py} (Ward and projection residuals at $n=1$:
+maxima $8.899\cdot10^{-16}$ and $3.473\cdot10^{-15}$);
+\texttt{theory/checks/ml4\_ward\_n2\_check.py} (the $n\ge2$ refutation and the
+corrected form, red-capable)}%
+{\texttt{theory/verdicts/corpus-r2.md} adjudication, scoped per
+\texttt{theory/verdicts/soft-index-b-r1.md} F1 and the erratum work item;
+audit \texttt{theory/verdicts/ml4-ward-n2-audit.md}}
+
+\emph{Idea of proof.} The current is an $SU(2)$ vector, so
+$[S^+,J^-_0]=2J^z_0$; expanding $S^+J^-_0$ with this commutator gives
+\cref{eq:ward-8}. If $S^+\psi=0$ in the $n$-magnon sector then
+$S^+S^-\psi=[S^+,S^-]\psi=2S^z\psi=(N-2n)\psi$, which is
+\cref{eq:ward-norm}. Substituting \cref{eq:ward-8} into the definition
+\cref{eq:descendant-projector} of the projector gives \cref{eq:ward-polar}.
+For $n=1$ a single Fourier state is highest weight and satisfies
+$J^z_0\ket{h}_N=iv(h)\ket{h}_N$ by direct evaluation, which yields
+\cref{eq:ward-onehard}; translation covariance promotes it to packets.
+
+\begin{refutedclaim}[The scalar projected Ward identity, refuted for two or more magnons]
+\label{ref:ward-scalar}
+\statusRefuted\ The withdrawn statement is the scalar display
+\begin{equation}
+  P_{n,N}J^-_0
+  \overset{\text{\emph{false for }} n\ge2}{=}
+  \frac{2}{N-2n}\,Q_0J^z_0
+  \qquad\text{on }\ker S^+ .
+  \label{eq:ward-refuted}
+\end{equation}
+It is exact at $n=1$ and false for every $n\ge2$.
+
+\emph{Mechanism.} The derivation passes from the correct polar formula
+\cref{eq:ward-polar} to \cref{eq:ward-refuted} by applying $A_n^{-1}$ as the
+scalar $(N-2n)^{-1}$ to the vector $2J^z_0\psi$. That is legitimate only if
+$2J^z_0\psi$ lies in $\ker S^+$, which is the subspace on which
+\cref{eq:ward-norm} makes $A_n$ scalar. But $[S^+,J^z_0]=-J^+_0$, so
+$S^+J^z_0\psi=-J^+_0\psi$, which vanishes at $n=1$ by momentum conservation
+and is \emph{nonzero} for $n\ge2$: numerically $\norm{J^+_0\psi}=0$, $0.66$,
+$1.36$ at $n=1,2,3$ for $N=8$. The scalar display then fails by
+$0.26$ and $1.11$ at $n=2,3$ against left-hand sides of norm $0.91$ and
+$1.39$, whereas the corrected form below is satisfied to $2.4\cdot10^{-15}$.
+
+\emph{Surviving statement, and it is register-dependent.} Exactly at every
+$n<N/2$, on $\ker S^+$,
+\begin{equation}
+  \boxed{\;P_{n,N}J^-_0=2\,D_{n,N}A_n^{-1}J^z_0\;}
+  \label{eq:ward-corrected}
+\end{equation}
+--- that is, \cref{eq:ward-polar} with the $J^-_0S^+$ term dropped, because it
+dies on $\ker S^+$, but with $A_n^{-1}$ kept as an \emph{operator} inverse,
+$A_n$ being taken on the \emph{full} sector $\Hilb_{n,N}$, where it is not
+scalar. The register matters and must always be named: in the
+highest-weight-restricted register $D_\lambda:=Q_0|_{\ker S^+}$ one has
+$A_\lambda=(N-2n)\mathbf 1$, so the same string $2D_\lambda A_\lambda^{-1}J^z_0$
+collapses straight back to the refuted display. In that register the correct
+form is instead
+\begin{equation}
+  P_{n,N}J^-_0=\frac{1}{m_\lambda}\,Q_0\,\Pi_{\mathrm{hw}}\,J^z_0,
+  \qquad m_\lambda=\frac{N-2n}{2},
+\end{equation}
+with $\Pi_{\mathrm{hw}}$ the projection onto the highest-weight subspace.
+
+\emph{A second casualty.} The two-hard specialisation, formerly written
+$P_{2,N}J^-_0=\frac{2}{N-4}Q_0J^z_0$, is refuted by $100\%$ of its left-hand
+side on the singular contact vector \cref{eq:singular-vector} of
+\cref{thm:two-magnon-completeness} --- which is itself highest weight, since
+applying $S^+$ to the alternating contact sum gives
+$(-1)^x+(-1)^{x-1}=0$ at each site. At $N=8$ the true norm is $0.775$, the old
+right-hand side has norm $1.414$, and the error is $0.775$ (relative error
+$1.000$); at $N=10$ the error is $0.504$ (relative $0.730$). The corrected
+full-sector form \cref{eq:ward-corrected} is exact there to
+$2.4\cdot10^{-16}$. No scalar $(N-4)^{-1}$ version of the two-hard Ward part
+is available.
+
+\emph{Downstream audit.} The audit is complete: $44$ sites were examined, of
+which $21$ were damaged, $2$ repairable by substitution, and $21$ clean, with
+$0$ left unclear. \textbf{No headline claim was reached by the damage.}
+Equations \cref{eq:ward-8,eq:ward-norm,eq:ward-polar,eq:ward-onehard} were
+independently re-verified exact. The damaged statement sites in the two
+earlier soft-index shards fold into a unified rewrite rather than being
+patched twice.
+\end{refutedclaim}
+\provenance{ML4-Ward (erratum clause)}{\texttt{theory/ml4-ward-reduction.md},
+the erratum notes at step (1.3) and at step (1.5).(2).1}%
+{\texttt{theory/checks/ml4\_ward\_n2\_check.py} (green exit 0, \texttt{--red}
+exit 1); \texttt{theory/checks/ml4\_check.py} at $n=1$}%
+{\texttt{theory/verdicts/ml4-ward-n2-audit.md} (the complete 44-site audit);
+first found in \texttt{theory/verdicts/soft-index-b-r1.md} F1}
+
+\subsection{What actually kills the linear term}
+
+The erratum has a constructive moral, isolated in the following abstract
+lemma: the vanishing of the unwanted first-order contribution is not supplied
+by the Ward identity at all. The Ward identity identifies the projected part
+of the current. The zero comes from channel matching plus one derivative of
+regularity.
+
+\begin{lemma}[Matching plus $C^1$ regularity supplies the second soft zero]
+\label{thm:ml4-a}
+\statusProved\ Let $U:\Hilb\to\Kk$ be an isometry, $P=UU^{\dagger}$, and let
+$\Gamma:(-\epsilon,\epsilon)\to B(\Hilb,\Kk)$ satisfy
+\begin{equation}
+  \Gamma(0)=U,\qquad
+  \sup_{\abs{k}<\epsilon}\norm{\partial_k\Gamma(k)}\le C_\Gamma .
+\end{equation}
+Let $J\in B(\Hilb,\Kk)$, put $R=(1-P)J$, and let $b\in C^1$ satisfy $b(0)=0$
+and $\abs{b(k)}\le C_b\abs{k}$. Then
+\begin{equation}
+  \norm{b(k)\Gamma(k)^{\dagger}R}\le C_bC_\Gamma\norm{J}\,k^2 ,
+  \label{eq:ml4a-op}
+\end{equation}
+and for a normalised rescaled soft packet
+$f_\varepsilon(k)=\varepsilon^{-1/2}f(k/\varepsilon)$,
+\begin{equation}
+  \norm{b(k)\Gamma(k)^{\dagger}Rg\,f_\varepsilon(k)}_{L^2(dk;\Hilb)}
+  \le C_bC_\Gamma\norm{J}\,\varepsilon^2
+    \norm{u^2f(u)}_{L^2(du)}\norm{g} .
+  \label{eq:ml4a-packet}
+\end{equation}
+The same statement is allowed for channel traces rather than bounded maps,
+provided the derivative bound is read in the trace norm on the chosen packet
+class.
+\end{lemma}
+\provenance{ML4-A}{\texttt{theory/ml4-ward-reduction.md} step
+(1.2)}{\texttt{theory/checks/ml4\_check.py} fixed-volume
+probes}{\texttt{theory/verdicts/corpus-r2.md} adjudication}
+
+\emph{Idea of proof.} Because $U$ is an isometry, $U^{\dagger}R=U^{\dagger}(1-UU^{\dagger})J=0$,
+so $\Gamma(k)^{\dagger}R=[\Gamma(k)-\Gamma(0)]^{\dagger}R$. The fundamental
+theorem of calculus bounds the difference by $C_\Gamma\abs{k}$, the projection
+bounds $\norm{R}$ by $\norm{J}$, and multiplying by $\abs{b(k)}\le C_b\abs{k}$
+gives \cref{eq:ml4a-op}; substituting $k=\varepsilon u$ and using that the
+normalisation factor cancels the Jacobian gives \cref{eq:ml4a-packet}.
+
+\begin{remark}[Where the zero comes from]
+\label{rem:ml4a-moral}
+The pair of properties that kills the orthogonal linear contribution is
+\emph{energy-shell channel matching}, $\Gamma(0)=U$, together with \emph{$C^1$
+on-shell trace regularity}. Energy conservation and multiplicity one imply the
+first in a genuine two-body channel. The velocity sign $\sgn(v_h-v_s)$ only
+labels which continuous wave is called outgoing; it supplies no zero at all.
+\end{remark}
+
+\subsection{Off-shell interpolation at fixed volume --- and why it is not a ring soft limit}
+
+\begin{theorem}[Fixed-volume off-shell interpolation for one hard magnon]
+\label{thm:ml4-offshell}
+\statusSketch\ Fix $I=[a,b]\Subset(0,\pi)$ and let $\Gamma_N(k)$ be the
+analytic interpolation obtained by transporting the coordinate scattering
+formula from total momentum $h+k$ to the $k=0$ fibre, normalised by
+$\Gamma_N(k)\ket{h}:=B_N(k,h)/\sqrt{N-2}$, where on $0\le x<y<N$
+\begin{equation}
+  B_N(k,h;x,y)=\frac{e^{ih(x+y)/2}}{\sqrt N}
+    \bigl\{s(k,h)e^{iq(y-x)}+e^{-iq(y-x)}\bigr\},
+  \qquad q=\tfrac{h-k}{2},
+\end{equation}
+with $s(k,h)$ the solution of the contact equation \cref{eq:contact-equation}
+analytic at zero. Let
+\begin{equation}
+  \mathsf{A}_{\perp,N}(k;f,g):=(e^{ik}-1)\,
+   \braket{\Gamma_N(k)f,\;R_{n,N}\,g}
+\end{equation}
+be the interpolated orthogonal contribution to the Ward-reduced connected
+numerator. At zero soft momentum the interpolation matches the descendant,
+$\Gamma_N(0)\ket{h}=Q_0\ket{h}_N/\sqrt{N-2}$, since $s(0,h)=1$. For every
+fixed $N$ there is then a constant $C'_{I,N}<\infty$ with
+\begin{equation}
+  \abs{\mathsf{A}_{\perp,N}(k;f,g)}
+   \le C'_{I,N}\,k^2\,\norm{f}_{I,N}\norm{g}_{I,N}
+\end{equation}
+for arbitrary smooth compactly supported hard packets; the corresponding
+soft-packet norm is accordingly $O_N(\varepsilon^2)$, and consequently
+\begin{equation}
+  \lim_{N\to\infty}\ \lim_{k\to0}\
+   \frac{\mathsf{A}_{\perp,N}(k;f,g)}{k}=0 ,
+\end{equation}
+where the inner limit is the \emph{off-shell analytic} limit.
+\end{theorem}
+\begin{scope}
+This is emphatically not an on-shell ring soft limit, and the distinction is
+not pedantic. At fixed periodic $N$ the nonzero momenta are discrete, so
+$k\to0$ at fixed $N$ never runs through physical ring states; the interpolated
+$\Gamma_N(k)$ is an off-shell analytic vector. Worse, the first \emph{physical}
+sequence refutes volume uniformity outright. Take $h=2\pi/5$, ring sizes
+divisible by five, and $k_N=2\pi/N$. The low-frequency relative-coordinate sum
+obeys
+\begin{equation}
+  \lim_{N\to\infty}N^{-1}\braket{B_N(c/N,h),B_N(0,h)}
+   =\frac{8\bigl[1-\cos(c/2)\bigr]}{c^2},
+\end{equation}
+which at $c=2\pi$ equals $4/\pi^2$ rather than the value $1$ at $c=0$. Hence
+the transported trace tends to $2\abs{v(h)}(1-4/\pi^2)>0$ along that sequence,
+so its ratio to $\abs{k_N}$ grows linearly in $N$ and the normalised version
+grows like $\sqrt N$: no $N$-independent version of the estimate holds. What
+remains open, therefore, is exactly the statement the campaign wants --- a
+packet-smeared infinite-volume on-shell trace bound controlling the regime
+$k=\Theta(1/N)$ --- together with the two-hard, three-magnon channel discussed
+next.
+\end{scope}
+\provenance{ML4}{\texttt{theory/ml4-ward-reduction.md} step (1.4) together
+with step (1.5).(2).2; narrowed after the erratum, since the earlier
+step (1.5).(2).1 consumed the refuted scalar display}%
+{\texttt{theory/checks/ml4\_check.py}: fixed-volume fitted exponents
+$0.99700$--$0.99988$ for the raw orthogonal trace and
+$1.99700$--$1.99988$ after multiplication by $e^{ik}-1$, with the omitted
+projection as built-in red mutation; the joint-scaling probe at $k=2\pi/N$ and
+its \texttt{--red-uniform} mutation reinstating the retracted uniform claim,
+which exits nonzero}{\texttt{theory/verdicts/corpus-r2.md} (held at sketch)}
+
+\begin{remark}[The sharp obstruction in the two-hard channel]
+\label{rem:ml4-3}
+To infer a quadratic bound for the orthogonal part in the two-hard sector one
+would need a three-magnon outgoing channel satisfying the two hypotheses of
+\cref{rem:ml4a-moral} in a packet trace norm uniform in volume.
+\cref{thm:two-magnon-completeness} resolves the \emph{input} two-magnon state
+and says nothing about the three-magnon target. Unlike the two-body half-line
+fibre, a three-body fixed-energy shell can have several open channels; energy
+conservation alone then does not force every zero-soft channel into the range
+of the charge, and an orthogonal degenerate channel can contribute at first
+order after the single lattice difference. Excluding that multiplicity is the
+sharp missing hypothesis, and it needs three-body wave operators together with
+a limiting-absorption or trace estimate. Assuming closed Bethe factorisation
+would hide the issue rather than settle it, and is not permitted here.
+\end{remark}
+
+\begin{conjecture}[Uniform current form-factor regularity]
+\label{conj:ml3}
+\statusConjecture\ The finite-volume regularity of the current form factors
+upgrades, after wave-packet smearing, to a bound uniform in volume and in the
+soft limit. Any proof must control the regime $k=\Theta(1/N)$ and must exclude
+a physical $1/k_s$ current pole, showing that the delta and principal-value
+pieces appearing in the coefficient formulas are distributional normalisation
+artefacts.
+\end{conjecture}
+\provenance{ML3}{---}{---}{--- (future work)}
+
+\begin{conjecture}[Order of limits and channel contamination in general]
+\label{conj:ml6}
+\statusConjecture\ The order of the infinite-volume limit, the wave-packet
+width, and the soft limit can be controlled in general, and the bound state
+and off-shell coefficients do not contaminate the leading real scattering
+channel.
+\end{conjecture}
+\provenance{ML6}{---}{---}{--- (future work)}
+
+\subsection{The order of limits on a separated packet class}
+
+The general conjecture above is open. On a restricted but honest class of
+preparation protocols it is a theorem, and the following is what the campaign
+actually owns about limit order.
+
+\begin{theorem}[Ordered limits remove bound and string weight on the separated class]
+\label{thm:ml6-hs-sep}
+\statusProved\ Assume \cref{def:fm-oracle-model,def:bethe-convention,def:bethe-soft-limit},
+$J>0$, and a fixed hard interval $I=[a,b]\Subset(0,\pi)$. Take a one-sided
+normalised soft packet $f_\varepsilon(k)=\varepsilon^{-1/2}f(k/\varepsilon)$
+with $\supp f\subset[c_1,c_2]\subset(0,\infty)$ and a normalised hard packet
+$g_\sigma$ supported in $I$. For each fixed $\varepsilon>0$ use the separated
+preparation sequence: translate the incoming hard packet by $R_j\to\infty$,
+take a settling time $T_j$ with $d_\varepsilon T_j-R_j\to\infty$, impose the
+separation condition, and take the ring size large enough that the
+thermodynamic and sampling error tends to zero. The order is
+\begin{equation}
+  N\to\infty\ \prec\ (R,T,\sigma)_j\to(\infty,\infty,0)\ \prec\ \varepsilon\downarrow0 .
+  \label{eq:l6-order}
+\end{equation}
+Then:
+\begin{enumerate}
+\item at each fixed $\varepsilon$, the total squared coefficient of the
+  prepared state outside the selected incoming real-scattering packet tends to
+  zero --- this includes the two-string and bound band and all
+  real-scattering coefficients off the selected support --- and the analogous
+  outgoing statement holds after the settling time;
+\item along every actual row-measure limit subsequence the normalised
+  connected readout is exactly
+  \begin{equation}
+    \mathsf{A}_*(\varepsilon)
+     =\int\bigl[S_{\mathrm{phys}}(k,h)-1\bigr]\,d\mu_{*,\varepsilon}(k,h);
+    \label{eq:hs-sep-readout}
+  \end{equation}
+\item with $\bar k_*(\varepsilon):=\int k\,d\mu_{*,\varepsilon}$,
+  \begin{equation}
+    \mathsf{A}_*(\varepsilon)=2i\,\bar k_*(\varepsilon)+O_I(\varepsilon^2),
+  \end{equation}
+  the remainder being uniform in the hard packet and in the actual limit
+  measure, so neither bound nor off-shell coefficients contaminate the leading
+  real scattering channel;
+\item no soft-uniform Cook estimate is needed, because the fixed-$\varepsilon$
+  channel limit is completed first.
+\end{enumerate}
+\end{theorem}
+\begin{scope}
+The theorem proves no uniform pointwise limit of individual coefficients ---
+only that their packet-smeared contaminating sum is controlled. It applies to
+the separated primitive packet class, not to an arbitrary preparation
+protocol. It constructs no incoming bound-pair wave operator, makes no
+endpoint or equal-velocity claim, and has no extension to $a\downarrow0$: that
+is the same non-uniformity as $k_h\to0$ recorded in
+\cref{rem:not-a-scattering-length}, and it is excluded rather than overcome.
+\end{scope}
+\provenance{ML6-HS-SEP}{\texttt{theory/ml6-hs-sep.md} steps (1.1)--(1.9):
+spectral fence (1.2), collective coefficient estimate (1.3), ordered limit
+(1.4), soft expansion in the purified channel (1.5), endpoint fence (1.6)}%
+{\texttt{theory/checks/ml1\_ml6\_check.py}: green exit 0, with
+\texttt{--red-bound} and \texttt{--red-unitarity} exiting 1; arithmetic
+only}{\texttt{theory/verdicts/blitz-ml1-ml6-r1.md}}
+
+\emph{Idea of proof.} At the same total momentum the continuum-to-bound
+separation is $E(K,q)-E_b(K)=J\abs{e^{iq}-c}^2$, which at $k=0$ equals
+$J\sin^2(h/2)$, so compactness of $I$ gives a uniform positive fence. The
+overlap of the unseparated charge-created relative wave with the bound fibre
+is exactly
+\begin{equation}
+  \beta(K,q)=\frac{2\sqrt{1-c^2}\,(\cos q-c)}{1-2c\cos q+c^2},
+  \qquad
+  \beta\bigl(h+k,\tfrac{h-k}{2}\bigr)=2k+O_I(k^2),
+\end{equation}
+so the raw bound amplitude of a soft packet is $O_I(\varepsilon)$ --- the same
+order as the connected law itself, hence \emph{not} by itself enough to
+exclude contamination. The decisive input is the ordered limit. At fixed
+$\varepsilon$, the separated preparation makes the incoming Cook tail decay
+like a high inverse power of the separation, so the projection onto the bound
+band and onto real roots off the selected window vanishes in norm
+\emph{before} the soft limit is taken; Parseval on the ring, together with
+strong convergence of the finite fibre matrices to the half-line matrices,
+converts this into a collective statement about smeared coefficients, with no
+root-by-root labelling and no principal-value cancellation required. Only then
+is $\varepsilon\downarrow0$ taken, at which point the expansion
+\cref{eq:S-phys} of \cref{thm:two-body-soft} is integrated against the limit
+measure. Because the contaminating projection is already exactly zero, it
+cannot contribute a competing term of order $\varepsilon$.
+
+\subsection{Cook limits over a general matrix-product vacuum}
+
+\begin{theorem}[Fixed-packet two-magnon Cook limits from exact band data]
+\label{thm:ac-ex-2m}
+\statusProvedConditional\ Assume \cref{def:d31}. Put
+$\Hilb_{0,12}:=L^2(K_1;\C^m)\otimes L^2(K_2;\C^m)$ with free Hamiltonian
+$H_{0,12}=\omega\otimes1+1\otimes\omega$ on the smooth product core
+$\mathcal{D}_{12}$, the two slots labelling the two disjoint packet windows
+rather than distinguishable species, and let $I$ be the two-creator
+identification map. Then, \emph{as a conditional implication from
+\cref{def:d31} and nothing else}:
+\begin{enumerate}
+\item[(i)] the fixed-packet limits
+  $W_\pm F:=\lim_{t\to\pm\infty}e^{itH}Ie^{-itH_{0,12}}F$ exist for
+  $F\in\mathcal{D}_{12}$;
+\item[(ii)] $W_\pm$ are isometries, extend uniquely to the packet-domain
+  closure, and intertwine joint time and space translations; their ranges are
+  annihilated by the sum $P_B$ of the listed fibrewise-isolated charge-two
+  bound-band projections, and are orthogonal to every alternative propagating
+  channel in the inventory, whose joint energies exceed
+  $\sup_{I_2}E+\eta_{\mathrm{inel}}$.
+\end{enumerate}
+Specialised to the ferromagnet of \cref{def:fm-oracle-model}, a fixed packet
+range lies in the matching part of the scattering summand of
+\cref{thm:two-magnon-completeness} and is orthogonal to its two-string
+summand, and $W_+^{*}W_-$ is exactly multiplication by the physical ratio
+$S_{\mathrm{phys}}$ of \cref{def:bethe-convention} (the inverse ratio under
+the opposite velocity ordering), of modulus one.
+
+The clustering estimates \cref{eq:d31c2} and its four-operator version are
+\emph{derived} from injectivity of the vacuum tensor, not assumed; no
+independent clustering hypothesis enters.
+
+The implication is not vacuous: the ferromagnet of
+\cref{def:fm-oracle-model} satisfies all five clauses of \cref{def:d31}. Its
+all-up state is the injective bond-dimension-one product tensor, its shifted
+Hamiltonian is positive with $\ker H=\C\Omega$, the total magnetisation
+supplies the conserved circle grading, the Fourier map
+$g\mapsto\int\frac{dk}{2\pi}g(k)\sum_xe^{ikx}\ket{x}$ is an exact isometric
+band map, a spacetime-Schwartz filter of $S^-_n$ gives the covariant creators,
+and \cref{thm:two-magnon-completeness} supplies exactly one bound band with a
+positive gap and an empty inelastic inventory.
+\end{theorem}
+\begin{scope}
+Clauses 1--5 of \cref{def:d31} --- the exact band, the creators, the
+covariance and the threshold data --- are \emph{hypotheses}, not consequences
+of a variational ansatz; only the clustering estimates are derived. Nothing
+here is uniform in a soft scale: every estimate is at fixed packets, and the
+Cook and Gram constants carry the packet Schwartz seminorms $s_N(F)$. Along a
+soft rescaling $f_\varepsilon(k)=\varepsilon^{-1/2}f(k/\varepsilon)$ one has
+$\norm{\partial^jf_\varepsilon}_\infty=\varepsilon^{-j-1/2}\norm{f^{(j)}}_\infty$,
+so the $N$ integrations by parts carry a factor $\varepsilon^{-N}$ and the
+bound degrades without limit as $\varepsilon\downarrow0$. The nonzero-velocity
+constant $\varepsilon_0$ of clause 4 enters no estimate in this theorem; only
+the velocity separation $\varepsilon_v$ does. The theorem asserts nothing
+about the fixed-time interface of \cref{thm:d29-interface}, which no step of
+its proof consumes. No endpoint or equal-velocity construction, no
+soft-uniform Cook bound, no bound-state wave operator, no compatibility or
+range exhaustion across packet windows, and no asymptotic completeness is
+claimed.
+\end{scope}
+\provenance{AC-EX-2M (parts A2M.1--A2M.2)}%
+{\texttt{theory/ansatz-scattering-2m.md} steps (1.2)--(1.7$'$): fixed-packet
+fence (1.2), clustering upgrade (1.3), filtered one-particle equations (1.4),
+Cook integrability (1.5), isometry (1.6), intertwining and the exact match
+(1.7), nonvacuity on the ferromagnet (1.7$'$)}%
+{\texttt{theory/checks/ansatz\_scattering\_2m\_check.py}: green exit 0 and
+seven registered red modes exiting 1 under optimised Python, all nine gates
+evaluated before exit. The certificate corroborates \emph{only} the clustering
+identity \cref{eq:d31c2} on AKLT, reproduced independently in a second tensor
+basis; it tests no Cook limit, no exact band, no spectral separation, and no
+identification with the ferromagnet's scattering summand. Two gate caveats are
+on record: the rescaled agreement gate does not certify the absence of a
+two-sided support-length factor (support-length independence is proved
+analytically, not numerically), and one guard gate is identically zero by
+algebra, so it is a code-shape guard rather than a numerical
+certificate.}{\texttt{theory/verdicts/ansatz-scattering-2m-r5.md} §9}
+
+\emph{Idea of proof.} Exactness of the band map means the filtered creator
+defect $D_{i,b}(n)=[H,a_{i,b}(n)]-\sum_mh_i(m-n)a_{i,b}(m)$ annihilates the
+vacuum and is almost local uniformly in $n$. Expanding $H$ on the two-creator
+vector and cancelling both filtered free convolutions therefore leaves only a
+commutator term,
+$(HI-IH_{0,12})F=\sum_{x,y}F(x,y)[D_1(x),a_2(y)]\Omega_A$, whose norm decays
+faster than any power of $x-y$. Outside its velocity cone each free packet is
+rapidly decreasing in $\abs{x}+\abs{t}$, while on the product of the two main
+cones the velocity separation forces $\abs{x-y}\ge\varepsilon_v\abs{t}/2$;
+splitting the sum accordingly gives an integrable majorant of order
+$\abs{t}^{-3}$, and the fundamental theorem of calculus then gives both strong
+limits. Isometry follows by applying the derived clustering estimate to the
+four-creator scalar product on the product cones, where the Gram-normalised
+exact band maps factorise into the free tensor Gram form, with the complement
+again power-suppressed. Intertwining is the usual replacement of $t$ by $t+s$;
+the joint spectral calculus then converts the fibrewise bound gap and the
+inelastic margin into exact annihilation of the corresponding projections.
+Finally, on the ferromagnet, stationary phase puts the two relative branches
+of \cref{eq:psi-sc} in the incoming and outgoing regions exactly as the
+coefficient convention of \cref{def:bethe-convention} prescribes, so the
+constructed labels are that convention's and not a new one.
+
+\subsection{The fixed-time interface: what is and is not established}
+
+\begin{theorem}[The fixed-time protocol interface]
+\label{thm:d29-interface}
+\statusSketch\ For the adjudicated fixed-time interface, two \emph{separate}
+statements are established, and they are not composed.
+\begin{enumerate}
+\item \emph{Diagonal compactness, conditional on assumed bounds.} Write the
+  amputated datum at an allowed full index tuple $\alpha$ as
+  $\mathsf{A}_\alpha(h)=\mathsf{N}_\alpha(h)/\mathsf{D}_\alpha(h)$ for $h\in I$.
+  If the selected-hard-packet bounds
+  \begin{equation}
+    \operatorname*{ess\,inf}_\alpha\ \operatorname*{ess\,inf}_{h\in I}
+      \abs{\mathsf{D}_\alpha(h)}\ge d_I>0,
+    \qquad
+    \sup_\alpha\norm{\mathsf{N}_\alpha}_{L^2(I)}\le C_I<\infty
+    \label{eq:d29-den}
+  \end{equation}
+  hold for every allowed tuple, then $\sup_\alpha\norm{\mathsf{A}_\alpha}_{L^2(I)}\le C_I/d_I$,
+  so every full-index sequence respecting the precedence
+  \begin{equation}
+    N\to\infty\ \prec\ t\to\pm\infty\ \prec\ (W\uparrow\Z,\sigma\downarrow0)_j
+     \ \prec\ \varepsilon\downarrow0
+    \label{eq:d29-order}
+  \end{equation}
+  with $\varepsilon\downarrow0$ has a weakly convergent subsequence in
+  $L^2(I)$. This is Banach--Alaoglu applied to assumed bounds: both displayed
+  inequalities in \cref{eq:d29-den} are assumptions, not derivations, and no
+  iterated-order datum is asserted to exist.
+\item \emph{Creator-choice independence --- a theorem about Haag--Ruelle
+  families.} At fixed $\varepsilon>0$, a soft creator family that is
+  admissibly Haag--Ruelle, satisfies the one-particle on-shell normalisation,
+  and has velocity support disjoint from the hard packet, may be replaced by
+  the filtered creator of \cref{def:d31} without changing any connected
+  on-shell pairing in the limit of large times.
+\end{enumerate}
+\end{theorem}
+\begin{scope}
+\textbf{The second statement does not apply to the adjudicated interface.}
+Both protocols on record specify a \emph{fixed-time} insertion
+$Q[f_\varepsilon]\psi$ of the charge on an already prepared hard vector, and
+that is not a Haag--Ruelle creator family: it never free-evolves its profile.
+The failure is precisely of Haag--Ruelle admissibility and not of the
+one-particle normalisation, which \emph{is} proved on the ferromagnet for the
+family built from that same charge acting on the vacuum.
+
+For the adjudicated datum the exact mismatch is visible at the soft law's own
+linear order. By \cref{thm:two-body-soft} and \cref{eq:R8-mismatch},
+\begin{equation}
+  Q_{k_s}\ket{k_h}-\ket{B^{\mathrm{in}}}
+   =(1-S_{12})\ket{P_{12}}
+   =-2ik_s\ket{P_{12}}+O(k_s^2),
+\end{equation}
+a relative size $\sqrt2\,k_s(1+O(k_s))$ --- nonzero exactly where the soft law
+lives. The identification of the fixed-time datum with the constructed channel
+of \cref{thm:ac-ex-2m} is therefore \textbf{open}, and two steps are named as
+missing:
+\begin{itemize}
+\item[(i)] prove, at order $k_s$ and with a displayed uniform remainder, that
+  the large-time readout's connected packet-amputated on-shell pairing equals
+  the constructed-channel one \emph{despite} that mismatch;
+\item[(ii)] exhibit an instance of the soft-regularity condition for the
+  fixed-time family, including existence of its volume and time limits.
+\end{itemize}
+The soft-regularity clauses have been verified for exactly one datum: the
+\emph{constructed-channel} family on the infinite chain, which has a single
+member and involves no exhaustion,
+\begin{equation}
+  \mathsf{A}(\varepsilon)(h)
+   =\int d\mu_f(u)\,S_{\mathrm{phys}}(\varepsilon u,h)
+\end{equation}
+on the ferromagnet, for which every uniformity clause is trivially satisfied
+because the family is a singleton and the limit-existence clause is bypassed
+rather than met. It therefore backs no claim about the interface. The
+window-and-width-uniform form of the soft-regularity condition is open on
+every model, the ferromagnet included; it remains a hypothesis with no
+verified instance. No fixed-time charge-to-channel identification, no
+fixed-time charge-to-scattering-vector equality, and no first-jet theorem for
+the interface is claimed.
+\end{scope}
+\provenance{AC-EX-2M-D29}{\texttt{theory/ansatz-scattering-2m.md} steps
+(1.8)--(1.9), excluding step (1.9).(2).4, which belongs to
+\cref{thm:ac-ex-2m}; the ported creator-choice theorem is taken from
+\texttt{refs/arxiv-1412.2970} (final clause of its Haag--Ruelle
+theorem)}{No certificate exists for this row:
+\texttt{theory/checks/ansatz\_scattering\_2m\_check.py} tests none of the
+assumed bounds \cref{eq:d29-den}, Haag--Ruelle admissibility, the missing step
+(i), the volume and time limits, or the soft-regularity
+condition}{\texttt{theory/verdicts/ansatz-scattering-2m-r5.md} §9 and
+\texttt{ansatz-scattering-2m-r6.md}}

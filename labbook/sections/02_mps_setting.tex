@@ -1,0 +1,721 @@
+% =====================================================================
+% SHARD-ID: LB-02-MPS-SETTING
+% SHARD-TITLE: The setting: uniform matrix-product states, windows, and
+%              excitations
+% SHARD-SOURCES: definitions.md D1, D5, D9, D11, D12 (status header: written
+%              2026-08-25, FROZEN at the 2026-08-26 freeze after the Corner A
+%              L6 loop converged, theory/verdicts/corner-a-r3.md PASS);
+%              notation.md; HANDOFF_MPS_SOFT_THEOREM.md 1.1, 1.3;
+%              theory/corner-a.md, theory/corner-a-goldstone.md,
+%              theory/corner-a-kinks.md; theory/checks/corner_a_check.py
+%              (checks C4, C5, C10, C11)
+% SHARD-CLAIMS: D1, D5, D9, D11, D12
+% =====================================================================
+
+% --- shard-local semantic macros (mirror notation.md; \providecommand so
+% --- that a sibling shard may declare the same symbol without a clash) ---
+\providecommand{\Aloc}{\mathfrak{A}_{\mathrm{loc}}}      % local subalgebra
+\providecommand{\Utens}{\mathcal{U}}                     % symmetry on a tensor
+\providecommand{\Vac}{\Omega_{\mathrm{vac}}}             % vacuum label set
+\providecommand{\Nnull}{\mathcal{N}}                     % null-direction map
+\providecommand{\Ewin}{\mathfrak{E}}                     % window CP map
+\providecommand{\lamt}{\tilde{\lambda}}                  % honest decay rate
+\providecommand{\Cbd}{C_{\partial}}                      % window-norm constant
+\providecommand{\gaugerem}{\mathfrak{B}}                 % gauge remainder
+\providecommand{\Ept}{\mathcal{E}}                       % endpoint space
+\providecommand{\dcoset}{\mathfrak{d}}                   % double-coset label
+\providecommand{\Fc}{\mathfrak{F}_{c}}                   % finitely supported
+\providecommand{\Fec}{\mathfrak{F}_{\mathrm{ec}}}        % eventually constant
+\providecommand{\Fell}{\mathfrak{F}_{\ell^{1}}}          % finite variation
+\providecommand{\Aeff}{\A_{\mathrm{eff}}}                % effective asg group
+\providecommand{\hsub}{\mathfrak{h}}                     % unbroken subalgebra
+\providecommand{\msub}{\mathfrak{m}}                     % broken complement
+\providecommand{\liealg}{\mathfrak{g}}                   % Lie algebra of G
+
+\section{The setting: uniform matrix-product states, windows, and excitations}
+\label{sec:mps-setting}
+
+A uniform matrix-product state is a translation-invariant state of an infinite
+spin chain built from a single small tensor. One fixes a physical dimension
+$d$ and a \emph{bond dimension} $\chi$, and one array $A = (A^{s})_{s=1}^{d}$
+of $\chi \times \chi$ matrices. Reading a physical configuration
+$s_{1}s_{2}\cdots s_{w}$ of $w$ consecutive sites as the ordered matrix word
+$A^{s_{1}}A^{s_{2}}\cdots A^{s_{w}}$, and closing that word against two fixed
+matrices, produces the amplitudes of a state on any window; the state on the
+whole chain is the compatible family of all such windows. All correlations of
+that state are governed by a single completely positive map on
+$\chi \times \chi$ matrices, the \emph{transfer matrix}
+$E(Y) = \sum_{s} A^{s} Y (A^{s})^{\dagger}$. When $E$ has a unique, simple
+eigenvalue of largest modulus --- the \emph{injective} case --- the resulting
+state is pure, translation invariant, and exponentially clustering, with
+correlation length set by the gap between the leading eigenvalue $1$ and the
+rest of the spectrum. Injectivity is the whole reason such states are
+tractable: it makes the state unique, it makes the symmetry data of
+\cref{sec:symmetry-noether} unique, and it makes long matrix words span the
+full matrix algebra, which is what lets a bond insertion be recovered from the
+window vector it produces.
+
+The campaign is about what a symmetry does when it is applied to a
+\emph{finite region} rather than the whole chain, so nothing may be said only
+about the infinite chain. This is why the basic object below is not the state
+but the \emph{window vector}: a finite interval $\Lambda = [a,b]$, the ordered
+product of the tensors sitting on it, arbitrary invertible matrices inserted on
+any of its bonds, and two boundary vectors closing the word. Everything the
+campaign proves --- the truncated-symmetry identity, the bond implementers, the
+soft limits --- is first an exact identity between window vectors, and only
+afterwards a statement about states. Two technical points earn their keep
+immediately. First, the $\abs{\Lambda}+1$ bonds available for insertion must
+include the two \emph{edge} bonds $(a-1|a)$ and $(b|b+1)$; without them the
+truncated-symmetry identity is simply false on the window $\Lambda = R$ that it
+is about. Second, the decay of $E^{m}$ towards its fixed point must be quoted
+honestly: $E$ may carry Jordan blocks at the subleading modulus, so the correct
+statement carries a rate $\lamt$ strictly above the transfer gap $\lambda_{E}$,
+never $\lambda_{E}$ itself. Both points are recorded in the definitions below
+because both were live errors at some stage of the campaign.
+
+\subsection{Vacua: uniform injective matrix-product states}
+
+The first definition fixes the arena --- the algebra of observables on the
+chain --- and the class of states the whole campaign treats as ``vacua''. The
+content of the injectivity clause is that the transfer matrix has a spectral
+gap, so that the state clusters exponentially and long matrix words are
+unconstrained.
+
+\begin{definition}[Uniform injective matrix-product vacuum (D1(a)--(d))]
+\label{def:injective-mps}
+\emph{(a) The chain.} Fix $d \in \N$ and let the lattice be $\Z$. The
+\emph{quasi-local algebra} is
+\begin{equation}
+  \alg := \bigotimes_{x \in \Z} M_{d}(\C),
+\end{equation}
+the C*-inductive limit of the window algebras
+$\alg_{\Lambda} := \bigotimes_{x \in \Lambda} M_{d}(\C)$ over finite
+$\Lambda \subset \Z$; the norm-dense \emph{local subalgebra} is
+$\Aloc := \bigcup_{\Lambda} \alg_{\Lambda}$. Translation by $x$ sites is the
+automorphism $\tau_{x} \in \mathrm{Aut}(\alg)$. A \emph{state} is a normalised
+positive linear functional on $\alg$; states are compared in the weak-$*$
+topology, i.e.\ pointwise on $\Aloc$. For a state $\varrho$ we write
+$(\Hilb_{\varrho}, \pi_{\varrho}, \Omega_{\varrho})$ for its GNS triple.
+
+\emph{(b) Tensor and transfer matrix.} A \emph{uniform matrix-product tensor}
+of bond dimension $\chi$ is $A = (A^{s})_{s=1}^{d}$ with
+$A^{s} \in M_{\chi}(\C)$. Its \emph{transfer matrix} is the completely
+positive map $E : M_{\chi} \to M_{\chi}$,
+\begin{equation}
+  E(Y) \; := \; \sum_{s} A^{s} \, Y \, (A^{s})^{\dagger},
+\end{equation}
+equivalently the $\chi^{2} \times \chi^{2}$ matrix
+$\sum_{s} A^{s} \otimes \overline{A^{s}}$.
+
+\emph{(c) Injectivity, canonical form, gap.} $A$ is \emph{injective}
+(equivalently \emph{normal}) if $E$ has spectral radius $1$, the eigenvalue $1$
+is the unique eigenvalue of modulus $1$, it is non-degenerate, and the left and
+right eigenmatrices $l, r$ --- i.e.\ $E^{*}(l) = l$ and $E(r) = r$ --- are
+positive definite. We fix the \emph{canonical form}
+\begin{equation}
+  l = \mathbb{1}, \qquad r > 0, \qquad \operatorname{tr} r = 1 ,
+\end{equation}
+after which the residual matrix-product gauge freedom is
+$A^{s} \mapsto Y^{-1} A^{s} Y$ with $Y$ unitary commuting with $r$, together
+with an overall phase. The \emph{transfer gap} is
+\begin{equation}
+  \lambda_{E} \; := \; \max \bigl\{\, \abs{\mu} \;:\; \mu \in \spec(E), \;
+  \mu \neq 1 \,\bigr\} \; < \; 1 ,
+  \qquad \xi_{c} := -1/\log \lambda_{E} ,
+\end{equation}
+with $\xi_{c}$ the correlation length. Because $E$ may have Jordan blocks at
+modulus $\lambda_{E}$, the honest decay statement is: \emph{for every
+$\lamt \in (\lambda_{E},1)$ there is $C_{\lamt} < \infty$ with}
+\begin{equation}
+  \norm{E^{m} - P} \;\le\; C_{\lamt} \, \lamt^{\,m}
+  \qquad \text{for all } m \ge 0,
+  \label{eq:honest-decay}
+\end{equation}
+where $P(Y) = \operatorname{tr}(Y)\, r$ is the spectral projection onto the
+fixed point. A bare $O(\lambda_{E}^{m})$ is \emph{false} in general: it needs
+the polynomial prefactor $m^{p}$ with $p$ equal to the Jordan block size minus
+one. Every rate quoted anywhere in this labbook is in the $\lamt$ form.
+Injectivity is equivalent to the existence of an $n_{0}$ with
+\begin{equation}
+  \operatorname{span}\bigl\{\, A^{s_{1}} \cdots A^{s_{n}} \;:\;
+  s_{1} \ldots s_{n} \,\bigr\} \;=\; M_{\chi}(\C)
+  \qquad \text{for all } n \ge n_{0} .
+  \label{eq:word-spanning}
+\end{equation}
+
+\emph{(d) The state.} For injective $A$ in canonical form, $\omega_{A}$ is the
+unique state on $\alg$ with, for $O \in \alg_{[1,w]}$,
+\begin{equation}
+  \omega_{A}(O) \;=\; \sum_{s,s'} \bra{s'} O \ket{s} \,
+  \operatorname{tr}\Bigl[\, (A^{s'_{w}})^{\dagger} \cdots (A^{s'_{1}})^{\dagger}
+  \cdot \mathbb{1} \cdot A^{s_{1}} \cdots A^{s_{w}} \cdot r \,\Bigr],
+\end{equation}
+extended by translation invariance. The state $\omega_{A}$ is pure,
+translation invariant, and exponentially clustering with rate $\lambda_{E}$
+(in the sense of \eqref{eq:honest-decay}). We write
+$(\Hilb_{A}, \pi_{A}, \Omega_{A})$ for its GNS triple and suppress $\pi_{A}$
+when harmless.
+\end{definition}
+
+\provenance{D1(a)--(d)}%
+{\texttt{definitions.md} D1, clauses (a)--(d); FROZEN at the 2026-08-26 freeze}%
+{---}%
+{\texttt{theory/verdicts/corner-a-r3.md} (PASS)}
+
+\subsection{Windows, decorations, and window vectors}
+
+A decoration is a window with things put on it: possibly different tensors at
+some sites, possibly invertible matrices squeezed onto some bonds, and two
+boundary vectors at the ends. This is the working object of the campaign
+because every symmetry statement below turns out to be an identity between a
+plain window vector and a decorated one. The edge-bond clause is not
+cosmetic: it is what makes ``the symmetry applied to $R$ acts only on the two
+boundary bonds of $R$'' a statement about the window $R$ itself rather than
+about some larger window.
+
+\begin{definition}[Window vectors, decorations, and decorated states (D1(e))]
+\label{def:window-vector}
+For a finite window $\Lambda = [a,b]$, a \emph{decoration} is a tuple
+$T = (T_{a},\dots,T_{b})$ of tensors $T_{x} = (T_{x}^{s})$, together with
+\emph{bond insertions} $M_{x|x+1} \in GL(\chi)$ on any subset of the
+$\abs{\Lambda}+1$ bonds
+\begin{equation}
+  (a-1|a), \quad (a|a+1), \quad \dots, \quad (b|b+1)
+\end{equation}
+--- \textbf{including the two edge bonds} --- and boundary vectors
+$b_{l}, b_{r} \in \C^{\chi}$. The \emph{window vector} is
+\begin{equation}
+  \ket{\psi_{\Lambda}(T; b_{l}, b_{r})} \; := \!\!
+  \sum_{s_{a} \ldots s_{b}} \!\!
+  \bra{b_{l}} M_{a-1|a} \, T_{a}^{s_{a}} \, M_{a|a+1} \cdots
+  T_{b}^{s_{b}} \, M_{b|b+1} \ket{b_{r}} \; \ket{s_{a} \ldots s_{b}},
+  \label{eq:window-vector}
+\end{equation}
+absent factors being $\mathbb{1}$. An edge insertion is equivalently a
+redefinition of the boundary vector,
+\begin{equation}
+  b_{l} \mapsto M_{a-1|a}^{\dagger} \, b_{l},
+  \qquad
+  b_{r} \mapsto M_{b|b+1} \, b_{r} ,
+\end{equation}
+and is included so that identities whose insertions land on $\partial \Lambda$
+are statements about the same window rather than about a larger one.
+
+There is a constant $\Cbd = \Cbd(A, b_{l}, b_{r}) < \infty$ with
+\begin{equation}
+  \bigl\Vert \ket{\psi_{\Lambda}(T; b_{l}, b_{r})} \bigr\Vert
+  \;\le\; \Cbd \prod_{M} \norm{M}
+  \label{eq:cbd}
+\end{equation}
+for every $\Lambda$ and every decoration differing from the uniform $A$ on
+boundedly many sites --- uniformly in $\abs{\Lambda}$, because the contraction
+is of the form $(b_{l} \otimes \bar{b}_{l} \vert E^{\abs{\Lambda}} \vert
+b_{r} \otimes \bar{b}_{r})$ and $E^{m}$ is power-bounded by
+\cref{def:injective-mps}(c).
+
+A \emph{decorated state} $\omega_{A}[T]$ is the state on $\alg$ obtained from a
+decoration that differs from the uniform $A$ only on finitely many sites and
+bonds, by the prescription of \cref{def:injective-mps}(d) with the modified
+string and with $l, r$ as the two infinite environments; it is well defined by
+the $\lamt$-estimate \eqref{eq:honest-decay}. We write $\omega_{A}^{M@b}$ for
+the state decorated by a single bond insertion $M$ on the bond $b$.
+\end{definition}
+
+\begin{remark}[Why the edge bonds are in the definition]
+\label{rem:edge-bond-repair}
+The clause admitting insertions on $(a-1|a)$ and $(b|b+1)$ was added in
+revision r2 of the Corner~A loop. The earlier window vector carried interior
+bonds only, which made the earlier statement of the truncated-symmetry
+identity false for the window $\Lambda = R$ --- the two surviving virtual
+operators then lie outside the expression altogether. The measured
+discrepancy for the $\chi = 2$ Pauli tensor was $1.658$; admitting edge
+insertions restores exactness to $0.0$.
+\end{remark}
+
+\provenance{D1(e)}%
+{\texttt{definitions.md} D1(e); repair recorded at \texttt{theory/corner-a.md}
+ step (1.3), sub-step (2.7)}%
+{\texttt{theory/checks/corner\_a\_check.py}, checks C2, C2b}%
+{\texttt{theory/verdicts/corner-a-r2.md} objection 1;
+ \texttt{theory/verdicts/corner-a-r3.md}}
+
+A kink state has a different vacuum on each half-line, so it is not a
+decoration in the above sense at all: it differs from any uniform tensor on a
+whole half-line. It is defined instead by its finite-window restrictions, and
+those restrictions are matrix-environment contractions rather than window
+vectors --- a distinction that cost the campaign one round of corrections.
+
+\begin{definition}[Two-sided (half-line) decorations (D1(e$'$))]
+\label{def:two-sided-decoration}
+A \emph{two-sided decoration} carries an injective canonical-form tensor
+$A_{\alpha}$ on $(-\infty, m]$ and an injective canonical-form tensor
+$A_{\beta}$ on $[m+1, \infty)$ (possibly $\alpha = \beta$), plus finitely many
+further site and bond modifications. For a finite window $W \ni m$ let
+$P_{W}(s)$ be the ordered product of the window tensors, with the
+modifications inserted, for the physical index string $s$, and define the
+\emph{unnormalised completely positive contraction}
+\begin{align}
+  \tilde{\varrho}_{W}
+  &:= \sum_{s,s'} \operatorname{tr}\bigl[\, l_{\alpha} \, P_{W}(s) \,
+     r_{\beta} \, P_{W}(s')^{\dagger} \,\bigr] \; \ket{s}\bra{s'},
+  \label{eq:two-sided-contraction} \\[2pt]
+  \omega_{\alpha|\beta}^{(m)}[T](O)
+  &:= \frac{\operatorname{tr}[\tilde{\varrho}_{W} O]}
+          {\operatorname{tr}[\tilde{\varrho}_{W}]}
+  \qquad \text{for } O \in \alg_{W}.
+\end{align}
+\end{definition}
+
+\begin{lemma}[The two-sided prescription defines a state]
+\label{lem:two-sided-welldefined}
+$\tilde{\varrho}_{W} \ge 0$, $\operatorname{tr} \tilde{\varrho}_{W} > 0$, and
+the functionals are consistent under $W \subseteq W'$; hence they define a
+unique state on $\alg$.
+\end{lemma}
+
+\begin{proof}[Idea of proof]
+\emph{Positivity.} For $c \in \C^{d^{\abs{W}}}$ put
+$T := \sum_{s} c_{s} P_{W}(s)$. Then
+\begin{equation}
+  \bra{c} \tilde{\varrho}_{W} \ket{c}
+  \;=\; \operatorname{tr}\bigl[\, l_{\alpha} T r_{\beta} T^{\dagger} \,\bigr]
+  \;=\; \operatorname{tr}\Bigl[\,
+        \bigl(l_{\alpha}^{1/2} T r_{\beta}^{1/2}\bigr)
+        \bigl(l_{\alpha}^{1/2} T r_{\beta}^{1/2}\bigr)^{\dagger} \,\Bigr]
+  \;\ge\; 0 ,
+\end{equation}
+using $l_{\alpha}, r_{\beta} > 0$ from \cref{def:injective-mps}(c).
+\emph{Nondegeneracy.}
+$\operatorname{tr} \tilde{\varrho}_{W}
+ = \operatorname{tr}[\, l_{\alpha} \, \Ewin_{W}(r_{\beta}) \,] > 0$
+with $\Ewin_{W}$ the window completely positive map, since
+$l_{\alpha}, r_{\beta} > 0$ and $\Ewin_{W}$ is faithful on positive definite
+inputs. \emph{Consistency.} Enlarging $W$ by one site on the left tail
+applies $\Ewin_{A_{\alpha}}^{*}$ to $l_{\alpha}$, which fixes it; on the right
+tail it applies $\Ewin_{A_{\beta}}$ to $r_{\beta}$, which fixes it.
+\end{proof}
+
+\begin{remark}[A corrected argument]
+The r2 text justified positivity by saying that each entry is
+$\bra{v} \cdot \ket{v}$ for a finite-window vector $v$. That is wrong: with
+full-rank matrix environments the restriction is a positive completely
+positive contraction, and becomes a vector expression only after purifying the
+environments --- not a rank-one boundary-vector window vector. The argument
+above is the corrected one. Independently, the weak-$*$ limit constructed in
+the Corner~A endpoint theorem supplies positivity, so
+\cref{lem:two-sided-welldefined} is a convenience rather than a load-bearing
+hypothesis.
+\end{remark}
+
+\provenance{D1(e$'$)}%
+{\texttt{definitions.md} D1(e$'$), with the well-definedness lemma stated and
+ proved there}%
+{\texttt{theory/checks/corner\_a\_check.py}, check C11 (Hermiticity $0$,
+ minimal eigenvalue $-1.4 \cdot 10^{-16}$, positive trace)}%
+{\texttt{theory/verdicts/corner-a-r2.md} objection 8 (conceded);
+ \texttt{theory/verdicts/corner-a-r3.md}}
+
+\subsection{Excitations: the ansatz and its gauge freedom}
+
+One-particle states are built by replacing the vacuum tensor at one site by a
+different tensor $B$ and superposing over the position of that replacement with
+a momentum phase. If the tensors to the left and to the right of $B$ are the
+same, the result is a local excitation over a single vacuum; if they are two
+different vacua, it is a kink. The parametrisation is redundant, and the
+redundancy --- the \emph{null directions} --- is the technical heart of the
+soft theorem: at zero momentum the Goldstone tensor of
+\cref{def:goldstone-tensor} becomes a null direction, which is exactly the
+statement that the zero-momentum Goldstone mode is a global symmetry rotation
+and therefore carries no independent excitation.
+
+\begin{definition}[Excitation ansatz and kink sectors (D5(a))]
+\label{def:excitation-ansatz}
+For injective canonical-form tensors $A_{\alpha}, A_{\beta}$, a tensor
+$B = (B^{s})$ with $B^{s} \in M_{\chi}$, and $k \in (-\pi,\pi]$, the
+\emph{excitation-ansatz vector} is defined on windows by
+\begin{equation}
+  \ket{\Phi_{k}(B; A_{\alpha}, A_{\beta})}_{\Lambda}
+  \; := \; \sum_{n \in \Lambda} e^{ikn} \,
+  \ket{\psi_{\Lambda}\bigl( \ldots A_{\alpha} A_{\alpha} \, B \,
+       A_{\beta} A_{\beta} \ldots ; \, b_{l}, b_{r} \bigr)},
+  \label{eq:excitation-ansatz}
+\end{equation}
+with $B$ at site $n$, $A_{\alpha}$ at all sites $< n$ and $A_{\beta}$ at all
+sites $> n$. For $\alpha = \beta$ we write $\ket{\Phi_{k}(B)}$ and call it the
+\emph{trivial} (local) sector; for $\alpha \neq \beta$ it is the \emph{kink}
+(topological) sector. On the infinite chain these are $\delta$-normalised
+generalised vectors,
+\begin{equation}
+  \braket{\Phi_{k}(B) \vert \Phi_{k'}(B')}
+  \;=\; 2\pi \, \delta(k-k') \cdot B^{\dagger} N_{k} B' ,
+  \label{eq:delta-normalisation}
+\end{equation}
+with $N_{k}$ the Gram form of the ansatz at momentum $k$.
+\end{definition}
+
+\provenance{D5(a)}%
+{\texttt{definitions.md} D5(a); convention matched against the local \TeX{}
+ ground truth \texttt{refs/arxiv-1103.2286} (\texttt{dispersionrelation\_final.tex})
+ and \texttt{refs/arxiv-1810.07006} (\texttt{p5\_excitations.tex}, Eq.~(kink))}%
+{---}%
+{\texttt{theory/verdicts/corner-a-r3.md}}
+
+\begin{definition}[Null directions of the ansatz (D5(b))]
+\label{def:null-directions}
+For $X \in M_{\chi}$ set
+\begin{equation}
+  \Nnull_{k}^{\alpha\beta}(X) \; := \; e^{ik} A_{\alpha} X - X A_{\beta},
+  \qquad\text{i.e.}\qquad
+  \Nnull_{k}(X)^{s} = e^{ik} A_{\alpha}^{s} X - X A_{\beta}^{s} .
+  \label{eq:null-directions}
+\end{equation}
+This is the gauge freedom $B \simeq B + e^{ik} A X - X A$ of the ansatz.
+The rank of $X \mapsto \Nnull_{k}(X)$ is $\chi^{2}$ for $k \neq 0$ and
+$\chi^{2} - 1$ for $k = 0$ with $\alpha = \beta$: the rank \emph{drops} by one
+as $k \to 0$.
+\end{definition}
+
+\begin{remark}[The vanishing of a null direction is a limit statement, not a
+finite-window identity]
+\label{rem:null-not-exact}
+The identity $\ket{\Phi_{k}(\Nnull_{k}(X))} = 0$ is \textbf{false as a
+finite-window identity}. On $\Lambda = [a,b]$ the reindexing that would prove
+it leaves exactly two boundary terms,
+\begin{equation}
+  e^{ik(b+1)} \ket{\psi_{\Lambda}; \, X@(b|b+1)}
+  \; - \; e^{ika} \ket{\psi_{\Lambda}; \, X@(a-1|a)} ,
+  \label{eq:null-boundary-terms}
+\end{equation}
+which do not vanish for generic $b_{l}, b_{r}$: the measured norm is $1.77$ for
+the $\chi = 2$ Pauli tensor at $k = 0.37$ (an earlier measurement with
+different boundary vectors gave $0.591$). The vanishing statement holds only
+in the limits specified in \cref{def:gauge-limits}. Shards of the first
+revision asserted the exact identity and were wrong; the exact identity, with
+its boundary terms, is the summation-by-parts lemma of the Goldstone shard.
+\end{remark}
+
+\provenance{D5(b)}%
+{\texttt{definitions.md} D5(b); exact identity with boundary terms at
+ \texttt{theory/corner-a-goldstone.md} step (1.5) (Lemma SBP); rank statement
+ ibid.; ground truth \texttt{refs/arxiv-1103.2286} and
+ \texttt{refs/arxiv-1810.07006} Eq.~(gaugeexcitations)}%
+{\texttt{theory/checks/corner\_a\_check.py}}%
+{\texttt{theory/verdicts/corner-a-r2.md} (warning conceded);
+ \texttt{theory/verdicts/corner-a-r3.md}}
+
+\subsection{Superselection: vacuum and kink sectors}
+
+The next definition says what it means for a state to ``look like vacuum
+$\alpha$ far to the left and vacuum $\beta$ far to the right''. The
+factorised form of the boundary condition --- with a spectator observable $D$
+inserted --- is what makes the label stable under normal perturbations, and
+hence a genuine superselection label rather than a property of one particular
+state. It refers forward to the covariant vacuum family of
+\cref{def:covariant-vacuum}.
+
+\begin{definition}[Vacuum and kink superselection sectors (D9(a),(b))]
+\label{def:kink-sector}
+Let $\{\omega_{\alpha}\}_{\alpha \in \Vac}$ be a $G$-covariant vacuum family
+(\cref{def:covariant-vacuum}). For $\alpha, \beta \in \Vac$ the \emph{kink
+sector} $\Kk_{\alpha\beta}$ is the set of states $\varrho$ on $\alg$ obeying
+the \emph{factorised} boundary conditions at infinity,
+\begin{equation}
+  \lim_{n \to -\infty} \varrho\bigl(D \cdot \tau_{n}(O)\bigr)
+    = \varrho(D) \, \omega_{\alpha}(O),
+  \qquad
+  \lim_{n \to +\infty} \varrho\bigl(D \cdot \tau_{n}(O)\bigr)
+    = \varrho(D) \, \omega_{\beta}(O),
+  \label{eq:kink-boundary-conditions}
+\end{equation}
+for all $D, O \in \Aloc$. Taking $D = \mathbb{1}$ gives the plain conditions
+$\varrho(\tau_{n}(O)) \to \omega_{\alpha/\beta}(O)$. The sector
+$\Kk_{\alpha\alpha}$ is the \emph{vacuum sector of $\alpha$}; it contains
+$\omega_{\alpha}$, every state $\omega_{\alpha} \circ \Ad(W^{\dagger})$ with
+$W \in \alg$ unitary, and every decorated state $\omega_{A_{\alpha}}[T]$ of
+\cref{def:window-vector}. A state in $\Kk_{\alpha\beta}$ with $\alpha \neq \beta$
+is a \emph{kink state} (equivalently a domain-wall or topological state).
+
+\emph{Disjointness.} States in $\Kk_{\alpha\beta}$ and
+$\Kk_{\alpha'\beta'}$ with $(\alpha,\beta) \neq (\alpha',\beta')$ are disjoint,
+i.e.\ mutually non-normal. Hence ``superselection sector'' is used here in the
+precise sense: the label $(\alpha,\beta)$ is a classical observable at
+infinity, unchangeable by any element of $\alg$.
+\end{definition}
+
+\provenance{D9(a),(b)}%
+{\texttt{definitions.md} D9(a),(b); stability of the factorised label and
+ disjointness proved at \texttt{theory/corner-a-kinks.md} step (1.8), with
+ rate $\lambda_{E}$ for every decorated matrix-product state at sub-step
+ (1.8)(iii)}%
+{---}%
+{\texttt{theory/verdicts/corner-a-r3.md}}
+
+The next object is the set of states obtained from one vacuum by inserting a
+single invertible matrix on one bond. It is defined here as a bare set with a
+bare action; \emph{that} the action descends, and what its orbits are, are
+theorems of the Corner~A shard, restated below only for the reader's
+convenience.
+
+\begin{definition}[Endpoint space and endpoint action (D9(c), definition only)]
+\label{def:endpoint-space}
+Fix a bond $b$ and a vacuum label $\alpha$. The \emph{endpoint space} is
+\begin{equation}
+  \Ept_{b}^{\alpha}
+  \; := \; \bigl\{\, \omega_{A_{\alpha}}^{M@b} \;:\; M \in GL(\chi) \,\bigr\},
+\end{equation}
+and the \emph{endpoint action} of $G$ on representatives is
+\begin{equation}
+  g \star M \; := \; V_{\alpha}(g) \, M .
+\end{equation}
+Nothing beyond this is definitional.
+\end{definition}
+
+\begin{remark}[What the endpoint theorem adds]
+\label{rem:endpoint-torsor}
+The following are proved in the Corner~A endpoint theorem and are recorded
+here only because they are what makes \cref{def:endpoint-space} interesting.
+(i) $\omega^{M@b} = \omega^{M'@b}$ if and only if $M' \in \C^{\times} M$;
+hence $[M] \mapsto \omega^{M@b}$ is a canonical bijection
+$PGL(\chi) \to \Ept_{b}^{\alpha}$, and $\Ept_{b}^{\alpha}$ is a
+$PGL(\chi)$-torsor. (ii) The action $\star$ descends to $\Ept_{b}^{\alpha}$
+and acts there as left translation by
+$\rho_{\alpha}(g) = [V_{\alpha}(g)] \in PGL(\chi)$, a genuine $G$-action with
+kernel $N_{\alpha}$; the orbit of $\omega_{\alpha}$ is
+$\rho_{\alpha}(G) \cong \Aeff = G/N_{\alpha}$, on which $\Aeff$ acts simply
+transitively. (iii) The lift of $\rho_{\alpha}$ to the padded window space
+furnished by \cref{def:bond-implementer} is a \emph{projective} action with
+multiplier $\omega_{\alpha}$; it exists always, including when
+$[\omega_{\alpha}] \neq 0$. What the class $[\omega_{\alpha}]$ obstructs is
+\emph{removing} the multiplier, i.e.\ lifting $\rho_{\alpha}$ to an honest
+homomorphism $G \to U(\chi)$. The earlier phrasing, that
+$[\omega_{\alpha}]$ obstructs ``lifting the state action to the window
+action'', is wrong and has been retracted.
+
+Two sanity checks. For $\chi = 1$, or whenever $V_{\alpha}$ is a scalar for
+every $g$, one has $N_{\alpha} = G$ and a one-point orbit. For the AKLT chain
+with $G = \Z_{2} \times \Z_{2}$ and $V_{\alpha} \in \{\mathbb{1}, X, Z, XZ\}$
+one has $N_{\alpha} = \{e\}$ and a four-point orbit.
+
+When it is said that the asymptotic symmetry ``relabels charge superselection
+sectors'', that is asserted about this torsor and about the module structure of
+$\C^{\chi}$ over the charge algebra of \cref{def:charge-algebra} --- never
+about $\Kk_{\alpha\beta}$, which is trivial in the unbroken case.
+\end{remark}
+
+\provenance{D9(c),(c$'$)}%
+{\texttt{definitions.md} D9(c) (definition) and D9(c$'$) (corollaries);
+ proved at \texttt{theory/corner-a.md} step (1.4), sub-steps (d2) and (f)}%
+{\texttt{theory/checks/corner\_a\_check.py}}%
+{\texttt{theory/verdicts/corner-a-r2.md} objections 2 and 7;
+ \texttt{theory/verdicts/corner-a-r3.md}}
+
+Finally, when the symmetry is broken there is a question of which pairs of
+vacua are genuinely different once the global symmetry is quotiented out. The
+naive answer --- the difference $g_{L} g_{R}^{-1}$ --- is wrong for nonabelian
+groups; the correct invariant is a double coset.
+
+\begin{definition}[Vacuum-pair invariant (D9(d))]
+\label{def:vacuum-pair-invariant}
+$G_{L} \times G_{R}$ acts on $\Vac \times \Vac$ componentwise. Carry
+explicitly the \emph{transitivity hypothesis} (T): \emph{$G$ acts transitively
+on $\Vac$}. The covariance requirement of \cref{def:covariant-vacuum} does
+\emph{not} imply (T) --- the vacuum family may split into several $G$-orbits
+--- so without (T) everything below holds per orbit. Under (T),
+$\Vac \cong G/H_{\alpha}$ and
+\begin{equation}
+  \Vac \times \Vac \;\cong\; (G/H_{\alpha}) \times (G/H_{\alpha}),
+\end{equation}
+transitively, with the stabiliser of $(\alpha,\beta)$ equal to
+$H_{\alpha} \times H_{\beta}$. This is \textbf{not} $(G \times G)/G_{\mathrm{diag}}$:
+for $G = SU(2)$ with $H_{\alpha} = U(1)$ it is $S^{2} \times S^{2}$, of
+dimension $4$, whereas $(G \times G)/G_{\mathrm{diag}} \cong SU(2)$ has
+dimension $3$.
+
+The complete invariant of a vacuum pair \emph{modulo the global (diagonal)
+symmetry} is the \emph{double coset}
+\begin{equation}
+  \dcoset(\alpha_{L}, \alpha_{R})
+  \; := \; H_{\alpha} \, g_{L}^{-1} g_{R} \, H_{\alpha}
+  \;\in\; H_{\alpha} \backslash G / H_{\alpha},
+  \label{eq:double-coset}
+\end{equation}
+where $\alpha_{L} = g_{L} \cdot \alpha$ and $\alpha_{R} = g_{R} \cdot \alpha$.
+It is well defined --- changing $g_{L} \mapsto g_{L} h_{1}$ and
+$g_{R} \mapsto g_{R} h_{2}$ conjugates within the double coset --- and
+diagonal-invariant, since $g_{i} \mapsto h g_{i}$ cancels. For $G = SU(2)$
+with $H_{\alpha} = U(1)$ it is the relative polar angle,
+$\cos \theta = \hat{n}_{L} \cdot \hat{n}_{R} \in [-1,1]$.
+\end{definition}
+
+\begin{remark}[The corrected classification]
+An earlier version asserted that the orbit of the coset space
+$(G_{L} \times G_{R})/G_{\mathrm{diag}}$ is the set of vacuum pairs, and that
+$[g_{L} g_{R}^{-1}]$ is the diagonal-invariant label. Both are false for
+nonabelian $G$: the componentwise stabiliser is
+$H_{\alpha} \times H_{\beta}$, not $G_{\mathrm{diag}}$, and
+$g_{L} g_{R}^{-1} \mapsto h \, g_{L} g_{R}^{-1} h^{-1}$ under the diagonal
+action. Both the double-coset invariant and the failure of
+$g_{L} g_{R}^{-1}$ to be diagonal-invariant were verified numerically.
+\end{remark}
+
+\provenance{D9(d)}%
+{\texttt{definitions.md} D9(d)}%
+{\texttt{theory/checks/corner\_a\_check.py}}%
+{\texttt{theory/verdicts/corner-a-r2.md} objection 5;
+ \texttt{theory/verdicts/corner-a-r3.md}}
+
+\subsection{Goldstone tensors and broken directions}
+
+Differentiating the symmetry action on the vacuum tensor produces a tensor in
+the excitation ansatz. This is the object whose zero-momentum limit is pure
+gauge, and whose small-momentum behaviour is the Adler zero the campaign is
+chasing.
+
+\begin{definition}[Goldstone tensor, broken and unbroken directions (D11)]
+\label{def:goldstone-tensor}
+Assume the smoothness hypothesis (S) of \cref{def:smoothness}. Fix
+$\alpha \in \Vac$, write $\hsub_{\alpha} := \mathrm{Lie}(H_{\alpha})$, and
+choose an $\Ad(H_{\alpha})$-invariant complement $\msub_{\alpha}$ with
+$\liealg = \hsub_{\alpha} \oplus \msub_{\alpha}$; the elements of
+$\msub_{\alpha}$ are the \emph{broken directions}.
+
+\emph{(a) Goldstone tensor.} For $\xi \in \liealg$,
+\begin{equation}
+  B_{\mathrm{G}}(\xi)
+  \; := \; \frac{d}{d\varepsilon}
+  \Bigl[\, \Utens\bigl(\exp(\varepsilon \xi)\bigr) A_{\alpha} \,\Bigr]
+  \Big\vert_{\varepsilon = 0},
+  \qquad\text{equivalently}\qquad
+  B_{\mathrm{G}}(\xi)^{s} = \sum_{s'} q(\xi)_{s s'} \, A_{\alpha}^{s'} .
+  \label{eq:goldstone-tensor}
+\end{equation}
+
+\emph{(b) Soft insertion.} In the sense of \cref{def:excitation-ansatz} and
+\cref{def:modulated-charge},
+\begin{equation}
+  \ket{\Phi_{k}\bigl(B_{\mathrm{G}}(\xi)\bigr)} \;=\; Q_{k}(\xi) \triangleright \omega_{\alpha} :
+\end{equation}
+replacing $A_{\alpha}$ by $B_{\mathrm{G}}(\xi)$ at site $n$ is exactly the
+action of the charge density $q_{n}(\xi)$ there.
+
+\emph{(c) Goldstone count.} The number of independent Goldstone tensors at
+$\alpha$ is
+\begin{equation}
+  \dim_{\C} \operatorname{span}_{\C}
+  \bigl\{\, B_{\mathrm{G}}(\xi) \;:\; \xi \in \msub_{\alpha} \,\bigr\}
+  \quad \text{modulo } \Nnull_{0}(\cdot),
+\end{equation}
+which may be strictly smaller than $\dim_{\R} \msub_{\alpha}$. The deficiency
+is the \emph{type-B} phenomenon; the isotropic ferromagnet realises
+$\dim_{\R} \msub_{\alpha} = 2$ broken directions but only one Goldstone mode.
+\end{definition}
+
+\provenance{D11}%
+{\texttt{definitions.md} D11; the count and the ferromagnetic example at
+ \texttt{theory/corner-a-goldstone.md} step (1.7)}%
+{\texttt{theory/checks/corner\_a\_check.py}}%
+{\texttt{theory/verdicts/corner-a-r3.md}}
+
+\subsection{In which limits the ansatz gauge remainder vanishes}
+
+The exact statement about null directions is the summation-by-parts identity,
+whose remainder consists of exactly two boundary window vectors. Whether that
+remainder can be dropped depends on the profile class, and different parts of
+the campaign need different classes. The definition below states only what is
+proved --- a bound on the remainder --- and then names the three regimes in
+which that bound is used. Its type discipline is binding: quoting a fixed-$k$
+identity with a decay hypothesis, or the reverse, is a defect.
+
+\begin{definition}[The three regimes in which the gauge remainder is
+negligible (D12)]
+\label{def:gauge-limits}
+Let $\Lambda_{L} := [-L, L]$ and
+\begin{equation}
+  \ket{\Phi_{f}^{\Lambda}(B)}
+  \; := \; \sum_{n \in \Lambda} f(n) \,
+  \ket{\psi_{\Lambda}(\ldots B@n \ldots)} .
+\end{equation}
+The summation-by-parts lemma shows that the gauge remainder
+$\gaugerem_{\Lambda}[f, X]$ is a sum of exactly two boundary window vectors,
+and gives the \textbf{upper bound}
+\begin{equation}
+  \bigl\Vert \gaugerem_{\Lambda}[f,X] \bigr\Vert
+  \;\le\; 2 \, \Cbd \, \norm{X} \,
+  \max\bigl(\abs{f(a)}, \abs{f(b)}\bigr),
+  \label{eq:sbp-bound}
+\end{equation}
+with $\Cbd$ the window-norm constant \eqref{eq:cbd}. Everything below is a
+consequence of this bound alone. Three regimes are used, and every statement
+citing this definition must name which.
+
+\emph{(a) Vanishing remainder for decaying profiles.} If $f \in c_{0}(\Z)$
+then $\Vert \gaugerem_{\Lambda}[f,X] \Vert \to 0$ as
+$\Lambda_{L} \nearrow \Z$. \textbf{This is a statement about the remainder
+only.} It does \emph{not} assert that either side of the summation-by-parts
+identity converges to a vector: for that one needs a summability class, as in
+(a$'$), \emph{and} the split property, which remains a sketch. Measured decay
+with the centred profile $(1+\abs{n-c})^{-3}$:
+$\Vert \gaugerem_{\Lambda} \Vert / \Vert \text{bulk} \Vert
+ = 3.4 \cdot 10^{-1},\, 5.7 \cdot 10^{-2},\, 8.5 \cdot 10^{-3},\,
+ 1.2 \cdot 10^{-3}$ for $L = 4, 8, 16, 32$.
+
+\emph{(a$'$) Norm-convergent wave packets.} If in addition $f \in \ell^{1}(\Z)$
+\textbf{and} $\Delta f \in \ell^{1}(\Z)$ --- that is, $f$ is summable of
+bounded variation --- then both sides of the summation-by-parts identity are
+absolutely convergent sums of window vectors of norm at most
+$\Cbd \norm{X}$, uniformly in $\Lambda$; the identity then holds between the
+two limits at fixed $\Lambda$ and remains remainderless as
+$\Lambda \nearrow \Z$. A smooth compactly supported momentum packet
+$f = \hat{\varphi}$ with $\varphi \in C_{c}^{\infty}((-\pi,\pi])$ has rapidly
+decreasing $f$ and so lies in $\ell^{1} \cap BV$. The class $\Fell$ of
+\cref{def:admissible-profiles} is exactly the bounded-variation condition.
+\textbf{This class, not $c_{0}$, is the one to cite for wave-packet
+statements.}
+
+\emph{(b) $\delta$-normalised plane wave.} For $f(n) = e^{ikn}$ one has
+$\abs{f} \equiv 1$, so \eqref{eq:sbp-bound} gives
+$\Vert \gaugerem_{\Lambda} \Vert = O(1)$ \emph{uniformly in $\Lambda$} --- and
+that is all that is needed:
+\begin{equation}
+  \bigl\Vert \, \abs{\Lambda}^{-1/2} \, \gaugerem_{\Lambda} \, \bigr\Vert
+  \;=\; O\bigl(\abs{\Lambda}^{-1/2}\bigr) \;\longrightarrow\; 0 .
+\end{equation}
+No claim is made, or needed, about how the bulk term grows. Equivalently, per
+site,
+\begin{equation}
+  \lim_{\Lambda \nearrow \Z} \abs{\Lambda}^{-1}
+  \bra{\Phi_{k}^{\Lambda}(B')} O \, \ket{\gaugerem_{\Lambda}} \;=\; 0
+\end{equation}
+for every $O \in \Aloc$ and every fixed $B'$. Measured:
+$\Vert \gaugerem_{\Lambda} \Vert \in [1.31,\, 2.03]$ for
+$L = 4, \ldots, 32$.
+
+\emph{Type discipline.} A fixed-$k$ identity may be quoted only with (b); a
+$c_{0}$ or $\ell^{1}$ identity only with (a) or (a$'$), and then in the
+real-space summation-by-parts form or as a Fourier superposition of the
+fixed-$k$ identities --- never as a fixed-$k$ equation with a $c_{0}$
+hypothesis. Statements quoted ``exactly'' without naming a regime are
+defects.
+\end{definition}
+
+\begin{remark}[What this definition deliberately no longer says]
+The r2 version over-quantified in three ways, all conceded. It asserted that
+the identity ``holds exactly'' for every $f \in c_{0}$, although
+$c_{0} \not\subset \ell^{1}$ and neither side need converge in norm --- take
+$f(n) = (1+\abs{n})^{-1/4}$. It asserted a universal $\Theta(\abs{\Lambda}^{1/2})$
+bulk growth, which is \emph{false}: for $\chi = 1$ one has
+$A_{\alpha} X \propto A_{\alpha}$, so the plane-wave bulk sum is a bounded
+geometric sum. And it attached a fixed-$k$ formula to a $c_{0}$ hypothesis,
+even though a plane wave is not in $c_{0}$. What survives, and all that is
+used, is the remainder bound \eqref{eq:sbp-bound}.
+\end{remark}
+
+\provenance{D12}%
+{\texttt{definitions.md} D12 (rewritten in r3); remainder bound and
+ summation-by-parts lemma at \texttt{theory/corner-a-goldstone.md} step (1.5);
+ the sketch split property at \texttt{theory/corner-a.md} step (1.4),
+ sub-step (2.9)}%
+{\texttt{theory/checks/corner\_a\_check.py}, checks C4 (decay), C5 (plane-wave
+ boundedness), C10 (the withdrawn bulk-growth assertion)}%
+{\texttt{theory/verdicts/corner-a-r2.md} objection 4;
+ \texttt{theory/verdicts/corner-a-r3.md}}

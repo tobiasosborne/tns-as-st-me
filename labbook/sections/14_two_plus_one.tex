@@ -1,0 +1,764 @@
+% SHARD-ID: LB-14-TWO-PLUS-ONE
+% SHARD-TITLE: The triangle in two space dimensions: anyon labels and 2D memory
+% SHARD-SOURCES: theory/anyon-label-index.md; theory/anyon-selection-hybrid.md;
+%              theory/memory-index-2d.md; theory/boundary-2d.md;
+%              docs/2p1-antecedents.md; theory/verdicts/w21-joint-critic.md
+% SHARD-CLAIMS: A-INDEX-TC-fin, M-INDEX-2D-fin, A-INDEX-PEPS, SHAPE-FLAT,
+%              M-INDEX-2D-spec
+
+% --- shard-local semantic macros (see WRITING-GUIDE rule 10) ---------------
+\newcommand{\tpLab}{\mathsf{A}}      % anyon label set; kept distinct from \A
+\newcommand{\tpCat}{\mathcal{C}}     % the input unitary fusion category
+\newcommand{\tpDeph}{\mathcal{D}}    % pinching / dephasing map of a PVM
+\newcommand{\tpWin}{W}               % a finite 2D window (disk or annulus)
+
+\section{The triangle in two space dimensions: anyon labels and 2D
+memory}\label{sec:two-plus-one}
+
+The one-dimensional story of the preceding sections has three corners: a
+charge attached to an endpoint, a memory recorded by a windowed observable,
+and a soft theorem relating the two. In two space dimensions the first two
+corners change character in a way that is worth stating plainly before any
+theorem. An endpoint is no longer labelled by a group element or a projective
+class; it is labelled by an \emph{anyon type}, an object of the Drinfeld
+centre of the input fusion category, and those labels do not in general
+subtract. A memory is no longer the displacement of a point-like kink; it is a
+ledger of charge crossing a closed curve, a disk or an annulus, whose boundary
+grows with the window instead of consisting of two endpoints. This section
+reports what the campaign proved about those two corners, and it is honest
+about the third: no two-dimensional soft theorem is claimed here.
+
+That honesty is not modesty for its own sake. A survey of the continuum
+antecedents produced three warnings, and each of them is a live trap for a
+lattice calculation in $2+1$ dimensions.
+
+\emph{First, memory means something different in $2+1$.} Direct continuum
+computations show that permanent-displacement memory is an accident of
+$d=4$. In $d=3$ the retarded field carries a tail, the force decays only as
+$U^{-1/2}$, and the verdict is an ``infinite momentum memory effect'' with no
+gravitational memory at all. A lattice observable in $2+1$ dimensions should
+therefore be a momentum or velocity kick, stated as a rate or on a finite
+window, and never as a finite permanent displacement. If a lattice computation
+returns a finite permanent shift, the honest first hypothesis is that the
+lattice regulator produced it, not the physics. Everything below respects this:
+the memory statements of this section are \emph{charge} ledgers on a finite
+window, and no displacement is defined.
+
+\emph{Second, a confined or dressed charge sector silently trivialises the
+triangle.} Logarithmic confinement in three-dimensional quantum
+electrodynamics forbids finite-energy asymptotic charged states, so the
+asymptotic symmetry acts trivially on the scattering matrix and the memory
+effect is abolished. The lattice analogue is immediate and dangerous: in a
+gapped $2+1$-dimensional topological phase there is no radiative sector at
+all, so a ``soft theorem'' derived there risks being the identity $0=0$ dressed
+up in notation. The pre-registered falsifier is that the sector carrying the
+charge must be shown to possess finite-energy asymptotic states --- gapless at
+a boundary, or tuned to criticality --- before any status label is allowed to
+move. The toric-code theorem below is stated as a \emph{label} theorem
+precisely so that it is not mistaken for a radiative soft theorem: it is
+exactly and nontrivially true in a gapped phase, and it makes no soft claim.
+
+\emph{Third, name the order of the fall-off.} The continuum literature
+separates a radiative $1/r^{d/2-1}$ sector from a Coulombic $1/r^{d-3}$
+sector, and ties only the null piece to flux and hence to the soft sector.
+That analysis is stated for $d\ge4$ and does not cover $d=3$, where the two
+exponents invert: the Coulombic term $1/r^{0}$ does not decay at all and
+dominates the radiative $1/r^{1/2}$. This structural oddity is flagged here
+rather than quietly extrapolated, and no result below depends on a
+radiative/Coulombic split.
+
+What the antecedents \emph{do} leave open is the holonomy route. Colour memory
+measures the change in a flat connection by parallel transport of test
+charges: an observable that needs no propagating radiation and no permanent
+displacement. Its lattice counterpart is the change in a string or matrix
+product operator holonomy encircling a region, whose labels are exactly the
+central idempotents of a tube algebra. That is the route taken by the first two
+theorems below.
+
+\subsection{The toric-code endpoint carries an exact anyon label}
+
+\begin{definition}[The toric-code model, its boundary-circle measurement, and
+the same-circle protocol]\label{def:toric-registers}
+Let $\Lambda=C_{L_x}\,\square\,C_{L_y}$ with $L_x,L_y\ge3$ be a finite square
+cellulation of the torus, with one qubit on each edge and Pauli operators
+$X_j,Z_j$. For each vertex $v$ and plaquette $p$ put
+\begin{equation}
+  A_v:=\prod_{j\ni v}X_j,\qquad
+  B_p:=\prod_{j\in\partial p}Z_j,\qquad
+  H_{\mathrm{TC}}:=-\sum_v A_v-\sum_p B_p .
+  \label{eq:tc-hamiltonian}
+\end{equation}
+A star and a plaquette share zero or two edges, so all these terms commute.
+Let $\Omega$ be any torus ground vector, $A_v\Omega=B_p\Omega=\Omega$. The two
+global relations $\prod_vA_v=\prod_pB_p=I$ leave a four-dimensional ground
+space, but no choice of logical ground state enters anything below.
+
+The \emph{anyon label set} is the pointed Drinfeld centre
+\begin{equation}
+  \tpLab:=\operatorname{Irr}Z(\operatorname{Vec}_{\Z_2})
+   =\{1,e,m,\epsilon\}\;\cong\;\Z_2^{e}\times\Z_2^{m},
+  \label{eq:tc-labels}
+\end{equation}
+written $x=(x_e,x_m)$ with $e=(1,0)$, $m=(0,1)$, $\epsilon=(1,1)$; addition in
+\eqref{eq:tc-labels} is fusion. We write $\tpLab$ rather than $\mathcal A$ to
+keep this label set distinct from the asymptotic symmetry group $\A$ of
+\cref{sec:corner-a}. The group structure of \eqref{eq:tc-labels} is special to
+this pointed model, and it is exactly what makes a difference of labels
+meaningful.
+
+Choose a proper contractible disk $D\subset\Lambda$ with compatible vertex and
+plaquette sets $V(D)$, $P(D)$, and define the closed boundary operators and
+their joint projection-valued measure
+\begin{equation}
+  F_e(D):=\prod_{v\in V(D)}A_v,
+  \qquad
+  F_m(D):=\prod_{p\in P(D)}B_p,
+  \qquad
+  P_a(D):=\tfrac14\bigl(I+(-1)^{a_e}F_e(D)\bigr)
+                 \bigl(I+(-1)^{a_m}F_m(D)\bigr).
+  \label{eq:tc-pvm}
+\end{equation}
+Every interior edge occurs twice in the appropriate product, so $F_e$ and
+$F_m$ are closed lattice boundary operators; they commute, are self-adjoint,
+and square to the identity. Equivalently, the two commuting bits
+$\hat q_D=\bigl((I-F_e)/2,\,(I-F_m)/2\bigr)$ take values in
+\eqref{eq:tc-labels}, $F_e$ reading the parity of enclosed electric charge and
+$F_m$ that of enclosed magnetic charge.
+
+Let $\gamma$ be a direct-lattice path and $\gamma^{*}$ a dual-lattice path,
+each with one endpoint inside $D$ and one outside, so that each crosses
+$\partial D$ an odd number of times. Put
+\begin{equation}
+  Z(\gamma)=\prod_{j\in\gamma}Z_j,
+  \qquad
+  X(\gamma^{*})=\prod_{j\pitchfork\gamma^{*}}X_j,
+  \qquad
+  W_x=Z(\gamma)^{x_e}\,X(\gamma^{*})^{x_m},
+  \label{eq:tc-ribbon}
+\end{equation}
+with an irrelevant Pauli phase chosen so that $W_x$ is unitary. \emph{Pure}
+means that the single $x$-component of \eqref{eq:tc-ribbon} has been selected;
+a coherent sum of different $W_x$ need not have one label and lies outside the
+definite-sector clause. For $x=\epsilon$ the direct and dual endpoints in one
+small neighbourhood form the composite endpoint. For $x=1$, $W_1=I$ is the
+empty ribbon and is not a physical endpoint.
+
+The \emph{same-circle protocol} is: for an arbitrary initial density matrix
+$\rho$, measure the projection-valued measure \eqref{eq:tc-pvm}, apply $W_x$,
+and measure the \emph{same} measure again. Its joint law and its sector
+increment are
+\begin{equation}
+  p_x(a,b):=\operatorname{Tr}\bigl[P_bW_xP_a\,\rho\,P_aW_x^{\dagger}P_b\bigr],
+  \qquad
+  \Delta q_D:=b-a\in\tpLab .
+  \label{eq:tc-tpm}
+\end{equation}
+Using the \emph{same} finite boundary register twice is load-bearing, exactly
+as in the finite windowed memory theorem of \cref{sec:memory-index}: the two
+outcomes belong to one affine register before their difference is taken. Here
+the register has zero offset and is the fusion group itself, and
+\eqref{eq:tc-tpm} is not spectral arithmetic for a difference of noncommuting
+operators.
+\end{definition}
+
+\provenance{A-INDEX-TC-fin}{\texttt{theory/anyon-label-index.md} \S\S1.1--1.4}%
+{\texttt{theory/checks/anyon\_label\_check.py} ANYON-C0--C4 on a $4\times4$
+torus (exact rational weights)}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W2)}
+
+\begin{theorem}[A toric-code ribbon endpoint has a definite anyon label and an
+exact same-circle shift]\label{thm:toric-endpoint}
+\statusProved\ In the setting of \cref{def:toric-registers}, for every
+$a,b,x\in\tpLab$:
+\begin{enumerate}
+\item \emph{(Definite endpoint sector.)} The ribbon has exact boundary
+  covariance,
+  \begin{equation}
+    F_eW_x=(-1)^{x_e}W_xF_e,
+    \qquad
+    F_mW_x=(-1)^{x_m}W_xF_m,
+    \label{eq:tc-covariance}
+  \end{equation}
+  and hence the selection rule
+  \begin{equation}
+    P_bW_xP_a=\delta_{b,a+x}\,W_xP_a .
+    \label{eq:tc-selection}
+  \end{equation}
+  In particular $P_bW_x\Omega=\delta_{b,x}W_x\Omega$: the enclosed string
+  endpoint sits in the definite Drinfeld-centre sector $x$.
+\item \emph{(Quantised two-measurement law.)} The law \eqref{eq:tc-tpm} is a
+  probability distribution supported on $\{(a,b):b=a+x\}$, so every run has the
+  group-valued outcome $\Delta q_D=x$. Starting from any torus ground state,
+  $p_x(1,x)=1$.
+\item \emph{(Braiding readout.)} A closed probe ribbon of type $y=(y_e,y_m)$
+  around the circle may be represented as
+  $L_y(D):=F_m(D)^{y_e}F_e(D)^{y_m}$ and obeys
+  \begin{equation}
+    L_yW_x=(-1)^{\,x_ey_m+x_my_e}\,W_xL_y ,
+    \label{eq:tc-braiding}
+  \end{equation}
+  a nondegenerate pairing, so the two measured bits distinguish all four
+  sectors.
+\end{enumerate}
+The theorem is finite-volume and exact; it assumes neither a thermodynamic
+limit nor any tensor-network approximation.
+\end{theorem}
+
+\begin{scope}
+The label shift is invariant under ribbon deformations that preserve the
+inside/outside endpoint partition, including arbitrary extra even crossings of
+the circle. It need \emph{not} survive moving an endpoint across $\partial D$,
+and it need not survive changing the measured circle between the two
+measurements: both fences are part of the statement. A coherent superposition
+of different ribbon types is not a pure endpoint and is outside the theorem.
+Nothing here is a soft theorem, a current identity, a Ward identity, or a
+persistence statement; and nothing here alters or repackages any
+one-dimensional row of the campaign. The finite windowed memory theorem of
+\cref{sec:memory-index} is used only as the protocol design pattern --- the
+same register measured twice --- and no current, wall coordinate, scattering
+limit, or Gram inverse is imported from it.
+\end{scope}
+
+\emph{Idea of proof.} A direct-lattice path enters and leaves every internal
+vertex, so it overlaps the corresponding star in zero or two edges, while at
+either endpoint the overlap is a single edge; the Pauli relation $XZ=-ZX$ then
+delivers exactly one minus sign per endpoint. The dual statement holds for
+$X(\gamma^{*})$ against the plaquettes. Multiplying the star identities over
+$V(D)$ and the plaquette identities over $P(D)$ cancels every interior
+incidence modulo two and leaves exactly one endpoint sign in each active
+component, which is \eqref{eq:tc-covariance}. Moving $F_s$ through $W_x$ in
+each spectral factor of \eqref{eq:tc-pvm} gives $P_bW_x=W_xP_{b-x}$, and right
+multiplication by $P_a$ together with orthogonality of the measure gives
+\eqref{eq:tc-selection}. On a ground vector every factor of $F_e$ and $F_m$
+has eigenvalue $+1$, so $P_a\Omega=\delta_{a,1}\Omega$ and the definite-sector
+clause follows. For the second clause, each weight in \eqref{eq:tc-tpm} is the
+trace of $K_{a,b}\rho K_{a,b}^{\dagger}$ with $K_{a,b}=P_bW_xP_a$, hence
+nonnegative; it vanishes off the support because the Kraus operator itself
+vanishes there, before any property of $\rho$ is used; and summing over $b$
+first, using $\sum_bP_b=I$, cyclicity, and $W_x^{\dagger}W_x=I$, gives total
+mass $\operatorname{Tr}\rho=1$ with no assumption that $\rho$ commutes with the
+first measurement. For the third clause, the closed $Z$-type boundary string
+$F_m$ has odd intersection with the active dual $X$-string exactly when
+$x_m=y_e=1$, and the direct/dual exchange of that argument gives the other
+factor; every nontrivial $x$ is detected by the probe $y=m$ when $x_e=1$ and
+by $y=e$ otherwise.
+
+There is also an exact non-abelian instance, which is worth recording because
+it shows precisely why the group-valued reading is special. For a Levin--Wen
+model with Ising input, whose bulk category is the doubled Ising theory, take
+the endpoint type and the enclosed source both equal to $(\sigma,\bar1)$.
+The exact bulk fusion rule is
+$(\sigma,\bar1)\otimes(\sigma,\bar1)=(1,\bar1)\oplus(\psi,\bar1)$, so a
+boundary-circle measurement may return either of two outcomes, each through a
+one-dimensional channel. The retained datum is the fusion event
+$(x,a\to b;\mu)$, not a quotient $b/a$; the two possible outputs are the
+explicit obstruction to subtracting Drinfeld-centre names. A group-valued
+shadow survives --- the universal grading of Ising is $\Z_2$, giving
+$U(Z(\mathrm{Ising}))\cong\Z_2\times\Z_2$, in which both outcomes have the same
+grade and $|b|-|a|=|x|$ --- but that shadow conserves only a coarse parity and
+chooses neither channel. This calculation is exact fusion arithmetic; its
+identification with a chosen microscopic endpoint tensor is \emph{not} proved,
+and is not part of \cref{thm:toric-endpoint}.
+
+\provenance{A-INDEX-TC-fin}{\texttt{theory/anyon-label-index.md} \S2 (theorem)
+and \S3 (proof, steps (1.1)--(1.4)); the doubled-Ising instance is \S4 and is
+not part of the promoted row}%
+{\texttt{theory/checks/anyon\_label\_check.py} ANYON-C0--C4, with the
+registered red mode \texttt{-{}-red wrong-sector}; fusion arithmetic separately
+in \texttt{theory/checks/cat\_hunt\_check.py} CATH-C1--C2}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W2) and its promotion table}
+
+\subsection{Two-dimensional memory is a charge ledger on a finite window}
+
+\begin{definition}[Two-dimensional windows, the background-subtracted window
+charge, and its two-measurement law]\label{def:2d-window-charge}
+Let $\Gamma=\Z^{2}$, or any countable locally finite two-dimensional lattice,
+with uniformly finite on-site Hilbert spaces and quasi-local algebra $\alg$.
+Let a compact group act site by site, choose one closed one-parameter subgroup
+and a Hermitian on-site generator $q_x$, and impose the integral-circle
+condition of \cref{sec:memory-index} in the form
+\begin{equation}
+  e^{2\pi i q_x}=c\,I,\qquad c=e^{2\pi i\kappa},\quad\kappa\in[0,1),
+  \qquad\text{equivalently}\qquad
+  \spec q_x\subset\kappa+\Z .
+  \label{eq:2d-int}
+\end{equation}
+Compactness of the group alone is not silently turned into a charge theorem: a
+circle subgroup and \eqref{eq:2d-int} must be selected, and a finite or
+disconnected symmetry with no such generator is outside every statement below.
+Let $\alpha_t$ be the infinite-volume dynamics; the finite theorem needs only
+that it is a group of $C^{*}$-automorphisms.
+
+The declared protocol windows are disks and annuli,
+\begin{equation}
+  B_R(z)=\{x:\dist(x,z)\le R\},
+  \qquad
+  A_{r,R}(z)=\{x:r<\dist(x,z)\le R\},
+  \label{eq:2d-windows}
+\end{equation}
+both finite; a disk has one boundary component and an annulus two, each
+oriented outward from the annular region. The finite theorem in fact applies to
+every finite $\tpWin\subset\Gamma$. A disk exhaustion $B_{R_m}(z)$ exhausts the
+plane; an annular exhaustion $A_{r_0,R_m}(z)$ with fixed $r_0$ exhausts the
+exterior of a fixed core and not the plane, and nothing is called an
+exhaustion here unless the domain it exhausts is named.
+
+The measured operator is a finite sum with a scalar counterterm,
+\begin{equation}
+  \Qhat_{\tpWin}=\sum_{x\in \tpWin}q_x-b_{\tpWin}I .
+  \label{eq:2d-window-charge}
+\end{equation}
+Two preparations are intended. For a \emph{symmetry-broken pair}, choose two
+zero-temperature vacua, a reference interface curve, and the phase profile on
+its two sides, and let $b_\tpWin$ be the corresponding sum of vacuum
+densities; the curve fixes only the normal-ordering convention and no sharp
+interface-position operator is assumed. For a \emph{symmetric vacuum}, take
+$b_\tpWin=\abs{\tpWin}\rho_0$ with $\rho_0$ the vacuum density; there is then
+no wall coordinate at all, and the protocol measures charge emitted from or
+absorbed by the window. The scalar $b_\tpWin$ may be non-integral and may
+change with $\tpWin$; this is harmless below precisely because both
+measurements use the same window and hence the same offset.
+
+Let $E_{\tpWin,t}$ be the spectral resolution of
+$\Qhat_\tpWin(t)=\alpha_t(\Qhat_\tpWin)$. Measuring projectively at
+$t_-<t_+$, the recorded escaped charge and its law are
+\begin{equation}
+  \nu:=q_--q_+,
+  \qquad
+  p_{\tpWin;t_-,t_+}(\nu)
+   :=\sum_q\norm{E_{\tpWin,t_+}(\{q-\nu\})\,E_{\tpWin,t_-}(\{q\})\,\Psi}^{2},
+  \label{eq:2d-tpm}
+\end{equation}
+absent spectral values contributing zero. This is a sequential measurement
+law, not the spectral law of the generally noncommuting difference
+$\Qhat_\tpWin(t_-)-\Qhat_\tpWin(t_+)$.
+\end{definition}
+
+\provenance{M-INDEX-2D-fin, D26}{\texttt{theory/memory-index-2d.md}
+steps (1.1)--(1.4)}{\texttt{theory/checks/memory\_index\_2d\_check.py}
+M2D-C1--C4}{\texttt{theory/verdicts/w21-joint-critic.md} \S(W3)}
+
+\begin{theorem}[Every finite disk or annulus records an integer]%
+\label{thm:memory-2d-finite}
+\statusProved\ Assume \eqref{eq:2d-int}, a finite disk or annulus $\tpWin$, a
+real scalar background $b_\tpWin$, a unit vector $\Psi$ in any representation
+of $\alg$, and finite times $t_-<t_+$. Put
+$\kappa_\tpWin:=\abs{\tpWin}\kappa-b_\tpWin \bmod \Z$. Then
+\begin{equation}
+  \spec\Qhat_\tpWin(t)\subset\kappa_\tpWin+\Z
+  \qquad\text{for every automorphic time }t,
+  \label{eq:2d-coset}
+\end{equation}
+and the law \eqref{eq:2d-tpm} is a probability distribution whose escaped
+increment $\nu$ lies in $\Z$. No commutativity of the two Heisenberg
+observables is assumed.
+\end{theorem}
+
+\begin{scope}
+This is a finite, additive, $0$-form charge theorem and nothing more. It
+implies no displacement: the one-dimensional conversion of escaped charge into
+a unique kink position does not transplant, because a two-dimensional
+interface has shape modes and a swept area rather than one canonical
+coordinate. It implies no $1$-form or topological charge, no anyon content, no
+loop-operator statement, and no result about topological order --- the
+symmetry here is an ordinary on-site $0$-form symmetry. It supplies no channel
+inventory and no ordered limit; the limit statement is
+\cref{thm:memory-2d-limit} and is conditional. It uses no spectral gap and no
+exponential clustering, so it holds verbatim in a gapless
+symmetry-broken phase with Goldstone modes: gaplessness can change
+probabilities, relaxation, and tightness, but it cannot move a same-window
+branch off $\Z$ while \eqref{eq:2d-int} holds. Finally, the \emph{total}
+unnormalised increment is what is integral; dividing by the perimeter
+$\abs{\partial \tpWin}$ would give a different, density-valued law supported in
+$\abs{\partial \tpWin}^{-1}\Z$, and that must never be advertised as the
+integer-valued index.
+\end{scope}
+
+\emph{Idea of proof.} Each on-site eigenvalue differs from $\kappa$ by an
+integer. The operators $\{q_x:x\in\tpWin\}$ commute because they act on
+different sites, so finite spectral addition on \eqref{eq:2d-window-charge}
+puts every spectral value of $\Qhat_\tpWin$ in
+$\abs{\tpWin}\kappa-b_\tpWin+\Z$, and $\alpha_t$ preserves spectrum, giving
+\eqref{eq:2d-coset} at every time with the same offset. Every summand of
+\eqref{eq:2d-tpm} is a squared norm, and summing first over the final and then
+over the initial resolution gives total mass one by two applications of
+Parseval, with no interchange of the two noncommuting projections. Since the
+observable, the window, and the background are the same at both times, both
+$q_-$ and $q_+$ lie in the single coset $\kappa_\tpWin+\Z$, so
+$\nu=q_--q_+\in\Z$ before any time or spatial limit. Every leaf of this
+argument sees only one fixed finite set and its cardinality: none sees spatial
+dimension, boundary length, a spectral gap, or a scattering channel, which is
+why the one-dimensional proof transplants without loss.
+
+What does change with dimension is the size of the boundary term, and it is
+worth displaying because it is the obstacle to the limit theorem. For a
+finite-range interaction $H=\sum_Z\Phi(Z)$ with a termwise charge-conserving
+decomposition $[\Phi(Z),\sum_{x\in Z}q_x]=0$, every term lying wholly inside or
+wholly outside the window cancels, so
+\begin{equation}
+  \frac{d}{dt}\Qhat_\tpWin(t)
+   = i\,\alpha_t\Bigl(
+       \sum_{Z\,:\,Z\cap \tpWin\ne\emptyset,\ Z\cap \tpWin^{c}\ne\emptyset}
+       \bigl[\Phi(Z),\textstyle\sum_{x\in \tpWin}q_x\bigr]\Bigr),
+  \qquad
+  \Bigl\lVert\frac{d}{dt}\Qhat_\tpWin(t)\Bigr\rVert
+   \le C_{\Phi,q,r}\,\abs{\partial_r \tpWin}.
+  \label{eq:2d-perimeter}
+\end{equation}
+On a disk of radius $R$ the number of contributing terms is $O(R)$, and on an
+annulus $O(r+R)$ because both boundary components contribute, in place of the
+two-endpoint boundary of an interval. This perimeter growth is a real
+structural difference, catalogued alongside the other two-dimensional boundary
+findings in \cref{sec:negative-results}; a Lieb--Robinson estimate localises
+the terms but does not by itself cancel the perimeter factor.
+
+\provenance{M-INDEX-2D-fin, D26, M-INDEX-fin}%
+{\texttt{theory/memory-index-2d.md} steps (1.5)--(1.6), with the leaf-by-leaf
+transplant ledger at step (1.6) and the perimeter audit at step (1.11)}%
+{\texttt{theory/checks/memory\_index\_2d\_check.py} M2D-C2 and the registered
+red mode \texttt{-{}-red fractional-charge}; donor one-dimensional
+memory-index and common-subsequence gates}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W3): promotable at proved
+strength}
+
+\subsection{Categorical selection: what a general anyon endpoint obeys}
+
+\begin{definition}[The tensor-network typing hypotheses for an annular
+endpoint register]\label{def:peps-typing}
+Let $\tpCat$ be a finite unitary fusion category and let a finite,
+matrix-product-operator-injective tensor-network lattice model supply all of
+the following \emph{exact} data. These are hypotheses, not consequences.
+
+\smallskip
+\noindent\textbf{(PT1) Tube measurement.} An annular representation of the
+tube algebra $\operatorname{Tub}(\tpCat)$ whose minimal central idempotents
+$\{P_a\}_{a\in\operatorname{Irr}Z(\tpCat)}$ are mutually orthogonal and sum to
+the identity on the chosen boundary-circle register.
+
+\noindent\textbf{(PT2) Pure endpoint.} A small-circle resolution of the
+endpoint tensor $T_x$ with $P^{\mathrm{end}}_yT_x=\delta_{y,x}T_x$ for one
+simple $x\in\operatorname{Irr}Z(\tpCat)$. A sum over $x$ is not called a pure
+endpoint.
+
+\noindent\textbf{(PT3) Pulling-through module action.} Exact zipper,
+associator, and pulling-through equations identifying the large-circle action
+of $T_x$ on a source sector $a$ with the semisimple decomposition
+\begin{equation}
+  x\otimes a\;\cong\;\bigoplus_b\Hom(b,x\otimes a)\otimes b .
+  \label{eq:pt-fusion}
+\end{equation}
+
+\noindent\textbf{(PT4) Protocol instrument.} The physical charge-creation
+operation is supplied either as a normalised family of channel-resolved Kraus
+maps $T_{(x,\mu)}$, or else the experiment is explicitly conditioned on the
+success of one displayed Kraus map. Category data alone supply neither a
+normalisation nor probabilities, and (PT4) is the only normalisation input
+anywhere in this subsection.
+
+\smallskip
+For the momentum form, let $T_x(y;w)$ be a translated, windowed representative
+of the same pure endpoint data, with endpoint position $y$ along a chosen
+direction and all microscopic smearing data collected in $w$. On a finite
+periodic boundary of length $L$ set
+\begin{equation}
+  T_x(k;w)=\sum_{y=0}^{L-1}e^{iky}\,T_x(y;w),
+  \qquad k\in(2\pi/L)\Z .
+  \label{eq:pt-fourier}
+\end{equation}
+In an infinite-volume protocol, ``a limit'' means a declared sequence of
+windows and momenta in a declared operator, weak, or matrix-element topology
+in which multiplication by the fixed finite-sector projectors is continuous.
+\end{definition}
+
+\provenance{A-INDEX-PEPS}{\texttt{theory/anyon-selection-hybrid.md} \S\S1--2;
+canonical typing in \texttt{theory/anyon-label-index.md} \S5}%
+{\texttt{theory/checks/cat\_hunt\_check.py} CATH-C0--C4;
+\texttt{theory/checks/soft\_2d\_hunt\_check.py} S2DH gates}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W6) and \S9 item 5}
+
+\begin{theorem}[Fusion selection for an annular endpoint
+register]\label{thm:fusion-selection}
+\statusProvedConditional\ Assume (PT1)--(PT3) of \cref{def:peps-typing}, and
+for the momentum form the notation and declared topology stated there; assume
+(PT4) only for the instrument-normalisation clause. Then on the finite annular
+register
+\begin{equation}
+  P_b\,T_{(x,\mu)}\,P_a=0
+  \qquad\text{unless}\qquad
+  \mu\in\Hom(b,x\otimes a)\ \text{ and }\ N_{xa}^{b}>0 ,
+  \label{eq:fusion-selection}
+\end{equation}
+and consequently the same-circle instrument weight
+\begin{equation}
+  p_x(a,b,\mu)
+   =\operatorname{Tr}\bigl(P_bT_{(x,\mu)}P_a\,\rho\,
+                           P_aT_{(x,\mu)}^{\dagger}P_b\bigr)
+  \label{eq:fusion-weight}
+\end{equation}
+is supported only on the fusion events allowed by \eqref{eq:fusion-selection},
+normalised or postselected exactly as stipulated by (PT4). Moreover the
+windowed/momentum form obeys the same rule,
+$P_bT_x(k;w)P_a=0$ unless $\Hom(b,x\otimes a)\ne0$, at every finite momentum
+and window, and every existing limit point in the declared topology obeys the
+same zero-block constraint.
+
+The retained fine datum is the fusion event $(x,a\to b;\mu)$. If $x$ is
+invertible, tensoring by $x$ is an equivalence and the target is uniquely
+$b=x\otimes a$, so the supplied index is group-valued,
+$x\in\Inv(Z(\tpCat))$; the toric-code theorem
+\cref{thm:toric-endpoint} is the case in which every simple object is
+invertible. For general $x$ the only group-valued statement is the universal
+grading shadow: presenting the universal grading group by $[c]=[r][s]$
+whenever $N_{rs}^{c}>0$, every allowed event obeys
+\begin{equation}
+  \abs{b}=\abs{x}\abs{a},
+  \qquad\text{equivalently}\qquad
+  \abs{b}\abs{a}^{-1}=\abs{x}.
+  \label{eq:grading-shadow}
+\end{equation}
+\end{theorem}
+
+\begin{scope}
+Three fences are part of this statement. First, no microscopic instantiation
+beyond the toric code is claimed: supplying (PT2)--(PT4) for a particular
+lattice model is an open, model-specific obligation, and it is not asserted
+that every representative of a topological phase supplies them. Second, no
+Taylor coefficient inside an allowed channel is claimed. The theorem says a
+forbidden block vanishes; it says nothing about the value, the leading
+behaviour, or the softness of an allowed block, and it therefore supplies no
+categorical soft theorem and no universal soft coefficient. Third, this is one
+selection-rule statement and is not an omnibus packaging of the group-label,
+windowed-memory, and tensor-network results, which consume different
+hypotheses and remain separate rows.
+
+Two further limitations are worth naming. The labels used are \emph{bulk}
+Drinfeld-centre labels, because the boundary circle sits in the
+two-dimensional bulk; a physical edge or condensate requires its own module or
+boundary-excitation category, under which bulk anyons may condense, be
+identified, or split. And tube projectors select sectors only: they supply no
+current operator, no Ward identity, no Gram inverse, no transition amplitude,
+and no persistence theorem. The shadow \eqref{eq:grading-shadow} does not
+select $b$, does not fix a probability, and does not authorise subtraction in
+$\operatorname{Irr}Z(\tpCat)$; the doubled-Ising branching recorded after
+\cref{thm:toric-endpoint} is the explicit instance.
+\end{scope}
+
+\emph{Idea of proof.} By (PT2) the endpoint carries one simple type $x$, and by
+(PT3) its action on the source sector $a$ is the semisimple decomposition
+\eqref{eq:pt-fusion}, which has no summand labelled $b$ when
+$\Hom(b,x\otimes a)=0$. By (PT1) the $P_b$ are mutually orthogonal central
+idempotents resolving the annular register, so left multiplication kills every
+component of $T_x P_a$ except its $b$ summand; resolving the multiplicity
+space, whose dimension is $N_{xa}^{b}$, gives \eqref{eq:fusion-selection}. A
+forbidden block makes the corresponding Kraus operator in
+\eqref{eq:fusion-weight} zero, so its weight vanishes by positivity alone;
+normalisation is used only in the form supplied by (PT4). For the momentum
+form, each summand $P_bT_x(y;w)P_a$ of \eqref{eq:pt-fourier} is zero on a
+forbidden pair, and Fourier summation and windowing are linear, so their finite
+linear combination vanishes. Finally, a net of identically zero blocks has zero
+limit whenever multiplication by the fixed projectors is continuous in the
+declared topology --- which asserts neither existence nor uniqueness of any
+soft limit.
+
+\provenance{A-INDEX-PEPS}{\texttt{theory/anyon-selection-hybrid.md}
+step (1.1), leaves (2.1)--(2.6)}%
+{\texttt{theory/checks/anyon\_label\_check.py} ANYON-C0--C4;
+\texttt{theory/checks/cat\_hunt\_check.py} CATH-C0--C4;
+\texttt{theory/checks/soft\_2d\_hunt\_check.py} S2DH gates. These finite gates
+establish neither (PT2)--(PT4) for an arbitrary model nor the existence of an
+infinite-volume momentum limit}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W6) and \S9 item 5
+(promoted after the structured-proof repair, orchestrator-verified)}
+
+\begin{theorem}[Contractible deformations do not change the endpoint
+morphism]\label{thm:isotopy-flat}
+\statusProvedConditional\ Assume an exact fixed-point string or
+matrix-product-operator representation together with its pulling-through and
+associator equations. Let $\gamma$ and $\gamma'$ have the same resolved
+endpoints and be related by a finite sequence of contractible local
+pulling-through moves inside a disk containing no other insertion. Then, after
+identifying the endpoint fusion spaces by the associator maps supplied by
+those moves, the code-projected endpoint morphisms for $\gamma$ and $\gamma'$
+agree.
+\end{theorem}
+
+\begin{scope}
+The contractibility hypothesis is load-bearing and so is the fixed-point
+hypothesis. A move sequence winding around another insertion is not
+contractible in the complement of that insertion, so the coherence argument
+does not identify it with the trivial path; its composition may instead be the
+corresponding braid or monodromy action. No off-fixed-point statement is made:
+nothing is claimed about a dressed string in a generic phase, and nothing is
+claimed about a gapless on-shell soft factor.
+\end{scope}
+
+\emph{Idea of proof.} A single local pulling-through move is, by hypothesis, an
+equality of the two code-projected tensor networks across that move, with the
+endpoint fusion spaces identified by the associator map it supplies.
+Composing those equalities along the finite move sequence identifies the first
+network with the last, since equality and the supplied identifications are
+stable under finite composition. Two contractible move sequences with the same
+ends give the same categorical identification by pentagon coherence, which
+relates their two finite compositions of associators. The exception is exactly
+the non-contractible case, which the coherence argument does not reach.
+
+\provenance{SHAPE-FLAT}{\texttt{theory/anyon-selection-hybrid.md}
+step (1.2), leaves (2.1)--(2.5)}%
+{\texttt{theory/checks/soft\_2d\_hunt\_check.py} with the registered
+deformation mutation \texttt{-{}-red wrong-path}; the toric-code patch supplies
+the nonzero witness (two paths give the same state, with an endpoint gap of
+four)}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W6) and \S9 item 5
+(promoted, orchestrator-verified)}
+
+\subsection{The conditional two-dimensional limit law}
+
+\begin{definition}[Two-dimensional local-relaxation clauses and the charge
+memory]\label{def:2d-relaxation}
+Fix a unit vector $\Psi$, a declared disk exhaustion $\tpWin_m=B_{R_m}(z)$ of
+the plane, or an annular exhaustion of a separately declared exterior domain,
+and the operators \eqref{eq:2d-window-charge}. Infinite-volume dynamics is
+formed first, fixed-window time limits second, and the spatial exhaustion
+last. The three clauses are as follows.
+
+\smallskip
+\noindent\textbf{(LR1$_{\mathrm{2D}}$) Common Ces\`aro subsequence.} There is
+one sequence $T_n\to\infty$ such that, for every fixed admissible window, the
+two Ces\`aro states
+$\omega^{\pm}_{\tpWin,n}$ formed by averaging
+$\braket{\Psi,\alpha_t(A)\Psi}$ over $[T_n,2T_n]$ and $[-2T_n,-T_n]$ converge
+weak-$*$, and every double-Ces\`aro average $p_{\tpWin,n}(\nu)$ of
+\eqref{eq:2d-tpm} converges. By the general common-subsequence theorem of
+\cref{sec:memory-index} this clause is itself a theorem --- the argument
+consumes only separability of the quasi-local algebra, strong continuity of the
+dynamics, and finiteness of each local spectrum, none of which sees dimension
+--- but it is retained as the binder that supplies one sequence for all
+clauses.
+
+\noindent\textbf{(LR2$_{\mathrm{2D}}$) First-moment nondemolition.} With
+$\tpDeph_{\tpWin,t_-}(A)=\sum_qE_{\tpWin,t_-}(\{q\})AE_{\tpWin,t_-}(\{q\})$,
+the double-Ces\`aro average of
+$\braket{\Psi,[\tpDeph_{\tpWin,t_-}(\Qhat_\tpWin(t_+))
+-\Qhat_\tpWin(t_+)]\Psi}$ tends to zero for every fixed window along that same
+sequence. This is a scalar first-moment condition, not operator asymptotic
+commutativity.
+
+\noindent\textbf{(LR3$_{\mathrm{2D}}$) First-moment tightness on the declared
+exhaustion.} Writing $p_\tpWin$ for the fixed-window time limit,
+\begin{equation}
+  \lim_{M\to\infty}\ \sup_m\ \sum_{\abs{\nu}>M}(1+\abs{\nu})\,
+  p_{\tpWin_m}(\nu)=0 .
+  \label{eq:2d-lr3}
+\end{equation}
+One may optionally require $p_{\tpWin_m}$ to converge weakly to a probability;
+that clause buys uniqueness of the limiting law and of its first moment, and is
+not needed for integer support.
+
+\smallskip
+The memory observable supplied by this definition is the \emph{charge memory}
+$M_Q(p):=\sum_{\nu\in\Z}\nu\,p(\nu)$, defined per subsequence, or uniquely
+under the optional clause. No universal scalar displacement is defined.
+\end{definition}
+
+\provenance{M-INDEX-2D-spec, D27}{\texttt{theory/memory-index-2d.md}
+steps (1.7)--(1.8)}{\texttt{theory/checks/memory\_index\_2d\_check.py}
+(finite arithmetic only; it proves nothing about
+(LR2$_{\mathrm{2D}}$)--(LR3$_{\mathrm{2D}}$))}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W3)}
+
+\begin{theorem}[Conditional two-dimensional charge ledger]%
+\label{thm:memory-2d-limit}
+\statusSketch\ Assume the integral-circle condition \eqref{eq:2d-int} together
+with (LR1$_{\mathrm{2D}}$)--(LR3$_{\mathrm{2D}}$) of
+\cref{def:2d-relaxation}. Then every ordered spatial limit point $p$ of the
+window laws is a probability supported on $\Z$, and along its subsequence its
+first moment obeys the charge ledger
+\begin{equation}
+  M_Q(p)=\lim_j\Bigl[
+    \omega^{-}_{\tpWin_{m_j}}\bigl(\Qhat_{\tpWin_{m_j}}\bigr)
+   -\omega^{+}_{\tpWin_{m_j}}\bigl(\Qhat_{\tpWin_{m_j}}\bigr)\Bigr].
+  \label{eq:2d-ledger}
+\end{equation}
+Under the optional full-law convergence clause, the limit law and the value in
+\eqref{eq:2d-ledger} are unique.
+\end{theorem}
+
+\begin{scope}
+The conditional implication above is complete and was independently verified;
+what is missing is an instance of its hypotheses. Clauses
+(LR2$_{\mathrm{2D}}$) and (LR3$_{\mathrm{2D}}$) are \emph{assumed, not
+derived}, and are not implied by symmetry or by a Lieb--Robinson bound; the
+boundary terms they must control are perimeter-sized by
+\eqref{eq:2d-perimeter}. No scalar interface displacement, channel
+completeness, unconditional Goldstone instance, $1$-form-symmetry result, or
+topological-order result is claimed.
+
+The status is capped at sketch by the campaign's non-vacuity test rather than
+by any defect in the argument: no nonzero model instance of
+(LR2$_{\mathrm{2D}}$)--(LR3$_{\mathrm{2D}}$) has been exhibited. In
+particular the exact $9\times9$ diagonalisation described below is
+\emph{not} such an instance, and must not be presented as one. Promotion
+requires a model in which both clauses are proved and the limiting law is not
+the point mass at zero.
+\end{scope}
+
+\emph{What is proved, and what is missing.} The proved part is the implication.
+At finite times, expanding the two measured values identifies the
+finite-window mean as the pinched difference
+\begin{equation}
+  \sum_\nu\nu\,p_{\tpWin;t_-,t_+}(\nu)
+   =\braket{\Qhat_\tpWin(t_-)}
+    -\braket{\tpDeph_{\tpWin,t_-}\bigl(\Qhat_\tpWin(t_+)\bigr)},
+  \label{eq:2d-pinched-mean}
+\end{equation}
+an identity in which no geometry enters. Double-Ces\`aro averaging
+\eqref{eq:2d-pinched-mean} and applying (LR2$_{\mathrm{2D}}$) removes the
+dephasing defect and converts the mean into the difference of the two Ces\`aro
+states at each fixed window. Clause (LR3$_{\mathrm{2D}}$) supplies tightness
+and uniform integrability, so Prokhorov extraction on the closed set $\Z$
+yields a further weakly convergent subsequence with no loss of mass and with
+the first moment passing to the limit; integer support survives because every
+finite-window law already has it, the possibly drifting offset $\kappa_\tpWin$
+having been cancelled at each fixed window by
+\cref{thm:memory-2d-finite} before the spatial limit is taken.
+
+The missing part is any verified instance. The relevant numerical probe is an
+exact small diagonalisation of the spin-$\tfrac12$ nearest-neighbour
+ferromagnet on a $9\times9$ open square, whose fully polarised state is an
+exact ground state and whose one-spin-flip sector is an exact magnon sector
+with the quadratic Goldstone dispersion
+$\varepsilon(k)=J(2-\cos k_x-\cos k_y)$; the measured charge is the magnon
+number, with on-site spectrum $\{0,1\}$. It confirms the finite theorem
+convincingly --- on a $13$-site disk the law is
+$p(0)=0.176188$, $p(1)=0.823812$, matching the integrated outward current to a
+residue of $9\times10^{-16}$; on a $24$-site annulus, initially empty so that
+magnon entry gives a negative increment, $p(-1)=0.691271$ with residue
+$5\times10^{-15}$; and a seeded state straddling the disk boundary, measured at
+two times with a common irrational offset $\sqrt3/11$ added to both readouts,
+reproduces exact integer support with the offset cancelling as predicted. All
+of that is finite-volume and finite-time. It establishes no infinite-volume
+time limit and no bound of the form \eqref{eq:2d-lr3}, and the finite gap of
+the $9\times9$ system is not evidence for a thermodynamic gap. Those runs are
+described further in \cref{sec:numerics}.
+
+\emph{What replaces the kink picture.} In one dimension the escaped charge
+converts into a wall displacement; in two dimensions it does not, and the
+honest replacement is spin-charge radiation through a closed curve. A local
+disturbance launches Goldstone wave packets, and the disk record counts their
+net selected charge across the circumference, an annulus recording the signed
+balance across its two boundary components. Angular profiles, multipoles, and
+neutral pairs are invisible to a single total-charge record. For a
+zero-temperature antiferromagnet the conserved observable is a selected
+\emph{uniform} spin generator; the staggered magnetisation is an order
+parameter, not the conserved charge, and must not be substituted into the
+theorem. Finite-window integrality remains exact in every one of these cases,
+while the ordered limit remains open.
+
+\provenance{M-INDEX-2D-spec, M-INDEX-2D-fin, LR1-GEN}%
+{\texttt{theory/memory-index-2d.md} steps (1.8)--(1.11), with the conditional
+theorem at step (1.9)}%
+{\texttt{theory/checks/memory\_index\_2d\_check.py} (finite arithmetic only;
+its green run proves nothing about (LR2$_{\mathrm{2D}}$)--(LR3$_{\mathrm{2D}}$)
+and there is no gate for the limit law)}%
+{\texttt{theory/verdicts/w21-joint-critic.md} \S(W3): the implication is
+correct and the row is held at sketch by the non-vacuity test}

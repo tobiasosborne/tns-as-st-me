@@ -1,0 +1,733 @@
+% SHARD-ID: LB-06-MEMORY-QUANTIZATION
+% SHARD-TITLE: Memory: what is refuted, what is exact, and what quantizes
+% SHARD-SOURCES: theory/memory-quantization.md; theory/memory-quantization-general.md;
+%   theory/mq-e.md; theory/corner-b-draft.md sections 2, 5, 6, 7, 10;
+%   claims/CLAIMS.md rows M, M-flux, B3, M-quant, M-quant-G, Mq-E, Mq-AD3,
+%   M-tk, N2, Bc; numerics/results/memory-scan-1.json,
+%   numerics/results/spin1-bc-falsifier.json.
+% SHARD-CLAIMS: M, M-flux, B3, M-quant, M-quant-G, Mq-E, Mq-AD3, M-tk, N2, Bc.
+
+% Shard-local macro: the unit shift on l^2(Z), to keep the translation
+% operator of the Fano Jacobi matrix visually distinct from the
+% transmission probability T(k) of Definition (kink-magnon scattering data).
+\newcommand{\shiftop}{\mathsf{T}}
+
+\section{Memory: what is refuted, what is exact, and what quantizes}
+\label{sec:memory-quantization}
+
+The memory corner began with an attractive guess: that the wall displacement
+should equal the zero-frequency limit of the soft factor, a lattice analogue of
+the Braginsky--Thorne relation. That guess is false, and saying exactly why it
+is false is the most useful thing this section does. What survives is sharper
+and, in a sense, better: an exact flux identity that holds at finite time and
+finite volume with no hypotheses at all, a charge ledger that constrains the
+displacement channel by channel, and --- conditional on the scattering
+hypothesis \cref{def:h-ad} --- a genuinely quantized displacement whose quantum
+is a charge, not a phase. Soft data re-enter at exactly one place: the value of
+the transmission probability $T(k)$.
+
+\subsection{The refuted conjecture}
+
+\begin{refutedclaim}[The soft-factor reading of the memory]
+\label{ref:soft-factor-memory}
+\statusRefuted\ \ \emph{Withdrawn statement.} The wall displacement $\delta x$
+equals the zero-frequency limit of the soft factor $\softS$ summed over the
+event --- the lattice Braginsky--Thorne relation as written in the campaign
+brief.
+
+\smallskip
+\emph{Why it fails.} Two independent mechanisms kill it in the model of
+\cref{def:kink-model}.
+\begin{enumerate}
+\item Once the channels of \cref{def:h-ad} exist, conditional charge
+  bookkeeping fixes the \emph{same} per-channel displacement for every $k$,
+  every $\Delta$ and every packet shape (\cref{thm:M-quant}), whereas any
+  soft-factor expression varies with all three.
+\item $\delta x$ is insensitive to the transmission phase $\delta_t(k)$
+  entirely. A purely transmitting wall with $\delta_t\equiv0$ still displaces by
+  exactly $-1/s$. The soft factor is a phase; the memory quantum is a charge,
+  and the two are not the same kind of object.
+\end{enumerate}
+
+\smallskip
+\emph{What survives.} Two statements, and no more. The flux identity
+\cref{thm:M-flux}, which says that the memory is the DC weight of the
+\emph{physical boundary current}; and the conditional quantization theorem
+\cref{thm:M-quant}, into which soft data enter only through the transmission
+probability $T(k)$. No reading in terms of virtual or bond data is claimed.
+\end{refutedclaim}
+
+\provenance{M}%
+{disproved in \texttt{theory/memory-quantization.md} \S1 and
+ \texttt{theory/corner-b-draft.md} \S\S2, 6, 10}%
+{\texttt{theory/checks/mquant\_check.py} tests the flux identity and the
+ empirical scan only}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\subsection{The exact flux identity}
+
+\begin{theorem}[The memory is the DC weight of the physical boundary current]
+\label{thm:M-flux}
+\statusProved\ \ Let the chain be finite and open, let $\varrho(t)$ be any
+state, let $W=[a,b]$ be any interior window, and assume only the local
+continuity equation
+\begin{equation}
+  \frac{d}{dt}S^z_x=j_{x-1|x}-j_{x|x+1}.
+  \label{eq:continuity}
+\end{equation}
+Then for every finite $t_i<t_f$,
+\begin{equation}
+  \varrho_{t_f}(\wallX_W)-\varrho_{t_i}(\wallX_W)
+  =\frac{1}{2s}\int_{t_i}^{t_f}\!dt\,
+   \Bigl[\varrho_t\bigl(j_{a-1|a}\bigr)-\varrho_t\bigl(j_{b|b+1}\bigr)\Bigr]
+  =\frac{1}{2s}\Bigl[\tilde\jmath_{a-1|a}(0)-\tilde\jmath_{b|b+1}(0)\Bigr],
+  \label{eq:flux-identity}
+\end{equation}
+where $\tilde\jmath(0)$ denotes the finite-time Fourier transform of the
+corresponding bond current evaluated at zero frequency. No kink, spectral,
+large-time or asymptotic-completeness hypothesis is used.
+\end{theorem}
+
+\noindent\emph{Idea of proof.} The windowed wall observable \eqref{eq:wallX} is
+a bounded local observable at every finite volume, so its Heisenberg derivative
+may be computed term by term. Inserting \eqref{eq:continuity} into the finite
+sum, the interior currents cancel in pairs and only the two boundary bonds
+survive:
+$\dot{\wallX}_W=\tfrac{1}{2s}\bigl(j_{a-1|a}-j_{b|b+1}\bigr)$. Integrating from
+$t_i$ to $t_f$ and reading the result as a Fourier transform at zero frequency
+gives \eqref{eq:flux-identity}. The whole content is that $\wallX_W$ can change
+\emph{only} through its two edges. \hfill$\square$
+
+\begin{remark}[The current here is the physical one]
+\label{rem:physical-current}
+Nothing in \eqref{eq:flux-identity} identifies the boundary current with the
+virtual bond potential $\mathcal J_b$ of the Noether analysis
+(\cref{sec:symmetry-noether}). That identity writes the \emph{vacuum charge
+density} as a difference of virtual insertions, in a different register. The
+earlier claim that \eqref{eq:flux-identity} is a difference of virtual or bond
+data is withdrawn; extending the virtual-potential reading to a kink-sector
+dynamical theorem remains future work.
+\end{remark}
+
+\provenance{M-flux}%
+{\texttt{theory/memory-quantization.md} \S1, Lemma Mq-flux, steps
+ (1.1)--(1.4); \texttt{theory/corner-b-draft.md} \S2 Eq.\ (2.2)}%
+{\texttt{theory/checks/mquant\_check.py}, named computation Mq-check F1: zero
+ operator residue in \eqref{eq:continuity} and $3.37\times10^{-16}$
+ finite-time residue in \eqref{eq:flux-identity} on frozen-boundary chains at
+ $N=7,8$}%
+{\texttt{theory/verdicts/corpus-r2.md}}
+
+\subsection{Finite-time label rigidity and the charge ledger}
+
+\begin{theorem}[The vacuum-pair label is rigid at finite time, and the charge
+ledger holds]
+\label{thm:B3}
+\statusProved\ \ Assume a translation-invariant finite-range dynamics whose two
+asymptotic vacua are stationary, and a state initially in the kink sector
+$\Kk_{\alpha\beta}$. Then:
+\begin{enumerate}
+\item \emph{(Label rigidity.)} $\varrho_t\in\Kk_{\alpha\beta}$ for every finite
+  $t$: finite-time dynamics fixes the vacuum-pair label $(\alpha,\beta)$, and
+  the argument fixes the labels rather than merely preserving disjointness.
+\item \emph{(Charge ledger.)} For an event separated in the sense of
+  \cref{def:h-ad}, with an explicit cut $c\in W$ and leg-subtracted channel
+  charges,
+  \begin{equation}
+    2s\cdot\delta x+\bigl(q_{\mathrm{out}}-q_{\mathrm{in}}\bigr)=0 .
+    \label{eq:ledger}
+  \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\noindent\emph{Idea of proof.} For rigidity, let $\alpha_t$ be the finite-range
+Heisenberg automorphism. Lieb--Robinson quasi-locality supplies, for each local
+pair $D,O$, each fixed $t$ and each $\varepsilon>0$, \emph{local} approximants
+$D_\varepsilon,O_\varepsilon$ --- independent of the translation index $n$ ---
+with $\norm{\alpha_t(D)-D_\varepsilon}<\varepsilon$ and
+$\norm{\alpha_t(O)-O_\varepsilon}<\varepsilon$. Translation covariance gives
+$\alpha_t(\tau_n(O))=\tau_n(\alpha_t(O))$, and stationarity of the vacua gives
+$\omega_{\alpha/\beta}(\alpha_t(O))=\omega_{\alpha/\beta}(O)$. The two-factor
+estimate
+\begin{equation}
+  \bigl|\varrho\bigl(\alpha_t(D)\alpha_t(\tau_n(O))\bigr)
+  -\varrho\bigl(D_\varepsilon\tau_n(O_\varepsilon)\bigr)\bigr|
+  \le\varepsilon\norm{O}+\bigl(\norm{D}+\varepsilon\bigr)\varepsilon
+\end{equation}
+then lets one take $n\to\mp\infty$ first, in the factorised local limit, and
+$\varepsilon\downarrow0$ afterwards, reproducing the same left and right vacuum
+functionals. For the ledger, a kink at coordinate $m$ contributes $2s(m-c)$ to
+the regularised total charge, so the in and out totals are
+$2s(m_i-c)+q_{\mathrm{in}}$ and $2s(m_f-c)+q_{\mathrm{out}}$; conservation of
+the regularised charge and subtraction give \eqref{eq:ledger}. Specialising,
+reflection has $q_{\mathrm{out}}=q_{\mathrm{in}}=-1$ and hence $\delta x=0$,
+while transmission has $(q_{\mathrm{in}},q_{\mathrm{out}})=(-1,+1)$ and hence
+$\delta x=-1/s$. \hfill$\square$
+
+\begin{scope}[What this theorem does not say, and one thing it refutes]
+\label{scope:B3}
+The charges in \eqref{eq:ledger} are \emph{leg-subtracted} channel charges,
+defined relative to the vacuum on which each separated leg sits. They are not
+raw half-line charges. Indeed, the former raw half-line formula
+$\delta x=(2s)^{-1}\Delta\mathfrak q^R_c=-(2s)^{-1}\Delta\mathfrak q^L_c$ is
+\statusRefuted: in the transmitted spin-$1/2$ channel it predicts $+1$ (or
+$-1$), while the ledger \eqref{eq:ledger} gives $-2$. Separately, the proposed
+reading of the kink coordinate as a $\Z$-torsor, with a flat kink band, depends
+on \cref{conj:K4} and is therefore a conjecture, not a consequence of this
+theorem. The vacuum-pair label is rigid and is read off, not shifted; $\delta x$
+records the leg-charge transfer within that fixed label.
+\end{scope}
+
+\provenance{B3}%
+{\texttt{theory/corner-b-draft.md} \S7, steps (1.1)--(1.3), with the N9 density
+ leaf supplied}%
+{---}%
+{\texttt{theory/verdicts/corpus-r2.md} (adjudicated with the N9 sweep)}
+
+\subsection{Conditional quantization for the spin-\texorpdfstring{$1/2$}{1/2}
+kink}
+
+\begin{theorem}[Windowed memory is channel-quantized, conditional on the
+scattering hypothesis]
+\label{thm:M-quant}
+\statusProvedConditional\ \ Let $\Delta>1$ and take the spin-$1/2$ Hamiltonian
+of \cref{def:kink-model}, with unbroken $U(1)$ charge $S^z$ and asymptotic
+densities $+1/2$ on the left and $-1/2$ on the right, selecting the kink sector
+$\Kk_{\uparrow\downarrow}$. Prepare one right-moving magnon on the $\uparrow$
+leg and use the windowed wall coordinate \eqref{eq:wallX}.
+
+\textbf{Assume (H-AD), i.e.\ all four clauses AD1--AD4 of \cref{def:h-ad}, for
+this scattering vector.} Then, in the limit order fixed by (AD4), the
+asymptotic two-channel displacement observable obeys
+\begin{equation}
+  \Delta X=-\frac{1}{s}\,N_T,
+  \qquad
+  \delta x=-\frac{\braket{N_T}}{s},
+  \label{eq:Mquant}
+\end{equation}
+and consequently
+\begin{equation}
+  \spec(\Delta X)\subseteq\Bigl\{-\frac1s,\,0\Bigr\},
+  \qquad
+  \delta x\in\Bigl[-\frac1s,0\Bigr],
+  \qquad
+  \operatorname{Var}_\Psi(\Delta X)
+  =\frac{1}{s^2}\braket{N_T}\bigl(1-\braket{N_T}\bigr).
+  \label{eq:Mquant-spec}
+\end{equation}
+The channel statement is independent of $k$, of $\Delta$, of the packet shape
+and of the scattering phase. For the concrete spin-$1/2$ application $s=1/2$,
+so $\delta x=-2\braket{N_T}$ and the variance is $4\braket{N_T}(1-\braket{N_T})$.
+\end{theorem}
+
+\noindent\emph{Idea of proof.} Choose a cut $c$ and regularise the total charge
+by subtracting $+s$ to the left of $c$ and $-s$ to the right; a kink whose
+windowed coordinate is $m$ then contributes $2s(m-c)$. The regularised charge
+is exactly conserved, because the bond currents telescope and the frozen
+endpoints carry no hopping current, and (AD1) with (AD4) carries that fixed
+label into the in and out channel limits. On the reflected branch the in and out
+totals are $2s(m_i-c)-1$ and $2s(m_R-c)-1$, so $m_R=m_i$; on the transmitted
+branch they are $2s(m_i-c)-1$ and $2s(m_T-c)+1$, so $2s(m_T-m_i)=-2$ and
+$m_T-m_i=-1/s$. Hence on the two outgoing channel spaces the displacement is
+$0\cdot P_L-(1/s)P_T$, and conjugating by $W_+$ gives $\Delta X=-(1/s)N_T$ on
+$\Hilb_{\mathrm{sc}}$. Since $N_T$ is an orthogonal projection, its spectrum
+lies in $\{0,1\}$ and $N_T^2=N_T$, which gives \eqref{eq:Mquant-spec}
+immediately. \hfill$\square$
+
+\begin{scope}[Exactly what is conditional, and what the variance is a variance
+of]
+\label{scope:M-quant}
+The hypothesis (H-AD) is used at precisely three places: to say that dressing
+inside a fixed-charge kink sector does not change the kink eigenvalue, to
+replace interacting late-time states by separated channels, and to package the
+channel weights into the projection $N_T$. The flux identity
+\cref{thm:M-flux} and the charge arithmetic use none of it. (H-AD) for the
+unprojected chain remains open; it is proved only for the projected
+three-wall component (\cref{cor:Mq-AD3}).
+
+The abstract arithmetic behind \eqref{eq:Mquant} is only the ledger
+\eqref{eq:ledger}; it does not by itself establish the required channels for a
+higher-spin $XXZ$ chain, nor for a general triple (compact group, injective
+MPS, finite-range Hamiltonian). That generality gap is closed only in the
+conditional form of \cref{thm:M-quant-G}.
+
+It is the \emph{outcomes} that are quantized, not every expectation value. The
+expectation $\delta x=-\braket{N_T}/s$ is the convex combination selected by
+$\braket{N_T}\in[0,1]$. Likewise $\operatorname{Var}(\Delta X)$ is the variance
+of the two-channel displacement observable; identifying it with the one-time
+variance $\operatorname{Var}(\wallX_W)$ would additionally require a sharp
+initial wall eigenstate and an explicit two-time measurement convention, and
+neither is implicit here.
+\end{scope}
+
+\begin{remark}[Finite-window error budget]
+\label{rem:error-budget}
+At finite window and finite separation it is useful to keep the theorem and the
+measurement apart:
+\begin{equation}
+  \Bigl|\delta x_W+\frac{\braket{N_T}}{s}\Bigr|
+  \le\epsilon_{\mathrm{AD}}
+   +C_{\tilde\lambda}\tilde\lambda^{d_W}
+   +\frac{N_W(t_i)+N_W(t_f)}{s}
+   +\epsilon_{\mathrm{num}},
+  \label{eq:budget}
+\end{equation}
+with $\tilde\lambda\in(\lambda_E,1)$, $d_W$ the minimum kink-core-to-edge
+distance, $\epsilon_{\mathrm{AD}}$ an empirical local charge-decomposition
+defect incurred when the exact channels are approximated numerically, $N_W$ the
+residual leg content inside $W$, and $\epsilon_{\mathrm{num}}$ the estimator and
+evolution errors. All terms vanish in the exact conditional limits, and
+$\epsilon_{\mathrm{AD}}$ is not a return to the superseded norm-mixture
+formulation of \cref{rem:h-ad-r1}. A projection error of order $\Delta^{-2}$ is
+added only when the full $\braket{N_T}$ is replaced by the Fano value of
+\cref{thm:M-tk}; it is not an error in \eqref{eq:Mquant}.
+\end{remark}
+
+\provenance{M-quant}%
+{\texttt{theory/memory-quantization.md} \S4 steps (1.1)--(1.7) and \S5
+ Corollary Mq-quant; \texttt{theory/corner-b-draft.md} \S6}%
+{\texttt{theory/checks/mquant\_check.py} tests the flux identity and the
+ empirical scan only; (H-AD) is an assumption and is tested by no gate}%
+{\texttt{theory/verdicts/corpus-r2.md} (proved conditional on
+ \cref{def:h-ad}); full-chain (H-AD) tracked as open work}
+
+\subsection{The compact-group generalisation}
+
+\begin{theorem}[The memory law for compact $G$ and injective MPS vacua]
+\label{thm:M-quant-G}
+\statusProvedConditional\ \ The following is proved \emph{only} as a
+conditional implication: the hypothesis package H-MQG(1)--(4) together with
+H-AD-G implies the conclusions \eqref{eq:G1}--\eqref{eq:G2}.
+
+\smallskip
+\noindent\textbf{Hypotheses H-MQG.}
+\begin{enumerate}
+\item[(1)] $G$ is compact and $\{A_\gamma\}_{\gamma\in\Omega_{\mathrm{vac}}}$ is
+  a $G$-covariant family of injective canonical MPS tensors of one common,
+  arbitrary finite bond dimension $\chi$ (\cref{sec:mps-setting}). Fix $\alpha$
+  and $\beta=g\cdot\alpha\neq\alpha$, and use the kink sector
+  $\Kk_{\alpha\beta}$ supplied by \cref{sec:corner-a}.
+\item[(2)] A common unbroken compact abelian subgroup lies in
+  $H_\alpha\cap H_\beta$. Choose one primitive circle direction $\xi$ in its Lie
+  algebra and fix, once for both tails, the Hermitian on-site charge
+  $S^z:=-i\,q(\xi)$. In this fixed convention $\omega_\alpha(S^z)=+s$ and
+  $\omega_\beta(S^z)=-s$, with $s>0$. For a higher-dimensional torus the
+  theorem is applied componentwise after choosing $\xi$; a finite abelian group
+  with no circle direction is not enough, since it supplies no local current.
+\item[(3)] $H$ is translation invariant, finite range and $G$-invariant in the
+  exact sense of \cref{sec:symmetry-noether}, and the two vacua are stationary.
+  Its infinite-volume dynamics therefore obeys the cut-current continuity
+  equation for the selected charge.
+\item[(4)] The selected incoming state is a \emph{fixed} wave packet in the
+  $\ell^1$ class $\Kk^{(1)}_{\alpha\beta}$ of \cref{def:l1-kink-class}, and its
+  wall coordinate is exactly the windowed observable \eqref{eq:wallX} with the
+  charge and $s$ of item (2). No plane wave is admitted in place of this packet.
+\end{enumerate}
+
+\smallskip
+\noindent\textbf{Hypothesis H-AD-G.} This is shorthand, not a replacement
+definition, for all of \cref{def:h-ad}(AD1)--(AD4) holding for that vector, with
+one incoming left leg, one reflected outgoing leg and one transmitted outgoing
+leg, whose charges --- measured relative to the vacuum supporting each leg, in
+the single convention of item (2) --- are
+\begin{equation}
+  q_{\mathrm{in}}=-1,\qquad q_L=-1\ \text{(reflected)},\qquad q_T=+1 .
+\end{equation}
+(AD2)'s transmitted-channel projection is $N_T$; (AD1) excludes any further
+propagating channel, and the selected vector has no bound-state component.
+
+\smallskip
+\noindent\textbf{Conclusion.} Form the infinite-volume dynamics and the wave
+operators first; fix the packet; at each fixed window take the incoming and
+outgoing large-time limits; only then increase $W=[a,b]$ to $\Z$, with both
+kink-core distances tending to infinity. In this order,
+\begin{align}
+  \Delta X&=-\frac{1}{s}N_T,
+  &\delta x&=-\frac{\braket{N_T}}{s},
+  \label{eq:G1}\\
+  \spec(\Delta X)&\subseteq\Bigl\{0,-\frac1s\Bigr\},
+  &\operatorname{Var}(\Delta X)
+   &=\frac{1}{s^2}\braket{N_T}\bigl(1-\braket{N_T}\bigr).
+  \label{eq:G2}
+\end{align}
+The outcome quantum is fixed by charge conservation alone: reflection transfers
+no charge between the two vacuum conventions, while transmission changes the
+separated leg charge by $q_T-q_{\mathrm{in}}=2$. More generally, if that
+difference is some definite $\nu$, the same proof gives the quantum
+$-\nu/(2s)$; the displayed $-1/s$ therefore includes the primitive channel
+normalisation of H-AD-G, and is not invariant under relabelling a charge-$\nu$
+particle as charge one.
+\end{theorem}
+
+\noindent\emph{Idea of proof.} Four steps. First, the selected state has a
+fixed asymptotic label $(\alpha,\beta)$ which the dynamics does not move, by
+the rigidity clause of \cref{thm:B3}; so $\delta x$ is motion \emph{within} a
+fixed sector, not a change of vacuum-pair label. Second, an exact finite-window
+identity: for a cut $c\in W$,
+\begin{equation}
+  \sum_{x=a}^{c}\bigl(S^z_x-s\bigr)+\sum_{x=c+1}^{b}\bigl(S^z_x+s\bigr)
+  =2s\bigl(\wallX_W-c\bigr),
+  \label{eq:G3}
+\end{equation}
+which is pure finite algebra, valid for arbitrary states and arbitrary $\chi$,
+since both sides expand to $\sum_{x=a}^{b}S^z_x+s(a+b-1-2c)$. Third, the two
+tail series converge absolutely on the $\ell^1$ class, the Heisenberg
+derivative of the window charge is the difference of the two physical cut
+currents, and the ordered limits of (AD3)--(AD4) carry the conserved total ---
+kink plus separated leg --- into the channels. Fourth, equating in and out
+totals gives the ledger \eqref{eq:ledger}, which returns $\delta x_R=0$ and
+$\delta x_T=-1/s$; packaging these by (AD1)--(AD2) gives
+$\Delta X=-(1/s)W_+P_TW_+^*$ and hence \eqref{eq:G1}--\eqref{eq:G2}, without
+replacing the coherent outgoing state by a mixture. \hfill$\square$
+
+\begin{scope}[What the generalisation does and does not buy]
+\label{scope:M-quant-G}
+The theorem is proved \emph{only} as the implication stated. H-AD-G itself is
+not proved; neither is the sector reduction \cref{thm:Mq-E} in any general
+setting, nor (H-AD) for the unprojected chain. No soft zero is proved here: if
+a separate result shows $\braket{N_T}\to0$, then \eqref{eq:G1} transfers that
+zero to the memory, but nothing in this theorem produces it. No uniformity is
+claimed --- not over packets, models, soft limits, a continuous vacuum
+manifold, $G$, $\alpha,\beta$, $\chi$, tensors, Hamiltonians, times, core
+decorations or deformations. At the general $\ell^1$ level the tail error is
+the state-specific omitted sum; it tends to zero as $W\uparrow\Z$ with no rate.
+Only if the asymptotic kink core is one fixed two-sided MPS decoration with
+modifications in a fixed bounded support does one recover an exponential tail
+$C_{\tilde\lambda}\tilde\lambda^{d_W}$, on exactly that fixed data.
+
+The transitivity hypothesis (T) is \emph{not} required for
+\eqref{eq:G1}--\eqref{eq:G2}. If it is imposed, it supplies the double-coset
+label $\mathfrak d(\alpha,\beta)\in H_\alpha\backslash G/H_\alpha$ of the fixed
+vacuum pair, and the scattering does not change that label. Finally, the
+measured displacement is charge bookkeeping inside a fixed sector; it is not a
+moment map, a flat kink torsor, an SPT index, or a deformation-independent
+absolute charge.
+
+Two convention warnings. Rescaling the generator rescales both $s$ and all leg
+charges, so only $-(q_{\mathrm{out}}-q_{\mathrm{in}})/(2s)$ is convention
+covariant. And a finite abelian symmetry alone is insufficient: without a
+circle generator there is only a modular charge label, not a local continuous
+current and not a real-valued displacement law.
+\end{scope}
+
+\begin{remark}[Consistency with the spin-$1/2$ case]
+\label{rem:G-instantiation}
+Taking $G=U(1)\rtimes\Z_2$, $\alpha=\uparrow$, $\beta=\downarrow$ and $s=1/2$
+in \cref{def:kink-model}, the two tensors are injective product tensors with
+$\chi=1$, so H-MQG(1)--(4) holds as the special case in which every
+transfer-tail error vanishes exactly. With $q_{\mathrm{in}}=q_L=-1$ and
+$q_T=+1$, \eqref{eq:G1}--\eqref{eq:G2} reduce to $\Delta X=-2N_T$,
+$\delta x=-2\braket{N_T}$, $\spec(\Delta X)\subseteq\{0,-2\}$ and
+$\operatorname{Var}(\Delta X)=4\braket{N_T}(1-\braket{N_T})$ --- exactly the
+numbers of \cref{thm:M-quant}. A rank-two example needs a nonabelian ambient
+group: a bare abelian group, or a selected central factor, would force
+$\omega_\beta=\omega_\alpha$ on the selected charge and could not produce
+opposite vacuum densities.
+\end{remark}
+
+\provenance{M-quant-G}%
+{\texttt{theory/memory-quantization-general.md} \S2, steps (1.1)--(1.5), with
+ the hypothesis package in \S0 and the scope discipline in \S4}%
+{\texttt{theory/checks/mquant\_general\_check.py} (symbolic charge arithmetic
+ and representation theory only; the red mode mutates $q_T$). It constructs no
+ MPS tensors, no wave operators and no proof of H-AD-G}%
+{\texttt{theory/verdicts/mquant-g-r2.md} (promoted as the conditional
+ implication only)}
+
+\subsection{The exactly solvable sector: the Fano graph}
+
+\begin{theorem}[The projected three-wall component is a Fano graph]
+\label{thm:Mq-E}
+\statusProved\ \ Take the spin-$1/2$ model of \cref{def:kink-model} with $J>0$,
+$\Delta>1$, kink orientation $\uparrow$ on the left and $\downarrow$ on the
+right, and a fixed integer regularised charge label $\mu$. Let $P_3$ project
+the fixed-$S^z$ kink-plus-one-magnon space onto configurations with one or
+three domain walls, retain the connected component containing the three
+consecutive walls $(\mu-1,\mu,\mu+1)$, and put $H_3=P_3H_{XXZ}P_3$. Then, for
+every admissible frozen-boundary interval and at infinite volume, there is an
+explicit unitary $U$ from that component onto
+$\ell^2(\Z)\oplus\C\ket{d}$ with
+\begin{equation}
+  UH_3U^*=H_0+V,\qquad
+  H_0=\Bigl[E_c-\frac{J}{2}\bigl(\shiftop+\shiftop^*\bigr)\Bigr]\oplus E_d,
+  \qquad
+  V=-\frac{J}{2}\bigl(\ket{0}\bra{d}+\ket{d}\bra{0}\bigr),
+  \label{eq:fano}
+\end{equation}
+where $\shiftop$ is the unit shift on $\ell^2(\Z)$,
+$E_c=\tfrac{3}{2}J\Delta$ is the uniform channel on-site energy, and
+$E_d=E_c-J\Delta=\tfrac12 J\Delta$ is the energy of the side vertex. The
+channel structure is explicit:
+\begin{itemize}
+\item the negative tail is the incoming and reflected leg, of charge $-1$,
+  carrying a sharp kink at bond $m:=\mu+1$;
+\item the positive tail is the transmitted leg, of charge $+1$, carrying a
+  sharp kink at bond $m-2=\mu-1$;
+\item the side vertex $\ket{d}$ is the pure sharp kink at bond $\mu$.
+\end{itemize}
+Moreover every fixed-window observable maps to two exact channel-kink constants
+plus a finite-support graph remainder: for $O\in\alg_W$,
+\begin{equation}
+  U P_C O P_C U^*
+  =o_L(O)\,\Pi^-_W+o_R(O)\,\Pi^+_W+F_W,
+  \label{eq:local-obs-map}
+\end{equation}
+with $o_L(O)=\bra{K_{\mu+1}}O\ket{K_{\mu+1}}$,
+$o_R(O)=\bra{K_{\mu-1}}O\ket{K_{\mu-1}}$, $\Pi^\mp_W$ the projections onto
+sufficiently remote negative and positive tails, and $F_W$ supported on a finite
+graph set. For the wall observable itself, $o_L(\wallX_W)=\mu+1$,
+$o_R(\wallX_W)=\mu-1$ and $\bra{K_\mu}\wallX_W\ket{K_\mu}=\mu$: zero reflected
+displacement, and transmitted displacement exactly $-2$.
+\end{theorem}
+
+\noindent\emph{Idea of proof.} In the $S^z$ product basis, a configuration is
+labelled by its ordered wall bonds. In the fixed charge sector the unique
+one-wall word has its wall at bond $\mu$, and every three-wall word is uniquely
+$(a,a+\ell,\mu+\ell)$ with $a\le\mu-1$ and $\ell\ge1$ --- a rectangle of
+labels. The exchange term toggles the two wall indicators neighbouring the bond
+it acts on, so a three-wall vertex has a surviving edge only when two of its
+walls are adjacent; in rectangle coordinates that is exactly the row $\ell=1$
+and the column $a=\mu-1$. Those two rays form a single two-sided path meeting at
+the junction $(\mu-1,\mu,\mu+1)$, the one-wall word $K_\mu$ is attached only to
+that junction, and every other rectangle vertex is isolated. Reading the row as
+negative labels and the column as positive labels gives the unitary, and the
+Ising energies ($3J\Delta/2$ per three-wall word, $J\Delta/2$ for the single
+wall) with uniform hopping $-J/2$ give \eqref{eq:fano}. The finite maps are
+literally restrictions of the infinite one along every cofinal sequence, since
+each word is a finite deviation of a sharp kink. Identity
+\eqref{eq:local-obs-map} follows because a $W$-local operator has zero matrix
+element between product words differing outside $W$, so all but finitely many
+tail rows are diagonal with the two kink constants. \hfill$\square$
+
+\begin{scope}[Projected, not full chain]
+\label{scope:Mq-E}
+This is a theorem about the compressed operator $H_3=P_3H_{XXZ}P_3$, not about
+the unprojected $XXZ$ Hamiltonian. It does not remove the separate leakage
+problem $P_3H_{XXZ}(1-P_3)\neq0$: five-wall and higher configurations are real,
+not absent. Their weight is \emph{measured}, not bounded: full-sector exact
+diagonalisation at $N=22$, $k=\pi/2$, packet width $\sigma=2.6$, over
+$0\le Jt\le13$, gives $P(\ge5\ \text{walls})\approx8\times10^{-3}$ at
+$\Delta=8$, $3\times10^{-2}$ at $\Delta=4$ and $1\times10^{-1}$ at $\Delta=2$,
+consistent with $O(\Delta^{-2})$. That is evidence for a controlled lift, not a
+uniform-in-time scattering estimate.
+\end{scope}
+
+\provenance{Mq-E}%
+{\texttt{theory/mq-e.md} \S\S1--7 (enumeration, component, finite unitary,
+ infinite-volume compatibility, labels and charges, local-observable map)}%
+{\texttt{theory/checks/mq\_e\_check.py} (finite-volume falsifier, safe under
+ \texttt{python3 -O}; the red mode shifts the right wall pair and exits 1).
+ Retained enumeration check: $N=14$, wall at bond $6$, component of size $12$
+ with degree histogram $\{1{:}3,\,2{:}8,\,3{:}1\}$}%
+{\texttt{theory/verdicts/blitz-mq-e-r1.md} (0 fatal, 0 major)}
+
+\begin{corollary}[The projected component satisfies the scattering hypothesis]
+\label{cor:Mq-AD3}
+\statusProved\ \emph{(for the projected component)}\ \ The projected incoming
+at-most-three-wall component of \cref{def:kink-model} satisfies all four clauses
+AD1--AD4 of \cref{def:h-ad}, for every incoming packet with smooth momentum
+amplitude compactly supported in $k\in(0,\pi)$. This does not prove
+\cref{def:h-ad} for the unprojected full chain.
+\end{corollary}
+
+\noindent\emph{Idea of proof.} By \cref{thm:Mq-E} the compressed operator is
+\eqref{eq:fano}, whose perturbation $V$ has rank at most two and is therefore
+trace class. Kato--Rosenblum then gives the wave operators $W_\pm$ with
+$\ran W_\pm=\Hilb_{\mathrm{ac}}(H_3)$, which is (AD1). Reflection about the
+junction splits off an odd free channel; the even channel together with
+$\ket{d}$ is a half-line Jacobi matrix differing from the constant-coefficient
+one in finitely many entries. With
+\begin{equation}
+  m_0(z)=\bra{0}\Bigl(z-E_c+\tfrac{J}{2}(\shiftop+\shiftop^*)\Bigr)^{-1}\ket{0}
+  =\bigl[(z-E_c)^2-J^2\bigr]^{-1/2},
+\end{equation}
+every cyclic resolvent entry is rational in $z$ and $m_0(z)$ with denominator
+$z-E_d-(J^2/4)m_0(z)$. Inside the band $[E_c-J,E_c+J]$ the boundary value
+$m_0(E+i0)$ has nonzero imaginary part, so that denominator has no real zero and
+the spectral measure is absolutely continuous there; outside the band its zeros
+are isolated and finite in number, and at the two thresholds the Jacobi
+solutions are constant or linear (up to a sign alternation) and are not square
+summable. Hence there is no singular continuous spectrum and
+$\Hilb=\Hilb_b\oplus\ran W_\pm$ with $\dim\Hilb_b<\infty$. Finally, stationary
+phase for $E(k)=E_c-J\cos k$ shows a smooth packet supported away from
+$k=0,\pi$ leaves every finite set as $t\to\pm\infty$; the wave operators
+transfer that local decay to $H_3$, and \cref{thm:Mq-E} labels the left and
+right tails as the reflected and transmitted channels with charges $-1$ and
+$+1$. Those are (AD2)--(AD3), and the strong limits impose (AD4).
+\hfill$\square$
+
+\provenance{Mq-AD3}%
+{\texttt{theory/memory-quantization.md} \S3, steps (1.1)--(1.5);
+ \texttt{theory/mq-e.md} \S6}%
+{\texttt{theory/checks/mq\_e\_check.py} tests the sector reduction, not the
+ spectral theorems}%
+{\texttt{theory/verdicts/blitz-mq-e-r1.md}}
+
+\subsection{The transmission coefficient and its quadratic soft zero}
+
+\begin{theorem}[Fano transmission and the quadratic zero]
+\label{thm:M-tk}
+\statusProved\ \emph{(projected, unconditional)}\ \ On the projected incoming
+at-most-three-wall component of \cref{def:kink-model}, the kink--magnon
+scattering data of \cref{def:scattering-data} are
+\begin{equation}
+  t(k)=\Bigl[1+\frac{iJ^2}{4\,\omega(k)\,v(k)}\Bigr]^{-1},
+  \qquad
+  r(k)=-\frac{iJ^2}{4\,\omega(k)\,v(k)}\,t(k),
+  \qquad
+  T(k)=\Bigl[1+\Bigl(\frac{J^2}{4\,\omega(k)\,v(k)}\Bigr)^{2}\Bigr]^{-1},
+  \label{eq:tk}
+\end{equation}
+with transmission phase
+$\delta_t(k)=-\arctan\bigl[J^2/(4\,\omega(k)\,v(k))\bigr]$ and $\omega,v$ as in
+\eqref{eq:dispersion}. In the soft limit $k\to0$ at fixed $\Delta$, where
+$v\to0$ and $\omega\to J(\Delta-1)$,
+\begin{equation}
+  T(k)=16(\Delta-1)^2k^2+O(k^4),
+  \qquad
+  R(k)=1-16(\Delta-1)^2k^2+O(k^4).
+  \label{eq:soft-zero}
+\end{equation}
+A soft magnon is thus totally reflected, with a quadratic zero in the
+transmission. Combining with \eqref{eq:Mquant},
+$\delta x(k)=-16(\Delta-1)^2k^2/s+O(k^4)$.
+\end{theorem}
+
+\noindent\emph{Idea of proof.} By \cref{thm:Mq-E} the effective one-body
+problem is a uniform tight-binding chain with hopping $-J/2$ and a single
+side-coupled level --- the pure kink --- attached at the junction with
+amplitude $-J/2$ and detuning $\omega(k)$. Eliminating the side level leaves an
+energy-dependent single-site potential $U(k)=(J/2)^2/\omega(k)$ at the
+junction. Matching $\psi_n=e^{ikn}+re^{-ikn}$ for $n\le0$ to $\psi_n=te^{ikn}$
+for $n\ge0$ across that impurity gives $-2i\tau r\sin k+Ut=0$ and $t=1+r$; with
+$2\tau\sin k=J\sin k=v(k)$ this is \eqref{eq:tk}. \hfill$\square$
+
+\begin{remark}[Two useful limits]
+\label{rem:tk-limits}
+For large $\Delta$ (the Ising regime), $J^2/(4\omega v)\approx1/(4\Delta\sin k)$,
+so $R(k)\approx1/(16\Delta^2\sin^2k)$: the wall is transparent up to
+$O(\Delta^{-2})$, the lattice counterpart of the reflectionless continuum domain
+wall. In the frequency variable, using
+$\omega-\omega_{\mathrm{gap}}=J(1-\cos k)\approx Jk^2/2$, the soft law
+\eqref{eq:soft-zero} reads
+$T\approx32(\Delta-1)^2(\omega-\omega_{\mathrm{gap}})/J$ --- linear in the
+excess energy above the gap. The crossover momentum is $k_*=1/(4(\Delta-1))$.
+\end{remark}
+
+\begin{scope}[Projected and non-universal]
+\label{scope:M-tk}
+Equations \eqref{eq:tk}--\eqref{eq:soft-zero} are exact for the Fano graph, and
+therefore unconditional on the projected component, because \cref{thm:Mq-E}
+identifies that graph with the all-volume incoming component. They are
+\emph{not} exact for the unprojected $H_{XXZ}$, because of the measured
+$O(\Delta^{-2})$ leakage into five-wall and higher configurations. The
+unprojected formula, and the universality of both the quadratic zero and its
+coefficient $16(\Delta-1)^2$, remain \statusConjecture. What a genuine soft
+theorem would have to supply is that this zero and its coefficient are functions
+of the kink's asymptotic data --- vacuum pair, $U(1)$ charge, gap --- and not of
+the microscopic tensor. That is the real obligation on the edge from the soft
+corner to the memory corner, and it is not discharged here.
+
+A separate warning, worth repeating: $d\delta_t/dk$ is the Wigner--Eisenbud
+spatial shift of the \emph{transmitted magnon}. It is smooth and non-quantised
+and it is not the wall displacement. The leakage affects $T(k)$; it does not
+affect the memory law \eqref{eq:Mquant}, which is a conservation law.
+\end{scope}
+
+\provenance{M-tk}%
+{\texttt{theory/corner-b-draft.md} \S5.2 Eqs.\ (5.1)--(5.3);
+ \texttt{theory/memory-quantization.md} \S5 Eqs.\ (Mq.9)--(Mq.10);
+ \texttt{theory/mq-e.md} \S7 step (1.2)}%
+{\texttt{theory/checks/mq\_e\_check.py};
+ \texttt{theory/checks/crosscheck\_corner\_b\_tk.py} remains an empirical
+ full-chain cross-check only}%
+{\texttt{theory/verdicts/blitz-mq-e-r1.md}}
+
+\subsection{What the numerics see}
+
+\begin{observation}[The wavepacket scan reproduces the conditional law]
+\label{obs:N2}
+\statusSketch\ \ An $XXZ$ wavepacket scan matches the spin-$1/2$ prediction
+$\delta x=-2\braket{N_T}$ of \cref{thm:M-quant} at the recorded precision. On
+the nine clean rows at $N=160$, three-wall truncation, standoff $36$, with
+trapped weight below $10^{-6}$:
+\begin{itemize}
+\item the headline estimator satisfies $\max|\delta x_1+2T|=0.004330$ sites,
+  i.e.\ $0.004$ at the reported precision;
+\item the integrated-magnetisation estimator $\delta x_2$, which is the direct
+  proxy for \eqref{eq:wallX}, satisfies $\max|\delta x_2+2T|=0.001233$ sites;
+\item the largest estimator spread is $0.005563$ sites and the largest possible
+  trapped-charge term is $2\times(8.862\times10^{-7})$ sites, so both residuals
+  lie inside the scan's own budget \eqref{eq:budget};
+\item norm and energy drifts are at most $7.75\times10^{-13}$ and
+  $6.08\times10^{-10}$, subleading to the measurement geometry.
+\end{itemize}
+This is \statusSketch\ and stays there: it is numerical evidence for the
+conditional theorem, not a theorem, and in particular not a proof of
+\cref{def:h-ad} for the full chain. Comparing three-wall against five-wall
+truncation shifts the robust integrated estimator by $0.0096$ sites at
+$\Delta=2$, $N=56$, about half a percent, which together with the measured
+$O(\Delta^{-2})$ higher-wall probability supports but does not establish the
+full-chain lift.
+\end{observation}
+
+\provenance{N2}%
+{no proof; empirical scan only, reported in
+ \texttt{theory/memory-quantization.md} \S6, named computation Mq-check N1}%
+{\texttt{numerics/results/memory-scan-1.json}: $\delta x\approx-2T$ within
+ $0.004$ sites}%
+{\texttt{theory/verdicts/corpus-r2.md} (held at sketch)}
+
+\subsection{Are the two twos the same number?}
+
+\begin{conjecture}[The soft slope and the memory quantum are one charge datum]
+\label{conj:Bc}
+\statusConjecture\ \ The soft phase slope of the two-magnon problem and the
+memory channel quantum of \cref{thm:M-quant} are the same asymptotic-charge
+datum, namely $|q_{\mathrm{hard}}|/s$, where $q_{\mathrm{hard}}$ is the hard
+leg's $U(1)$ charge relative to its vacuum and $s$ is the vacuum density of
+\cref{def:memory-observables}.
+\end{conjecture}
+
+\noindent\emph{Where the conjecture comes from.} In the isotropic ferromagnet
+the two-magnon phase has $d\delta_{\mathrm{phys}}/dk_s|_0=2$ on the half-zone
+(\cref{sec:two-magnon}), i.e.\ a soft Wigner shift of two sites off a hard
+magnon; and the kink memory quantum of \cref{thm:M-quant} is $1/s=2$ sites at
+$s=1/2$. Two independent-looking calculations return the same number. The
+conjecture is that this is not a coincidence.
+
+\smallskip
+\noindent\emph{Evidence, stated as evidence.} A pre-registered falsifier was run
+and \emph{survived}. Across site spins $s\in\{1/2,1,3/2,2\}$, the measured soft
+slope is $1/s$ and the measured ratio is $\delta x/N_T=-1/s$, both inside
+pre-registered $8\%$ criteria, on an ansatz-free ring plus dynamics computation
+with a Bethe residual below $1.1\times10^{-14}$. A second, sharper falsifier
+targeted the charge-two case: three-magnon exact diagonalisation at $N=100$
+measured $4.07001\pm0.08981$ against the predicted $|q_{\mathrm{hard}}|/s=4$ at
+$s=1/2$, inside the pre-registered absolute window of $0.35$, with the
+dense-sector oracle green and the hopping mutation red.
+
+\smallskip
+\noindent\emph{Why this is not a proof.} Both measurements are finite-packet
+evidence. There is no extrapolation in system size or packet width, and no
+charge-two kink-memory test at all --- the memory half of the conjecture has
+been checked only at $|q_{\mathrm{hard}}|=1$. The soft half is generalised to
+every site spin by the exact two-body slope theorem of \cref{sec:two-magnon},
+but the memory half rests on the conditional theorems \cref{thm:M-quant} and
+\cref{thm:M-quant-G}, and the factor at $|q_{\mathrm{hard}}|>1$ is open. No
+cross-reference between the two halves promotes the conjecture; it remains
+\statusConjecture. Should a spin-$1$ two-magnon phase ever return a slope of $2$
+rather than $1$, the coincidence is numerology and must be dropped.
+
+\provenance{Bc}%
+{no proof shard; statement recorded in \texttt{theory/corner-b-draft.md} \S10
+ and \S5.3}%
+{\texttt{theory/checks/spin\_s\_slope\_check.py};
+ \texttt{numerics/results/spin1-bc-falsifier.json} (84 ring, 16 dynamics and
+ 22 memory rows); \texttt{numerics/results/spin1-bc-crosscheck.json};
+ \texttt{numerics/test/test\_spins\_twomagnon.jl} and
+ \texttt{test\_spins\_memory.jl} (decision tests with fixed criteria);
+ \texttt{theory/lanes/blitz-2026-08-29/bc-charge2/RESULT.md} with
+ \texttt{test\_bc\_charge2.jl} and its green, red-stub and red-mutation logs}%
+{falsifier survived 2026-08-26 and again on the charge-two lane 2026-08-29;
+ status unchanged}

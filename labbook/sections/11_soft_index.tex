@@ -1,0 +1,1158 @@
+% SHARD-ID: LB-11-SOFT-INDEX
+% SHARD-TITLE: The soft index: Ward-identity constraints on soft amplitudes
+% SHARD-SOURCES: theory/soft-index-r2.md (all sections, incl. the quarantined
+%   MERGE PROPOSALS of §7); theory/soft-index-general.md §§0--4;
+%   theory/soft-index-g4.md ⟨1⟩1--⟨1⟩7; theory/proto-lsz-match.md;
+%   theory/proto-lsz-scalar.md; definitions.md D24, D25;
+%   claims/CLAIMS.md rows S-IDX-*, S2-2body-S, D24-VAL, AMP;
+%   theory/verdicts/soft-index-r2-critic.md, blitz-proto-lsz-r1.md,
+%   d24d3-adjudication-r3/r4/r5.md
+% SHARD-CLAIMS: S-IDX-fin-r2, S-IDX-fin-G, S-IDX-G-label,
+%   S-IDX-spec-struct-r2, S-IDX-spec-r2, S-IDX-HR-value-r2,
+%   S-IDX-MATCH-HS-SEP, S-IDX-D29-value-HS-SEP,
+%   S-IDX-PROTO-SCALAR-HS-SEP; proposed D29, D30
+
+% Local semantic macros for this shard (rule 10 permits shard-local macros).
+% \statusProposed marks a definition that is NOT yet installed in
+% definitions.md: it lives only in a shard's MERGE PROPOSALS block.
+\newcommand{\statusProposed}{\statustag{Plum}{proposed, not merged}}
+\newcommand{\Aproto}{\mathcal{A}}        % the finite protocol ratio datum
+\newcommand{\Rproto}{\mathcal{R}}        % the interacting/free row ratio
+\newcommand{\Hsec}{\mathcal{H}}          % a finite weight sector
+\newcommand{\rank}{\operatorname{rank}}  % \DeclareMathOperator is preamble-only
+
+\section{The soft index: Ward-identity constraints on soft amplitudes}
+\label{sec:soft-index}
+
+\subsection{Why an index, and not a soft factor}
+
+The programme that opened this part of the campaign was the obvious one: look
+for a lattice analogue of a universal soft factor --- a single multiplier,
+built out of the charges and velocities of the hard legs alone, that
+multiplies an $n$-leg amplitude when one extra soft quantum of momentum $k$ is
+emitted. That route failed, and it failed for a stated reason: on the lattice
+there is no proof that the soft multiplier is independent of the microscopic
+source, and there is an explicit local source for which it is not. The
+refutation is recorded in \cref{sec:universality}; what survives there is a
+criterion and a conditional shape, not a number.
+
+The work in this section replaces that route by a different one. Rather than
+asking what the soft emission \emph{is}, we ask what the symmetry algebra
+\emph{forces} it to be. The symmetry supplies an exact operator identity in
+finite volume --- a Ward identity between a charge, its associated current
+zero mode, and the projector onto the range of the charge --- and that identity
+constrains a normalised ratio of matrix elements to be exactly one. We call
+that ratio the \emph{soft index}. It is an index in the honest sense: it is
+an integer (or a one), it is insensitive to the couplings of the Hamiltonian,
+to the system size, and to the hard state inside the relevant sector, and its
+proof is finite-dimensional linear algebra plus representation theory.
+
+The strategy therefore splits cleanly into two halves, and the split is the
+organising idea of this whole section.
+
+\begin{itemize}
+\item \textbf{Structure.} What the symmetry alone forces. This half is
+  unconditional in finite volume (\cref{thm:soft-index-su2},
+  \cref{thm:soft-index-compact-G}, \cref{thm:sector-label}), and it becomes a
+  conditional statement about limits of a protocol readout once one asks about
+  the soft limit (\cref{thm:soft-index-structural}). Structure never produces
+  a number: it produces a shape with an open constant in it.
+\item \textbf{Value.} What pins the constant. Values come from on-shell
+  two-body data --- the exact spin-$S$ two-magnon phase slope of
+  \cref{sec:two-magnon} --- and they enter only after a separately stated
+  matching hypothesis that identifies the protocol readout with the on-shell
+  multiplier. Where that matching is a hypothesis, the value statement is a
+  conditional; where the matching is a theorem, the value statement is a
+  theorem.
+\end{itemize}
+
+The one substantive advance of the campaign in this area is that on a
+restricted but explicitly displayed class of preparations --- the
+\emph{separated-preparation} class of \cref{def:separated-preparation} --- the
+matching hypothesis is no longer a hypothesis. It is proved, with zero
+remainder (\cref{thm:match-separated}), and with it the value follows
+unconditionally on that class (\cref{thm:d29-value-separated}) and the
+factorisation takes an exact LSZ shape (\cref{thm:proto-scalar}). What remains
+open there is not the aggregate identity but its decomposition into named
+components; that residual gap is isolated as a single lemma
+(\cref{scope:comp-hs}).
+
+\subsection{The protocol datum: a proposed readout, not yet a definition}
+
+Everything in the ``limit'' half of this section is a statement about one
+concrete finite-volume number and its subsequential limits. That number, and
+the regularity package attached to it, are written down here in full. They are
+flagged \statusProposed{} throughout: they live in the merge-proposal block of
+the soft-index shard and have deliberately \emph{not} been installed as
+numbered definitions in the campaign's definition file, because no adjudicated
+round has yet promoted them. Every theorem below that mentions them says so.
+
+\begin{definition}[The windowed, packet-smeared, charge-created ratio readout]
+\label{def:protocol-readout}
+\statusProposed
+
+Fix a site spin $S$ with $2S\in\N$ and the fully polarised bilinear
+ferromagnet $H_S=-J\sum_x(\mathbf S_x\cdot\mathbf S_{x+1}-S^2)$ on an
+$N$-site periodic ring, and fix a hard window $I=[a,b]\Subset(0,\pi)$ inside
+one physical velocity channel. The readout has six parts.
+
+\emph{(1) Hard register.} Let $\psi_{g,\sigma}$ be a normalised one-magnon
+hard packet drawn from $g_\sigma\in C_c^\infty(I)$ on the ring momenta. Write
+$m_{\lambda,N}$ for the weight of its sector; on the primitive one-magnon band
+$m_{\lambda,N}=NS-1$, while an abstract use carries only
+$m_{\lambda,N}/N\to\rho>0$. On the \emph{full} weight sector put
+$D_{\lambda,N}=Q_0$, $A_{\lambda,N}=D_{\lambda,N}^\dagger D_{\lambda,N}$ and
+$P_{\lambda,N}=D_{\lambda,N}A_{\lambda,N}^{-1}D_{\lambda,N}^\dagger$, and for a
+scalar hard band with $v_h\neq0$ record the \emph{measured Ward register}
+\begin{equation}
+  \ell_{\lambda,N}(h):=
+  \frac{\bra{h}Q_0^\dagger P_{\lambda,N}J^-_0\ket{h}}{2iv_h}.
+  \label{eq:measured-ward-register}
+\end{equation}
+
+\emph{(2) One scale-tied soft packet.} Fix $f\in C_c^\infty((c_1,c_2))$ with
+$0<c_1<c_2<1$ and $\norm{f}_2=1$ (or its reflection in the opposite channel),
+put $f_\epsilon(k)=\epsilon^{-1/2}f(k/\epsilon)$ and
+$\Lambda_N(\epsilon)=(2\pi\Z/N)\cap\supp f_\epsilon$. The \emph{only} soft
+insertion is $Q[f_\epsilon]=\sum_{k\in\Lambda_N(\epsilon)}f_\epsilon(k)Q_k$,
+and the finite state is
+$\Phi_{N,\sigma}(0;\epsilon)=Q[f_\epsilon]\psi_{g,\sigma}$. There is no
+independent carrier or width limit and no arbitrary local source.
+
+\emph{(3) Coordinate-kernel register.} A normalised two-excitation vector is
+mapped to a symmetric $N\times N$ matrix by sending an occupation coefficient
+$c_{xy}$, $x<y$, to $c_{xy}/\sqrt2$ at the entries $(x,y)$ and $(y,x)$ and,
+when $S\ge1$, a double-occupancy coefficient $c_{xx}$ to $(x,x)$; the momentum
+kernel is the discrete Fourier transform
+$\widehat\Phi(k,h)=N^{-1}\sum_{x,y}e^{-i(kx+hy)}\Phi(x,y)$.
+
+\emph{(4) Interacting/free readout.} For a settling time $T$ let
+$\widehat\Phi_N(T)$ be the kernel of $e^{-iH_ST}\Phi_{N,\sigma}(0;\epsilon)$
+and let
+$\widehat\Phi_N^{\rm free}(T)(k,h)=\widehat\Phi_N(0)(k,h)\,
+e^{-i[\omega_S(k)+\omega_S(h)]T}$ be the freely propagated reference. With a
+hard-column set $K_h\subset I\cap(2\pi\Z/N)$ and an initial ordering matched to
+the physical out/in labelling, put
+\begin{align}
+  d_N(k)&=\sum_{h\in K_h}\abs{\widehat\Phi_N^{\rm free}(T)(k,h)}^2, &
+  n_N(k)&=\sum_{h\in K_h}\widehat\Phi_N(T)(k,h)\,
+          \overline{\widehat\Phi_N^{\rm free}(T)(k,h)},
+  \label{eq:d29-rows}
+\end{align}
+and, on the domain where $D_N(\epsilon):=\sum_k d_N(k)>0$,
+\begin{equation}
+  d\mu_{N,\epsilon}(k,h)=
+  \frac{\abs{\widehat\Phi_N^{\rm free}(T)(k,h)}^2}{D_N(\epsilon)},
+  \qquad
+  \Aproto_{N,T,W,\sigma}(\epsilon)=
+  \frac{\sum_k n_N(k)}{D_N(\epsilon)}-1,
+  \qquad
+  \bar k(\epsilon)=\int k\,d\mu_{N,\epsilon}.
+  \label{eq:d29-datum}
+\end{equation}
+The aggregate is a norm projection, not a pointwise division by a hard
+amplitude; every finite datum is an explicit finite matrix quantity.
+
+\emph{(5) Exact finite diagnostics.} Record separately the full-sector split
+$J^-_k=P_{\lambda,N}J^-_k+(1-P_{\lambda,N})J^-_k$ and both terms of the
+current/contact identity, identifying neither with the other; and for an exact
+hard vector define the contact defect
+$\mathfrak D_N(k,h)=(H_S-\omega_S(k)-\omega_S(h))Q_k\ket{h}_N$, whose time
+integral is the exact interacting-minus-free evolution by finite-dimensional
+Duhamel. No LSZ exhaustiveness, boundary decay, on-shell matching, value of
+the amputation constant, wave operator, or completeness statement is
+definitional here.
+
+\emph{(6) Admissible indices and their order.} An index is admissible only if
+$N\epsilon(c_2-c_1)>2\pi$, its initial geometry matches the physical channel,
+and its settling time lies in a declared settling/recollision sandwich
+$[T_{\min},c_{\rm rec}N/v_{\max}]$. Outer limits use admissible sequences
+$j\mapsto(N_j,T_j,W_j,\sigma_j)$ at \emph{fixed} $\epsilon$; only after an
+outer limit point has been selected is $\epsilon\downarrow0$ taken. At fixed
+$N$ the sample set $\Lambda_N(\epsilon)$ is empty once $c_2\epsilon<2\pi/N$,
+so the joint sequence is not a limit of this family.
+\end{definition}
+
+\provenance{proposed D29 (PROTO)}{%
+  \texttt{theory/soft-index-r2.md} §7, step (1.14).(2.1) --- quarantined in
+  that shard's merge-proposal block; \emph{not} installed in
+  \texttt{definitions.md}}{%
+  \texttt{theory/checks/soft\_index\_r2\_check.py} gates SIDXR2-C1--C3, C7--C8
+  (finite diagnostics and negative controls)}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md}}
+
+\begin{definition}[The regularity target attached to the readout]
+\label{def:protocol-regularity}
+\statusProposed
+
+This is a closure property for \cref{def:protocol-readout} and asserts no
+existence of an outer limit point. Along a stated admissible outer
+subsequence, whenever the scalar datum has an actual cluster family on soft
+scales $E\subset(0,\epsilon_0]$ with $0\in\overline E$, require:
+\emph{(a) denominator nondegeneracy} --- the aggregate free mass is nonzero,
+the normalised row measures are tight on the fixed hard window and the
+scale-tied soft support, and rows of zero free mass carry zero measure;
+\emph{(b) component compactness} --- the row measures, $m_{\lambda,N}/N$,
+$\ell_{\lambda,N}$, and every component named by any separately assumed
+decomposition have a further cluster point, with limits written
+$\mu_{*,\epsilon}$, $\rho>0$, $\ell_h$, and in particular
+$c_1\epsilon\le\abs{\bar k_*(\epsilon)}\le c_2\epsilon$ in a one-sided
+channel; \emph{(c) regularity only} --- each cluster family admits the
+continuous or $C^1$ extension to $\epsilon=0$ required at its point of use,
+with locally uniform bounds and equicontinuous first difference quotients;
+\emph{(d) no hidden matching} --- there is no equality with a chamber
+coefficient, no on-shell eigenvector, no physical multiplier, no LSZ
+exhaustiveness, no value or reality condition for the amputation constant, and
+no formula for $\ell_h$ in terms of a composite charge; \emph{(e) optional
+convenience} --- full-family convergence may be assumed, buying uniqueness of
+the selected limit function only.
+\end{definition}
+
+\begin{scope}[Regularity cannot supply a value]
+\label{scope:regularity-no-value}
+Clause (e) is stated with its own limitation because the limitation is the
+point. For any regular family with $1+\Aproto(\epsilon)\neq0$ the
+transformation
+\begin{equation}
+  1+\Aproto(\epsilon)\ \longmapsto\ [1+\Aproto(\epsilon)]\,e^{ic\epsilon}
+  \label{eq:mobius-shift}
+\end{equation}
+preserves every clause (a)--(d) and shifts the phase jet
+$\partial_\epsilon\arg(1+\Aproto)|_0$ by the arbitrary real constant $c$. Any
+argument that reads a numerical coefficient out of the regularity package
+alone is therefore invalid: a separate value supplier must appear at the exact
+leaf where the coefficient is fixed. In this section that supplier is always
+the exact two-magnon phase slope of \cref{sec:two-magnon}, and never a
+regularity clause.
+\end{scope}
+
+\provenance{proposed D30 (TGT)}{%
+  \texttt{theory/soft-index-r2.md} §7, step (1.14).(2.2); the value-shift
+  obstruction is step (1.7)}{%
+  \texttt{theory/checks/soft\_index\_r2\_check.py} gate SIDXR2-C6
+  (\textsc{tgt-mobius})}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md}}
+
+\subsection{The finite soft-index theorem on the \texorpdfstring{$SU(2)$}{SU(2)} ring}
+
+The first theorem is the anchor of the whole section: it is exact, finite, and
+free of every limiting hypothesis. Its content is that the charge, its current
+zero mode, and the projector onto the range of the charge are locked together
+by the algebra, and that the resulting normalised ratio is one.
+
+The one thing the reader must carry away is that the identity comes in
+\emph{two registers} which look similar and are not interchangeable. In the
+first, the Gram operator $A=D^\dagger D$ is formed on the \emph{whole} weight
+sector and inverted there. In the second, the charge is restricted to the
+highest-weight subspace first, and only then is the Gram operator formed; it
+is then a scalar. Substituting the scalar of the second register into the
+first is false as soon as the sector contains two or more magnons --- a mistake
+the campaign made once and now guards against with a dedicated red mode.
+
+\begin{theorem}[Finite soft index on an $SU(2)$ ring]
+\label{thm:soft-index-su2}
+\statusProved
+
+Let a finite periodic ring carry an on-site $SU(2)$ action and an
+$SU(2)$-invariant finite-range Hamiltonian. Let $Q_0=S^-$, let
+$(J^+_0,J^z_0,J^-_0)$ be its vector-current zero modes, and let
+$\Hsec_{\lambda,N}$ be the \emph{full} weight sector on which
+$S^z=m_{\lambda,N}>0$. Put
+\[
+  D_{\lambda,N}:=Q_0|_{\Hsec_{\lambda,N}},\qquad
+  A_{\lambda,N}:=D_{\lambda,N}^\dagger D_{\lambda,N}
+  \quad\text{on all of }\Hsec_{\lambda,N},
+\]
+let $P_{\lambda,N}$ project onto $\ran D_{\lambda,N}$, and let $\Pi_{\rm hw}$
+project $\Hsec_{\lambda,N}$ onto
+$K_{\lambda,N}:=\ker S^+\cap\Hsec_{\lambda,N}$. Then $A_{\lambda,N}$ is
+strictly positive, and for every $\psi\in K_{\lambda,N}$:
+
+\emph{(i) Full-sector Gram-inverse register.}
+\begin{equation}
+  P_{\lambda,N}J^-_0\psi=2\,D_{\lambda,N}A_{\lambda,N}^{-1}J^z_0\psi.
+  \label{eq:fin1}
+\end{equation}
+
+\emph{(ii) Separately restricted highest-weight register.} With $D_{\rm hw}$
+the restriction of $D_{\lambda,N}$ to $K_{\lambda,N}$ and $P_{\rm hw}$ the
+projector onto its range,
+\begin{equation}
+  D_{\rm hw}^\dagger D_{\rm hw}=2m_{\lambda,N}\mathbb 1,
+  \qquad
+  P_{\rm hw}J^-_0\psi=\frac{1}{m_{\lambda,N}}\,Q_0\,\Pi_{\rm hw}J^z_0\psi.
+  \label{eq:fin2}
+\end{equation}
+
+\emph{(iii) Primitive one-magnon residue.} For a nonzero-momentum primitive
+one-magnon vector $\ket{h}_N$ in the spin-$S$ ferromagnetic band, where
+$m_{\lambda,N}=NS-1$, the projector in \cref{eq:fin2} may be removed and
+\begin{equation}
+  J^z_0\ket{h}_N=i\,v_S(h)\ket{h}_N,
+  \qquad
+  \bra{h}Q_0^\dagger P_{\lambda,N}J^-_0\ket{h}_N=2i\,v_S(h).
+  \label{eq:fin3}
+\end{equation}
+Equivalently, the normalised Ward register
+\cref{eq:measured-ward-register} equals $\ell_{\lambda,N}(h)=1$.
+
+\emph{(iv) Pure charge-created anchor.} If $\psi_g$ is a one-magnon packet of
+exact band vectors and $\Phi_0:=Q_0\psi_g$ is the \emph{pure} zero-mode-created
+state, then its interacting/free row ratio in the readout of
+\cref{def:protocol-readout} at soft row $k=0$, with nonzero free denominator,
+is exactly one for every finite $N,T,W,\sigma$ and every site spin $S$:
+\begin{equation}
+  \Rproto_{\Phi_0}(0)=1.
+  \label{eq:fin8}
+\end{equation}
+\end{theorem}
+
+\begin{scope}[What the two registers do and do not say]
+\label{scope:soft-index-su2}
+The two registers are not interchangeable, and the difference is not
+cosmetic. In \cref{eq:fin1} the inverse Gram operator stays on the full source
+sector, because $J^z_0\psi$ need not remain highest weight once the sector
+contains two or more magnons; the scalar $2m_{\lambda,N}$ of \cref{eq:fin2}
+may not be pulled through $A_{\lambda,N}^{-1}$. In particular the string
+$m_{\lambda,N}^{-1}Q_0J^z_0$, without the highest-weight projector, is
+\emph{false} for two or more magnons, where the cross-register error is
+$O(1)$ while \cref{eq:fin1} is exact; that string appears nowhere as a claim.
+
+The anchor \cref{eq:fin8} is an anchor for the object just named and nothing
+else. It does not assert that the adjoined $k=0$ row of the running family
+$Q[f_\epsilon]\psi_g$ equals one at $S\ge1$ --- a direct computation gives
+$2.1633+0.1527i$ for that row at $S=1$, $N=7$, against one to
+$9.5\times10^{-16}$ for the pure charge-created row --- and it implies nothing
+about $\epsilon\downarrow0$, since the admissible family contains no
+fixed-$N$ continuous path to that row. At $S=1/2$ the same row identity holds
+for arbitrary two-magnon input, so there it is a readout tautology rather than
+independent evidence for a soft zero.
+
+The theorem makes no assumption of the protocol readout, its regularity
+package, wave operators, completeness, integrability, or any soft limit.
+\end{scope}
+
+\paragraph{Idea of proof.} Three short steps. First, positivity: decomposing
+the finite $SU(2)$ representation into spin-$j$ irreducibles, a weight-$m$
+vector satisfies $S^+S^-=(j+m)(j-m+1)\ge 2m>0$, so $A_{\lambda,N}$ is
+invertible on the entire sector and the polar formula
+$P_{\lambda,N}=D_{\lambda,N}A_{\lambda,N}^{-1}D_{\lambda,N}^\dagger$ holds.
+Second, the Ward step: covariance of the invariant finite-range current gives
+$[S^+,J^-_0]=2J^z_0$, so on a highest-weight $\psi$,
+$D_{\lambda,N}^\dagger J^-_0\psi=S^+J^-_0\psi=2J^z_0\psi$; substituting this
+into the polar formula is exactly \cref{eq:fin1}. Restricting the domain
+first inserts the source projector $\Pi_{\rm hw}$ into the adjoint and turns
+the Gram operator into the scalar $2m_{\lambda,N}$, giving \cref{eq:fin2}.
+Third, the residue: for $h\neq0$ the raised current $J^+_0\ket{h}_N$ vanishes
+because the zero-mode current preserves momentum while its raised target is
+the momentum-zero vacuum, so $J^z_0\ket{h}_N$ is itself highest weight and the
+projector drops; the continuity equation
+$-[\omega_S(h+k)-\omega_S(h)]=(e^{ik}-1)\bra{h+k}J^z_k\ket{h}_N$ has removable
+value $i\partial_h\omega_S(h)=iv_S(h)$ at $k=0$, and pairing with
+$Q_0\ket{h}_N$, whose squared norm is $2m_{\lambda,N}$, cancels the weight and
+leaves $2iv_S(h)$. The anchor \cref{eq:fin8} is immediate from
+$[H,Q_0]=0$ and $\omega_S(0)=0$: the interacting and free kernels coincide row
+by row.
+
+\provenance{S-IDX-fin-r2}{%
+  \texttt{theory/soft-index-r2.md} steps (1.3)--(1.5); positivity (1.3).(2.1),
+  full register (1.3).(2.4), restricted register (1.3).(2.5), residue
+  (1.3).(2.7)--(2.8), anchor (1.4)}{%
+  \texttt{theory/checks/soft\_index\_r2\_check.py} gates SIDXR2-C1--C3, green
+  exit $0$ with eight public red modes; the \texttt{-{}-red-register-trap}
+  mode executes the standing cross-register mutation and propagates its
+  outcome}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md} (\textsc{promotable now};
+  proof independently recomputed by the critic, promoted after the mandated
+  checker repair)}
+
+\subsection{The same theorem for every compact group}
+
+Nothing in the previous proof used $SU(2)$ beyond one root ladder. Written in
+that language the theorem generalises verbatim to any compact Lie group, on
+any finite graph or periodic lattice, one represented root at a time. This is
+worth stating in full because it makes visible exactly which structural
+ingredients are load-bearing --- a root triple, an adjoint-covariant current,
+and an occupied weight sector --- and therefore exactly where the statement has
+no content at all.
+
+\begin{theorem}[Root-wise finite soft index for a compact group]
+\label{thm:soft-index-compact-G}
+\statusProved
+
+Let a finite graph or a finite periodic lattice carry a finite-dimensional
+on-site unitary representation $U_N=u^{\otimes N}$ of a compact Lie group $G$
+and a $G$-invariant finite-range Hamiltonian, and put
+$Q(X)=\sum_x q_x(X)$ for $X\in\mathfrak g_\C$. Suppose given a displayed
+complex-linear current zero mode
+$J_0:\mathfrak g_\C\to\mathrm{End}(\Hilb_N)$ satisfying the adjoint covariance
+\begin{equation}
+  [Q(X),J_0(Y)]=J_0([X,Y]);
+  \label{eq:adjoint-covariance}
+\end{equation}
+on a periodic lattice $J_0$ may be taken to be the displayed directional
+zero-momentum flux. Let $\alpha$ be a represented root of the semisimple Lie
+algebra of the identity component $G^0$, with a compact-compatible triple
+$[E_\alpha,F_\alpha]=H_\alpha$, $[H_\alpha,E_\alpha]=2E_\alpha$,
+$[H_\alpha,F_\alpha]=-2F_\alpha$, $Q(E_\alpha)^\dagger=Q(F_\alpha)$ and
+$Q(H_\alpha)$ Hermitian. For an occupied positive coroot weight $\lambda$ put
+\[
+  \Hsec^\alpha_{\lambda,N}:=\ker(Q(H_\alpha)-\lambda),\qquad
+  D_\alpha:=Q(F_\alpha)|_{\Hsec^\alpha_{\lambda,N}},\qquad
+  A_\alpha:=D_\alpha^\dagger D_\alpha,
+\]
+let $P_\alpha$ project onto $\ran D_\alpha$, let
+$K^\alpha_{\lambda,N}:=\ker Q(E_\alpha)\cap\Hsec^\alpha_{\lambda,N}$ with
+projector $\Pi^\alpha_{\rm hw}$, and let $D_{\rm hw}$, $P_{\rm hw}$ be the
+correspondingly restricted objects. Then $A_\alpha>0$, and for every
+$\psi\in K^\alpha_{\lambda,N}$:
+\begin{align}
+  P_\alpha J_0(F_\alpha)\psi
+    &=D_\alpha A_\alpha^{-1}J_0(H_\alpha)\psi,
+    \label{eq:hg-full}\\[2pt]
+  D_{\rm hw}^\dagger D_{\rm hw}=\lambda\mathbb 1,
+  \qquad
+  P_{\rm hw}J_0(F_\alpha)\psi
+    &=\frac{1}{\lambda}\,Q(F_\alpha)\,\Pi^\alpha_{\rm hw}J_0(H_\alpha)\psi.
+    \label{eq:hg-restricted}
+\end{align}
+Whenever $\braket{\psi,J_0(H_\alpha)\psi}$ is nonzero, the normalised Ward
+index is exactly one:
+\begin{equation}
+  \frac{\braket{D_\alpha\psi,\;P_\alpha J_0(F_\alpha)\psi}}
+       {\braket{\psi,\;J_0(H_\alpha)\psi}}=1.
+  \label{eq:hg-index}
+\end{equation}
+If a possibly disconnected compact subgroup $K\le G$ is used for a Schur or
+sector statement, the required global covariance
+$U_N(k)J_0(Y)U_N(k)^\dagger=J_0(\Ad_kY)$, $k\in K$, is displayed as a
+hypothesis; infinitesimal covariance alone is not used for disconnected
+elements.
+\end{theorem}
+
+\begin{scope}[Three fences: where this theorem has no rows]
+\label{scope:soft-index-compact-G}
+The theorem has rows only for \emph{represented roots} of the semisimple Lie
+algebra of $G^0$, and this is a genuine restriction with three separate
+consequences. A central-torus direction has no root ladder, hence no row at
+all. A finite group has no nonzero Lie-algebra current component, hence no
+Lie-current row. And an arbitrary finite graph supplies no canonical
+direction and no zero mode: on a periodic lattice one may use the displayed
+directional flux, but on a general graph the current map is an input, not
+something the geometry provides. A chosen finite-ring periodisation of a
+termwise invariant interaction is an \emph{example} supplying
+\cref{eq:adjoint-covariance}; it is not part of the abstract hypotheses, and
+no canonical half-line cut on a circle is asserted.
+
+As in the $SU(2)$ case, the full-sector Gram-inverse register
+\cref{eq:hg-full} and the root-highest-restricted scalar register
+\cref{eq:hg-restricted} are not interchangeable: $J_0(H_\alpha)\psi$ need not
+remain root-highest, so $\lambda$ cannot replace $A_\alpha$ in
+\cref{eq:hg-full}.
+\end{scope}
+
+\paragraph{Idea of proof.} Restrict the finite unitary representation to the
+root $\mathfrak{sl}_2$ and use complete reducibility,
+$\Hilb_N\cong\bigoplus_{n\ge0}V_n\otimes M_{n,\alpha}$. On the weight-$\lambda$
+line of $V_n$,
+\[
+  Q(E_\alpha)Q(F_\alpha)=\tfrac14(n+\lambda)(n-\lambda+2)\,\mathbb 1
+  \ \ge\ \lambda>0,
+\]
+so $A_\alpha$ is strictly positive on the \emph{entire} source sector and
+$P_\alpha=D_\alpha A_\alpha^{-1}D_\alpha^\dagger$. Adjoint covariance gives
+$D_\alpha^\dagger J_0(F_\alpha)\psi=Q(E_\alpha)J_0(F_\alpha)\psi
+=J_0(H_\alpha)\psi$ for root-highest $\psi$, and substituting into the polar
+formula yields \cref{eq:hg-full}. For the restricted register,
+$Q(E_\alpha)Q(F_\alpha)\phi=(Q(F_\alpha)Q(E_\alpha)+Q(H_\alpha))\phi
+=\lambda\phi$ on $K^\alpha_{\lambda,N}$, and the adjoint of a
+restricted-domain map carries the source projector. The index
+\cref{eq:hg-index} needs no further work at all: since $D_\alpha\psi$ lies in
+$\ran D_\alpha$, the projector is invisible in the pairing and
+$\braket{D_\alpha\psi,P_\alpha J_0(F_\alpha)\psi}
+=\braket{\psi,D_\alpha^\dagger J_0(F_\alpha)\psi}
+=\braket{\psi,J_0(H_\alpha)\psi}$; divide. No injectivity, rank-one property,
+or scalarity of a reduced operator is used beyond the positivity already
+proved.
+
+\provenance{S-IDX-fin-G}{%
+  \texttt{theory/soft-index-general.md} §§1--2 (statement §1.2, positivity and
+  full register, restricted register, normalised index);
+  \texttt{theory/soft-index-2d.md} §§1--2}{%
+  \texttt{theory/checks/soft\_index\_2d\_check.py} gates SIDX2D-C0--C3 and
+  \texttt{-{}-red-scalar-full}; the general-$G$ and $SU(2)$ reference gates;
+  fences computed as G5-C1-\textsc{abelian}, G5-C2-\textsc{finite},
+  G5-C3-\textsc{global-form}}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md} (reduction to
+  \cref{thm:soft-index-su2} verified)}
+
+\subsection{The soft index as a difference of superselection labels}
+
+There is a second, complementary statement in the general compact setting,
+and it is the one that deserves the name ``index'' most literally. Instead of
+asking about operator matrix elements it asks about \emph{labels}: the
+charge-created and current-created vectors sit in a central character sector,
+and the soft datum is the difference between the target label and the source
+label. That difference is a character, it takes integer values on
+cocharacters, and it does not depend on the ring size, the hard vector, the
+Hamiltonian couplings, or any inventory of scattering channels.
+
+\begin{theorem}[Sector-label integrality of the soft index]
+\label{thm:sector-label}
+\statusProved
+
+Let a finite periodic ring carry a compact, possibly disconnected, on-site Lie
+symmetry $G$, let $\alpha$ be a vacuum label with unbroken subgroup
+$H_\alpha$, write $Z_\alpha:=Z(H_\alpha)$, and define the \emph{effective
+unbroken centre}
+\begin{equation}
+  K_u:=\{z\in Z_\alpha: u(z)\in U(1)\mathbb 1\},
+  \qquad
+  Z_{\alpha,\rm eff}:=Z_\alpha/K_u,
+  \qquad
+  \Lambda_\alpha^*:=\Hom(Z_{\alpha,\rm eff},U(1)).
+  \label{eq:effective-centre}
+\end{equation}
+All occupied $Z_\alpha$ characters have the same restriction to $K_u$, so they
+form an affine torsor whose differences lie in $\Lambda_\alpha^*$; this
+character group carries the free lattice of the connected central torus and
+may in addition carry a finite torsion part contributed by disconnected
+components. Let a nonzero represented Lie component $X\in\mathfrak g_\C$ span
+a $Z_\alpha$-character line of character $\chi_X\in\Lambda_\alpha^*$, put
+$Q_X=Q(X)$, let $J_X$ be the displayed finite-ring current component, and
+assume the displayed global covariance
+\begin{equation}
+  U_N(z)Q_XU_N(z)^\dagger=\chi_X(z)Q_X,
+  \qquad
+  U_N(z)J_XU_N(z)^\dagger=\chi_X(z)J_X,
+  \qquad z\in Z_\alpha.
+  \label{eq:global-covariance}
+\end{equation}
+Then for every occupied central character $\gamma$, with $\Pi_\gamma$ its
+projector,
+\begin{equation}
+  \Pi_\delta Q_X\Pi_\gamma=\delta_{\delta,\gamma\chi_X}\,Q_X\Pi_\gamma,
+  \qquad
+  \Pi_\delta J_X\Pi_\gamma=\delta_{\delta,\gamma\chi_X}\,J_X\Pi_\gamma,
+  \label{eq:label-blocks}
+\end{equation}
+so that the finite sector-label index is the character difference
+\begin{equation}
+  \mathrm{ind}_{Z_\alpha}(X;\gamma):=(\gamma\chi_X)\gamma^{-1}
+  =\chi_X\in\Lambda_\alpha^*,
+  \label{eq:label-index}
+\end{equation}
+and for every cocharacter $\eta:U(1)\to Z_{\alpha,\rm eff}^0$,
+\begin{equation}
+  \chi_X(\eta(e^{i\theta}))=e^{in_\eta(\chi_X)\theta},
+  \qquad
+  \Delta q_\eta=n_\eta(\chi_X)\in\Z.
+  \label{eq:label-integrality}
+\end{equation}
+A disconnected effective centre may additionally contribute the finite torsion
+label retained in \cref{eq:label-index}; it does not create an integer circle
+coordinate. Finally, for an exact hard eigenvector $\psi_h$ with
+$Q_X\psi_h\neq0$, the pure charge-created readout of \cref{eq:fin8} is one
+whenever its denominator is nonzero.
+\end{theorem}
+
+\begin{scope}[What the label theorem does \emph{not} imply]
+\label{scope:sector-label}
+The most important negative statement here is that
+\cref{eq:label-blocks} does \emph{not} imply the projected-current operator
+identity. Writing $D_\gamma:=Q_X\Pi_\gamma$ and $P_{D,\gamma}$ for the
+projector onto its range, the theorem gives only the inclusion
+\begin{equation}
+  \ran D_\gamma\subseteq\ran\Pi_{\gamma\chi_X},
+  \qquad
+  P_{D,\gamma}\le\Pi_{\gamma\chi_X},
+  \label{eq:descendant-finer}
+\end{equation}
+and the inclusion is strict in an explicit instance. In the four-qutrit
+fundamental $SU(3)$ ferromagnet one finds
+$\dim\Hsec_{5/3}=8$, $\dim\Hsec_{2/3}=24$, $\rank D=8$, and the live
+replacement defect
+$\norm{(\Pi_{2/3}-P_D)J_X\ket{h;2}}=\sqrt{8/3}$: replacing the
+descendant-range projector by the central-sector projector changes the current
+vector. The underdetermination behind this is abstract, not accidental: for a
+one-dimensional source line and a two-dimensional target of the same
+character, $D\psi=e_1$ and $J\psi=ae_1+be_2$ have the same source and target
+labels for every $a,b$, while $P_DJ\psi=ae_1$ varies. Sector labels alone do
+not determine an operator coefficient.
+
+Two further degeneracies. If $X$ is central its adjoint character is trivial
+and the label \cref{eq:label-index} is zero --- which is still distinct from a
+root row, since a central direction has no ladder. If $G$ is finite there is
+no nonzero $X$ and the theorem has no Lie-current instance at all; an
+independently supplied finite torsion label, or a finite-string endpoint
+identity, is a different statement.
+\end{scope}
+
+\paragraph{Idea of proof.} If $\psi=\Pi_\gamma\psi$ then
+\cref{eq:global-covariance} gives
+$U_N(z)Q_X\psi=\gamma(z)\chi_X(z)Q_X\psi$ and likewise for $J_X$, so the
+image lies entirely in the $\gamma\chi_X$ block; Haar orthogonality of
+distinct characters --- equivalently
+$\Pi_\delta=\int_{Z_\alpha}\overline{\delta(z)}\,U_N(z)\,dz$ --- kills every
+other block and proves \cref{eq:label-blocks}. Dividing the target label by
+the source label proves \cref{eq:label-index}, the common affine restriction
+on $K_u$ cancelling; and every continuous character of $U(1)$ is
+$e^{i\theta}\mapsto e^{in\theta}$ for a unique integer $n$, which is
+\cref{eq:label-integrality}. Since $H_N$ commutes with the central action it
+preserves each $\Pi_\gamma$, so the label difference cannot change under
+finite-volume dynamics. This is compact representation covariance, not a
+statement about quantisation of an expectation value.
+
+\provenance{S-IDX-G-label}{%
+  \texttt{theory/soft-index-g4.md} steps (1.1)--(1.7); headline statement at
+  (1.3), the pure zero-mode anchor at (1.4), the exact route boundary at
+  (1.5), the $SU(2)$ reduction at (1.6), the four-site $SU(3)$ instance at
+  (1.7); restated in \texttt{theory/soft-index-general.md} §4}{%
+  \texttt{theory/checks/soft\_index\_g4\_check.py} gates G4-C0--C4;
+  \texttt{theory/checks/soft\_index\_g\_boundary\_check.py} gates G5-C1--C3;
+  \texttt{theory/checks/soft\_index\_r2\_check.py} gates SIDXR2-C2--C3}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md}}
+
+\subsection{The structural limit law, and the one remaining gap in one dimension}
+
+We now leave exact finite volume. The question is what the symmetry forces
+about \emph{limits} of the readout of \cref{def:protocol-readout} as the ring,
+the settling time and the window are taken out and the soft scale $\epsilon$
+is then sent to zero. The honest register for this is the \emph{actual limit
+point}: a common outer subsequence along which, for every $\epsilon$ in a set
+$E\downarrow0$, the scalar datum, the row measures, the hard Ward registers,
+and every component named below all converge in the topologies required. The
+phrase asserts nothing about existence of such a subsequence. Along it the
+ordered soft variable is the packet mean $\bar k_*(\epsilon)$, not the carrier
+of an unsmeared plane wave, and it obeys
+$c_1\epsilon\le\abs{\bar k_*(\epsilon)}\le c_2\epsilon$, with sign fixed by
+the chosen one-sided profile.
+
+The whole content of the structural theorem rests on one hypothesis, and that
+hypothesis is the single remaining gap of the one-dimensional programme. It is
+displayed here as a named object so that it can never be smuggled into a
+definition.
+
+\begin{definition}[Hypothesis \textsc{(proto-lsz)}: an exhaustive component decomposition]
+\label{def:proto-lsz}
+In the packet and amputation normalisation of \cref{def:amputation-convention}
+(\cref{sec:universality}), after the outer limit and uniformly for $h\in I$,
+the limit datum decomposes exhaustively as
+\begin{equation}
+  \Aproto_*=\Aproto_*^{\rm desc}+\Aproto_*^{\perp}
+            +\Aproto_*^{\rm dir}+\Aproto_*^{\partial},
+  \label{eq:proto-lsz-split}
+\end{equation}
+naming respectively the descendant, orthogonal-current, direct-contact, and
+two window-boundary-gradient contributions, where the descendant term has the
+external-flux form
+\begin{equation}
+  \Aproto_*^{\rm desc}(\epsilon)=
+  \int(e^{ik}-1)\,L(k,h)\,[\,2iv_h\ell_h\,]\;d\mu_{*,\epsilon}(k,h),
+  \label{eq:proto-lsz-desc}
+\end{equation}
+with $L$ uniformly $C^1$ and carrying exactly the $h$-profile
+$L(0,h)=\aleg(\rho)\,(-i\sgn(v_h-v_s)/v_h)$ of
+\cref{def:no-contact-class}(3b), and
+\begin{equation}
+  \Aproto_*^{\perp}=O(\epsilon^2),\qquad
+  \Aproto_*^{\rm dir}=O(\epsilon^2),\qquad
+  \Aproto_*^{\partial}=o(\epsilon).
+  \label{eq:proto-lsz-bounds}
+\end{equation}
+The hypothesis also carries the antecedents that the relevant class
+$\classSW(\rho)$ is nonempty and that the asymptotic one-magnon kernel exists
+--- solely so that $\aleg(\rho)$ is defined --- and that the measured hard Ward
+register converges to a finite $\ell_h$, with $\ell_h=1$ only for the
+primitive one-magnon band proved in \cref{thm:soft-index-su2}.
+\end{definition}
+
+This hypothesis is uninstantiated. It carries the exhaustiveness, the
+kinematic normalisation, the reduced-channel regularity, the no-contact
+condition, and the finite-window boundary limit as \emph{explicit assumptions};
+it does not make exhaustiveness true by definition, and no current claim
+proves it for the adjudicated fixed-time readout.
+
+\begin{theorem}[Structural law for actual limit points]
+\label{thm:soft-index-structural}
+\statusSketch
+
+Assume an actual limit point of \cref{def:protocol-readout} in the sense
+above, the regularity package \cref{def:protocol-regularity}, and hypothesis
+\textsc{(proto-lsz)} of \cref{def:proto-lsz}. Then every such limit point
+obeys
+\begin{equation}
+  \Aproto_*(\epsilon)=
+  2i\,\aleg(\rho)\,\sgn(v_h-v_s)\,\ell_h\,\bar k_*(\epsilon)+o(\epsilon),
+  \label{eq:spec-structural}
+\end{equation}
+and hence has the continuous Adler extension $\Aproto_*(0)=0$. Before any
+on-shell matching its phase jet is only
+\begin{equation}
+  \frac{\arg(1+\Aproto_*(\epsilon))}{\bar k_*(\epsilon)}
+  \longrightarrow
+  2\,\mathrm{Re}\,\aleg(\rho)\,\sgn(v_h-v_s)\,\ell_h ,
+  \label{eq:spec-phase-jet}
+\end{equation}
+which is not a numerical law.
+\end{theorem}
+
+\begin{scope}[Exactly what is proved and what is missing]
+\label{scope:soft-index-structural}
+What is proved is a complete conditional implication: given the displayed
+hypotheses, the algebra of \cref{eq:spec-structural} is exact. What is missing
+is any instance. Hypothesis \textsc{(proto-lsz)} is not proved for the
+adjudicated fixed-time readout; in particular the two window-boundary
+gradients and the identification of the fixed-time charge insertion with a
+constructed scattering channel are not controlled by the wave-operator results
+of \cref{sec:wave-operators}, which explicitly exclude that interface. The
+soft-leg amputation constant $\aleg(\rho)$ appearing in
+\cref{eq:spec-structural} is the \emph{open} class constant of
+\cref{def:no-contact-class}(3b): no value, and in particular no $1/\rho$ law,
+is claimed here at any density including $\rho=1/2$. The regularity package
+cannot repair this by \cref{scope:regularity-no-value}. Finally, existence of
+an actual limit point is not asserted.
+\end{scope}
+
+\paragraph{What the argument does.} Uniformly on the packet support,
+$e^{ik}-1=ik+O(\epsilon^2)$ and
+$L(k,h)=\aleg(\rho)(-i\sgn(v_h-v_s)/v_h)+O(\epsilon)$; multiplying the three
+leading factors in \cref{eq:proto-lsz-desc} gives
+$(ik)\cdot\aleg(-i\sgn/v_h)\cdot 2iv_h\ell_h
+=2i\aleg\sgn\,\ell_h\,k$, and integration replaces $k$ by the packet mean.
+Every cross term is $O(\epsilon^2)$ uniformly because $I\Subset(0,\pi)$ keeps
+$v_h$ away from zero in the chosen channel. Adding the three bounds of
+\cref{eq:proto-lsz-bounds} gives \cref{eq:spec-structural}; the Adler
+extension follows since the right-hand side is $O(\epsilon)$, and
+$\arg(1+z)=\mathrm{Im}\,z+O(\abs{z}^2)$ with the nonzero lower bound on
+$\abs{\bar k_*}$ gives \cref{eq:spec-phase-jet}.
+
+\provenance{S-IDX-spec-struct-r2}{%
+  \texttt{theory/soft-index-r2.md} §3, statement and proof at step (1.8);
+  the limit-point register at (1.7)}{%
+  no certificate for the hypothesis; the gates test the finite inputs only
+  (\texttt{theory/checks/soft\_index\_r2\_check.py} gate SIDXR2-C5,
+  arithmetic)}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md}}
+
+\subsection{Adding on-shell data: the matched value}
+
+The structural law contains a shape and an open constant. To get a number one
+must connect the protocol readout to something on shell. That connection is a
+separate hypothesis, and it is displayed rather than assumed silently.
+
+\begin{theorem}[Matched spectral law under the matching hypothesis]
+\label{thm:soft-index-matched}
+\statusSketch
+
+Assume the hypotheses of \cref{thm:soft-index-structural}; a fully polarised
+spin-$S$ vacuum, so that the tail density is $\rho=S$; a primitive one-magnon
+hard leg, so that $\ell_h=1$; the class-membership antecedent
+$(\beta_S)$ of \cref{thm:d24-val} --- existence of a source
+$O\in\classSW(\rho)|_{\rho=S}$ with $M_1^O\neq0$ --- and the following separate
+matching hypothesis:
+\begin{equation}
+  \textsc{(match-s)}:\qquad
+  \Aproto_*(\epsilon)-\int[\,S_{\rm phys}(k,h)-1\,]\,d\mu_{*,\epsilon}(k,h)
+  =o(\epsilon),
+  \label{eq:match-s}
+\end{equation}
+a first-order identification of the fixed-time protocol readout with the
+on-shell multiplier, containing no numerical slope of its own. Then every
+actual limit point has phase slope
+\begin{equation}
+  \frac{\arg(1+\Aproto_*(\epsilon))}{\bar k_*(\epsilon)}
+  \longrightarrow \frac{\sgn(v_h-v_s)}{S},
+  \label{eq:matched-slope}
+\end{equation}
+and comparison with \cref{eq:spec-structural} supplies the conditional matched
+value of the amputation constant,
+\begin{equation}
+  \aleg(S)=\frac{1}{2S}=\frac{1}{Z_\rho}.
+  \label{eq:matched-value}
+\end{equation}
+More generally, any datum at the same density that shares this class constant
+and satisfies \textsc{(proto-lsz)} obeys the structural slope
+$\sgn(v_h-v_s)\ell_h/\rho$.
+\end{theorem}
+
+\begin{scope}[Where the number comes from, and what is not claimed]
+\label{scope:soft-index-matched}
+The only numerical supplier is the exact two-body expansion
+$S_{\rm phys}(k,h)-1=i\sgn(v_h-v_s)k/S+O(k^2)$ of \cref{sec:two-magnon}, and
+it enters strictly \emph{after} \textsc{(match-s)}, never as a clause of the
+readout and never as a regularity condition. Hypothesis \textsc{(match-s)} is
+exactly the open first-order bridge that the wave-operator results of
+\cref{sec:wave-operators} decline to supply at this interface, and by
+\cref{scope:regularity-no-value} the regularity package cannot substitute for
+it; the theorem is therefore a complete conditional implication with no
+instance in general.
+
+The value \cref{eq:matched-value} at $S\in\{1/2,1,3/2,2\}$ is precisely the
+existing conditional row of \cref{thm:d24-val}; at other half-integer spins it
+is the same one-line consequence, but it belongs to this sketch rather than
+being silently attributed to that row. Nothing here exhibits a member of
+$\classSW(\rho)$, and nothing here licenses a bridge-free conclusion about the
+amputation constant --- that would be the conjecture of \cref{conj:amp}. The
+final displayed generalisation carries $\ell_h$ as the \emph{measured} Ward
+register; no composite-charge formula $\ell_h=\abs{q}$ is asserted beyond the
+primitive $\abs{q}=1$ case, since the two-body slope supplier is scoped to
+unit charge. No leg-normalisation argument is used anywhere in the derivation
+of \cref{eq:matched-value}: the exact charge-created/asymptotic leg conversion
+supplies only $Z_\rho^{-1/2}$, and never $Z_\rho^{-1}$.
+\end{scope}
+
+\provenance{S-IDX-spec-r2}{%
+  \texttt{theory/soft-index-r2.md} §3, steps (1.9).(2.1)--(2.5); the value
+  interface and its fences at (1.11)}{%
+  \texttt{theory/checks/soft\_index\_r2\_check.py} \texttt{-{}-red-s2-value}
+  tests the finite matching arithmetic only; no gate tests \textsc{(match-s)}}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md}}
+
+\subsection{The separated-preparation breakthrough: matching becomes a theorem}
+
+The results so far leave one hypothesis carrying all the weight. The advance
+recorded here removes it --- not in general, but on an explicitly displayed
+subclass of preparations, and there completely.
+
+The idea is physical and simple. If the soft and hard packets are prepared far
+apart, allowed to approach, collide once, and separate, and if the
+separations and settling times are taken out in the right order at fixed soft
+scale, then the fixed-time charge-created state can be compared \emph{in norm}
+with a genuine incoming scattering channel, that channel can be pushed through
+the two-body wave operators, and the readout can be evaluated on the outgoing
+side. The comparison is a chain of Cook-type estimates; none of them needs to
+be uniform in the soft scale, because the soft scale is held fixed until the
+very end.
+
+\begin{definition}[The separated-preparation subclass]
+\label{def:separated-preparation}
+Specialise the indices of \cref{def:protocol-readout} as follows. At fixed
+$\epsilon>0$ take hard widths $\sigma_j\downarrow0$, initial separations
+$R_j\to\infty$, and settling times $T_j$ with
+$L_j:=d_\epsilon T_j-R_j\to\infty$, where $d_\epsilon$ is the velocity
+separation of the two packets. With
+$B_{M,\epsilon}$ the largest $\sup$-norm of the derivatives of
+$S_{\rm phys}$ of total order at most $M$ on the soft support times $I$, and
+$K_{M,\epsilon}:=C_{M,S,J}(1+B_{M,\epsilon})/d_\epsilon$, require for one
+integer $M\ge8$
+\begin{equation}
+  K_{M,\epsilon}\;s_M(f_\epsilon)\;s_M(g_{\sigma_j})\,
+  \bigl[(1+R_j)^{3-M}+(1+L_j)^{3-M}\bigr]\longrightarrow0,
+  \label{eq:sep}
+\end{equation}
+where $s_M$ is the fixed-packet Schwartz seminorm evaluated on the
+\emph{untranslated} envelopes, the unit-modulus translation phase being kept
+inside the stationary phase rather than differentiated. The hard-column window
+is the labelled rectangle formed by the soft support and $\supp g_{\sigma_j}$,
+and zero-mass rows carry zero measure. After $(\sigma_j,R_j,T_j)$ are fixed,
+choose a ring $N_j$ so large that $N_j\epsilon(c_2-c_1)>2\pi$,
+$T_j\le c_{\rm rec}N_j/v_{\max}$, and the total norm error $\eta_j$ between
+the periodised finite-ring kernels and their infinite-chain counterparts is at
+most $1/j$.
+\end{definition}
+
+This class is nonempty and directly verifiable, not a renaming of the matching
+hypothesis: compactly supported smooth packets satisfy
+$s_M(g_\sigma)=O(\sigma^{-M-1/2})$, so taking, for instance,
+$R_j=\lceil\sigma_j^{-2}\rceil$ and $T_j=2R_j/d_\epsilon$ makes $L_j=R_j$ and
+the left-hand side of \cref{eq:sep} equal to $O_\epsilon(\sigma_j^{M-13/2})$,
+which vanishes for $M\ge8$. Suitable rings exist by Plancherel sampling and
+strong convergence of finite-range dynamics at fixed time, chosen diagonally.
+
+\begin{theorem}[On the separated class, matching holds with zero remainder]
+\label{thm:match-separated}
+\statusProved
+
+Let $H_S=-J\sum_x(\mathbf S_x\cdot\mathbf S_{x+1}-S^2)$ with $2S\in\N$, work on
+the primitive regular two-magnon channel, and assume the separated-preparation
+subclass of \cref{def:separated-preparation}. Then along every actual
+row-measure limit subsequence the fixed-time charge-created finite-ring
+readout converges and satisfies, for that same limiting row measure,
+\begin{equation}
+  \Aproto_*(\epsilon)=\int[\,S_{\rm phys}(k,h)-1\,]\;d\mu_{*,\epsilon}(k,h).
+  \label{eq:match-separated}
+\end{equation}
+In particular the matching hypothesis \textsc{(match-s)} of
+\cref{eq:match-s} holds on this subclass with \emph{zero} remainder, hence a
+fortiori through $o(\epsilon)$.
+\end{theorem}
+
+\begin{scope}[The boundary of the positive result]
+\label{scope:match-separated}
+The theorem is a whole-datum scattering identity. It does \emph{not} identify
+the finite-separation fixed-time vector with a Haag--Ruelle creator or with a
+scattering vector; it does not require a soft-uniform Cook estimate; and it
+proves no component decomposition. In particular it does not prove
+\textsc{(proto-lsz)}: nothing above splits the datum into descendant,
+orthogonal-current, direct-contact and two boundary-gradient pieces, exhibits
+a microscopic member of $\classSW(\rho)$, or evaluates the amputation
+constant. Compare \cref{eq:match-separated} with
+\cref{eq:proto-lsz-split,eq:proto-lsz-bounds}: the latter is strictly stronger
+content.
+
+The result is primitive two-body only: no endpoint, equal-velocity,
+composite-charge, bound-state-channel, many-body, or asymptotic-completeness
+statement is asserted outside the two-magnon sector. The proof uses no scalar
+replacement of the full-sector Gram operator, respecting the register erratum
+of \cref{scope:soft-index-su2}.
+\end{scope}
+
+\paragraph{Idea of proof: a norm bridge.} Four movements. \emph{(i) Wave
+operators.} Fourier transform in the centre coordinate decomposes the
+two-magnon Hamiltonian into fibres over the total momentum; on each fibre the
+relative motion is a constant-coefficient Jacobi recurrence away from contact,
+with only the adjacent row $r=1$ and, for $S\ge1$, the single normalised
+double-occupancy row $r=0$ modified. A finite-rank boundary perturbation of a
+scalar Jacobi operator has isometric incoming and outgoing generalised
+transforms with equal range, and their composition is multiplication by the
+physical ratio, $(W_+^S)^*W_-^S=M_{S_{\rm phys}}$, with $S_{\rm phys}$ the
+exact two-body multiplier of \cref{sec:two-magnon}. \emph{(ii) Cook
+estimates.} The identification defect
+$(H_SI_S-I_SH_0)U_0(t)F_R$ is supported only on the collision rows $r\le1$;
+outside the two separated velocity cones repeated integration by parts gives
+decay $(1+R+d_\epsilon\abs t)^{2-M}$, and integrating in $t$ gives the two
+displayed bounds --- one comparing the fixed-time state with the incoming wave
+operator, one comparing the outgoing channel with free propagation.
+\emph{(iii) The bridge.} Equality of ranges gives
+$W_-^SF_R=W_+^SM_{S_{\rm phys}}F_R$, and combining the two Cook bounds yields
+a single norm estimate that starts at the fixed-time charge state and ends at
+the freely propagated outgoing channel. No equality between those two states
+was assumed anywhere. \emph{(iv) Through the readout.} The coordinate-kernel
+map and the row-rectangle selection are contractions; the free-reference error
+is the freely propagated initial collision rows plus a finite-ring sampling
+error, both $o(1)$ under \cref{eq:sep}. Disjoint momentum supports make the
+ideal labelled rectangles orthogonal of equal mass $1/2$, which bounds the
+denominators away from zero, so the row measures converge in total variation
+and the normalised pairing converges. In the ideal rectangle the free
+propagation phase and the translation phase occur on both sides of the pairing
+and cancel, leaving exactly $\int S_{\rm phys}\,d\mu$. Since the difference in
+\textsc{(match-s)} is identically zero at each fixed $\epsilon$ after the
+outer limit, it is trivially $o(\epsilon)$ when $\epsilon\downarrow0$ is
+finally taken --- which is precisely why the fixed-packet divergence of the
+Cook constants does not obstruct this subclass.
+
+\provenance{S-IDX-MATCH-HS-SEP}{%
+  \texttt{theory/proto-lsz-match.md} steps (1.1)--(1.6): the subclass (1.2),
+  wave operators (1.3), the fixed-time-to-incoming-channel bound (1.4),
+  passage through the readout (1.5), the theorem (1.6); honest boundary at
+  (1.11)}{%
+  \texttt{theory/checks/proto\_lsz\_match\_check.py} gates PMLM-C1--C5; finite
+  corroboration only, with no wave-operator certificate}{%
+  \texttt{theory/verdicts/blitz-proto-lsz-r1.md}}
+
+\begin{theorem}[The value on the separated class]
+\label{thm:d29-value-separated}
+\statusProved
+
+Under the separated-preparation subclass of
+\cref{def:separated-preparation}, along every actual row-measure limit
+subsequence the primitive fixed-time scalar datum obeys
+\begin{equation}
+  \Aproto_*(\epsilon)=\frac{i\,\sgn(v_h-v_s)\,\bar k_*(\epsilon)}{S}
+  +O(\epsilon^2),
+  \qquad
+  \frac{\arg(1+\Aproto_*(\epsilon))}{\bar k_*(\epsilon)}
+  \longrightarrow\frac{\sgn(v_h-v_s)}{S}.
+  \label{eq:d29-value-sep}
+\end{equation}
+\end{theorem}
+
+\begin{scope}[This row is about the readout, not about the class constant]
+\label{scope:d29-value-separated}
+The value enters only after \cref{thm:match-separated} has already identified
+the readout with the multiplier, and then solely through the exact two-body
+slope of \cref{sec:two-magnon}. The row makes no claim about the amputation
+constant $\aleg$, about membership in the no-contact class of
+\cref{def:no-contact-class}, about hypothesis \textsc{(proto-lsz)}, or about
+endpoints, equal velocities, composite charges, or any other protocol class.
+In particular, no value of $\aleg$ follows from this corollary alone; if
+\textsc{(proto-lsz)}, class membership, and the other antecedents of
+\cref{thm:soft-index-matched} were separately supplied, the comparison there
+would give the conditional value $\aleg(S)=1/(2S)$ --- this theorem neither
+supplies nor replaces those antecedents.
+\end{scope}
+
+\paragraph{Idea of proof.} Insert
+$S_{\rm phys}(k,h)-1=i\sgn(v_h-v_s)k/S+O(k^2)$ into
+\cref{eq:match-separated} and integrate against the same measure; the
+scale-tied support $\abs k\le c_2\epsilon$ makes the integrated remainder
+$O(\epsilon^2)$. Then $\arg(1+z)=\mathrm{Im}\,z+O(\abs z^2)$ together with the
+one-sided lower bound $\abs{\bar k_*}\ge c_1\epsilon$ gives the slope.
+
+\provenance{S-IDX-D29-value-HS-SEP}{%
+  \texttt{theory/proto-lsz-match.md} step (1.10) --- the only place in that
+  shard where the number $1/S$ is invoked}{%
+  \texttt{theory/checks/proto\_lsz\_match\_check.py} gate PMLM-C4 plus the
+  frozen partial gate C5}{%
+  \texttt{theory/verdicts/blitz-proto-lsz-r1.md}}
+
+\subsection{An exact LSZ-shaped scalar factorisation}
+
+The matched identity can be rewritten so that it has the \emph{shape} the
+universality analysis of \cref{sec:universality} predicts --- an external flux
+factor times a Ward residue, integrated against the row measure --- with a
+reduced multiplier that extends continuously to zero soft momentum. This is
+worth isolating, because it shows that the LSZ shape itself is available on
+the separated class without any of the component hypotheses.
+
+\begin{theorem}[Exact scalar factorisation of every separated limit point]
+\label{thm:proto-scalar}
+\statusProved
+
+On the fully polarised bilinear ferromagnet $H_S$ with $2S\in\N$, and on the
+separated-preparation subclass of \cref{def:separated-preparation}, define for
+$k\neq0$ the \emph{scalar scattering witness}
+\begin{equation}
+  L_S^{\rm sc}(k,h):=\frac{S_{\rm phys}(k,h)-1}{(e^{ik}-1)\,2iv_h}.
+  \label{eq:scalar-witness}
+\end{equation}
+Then $L_S^{\rm sc}$ has a unique uniformly $C^1$ extension to $k=0$ on the
+compact channel, with
+\begin{equation}
+  L_S^{\rm sc}(0,h)=\frac{-i\,\sgn(v_h-v_s)}{2S\,v_h},
+  \label{eq:scalar-witness-value}
+\end{equation}
+and every actual row-measure limit point has the exact factorisation
+\begin{equation}
+  \Aproto_*(\epsilon)=
+  \int(e^{ik}-1)\,L_S^{\rm sc}(k,h)\,[\,2iv_h\,]\;d\mu_{*,\epsilon}(k,h),
+  \qquad
+  \Aproto_*(\epsilon)=\frac{i\,\sgn(v_h-v_s)\,\bar k_*(\epsilon)}{S}
+  +O(\epsilon^2).
+  \label{eq:scalar-factorisation}
+\end{equation}
+\end{theorem}
+
+\begin{scope}[Same profile is not same object]
+\label{scope:proto-scalar}
+Equation \cref{eq:scalar-witness-value} has the same functional profile as the
+no-contact class clause \cref{def:no-contact-class}(3b) with scalar
+coefficient $1/(2S)$. That observation does \emph{not} identify
+$L_S^{\rm sc}$ with the descendant quotient $L$ of that clause, and it does
+not prove a member of $\classSW(\rho)|_{\rho=S}$: the class's $L$ is the
+quotient of an independently identified descendant external-leg component
+inside an exhaustive decomposition, and is defined only when the class is
+nonempty. The superscript is a deliberate warning label. Nor does the theorem
+prove the orthogonal-current, direct-contact, or window bounds of
+\textsc{(proto-lsz)}, which remains open. No step obtains $1/(2S)$ from the
+charge-created/asymptotic-leg conversion, which supplies only
+$Z_\rho^{-1/2}$.
+\end{scope}
+
+\begin{scope}[The exact remaining lemma \textsc{(comp-hs)}]
+\label{scope:comp-hs}
+Aggregate matching cannot determine component estimates, and the obstruction
+is elementary: for any nonzero bounded smooth $b$ on $I$ and
+$B(k,h)=k\,b(h)$, the replacement
+$E_{\rm desc}\mapsto E_{\rm desc}+B$, $E_\perp\mapsto E_\perp-B$ leaves every
+whole-datum equality unchanged while moving both components. What is therefore
+needed, and all that is needed, is one model lemma.
+
+\textsc{(comp-hs)}: on the separated class, using at finite volume the exact
+full-sector split $J^-_k=P_{\lambda,N}J^-_k+(1-P_{\lambda,N})J^-_k$ and the
+exact Duhamel contact defect --- with no scalar replacement of the Gram
+operator --- the finite readout functional admits four independently defined
+terms, from the descendant-range current projection, the complementary
+projection, the direct source/contact functional, and the two window
+gradients, such that on the ordered outer limit: \emph{(1)} the descendant
+quotient converges in the packet norm to a uniformly $C^1$ multiplier
+$L_S^{\rm desc}$ with $L_S^{\rm desc}(0,h)=L_S^{\rm sc}(0,h)$, equivalently
+$L_S^{\rm desc}-L_S^{\rm sc}=O(k)$ uniformly; \emph{(2)} the
+complementary-current and direct-contact terms are each $O(\epsilon^2)$
+uniformly on $I$; \emph{(3)} the two window-gradient terms sum to
+$o(\epsilon)$ under \cref{eq:sep}; \emph{(4)} the limiting descendant
+construction exhibits a nonzero microscopic member of
+$\classSW(\rho)|_{\rho=S}$.
+
+Together with \cref{thm:proto-scalar} this would prove full
+\textsc{(proto-lsz)} on the separated class without changing any definition.
+No existing proved claim supplies it: the finite Ward theorem gives no
+volume-uniform reduced-channel regularity, and the matching theorem controls
+only the sum after the outer limit. A viable attack is a two-body fibre
+limiting-absorption or Feshbach estimate --- insert the full-sector descendant
+projector before taking the Jacobi boundary resolvent, prove a uniform
+reduced-resolvent bound on the compact hard window, and push the four finite
+functionals through the already proved norm bridge --- which tests items (1)--(3)
+directly rather than inferring them from their sum.
+\end{scope}
+
+\paragraph{Idea of proof.} The multiplier $S_{\rm phys}$ is analytic in $k$
+and smooth in $h$ near the compact rectangle with $S_{\rm phys}(0,h)=1$ and
+$\partial_kS_{\rm phys}(0,h)=i\sgn(v_h-v_s)/S$. The analytic removable-factor
+theorem therefore gives $S_{\rm phys}-1=(e^{ik}-1)G_S(k,h)$ with $G_S$
+uniformly $C^1$ and $G_S(0,h)=\sgn(v_h-v_s)/S$, since
+$\partial_k(e^{ik}-1)|_0=i$; dividing by $2iv_h$, which is bounded away from
+zero on $I$, preserves regularity and gives
+\cref{eq:scalar-witness-value}. Substituting the resulting pointwise identity
+$S_{\rm phys}-1=(e^{ik}-1)L_S^{\rm sc}\,[2iv_h]$ --- valid at $k=0$ by
+continuity --- into the matched identity \cref{eq:match-separated} gives
+\cref{eq:scalar-factorisation}. The number $1/(2S)$ entered only through the
+$k$-derivative of the physical multiplier, after its branch was fixed.
+
+\provenance{S-IDX-PROTO-SCALAR-HS-SEP}{%
+  \texttt{theory/proto-lsz-scalar.md} steps (1.1)--(1.7): removable quotient
+  (1.2), exact factorisation (1.3), supplier separation (1.4), the
+  aggregate/component obstruction (1.5), the lemma \textsc{(comp-hs)} (1.6)}{%
+  \texttt{theory/checks/proto\_lsz\_check.py} gates PLSZ-C1--C4 (corroboration
+  of the scalar algebra only, not of regularity)}{%
+  \texttt{theory/verdicts/blitz-proto-lsz-r1.md} (0 fatal, 0 major)}
+
+\subsection{The Haag--Ruelle value instance}
+
+Finally, there is a second and logically independent place where the number
+$1/S$ appears: not in the fixed-time protocol readout at all, but in the
+constructed scattering channel of \cref{sec:wave-operators}. It is recorded
+here to keep the two clearly apart.
+
+\begin{theorem}[Value in the constructed Haag--Ruelle channel]
+\label{thm:hr-value}
+\statusSketch
+
+Under the exact-band register on the ferromagnetic model, the fixed-packet
+constructed Haag--Ruelle channel of \cref{sec:wave-operators} has multiplier
+$S_{\rm phys}$, and its scale-tied packet average
+\begin{equation}
+  \Aproto_{\rm HR}(\epsilon):=
+  \int[\,S_{\rm phys}(\epsilon u,h)-1\,]\,d\mu_f(u,h)
+  \label{eq:hr-average}
+\end{equation}
+has phase slope $\sgn(v_h-v_s)/S$, with
+$\bar k=\epsilon\int u\,d\mu_f$.
+\end{theorem}
+
+\begin{scope}[An on-shell instance, explicitly not a protocol instance]
+\label{scope:hr-value}
+Equation \cref{eq:hr-average} is a value instance for a \emph{constructed}
+channel. It is not the fixed-time charge-created protocol datum of
+\cref{def:protocol-readout}: the Cook and Gram constants of the wave-operator
+construction diverge along the rescaled soft packet, and creator-choice
+independence does not apply to the fixed-time insertion
+$Q[f_\epsilon]\psi_g$. It is therefore no basis for upgrading either the
+structural or the matched spectral row. Consequently there is at present no
+proved instance of \cref{thm:soft-index-structural} or
+\cref{thm:soft-index-matched} for the general protocol, no proved microscopic
+member of $\classSW(\rho)$, and no permission to use the amputation conjecture
+of \cref{conj:amp} as a value supplier.
+\end{scope}
+
+\provenance{S-IDX-HR-value-r2}{%
+  \texttt{theory/soft-index-r2.md} §4, instances and non-instances at step
+  (1.10); interfaces and fences at (1.11)}{---}{%
+  \texttt{theory/verdicts/soft-index-r2-critic.md}}
+
+\subsection{Reading of the section}
+
+The symmetry algebra alone delivers a genuine index: exact, finite, integral
+where an index should be integral, and valid for every compact group one root
+at a time. That is \cref{thm:soft-index-su2,thm:soft-index-compact-G,%
+thm:sector-label}, and none of it is conditional.
+
+Passing to the soft limit costs one hypothesis --- an exhaustive component
+decomposition of the limiting readout --- and passing from a shape to a number
+costs a second --- the identification of that readout with the on-shell
+multiplier. On the separated-preparation class the second cost is paid in
+full: matching is a theorem there, with zero remainder, and the value and the
+LSZ shape follow. The first cost is not yet paid anywhere, and it is now
+isolated to the single lemma \textsc{(comp-hs)} of \cref{scope:comp-hs}. That
+lemma is the one remaining gap of the one-dimensional soft-index programme.

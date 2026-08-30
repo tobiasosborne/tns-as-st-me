@@ -1,0 +1,1123 @@
+% SHARD-ID: LB-07-MEMORY-INDEX
+% SHARD-TITLE: The memory index: quantization without scattering theory
+% SHARD-SOURCES: definitions.md D26--D27; claims/CLAIMS.md rows M-INDEX-fin,
+%   M-INDEX-spec, M-IDX-density, M-INDEX-LA-folium, M-INDEX-LA-strong,
+%   LR1-GEN, M-SCOPE-center, M-INDEX-torus (adjudicated scoping verbatim);
+%   theory/memory-index.md; theory/folium-implementer.md;
+%   theory/compact-g-memory-scope.md; theory/lr-d16.md (step (1.3) only).
+% SHARD-CLAIMS: D26, D27, M-INDEX-fin, M-INDEX-spec, LR1-GEN, M-IDX-density,
+%   M-INDEX-LA-folium, M-INDEX-LA-strong, M-SCOPE-center, M-INDEX-torus
+%
+% Local semantic macros (this shard only; they mirror notation.md rows that
+% have no macro in main.tex's preamble).
+\providecommand{\dephase}{\mathcal{D}}      % TPM dephasing (pinching) map
+\providecommand{\specres}{E}                % spectral resolution of a charge
+\providecommand{\tr}{\operatorname{tr}}     % matrix trace on the virtual space
+
+\section{The memory index: quantization without scattering theory}
+\label{sec:memory-index}
+
+\subsection{The inversion of the continuum logic}
+
+In the continuum infrared triangle the memory effect is the last of the three
+corners to be quantized, and it is quantized from the outside. One first
+builds a scattering theory: wave operators, an inventory of asymptotic
+channels, and enough completeness to say that the inventory is exhaustive.
+A soft theorem is then read off the $S$-matrix, and the memory --- the
+permanent displacement left behind after everything has dispersed --- inherits
+whatever discreteness the channel labels happen to carry. Every step of that
+chain is analytically expensive, and on a lattice model of any interest not
+one of the steps is available.
+
+On the lattice the logic runs the other way. The quantum of memory is fixed
+\emph{before} any dynamics is discussed, by two ingredients that a lattice
+model supplies for free:
+
+\begin{enumerate}
+\item \emph{An integrality hypothesis on the on-site charge.} The selected
+  charge generates a circle, so its $2\pi$ rotation acts on one site by a
+  scalar. That single algebraic fact --- hypothesis (INT), Definition
+  \ref{def:int} --- pins the on-site spectrum into one coset of $\Z$.
+\item \emph{Window arithmetic.} The regularised charge of a finite window is a
+  sum of on-site charges plus a real background number. Its spectrum
+  therefore also lies in one coset of $\Z$; the coset is some fixed real
+  offset $\kappa_{W,c_0}$ that depends on the window and the cut, and on
+  nothing else.
+\end{enumerate}
+
+The measurement protocol does the rest. If one measures the \emph{same}
+windowed observable twice --- once early, once late --- both readouts are drawn
+from that same coset, and their difference is an integer no matter how
+complicated the intervening evolution was, and no matter that the two
+Heisenberg observables fail to commute. The offset does not have to be
+computed; it has to cancel, and it cancels because it is the same offset
+twice. Time evolution enters only through the fact that it is a
+$*$-automorphism, so that it preserves spectra.
+
+That is the whole mechanism, and it costs no wave operator, no channel
+inventory, and no completeness. What scattering theory buys, when it happens
+to be available, is exactly the residual question: \emph{which} integer, and
+with what probability. Corollary \ref{thm:reduction-had} makes that precise
+--- under the scattering hypotheses of \cref{sec:wave-operators} the law
+collapses to a two-point law and reproduces the channel result of
+\cref{sec:memory-quantization} --- but the support statement was already true
+without it.
+
+Two disciplines are binding throughout and are worth stating before anything
+else, because most of the ways of misreading this section violate one of them.
+
+\begin{remark}[Only outcomes are quantized, never their mean]
+\label{ref:register-discipline}
+The wall displacement $\delta x$ is an average over a probability law. It is
+never claimed to be quantized, and generically it is not. Quantization
+attaches to two objects only: the individual outcomes of the explicit
+two-measurement protocol below, and --- separately, under the scattering
+hypotheses --- the spectrum of the single displacement operator $\Delta X$ of
+\cref{sec:memory-quantization}. In particular, writing $\delta x$ as an
+expectation over some coupling of two marginal laws is bookkeeping, not an
+outcome law, since no such joint law is constructed.
+\end{remark}
+
+\begin{remark}[Differences of lattice-valued observables are not
+lattice-valued]
+\label{ref:noncommuting-landmine}
+It is tempting to argue that both $\Qhat(t_-)$ and $\Qhat(t_+)$ have integer
+spectrum, hence so does their difference. That is false. On $\C^2$ take
+$Q_-=\ket{0}\bra{0}$ and $Q_+=\ket{+}\bra{+}$: both spectra are
+$\{0,1\}\subset\Z$, yet
+\begin{equation}
+  \spec(Q_+-Q_-)=\Bigl\{-\tfrac{1}{\sqrt2},+\tfrac{1}{\sqrt2}\Bigr\}.
+  \label{eq:noncommuting-landmine}
+\end{equation}
+No argument below ever forms such a difference. Integrality enters only
+through the two \emph{spectral resolutions} of the same window observable, at
+step (1.5).(2.3) of the proof shard --- that is, through readouts, not through
+operator arithmetic.
+\end{remark}
+
+\provenance{register discipline L3; landmine exhibit L1}
+{\texttt{theory/memory-index.md} \S0 (register paragraph) and \S6 (L1, L3)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C2 (the naive unmeasured
+ difference must fail at $>10^{-6}$: the dephasing defect is generically
+ nonzero)}
+{\texttt{memory-index-r1.md} V3; \texttt{memory-index-r2.md}}
+
+\subsection{The two definitions}
+
+Throughout this section the setting is that of \cref{sec:memory-quantization}:
+a compact on-site symmetry group with a covariant family of injective
+matrix-product vacua, a distinguished kink pair $(\alpha,\beta)$, one selected
+primitive circle direction $\xi$ common to both unbroken subgroups, and the
+Hermitian on-site charge $S^z:=-\mathrm{i}\,q(\xi)$ built from it. The vacuum
+densities are $\omega_\alpha(S^z)=+s$ and $\omega_\beta(S^z)=-s$ with $s>0$,
+and $\wallX_W$ is the windowed wall-position observable of the frozen
+definition recalled in \cref{sec:mps-setting}.
+
+\begin{definition}[Circle-integral on-site charge, hypothesis (INT)]
+\label{def:int}
+For the selected Hermitian circle charge $S^z=-\mathrm{i}\,q(\xi)$,
+hypothesis \textbf{(INT)} says that there is $c\in U(1)$ with
+\begin{equation}
+  e^{2\pi\mathrm{i}S^z_x}=c\,\mathbb{1}
+  \label{eq:int}
+\end{equation}
+on one site. Equivalently, choosing the unique $\kappa\in[0,1)$ with
+$c=e^{2\pi\mathrm{i}\kappa}$,
+\begin{equation}
+  \spec S^z\subset\kappa+\Z .
+  \label{eq:int-coset}
+\end{equation}
+This holds for every spin-$S$ chain, with $c=e^{2\pi\mathrm{i}S}$.
+
+No arithmetic condition on the real tail-density parameter $\rho$ is part of
+(INT). In particular $\rho=0$ is admitted --- that is the AKLT cross-check
+--- and the condition $s>0$ that calibrates the wall coordinate is a separate
+hypothesis belonging to the kink setting, not to (INT). Under the additional
+smoothness hypothesis (S) at both tails the density is instead \emph{derived}
+to satisfy $e^{2\pi\mathrm{i}\rho}=c=e^{-2\pi\mathrm{i}\rho}$, hence
+$2\rho\in\Z$; that is Theorem \ref{thm:density} below, a conclusion and not a
+hypothesis.
+\end{definition}
+
+\provenance{D26}
+{\texttt{definitions.md}, ``Memory-index campaign --- D26--D27'' (merged from
+ \texttt{theory/memory-index.md} \S8.1)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C1 (finite-window offset
+ and TPM law); \texttt{theory/checks/memory\_index\_probe.py} P2}
+{\texttt{memory-index-r2.md} (objection 7 repair: $\rho=0$ admitted);
+ \texttt{memory-index-r3.md}}
+
+The second definition packages what has to be assumed about the long-time
+behaviour of the charge history. It is the only place in the section where a
+genuinely dynamical hypothesis is made, and it is assumed, never derived.
+
+\begin{definition}[Charge-history local relaxation, hypothesis (LR)]
+\label{def:lr}
+Fix a kink-class vector $\Psi$ of the $\ell^1$ class of
+\cref{sec:mps-setting}, a cut $c_0$, and a padded exhaustion
+$W_m=[a_m,b_m]\uparrow\Z$ with $c_0\in W_m$ for all $m$. Put
+\begin{equation}
+  \Qhat_{W,c_0}:=2s\,(\wallX_W-c_0)\in\alg_W ,
+  \label{eq:qhat-def}
+\end{equation}
+and let $\specres_{W,t}$ be the spectral resolution of its Heisenberg
+translate $\Qhat_{W,c_0}(t)=\alpha_t(\Qhat_{W,c_0})$. Hypothesis
+\textbf{(LR)} consists of the following three clauses.
+
+\medskip\noindent\textbf{(LR1) Common-sequence Cesàro convergence.} There is
+\emph{one} sequence $T_n\to\infty$ such that, for every fixed window $W$, the
+two one-time Cesàro states
+\begin{equation}
+  \omega^{+}_{W,n}(A)=\frac{1}{T_n}\int_{T_n}^{2T_n}
+     \braket{\Psi,\alpha_t(A)\Psi}\,\mathrm{d}t,
+  \qquad
+  \omega^{-}_{W,n}(A)=\frac{1}{T_n}\int_{-2T_n}^{-T_n}
+     \braket{\Psi,\alpha_t(A)\Psi}\,\mathrm{d}t,
+  \qquad A\in\alg_W ,
+  \label{eq:lr1-states}
+\end{equation}
+and the double-Cesàro two-measurement laws
+\begin{equation}
+  p_{W,n}(\nu)=\frac{1}{T_n^{2}}\int_{T_n}^{2T_n}\!\mathrm{d}t_+
+   \int_{-2T_n}^{-T_n}\!\mathrm{d}t_-
+   \sum_{q}\bigl\lVert \specres_{W,t_+}(\{q-\nu\})\,
+                       \specres_{W,t_-}(\{q\})\,\Psi\bigr\rVert^{2}
+  \label{eq:lr1-laws}
+\end{equation}
+converge. The sum runs over $q\in\spec\Qhat_{W,c_0}$, and spectral values
+that are absent contribute zero.
+
+\medskip\noindent\textbf{(LR2) Vanishing first-moment measurement
+back-action.} With the dephasing (pinching) map
+$\dephase_{W,t_-}(A)=\sum_q \specres_{W,t_-}(\{q\})\,A\,
+\specres_{W,t_-}(\{q\})$, the double-Cesàro average of
+\begin{equation}
+  \bigl\langle\Psi,\bigl[\dephase_{W,t_-}\bigl(\Qhat_{W,c_0}(t_+)\bigr)
+     -\Qhat_{W,c_0}(t_+)\bigr]\Psi\bigr\rangle
+  \label{eq:lr2-defect}
+\end{equation}
+tends to zero for every fixed $W$. This is a first-moment nondemolition
+condition only; asymptotic commutativity of the two Heisenberg observables is
+\emph{not} assumed.
+
+\medskip\noindent\textbf{(LR3) First-moment tightness of the spatial
+family.} Writing $p_W$ for the fixed-window time limit supplied by (LR1), the
+family $\{p_{W_m}\}$ is first-moment tight:
+\begin{equation}
+  \lim_{M\to\infty}\ \sup_m\ \sum_{\abs{\nu}>M}(1+\abs{\nu})\,p_{W_m}(\nu)=0 .
+  \label{eq:lr3}
+\end{equation}
+
+\medskip\noindent\textbf{(LR-conv) Convenience normalisation, optional.}
+$p_{W_m}$ converges weakly to a probability $p$. This clause buys only
+uniqueness of the \emph{value} $\delta x$ below; support quantization is
+subsequence-free without it, by Prokhorov's theorem on the closed set $\Z$.
+
+\medskip\noindent\textbf{The ordered wall expectation (a definition, not a
+hypothesis).} $\delta x$ is
+\begin{equation}
+  \delta x:=\lim_m\bigl[\omega^{+}_{W_m}(\wallX_{W_m})
+                       -\omega^{-}_{W_m}(\wallX_{W_m})\bigr],
+  \label{eq:deltax-def}
+\end{equation}
+taken along the full sequence when (LR-conv) holds and along an (LR3)
+subsequence otherwise. Its existence is a corollary of (LR1)--(LR3): at every
+fixed $m$ one has the exact ledger identity
+\begin{equation}
+  \sum_\nu \nu\,p_{W_m}(\nu)
+   =-2s\bigl[\omega^{+}_{W_m}(\wallX_{W_m})
+             -\omega^{-}_{W_m}(\wallX_{W_m})\bigr],
+  \label{eq:ledger-fixed-m}
+\end{equation}
+and (LR3) makes the left-hand side converge, hence the right-hand side. This
+$\delta x$ is the ordered asymptotic value of the finite-time wall observable;
+the finite-time $\delta x$ is unchanged. The order of limits is binding: the
+infinite-volume dynamics is formed first, the fixed-window time limits
+second, and the spatial exhaustion last. No plane-wave or soft-momentum
+interchange is included anywhere.
+\end{definition}
+
+\provenance{D27}
+{\texttt{definitions.md}, ``Memory-index campaign --- D26--D27''; the
+ existence corollary for $\delta x$ is \texttt{theory/memory-index.md} step
+ (1.7).(2.2)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C4 (a tight family with
+ non-convergent first moment is rejected: bare tightness is not enough);
+ \texttt{theory/checks/lr\_d16\_check.py} C1(a),(b)}
+{\texttt{memory-index-r1.md} (objection 1: the former clause LR4 was a
+ theorem and is deleted; the interaction-range-collar clause was cited by no
+ step and is deleted); \texttt{memory-index-r2.md}}
+
+\begin{remark}[Why (LR3) carries the weight $(1+\abs{\nu})$]
+\label{ref:why-first-moment-tight}
+Bare tightness is not enough, and one-point expectation convergence can never
+supply the missing control. Two exhibits make this concrete. First,
+$\mu_W=(1-\tfrac1W)\delta_0+\tfrac{1}{2W}\delta_{W}+\tfrac{1}{2W}\delta_{-W}$
+has pointwise limit $\delta_0$ and exact signed first moment $0$, yet
+$\sum_{\abs{\nu}>R}\abs{\nu}\mu_W(\nu)\ge 1$ for every $R$. Second,
+$p_m=(1-\tfrac1m)\delta_0+\tfrac1m\delta_m$ is tight with weak limit
+$\delta_0$ but has first moment identically $1$. The $(1+\abs{\nu})$ weight
+in \eqref{eq:lr3} is exactly what prevents both loss of mass and loss of the
+first moment.
+\end{remark}
+
+\provenance{D27(LR3); landmine exhibit L2}
+{\texttt{theory/memory-index.md} \S6 (L2)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C4}
+{\texttt{memory-index-b-r1.md} objection 2; \texttt{memory-index-r1.md}}
+
+\subsection{Finite windows: the protocol, and integrality by offset
+cancellation}
+
+\subsubsection*{The two-projective-measurement protocol}
+
+Everything downstream is a statement about one explicitly specified
+experiment, so it is worth stating the experiment before the theorem. Fix a
+finite window $W=[a,b]$, a cut $c_0\in W$, and two times $t_-<t_+$. The
+observable is the single windowed regularised charge $\Qhat_{W,c_0}$ of
+\eqref{eq:qhat-def}; the same window, the same cut, and the same background
+are used at both times.
+
+At time $t_-$ one performs a projective measurement of
+$\Qhat_{W,c_0}(t_-)$, obtaining an eigenvalue $q_-=q$ with probability
+$\lVert \specres_{W,t_-}(\{q\})\Psi\rVert^{2}$ and leaving the (unnormalised)
+post-measurement vector $\specres_{W,t_-}(\{q\})\Psi$. At time $t_+$ one
+measures the same window observable again, now Heisenberg-translated to
+$t_+$, obtaining $q_+$. The joint law of the pair, indexed by the
+\emph{escaped charge} $\nu:=q_--q_+$, is
+\begin{equation}
+  p_{W;t_-,t_+}(\nu)=\sum_{q\in\kappa_{W,c_0}+\Z}
+   \bigl\lVert \specres_{W,t_+}(\{q-\nu\})\,
+               \specres_{W,t_-}(\{q\})\,\Psi\bigr\rVert^{2}.
+  \label{eq:tpm-law}
+\end{equation}
+This is the two-projective-measurement (TPM) law. Nothing in
+\eqref{eq:tpm-law} presumes that the two Heisenberg observables commute;
+$p_{W;t_-,t_+}$ is a genuine outcome law of a stated procedure, not a
+spectral property of some difference operator (Remark
+\ref{ref:noncommuting-landmine}).
+
+The sign convention is fixed once. The measured window-charge increment is
+$\Delta Q_W:=q_+-q_-$, and the escaped charge is $\nu=-\Delta Q_W$; the
+ledger of \cref{sec:memory-quantization} then reads
+\begin{equation}
+  2s\,\delta x=\lim \mathbb{E}[\Delta Q_W]=-\sum_\nu \nu\,p_\nu,
+  \qquad\text{i.e.}\qquad
+  \delta x=-\frac{1}{2s}\sum_\nu \nu\,p_\nu .
+  \label{eq:ledger}
+\end{equation}
+
+The first moment of \eqref{eq:tpm-law} has an exact closed form which is what
+clause (LR2) is designed to control:
+\begin{equation}
+  \sum_\nu \nu\,p_{W;t_-,t_+}(\nu)
+   =\bigl\langle \Qhat_{W,c_0}(t_-)\bigr\rangle
+    -\bigl\langle \dephase_{W,t_-}\bigl(\Qhat_{W,c_0}(t_+)\bigr)\bigr\rangle .
+  \label{eq:tpm-mean}
+\end{equation}
+The second term is the \emph{dephased} final expectation, not the bare one;
+the difference between the two --- the dephasing defect --- is generically
+nonzero, and replacing \eqref{eq:tpm-mean} by the naive unmeasured difference
+$\langle\Qhat(t_-)\rangle-\langle\Qhat(t_+)\rangle$ is a registered checker
+mutation that fails.
+
+\subsubsection*{The finite-window theorem}
+
+\begin{theorem}[Windowed memory is quantized without scattering theory]
+\label{thm:fin}
+\statusProved\
+Assume (INT) of Definition \ref{def:int}; assume the calibration of
+\cref{sec:memory-quantization} fixing the wall-coordinate parameter $s>0$ to
+be the tail density; and fix a finite window $W=[a,b]$ and a cut $c_0\in W$.
+Then:
+\begin{enumerate}
+\item[(i)] the regularised wall charge has, expanded,
+  \begin{equation}
+    \Qhat_{W,c_0}=\sum_{x=a}^{b}S^z_x+s\,(a+b-1-2c_0)\,\mathbb{1},
+    \label{eq:qhat-expanded}
+  \end{equation}
+  and its spectrum lies in one coset of $\Z$,
+  $\spec\Qhat_{W,c_0}\subset\kappa_{W,c_0}+\Z$, with offset
+  \begin{equation}
+    \kappa_{W,c_0}\equiv \abs{W}\kappa+s\,(a+b-1-2c_0)
+    \pmod{\Z},\qquad \abs{W}=b-a+1;
+    \label{eq:coset}
+  \end{equation}
+\item[(ii)] the same coset occurs at every time, i.e.
+  $\spec\Qhat_{W,c_0}(t)\subset\kappa_{W,c_0}+\Z$ for every $t$; and
+\item[(iii)] the TPM law \eqref{eq:tpm-law} is a probability law whose escaped
+  increment satisfies $\nu\in\Z$, with no assumption that
+  $\Qhat_{W,c_0}(t_-)$ and $\Qhat_{W,c_0}(t_+)$ commute.
+\end{enumerate}
+\end{theorem}
+
+\begin{scope}
+The hypotheses are exactly (INT), the density calibration $s>0$, a finite
+window $W=[a,b]$, and a cut $c_0\in W$; the offset is
+\eqref{eq:coset} and is time-independent \emph{because} the dynamics acts by
+$C^*$-automorphisms, which preserve spectra --- no further dynamical input is
+used or available. Integrality of the TPM increment is offset cancellation at
+fixed $W$, and it is \emph{not} spectral arithmetic for a difference of
+noncommuting operators (Remark \ref{ref:noncommuting-landmine}). The
+supporting numerical probe certifies $\spec\Qhat_W\subset\Z$ \emph{by
+construction of the observable} in the exactly solvable instantiation of
+\cref{sec:kink-model} --- there the on-site charge and the vacuum density are
+both exactly $\pm\tfrac12$, so every eigenvalue is an exact machine integer
+for any state, evolved or not. That is an arithmetic certificate, not a
+dynamical one, and it says nothing about the outcome law. This theorem is a
+finite additive statement about a $0$-form charge: it implies no displacement
+law, no channel inventory, and no ordered limit.
+\end{scope}
+
+\emph{Idea of proof.} By (INT), $\spec S^z\subset\kappa+\Z$ on one site. The
+window charge \eqref{eq:qhat-expanded} is a sum of $\abs{W}$ commuting on-site
+charges plus a real multiple of the identity, so its spectrum is a sum of
+finite spectra shifted by that number; this gives \eqref{eq:coset}. Spectra
+are automorphism-invariant, which gives (ii). For (iii), positivity of
+\eqref{eq:tpm-law} is manifest, and summing over $\nu$ and $q$ gives $1$
+because each of the two spectral resolutions sums to the identity (apply
+Parseval twice, sequentially). Finally both readouts $q_-$ and $q_+$ are
+drawn from the \emph{same} coset $\kappa_{W,c_0}+\Z$, because both
+measurements use the same $W$, the same $c_0$, and the same background; hence
+$\nu=q_--q_+\in\Z$. The offset is removed here, at fixed $W$, before any
+limit is taken --- which is also why it cannot smear when the window is later
+enlarged.
+
+\provenance{M-INDEX-fin; D13(a), D26}
+{\texttt{theory/memory-index.md} steps (1.1) and (1.5); the offset
+ cancellation is step (1.5).(2.3); the mean identity \eqref{eq:tpm-mean} is
+ step (1.6)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C1, IDX-C2 (ten
+ registered rows; green exit $0$, \texttt{--red} exit $1$, RED-OK $10$ of
+ $10$); \texttt{theory/checks/memory\_index\_probe.py} P2 (arithmetic
+ certificate only)}
+{\texttt{memory-index-r2.md} \S4; gates cleared in
+ \texttt{memory-index-r3.md} \S0 V3}
+
+\subsection{The limit law}
+
+The finite-window theorem says nothing about what happens as the window grows
+and the times recede. That step is where a hypothesis has to be paid, and
+(LR) is that hypothesis. What follows is a conditional implication and is
+stated as one.
+
+\begin{theorem}[The ordered escaped-charge law is supported on the integers]
+\label{thm:spec}
+\statusProvedConditional\
+Assume the kink-and-calibration hypotheses (1)--(4) of
+\cref{sec:memory-quantization} --- in particular no scattering hypothesis and
+no channel inventory --- together with (INT) of Definition \ref{def:int} and
+(LR1)--(LR3) of Definition \ref{def:lr} in their tightness-only form. Then
+every subsequential ordered TPM escaped-charge law $p$ is a probability
+supported on $\Z$, and along that subsequence
+\begin{equation}
+  \delta x=-\frac{1}{2s}\sum_{\nu\in\Z}\nu\,p_\nu .
+  \label{eq:idx2}
+\end{equation}
+Support quantization is subsequence-free; the optional clause (LR-conv) makes
+$p$ and the value $\delta x$ unique and does nothing else. Consequently the
+individual outcomes of this explicit history protocol --- not their average
+--- are multiples of $1/(2s)$ in wall-displacement units.
+\end{theorem}
+
+\begin{scope}
+The theorem is proved only as the conditional implication just displayed:
+the kink hypotheses, (INT) and (LR1)--(LR3) in tightness-only form imply that
+every (LR3)-subsequential ordered TPM law is a probability on $\Z$ satisfying
+\eqref{eq:idx2} \emph{along that subsequence}. Support quantization is
+subsequence-free; (LR-conv) buys uniqueness of the value $\delta x$ and
+nothing else. Hypothesis (LR) is assumed, never derived, and no implication
+from the scattering hypotheses of \cref{sec:wave-operators} to (LR) is
+claimed anywhere: the frozen words of the local-decay clause there fix no
+window-marginal topology and supply no uniform integrability, so a future
+bridge would have to add the reading of Corollary \ref{thm:reduction-had}
+explicitly and prove (LR) from it. No sector-wide total-charge operator is
+constructed here, and its unconditional existence is refuted --- see Refuted
+claim \ref{ref:la-strong}. Bound states, absorption and additional channels
+are all permitted, precisely because none of them is named.
+\end{scope}
+
+\emph{Idea of proof.} Three moves, in the order the limits are taken. First,
+at fixed $W$, average the exact mean identity \eqref{eq:tpm-mean} doubly in
+Cesàro form and pass to the common sequence of (LR1); clause (LR2) says
+exactly that the dephasing defect disappears in that average, so what
+survives is
+\begin{equation}
+  \sum_\nu \nu\,p_W(\nu)
+   =\omega^{-}_{W}(\Qhat_{W,c_0})-\omega^{+}_{W}(\Qhat_{W,c_0}).
+  \label{eq:spec-step1}
+\end{equation}
+This is the step that closes the two-time problem: it is (LR2), and not the
+false arithmetic of Remark \ref{ref:noncommuting-landmine}, that does the
+work. Second, substitute the definition \eqref{eq:qhat-def}; the common
+scalar $-2sc_0$ cancels exactly and \eqref{eq:spec-step1} becomes the ledger
+\eqref{eq:ledger-fixed-m}. Third, take the padded spatial exhaustion. Each
+$p_{W_m}$ is a probability on the closed set $\Z$, so by Prokhorov every
+subsequence has a further subsequence converging weakly to a probability
+$p'$, necessarily supported on $\Z$ --- that part needs no more than
+tightness, which is why it is subsequence-free. The $(1+\abs{\nu})$ weight in
+(LR3) additionally passes the first moment to the limit, giving
+\eqref{eq:idx2}. The window-dependent offset $\kappa_{W,c_0}$ cannot smear
+under this limit because it was already removed at fixed $W$, in Theorem
+\ref{thm:fin}(iii). No plane-wave or soft limit is taken: the normalisable
+packet is fixed before all limits.
+
+\provenance{M-INDEX-spec; depends on M-flux, M-quant-G, M-INDEX-fin, D13,
+ D17, D26, D27}
+{\texttt{theory/memory-index.md} steps (1.4)--(1.8); the Prokhorov step is
+ (1.7).(2.3)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C1--IDX-C5 (ten
+ registered rows; green exit $0$, \texttt{--red} exit $1$, RED-OK $10$ of
+ $10$); \texttt{theory/checks/memory\_index\_probe.py} P1--P5 (PASS;
+ \texttt{--red} exit $1$ with $190$ pre-registered violations,
+ \texttt{--selftest} exit $0$)}
+{\texttt{memory-index-r2.md} \S4; gates cleared in
+ \texttt{memory-index-r3.md}}
+
+\begin{corollary}[Reduction to the channel picture, when a channel picture
+exists]
+\label{thm:reduction-had}
+\statusProvedConditional\
+Assume in addition the scattering hypotheses of \cref{sec:wave-operators} in
+the form used in \cref{sec:memory-quantization}, with the local-decay clause
+read as \emph{weak-$*$ convergence of the window restriction, per channel, to
+the corresponding kink charge eigenstate}. Then the limit law is the
+two-point law
+\begin{equation}
+  p=(1-\braket{N_T})\,\delta_0+\braket{N_T}\,\delta_2 ,
+  \label{eq:two-point}
+\end{equation}
+and \eqref{eq:idx2} together with its variance reproduces exactly the channel
+result of \cref{sec:memory-quantization}:
+\begin{equation}
+  \delta x=-\frac{\braket{N_T}}{s},
+  \qquad
+  \frac{1}{(2s)^2}\operatorname{Var}_p(\nu)
+    =\frac{1}{s^{2}}\braket{N_T}\bigl(1-\braket{N_T}\bigr).
+  \label{eq:reduction}
+\end{equation}
+\end{corollary}
+
+\begin{scope}
+The reading of the local-decay clause is a further hypothesis, named here
+because the frozen words of that clause fix no topology; it is the reading
+the channel argument of \cref{sec:memory-quantization} needs for its own
+uses. Reflection changes the core charge by $0$ and transmission by $-2$, so
+the escaped values are $0$ and $2$; the two-point form \eqref{eq:two-point}
+holds only inside the two-channel inventory, which excludes any further
+propagating channel and any bound-state component of the selected vector.
+Coherence is retained throughout: no replacement of the state by a norm
+mixture is used.
+\end{scope}
+
+\emph{Idea of proof.} Two limits do the work. Incoming concentration: for the
+incoming kink-charge eigenvalue $q_*$, the window projection
+$\specres_W(\{q_*\})$ lies in $\alg_W$, and
+$\lVert \specres_W(\{q_*\})\Psi_t-\Psi_t\rVert^{2}
+ =1-\braket{\Psi_t,\specres_W(\{q_*\})\Psi_t}\to 0$ as $t\to-\infty$ by the
+named reading. Cross-term vanishing: for the outgoing superposition
+$r\ket{R}+t\ket{T}$, Cauchy--Schwarz gives
+$\abs{\bra{R}\specres_W(\{q_R\})\ket{T}}
+ \le \braket{T,\specres_W(\{q_R\})T}^{1/2}\to0$ since the transmitted leg's
+window law concentrates on $q_T\neq q_R$. Hence the TPM Born weights receive
+no inter-channel cross terms and are $1-\braket{N_T}$ and $\braket{N_T}$; the
+rest is a Bernoulli computation.
+
+\provenance{M-INDEX-spec (reduction clause)}
+{\texttt{theory/memory-index.md} step (1.8), with the local-decay topology
+ lemma at (1.8).(2.2)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C5 (mutating the
+ transmitted escaped charge from $2$ to $1$ must fail both the mean and the
+ variance)}
+{\texttt{memory-index-r1.md} objection 4; \texttt{memory-index-r2.md};
+ \texttt{memory-index-r3.md} objection 5 (indexing gloss withdrawn)}
+
+\begin{remark}[An empirical fence for the channel-free register]
+\label{ref:probe-fence}
+The numerical probe of \cref{sec:numerics} finds, in the exactly solvable
+chain of \cref{sec:kink-model}, extra outcome mass at window-charge values
+$-1$ and $-3$, carried by near-threshold two-magnon channels with vanishing
+group velocity. Those channels lie outside the two-channel inventory of
+Corollary \ref{thm:reduction-had}, yet the mass sits exactly on the integers.
+This is direct evidence for the channel-free register of Theorem
+\ref{thm:spec}, and a concrete reason why the two-point form
+\eqref{eq:two-point} needs its inelastic-threshold fence.
+\end{remark}
+
+\provenance{M-INDEX-spec (fence remark)}
+{\texttt{theory/memory-index.md} \S4 remark, \S7 finding (i)}
+{\texttt{theory/checks/memory\_index\_probe.py} P3 (the outcome-support
+ finding is P3's, not P2's)}
+{\texttt{memory-index-r2.md} objection 9; \texttt{memory-index-r3.md}}
+
+\subsection{Clause (LR1) is a theorem}
+
+Of the three clauses of (LR), the first is not a hypothesis at all. It
+follows from soft-analysis inputs that any lattice model of the kind
+considered here supplies. This matters twice over: it shortens what has to be
+assumed, and it explains why the clause cannot simply be deleted.
+
+\begin{theorem}[Cesàro compactness of the charge history]
+\label{thm:lr1-gen}
+\statusProved\
+Let $\alg$ be the quasi-local algebra of a quantum spin system on a countable
+lattice with uniformly finite local dimension, let $\alpha_t$ be a strongly
+continuous one-parameter group of $*$-automorphisms of $\alg$, let $\Psi$ be a
+unit vector in \emph{any} representation of $\alg$, let $c_0$ be a cut, and
+let $\Qhat_{W,c_0}\in\alg_W$ be self-adjoint with finite spectrum at each
+finite window $W\ni c_0$. Then \emph{every} prescribed sequence $S_n\to\infty$
+admits a subsequence $T_n=S_{n_j}$ along which, \emph{simultaneously for every
+such $W$}, the two Cesàro states $\omega^{\pm}_{W,n}$ of
+\eqref{eq:lr1-states} converge weak-$*$ on all of $\alg$ to states, and every
+double-Cesàro TPM weight $p_{W,n}(\nu)$ of \eqref{eq:lr1-laws} converges.
+Each limit $p_W$ is a probability supported in the finite set
+$\spec\Qhat_W-\spec\Qhat_W$, which under (INT) lies in $\Z$.
+\end{theorem}
+
+\begin{scope}
+The proof consumes exactly three inputs: separability (and unitality) of
+$\alg$; strong continuity of $\alpha_t$; and finiteness of
+$\spec\Qhat_{W,c_0}$ at each fixed $W$. It uses \emph{no} spectral gap, no
+Lieb--Robinson velocity, no ergodicity, no scattering or completeness input,
+and no property of $\Psi$ beyond $\norm{\Psi}=1$. What is \emph{not} claimed:
+pointwise-in-$t$ convergence, which (LR1) does not ask for; convergence along
+the full sequence; and anything whatsoever about (LR2) or (LR3). One further
+caveat is recorded: the ASSUME line of the proof step still over-lists two
+standing register hypotheses that the argument does not use, and is due a
+strengthening in a later round.
+
+The clause is therefore a theorem rather than a restriction --- but it is not
+removable. It existentially binds the \emph{single} sequence over which
+clauses (LR2) and (LR3) are then quantified, and the substantive content of
+(LR) lies entirely in those two clauses.
+\end{scope}
+
+\emph{Idea of proof.} The quasi-local algebra is a $C^*$-inductive limit over
+a countable directed family of finite-dimensional matrix algebras, hence
+separable: rational-coefficient words in fixed finite generating sets of the
+local algebras form a countable norm-dense set. Therefore the state space
+$S(\alg)$ is weak-$*$ compact \emph{and metrizable}, hence sequentially
+compact, and two successive extractions produce one sequence along which both
+$\omega^{+}$ and $\omega^{-}$ converge --- one sequence, all windows at once,
+because convergence is on all of $\alg$. For the laws, fix $W$: since
+$\Qhat_{W,c_0}$ has finite spectrum $\sigma_W$, its spectral projections lie
+in $\alg_W$, the integrand of \eqref{eq:lr1-laws} is a finite sum of jointly
+continuous functions of $(t_-,t_+)$ with values in $[0,1]$, it vanishes unless
+$\nu\in\sigma_W-\sigma_W$, and it sums to $1$. The index set of pairs
+$(W,\nu)$ is countable, so a Cantor diagonal extraction over
+Bolzano--Weierstrass in $[0,1]$ yields one further sequence along which every
+$p_{W,n}(\nu)$ converges. Finally a pointwise limit of probability measures
+on a \emph{fixed finite} set is a probability measure on that set: no mass can
+escape.
+
+\provenance{LR1-GEN; D26, D27}
+{\texttt{theory/lr-d16.md} steps (1.3).(2.1)--(2.8), restated at (1.6).(2.2);
+ the scope inventory is step (1.3).(2.7)}
+{\texttt{theory/checks/lr\_d16\_check.py} C1(a) TPM normalisation
+ ($6.66\times10^{-16}$) and C1(b) raw integer spectrum and support; green
+ exit $0$, \texttt{--red c1-nonunitary} and \texttt{--red c1-noninteger} each
+ exit $1$ on exactly that row. These certify the finite-$W$ TPM arithmetic
+ only; \emph{no} gate bears on the Cesàro convergence itself, which is not a
+ finite-size testable statement and needs none --- the proof is complete}
+{\texttt{lr-d16-r1.md}; \texttt{lr-d16-r2.md}}
+
+\subsection{A by-product: the tail density is half-integer}
+
+The circle hypothesis (INT) was introduced to control window spectra. Applied
+to the two vacua themselves it yields something independent of any window, any
+cut and any dynamics: a rigidity statement in the Lieb--Schultz--Mattis
+family, proved here in the matrix-product register with no gap, no clustering
+and no dynamical input beyond injectivity.
+
+\begin{theorem}[Antisymmetric covariant tails have half-integer density]
+\label{thm:density}
+\statusProved\
+Assume: injective canonical matrix-product tensors $A_\alpha,A_\beta$;
+covariance of the vacuum family with a common unbroken circle direction
+$\xi\in\mathfrak{h}_\alpha\cap\mathfrak{h}_\beta$ and on-site charge
+$S^z=-\mathrm{i}\,q(\xi)$; the uniqueness clause of the intertwining relation;
+the smoothness hypothesis (S) at both tails; (INT) of Definition \ref{def:int}
+with scalar $c$; and the \textbf{antisymmetry}
+$\omega_\beta(S^z)=-\omega_\alpha(S^z)=:-\rho$. Then the intertwining phase
+$f_\alpha(\theta):=\theta_\alpha(\exp(\theta\xi))$ has slope
+$f_\alpha'(0)=\rho$, satisfies $f_\alpha(\theta)=\rho\theta \bmod 2\pi$ for all
+$\theta$, and
+\begin{equation}
+  e^{2\pi\mathrm{i}\rho}=c=e^{-2\pi\mathrm{i}\rho},
+  \qquad\text{hence}\qquad e^{4\pi\mathrm{i}\rho}=1,
+  \qquad 2\rho\in\Z,\qquad c\in\{\pm1\}.
+  \label{eq:density-quantization}
+\end{equation}
+\end{theorem}
+
+\begin{scope}
+The antisymmetry is load-bearing. One tail alone gives only
+$\rho\in\kappa+\Z$; a general (non-antisymmetric) tail pair gives only
+$\rho_\alpha-\rho_\beta\in\Z$; the conclusion $2\rho\in\Z$ needs the
+antisymmetric pair. The density $\rho$ is a free real parameter of the vacuum
+pair, and $\rho=0$ is admitted --- that is the AKLT cross-check. No step
+assumes any relation between $\rho$ and the on-site dimension $d$: $\rho$ is a
+fresh density symbol and is deliberately \emph{not} the site-spin parameter
+whose standard gloss $d=2s+1$ appears in the symbol table; that gloss is the
+fully polarised special case and is not imported here. The result is derived,
+not assumed.
+\end{scope}
+
+\emph{Idea of proof.} Four steps. (i) \emph{Slope equals density.} With
+$V_\theta:=V_\alpha(\exp(\theta\xi))$ and $u(\theta):=e^{\mathrm{i}\theta S^z}$
+on one site, the intertwining relation gives
+$\omega_\alpha(u_x(\theta))
+ =e^{\mathrm{i}f_\alpha(\theta)}\tr[V_\theta^{-1}E_\alpha(V_\theta r)]$.
+Differentiating at $\theta=0$ --- legitimate by (S) --- the two virtual terms
+cancel because the transfer operator fixes the right environment and preserves
+traces, leaving
+$\tfrac{\mathrm{d}}{\mathrm{d}\theta}\omega_\alpha(u_x(\theta))|_0
+ =\mathrm{i}f_\alpha'(0)$, while the same derivative equals
+$\mathrm{i}\,\omega_\alpha(S^z)=\mathrm{i}\rho$. Hence $f_\alpha'(0)=\rho$.
+(ii) \emph{Additivity and continuity.} $f_\alpha$ is additive mod $2\pi$ along
+the unbroken circle and is $C^1$ near the origin with $f_\alpha(0)=0$; the
+additivity defect of a continuous lift is a continuous $2\pi\Z$-valued
+function vanishing at the origin, hence identically zero nearby, and Cauchy's
+functional equation gives $f_\alpha(\theta)=\rho\theta \bmod 2\pi$ globally.
+(iii) \emph{Evaluate at $\theta=2\pi$.} (INT) gives $u(2\pi)=c\mathbb{1}$, so
+the intertwining relation reads
+$cA_\alpha^{\,s}=e^{\mathrm{i}f_\alpha(2\pi)}V_{2\pi}^{-1}A_\alpha^{\,s}V_{2\pi}$;
+the uniqueness clause (applied with the trivial comparison gauge) forces
+$V_{2\pi}$ scalar and $e^{\mathrm{i}f_\alpha(2\pi)}=c$, i.e.
+$e^{2\pi\mathrm{i}\rho}=c$. (iv) \emph{The other tail.} The same computation
+at $\beta$, whose density is $-\rho$ and whose on-site charge --- hence
+whose scalar $c$ --- is the same, gives $e^{-2\pi\mathrm{i}\rho}=c$. Dividing
+yields \eqref{eq:density-quantization}.
+
+\provenance{M-IDX-density; D1, D2(a,b,e), D26}
+{\texttt{theory/memory-index.md} step (1.9); route recorded in
+ \texttt{memory-index-b-r1.md} \S1(b)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C6, IDX-C7(i),
+ IDX-C7(ii) (green exit $0$, \texttt{--red} exit $1$). The load-bearing
+ two-tail step (1.9).(2.4) is separately red-certified as IDX-C7(ii), with
+ twisted-transfer defects at the correct counterterm and
+ $\abs{\varphi_W(2\pi)-1}$ up to $1.9979$ on the charge-shifted family,
+ independently re-run in \texttt{memory-index-r3.md} \S0 V3(i)--(iii)}
+{\texttt{memory-index-b-r1.md}; \texttt{memory-index-r2.md} \S4 (objection 1
+ fence, note 10); \texttt{memory-index-r3.md}}
+
+\begin{remark}[The offset vanishes identically on an antisymmetric pair]
+\label{ref:zero-offset}
+If in addition the wall-coordinate calibration parameter is identified with
+the tail density, $s=\rho$, then the coset offset \eqref{eq:coset} is not
+merely constant in time but identically zero: substituting
+$\kappa\equiv\rho \pmod{\Z}$ into \eqref{eq:coset} gives
+\begin{equation}
+  \kappa_{W,c_0}\equiv \rho(b-a+1)+\rho(a+b-1-2c_0)=2\rho\,(b-c_0)\equiv 0
+  \pmod{\Z},
+  \label{eq:zero-offset}
+\end{equation}
+since $2\rho\in\Z$ and $b-c_0\in\Z$. Hence $e^{2\pi\mathrm{i}\Qhat_{W,c_0}}$
+is exactly the identity in $\alg_W$ and $\spec\Qhat_{W,c_0}\subseteq\Z$ for
+every window and cut. Nothing in Theorems \ref{thm:fin}--\ref{thm:spec} needs
+this: the TPM increment cancels the offset at fixed $W$ regardless. It merely
+strengthens ``one coset'' to ``the zero coset'', and it is what the numerical
+probe's integrality findings instantiate at $s=\tfrac12$.
+\end{remark}
+
+\provenance{M-IDX-density (corollary); D26, and the density calibration
+ $s=\rho$}
+{\texttt{theory/memory-index.md} step (1.10)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C7(i),(ii);\linebreak
+ \texttt{theory/checks/memory\_index\_probe.py} P1, P2}
+{\texttt{memory-index-r2.md} objection 4; \texttt{memory-index-r3.md}}
+
+\subsection{An implementer on one kink folium}
+
+Theorem \ref{thm:fin} is about finite windows. It is natural to ask whether
+the window charges assemble into a single self-adjoint charge operator in an
+infinite-volume representation. The next two results give the honest answer:
+on one fixed kink representation such an operator exists, but it is
+\emph{not} obtained as a limit of the window charges, and the general
+existence statement is false.
+
+\begin{theorem}[A strongly continuous circle implementer on the fixed kink
+folium]
+\label{thm:la-folium}
+\statusProved\
+Let $\varrho_0$ be the fixed bare kink state supplied by the corner-A
+construction of \cref{sec:corner-a}, with invertible junction insertion
+$V_\alpha(g)^{-1}$. Let the selected circle be common-unbroken,
+$h_\theta\in H_\alpha\cap H_\beta$, satisfy the smoothness hypothesis (S) at
+both tails, and obey (INT) of Definition \ref{def:int}. Then in the GNS
+representation of $\varrho_0$ the circle automorphisms are implemented by a
+strongly continuous unitary group
+\begin{equation}
+  U(\theta)=e^{\mathrm{i}\theta\Qhat},\qquad
+  U(\theta)\pi(A)U(\theta)^{*}=\pi(\gamma_\theta(A)),\quad A\in\alg ,
+  \label{eq:implementer}
+\end{equation}
+whose Stone generator satisfies
+$e^{2\pi\mathrm{i}\Qhat}=e^{2\pi\mathrm{i}q_0}\mathbb{1}$ for some real
+$q_0$; consequently $\Qhat$ is pure point with
+$\spec\Qhat\subseteq q_0+\Z$, a single coset of $\Z$.
+\end{theorem}
+
+\begin{scope}
+This is a folium-equivalence and implementer theorem. It is \emph{not} a
+strong-resolvent limit of the window charges $\Qhat_{W,c_0}$: for a nonscalar
+virtual circle action $V_\theta$ those bare window unitaries remain
+non-Cauchy, as Refuted claim \ref{ref:la-strong} records, and there is no
+contradiction because an implementing unitary is determined only up to a
+scalar and is under no obligation to be the strong limit of any particular
+inner approximants. The scope is the fixed bare kink of \cref{sec:corner-a},
+together with only those finite-core variants whose padded blocked tensors
+span the full matrix algebra $M_\chi(\C)$; no assertion is made for arbitrary
+finite-core modifications. The common-unbroken recital is necessary: if the
+circle moved either tail label, the rotated state would lie in a disjoint
+sector and no implementer could exist in the fixed representation. The whole
+content is \emph{existence}; once the implementer exists, the scalar-period
+clause is a one-line Schur argument.
+\end{scope}
+
+\emph{Idea of proof.} Injectivity localises the circle orbit. Since the left
+and right injectivity words each span $M_\chi(\C)$ and the junction matrix is
+invertible, the blocked reference matrices $L_aMR_b$ span $M_\chi(\C)$; hence
+a fixed padded block around the junction carries a local operator $B(M')$,
+affine and continuous in $M'$ with $B(M)=\mathbb{1}$, such that
+$\pi(B(M'))\Omega$ realises exactly the state with junction $M'$ replaced.
+Rotating by the circle telescopes all virtual gauges away except at the
+junction, where $M\mapsto M_\theta=V_\alpha(h_\theta)MV_\beta(h_\theta)^{-1}$;
+this is continuous and invertible near $\theta=0$, so the rotated states are
+represented by a continuous family of unit vectors $\xi_\theta$ in the
+\emph{same} Hilbert space. The fixed kink is pure --- it is a vacuum composed
+with a half-string automorphism --- so its GNS representation is irreducible,
+and the rule
+$W_\theta\pi(A)\Omega:=\pi(\gamma_\theta(A))\xi_{-\theta}$ defines an
+isometry, extends to a unitary, and implements $\gamma_\theta$. Uniqueness of
+implementers up to scalars makes $\theta\mapsto[W_\theta]$ a continuous
+projective homomorphism, which on a \emph{one-dimensional} parameter group can
+be de-projectivised explicitly: the $C^1$ scalar two-cocycle
+$m(s,t)=W_sW_tW_{s+t}^{*}$ has argument $f(s,t)=a(s+t)-a(s)-a(t)$ for an
+explicit $a$, so $e^{\mathrm{i}a(\theta)}W_\theta$ is an honest local group
+and extends to $\R$. Stone's theorem produces $\Qhat$; (INT) makes
+$\gamma_{2\pi}$ the identity automorphism, so $U(2\pi)$ lies in the scalar
+commutant, and spectral calculus confines the spectral measure to
+$q_0+\Z$ and makes it pure point.
+
+\provenance{M-INDEX-LA-folium; A2, WI, D1(c,e$'$), D2(b,e), D26}
+{\texttt{theory/folium-implementer.md} steps (1.1)--(1.7); the compatibility
+ fence with Refuted claim \ref{ref:la-strong} is step (1.7); summarised at
+ \texttt{theory/memory-index.md} step (1.3b)}
+{--- (exact finite-dimensional and functional-analytic proof; no numerical
+ claim and no checker required)}
+{\texttt{blitz-la-folium-r1.md} (0 fatal / 0 major)}
+
+\subsection{What is refuted: there is no sector-wide charge operator}
+
+\begin{refutedclaim}[Unconditional existence of a regularised total charge]
+\label{ref:la-strong}
+\statusRefuted\
+\emph{Withdrawn statement.} The kink-sector definition, the $\ell^1$
+decay class, and (INT) together imply the existence of a self-adjoint
+regularised total charge in every GNS representation of the kink sector
+$\Kk_{\alpha\beta}$ --- the operator form of the finite-window theorem.
+
+\emph{This is false, by two distinct mechanisms.}
+
+\medskip\noindent\textbf{Mechanism A (off-folium; the fluctuation
+counterexample).} This mechanism alone refutes the statement as written, and
+it needs neither the smoothness hypothesis (S) nor any identification of the
+calibration parameter with the density. Take one site with basis $\ket{m}$,
+$m\in\{-\tfrac32,-\tfrac12,\tfrac12,\tfrac32\}$ and $S^z\ket{m}=m\ket{m}$; the
+symmetry group $U(1)\rtimes\Z_2$ with the circle generated by $S^z$ and the
+reflection $R\ket{m}=\ket{-m}$; the product vacua
+$\alpha=\bigotimes\ket{\tfrac12}$ and $\beta=\bigotimes\ket{-\tfrac12}$; and
+$H=0$. For $n\ge1$ put $\varepsilon_n=(n+1)^{-1/2}$ and
+\begin{equation}
+  \ket{\psi_{-n}}=\sqrt{1-\varepsilon_n^{2}}\,\ket{\tfrac12}
+    +\frac{\varepsilon_n}{\sqrt2}
+      \bigl(\ket{-\tfrac12}+\ket{\tfrac32}\bigr),
+  \label{eq:ce-vector}
+\end{equation}
+and let $\varrho$ be the product state with these vectors at the sites
+$-n$ and $\ket{-\tfrac12}$ at every site $x\ge0$. Then $\varrho$ lies in the
+$\ell^1$ kink class \emph{including} its optional spatial first moment, since
+$\bra{\psi_{-n}}S^z\ket{\psi_{-n}}=\tfrac12$ \emph{exactly} at every site: all
+the deviation sums vanish identically. Yet the window charge on
+$W_N=[-N,N]$ with $c_0=-1$ has, in the cyclic vector, the distribution of
+$L_N=\sum_{n=1}^{N}(S^z_{-n}-\tfrac12)$, whose characteristic function is
+\begin{equation}
+  \varphi_N(t)=\prod_{n=1}^{N}\bigl[1-\varepsilon_n^{2}(1-\cos t)\bigr].
+  \label{eq:ce-charfun}
+\end{equation}
+With $V_N=\sum_{n\le N}\varepsilon_n^{2}\sim\log N\to\infty$ and
+$1-\cos t\ge 2t^2/\pi^2$ on $[-\pi,\pi]$, one gets
+$\abs{\varphi_N(t)}\le e^{-2V_Nt^{2}/\pi^{2}}$ and hence
+$\sup_k \mathbb{P}(L_N=k)\le C\,V_N^{-1/2}$: the distribution spreads without
+bound. Splitting the resolvent matrix element at $\abs{k}\le K$ then gives
+$\braket{\Omega_\varrho,(\Qhat_{W_N,-1}-\mathrm{i})^{-1}\Omega_\varrho}\to0$,
+which is impossible for a self-adjoint limit, since every self-adjoint
+$\Qhat$ has
+$\operatorname{Im}\braket{\Omega,(\Qhat-\mathrm{i})^{-1}\Omega}
+ =\int(\lambda^{2}+1)^{-1}\mathrm{d}\mu(\lambda)>0$. The moral is sharp: the
+$\ell^1$ class controls \emph{means}, not charge fluctuations, and certainly
+not implementability. A second, purely definitional point reinforces it: the
+kink sector is a \emph{set} of states, whereas a GNS representation belongs to
+one state, so ``the GNS representation of $\Kk_{\alpha\beta}$'' has no
+canonical meaning without an additional folium choice.
+
+\medskip\noindent\textbf{Mechanism B (on-folium; a strengthening, not a second
+proof of the same statement).} This mechanism assumes strictly more --- the
+smoothness hypothesis (S), the identification of the calibration parameter
+with the tail density, a two-sided decorated kink reference, the corner-A
+construction, and a nonscalar $V_{\theta_0}$ --- and in exchange it kills the
+window-limit route \emph{on} the kink folium itself, where fluctuations are
+perfectly tame. For nested windows differing by a shell $I$ of length $\ell$
+deep in the $\alpha$ tail, the on-site summands commute, so
+\begin{equation}
+  \bigl\lVert\bigl(e^{\mathrm{i}\theta\Qhat_{W',c_0}}
+    -e^{\mathrm{i}\theta\Qhat_{W,c_0}}\bigr)\Omega\bigr\rVert^{2}
+  =2-2\operatorname{Re}
+    \braket{\Omega,e^{-\mathrm{i}\theta Q_I^{\alpha}}\Omega},
+  \label{eq:mechB}
+\end{equation}
+where $Q_I^{\alpha}=\sum_{x\in I}(S^z_x-\rho)$ is the tail-normal-ordered
+shell charge --- the identification of the two is exactly where $s=\rho$ is
+consumed. Pushing the shell deep into the tail and then letting
+$\ell\to\infty$ sends the right-hand side to
+$2\bigl(1-\abs{\tr(V_\theta r)}^{2}\bigr)$, and for a positive normalised
+environment $\abs{\tr(Vr)}\le1$ with equality only for scalar $V$. Hence for
+nonscalar $V_{\theta_0}$
+\begin{equation}
+  \liminf\ \bigl\lVert\bigl(e^{\mathrm{i}\theta_0\Qhat_{W'}}
+    -e^{\mathrm{i}\theta_0\Qhat_{W}}\bigr)\Omega\bigr\rVert^{2}
+  \ \ge\ 2\bigl(1-\abs{\tr(V_{\theta_0}r)}^{2}\bigr)>0 :
+  \label{eq:mechB-bound}
+\end{equation}
+the window unitaries are not Cauchy, so the window charges have no
+strong-resolvent limit. (At $\theta\in2\pi\Z$ there is no obstruction, exactly
+as Remark \ref{ref:zero-offset} predicts.)
+
+\medskip\noindent\emph{What survives.} Mechanism A shows the operator form
+fails off every kink folium; mechanism B shows the \emph{window route} fails
+on the folium as well. The surviving statements are: the finite-window
+theorem (Theorem \ref{thm:fin}) and the ordered limit law (Theorem
+\ref{thm:spec}), which never form such an operator; the implementer theorem
+(Theorem \ref{thm:la-folium}), which reaches a self-adjoint charge on one
+fixed folium by an entirely different route; and the arithmetic implication
+that \emph{if} a self-adjoint $\Qhat$ is supplied and $e^{2\pi\mathrm{i}\Qhat}$
+is scalar, then $\Qhat$ is pure point with spectrum in one coset of $\Z$ ---
+which is a consequence of spectral calculus and proves neither premise.
+\end{refutedclaim}
+
+\provenance{M-INDEX-LA-strong}
+{two mechanisms: \texttt{theory/memory-index.md} step (1.3) (the
+ fluctuation counterexample, off-folium --- this alone refutes the row as
+ stated and needs neither (S) nor $s=\rho$) and step (1.12) (the nonscalar
+ virtual-circle obstruction, on-folium --- a \emph{strengthening}, not a
+ second proof of the same statement: it additionally assumes (S), $s=\rho$,
+ D1(e$'$), A2, and nonscalar $V_{\theta_0}$). The valid arithmetic
+ implication is step (1.2)}
+{\texttt{theory/checks/memory\_index\_check.py} IDX-C3, IDX-C8 (green exit
+ $0$, \texttt{--red} exit $1$)}
+{\texttt{memory-index-b-r1.md} objection 7(d) (nonexistence direction only);
+ \texttt{memory-index-r2.md} objection 4; \texttt{blitz-la-folium-r1.md}
+ (compatibility with Theorem \ref{thm:la-folium})}
+
+\subsection{Where memory can live: the compact-group scope}
+
+So far the symmetry has been one selected circle. For a general compact
+on-site group one can ask which directions of the symmetry algebra are
+capable of carrying a calibrated memory at all. The answer is sharp, and it is
+a genuine restriction: only the central directions of the unbroken subgroup.
+
+\begin{theorem}[Calibrated memory lives on the centre of the unbroken
+subgroup]
+\label{thm:scope-center}
+\statusProved\
+Let $G$ be a compact on-site symmetry group and $\alpha$ a vacuum of the
+covariant family, with unbroken subgroup $H_\alpha$ and Lie algebra
+$\mathfrak{h}_\alpha$. Then:
+\begin{enumerate}
+\item[(i)] the vacuum density functional
+  $\xi\mapsto\omega_\alpha(q(\xi))$ is $\Ad(H_\alpha)$-invariant and
+  annihilates $[\mathfrak{h}_\alpha,\mathfrak{h}_\alpha]$; with an
+  $\Ad(H_\alpha)$-invariant inner product its representing vector lies in
+  $\mathfrak{h}_\alpha^{H_\alpha}=\mathrm{Lie}\bigl(Z(H_\alpha)^{0}\bigr)$, and
+  every nonzero tail-density jump descends through the on-site scalar kernel
+  to $\mathrm{Lie}\bigl(Z_{\alpha,\mathrm{eff}}^{0}\bigr)$;
+\item[(ii)] a Weyl representative $n_w$ with $\beta=n_w\cdot\alpha\neq\alpha$
+  and $\Ad_{n_w^{-1}}\xi=-\xi$ supplies an opposite-density kink pair
+  $(+s,-s)$ on a common unbroken circle, hence a kink sector of the
+  corner-A type; and
+\item[(iii)] semisimple unbroken directions and finite groups supply no
+  calibrated memory: in the first case the vacuum density vanishes, so no
+  positive calibration $s$ exists; in the second there is no Lie-algebra
+  circle, hence no current to integrate and no real displacement calibration
+  at all.
+\end{enumerate}
+\end{theorem}
+
+\begin{scope}
+The theorem classifies the only possible \emph{location} and \emph{lattice} of
+a memory effect; it does not assert that any given compact group actually has
+one. It does not claim that every $G$ has an active centre, a Weyl element
+that flips a central direction, a kink, scattering channels, or relaxation. A
+Weyl element supplies a calibrated pair only on a direction in its $-1$
+eigenspace and only when it moves $\alpha$ to a distinct vacuum; directions
+fixed by that element have equal tail densities and are spectators. The
+exclusion in (iii) concerns the semisimple part of the \emph{unbroken}
+algebra, not of the ambient group: an ambient semisimple group may perfectly
+well exhibit memory after breaking to a subgroup with a central circle, as in
+$SU(2)\to U(1)$. Finite groups may still leave exact group-valued string
+endpoint operators, but that is a different observable and not an additive
+memory law. Finally, this construction supplies vacuum-pair hypotheses only;
+it supplies neither scattering hypotheses nor (LR).
+\end{scope}
+
+\emph{Idea of proof.} For (i), invariance of the vacuum under $H_\alpha$ gives
+$d_\alpha(\Ad_h\xi)=d_\alpha(\xi)$; differentiating along $h=\exp(t\eta)$
+gives $d_\alpha([\eta,\xi])=0$, so the functional kills the commutator ideal.
+Compact reductivity splits
+$\mathfrak{h}_\alpha=\mathfrak{z}(\mathfrak{h}_\alpha)\oplus
+[\mathfrak{h}_\alpha,\mathfrak{h}_\alpha]$, and the invariance places the
+representing vector in the fixed-point set, i.e. in the Lie algebra of the
+connected centre. A direction acting by scalars on site has the same density
+in every state, so a nonzero \emph{jump} descends to the effective centre. For
+(ii), covariance gives $d_\beta(\xi)=d_\alpha(\Ad_{n_w^{-1}}\xi)=-d_\alpha(\xi)$,
+which is the antisymmetric pair, and conjugation carries the same circle into
+$H_\beta=n_wH_\alpha n_w^{-1}$, so the circle is common-unbroken; the
+corner-A construction then supplies and superselects the kink sector. For
+(iii), the wall calibration carries an explicit factor $(2s)^{-1}$ with $s>0$,
+which (i) makes unavailable on semisimple directions, while a finite group has
+trivial Lie algebra.
+
+\provenance{M-SCOPE-center; D2, D9, D10, A2, M-quant-G, S-IDX-fin-G,
+ S-IDX-G-label}
+{\texttt{theory/compact-g-memory-scope.md} \S\S1, 3--4, i.e. steps (1.1),
+ (1.3), (1.4), (1.5)}
+{\texttt{theory/checks/scope\_g\_check.py} SG-C1 (finite covariance only: 24
+ deterministic covariant tensors and 24 invariant density samples for a
+ nonabelian $U(1)\times SU(2)$, checking zero density on all three semisimple
+ generators and a permitted nonzero central density; the red mutation adds a
+ highest-weight triplet component and breaks covariance)}
+{\texttt{blitz-scope-g-r1.md} (0 fatal / 0 major)}
+
+\subsection{Higher rank: the torus generalization}
+
+When the effective centre has rank $r>1$ the escaped charge is a vector, and
+the natural home for it is not $\Z^r$ but the weight lattice of the effective
+central torus; $\Z^r$ appears only after a choice of primitive coordinates.
+
+\begin{theorem}[The joint escaped charge lies in the central weight lattice]
+\label{thm:torus}
+\statusProved\
+Let the vacuum pair share a connected torus of rank $r$ inside
+$Z(H_\alpha)^0\cap Z(H_\beta)^0$; quotient its on-site scalar kernel and
+choose $r$ primitive cocharacters of the resulting effective torus, so that
+the free part of its character lattice is written $\Z^r$. Impose (INT)
+separately on each corresponding Hermitian generator $C_j=-\mathrm{i}q(\xi_j)$,
+and on every \emph{active} direction impose the antisymmetric calibration
+$\omega_\alpha(C_j)=+s_j$, $\omega_\beta(C_j)=-s_j$ with $s_j>0$ (directions
+with zero density jump are simply omitted from the calibrated list). Use one
+fixed window $W=[a,b]$, one cut $c_0\in W$, and the same backgrounds at both
+measurement times. Then:
+\begin{enumerate}
+\item[(i)] at finite times the joint TPM escaped-charge vector lies in the
+  effective central weight lattice, hence in $\Z^r$ in the chosen primitive
+  coordinates; and
+\item[(ii)] under the joint-PVM strengthening of (LR) stated below, every
+  ordered subsequential law $p$ on that lattice satisfies, componentwise,
+  \begin{equation}
+    \delta x_j=-\frac{1}{2s_j}\sum_{\nu\in\Z^r}\nu_j\,p(\nu),
+    \qquad j=1,\dots,r .
+    \label{eq:torus-ledger}
+  \end{equation}
+\end{enumerate}
+The joint-PVM strengthening is: the \emph{joint} TPM laws have the (LR1)
+limits on one common sequence; the \emph{joint} initial dephasing has
+vanishing first-moment defect for every $C_j$, as in (LR2); and the laws are
+first-moment tight with $\abs{\nu}$ replaced by $\lVert\nu\rVert_1$, as in
+(LR3). The optional full-sequence weak convergence plays exactly the
+convenience role it plays in Definition \ref{def:lr}.
+\end{theorem}
+
+\begin{scope}
+Conclusion (i) is unconditional on the displayed finite hypotheses and needs
+no relaxation assumption of any kind. Conclusion (ii) needs the joint-PVM
+strengthening, and the distinction matters: applying the scalar hypothesis
+(LR) separately to each circle proves the $r$ \emph{marginal} statements of
+Theorem \ref{thm:spec}, but it does not by itself prove that the finer joint
+dephasing defect vanishes. An individual calibrated history outcome is the
+vector $\bigl(-\nu_1/(2s_1),\dots,-\nu_r/(2s_r)\bigr)$; each $\delta x_j$ is
+its mean and need not lie on the lattice --- no mean quantization is claimed
+(Remark \ref{ref:register-discipline}). No single scalar wall displacement is
+inferred unless the event separately makes the component values compatible.
+Under the smoothness hypothesis (S) at both tails, Theorem \ref{thm:density}
+additionally gives $2s_j\in\Z$ for every antisymmetric active circle, but that
+is a conclusion, not an added hypothesis.
+\end{scope}
+
+\emph{Idea of proof.} The generators $C_j$ lie in one abelian torus, so they
+commute on site; hence all the window charges
+\begin{equation}
+  \Qhat^{(j)}_{W,c_0}:=2s_j\bigl(\wallX^{(j)}_W-c_0\bigr)
+   =\sum_{x=a}^{b}C_{j,x}+s_j\,(a+b-1-2c_0)\,\mathbb{1}
+  \label{eq:torus-charges}
+\end{equation}
+commute and admit a joint spectral resolution, and so do their Heisenberg
+translates at each fixed time. The joint on-site spectral labels form an
+affine torsor over the effective central character lattice, so every
+\emph{difference} of labels evaluates on the chosen primitive cocharacters to
+an element of $\Z^r$; summing over the window and adding the scalar
+backgrounds changes only the common affine offset. Every nonzero atom of the
+joint TPM law then has the form
+\begin{equation}
+  \bigl\lVert \specres_{W,t_+}(\{\lambda-\nu\})\,
+              \specres_{W,t_-}(\{\lambda\})\,\Psi\bigr\rVert^{2},
+  \qquad \nu\in\Z^{r},
+  \label{eq:torus-atom}
+\end{equation}
+and the affine offset cancels because both measurements use the same window,
+cut and backgrounds --- the vector version of Theorem \ref{thm:fin}(iii),
+again with no cross-time commutation used. For (ii), the componentwise
+analogue of the mean identity \eqref{eq:tpm-mean} plus the joint (LR2) gives
+$\sum_\nu\nu_j p_W(\nu)
+ =-2s_j[\omega^{+}_W(\wallX^{(j)}_W)-\omega^{-}_W(\wallX^{(j)}_W)]$, and
+vector first-moment tightness --- $\lVert\nu\rVert_1$ dominates every
+$\abs{\nu_j}$ --- supplies the Prokhorov and first-moment steps of Theorem
+\ref{thm:spec} in each component.
+
+\provenance{M-INDEX-torus; D13, D26, D27, M-INDEX-fin, M-INDEX-spec,
+ M-IDX-density, S-IDX-G-label}
+{\texttt{theory/compact-g-memory-scope.md} \S2, step (1.2), with the
+ finite-window part at (1.2).(2.1)--(2.5) and the ordered-limit part at
+ (1.2).(2.6)--(2.9)}
+{\texttt{theory/checks/scope\_g\_check.py} SG-C2 (finite arithmetic only; no
+ gate bears on the relaxation hypothesis): three commuting on-site Cartan
+ charges, two random same-time joint eigenbases with noncommuting cross-time
+ observables, and the full $625$-atom joint TPM law, checking normalisation
+ and affine-offset cancellation into $\Z^3$; the red mutation shifts the
+ final background by $\sqrt2/10$ and the lattice gate fails}
+{\texttt{blitz-scope-g-r1.md} (0 fatal / 0 major; the citation for the
+ on-site joint spectrum was repaired there to D26 and Theorem
+ \ref{thm:fin})}
+
+\subsection{What the section does and does not settle}
+
+Theorem \ref{thm:fin} is the centrepiece and is unconditional: given the
+integrality hypothesis on the on-site charge and a fixed window, the outcomes
+of the stated two-measurement protocol are integers, for any dynamics that
+acts by automorphisms. Theorem \ref{thm:spec} carries that statement to the
+ordered limit at the price of one explicitly named dynamical hypothesis, (LR),
+which is assumed and not derived; Theorem \ref{thm:lr1-gen} removes its first
+clause from the price list, leaving the substantive content in the second and
+third. Theorem \ref{thm:density} is a by-product of independent interest, and
+Theorem \ref{thm:scope-center} together with Theorem \ref{thm:torus} says
+where in a general compact symmetry such a memory can live and what lattice it
+takes values in.
+
+Two limits of the analysis should be kept in view. The operator form of the
+finite-window statement is false (Refuted claim \ref{ref:la-strong}), so
+``the total charge of the sector'' is not an available object; only the
+law-level statements and the single-folium implementer (Theorem
+\ref{thm:la-folium}) survive. And no model instance of (LR2)--(LR3) has been
+exhibited: what is proved is a conditional whose hypothesis class is
+constrained from several sides in \cref{sec:local-relaxation}. The status of
+the triangle as a whole is assembled in \cref{sec:triangle-status}.

@@ -1,0 +1,136 @@
+% =====================================================================
+% labbook/main.tex — MASTER of the sharded LaTeX labbook (TJO directive
+% 2026-08-30). ROLE: preamble + macros + an ORDERED \include list ONLY.
+% No body prose and no \section in this file.
+%
+% PURPOSE: a complete, self-contained, READABLE record of every result of
+% the campaign. A reader must never need to look up a campaign acronym:
+% every definition is restated in full, every result carries a descriptive
+% human name, and campaign identifiers appear only as provenance metadata.
+%
+% LOCKSTEP RULE: any commit that changes a status in claims/CLAIMS.md or
+% adds/edits a definition in definitions.md MUST update the corresponding
+% shard here in the same commit. scripts/check-labbook.sh verifies that
+% every claim id and definition number appears in some shard.
+%
+% Build: cd labbook && make      (latexmk -pdf main.tex -> main.pdf)
+% =====================================================================
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array,booktabs,longtable}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% ---------------------------------------------------------------------
+% Theorem environments (numbered within sections)
+% ---------------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{refutedclaim}[theorem]{Refuted claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{oracle}[theorem]{Oracle fact}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{scope}[theorem]{Scope}
+
+% ---------------------------------------------------------------------
+% Status tags. Usage: \statusProved, \statusSketch, \statusConjecture,
+% \statusRefuted, and \statusProvedConditional for conditional theorems.
+% The tag ALWAYS matches the status column of claims/CLAIMS.md.
+% ---------------------------------------------------------------------
+\newcommand{\statustag}[2]{\textcolor{#1}{\textup{\textsc{\small [#2]}}}}
+\newcommand{\statusProved}{\statustag{ForestGreen}{proved}}
+\newcommand{\statusProvedConditional}{\statustag{ForestGreen}{proved, conditional}}
+\newcommand{\statusSketch}{\statustag{Orange}{sketch}}
+\newcommand{\statusConjecture}{\statustag{RoyalBlue}{conjecture}}
+\newcommand{\statusRefuted}{\statustag{BrickRed}{refuted}}
+
+% ---------------------------------------------------------------------
+% Provenance block. Four arguments:
+%   1. campaign identifier(s) (claims/CLAIMS.md row id, or D-number)
+%   2. where proved / stated (repo file + step anchor)
+%   3. where tested (checker / numerics), or --- if none
+%   4. review record (verdict file / adjudication), or --- if none
+% Renders as a quiet footnotesize block after the statement. This is the
+% ONLY place campaign ids are load-bearing; body text never relies on them.
+% ---------------------------------------------------------------------
+\newcommand{\provenance}[4]{%
+  \par\nobreak\vspace{0.25\baselineskip}%
+  {\footnotesize\color{gray}%
+   \begin{tabular}{@{}p{0.16\textwidth}@{}p{0.80\textwidth}@{}}
+     campaign id: & #1 \\
+     proved in:   & #2 \\
+     tested by:   & #3 \\
+     reviewed in: & #4 \\
+   \end{tabular}\par}%
+  \vspace{0.25\baselineskip}}
+
+% ---------------------------------------------------------------------
+% Semantic macros (mirror notation.md; single source of typesetting)
+% ---------------------------------------------------------------------
+\newcommand{\braket}[1]{\langle #1\rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Inv}{Inv}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\A}{\mathcal{A}}            % asymptotic symmetry group (script A)
+\newcommand{\Hilb}{\mathcal{H}}
+\newcommand{\Kk}{\mathcal{K}}           % kink sector space
+\newcommand{\alg}{\mathfrak{A}}         % quasi-local algebra
+\newcommand{\softS}{\mathsf{S}}         % the soft multiplier of D25
+\newcommand{\classSW}{\mathcal{S}_W}    % the no-contact universality class
+\newcommand{\aleg}{\mathfrak{a}_{\mathrm{leg}}} % soft-leg amputation constant
+\newcommand{\Qhat}{\hat{Q}}             % windowed regularised charge
+\newcommand{\wallX}{\mathfrak{X}}       % windowed wall-position observable
+
+\title{The infrared triangle on the lattice:\\ the campaign labbook}
+\author{Repository \texttt{tns-as-st-me}; owner Tobias Osborne}
+\date{\today\ (maintained in lockstep with \texttt{claims/CLAIMS.md})}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\include{sections/00_overview}
+\include{sections/01_dictionary}
+\include{sections/02_mps_setting}
+\include{sections/03_symmetry_noether}
+\include{sections/04_corner_a}
+\include{sections/05_kink_model}
+\include{sections/06_memory_quantization}
+\include{sections/07_memory_index}
+\include{sections/08_local_relaxation}
+\include{sections/09_two_magnon}
+\include{sections/10_wave_operators}
+\include{sections/11_soft_index}
+\include{sections/12_universality}
+\include{sections/13_spt}
+\include{sections/14_two_plus_one}
+\include{sections/15_negative_results}
+\include{sections/16_numerics}
+\include{sections/17_triangle_status}
+
+\end{document}

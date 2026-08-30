@@ -1,0 +1,631 @@
+% =====================================================================
+% SHARD-ID: LB-03-SYMMETRY-NOETHER
+% SHARD-TITLE: Symmetry on a window: intertwiners, bond implementers, and
+%              lattice Noether
+% SHARD-SOURCES: definitions.md D2, D3, D4, D10 (status header: written
+%              2026-08-25, FROZEN at the 2026-08-26 freeze after the Corner A
+%              L6 loop converged, theory/verdicts/corner-a-r3.md PASS);
+%              notation.md; HANDOFF_MPS_SOFT_THEOREM.md 1.1, 1.2;
+%              theory/corner-a.md steps (1.2)-(1.4);
+%              theory/corner-a-goldstone.md step (1.6);
+%              refs/arxiv-0802.0447, refs/arxiv-2011.12127;
+%              theory/checks/corner_a_check.py (checks C0-C2b, C8, C8b)
+% SHARD-CLAIMS: D2, D3, D4, D10
+% =====================================================================
+
+% --- shard-local semantic macros (mirror notation.md; \providecommand so
+% --- that a sibling shard may declare the same symbol without a clash) ---
+\providecommand{\Aloc}{\mathfrak{A}_{\mathrm{loc}}}      % local subalgebra
+\providecommand{\Utens}{\mathcal{U}}                     % symmetry on a tensor
+\providecommand{\Vac}{\Omega_{\mathrm{vac}}}             % vacuum label set
+\providecommand{\Nnull}{\mathcal{N}}                     % null-direction map
+\providecommand{\Ewin}{\mathfrak{E}}                     % window CP map
+\providecommand{\lamt}{\tilde{\lambda}}                  % honest decay rate
+\providecommand{\Cbd}{C_{\partial}}                      % window-norm constant
+\providecommand{\gaugerem}{\mathfrak{B}}                 % gauge remainder
+\providecommand{\Ept}{\mathcal{E}}                       % endpoint space
+\providecommand{\dcoset}{\mathfrak{d}}                   % double-coset label
+\providecommand{\Fc}{\mathfrak{F}_{c}}                   % finitely supported
+\providecommand{\Fec}{\mathfrak{F}_{\mathrm{ec}}}        % eventually constant
+\providecommand{\Fell}{\mathfrak{F}_{\ell^{1}}}          % finite variation
+\providecommand{\Aeff}{\A_{\mathrm{eff}}}                % effective asg group
+\providecommand{\hsub}{\mathfrak{h}}                     % unbroken subalgebra
+\providecommand{\msub}{\mathfrak{m}}                     % broken complement
+\providecommand{\liealg}{\mathfrak{g}}                   % Lie algebra of G
+\providecommand{\Vbond}{\mathcal{V}}                     % bond implementer
+\providecommand{\Wspan}{\mathcal{W}}                     % insertion window span
+\providecommand{\chalg}{\mathfrak{a}}                    % twisted group algebra
+\providecommand{\bcharge}{\mathfrak{q}}                  % asymptotic bond charge
+\providecommand{\bondpot}{\mathcal{J}}                   % bond current potential
+
+\section{Symmetry on a window: intertwiners, bond implementers, and lattice
+Noether}
+\label{sec:symmetry-noether}
+
+An on-site symmetry acts on a matrix-product state in a way that is completely
+determined at the level of the single tensor. If the symmetry leaves the state
+invariant, then applying the physical unitary $u(g)$ to the physical index of
+the tensor cannot change the tensor by more than the residual gauge freedom of
+the parametrisation: a phase and a conjugation by some invertible matrix acting
+on the virtual (bond) indices. That statement is the \emph{fundamental theorem
+of matrix product states}, and the resulting relation --- the
+\emph{intertwining relation} of \cref{def:intertwining} --- is the engine that
+drives the entire campaign. Because the conjugating matrices $V_{\alpha}(g)$
+are determined only up to a phase, they compose only up to a phase: they form
+a projective representation, whose cohomology class
+$[\omega_{\alpha}] \in H^{2}(H_{\alpha}, U(1))$ is the one-dimensional
+symmetry-protected-topological index. On the lattice this class is the exact
+analogue of an anomaly of the asymptotic symmetry, and it is where the
+campaign's genuinely new prediction lives.
+
+The reason the intertwining relation matters so much is what happens when the
+symmetry is applied only to a finite interval $R = [a,b]$ instead of the whole
+chain. Substituting the relation at each of the $\abs{R}$ sites of $R$ produces
+an alternating string
+$V_{\alpha}(g)^{-1} A \, V_{\alpha}(g) V_{\alpha}(g)^{-1} A \, V_{\alpha}(g)
+ \cdots$, in which every interior pair
+$V_{\alpha}(g) V_{\alpha}(g)^{-1}$ collapses to the identity. Only the two
+outermost factors survive, and they sit on the two \emph{boundary bonds} of
+$R$. Concretely, with $T_{R}^{(g)}$ denoting the decoration that carries
+$A_{\alpha}$ on $\Lambda \setminus R$, $A_{g \cdot \alpha}$ on $R$, the bond
+insertion $V_{\alpha}(g)^{-1}$ on $\partial_{-}R = (a-1|a)$ and
+$V_{\alpha}(g)$ on $\partial_{+}R = (b|b+1)$,
+\begin{equation}
+  U_{R}(g) \, \ket{\psi_{\Lambda}(A_{\alpha}; b_{l}, b_{r})}
+  \;=\; e^{\,i \abs{R} \theta_{\alpha}(g)} \,
+        \ket{\psi_{\Lambda}\bigl(T_{R}^{(g)}; b_{l}, b_{r}\bigr)} ,
+  \label{eq:telescoping}
+\end{equation}
+exactly, as window vectors --- and, as states, with no phase at all, since the
+extensive factor $e^{i\abs{R}\theta_{\alpha}(g)}$ appears in bra and ket and
+cancels. This is the lattice Ward identity. It says that a symmetry applied
+to a region acts \emph{only at the region's boundary}, and acts there by
+virtual-space operators that are invisible to any local physical measurement in
+the bulk. Every selection rule, every current-conservation statement, and the
+whole soft-theorem mechanism of the campaign is this telescoping plus
+transfer-matrix calculus. Three points about \eqref{eq:telescoping} deserve
+emphasis. The identity is exact on a finite window, provided either that the
+window is enlarged to contain $[a-1,b+1]$, or that the window vector admits
+insertions on its edge bonds --- which is precisely why
+\cref{def:window-vector} was written to admit them. The telescoping uses only
+the intertwining relation; injectivity is needed to \emph{obtain} that relation
+and to make the pair $(\theta_{\alpha}, V_{\alpha})$ unique, not for the
+algebra. And the orientation matters: the surviving operator on the
+\emph{left} boundary bond is $V_{\alpha}(g)^{-1}$ and on the \emph{right} it is
+$V_{\alpha}(g)$, fixed by the convention of \cref{def:intertwining}. The
+original campaign brief states the opposite orientation; that document is
+historical and is not edited, so the correction is recorded here. A
+$\Z_{2}$ example is blind to the flip, because there $V = Z = V^{-1}$; a
+$U(1)$ symmetry with $V(t) = e^{itZ/2}$ separates them cleanly, the correct
+orientation giving an error of $5.6 \cdot 10^{-17}$ and the flipped one
+$0.267$.
+
+The rest of this section fixes, in order: the symmetry data and the
+intertwining relation; the classes of \emph{profiles} $f : \Z \to G$ for which
+a modulated symmetry operation makes sense (a discipline that is not
+bureaucratic --- half-infinite strings are not elements of the algebra at all);
+the bond implementers and the group they generate; and the lattice Noether pair
+of charge density and current.
+
+\subsection{The symmetry data and the intertwining relation}
+
+\begin{definition}[On-site symmetry and its action on a tensor (D2, preamble)]
+\label{def:onsite-symmetry}
+Let $G$ be a compact group (finite, or a compact Lie group) with a unitary
+representation $u : G \to U(\C^{d})$ on one site, and let
+$U_{\Lambda}(g) := \bigotimes_{x \in \Lambda} u_{x}(g)$. Write $\Utens(g)$ for
+the induced linear map on tensors,
+\begin{equation}
+  \bigl(\Utens(g) A\bigr)^{s} := \sum_{s'} u(g)_{s s'} A^{s'},
+  \qquad u(g)_{s s'} := \bra{s} u(g) \ket{s'},
+\end{equation}
+so that $\Utens(g) \Utens(h) = \Utens(gh)$.
+\end{definition}
+
+\begin{definition}[Covariant vacuum family (D2(a))]
+\label{def:covariant-vacuum}
+A \emph{$G$-covariant vacuum family} consists of a finite or compact set
+$\Vac$ of labels, injective canonical-form tensors
+$\{A_{\alpha}\}_{\alpha \in \Vac}$ of common bond dimension $\chi$ generating
+pairwise distinct states $\omega_{\alpha} := \omega_{A_{\alpha}}$, together
+with a $G$-action $(g,\alpha) \mapsto g \cdot \alpha$ on $\Vac$ such that
+$U_{\Lambda}(g)$ maps $\omega_{\alpha}$ to $\omega_{g \cdot \alpha}$ for every
+finite $\Lambda$, in the sense
+\begin{equation}
+  \omega_{\alpha} \circ \Ad\bigl(U_{\Lambda}(g)^{\dagger}\bigr)
+  \;=\; \omega_{g \cdot \alpha}
+  \qquad \text{on } \alg_{\Lambda}, \text{ for all } \Lambda .
+\end{equation}
+The \emph{stabiliser} $H_{\alpha} := \{ g \in G : g \cdot \alpha = \alpha \}$
+is the \emph{unbroken subgroup}. The family is \emph{unbroken at $\alpha$} if
+$H_{\alpha} = G$, in which case $\abs{\Vac}$ may be $1$.
+\end{definition}
+
+\provenance{D2(a)}%
+{\texttt{definitions.md} D2(a); FROZEN at the 2026-08-26 freeze}%
+{---}%
+{\texttt{theory/verdicts/corner-a-r3.md} (PASS)}
+
+The next relation is the one everything rests on. It is not an assumption of
+this campaign: it is the fundamental theorem of matrix product states, and it
+is quoted here against the local \TeX{} sources rather than from memory.
+
+\begin{definition}[The intertwining relation (D2(b))]
+\label{def:intertwining}
+For every $\alpha \in \Vac$ and every $g \in G$ there exist a phase
+$\theta_{\alpha}(g) \in \R/2\pi\Z$ and a unitary $V_{\alpha}(g) \in U(\chi)$
+with
+\begin{equation}
+  \sum_{s'} u(g)_{s s'} \, A_{\alpha}^{s'}
+  \;=\; e^{\,i \theta_{\alpha}(g)} \,
+        V_{\alpha}(g)^{-1} \, A_{g \cdot \alpha}^{s} \, V_{\alpha}(g)
+  \qquad \text{for all } s .
+  \label{eq:IT}
+\end{equation}
+The pair $(\theta_{\alpha}(g), V_{\alpha}(g))$ is unique up to
+$V_{\alpha}(g) \mapsto e^{i\varphi} V_{\alpha}(g)$.
+\end{definition}
+
+\begin{remark}[Ground truth for \eqref{eq:IT}]
+Existence: \texttt{refs/arxiv-0802.0447} (\texttt{StringOrder-v10.tex}),
+Lemma~1, states that the spectral radius of the mixed transfer map $E_{u}$ is
+at most $1$, with equality if and only if there are a unitary $V$ and a phase
+$\theta$ with
+$V^{\dagger} \tilde{A}_{j} = e^{i(\theta - \theta_{j})} \tilde{A}_{j}
+ V^{\dagger}$, together with the accompanying condition
+$(u \otimes \mathbb{1}) B = (\mathbb{1} \otimes V) B V^{\dagger}$; and
+\texttt{refs/arxiv-2011.12127} (\texttt{TN-Review-main.tex}), which for
+$U(g)^{\otimes N} \ket{\psi_{N}} \simeq \ket{\psi_{N}}$ states
+$\sum_{j} U_{ij}(g) A^{j} = e^{i\phi(g)} X^{\dagger}(g) A^{i} X(g)$.
+Uniqueness: \texttt{refs/arxiv-2011.12127}, the equation labelled
+\texttt{XAX=B}, states that
+\begin{equation}
+  X^{-1} A^{i} X = e^{i\varkappa} \, Y^{-1} A^{i} Y
+  \quad \Longrightarrow \quad
+  \varkappa = 0 \; \text{ and } \; X = e^{i\varphi} Y
+  \text{ for some } \varphi .
+\end{equation}
+\end{remark}
+
+\provenance{D2(b)}%
+{\texttt{definitions.md} D2(b); consequences derived at
+ \texttt{theory/corner-a.md} step (1.2)}%
+{\texttt{theory/checks/corner\_a\_check.py}, checks C0, C1, C1b, C1c
+ (orientation)}%
+{\texttt{theory/verdicts/corner-a-r3.md}}
+
+Composing the intertwining relation with itself forces the phase and the
+virtual matrices to compose in a definite way. The virtual matrices compose
+only projectively, and the class of that projective multiplier is the
+symmetry-protected-topological index --- the lattice anomaly.
+
+\begin{definition}[Cocycles and the symmetry-protected index (D2(c))]
+\label{def:cocycle-spt-index}
+Composition of \eqref{eq:IT} gives, for all $g, h \in G$,
+\begin{equation}
+  \theta_{\alpha}(hg) = \theta_{\alpha}(g) + \theta_{g \cdot \alpha}(h),
+  \qquad
+  V_{g \cdot \alpha}(h) \, V_{\alpha}(g)
+  = e^{\,i \omega_{\alpha}(h,g)} \, V_{\alpha}(hg) .
+  \label{eq:cocycles}
+\end{equation}
+Restricted to $g,h \in H_{\alpha}$ these say that
+$\theta_{\alpha}\vert_{H_{\alpha}} : H_{\alpha} \to U(1)$ is a homomorphism and
+that $\omega_{\alpha} : H_{\alpha} \times H_{\alpha} \to U(1)$ is a $2$-cocycle.
+Its class
+\begin{equation}
+  [\omega_{\alpha}] \;\in\; H^{2}\bigl(H_{\alpha}, U(1)\bigr)
+\end{equation}
+is the \emph{symmetry-protected-topological index} of $A_{\alpha}$.
+\end{definition}
+
+\begin{remark}[A notation hazard, stated once]
+The symbol $\omega$ carrying \emph{two group} arguments is this cocycle; the
+symbol $\omega$ carrying a \emph{momentum} argument, $\omega(k)$, is a magnon
+dispersion. The two never occur with the same argument type, and this is the
+mechanical disambiguation rule used throughout the repository.
+\end{remark}
+
+\begin{definition}[Normal ordering (D2(d))]
+\label{def:normal-ordering}
+For $g \in H_{\alpha}$ put
+$\check{u}_{\alpha}(g) := e^{-i\theta_{\alpha}(g)} u(g)$. Because
+$\theta_{\alpha}\vert_{H_{\alpha}}$ is a homomorphism, $\check{u}_{\alpha}$ is
+again a unitary representation of $H_{\alpha}$, and it satisfies
+\eqref{eq:IT} with phase $1$. All charges below are those of
+$\check{u}_{\alpha}$ unless stated otherwise; physically this is the charge
+measured from its vacuum value.
+\end{definition}
+
+\begin{definition}[Smoothness hypothesis (S) (D2(e))]
+\label{def:smoothness}
+When $G$ is a Lie group we assume, and state whenever it is used, that
+$\varepsilon \mapsto A_{\exp(\varepsilon\xi) \cdot \alpha}$ and
+$\varepsilon \mapsto V_{\alpha}(\exp(\varepsilon\xi))$ admit $C^{1}$ local
+sections with $V_{\alpha}(e) = \mathbb{1}$. We then write
+\begin{equation}
+  X_{\alpha}(\xi) := \frac{d}{d\varepsilon}
+     V_{\alpha}\bigl(\exp(\varepsilon\xi)\bigr)\Big\vert_{\varepsilon = 0}
+  \quad \text{(anti-Hermitian)},
+  \qquad
+  \theta'_{\alpha}(\xi) := \frac{d}{d\varepsilon}
+     \theta_{\alpha}\bigl(\exp(\varepsilon\xi)\bigr)\Big\vert_{\varepsilon = 0}.
+\end{equation}
+\end{definition}
+
+\provenance{D2(c),(d),(e)}%
+{\texttt{definitions.md} D2(c)--(e); the cocycle relations
+ \eqref{eq:cocycles} derived at \texttt{theory/corner-a.md} step (1.2)}%
+{\texttt{theory/checks/corner\_a\_check.py}}%
+{\texttt{theory/verdicts/corner-a-r3.md}}
+
+\subsection{Which profiles are allowed}
+
+A ``modulated symmetry'' means applying $u(f(x))$ at site $x$ for some profile
+$f : \Z \to G$. Whether the resulting object is an operator, a map on states,
+or nothing at all depends entirely on how $f$ behaves at infinity. The
+following classes are not bookkeeping: a half-infinite symmetry string is
+\emph{not} an element of the quasi-local algebra, and a plane wave is in none
+of the classes and is admissible only inside a Fourier transform. Every soft
+statement in the campaign must say which class it uses.
+
+\begin{definition}[Admissible profile classes (D3(a))]
+\label{def:admissible-profiles}
+Let
+\begin{align}
+  \Fc  &:= \bigl\{\, f : \Z \to G \;:\; f(x) = e
+           \text{ for all but finitely many } x \,\bigr\}, \\
+  \Fec &:= \bigl\{\, f : \Z \to G \;:\; f \text{ is constant on some }
+           (-\infty,-n] \text{ and on some } [n,\infty) \,\bigr\},
+\end{align}
+and, for a Lie algebra element $\xi \in \liealg$,
+\begin{align}
+  \Fc(\xi)   &:= \bigl\{\, f : \Z \to \R \;:\; f
+                 \text{ finitely supported} \,\bigr\}, \\
+  \Fec(\xi)  &:= \bigl\{\, f : \Z \to \R \;:\; f
+                 \text{ constant near } \pm\infty \,\bigr\}, \\
+  \Fell(\xi) &:= \Bigl\{\, f : \Z \to \R \;:\;
+                 \sum_{x} \abs{f(x+1) - f(x)} < \infty \,\Bigr\}
+                 \quad \text{(finite total variation)} .
+\end{align}
+One has $\Fc \subset \Fec$ and $\Fec(\xi) \subset \Fell(\xi)$. A profile is
+\emph{admissible for an operator statement} if and only if it lies in $\Fc$,
+in which case the operator lies in $\Aloc$; it is \emph{admissible for a state
+statement} if and only if it lies in $\Fec$, in which case the operator is a
+weak-$*$ limit of elements of $\Aloc$. The plane wave $f(x) = e^{ikx}$ lies in
+none of these for $k \neq 0$; it is admitted only inside a Fourier transform,
+i.e.\ as the distributional kernel of a wave packet
+$\sum_{k} \varphi(k) f_{k}$ with $\varphi \in C_{c}^{\infty}((-\pi,\pi])$.
+\end{definition}
+
+\begin{definition}[Truncated symmetry operations (D3(b))]
+\label{def:truncated-symmetry}
+For a finite interval $R = [a,b] \subset \Z$ put
+$U_{R}(g) := \prod_{x \in R} u_{x}(g) \in \Aloc$. Its \emph{boundary bonds}
+are $\partial_{-}R := (a-1|a)$ and $\partial_{+}R := (b|b+1)$, and
+$\abs{R} = b-a+1$. More generally, for $f \in \Fc$,
+$U[f] := \prod_{x} u_{x}(f(x)) \in \Aloc$.
+\end{definition}
+
+\begin{definition}[Half-infinite strings act on states only (D3(c))]
+\label{def:half-infinite-string}
+For $f \in \Fec$ the product $U[f]$ is \emph{not} an element of $\alg$. It is
+used only through the induced map on states,
+\begin{equation}
+  \varrho \;\longmapsto\;
+  \text{w*-}\!\lim_{n \to \infty} \varrho \circ \Ad\bigl(U[f_{n}]^{\dagger}\bigr),
+\end{equation}
+where $f_{n} \in \Fc$ agrees with $f$ on $[-n,n]$ and equals $e$ outside.
+Existence of this limit is a theorem, not a definition; when it exists the
+limit state is written $f \triangleright \varrho$. The canonical case is
+$f = 1_{[x,\infty)} \cdot g$, written $U_{[x,\infty)}(g)$.
+\end{definition}
+
+\provenance{D3}%
+{\texttt{definitions.md} D3(a)--(c); existence of the half-infinite limit
+ proved at \texttt{theory/corner-a.md} steps (1.2)(c) and (1.4)}%
+{---}%
+{\texttt{theory/verdicts/corner-a-r3.md}}
+
+\subsection{Bond implementers and the effective asymptotic symmetry group}
+
+The telescoping identity \eqref{eq:telescoping} leaves virtual operators on
+bonds. To speak of them as \emph{operators} one needs the map
+``$M \mapsto$ the window vector with $M$ inserted on bond $b_{0}$'' to be
+injective, so that left multiplication on $M$ transports to a well-defined map
+on window vectors. That injectivity is genuinely conditional: it needs enough
+uniform sites on each side of the bond, and without them the construction is
+ill defined --- not merely unproved. The definition therefore carries its
+padding hypothesis explicitly.
+
+\begin{definition}[Padded windows and the insertion map (D4(a1),(a2))]
+\label{def:padded-window}
+A window $\Lambda = [a,b]$ is \emph{padded about the bond $b_{0} = (m|m+1)$}
+if it contains at least $n_{0}$ sites on each side of $b_{0}$, with $n_{0}$ the
+word-spanning length of \eqref{eq:word-spanning}, and if the boundary vectors
+satisfy $b_{l} \neq 0$ and $b_{r} \neq 0$. For such $\Lambda$ let
+$\Wspan_{\Lambda, b_{0}}$ be the linear span of the window vectors carrying one
+insertion on $b_{0}$, and let
+\begin{equation}
+  \iota_{\Lambda, b_{0}} : M_{\chi}(\C) \longrightarrow
+  \Wspan_{\Lambda, b_{0}},
+  \qquad
+  M \longmapsto \ket{\psi_{\Lambda}(A; b_{l}, b_{r}; M@b_{0})} .
+\end{equation}
+On a padded window, $\iota_{\Lambda,b_{0}}$ is \textbf{injective}.
+\end{definition}
+
+\begin{proof}[Idea of proof of injectivity]
+The coefficient of $\ket{s}$ is $b_{l}^{\dagger} P(s) \, M \, Q(s) \, b_{r}$,
+with $P$ and $Q$ the matrix words to the left and to the right of $b_{0}$. By
+\eqref{eq:word-spanning} each of $P$, $Q$ ranges over a spanning set of
+$M_{\chi}(\C)$, and the coefficient is linear in each; since $b_{l} \neq 0$
+the set $\{ b_{l}^{\dagger} P : P \in M_{\chi} \}$ is all of
+$(\C^{\chi})^{*}$, and since $b_{r} \neq 0$ the set $\{ Q b_{r} \}$ is all of
+$\C^{\chi}$. So $\iota(M) = \iota(M')$ forces $v^{\dagger}(M-M')w = 0$ for all
+$v, w$, i.e.\ $M = M'$.
+\end{proof}
+
+\begin{remark}[Padding is necessary, not decorative]
+\label{rem:padding-necessary}
+Without padding the kernel of $\iota$ need not be invariant under left
+multiplication, so the rule ``$\iota(M) \mapsto \iota(NM)$'' is ill defined.
+An explicit injective, canonical-gaugeable, $\Z_{2}$-symmetric counterexample:
+take
+\begin{equation}
+  A^{0} = \operatorname{diag}(1,2), \quad A^{1} = X, \quad
+  u(g) = \operatorname{diag}(1,-1), \quad V = Z, \quad
+  b_{l} = (\sqrt{2},\, 1), \quad b_{r} = (1,\, 0),
+\end{equation}
+one site on each side of the bond, and
+\begin{equation}
+  N = \begin{pmatrix} -\sqrt{2} & 0 \\ 1 & 0 \end{pmatrix} .
+\end{equation}
+Then $\iota(N) = 0$ while $\norm{\iota(ZN)}_{\infty} = 4$. The transfer
+spectrum is $\{4.303,\, 3,\, 1,\, 0.697\}$ --- a unique top eigenvalue, with
+$\lambda_{E} = 0.697$ after rescaling --- and the length-two words have rank
+$4$, so this genuinely is a tensor of the class of
+\cref{def:injective-mps}. Padding both sides to $n_{0} = 2$ restores
+$\ran \iota$ of full dimension $\chi^{2} = 4$.
+\end{remark}
+
+\begin{definition}[Bond implementers (D4(a4))]
+\label{def:bond-implementer}
+On a padded window define, for $M \in GL(\chi)$,
+\begin{equation}
+  \Vbond_{b_{0}}(M) \; := \;
+  \iota_{\Lambda,b_{0}} \circ L_{M} \circ \iota_{\Lambda,b_{0}}^{-1}
+  \qquad \text{on } \ran \iota_{\Lambda,b_{0}} = \Wspan_{\Lambda,b_{0}},
+\end{equation}
+where $L_{M}$ is left multiplication on $M_{\chi}(\C)$. By
+\cref{def:padded-window} this is well defined and linear, and
+$\Vbond_{b_{0}}(M)\Vbond_{b_{0}}(M') = \Vbond_{b_{0}}(MM')$, with scalars
+acting by scalars. Put
+\begin{equation}
+  \Vbond_{b_{0}}(g) \; := \; \Vbond_{b_{0}}\bigl(V_{\alpha}(g)\bigr)
+  \qquad \text{(\textbf{not} } V_{\alpha}(g)^{-1} \text{)} .
+\end{equation}
+With the convention \eqref{eq:cocycles}, this gives
+\begin{equation}
+  \Vbond_{b_{0}}(h) \, \Vbond_{b_{0}}(g)
+  \;=\; e^{\,i \omega_{\alpha}(h,g)} \, \Vbond_{b_{0}}(hg) ,
+  \label{eq:implementer-cocycle}
+\end{equation}
+a linear representation of the twisted group algebra $\chalg_{\alpha}$ of
+\cref{def:charge-algebra} on $\Wspan_{\Lambda,b_{0}}$, in which the multiplier
+acts nontrivially. On \emph{states} the multiplier is invisible, since
+$\omega^{cM@b} = \omega^{M@b}$ for a scalar $c$; the state-level action is
+\cref{def:effective-asg}.
+\end{definition}
+
+\begin{remark}[Two corrections carried in this definition]
+The r1 version used the implementer $V_{\alpha}(g)^{-1}$ with left
+multiplication, which reverses the composition law, and asserted a
+twisted-algebra action on states, where phases are invisible. The r2 version
+declared the implementer on an unpadded insertion span, where it is not well
+defined --- see \cref{rem:padding-necessary}. Both are superseded by the form
+above. This definition applies in the unbroken case $H_{\alpha} = G$; the
+broken case is handled through \cref{def:kink-sector} and the Corner~A
+endpoint theorem.
+\end{remark}
+
+\provenance{D4(a)}%
+{\texttt{definitions.md} D4(a1)--(a4); consumed at \texttt{theory/corner-a.md}
+ step (1.4)}%
+{\texttt{theory/checks/corner\_a\_check.py}, checks C8 (kernel not invariant
+ without padding) and C8b (padding to $n_{0}=2$ restores injectivity)}%
+{\texttt{theory/verdicts/corner-a-r2.md} objections 1, 3, 4, 7, 8;
+ \texttt{theory/verdicts/corner-a-r3.md}}
+
+Passing from window vectors to states loses exactly the phases, and with them
+the multiplier. What survives is an honest group action, and the group that
+acts is not $G$ but $G$ modulo those elements whose virtual matrix is a scalar.
+
+\begin{definition}[The effective asymptotic symmetry group (D4(b))]
+\label{def:effective-asg}
+Set
+\begin{equation}
+  N_{\alpha} \; := \; \bigl\{\, g \in G \;:\;
+  V_{\alpha}(g) \in \C^{\times}\mathbb{1} \,\bigr\},
+\end{equation}
+a normal subgroup of $G$ --- the preimage of the centre under a projective
+representation. The induced map on states is the group homomorphism
+\begin{equation}
+  \rho_{\alpha} : G \longrightarrow PGL(\chi),
+  \qquad \rho_{\alpha}(g) := [V_{\alpha}(g)],
+\end{equation}
+which is \emph{not} projective, the cocycle having been quotiented away, and
+which has $\ker \rho_{\alpha} = N_{\alpha}$. The \emph{effective asymptotic
+symmetry group} is
+\begin{equation}
+  \Aeff \; := \; G/N_{\alpha} \;\cong\; \rho_{\alpha}(G) \;\subseteq\; PGL(\chi) .
+  \label{eq:aeff}
+\end{equation}
+This is a genuine group.
+\end{definition}
+
+\begin{remark}[The superseded object]
+\label{rem:asg-superseded}
+The object $\A = (G_{L} \times G_{R})/G_{\mathrm{diag}}$ of the original brief
+is \emph{not} the vacuum orbit unless $N_{\alpha} = \{e\}$, and it is a group
+only for abelian $G$. It is retained only as a name for the coset space and is
+never used as a classifying object; the classifying objects are $\Aeff$ in the
+unbroken case and the double coset \eqref{eq:double-coset} in the broken case.
+\end{remark}
+
+\begin{definition}[The two asymptotic copies (D4(c))]
+\label{def:two-asymptotic-copies}
+$G_{L}$ and $G_{R}$ act through half-infinite strings on $(-\infty,b]$ and
+$[b+1,\infty)$ respectively. By the telescoping identity
+\eqref{eq:telescoping}, the left string leaves $V_{\alpha}(g_{L})$ on the bond
+$b$ and the right string leaves $V_{\alpha}(g_{R})^{-1}$, so the composite
+residue is $V_{\alpha}(g_{L}) V_{\alpha}(g_{R})^{-1}$, which is trivial on
+states if and only if $g_{L} g_{R}^{-1} \in N_{\alpha}$. Hence the true
+stabiliser is
+\begin{equation}
+  S_{\alpha} := \bigl\{ (g_{L},g_{R}) \;:\;
+  g_{L} g_{R}^{-1} \in N_{\alpha} \bigr\} \;\supseteq\; G_{\mathrm{diag}},
+\end{equation}
+with $S_{\alpha} = G_{\mathrm{diag}}$ if and only if $N_{\alpha} = \{e\}$.
+\end{definition}
+
+\begin{definition}[Asymptotic charge algebra (D4(d))]
+\label{def:charge-algebra}
+$\chalg_{\alpha} := \C_{\omega_{\alpha}}[H_{\alpha}]$ is the twisted group
+algebra with basis $\{v_{g}\}$ and product
+$v_{h} v_{g} = e^{i\omega_{\alpha}(h,g)} v_{hg}$. This definition supplies
+only the name; the content --- that $g \mapsto V_{\alpha}(g)$ is a
+$*$-representation of it, and that $\rho_{\alpha}$ is the induced state-level
+action --- is a theorem of the Corner~A endpoint shard. For a Lie group,
+under the smoothness hypothesis of \cref{def:smoothness}, the
+\emph{asymptotic charges} are $\bcharge_{b}(\xi) := X_{\alpha}(\xi)$, acting by
+left multiplication on the bond insertion, and
+\begin{equation}
+  \bigl[\, \bcharge_{b}(\xi), \, \bcharge_{b}(\zeta) \,\bigr]
+  \;=\; \bcharge_{b}\bigl([\xi,\zeta]\bigr)
+        \; + \; c_{\alpha}(\xi,\zeta) \, \mathbb{1} .
+  \label{eq:charge-algebra}
+\end{equation}
+\end{definition}
+
+\begin{remark}[What the central term is, and what it is not]
+\label{rem:no-central-charge}
+The term $c_{\alpha}$ in \eqref{eq:charge-algebra} is only the \emph{local
+infinitesimal image} of the class $[\omega_{\alpha}]$, and it generally loses
+it. For $\hsub_{\alpha}$ compact semisimple, Whitehead's second lemma says
+that its Lie-algebra cohomology class in $H^{2}(\hsub_{\alpha},\R)$ is
+trivial; the displayed central cocycle is then a coboundary and can be gauged
+away by choosing a phase section, although it need not vanish in every local
+section. The global class $[\omega_{\alpha}]$ may nevertheless be nontrivial
+torsion: for the AKLT chain, $H^{2}(SO(3),U(1)) = \Z_{2}$, while a suitable
+phase convention gives the ordinary $su(2)$ bracket for the spin-one-half edge
+generators. \textbf{The lattice symmetry-protected anomaly is a
+group-cohomological multiplier, not a Lie-algebra central charge.} This is a
+genuine disanalogy with the continuum picture of a centrally extended charge
+algebra, and it must be stated as such rather than glossed over.
+\end{remark}
+
+\provenance{D4(b),(c),(d)}%
+{\texttt{definitions.md} D4(b)--(d); the representation content proved at
+ \texttt{theory/corner-a.md} step (1.4), sub-steps (d) and (f)}%
+{\texttt{theory/checks/corner\_a\_check.py}}%
+{\texttt{theory/verdicts/corner-a-r2.md} objections 3, 4;
+ \texttt{theory/verdicts/corpus-r2.md} note N5 (the central-term caveat);
+ \texttt{theory/verdicts/corner-a-r3.md}}
+
+\subsection{The lattice Noether pair}
+
+Differentiating the on-site symmetry gives a charge density; commuting the
+Hamiltonian with the half-line charge gives a current supported near the cut.
+The pair satisfies an exact lattice continuity equation --- no continuum limit,
+no approximation. The last clause is the one that connects back to the
+telescoping mechanism: acting on the vacuum, the physical charge density is the
+lattice divergence of a purely virtual, bond-supported quantity. That
+quantity is the lattice analogue of a gauge potential, and the charge density
+is its field strength.
+
+\begin{definition}[Charge density and cut current (D10(a),(b))]
+\label{def:noether-pair}
+Write $\liealg = \mathrm{Lie}(G)$, and let $H = \sum_{x} h_{x,x+1}$ be a
+translation-invariant nearest-neighbour Hamiltonian; the definition extends
+verbatim to finite range $R_{h}$. For $\xi \in \liealg$ let
+\begin{equation}
+  q(\xi) := \frac{d}{d\varepsilon} u\bigl(\exp(\varepsilon\xi)\bigr)
+  \Big\vert_{\varepsilon=0}
+  \quad \text{(anti-Hermitian on } \C^{d} \text{)},
+\end{equation}
+with $q_{x}(\xi)$ its copy at site $x$. Assume $H$ is $G$-invariant on-site:
+$[\,h_{x,x+1},\, q_{x}(\xi) + q_{x+1}(\xi)\,] = 0$.
+
+\emph{(a) Cut current.} For finite range $R_{h}$, each $h_{x}$ supported in
+$[x, x+R_{h}-1]$, and $G$-invariance
+$[\,h_{x}, \sum_{y \in \supp h_{x}} q_{y}(\xi)\,] = 0$, define the current
+across the bond $(m|m+1)$ as
+\begin{equation}
+  j_{m|m+1}(\xi) \; := \; -\Bigl[\, H, \sum_{y \le m} q_{y}(\xi) \,\Bigr]
+  \; = \; -\sum_{x} \Bigl[\, h_{x}, \sum_{y \le m} q_{y}(\xi) \,\Bigr].
+  \label{eq:cut-current}
+\end{equation}
+The sum over $x$ is finite --- at most $R_{h}$ terms, those whose support
+straddles the cut --- because $[\,h_{x}, \sum_{y \le m} q_{y}\,] = 0$ whenever
+$\supp h_{x}$ lies wholly on one side. Hence
+$j_{m|m+1}(\xi) \in \Aloc$. In the nearest-neighbour case $R_{h} = 2$ this
+reduces to
+\begin{equation}
+  j_{x|x+1}(\xi) = -\bigl[\, h_{x,x+1}, q_{x}(\xi) \,\bigr]
+                 = \bigl[\, h_{x,x+1}, q_{x+1}(\xi) \,\bigr].
+\end{equation}
+
+\emph{(b) Continuity equation.} Exactly, on the lattice,
+\begin{equation}
+  \bigl[\, H, q_{x}(\xi) \,\bigr]
+  \;=\; j_{x-1|x}(\xi) \; - \; j_{x|x+1}(\xi) .
+  \label{eq:continuity}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Modulated charge and current (D10(c))]
+\label{def:modulated-charge}
+For $f \in \Fc(\xi)$,
+\begin{equation}
+  Q[f;\xi] := \sum_{x} f(x) \, q_{x}(\xi) \in \Aloc,
+  \qquad
+  J[f;\xi] := \sum_{x} f(x) \, j_{x|x+1}(\xi) .
+\end{equation}
+For $f(x) = e^{ikx}$ we write $Q_{k}(\xi)$ and $J_{k}(\xi)$, understood in the
+wave-packet sense of \cref{def:admissible-profiles}.
+\end{definition}
+
+\begin{definition}[Bond current potential (D10(d))]
+\label{def:bond-current-potential}
+In the unbroken case, with the intertwining relation \eqref{eq:IT} and normal
+ordering (\cref{def:normal-ordering}), let $\bondpot_{b}(\xi)$ denote the
+operation ``insert $X_{\alpha}(\xi)$ on bond $b$'', in the sense of
+\cref{def:bond-implementer}. The Goldstone shard's theorem G0(d) states that
+\begin{equation}
+  q_{x}(\xi) \triangleright \omega_{\alpha}
+  \;=\; \bigl( \bondpot_{x|x+1}(\xi) - \bondpot_{x-1|x}(\xi) \bigr)
+        \triangleright \omega_{\alpha} :
+  \label{eq:bond-potential}
+\end{equation}
+the physical charge density acting on the vacuum is the lattice divergence of a
+purely virtual, bond-supported quantity. In this dictionary $\bondpot$ is the
+lattice analogue of the gauge potential and $q$ is the field strength.
+\end{definition}
+
+\begin{remark}[A definition that was repaired]
+The r1 text defined the current by the nearest-neighbour formula while the
+hypothesis it served quantified over finite range. The cut-current form
+\eqref{eq:cut-current} is the repaired definition, and it supersedes the
+nearest-neighbour one, which remains correct in its original restricted
+setting.
+\end{remark}
+
+\provenance{D10}%
+{\texttt{definitions.md} D10(a)--(d); the continuity equation
+ \eqref{eq:continuity} and the bond-potential identity
+ \eqref{eq:bond-potential} proved at
+ \texttt{theory/corner-a-goldstone.md} step (1.6)}%
+{\texttt{theory/checks/corner\_a\_check.py}}%
+{\texttt{theory/verdicts/corner-a-r2.md} objection 19;
+ \texttt{theory/verdicts/corner-a-r3.md}}

@@ -1,0 +1,348 @@
+% SHARD-ID: LB-17-TRIANGLE-STATUS
+% SHARD-TITLE: The state of the triangle
+% SHARD-SOURCES: claims/CLAIMS.md ("Edges of the triangle" block and every
+%   status column); theory/TRIANGLE.md sections 6--7; paper/skeleton.md (gap
+%   ledger); HANDOFF.md (session-7 close, resume order); PRD.md (north star)
+% SHARD-CLAIMS: owns no statement.  It is the status ledger: it reports, corner
+%   by corner and edge by edge, statuses that are stated and proved in the
+%   sections named in each row.  Campaign identifiers for every result named
+%   here are in the dictionary, section 2.
+
+\section{The state of the triangle}
+\label{sec:triangle-status}
+
+This closing section says, without hedging, where the programme stands. It
+reports statuses; it proves nothing. Each result is named as it is named in
+the section that owns it, and every status written here is the status carried
+in the campaign's claim ledger --- including the ones that are uncomfortable.
+
+\subsection{The three corners}
+
+\paragraph{Corner A --- asymptotic symmetry: complete.}
+This corner is finished, and it is the only one of which that can be said.
+The truncated-symmetry identity, the unbroken endpoint theorem, the
+broken-case sector-jump theorem, and the Goldstone and lattice-Noether
+theorem are all \statusProved{} (\cref{sec:corner-a}); their review loop
+converged with wording notes only, and their statuses are final as stated. The
+corner also delivered two corrections that the rest of the campaign has had
+to absorb. First, the coset space $(G_L\times G_R)/G_{\mathrm{diag}}$ is
+\emph{not} the classifying object: in the unbroken case the object that acts
+is the quotient of the group by the kernel of the virtual representation, and
+in the broken case the complete invariant of a vacuum pair is a double coset.
+Second, this corner does \emph{not} by itself supply the soft edge: what it
+gives is an exact operator continuity equation, which entails no Adler zero
+and no universality.
+
+Two boxes inside the corner remain \statusSketch{} and are load-bearing
+wherever they are used: the split property, which is what a genuine edge
+Hilbert space realisation would need, and uniformity of the broken-case
+statement over a continuous vacuum manifold. They are flagged at every point
+of use rather than assumed silently.
+
+Alongside the corner sits the tail-density result --- for a circle-covariant
+injective MPS vacuum pair with opposite densities, $2\rho\in\Z$ --- which is
+\statusProved{} (\cref{sec:memory-index}), and the scope theorem
+(\cref{sec:memory-index}), also \statusProved{}, which says which symmetry
+directions can carry a calibrated memory at all: the charge lives on the
+centre of the unbroken subgroup, semisimple directions supply none, and a
+finite group supplies no current at all.
+
+\paragraph{Corner B --- memory: the strongest positive result, with one
+honest hole.}
+The finite-window memory-index theorem is \statusProved{} and unconditional
+(\cref{sec:memory-index}): with the circle-charge condition alone, the window
+charge's spectrum lies in one coset of $\Z$ and the two-projective-measurement
+increment is an integer. The window-charge identity is \statusProved{}
+unconditionally as an identity (\cref{sec:local-relaxation}), and it is what
+makes the theorem more than bookkeeping: the window charge is not a new
+object but the windowed lift of the conserved first-moment wall coordinate,
+and its first corollary closes the obvious loophole by showing that no state
+carrying an escaping charged leg has time-uniform kink tails.
+
+The infinite-volume law is \statusProvedConditional{}
+(\cref{sec:memory-index}): under the circle-charge condition and the
+relaxation hypothesis, every subsequential ordered protocol law is a
+probability on $\Z$ and the displacement is
+$\delta x=-(2s)^{-1}\sum_\nu\nu\,p_\nu$. Half of that hypothesis is free ---
+its first clause is a theorem from separability and strong continuity alone,
+\statusProved{} (\cref{sec:memory-index}) --- so the real content sits in the
+remaining two clauses. In the easy-axis model, energy conservation bounds the
+\emph{number} of domain walls uniformly in time, \statusProved{}
+(\cref{sec:local-relaxation}); but wall number is not wall length, so this
+does not deliver the tightness clause. A sufficient no-runaway condition for
+tightness exists at \statusSketch{}, as does its composition with the
+mean-escape obstruction (\cref{sec:local-relaxation}).
+
+\textbf{The hole:} clauses two and three of the relaxation hypothesis have not
+been established for any concrete dynamical model, the easy-axis kink model
+included. Until they are, this part of the corner prints in conditional form.
+The conditional theorem does not fall; what is missing is its first fully
+unconditional dynamical instance.
+
+The older, channel-based route to the same conclusion is also on the books and
+is honest about its price. The general conditional memory law is
+\statusProvedConditional{} on the four-clause asymptotic hypothesis with
+displayed channel charges (\cref{sec:memory-quantization}); the Fano-graph
+reduction and the transmission amplitude with its soft zero are
+\statusProved{} for the \emph{projected} component of the kink model, and the
+full-chain statement is open. The brief's literal memory conjecture is
+\statusRefuted{}, with the physical-current flux identity surviving as
+\statusProved{}. The recorded easy-axis scan is \statusSketch{}, and remains
+so because it is numerical evidence rather than a theorem.
+
+\paragraph{Corner C --- the soft theorem: structure proved, value proved,
+general limit law one hypothesis short.}
+The exact two-body content is done. Complete two-magnon resolution by direct
+diagonalisation, with no assumed Bethe completeness, is \statusProved{}; the
+spin-$\tfrac12$ soft expansion is \statusProved{}; and the exact spin-$S$
+slope
+\[
+  \left.\partial_{k_s}\delta_{\mathrm{phys}}\right|_{k_s=0}
+  =\frac{\sgn(v_h-v_s)}{S}
+\]
+is \statusProved{} at every site spin, without any integrability input
+(\cref{sec:two-magnon}). The oracle cross-checks are \statusProved{} and are
+used as checks, never as premises.
+
+The kinematic apparatus is in place. The canonical two-magnon wave-operator
+decomposition is \statusProved{}, and the fixed-packet construction from exact
+band data is \statusProvedConditional{} --- with the important difference,
+relative to its kink counterpart, that its hypotheses are instantiated on the
+ferromagnet, so the implication is not vacuous
+(\cref{sec:wave-operators}). The ordered-limit packet theorem on the separated
+class is \statusProved{}.
+
+The index apparatus is in place. The finite soft-index identity is
+\statusProved{}, first on a finite $SU(2)$ ring and then for an arbitrary
+compact Lie symmetry on any finite graph or periodic lattice, in both Ward
+registers; sector-label integrality is \statusProved{}
+(\cref{sec:soft-index}). On the displayed separated-preparation subclass the
+matching theorem is \statusProved{} with zero remainder, and with it the value
+statement and the exact scalar factorisation of the protocol datum
+(\cref{sec:soft-index}). The chain from symmetry to a number is therefore
+closed on that subclass, and closed in the right direction: matching
+transports an on-shell number inwards, and no value is stipulated anywhere.
+
+What is not closed is the \emph{general} limit law. The structural statement
+and the general value statement are both \statusSketch{}, and their shared
+missing input is a single named hypothesis --- see the next subsection. The
+$n$-leg soft theorem remains \statusConjecture{}
+(\cref{sec:universality}). Two of its supporting rows are
+\statusConjecture{} (packet-smeared form-factor regularity; control of the
+order of the volume, width and soft limits) and the one-hard Ward reduction
+is \statusSketch{}, with its fixed-volume formulas established as an
+off-shell interpolation and the on-shell infinite-volume estimate open. The
+exact finite-sector Ward projection is \statusProved{}, carrying an erratum
+that must be read with it: its convenient scalar form is exact for one magnon
+and false for two, and the correct replacement is register-dependent.
+
+\paragraph{The SPT dichotomy.}
+The rebuilt rows are \statusProved{} (\cref{sec:spt}): the multiplier
+cancellation for closed insertions, the edge-residue congruence, the twist and
+ordered-product relations, and the boundary-window memory theorem --- the last
+unconditional at finite length and conditional in its limit clause. Bulk
+coefficient continuity along a common-gap path is likewise \statusProved{},
+which is precisely what makes the dichotomy a dichotomy rather than a slogan.
+Two old rows are \statusRefuted{}: pointwise blindness of closed contractions
+to the projective class, and the all-orders claim that the class can appear in
+no coefficient at all. The dynamical instance --- a nonzero edge-changing
+reflection amplitude for an explicit open boundary Hamiltonian --- is
+\statusConjecture{}, and the pieces it is missing are named: half-chain wave
+operators, the boundary asymptotic hypothesis, the on-shell reflection matrix,
+and nonvanishing.
+
+\paragraph{Two spatial dimensions.}
+Recorded, and deliberately kept separate from the one-dimensional programme
+(\cref{sec:two-plus-one}). The exact toric-code endpoint-label theorem and the
+finite planar window-integrality theorem are \statusProved{}; the categorical
+selection theorem and isotopy flatness are \statusProved{} as conditional
+implications on displayed hypotheses. The planar limit law is
+\statusSketch{}, capped there by a nonvacuity test: no nonzero model instance
+of its two substantive relaxation clauses has been exhibited.
+
+\subsection{The three edges}
+
+The edge statements below are the campaign's recorded ones. They are quoted
+faithfully; a remark at the end says how they should be read today.
+
+\paragraph{Asymptotic symmetry $\Rightarrow$ soft theorem: \statusConjecture.}
+This is the core proof obligation and it is not discharged. Corner A supplies
+only the exact lattice continuity equation --- a statement about the true
+model that needs no tensor networks at all --- and, in the ferromagnet, the
+Ward residue. It supplies no Adler zero and no universality. The live
+obligations are: the canonical wave-operator decomposition; packet-smeared
+infinite-volume form-factor regularity, including control at momenta of order
+$1/N$; the one-hard Ward reduction for two hard magnons into a three-magnon
+channel; the exhaustive normed reduction used by the no-contact
+factorisation; microscopic membership in the no-contact class; and the
+remainder and limit-order control. Separately, and settled negatively:
+process independence over unrestricted local sources is \statusRefuted{}, so
+any statement along this edge must carry a source-class hypothesis.
+
+\paragraph{Soft theorem $\Rightarrow$ memory: \statusSketch.}
+The edge does not have the shape the brief conjectured. Its true shape is:
+soft behaviour of the transmission amplitude, hence a vanishing transmission
+probability at zero momentum --- a memory Adler zero --- hence the conditional
+displacement law $\delta x(k)=-T(k)/s$. The physical-current flux identity is
+\statusProved{} and the charge bookkeeping is \statusProved{} conditional on
+the asymptotic hypothesis; the middle step is conditional on the Fano-graph
+reduction, and the full-chain version on asymptotic completeness. Whether the
+zero and its coefficient are \emph{universal} remains \statusConjecture{}, and
+the universality counterexample of \cref{sec:universality} is a standing
+warning here too.
+
+\paragraph{Memory $\Rightarrow$ asymptotic symmetry: \statusSketch, with a
+proved core.}
+The core is \statusProved{}: under stationary vacua and finite-range dynamics,
+the vacuum-pair label is rigid at finite time, and for a separated event the
+exact ledger
+\[
+  2s\,\delta x+(q_{\mathrm{out}}-q_{\mathrm{in}})=0
+\]
+holds --- reflection gives zero displacement, transmission gives $-1/s$. The
+older half-line formula is \statusRefuted{}, wrong in sign and by a factor of
+two. The edge nevertheless stays at \statusSketch{} for one stated reason:
+nobody has shown that a \emph{measured} memory reconstructs an
+asymptotic-symmetry action or a classifying datum. The vacuum-pair label is
+read off, not shifted; the displacement records leg-charge transport inside
+it. The thermodynamic uniqueness and flatness statement that would sharpen
+this is \statusConjecture{}, supported only by finite-volume evidence.
+
+\begin{remark}[How to read the edge block]
+The three edge statements above are quoted from the campaign's recorded edge
+block, which predates several later promotions --- in particular the exact
+spin-$S$ slope theorem, the finite soft-index identities in their general
+form, the separated-preparation matching theorem, and the two-magnon
+wave-operator construction. A refresh of that block is queued. The refresh
+will not upgrade an edge: none of those promotions supplies a universality
+statement or a reconstruction statement, which are what the first and third
+edges are missing. It will, however, shorten the first edge's list of live
+obligations, and it will make visible that the soft corner now reaches a
+number on a displayed subclass rather than only a shape.
+\end{remark}
+
+\subsection{The one remaining gap in the one-dimensional soft law}
+
+Strip away everything that is finished and one hypothesis is left standing
+between the campaign and a general one-dimensional soft limit law. It is the
+exhaustive decomposition hypothesis of \cref{sec:soft-index}: that, after the
+outer limit and uniformly in the hard variable, the limit datum splits as
+\[
+  \mathcal{A}_* \;=\; \mathcal{A}_*^{\mathrm{desc}}
+                    +\mathcal{A}_*^{\perp}
+                    +\mathcal{A}_*^{\mathrm{dir}}
+                    +\mathcal{A}_*^{\partial},
+  \qquad
+  \mathcal{A}_*^{\mathrm{desc}}(\epsilon)
+   =\int (e^{ik}-1)\,L(k,h)\,\bigl[2iv_h\ell_h\bigr]\,
+     \mathrm{d}\mu_{*,\epsilon}(k,h),
+\]
+with $L$ continuously differentiable of the expected profile and the other
+three terms of second order in the soft scale. Grant that decomposition and
+the structural statement, the Adler zero, and --- with the matching step and
+class membership --- the value all follow. Withhold it and each of those stays
+at \statusSketch{}.
+
+It is worth being precise about why this is the residue rather than one
+obstacle among many. The value half is no longer missing: the exact spin-$S$
+slope is proved, the matching hypothesis is proved with zero remainder on the
+separated-preparation subclass, and on that subclass the protocol datum has an
+exact scalar factorisation with a soft factor $(e^{ik}-1)$ and a quotient that
+extends continuously through zero. What the decomposition hypothesis would
+add is exactly the step from ``the datum factorises on this displayed
+subclass'' to ``the datum decomposes, on the general protocol class, into a
+descendant piece of the expected shape and remainders that do not matter''.
+Its components --- orthogonal-current, direct-contact and window-boundary
+bounds --- are named, and none of them is proved.
+
+There is a second, independent gap, in the memory corner rather than the soft
+corner, and it should not be conflated with the first: the two substantive
+relaxation clauses have no unconditional dynamical instance
+(\cref{sec:local-relaxation}). The finite-window theorem is untouched by it;
+only the infinite-volume law prints conditionally.
+
+\subsection{Open problems}
+
+The following are the campaign's live questions, in rough order of how much
+each would change the picture.
+
+\begin{enumerate}
+  \item \textbf{The exhaustive decomposition of the protocol datum.} Prove the
+    hypothesis above, or find the class on which it fails. This is the single
+    step between a subclass result and a general one-dimensional soft limit
+    law.
+  \item \textbf{An unconditional dynamical instance of local relaxation.}
+    Establish the convergence and tightness clauses for the easy-axis kink
+    model. Every ingredient that has been proved so far --- the free first
+    clause, the domain-wall number bound, the no-runaway sufficiency lemma ---
+    approaches this without reaching it, and the wall-number-versus-wall-length
+    distinction is exactly what stands in the way.
+  \item \textbf{Exhibit a member of the no-contact class.} The class is
+    currently uninhabited as far as anyone has shown, at every density. Two
+    rows --- the conditional matched value and the amputation conjecture ---
+    predict what the class constant of any member must be, so both are
+    constraints on future work rather than present evidence. Until a member
+    exists, the universality statement is a theorem about a possibly empty
+    class, and the labbook says so.
+  \item \textbf{The amputation constant.} The exact leg-conversion computation
+    supplies only the square root of the order-parameter density factor. The
+    amputation conjecture therefore requires a second factor from a mechanism
+    that is \emph{not} a leg normalisation; any proposed proof must be checked
+    against that computation or it double-counts the leg.
+  \item \textbf{Full-chain asymptotic completeness for the kink model.} The
+    Fano reduction and the soft zero are proved for the projected component
+    only; the leakage off that component is measured but not controlled.
+  \item \textbf{Thermodynamic uniqueness and flatness of the kink family.}
+    One zero-energy kink per regularised-charge sector, with no recoil. This
+    is also what the memory-implies-symmetry edge needs.
+  \item \textbf{The higher-charge factor in the ``two 2s'' conjecture.} The
+    unit-charge slope half is now a theorem at every site spin and the
+    finite-volume falsifier for charge two was survived; the general charge
+    factor, and the charge-two kink-memory test, are open.
+  \item \textbf{The dynamical SPT instance.} A nonzero edge-changing
+    reflection amplitude on an open interval of momenta, which would turn the
+    rigidity dichotomy into an observable event.
+  \item \textbf{Nonvacuity in two dimensions.} A nonzero model instance of the
+    planar relaxation clauses, and a microscopic pure-endpoint instantiation
+    of the categorical selection theorem beyond the toric code.
+  \item \textbf{The unrun numerical check.} Excitation-ansatz magnon
+    amplitudes against the Bethe amplitude as the momentum goes to zero
+    (\cref{sec:numerics}).
+\end{enumerate}
+
+\subsection{The north star, and how far it stands}
+
+The campaign's stated target is a theorem, a verification against exact
+solvable-model data, and tensor-network numerics on a serious model
+illustrating the memory effect.
+
+The theorem exists, but it is not the theorem the brief expected. The brief
+expected a soft theorem whose zero-frequency limit would quantize the memory.
+What was proved instead is that the memory is quantized \emph{first}, by
+symmetry alone, with no scattering theory anywhere in the argument --- and
+that the soft theorem's job is reduced to supplying the number that multiplies
+an already-integral ledger. That inversion of the burden of proof is the
+campaign's result, and it is a stronger statement than the one it replaces,
+because the quantization half now stands on an unconditional finite-window
+theorem instead of on an unproved factorisation.
+
+The verification exists. The exact spin-$S$ two-magnon slope is proved
+independently of integrability and agrees with the exact solvable-model data
+where those data exist; the oracle facts were recomputed rather than quoted;
+and the pre-registered falsifiers --- including the charge-two slope test at
+finite volume --- were survived at their declared criteria. Survival is
+recorded here as evidence, never as proof.
+
+The numerics stand partly built (\cref{sec:numerics}). Ground states of the
+non-integrable running model have been computed across its phases with a
+calibration point, giving the raw data for the rigidity dichotomy. The kink
+transport measurement that would show the quantized memory directly on that
+model was interrupted mid-flight and its partial results are explicitly not
+trusted; it is the first item to be redone.
+
+So: two corners of the triangle carry proved theorems, the third carries
+proved theorems on a displayed subclass and one named hypothesis short of the
+general statement, and all three edges remain below the level of theorems ---
+one conjecture and two sketches, each with its missing step named rather than
+gestured at. That is a smaller claim than ``the infrared triangle is a theorem
+on the lattice''. It is also, unlike that claim, true.

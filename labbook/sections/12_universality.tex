@@ -1,0 +1,743 @@
+% SHARD-ID: LB-12-UNIVERSALITY
+% SHARD-TITLE: Universality: the class, the refutation, and the two candidate constants
+% SHARD-SOURCES: definitions.md D24 (a)--(e) and D25;
+%   theory/ml5-universality.md ⟨1⟩1--⟨1⟩6;
+%   theory/verdicts/d24d3-adjudication-r5.md §5 (merged text of record for
+%   D24(d)), §§1--2 (the finite-N leg ratio and the AMP fence),
+%   d24d3-adjudication-r3.md §2 and ⟨1⟩4, d24d3-adjudication-r4.md §1.3;
+%   theory/verdicts/corpus-r2.md (ML5-A/ML5-B promotion);
+%   claims/CLAIMS.md rows ML5, ML5-A, ML5-B, D24-VAL, AMP, S-general
+% SHARD-CLAIMS: ML5, ML5-A, ML5-B, D24-VAL, AMP, S-general; D24, D25
+
+\section{Universality: the class, the refutation, and the two candidate constants}
+\label{sec:universality}
+
+\subsection{What ``universal'' could have meant, and how the naive version died}
+
+In the continuum, the appeal of a soft theorem is that the soft emission
+factorises off the hard process with a multiplier that knows nothing about the
+hard process --- only the charges and velocities of the external legs. That is
+what makes it a theorem about symmetry rather than about a model. The natural
+lattice ambition was the same: a multiplier $\softS$, depending on the
+asymptotic leg data alone, such that adding one soft magnon of momentum $k_s$
+to an $n$-leg amplitude multiplies it by $\softS$ up to a controlled
+remainder.
+
+Stated over unrestricted local or quasi-local sources, that ambition is
+false. There is an explicit four-site source on the ferromagnet whose
+one-hard amplitude is completely insensitive to a deformation parameter while
+its hard-plus-soft amplitude is not; the deformation moves the soft first jet
+by an $h$-dependent amount that no leg-data multiplier can reproduce. The
+refutation is \cref{ref:ml5-unrestricted}, and it is not a technicality: it
+says that the soft first jet on the lattice is \emph{not} a function of the
+asymptotic data alone.
+
+What survives is a three-part structure, and the rest of this section is that
+structure.
+
+\begin{itemize}
+\item A precisely delimited \emph{class} of sources --- the Ward-covariant
+  no-contact class of \cref{def:no-contact-class} --- inside which
+  factorisation can be asked about at all. The class is defined by five
+  conditions, of which two (exhaustiveness of the LSZ decomposition, and
+  absence of a direct soft contact) are exactly the content that the
+  finite-volume Ward identity does not supply.
+\item An exact \emph{criterion} for factorisation on any linear source class
+  (\cref{thm:ml5-a}), which is a genuine equivalence and is agnostic about the
+  value of the constant, and a conditional \emph{shape} theorem on the class
+  (\cref{thm:ml5-b}), whose conclusion contains a class constant and no number.
+\item Two candidate readings of that constant, carried side by side and
+  neither adopted: a conditional matched value that is a theorem as an
+  implication with unproved antecedents (\cref{thm:d24-val}), and a
+  bridge-free amputation conjecture with a sharp quantitative fence against it
+  (\cref{conj:amp}).
+\end{itemize}
+
+One piece of history has to be told honestly, because it explains why the
+definition below has an unusual shape. The class was originally frozen with a
+clause that \emph{stipulated} the amputation constant to be $1$. Under the
+corpus's identification of the class's soft jet with the two-body physical
+phase jet, that stipulation forces a soft slope of $2$ at every tail density
+--- which contradicts the proved spin-$S$ law $1/S$ of \cref{sec:two-magnon} at
+every density except $\rho=1/2$. The frozen class was therefore provably
+\emph{empty} away from $\rho=1/2$: the definition had accidentally been made
+inconsistent rather than merely unpopulated. The repair was to split the
+offending clause into a hypothesis about the shape of the external flux factor
+and a separate, honest statement that its constant is open. That split is the
+$(3a)/(3b)$ structure below, and everything downstream is written to keep the
+constant visible as a name rather than a number.
+
+\subsection{The definition of the class}
+
+\begin{definition}[Hard sources]
+\label{def:hard-sources}
+A \emph{local source} is an element of the local algebra $\alg_{\rm loc}$. An
+\emph{exponentially quasi-local source} is a norm-convergent sum
+$O=\sum_XO_X$ with
+\begin{equation}
+  \norm{O}_\mu:=\sum_X e^{\mu\,\mathrm{diam}(X)}\norm{O_X}<\infty
+  \label{eq:quasilocal-norm}
+\end{equation}
+for some $\mu>0$. Local sources have finite $\norm{\cdot}_\mu$.
+\end{definition}
+
+\begin{definition}[Amputated amplitudes, and the normalisation they are measured in]
+\label{def:amputation-convention}
+For a source $O$, write $M_1^O(h)$ for its amputated one-hard amplitude and
+$M_2^O(k,h)$ for its connected hard-plus-soft amplitude in the physical
+channel. Both are linear in $O$, and both are measured as multipliers in
+$L^2(I,dh)$ for a fixed hard window $I=[a,b]\Subset(0,\pi)$. Remainders are
+measured as
+$\norm{R_{S2}(k)}_{L^2(I)}\le C_I\abs{k}^2\norm{M_1^O}_{L^2(I)}$, or, for the
+rescaled packet $f_\epsilon(k)=\epsilon^{-1/2}f(k/\epsilon)$, as $O(\epsilon^2)$
+in the product packet norm. Plane waves are generalised kernels inside
+compactly supported smooth packets.
+
+\emph{Amputation and leg normalisation.} Both amplitudes are taken against
+asymptotic one-magnon kernels normalised by $\braket{k|k'}=2\pi\delta(k-k')$,
+inside the campaign's packet discipline. That kernel is \emph{constructed} in
+the fully polarised spin-$S$ register, where it is
+$\ket{k}=\sum_xe^{ikx}\ket{x}$, an exact one-magnon eigenvector of $H_S$; in
+an exact-band register it is the target of a separate sketch row, and outside
+those registers its existence is open. Every statement about the class
+constant of clause (3b) below is therefore scoped to a register where the
+kernel exists. The \emph{same} amputation is applied to the \emph{same} hard
+leg in both amplitudes, and the soft leg enters $M_2^O$ as \emph{one
+additional $\delta$-normalised asymptotic magnon of momentum $k$ carrying unit
+leg weight} --- not as a charge-created or current-created vector. This is
+strictly narrower than the analytic amputation admitted by the fixed-volume
+Ward reduction, which allows any bounded $C^1$ multiplier family: here every
+soft-leg envelope $\lambda(k)$ must satisfy $\lambda(0)=1$.
+\end{definition}
+
+\begin{scope}[The convention is load-bearing, and it is only a convention]
+\label{scope:amputation-convention}
+A change of normalisation $M_1^O\mapsto c\,M_1^O$,
+$M_2^O(k,\cdot)\mapsto c'(k)M_2^O(k,\cdot)$ with $c,c'(k)\neq0$ --- necessarily
+independent of $O$, by linearity --- leaves clauses (1), (4), (5) of
+\cref{def:no-contact-class} invariant, because clause (1) is homogeneous in
+one amplitude while clauses (4) and (5) are two-amplitude bounds whose
+existentially quantified constant absorbs $c'/c$. Clause (2), whose residue is
+quoted against the charge-created soft leg, transforms as $c'/c$; the external
+flux factor and the amputation constant transform as
+$L(k,h)\mapsto(c'(k)/c)L(k,h)$ and $\aleg\mapsto(c'(0)/c)\aleg$. Fixing
+$c'(0)/c=1$ is exactly what pins $\aleg$ against these rescalings, and this
+definition supplies that fixing alone. Clause (2) is \emph{not} a second
+covariance anchor: read against the charge-created leg it is a
+cross-normalisation \emph{membership} condition on the source, tying the
+descendant term to $2iv_hM_1^O$, and it is that --- not a second fixing of the
+covariance freedom --- which makes $\aleg$ a number rather than a name. Without
+both, the assertions ``$\aleg=1$'' and ``$\aleg=1/Z_\rho$'' are statements
+about a convention and not about a model. What remains free does not move
+$\aleg$: rescaling the source; any hard-leg amputation convention applied
+identically in both amplitudes, which cancels in the clause-(3a) quotient; and
+any soft-leg envelope with $\lambda(0)=1$.
+
+Two consequences are used repeatedly below. \emph{(i)} In the fully polarised
+spin-$S$ ferromagnet the charge-created soft leg is \emph{not} this
+convention's soft leg: on normalised one-flip states
+$S^-_x\ket\Omega=\sqrt{Z_\rho}\ket{x}$, hence exactly
+\begin{equation}
+  Q^-_k\ket\Omega=\sqrt{Z_\rho}\,\ket{k}
+  \label{eq:d24-leg-conversion}
+\end{equation}
+on the vacuum, the two legs coinciding only at $\rho=1/2$; on a one-hard-magnon
+descendant the same conversion holds per site only up to $O(1/(Z_\rho N))$,
+since $\norm{Q^-_q\ket h}^2=Z_\rho N-2$ exactly for $q\neq h$, becoming exactly
+$\sqrt{Z_\rho}$ in the LSZ limit. \emph{(ii)} Because clause (2)'s residue is
+quoted against the charge-created leg while the clause-(1) descendant summand
+is measured against this convention's asymptotic leg, a soft-leg normalisation
+argument \emph{alone} contributes exactly that conversion mismatch to $\aleg$
+--- $Z_\rho^{-1/2}$ in the LSZ limit and $(Z_\rho-2/N)^{-1/2}$ at finite $N$ on
+the descendant leg --- and not $Z_\rho^{-1}$. This is the fence on
+\cref{conj:amp}.
+\end{scope}
+
+\begin{definition}[The contact first jet]
+\label{def:contact-first-jet}
+With $\chi(h,k):=\sgn(v(h)-v(k))$ and $\aleg$ the soft-leg amputation constant
+of \cref{def:no-contact-class}(3b) below --- the forward reference is
+deliberate, since this quantity is \emph{by definition} the obstruction to the
+factorisation that the class predicts ---
+\begin{equation}
+  \mathfrak c_h(O):=\left.\partial_kM_2^O(k,h)\right|_{k=0}
+  -2i\,\aleg\,\chi(h,0)\,M_1^O(h).
+  \label{eq:contact-first-jet}
+\end{equation}
+\end{definition}
+
+\begin{definition}[The Ward-covariant no-contact class $\classSW(\rho)$]
+\label{def:no-contact-class}
+Fix a broken-symmetry tail density $\rho:=\omega_\alpha(S^z)>0$ and write
+$Z_\rho:=2\rho$ for the order-parameter density. (In an $\mathfrak{su}(2)$
+model with a fully polarised tail, $Z_\rho=\omega_\alpha([S^+_x,S^-_x])$ --- a
+special case, not a membership condition. Under the tail hypotheses and the
+integrality hypothesis of \cref{sec:memory-index}, together with the
+antisymmetric tail pair $\omega_\beta(S^z)=-\omega_\alpha(S^z)=-\rho$, one has
+$2\rho\in\Z$, so $Z_\rho$ is then a positive integer. The value $\rho=0$ is
+excluded: there is then no broken order parameter and no soft leg of this
+type. In the fully polarised spin-$S$ ferromagnet $\rho=S$.)
+
+Amplitudes below --- $M_1^O$, $M_2^O$, and the clause-(1) summand
+$E^O_{\rm desc}$ --- are in the normalisation of
+\cref{def:amputation-convention}; clause (2)'s residue display is quoted in
+the charge-created normalisation of the Ward reduction, as that clause states;
+clause (3b) is empty without \cref{def:amputation-convention}. The class
+$\classSW(\rho)$ consists of the sources satisfying all five of the following
+(clause 3 has two parts; the \emph{count} of conditions is deliberately
+unchanged).
+
+\emph{(1) Exhaustive normed LSZ decomposition.} In $L^2(I)$, $M_2^O$ is
+exactly the sum of the descendant external-leg term $E^O_{\rm desc}$, the
+orthogonal-current term, and the direct source/contact term named below; there
+is no additional reduced term, and the equality holds in the packet norm of
+\cref{def:amputation-convention}.
+
+\emph{(2) Ward covariance.} The descendant current residue --- \textbf{quoted
+against the charge-created soft leg $Q_0\ket h$, and not against the
+asymptotic leg} --- factorises as $2iv_hM_1^O(h)$. The two legs differ by
+$\sqrt{Z_\rho}$ \emph{in the LSZ limit}; at finite $N$ the descendant leg
+carries $\sqrt{Z_\rho-2/N}$ instead, since $\norm{Q^-_q\ket h}^2=Z_\rho N-2$
+exactly for $q\neq h$. That mismatch is part of what clause (3b)'s constant
+records: against the asymptotic leg the same residue reads
+$2iv_hM_1^O(h)/\sqrt{Z_\rho}$ in that limit, the two readings coinciding only
+at $\rho=1/2$. The clause is \emph{consistent} at every density: its left-hand
+side is exactly $Z_\rho$-linear on the fully polarised spin-$S$ tail, with
+$\bra hQ_0^\dagger J^-_0\ket h=2iv_S(h)$ and $v_S(h)=Z_\rho J\sin h$, the
+frozen reconstruction shard being its $Z_\rho=1$ reading. Whether a given $O$
+also makes the right-hand side match is a membership question, which no
+computation decides. The alternative reading, against the asymptotic leg,
+would be unsatisfiable by an $O$-independent factor at every $\rho\neq1/2$ ---
+which is why this normalisation and not that one.
+
+\emph{(3) Kinematic LSZ normalisation}, in two parts.
+
+\emph{(3a) Hypothesis.} The external flux factor
+\begin{equation}
+  L(k,h):=\frac{E^O_{\rm desc}(k,h)}
+                {(e^{ik}-1)\,2iv_h\,M_1^O(h)}
+  \label{eq:external-flux-factor}
+\end{equation}
+is well defined by clauses (1)--(2) for $k\neq0$ at every $h$ with
+$M_1^O(h)\neq0$; the hypothesis is that it extends to a
+\emph{process-independent}, uniformly $C^1$ function on
+$\{\abs k\le\epsilon\}\times I$, and $L(0,h)$ denotes that extension's value at
+$k=0$.
+
+\emph{(3b) The profile of $L(0,h)$, and the open amputation constant.} The
+quantity $v_h\,L(0,h)/\chi(h,0)$ does not depend on $h$ on $I$; equivalently
+\begin{equation}
+  L(0,h)=\aleg(\rho)\cdot\frac{-i\,\chi(h,0)}{v_h}
+  \label{eq:L-profile}
+\end{equation}
+for some nonzero constant $\aleg(\rho)$. \textbf{What this clause asserts is
+that $h$-profile --- the reciprocal LSZ energy denominator
+$[\omega(h+k)-\omega(h)]^{-1}k$, the campaign's fixed provenance for $L$ ---
+and no value.} By (3a), $L$ is a single class-level function, so $\aleg(\rho)$
+is a datum of the class $\classSW(\rho)$ and not of any individual source; it
+is defined only when that class is nonempty, and only in a register where the
+asymptotic one-magnon kernel of \cref{def:amputation-convention} is
+constructed. \textbf{This definition fixes no value of $\aleg(\rho)$ at any
+density, $\rho=1/2$ included.}
+
+\emph{(4) Reduced-channel regularity.} The orthogonal current channel is
+$O_{L^2(I)}(k^2)$ in the stated target limit, with the relative norm bound of
+\cref{def:amputation-convention}. The fixed-volume Ward reduction does not by
+itself supply a volume-uniform bound.
+
+\emph{(5) No direct soft contact.} The amputated source commutator/contact
+term is bounded by $C_I\abs k^2\norm{M_1^O}_{L^2(I)}$.
+\end{definition}
+
+\begin{scope}[Nonemptiness, the retired stipulation, and what the repair did not buy]
+\label{scope:no-contact-class}
+Clauses (1) and (5) are the extra LSZ and contact content beyond the
+fixed-volume Ward reduction, and by \cref{def:contact-first-jet} the
+zero-intercept and zero-first-jet conditions are necessary, not cosmetic.
+Symmetry-generated external-leg insertions are the intended seed, but
+\textbf{no nontrivial microscopic class has been proved to satisfy all five
+conditions}; nonemptiness in the target scattering register is future work.
+
+As frozen, clause (3) stipulated $\aleg=1$. Under the campaign's
+jet-identification bridge --- the identification of this definition's soft
+multiplier jet with the two-body physical phase jet, an \emph{unproved} bridge
+carried as antecedent $(\alpha)$ in \cref{thm:d24-val} --- that stipulation
+contradicts the proved spin-$S$ two-body slope at every $\rho\neq1/2$, so the
+frozen class was provably empty there. The stipulation is withdrawn. Two
+candidate readings are carried and neither is part of this definition: the
+conditional matched value $\aleg(\rho)=1/Z_\rho$ of \cref{thm:d24-val}, and
+the bridge-free amputation conjecture of \cref{conj:amp}. The fence on the
+latter is \cref{scope:amputation-convention}(ii): a leg normalisation alone
+supplies $Z_\rho^{-1/2}$, not $Z_\rho^{-1}$.
+
+The repair removed a \emph{proof} that $\classSW(\rho)$ is empty for
+$\rho\neq1/2$; it supplies no member and fixes no value, so nonemptiness stays
+open at \emph{every} $\rho$. At $\rho=1/2$ the two candidate readings and the
+retired stipulation all coincide at $1$, so displays elsewhere in the corpus
+of the soft coefficient $2$ remain numerically consistent with this clause ---
+but those displays rest on the contact/oracle route of \cref{sec:two-magnon},
+not on this clause.
+\end{scope}
+
+\begin{scope}[The counterexamples that shape the definition]
+\label{scope:counterexamples}
+Two explicit local sources on four consecutive sites are recorded as part of
+the definition, because each rules out a simpler alternative.
+
+The \emph{process-dependence} source is
+\begin{equation}
+  D:=S^-_0S^-_1-S^-_1S^-_2+S^-_2S^-_3-S^-_0S^-_3,
+  \qquad O_\eta:=S^-_0+\eta D,
+  \label{eq:o-eta}
+\end{equation}
+discussed as \cref{ref:ml5-unrestricted} below.
+
+The \emph{intercept} source is
+\begin{equation}
+  V_{\rm int}:=\tfrac94S^-_0S^-_2-\tfrac32S^-_0S^-_3-\tfrac32S^-_1S^-_2
+               +S^-_1S^-_3 .
+  \label{eq:v-int}
+\end{equation}
+It is local and has $M_1^{V_{\rm int}}=0$ and
+$\partial_kM_2^{V_{\rm int}}(0,h)=0$, but
+\begin{equation}
+  M_2^{V_{\rm int}}(0,h)=\tfrac34-\tfrac12e^{-ih}+\tfrac34e^{-2ih}
+                          -\tfrac12e^{-3ih},
+  \label{eq:v-int-intercept}
+\end{equation}
+which is not identically zero. A zero first jet therefore does \emph{not}
+replace the zero-intercept condition of \cref{def:contact-first-jet}: this is
+the in-model red guard against the superseded first-jet-only criterion.
+\end{scope}
+
+\provenance{D24 (a)--(e)}{%
+  \texttt{definitions.md} D24, promoted at the 2026-08-26 freeze from
+  \texttt{theory/ml5-universality.md} steps (1.1)--(1.3) and repaired
+  thereafter; \texttt{theory/verdicts/d24d3-adjudication-r5.md} §5 is the
+  merged text of record for clause (d), superseding r4 §5 where marked
+  (clause 2 scope, clause 3b hypotheses); the finite-$N$ leg ratio is r5 §1.1
+  and the two-hypothesis fence is r5 §2}{%
+  \texttt{theory/checks/d24d3\_normalization\_check.py} named computations
+  D24N-C3 (the residue in both normalisations and both scopes) and D24N-C8
+  (the exact leg-conversion constant, vacuum and descendant legs);
+  \texttt{theory/checks/ml4\_check.py} named computation ML5-I1 (the intercept
+  counterexample)}{%
+  \texttt{theory/verdicts/d24d3-adjudication-r3.md},
+  \texttt{d24d3-adjudication-r4.md},
+  \texttt{d24d3-adjudication-r5.md}}
+
+\begin{definition}[The corner-C soft multiplier]
+\label{def:soft-multiplier}
+In the $n$-leg conjecture of \cref{conj:s-general}, $\softS(k_s;\{q_i,v_i\})$
+denotes the proposed soft multiplier in
+\begin{equation}
+  M_{n+1}(k_s;p_1,\dots,p_n)=\softS(k_s;\{q_i,v_i\})\,M_n(p_1,\dots,p_n)
+  +R_{S2}(k_s).
+  \label{eq:n-leg-factorisation}
+\end{equation}
+Its arguments are the asymptotic leg charges and velocities and, for kink
+legs, the vacuum-pair and collective-coordinate data. Here \emph{universal}
+means independent of the microscopic hard tensors within the Ward-covariant
+no-contact class $\classSW$ of \cref{def:no-contact-class}. The conjectured
+behaviour is $\softS\to0$, with leading order linear in $k_s$ and
+$R_{S2}=o(\softS)$ in the packet norm of \cref{def:amputation-convention}.
+This definition names the object and does not strengthen its status:
+existence, factorisation, and universality all remain the conjecture
+\cref{conj:s-general}. The symbol is distinct from the symmetry-protected
+endpoint operator and from the Bethe amplitudes $S_{12}$, $S_{21}$,
+$S_{\rm phys}$ of \cref{sec:two-magnon}.
+\end{definition}
+
+\provenance{D25}{\texttt{definitions.md} D25}{---}{---}
+
+\subsection{The refutation}
+
+\begin{refutedclaim}[Universality over unrestricted local sources]
+\label{ref:ml5-unrestricted}
+\statusRefuted
+
+\emph{Withdrawn statement.} For every local or exponentially quasi-local
+source $O$, the hard-plus-soft amplitude factorises as
+$M_2^O(k,h)=2i\aleg\chi\,k\,M_1^O(h)+O_{L^2(I)}(k^2)$, with a multiplier
+depending only on the asymptotic leg data.
+
+\emph{The mechanism that kills it.} Take the four-site family $O_\eta$ of
+\cref{eq:o-eta}. Every $O_\eta$ is local, and it is deliberately not a single
+$SU(2)$ tensor source: it mixes one- and two-lowering components. The
+one-hard amplitude is independent of $\eta$, while
+\begin{equation}
+  M_2^{O_\eta}(k,h)=\eta\bigl\{\,2i(1-e^{-3ih})\,k+O_I(k^2)\,\bigr\},
+  \qquad
+  \mathfrak c_h(\eta D)=2i\eta(1-e^{-3ih})\neq0
+  \label{eq:o-eta-obstruction}
+\end{equation}
+on any hard packet supported where $1-e^{-3ih}\neq0$. The contact first jet
+therefore fails to vanish while the one-hard amplitude is unchanged, so no
+multiplier built from the asymptotic leg data can reproduce
+$\partial_kM_2$. Unrestricted universality is false.
+
+\emph{What survives.} The equivalence \cref{thm:ml5-a}, which converts the
+question into two testable conditions on any linear source class, and the
+conditional shape theorem \cref{thm:ml5-b} on the restricted class
+$\classSW(\rho)$. This negative row asserts nothing about the repaired
+conditional implication.
+\end{refutedclaim}
+
+\begin{scope}[The counterexamples are blind to the constant]
+\label{scope:counterexamples-blind}
+Both sources of \cref{scope:counterexamples} have $M_1^O=0$, so the
+$\aleg$-dependent term in \cref{eq:contact-first-jet} vanishes identically for
+every value of $\aleg$. The refutation and its checker are therefore
+untouched by the clause-(3b) repair; neither needed an edit when the
+stipulation $\aleg=1$ was withdrawn.
+\end{scope}
+
+\provenance{ML5}{\texttt{theory/ml5-universality.md} step (1.4)}{%
+  \texttt{theory/checks/ml4\_check.py}, the $O_\eta$ obstruction: soft zero
+  $3.14\times10^{-16}$, coefficient error $9.96\times10^{-6}$}{%
+  \texttt{theory/verdicts/corpus-r2.md}}
+
+\subsection{The repaired criterion}
+
+\begin{theorem}[Intercept-and-first-jet criterion for factorisation]
+\label{thm:ml5-a}
+\statusProved
+
+Let $\mathcal S$ be a linear source class in the norm of
+\cref{def:hard-sources} such that for every $O\in\mathcal S$ one has
+$M_1^O\in L^2(I)$ and $M_2^O(k,\cdot)$ is $C^2$ for $\abs k\le\epsilon$ as an
+$L^2(I)$-valued map, and put
+\begin{equation}
+  K_O(\epsilon):=\tfrac12\sup_{\abs q\le\epsilon}
+  \norm{\partial_q^2M_2^O(q,\cdot)}_{L^2(I)}<\infty.
+  \label{eq:KO}
+\end{equation}
+Then the factorisation
+\begin{equation}
+  M_2^O(k,h)=2i\,\aleg\,\chi\,k\,M_1^O(h)+O_{L^2(I)}(k^2)
+  \label{eq:factorisation}
+\end{equation}
+holds on $\mathcal S$ \emph{if and only if both}
+\begin{equation}
+  M_2^O(0,\cdot)=0
+  \qquad\text{and}\qquad
+  \mathfrak c_h(O)=0
+  \label{eq:iff-conditions}
+\end{equation}
+in $L^2(I)$ for every $O\in\mathcal S$. Under \cref{eq:iff-conditions} the
+remainder obeys the exact control
+\begin{equation}
+  \norm{M_2^O(k,\cdot)-2i\aleg\chi\,kM_1^O}_{L^2(I)}\le K_O(\epsilon)\abs k^2 .
+  \label{eq:taylor-control}
+\end{equation}
+On an affine class $O_0+\mathcal V$ both conditions must hold on every source
+difference $V\in\mathcal V$, and the base source must obey
+\cref{eq:factorisation} with the same stated norm control.
+\end{theorem}
+
+\begin{scope}[Two qualifications]
+\label{scope:ml5-a}
+First, the \emph{relative} bound used in \cref{def:amputation-convention}
+requires the additional uniform hypothesis
+$K_O(\epsilon)\le C_I\norm{M_1^O}_{L^2(I)}$ on the class; it does not follow
+from $C^2$ regularity alone. Second, and more importantly, \textbf{the
+criterion is constant-agnostic}: its proof evaluates at $k=0$ and
+differentiates once, and never uses the value of $\aleg$; only $\aleg\neq0$ is
+needed. The theorem is a criterion, not an assertion that any particular
+quasi-local source obeys it.
+\end{scope}
+
+\paragraph{Idea of proof.} Necessity: evaluate \cref{eq:factorisation} at
+$k=0$ to get the intercept condition, then differentiate at $k=0$ --- the
+$O(k^2)$ remainder has vanishing first derivative --- to get
+$\mathfrak c_h(O)=0$. Sufficiency: with both conditions, the Banach-space
+Taylor theorem with integral remainder gives \cref{eq:taylor-control} and
+hence \cref{eq:factorisation}. The affine statement follows because both
+amplitudes, and therefore both $M_2(0,\cdot)$ and $\mathfrak c_h$, are linear
+in the source.
+
+\provenance{ML5-A}{%
+  \texttt{theory/ml5-universality.md} step (1.2), necessity (2.1),
+  sufficiency (2.2), affine case (2.3); stated with the constant
+  $2i\aleg\chi$ since the clause-3 repair}{%
+  \texttt{theory/checks/ml4\_check.py} named computation ML5-I1 (nonzero
+  intercept with zero numerical first jet)}{%
+  \texttt{theory/verdicts/corpus-r2.md} (promotion adjudication);
+  \texttt{theory/verdicts/d24d3-adjudication-r3.md} (constant-agnostic
+  restatement)}
+
+\subsection{The conditional shape theorem}
+
+\begin{theorem}[Factorisation shape on the no-contact class]
+\label{thm:ml5-b}
+\statusProvedConditional
+
+Let $\classSW(\rho)$ be a source class satisfying all five conditions of
+\cref{def:no-contact-class} --- including, as an explicit hypothesis, the
+exhaustive normed LSZ decomposition. Then every $O\in\classSW(\rho)$ obeys
+\begin{equation}
+  M_2^O(k,h)=2i\,\aleg(\rho)\,\chi\,k\,M_1^O(h)+O_{L^2(I)}(k^2),
+  \label{eq:ml5b-conclusion}
+\end{equation}
+where $\aleg(\rho)$ is the soft-leg amputation constant of clause (3b). The
+coefficient is the signed $2\aleg$-site Wigner displacement, and it is
+independent of the hard process within the class.
+\end{theorem}
+
+\begin{scope}[A shape with a class constant, not a number]
+\label{scope:ml5-b}
+\textbf{The conclusion \cref{eq:ml5b-conclusion} contains no number at any
+density, $\rho=1/2$ included.} Clause (3b) fixes no value of $\aleg$, so this
+theorem predicts a factorisation \emph{shape} --- linear in $k$, proportional
+to $M_1^O$, with a class constant --- and not a coefficient. The number $2$ was
+never a consequence of this theorem; it was a consequence of this theorem
+\emph{plus} the frozen clause-3 stipulation $\aleg=1$, which is withdrawn.
+Corpus displays of the soft coefficient $2$ rest on the contact/oracle route
+of \cref{sec:two-magnon}, which does not use \cref{def:no-contact-class} at
+all. The ``two-site'' Wigner reading is the $\aleg=1$, $\rho=1/2$ register.
+
+Hypotheses (1), (4), (5) are explicit assumptions and not consequences of the
+finite-volume Ward identity: the velocity-domain condition fixes the sign
+$\chi$ and the external flux orientation, but it does not suppress the
+orthogonal current and does not constrain a direct contact source. What
+remains for future work is a nonempty class containing more than
+symmetry-generated external-leg insertions; one needs an LSZ Ward identity for
+the quasi-local source showing that its amputated commutator has zero first
+jet, not merely that it is regular. For two hard magnons one additionally
+needs the two-hard Ward reduction, and a sum of external Wigner displacements
+is conditional on the absence of degenerate three-body channels. Nonemptiness
+and microscopic membership remain open at every $\rho$.
+
+On the promotion history, one sentence: the clause-3 split reparametrised this
+theorem rather than reopening it --- the proof is unchanged apart from carrying
+$\aleg$ as a nonzero constant factor, the relevant step needing only
+$\aleg\neq0$ and $v_h$ bounded below on $I$ --- so the earlier corpus promotion
+survives verbatim with the constant carried.
+\end{scope}
+
+\paragraph{Idea of proof.} By clause (2) the descendant external-leg
+contribution is $(e^{ik}-1)L(k,h)\,[2iv_hM_1^O(h)]$. Expanding
+$e^{ik}-1=ik+O(k^2)$ and, by clauses (3a)--(3b),
+$L(k,h)=\aleg(-i\chi/v_h)+O_I(k)$, and using that $v_h$ is bounded away from
+zero on the compact window and that $\aleg\neq0$, this equals
+$2i\aleg\chi\,kM_1^O+O_{L^2(I)}(k^2)$. By clauses (4) and (5) the orthogonal
+current and direct source terms are each $O(k^2)$, and by clause (1) these are
+\emph{all} the remaining terms. Adding gives \cref{eq:ml5b-conclusion}, whose
+phase slope is $2\aleg\chi$.
+
+\provenance{ML5-B}{%
+  \texttt{theory/ml5-universality.md} step (1.3), descendant leg (2.1),
+  exhaustive remainder (2.2), sum (2.3); re-scoped at the clause-3 repair,
+  \texttt{theory/verdicts/d24d3-adjudication-r3.md};
+  superseded in part by \texttt{d24d3-adjudication-r4.md} §0.2 and
+  \texttt{d24d3-adjudication-r5.md} §0.2, with r5 §5 the merged text of
+  record}{%
+  \texttt{theory/checks/ml4\_check.py} (local obstructions only, and blind to
+  $\aleg$ since both counterexamples have $M_1^O=0$);
+  \texttt{theory/checks/d24d3\_normalization\_check.py} D24N-C1--C3 test the
+  kinematics of the conclusion, not its constant}{%
+  \texttt{theory/verdicts/corpus-r2.md} (promotion as a conditional
+  implication; the r3 annotation records that the certified multiplication
+  survives verbatim with $\aleg$ carried)}
+
+\subsection{The two candidate constants}
+
+The shape theorem leaves exactly one number undetermined. Two independent
+routes to it are carried side by side. Neither is adopted, and the difference
+between them is precisely one unproved bridge.
+
+\begin{theorem}[Conditional matched value of the amputation constant]
+\label{thm:d24-val}
+\statusProvedConditional
+
+Work in the normalisation of \cref{def:amputation-convention}, and assume:
+
+$(\alpha)$ \emph{the jet-identification bridge} --- the soft multiplier jet of
+\cref{def:no-contact-class} equals the two-body physical phase jet of
+\cref{sec:two-magnon} (this is the corpus identification, and it is
+\emph{not} a proved statement); and
+
+$(\beta_S)$ \emph{class membership} --- existence of a source
+$O\in\classSW(\rho)|_{\rho=S}$ with $M_1^O\neq0$ in the fully polarised
+spin-$S$ register. (The notation $\classSW(\rho)|_{\rho=S}$, rather than
+$\classSW(S)$, keeps visible that the density here is the tail density of
+\cref{def:no-contact-class} and not a spin label, and in particular not the
+file-local double-occupancy coefficient of the two-magnon shard.)
+
+Then, for each such $S$ separately,
+\begin{equation}
+  \aleg(S)=\frac{1}{2S}=\frac{1}{Z_\rho},
+  \qquad\text{i.e.}\qquad
+  L(0,h)=\frac{-i\chi}{2\rho\,v_h},
+  \qquad\text{with shape-theorem jet } \frac{\chi}{\rho},
+  \label{eq:d24-val}
+\end{equation}
+at $S\in\{1/2,1,3/2,2\}$. Within the one-parameter family
+$\aleg=Z_\rho^{-p}$, the exact law
+\begin{equation}
+  (2S)^p=2S
+  \label{eq:power-law}
+\end{equation}
+forces $p=1$ at any single $2S\neq1$.
+\end{theorem}
+
+\begin{scope}[The implication is a theorem; its antecedents are not]
+\label{scope:d24-val}
+This row is currently \textsc{vacuous-or-unknown}, and that qualifier is
+content, not modesty. Antecedent $(\beta_S)$ is open at every $S$ --- no member
+of the class has ever been exhibited --- and antecedent $(\alpha)$ is unproved.
+The row therefore \emph{constrains future work} --- any member ever exhibited
+must have this value --- rather than supplying evidence now. It cannot be
+upgraded past that reading until a member is exhibited or the conjecture
+\cref{conj:amp} closes.
+
+Two further cautions. The point $S=1/2$ is degenerate in
+\cref{eq:power-law}, and the four densities at which the row is stated are
+four points of one analytic curve, not four independent measurements.
+Extension to non-half-integer $\rho$ is hypothesis, not consequence.
+\end{scope}
+
+\paragraph{Idea of proof.} Under $(\beta_S)$ the class constant is defined and
+the shape theorem \cref{thm:ml5-b} applies, giving a soft phase jet
+$2\aleg(\rho)\chi$. Under $(\alpha)$ that jet is the two-body physical phase
+jet, which the proved spin-$S$ two-body result of \cref{sec:two-magnon} fixes
+at $\chi/S$. Equating gives $2\aleg(S)=1/S$, i.e. \cref{eq:d24-val}, since
+$Z_\rho=2\rho=2S$. The power law \cref{eq:power-law} is then the observation
+that $Z_\rho^{-p}=Z_\rho^{-1}$ at a single density with $Z_\rho\neq1$ already
+forces the exponent.
+
+\provenance{D24-VAL}{%
+  \texttt{theory/verdicts/d24d3-adjudication-r3.md} §2, step (1.3); superseded
+  in part by \texttt{d24d3-adjudication-r4.md} §0.2 (preamble, clause-2
+  normalisation, invariance list, conversion step) and
+  \texttt{d24d3-adjudication-r5.md} §0.2 (clause-2 LSZ scope, clause-3b
+  hypotheses); r5 §5 is the merged text of record}{%
+  \texttt{theory/checks/d24d3\_normalization\_check.py} D24N-C6 tests the
+  numerical consistency of the \emph{consequent} against the ansatz-free
+  two-magnon slopes at a band derived from the data's own quoted error;
+  neither antecedent is tested by any gate, and no gate bears on $L$,
+  $E^O_{\rm desc}$, or membership}{%
+  \texttt{theory/verdicts/d24d3-adjudication-r3.md},
+  \texttt{d24d3-adjudication-r4.md},
+  \texttt{d24d3-adjudication-r5.md}}
+
+\begin{conjecture}[Soft-leg amputation supplies the order-parameter density]
+\label{conj:amp}
+\statusConjecture
+
+For every $\rho$ at which $\classSW(\rho)\neq\varnothing$ \emph{and} the
+asymptotic one-magnon kernel of \cref{def:amputation-convention} exists ---
+currently the fully polarised spin-$S$ family, kernel existence off that
+family being itself a conjecture --- charge-created soft-leg amputation
+contributes the per-site order-parameter density $Z_\rho=2\rho$ to the
+external flux, i.e.
+\begin{equation}
+  \aleg(\rho)=\frac{1}{Z_\rho}
+  \qquad\text{\emph{without} the jet-identification bridge }(\alpha).
+  \label{eq:amp}
+\end{equation}
+\end{conjecture}
+
+\begin{scope}[The quantitative fence: a leg normalisation gives only half the power]
+\label{scope:amp}
+Dropping the bridge $(\alpha)$ is precisely what distinguishes this conjecture
+from \cref{thm:d24-val}, so the two do not double-count in the argument DAG.
+Like that theorem, this row is currently \textsc{vacuous-or-unknown}:
+nonemptiness is open at every $\rho$, so it constrains future work --- any
+member ever exhibited must have this value if the conjecture holds --- rather
+than supplying evidence now. It is statable only relative to the normalisation
+of \cref{def:amputation-convention}: a change of normalisation rescales
+$\aleg$, so before that convention the statement had no truth value.
+
+The substantive fence is quantitative. The leg-conversion factor is computed
+\emph{exactly}: $Q^-_k\ket\Omega=\sqrt{Z_\rho}\ket k$ as in
+\cref{eq:d24-leg-conversion}, and this is the exact mismatch, in the LSZ limit,
+between clause (2)'s charge-created residue normalisation and the asymptotic
+leg of \cref{def:amputation-convention} (at finite $N$ the descendant-leg
+ratio is $\sqrt{Z_\rho-2/N}$). A leg normalisation \emph{alone} therefore
+supplies only $Z_\rho^{-1/2}$.
+
+That half-power value is refuted against the ansatz-free two-magnon data, but
+\textbf{only under two hypotheses, neither of them proved}: (i) the
+charge-created reading of the descendant term --- that the clause-(1)
+descendant summand is exactly the propagated charge-created leg with no
+further dressing --- and (ii) the jet-identification bridge $(\alpha)$, without
+which a two-magnon phase slope and an amputation constant are not comparable
+at all. Under both, the refutation is at the pre-registered band $0.08$, with
+deviations $0.42$, $0.73$, $1.00$ at $S=1,3/2,2$ and margins $5.2$--$12.5\times$;
+the relevant red mode's own message quotes the tighter runtime-derived band
+$0.0479$, and the refutation needs neither band to be tight.
+
+The conclusion is therefore sharp and useful: the conjecture can be true only
+if a second factor $Z_\rho^{-1/2}$ arises from a mechanism that is \emph{not}
+a leg normalisation. Any proposed proof must be checked against the exact leg
+conversion, or it double-counts the leg.
+\end{scope}
+
+\provenance{AMP}{---, originally named at
+  \texttt{theory/verdicts/soft-index-r1.md} F1(c)(i); the quantitative fence
+  is \texttt{theory/verdicts/d24d3-adjudication-r3.md} step (1.4), in one-step
+  form \texttt{d24d3-adjudication-r4.md} §1.3, with the two hypotheses shipped
+  explicitly per \texttt{d24d3-adjudication-r5.md} §2}{%
+  \texttt{theory/checks/d24d3\_normalization\_check.py} D24N-C8 (the
+  leg-conversion constant on the vacuum and descendant legs) and D24N-C6
+  \texttt{-{}-red-halfpower} (the leg-normalisation-only value refuted)}{%
+  \texttt{theory/verdicts/d24d3-adjudication-r3.md},
+  \texttt{d24d3-adjudication-r4.md},
+  \texttt{d24d3-adjudication-r5.md}}
+
+\subsection{The surviving \texorpdfstring{$n$}{n}-leg conjecture}
+
+\begin{conjecture}[Lattice soft theorem with $n$ hard legs]
+\label{conj:s-general}
+\statusConjecture
+
+With $\softS$ as in \cref{def:soft-multiplier}, the $(n+1)$-leg amplitude
+factorises as
+\begin{equation}
+  M_{n+1}(k_s)=\softS(k_s;\{q_i,v_i\})\,M_n+R_{S2},
+  \label{eq:s-general}
+\end{equation}
+with $\softS$ universal --- independent of the microscopic hard tensors --- only
+on the repaired class $\classSW$ of \cref{def:no-contact-class}. Over
+unrestricted local sources, universality is refuted
+(\cref{ref:ml5-unrestricted}).
+\end{conjecture}
+
+\begin{scope}[The live obligations]
+\label{scope:s-general}
+The conjecture is stated with its outstanding debts attached, and they are
+substantial: existence of the asymptotic one-magnon kernel outside the fully
+polarised register; the reduced-channel estimates; the packet-smeared
+infinite-volume Ward reduction, and the same reduction at two or more hard
+legs; the exhaustive LSZ decomposition; and microscopic membership in
+$\classSW$. Every one of these is a separate open item, and the last is the
+one that also blocks both candidate constants above. The status of the
+conjecture within the wider argument, including how it interacts with the
+memory and asymptotic-symmetry corners, is summarised in
+\cref{sec:triangle-status}; the negative results that bound the search space
+are collected in \cref{sec:negative-results}.
+\end{scope}
+
+\provenance{S-general}{---, statement carried in \texttt{claims/CLAIMS.md};
+  definition in \texttt{definitions.md} D25; depends on the two-body row of
+  \cref{sec:two-magnon} and on \cref{thm:ml5-b}}{---}{---}
+
+\subsection{Reading of the section}
+
+The honest summary is short. Universality in the naive sense is false on the
+lattice, and the counterexample is explicit and checked. What replaces it is a
+criterion that is an exact equivalence, and a conditional theorem that
+delivers a factorisation shape on a class defined by five conditions --- two of
+which encode exactly the content the Ward identity does not give. The single
+constant in that shape is open. Two candidate values for it are carried, one a
+theorem with unproved antecedents and one a conjecture with a sharp
+quantitative fence, and both are worth precisely what their antecedents are
+worth: they tell us what any future class member must satisfy, and nothing
+about whether such a member exists.
+
+The one place in the campaign where a constant of exactly this profile has
+been \emph{derived} rather than assumed is the separated-preparation class of
+\cref{sec:soft-index}, where the reduced multiplier is proved to extend with
+value $-i\chi/(2Sv_h)$. That is the same profile with the same coefficient ---
+and, as recorded there, that agreement is not yet an identification.

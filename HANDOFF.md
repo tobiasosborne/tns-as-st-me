@@ -2,10 +2,31 @@
 
 # HANDOFF — live state
 
-Updated: 2026-08-29, end of session 7 (the PRD session). Read order gate:
+Updated: 2026-08-30, session 9 (the labbook session). Read order gate:
 CLAUDE.md → **PRD.md (the process constitution — where it conflicts with
 older habits recorded here or anywhere, PRD WINS)** →
 HANDOFF_MPS_SOFT_THEOREM.md → this file → paper/skeleton.md.
+
+## Session 9 — the labbook (TJO directive 2026-08-30)
+
+TJO rejected acronym-soup reporting. **`labbook/` now exists and is LAW
+(L11):** a sharded LaTeX labbook (18 shards, 202 pp, compiles clean) that
+restates ALL definitions D1–D31 in full, presents every CLAIMS row under a
+descriptive human name with status/scope/provenance, glosses every campaign
+identifier in a 170-entry dictionary shard, includes a negative-results
+chapter, and a numerics chapter with 13 matplotlib figures regenerated from
+`numerics/results/*.json` by `labbook/figures/make_figures.py` plus prose
+(never verbatim) descriptions of the Julia codes. Style contract:
+`labbook/WRITING-GUIDE.md`. **Lockstep gate: `scripts/check-labbook.sh`**
+(claim-id/D-number coverage + verbatim ban) runs at session close; any
+commit touching CLAIMS.md / definitions.md / numerics results must update
+the owning shard in the same commit. Built by an 11-agent Opus wave;
+tracked as tns-27m. Incidental source fixes: stale CONJECTURE gloss on
+M-INDEX-LA-folium inside the ACE-LD-eps row corrected (owning row is the
+status of record); sharper tns-kng diagnosis recorded on the bead (the
+NaN is the readout-window guard refusing an empty sample set after edge
+leak 5.0e-3 > 1e-3 tolerance; real defects = exit-0 write + missing
+finiteness gate).
 
 ## Session 7 — PRD, the general-G swarm, the 2+1 wave, numerics
 

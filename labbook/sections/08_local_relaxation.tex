@@ -1,0 +1,1225 @@
+% SHARD-ID: LB-08-LOCAL-RELAXATION
+% SHARD-TITLE: Local relaxation, escape obstructions, and kink--magnon wave operators
+% SHARD-SOURCES: theory/ace-ld.md; theory/lr-d16.md; theory/ansatz-scattering.md;
+%   definitions.md D28 (and, recalled only, D13, D17, D18, D26, D27);
+%   claims/CLAIMS.md rows LD-ID, ACE-LD-eps, ACE-LD-sharp, ACE-LD-abs,
+%   LR-D16-EDW, LR-D16-NR, ACE-LD-obst-prime, M-ESC-NR, AC-EX, AD3-ex;
+%   verdicts theory/verdicts/{ace-ld-r2,ace-ld-r3,ace-ld-r4,lr-d16-r1,lr-d16-r2,
+%   blitz-m-esc-nr-r1,memory-index-r3}.md
+% SHARD-CLAIMS: LD-ID, ACE-LD-eps, ACE-LD-sharp, ACE-LD-abs, LR-D16-EDW,
+%   LR-D16-NR, ACE-LD-obst-prime, M-ESC-NR, AC-EX, AD3-ex; D28
+
+% --- local semantic macros for this shard only (see main.tex for the rest) ---
+\newcommand{\Qrel}{\mathcal{Q}}              % relative-charge limit vector
+\newcommand{\Nesc}{\mathcal{N}}              % escaped wrong-phase content
+\newcommand{\NDW}{N_{\mathrm{DW}}}           % domain-wall number
+\providecommand{\lamt}{\widetilde{\lambda}}  % tail decay rate (shared with shard 02)
+\newcommand{\dev}{D}                         % on-site tail deviation operator
+
+\section{Local relaxation, escape obstructions, and kink--magnon wave operators}
+\label{sec:local-relaxation}
+
+The memory limit law of \cref{sec:memory-index} is not unconditional. It
+delivers a quantized ordered wall displacement only on states for which the
+windowed charge history relaxes: the three clauses of local relaxation
+--- convergence of the fixed-window Ces\`aro states and two-point-measurement
+laws, first-moment nondemolition, and first-moment tightness of the family of
+window laws --- which we abbreviate (LR1), (LR2), (LR3), and collectively (LR).
+This section is the record of what has actually been proved about that
+hypothesis and about its enemies.
+
+The material falls into three groups, and it is worth saying in advance which
+way each one cuts.
+
+\emph{First}, an exact algebraic identity: the regularised window charge is
+nothing but the windowed restriction of the conserved first-moment wall
+coordinate. This is unconditional, it costs nothing, and it is the sharpest
+single fact in this section, because it converts two apparently
+representation-theoretic questions --- can a state have exponentially confined
+tails while a charged leg escapes? can such a state carry nonzero ordered
+memory? --- into arithmetic. Both answers are negative.
+
+\emph{Second}, a package of theorems around a named exponential-tail
+hypothesis (K-TAIL). These say what the confined-charge corner looks like: on
+it one has a quantitative window-charge estimate with an explicit
+$\lamt^{d_W}$ rate, the tail vacua are forced to have sharp on-site charge,
+and --- the sting --- the ordered memory is \emph{exactly zero}. The
+hypothesis class is inhabited (the exactly solvable kink model of
+\cref{sec:kink-model} sits in it, with numerically measured decay rate), but
+it is disjoint from the escaping-leg class in which a nonzero memory could
+live.
+
+\emph{Third}, the complementary corner. An unconditional operator inequality
+bounds the \emph{number} of phase boundaries in the easy-axis model uniformly
+in time, but says nothing about their \emph{length}; the gap between the two
+is exactly the residual hypothesis (NR) from which clause (LR3) does follow.
+Against this, mean tail transport (M-ESC) is shown to destroy (LR3) outright.
+No state realising (M-ESC) is exhibited anywhere in this campaign, so that
+result constrains a hypothesis class rather than refuting anything; but
+together with the tightness transfer it yields the clean propositional
+statement that (M-ESC) and (NR) cannot both hold.
+
+The section closes with the conditional construction of kink--magnon wave
+operators from exact ansatz band data, which is the machinery that would
+instantiate the channel structure the escape analysis presumes, and with the
+local-decay hypothesis it leaves open.
+
+\subsection{Standing notation}
+\label{subsec:lr-notation}
+
+The following objects are defined in full in \cref{sec:memory-quantization}
+and \cref{sec:memory-index}; they are recalled here so that this section can
+be read without turning back.
+
+\begin{definition}[Window observables and the relative window charge]
+\label{def:window-charge}
+Fix a chain with two $S^z$-vacuum densities $s_\alpha=+s$ at $-\infty$ and
+$s_\beta=-s$ at $+\infty$, $s>0$. For a finite window $W=[a,b]\subset\Z$ the
+\emph{windowed wall-position observable} is
+\begin{equation}
+  \wallX_W \;:=\; a-1+\frac{1}{2s}\sum_{x=a}^{b}\bigl(S^z_x+s\bigr),
+  \label{eq:wall-observable}
+\end{equation}
+normalised so that $\wallX_W=m$ on a sharp wall at the bond $(m\mid m+1)$
+carrying no other content in $W$. For a cut $c_0\in W$ the \emph{relative
+window charge} is $\Qhat_{W,c_0}:=2s(\wallX_W-c_0)$, a local self-adjoint
+element of $\alg_W$ with finite spectrum, and $E_W(\cdot)$ denotes its
+spectral measure. The \emph{escaped wrong-phase content} outside $W$ is
+\begin{equation}
+  \Nesc_W \;:=\; \sum_{x<a}\Bigl(\tfrac12-S^z_x\Bigr)
+              +\sum_{x>b}\Bigl(S^z_x+\tfrac12\Bigr),
+  \label{eq:escaped-content}
+\end{equation}
+a sum of non-negative diagonal terms, so that $\Nesc_{W'}\le\Nesc_W$ whenever
+$W\subseteq W'$.
+\end{definition}
+
+\begin{definition}[Tail deviations and window padding]
+\label{def:tail-deviations}
+For a finite core interval $K=[\ell,r]\subset\Z$ and a site $x\notin K$ put
+$\gamma(x):=\alpha$ if $x<\ell$ and $\gamma(x):=\beta$ if $x>r$, and define the
+\emph{on-site tail deviation}
+\begin{equation}
+  \dev_x \;:=\; S^z_x-s_{\gamma(x)},\qquad s_\alpha=+s,\quad s_\beta=-s .
+  \label{eq:tail-deviation}
+\end{equation}
+For a window $W=[a,b]\supseteq K$ the \emph{core-to-edge padding} is
+$d_W:=\dist(K,\Z\setminus W)=\min(\ell-a,\;b-r)+1\ge1$. Where a cut $c_0$ is
+fixed rather than a core, we write instead the \emph{step density}
+$s_{\gamma_{c_0}}(x):=+s$ for $x\le c_0$ and $-s$ for $x>c_0$.
+\end{definition}
+
+Throughout, H-MQG(1)--(3) are the standing structural hypotheses of the
+general memory-quantization setting of \cref{sec:memory-quantization}: a
+compact group $G$ with a covariant family of injective canonical matrix
+product state tensors of one common bond dimension and a selected kink sector
+$\Kk_{\alpha\beta}$; a common unbroken abelian subgroup with a fixed primitive
+on-site charge $S^z$ calibrated by $\omega_\alpha(S^z)=+s=-\omega_\beta(S^z)$,
+$s>0$; and a translation-invariant, finite-range, $G$-invariant Hamiltonian
+with stationary vacua. D26(INT) is the integrality condition on the on-site
+charge, and D17 is the $\ell^1$ kink class.
+
+\subsection{The window charge is the conserved wall coordinate}
+\label{subsec:window-charge-identity}
+
+The starting point costs nothing and pays for a great deal. The regularised
+window charge, which was introduced as a bookkeeping device for windowed
+two-point measurements, is literally the sum of the on-site tail deviations
+over the window --- with no offset and no normalisation factor.
+
+\begin{theorem}[The window charge is the windowed sum of tail deviations]
+\label{thm:window-charge-identity}
+\statusProved\;
+Assume H-MQG(1)--(2). For every finite window $W=[a,b]$ with $c_0\in W$,
+\begin{equation}
+  \Qhat_{W,c_0}\;=\;\sum_{x\in W}\bigl(S^z_x-s_{\gamma_{c_0}}(x)\bigr)
+  \qquad\text{exactly.}
+  \label{eq:window-charge-identity}
+\end{equation}
+Consequently, on any state on which the increasing-window limit exists --- in
+particular on every state satisfying the exponential-tail hypothesis (K-TAIL)
+of \cref{def:k-tail}, where the limit vector
+$\Qrel_{c_0}\varphi:=\lim_n\Qhat_{W_n,c_0}\varphi$ exists and is independent
+of the exhaustion ---
+\begin{equation}
+  \Qrel_{c_0}\;=\;\sum_{x\in\Z}\bigl(S^z_x-s_{\gamma_{c_0}}(x)\bigr)
+  \;=\;2s\,(X_1-c_0),
+  \label{eq:relative-charge-is-X1}
+\end{equation}
+where $X_1$ is the first-moment wall coordinate of the dynamical dress
+(\cref{sec:memory-quantization}), the regularised total magnetisation, which
+is exactly conserved. The relative window charge is therefore not a new
+object but the vector-valued lift of $X_1$.
+\end{theorem}
+
+\begin{scope}
+\label{scope:window-charge-identity}
+The identity \eqref{eq:window-charge-identity} is unconditional under
+H-MQG(1)--(2). The identification \eqref{eq:relative-charge-is-X1} requires in
+addition that the increasing-window limit exist on the state in question. What
+is constructed is only the limit \emph{vector} $\Qrel_{c_0}\varphi$ on a
+(K-TAIL) state, never a sector-wide charge operator: the refutation of the
+strong local-additivity claim (\cref{sec:negative-results}) is respected and
+not contradicted, its refuting state having polynomially decaying deviations
+and therefore lying outside the (K-TAIL) class.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+The frozen expansion of the windowed observable gives
+$\Qhat_{W,c_0}=\sum_{x\in W}S^z_x+s(a+b-1-2c_0)$, and the step density sums to
+exactly the negative of that offset,
+$\sum_{x\in W}s_{\gamma_{c_0}}(x)=s\,[(c_0-a+1)-(b-c_0)]=-s(a+b-1-2c_0)$. The
+two scalars cancel identically; there is nothing left to estimate. Summing the
+identity over an exhaustion and comparing with the definition of $X_1$ gives
+\eqref{eq:relative-charge-is-X1}.
+\end{proof}
+
+\provenance{LD-ID}{\texttt{theory/ace-ld.md} step (1.4).(2.7), THEOREM LD-ID, sub-step (3.1)--(3.2)}{No gate is required: the identity is exact algebra. Independently re-verified in \texttt{theory/verdicts/ace-ld-r3.md} \S0(i) on all $2^{12}$ basis states of the exactly solvable battery over six windows (maximal discrepancy $0.000\mathrm{e}{+00}$), symbolically and on a $201$-site lattice in \texttt{theory/verdicts/ace-ld-r2.md} \S0(i), and reached independently by the parallel lane}{\texttt{ace-ld-r2.md}, \texttt{ace-ld-r3.md}, \texttt{ace-ld-r4.md}; parallel-lane confirmation \texttt{lr-d16-r1.md} \S2 item 1}
+
+The identity has two corollaries, each on its own named hypotheses. The first
+closes off an entire class of loopholes.
+
+\begin{corollary}[No escaping charged leg has time-uniform confined tails]
+\label{cor:no-escaping-leg}
+\statusProvedConditional\;
+Assume, in addition to the hypotheses of \cref{thm:window-charge-identity},
+that $\Psi_t$ carries an outgoing free leg of charge $q_{\mathrm{leg}}\neq0$
+which has left the window $W$ in the sense of the asymptotic-decay clause
+D18(AD3), and that the state satisfies (K-TAIL) with \emph{time-independent}
+constants $(K,C_K,\lamt)$. Then
+\begin{equation}
+  \norm{\Qrel_{c_0}\Psi_t-\Qhat_{W,c_0}\Psi_t}
+  \;\ge\;\Bigl|\sum_{x\notin W}\omega_{\Psi_t}(\dev_x)\Bigr|
+  \;\longrightarrow\;\abs{q_{\mathrm{leg}}}
+  \quad(t\to\infty),
+  \label{eq:leg-lower-bound}
+\end{equation}
+while (K-TAIL) bounds the same quantity by $2C_K\lamt^{d_W}/(1-\lamt)$
+uniformly in $t$. Choosing $d_W$ so large that
+$2C_K\lamt^{d_W}/(1-\lamt)<\abs{q_{\mathrm{leg}}}$ is a contradiction. Hence
+no state in the escaping-leg class of D18(AD3) satisfies (K-TAIL) with
+time-independent constants, and distinct channel charges $q_L\neq q_T$ are
+unavailable within a single conserved-charge sector of D18.
+\end{corollary}
+
+\begin{corollary}[On the confined class the ordered memory vanishes]
+\label{cor:ordered-memory-zero}
+\statusProvedConditional\;
+Assume in addition (K-Q) of \cref{def:k-q} at $\varepsilon_Q=0$ together with
+time-uniform (K-TAIL) data, and adopt D27's definition of the ordered wall
+expectation $\delta x$. Then $q_\varphi$ is a time-independent eigenvalue of
+the conserved $\Qrel_{c_0}$, and
+\begin{equation}
+  \abs{\delta x}\;\le\;s^{-1}\lim_m\frac{2C_K}{1-\lamt}\lamt^{d_{W_m}}\;=\;0 .
+  \label{eq:delta-x-zero}
+\end{equation}
+On that class the ordered memory is exactly zero --- the conservation trap of
+the dynamical dress, now in windowed dress.
+\end{corollary}
+
+\begin{scope}
+\label{scope:ld-id-corollaries}
+Neither corollary is claimed outside its stated hypotheses, and nothing is
+claimed about which regime any given model occupies.
+\Cref{cor:no-escaping-leg} additionally requires D18(AD3) and time-independent
+(K-TAIL) constants; \cref{cor:ordered-memory-zero} additionally requires (K-Q)
+at $\varepsilon_Q=0$, time-uniform data, and D27's own definition of
+$\delta x$.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+For \cref{cor:no-escaping-leg}: by
+\cref{thm:window-charge-identity} the difference
+$\Qrel_{c_0}\Psi_t-\Qhat_{W,c_0}\Psi_t$ is exactly the sum of the tail
+deviations outside $W$, and Cauchy--Schwarz on unit $\Psi_t$ bounds its norm
+below by the modulus of its expectation, which D18(AD3) drives to
+$q_{\mathrm{leg}}$. The quantitative witness --- one magnon over a polarised
+vacuum --- has escaped tail sum saturating at exactly $2s=1$ at every padding,
+with the minimal admissible $C_K$ growing like $\lamt^{-vt}$ (numerically
+$10^{+79.8}$ at $t=64$). For \cref{cor:ordered-memory-zero}: the exponential
+estimate \eqref{eq:eps-bound} applied on both time wings pins the window-charge
+expectation to $q_\varphi$ at every time, and $\delta x$ is by definition
+$(2s)^{-1}$ times the limit of the difference of those expectations.
+\end{proof}
+
+\provenance{LD-ID}{\texttt{theory/ace-ld.md} step (1.4).(2.7), sub-steps (3.3) and (3.4)}{Corollary (i)'s quantitative witness re-measured in \texttt{theory/verdicts/ace-ld-r3.md} M1(b): $\norm{(\Qhat_{W'}-\Qhat_{W})\varphi}=2s$ at every padding for an escaped leg inside the annulus}{\texttt{ace-ld-r3.md} (F1, M1, m1--m3), \texttt{ace-ld-r4.md}; mechanism reached independently in \texttt{lr-d16-r1.md} M2(b)2}
+
+\subsection{Exponentially confined tails: the \texorpdfstring{$\varepsilon$}{epsilon}-theorem}
+\label{subsec:eps-theorem}
+
+We now name the confinement hypothesis precisely and state what it buys.
+
+\begin{definition}[(K-TAIL): confined-core exponential tail decay]
+\label{def:k-tail}
+A unit vector $\varphi$ satisfies \textbf{(K-TAIL)} if there are a finite
+interval $K=[\ell,r]$ and constants $C_K<\infty$, $\lamt\in(0,1)$ such that for
+all $x,x'\notin K$ lying on the \emph{same} side of $K$,
+\begin{equation}
+  \bigl|\omega_\varphi(\dev_x \dev_{x'})\bigr|
+  \;\le\; C_K^2\,\lamt^{\dist(x,K)}\,\lamt^{\dist(x',K)} .
+  \label{eq:k-tail}
+\end{equation}
+Taking $x=x'$ gives the on-site bound
+$\norm{\dev_x\varphi}^2\le C_K^2\lamt^{2\dist(x,K)}$. Conversely, since each
+$\dev_x$ is self-adjoint, Cauchy--Schwarz gives
+$\abs{\omega_\varphi(\dev_x\dev_{x'})}
+=\abs{\braket{\dev_x\varphi,\dev_{x'}\varphi}}
+\le\norm{\dev_x\varphi}\,\norm{\dev_{x'}\varphi}$, so the on-site bound implies
+the full same-side clause. \textbf{(K-TAIL) is therefore an on-site tail-decay
+hypothesis, not a clustering hypothesis}, and a site-by-site numerical profile
+certifies it in full.
+\end{definition}
+
+\begin{definition}[(K-Q): sharp relative charge]
+\label{def:k-q}
+A unit vector $\varphi$ satisfies \textbf{(K-Q)} if there are $q_\varphi\in\R$
+and $\varepsilon_Q\ge0$ with
+$\norm{\Qrel_{c_0}\varphi-q_\varphi\varphi}\le\varepsilon_Q$, where
+$\Qrel_{c_0}\varphi=\lim_n\Qhat_{W_n,c_0}\varphi$ is the relative-charge limit
+vector. That limit exists on every (K-TAIL) state and is exhaustion
+independent --- this is a lemma, not part of the hypothesis --- and by
+\cref{thm:window-charge-identity} it equals $2s(X_1-c_0)$. So (K-Q) is a
+sharpness hypothesis on the \emph{conserved} charge, and (K-TAIL) says, up to
+the uniform bound below, that no charge lies outside the core.
+\end{definition}
+
+\begin{theorem}[Exponential window-charge estimate on confined-tail states]
+\label{thm:eps-theorem}
+\statusProvedConditional\;
+Proved only as the following conditional implication. Assume H-MQG(1)--(2); a
+finite core $K=[\ell,r]$; a finite window $W=[a,b]\supseteq K$ with cut
+$c_0\in W$ and padding $d_W\ge1$ as in \cref{def:tail-deviations}; and a unit
+vector $\varphi$ satisfying (K-TAIL) with constants $C_K,\lamt$ and (K-Q) with
+data $q_\varphi,\varepsilon_Q$. Then
+\begin{equation}
+  \norm{(\Qhat_{W,c_0}-q_\varphi)\varphi}
+  \;\le\;\varepsilon_Q+\frac{2C_K}{1-\lamt}\,\lamt^{\,d_W},
+  \label{eq:eps-bound}
+\end{equation}
+and consequently $\dist\bigl(q_\varphi,\;\kappa_{W,c_0}+\Z\bigr)$ is bounded by
+the same quantity, where $\kappa_{W,c_0}+\Z$ is the coset containing the
+spectrum of the window charge (the finite memory-index theorem of
+\cref{sec:memory-index}).
+\end{theorem}
+
+Two consequences of (K-TAIL) are forced, and each is itself proved.
+
+\begin{corollary}[Forced consequences of confined tails]
+\label{cor:eps-forced}
+\statusProvedConditional\;
+Under (K-TAIL):
+\begin{enumerate}
+\item[(i)] In the kink class of D9(a), (K-TAIL) is equivalent to the statement
+that no charge lies outside the core, quantitatively
+\begin{equation}
+  \norm{\Qrel_{c_0}\varphi-\Qhat_{W,c_0}\varphi}
+  \;\le\;\frac{2C_K}{1-\lamt}\lamt^{\,d_W}
+  \qquad\text{for every finite }W\supseteq K\text{ with }c_0\in W,
+  \label{eq:tail-uniform}
+\end{equation}
+and it forces both tail vacua to have \emph{sharp on-site charge}:
+$\omega_\gamma\bigl((S^z_x-s_\gamma)^2\bigr)=0$ at every site, equivalently
+$\omega_\gamma\bigl(\Pi_x^{(s_\gamma)}\bigr)=1$ for the on-site spectral
+projection of $S^z_x$. Hence $\pm s\in\spec S^z$; in particular a spin-$1$
+chain with calibration $s=1/2$ admits no (K-TAIL) kink state. See
+\cref{thm:sharp-charge}.
+\item[(ii)] With time-independent data $(K,C_K,\lamt)$, (K-TAIL) is
+\emph{jointly unsatisfiable} with the clause of D18(AD3) that the free leg
+charge leaves the window. No state carrying an escaping leg of nonzero charge
+satisfies it with time-independent constants; $q_L\neq q_T$ is unavailable
+within one conserved-charge sector of D18; and on states that do satisfy it
+with $\varepsilon_Q=0$ and time-uniform data the ordered wall displacement is
+$\delta x=0$.
+\end{enumerate}
+\end{corollary}
+
+\begin{scope}
+\label{scope:eps-theorem}
+The following are \emph{not} claimed. That the $\varepsilon$-weakened
+local-decay statement supplies the cross-term step of the wave-operator
+construction of \cref{subsec:wave-operators} --- it does not, because the
+hypothesis fails on that entire class; the earlier claim to the contrary is
+retracted. The exact fixed-window local-decay hypothesis (AD3-ex) of
+\cref{conj:ad3-ex}. The weak-$*$ clause of D18(AD3) or the reduction clause of
+the spectral memory-index statement. The $\chi=1$ product form of the tail
+vacua under H-MQG alone (see \cref{ref:chi-one}). Any statement about generic
+injective matrix product state vacua --- sharp on-site charge excludes every
+vacuum with nonzero on-site charge variance, and that is the scope boundary of
+this theorem. Any infinite-volume proof of (K-TAIL) or (K-Q) on any model.
+The existence of a sector-wide conserved charge operator: only the limit
+vector on a (K-TAIL) state is constructed, the strong local-additivity claim
+is refuted and is not contradicted, and the infinite-volume route to the
+time-uniformity of (K-Q) remains a conjecture.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+Two lemmas. The first is a window-difference identity: for
+$W=[a,b]\subseteq W'=[a',b']$ both containing the cut,
+\begin{equation}
+  \Qhat_{W',c_0}-\Qhat_{W,c_0}
+  \;=\;\sum_{x=a'}^{a-1}\bigl(S^z_x-s\bigr)
+      +\sum_{x=b+1}^{b'}\bigl(S^z_x+s\bigr),
+  \label{eq:window-difference}
+\end{equation}
+so the difference is exactly the sum of the on-site deviations over the
+annulus, the cut dependence cancelling because $c_0$ enters both terms with the
+same coefficient. The second is a tail-sum estimate: for a finite one-sided set
+$F$ at distance $d$ from $K$, expanding the square and using (K-TAIL) on every
+pair gives
+$\norm{\sum_{x\in F}\dev_x\varphi}\le C_K\lamt^{d}/(1-\lamt)$, because the
+distinct sites of a one-sided $F$ have pairwise distinct integer distances to
+$K$, all at least $d$, so the geometric series sums. Applying this to the two
+annuli in \eqref{eq:window-difference} shows that
+$\{\Qhat_{W_n,c_0}\varphi\}$ is Cauchy along any exhaustion, that interleaving
+two exhaustions identifies the limits, and that letting $W'\uparrow\Z$ gives
+\eqref{eq:tail-uniform}. The theorem is then the triangle inequality on
+$(\Qhat_{W,c_0}-q_\varphi)\varphi
+=(\Qhat_{W,c_0}\varphi-\Qrel_{c_0}\varphi)+(\Qrel_{c_0}\varphi-q_\varphi\varphi)$,
+and the coset location follows from
+$\norm{(\Qhat_{W,c_0}-q_\varphi)\varphi}^2=\int\abs{\lambda-q_\varphi}^2\,
+d\mu_\varphi(\lambda)\ge\dist(q_\varphi,\spec\Qhat_{W,c_0})^2$ together with
+spectral permanence.
+\end{proof}
+
+\begin{remark}[Why the time-uniform hypothesis is honest]
+\label{rem:kq-propagation}
+(K-Q) constrains the \emph{conserved} charge, and that is what makes the
+time-uniform version of \cref{thm:eps-theorem} an assumption about the initial
+data rather than a disguised assumption of the conclusion. If the realization
+carries a self-adjoint $\widehat{\Qrel}$ commuting with the dynamics and
+agreeing with the limit vector on (K-TAIL) states, then
+$\norm{(\widehat{\Qrel}-q)\varphi_t}=\norm{(\widehat{\Qrel}-q)\varphi_0}$, so
+(K-Q) at $t=0$ propagates with the same $q$ and $\varepsilon_Q$. The window
+charge $\Qhat_{W,c_0}$ is \emph{not} conserved --- that is the whole content of
+the conservation trap --- and no such propagation is claimed for it: the
+estimate converts conserved-charge sharpness plus instantaneous tail decay into
+a window statement separately at each time.
+\end{remark}
+
+\begin{remark}[The hypothesis class is inhabited]
+\label{rem:d16-instantiation}
+The exactly solvable easy-axis kink model of \cref{sec:kink-model} sits inside
+the class. Its exact zero-energy sector states satisfy (K-Q) exactly, and they
+satisfy (K-TAIL) at rate
+\begin{equation}
+  \lamt \;=\; q \;=\; \Delta-\sqrt{\Delta^2-1},
+  \label{eq:d16-rate}
+\end{equation}
+independently verified by full $2^L$ exact diagonalisation at $L=12$: the
+measured on-site defects are
+$\norm{\dev_x\varphi}=4.356\times10^{-2},\;9.092\times10^{-3},\;
+1.898\times10^{-3},\;3.960\times10^{-4},\;8.266\times10^{-5}$, with per-site
+ratios $0.20871$ on \emph{both} sides against $q=0.208712$, and $C_K=0.2087$,
+in the $\Z_2$ image of the frozen orientation. The checker's conclusion gates
+independently certify the $\lamt^{d_W}$ rate of \eqref{eq:eps-bound}, with
+defects from $4.45\times10^{-2}$ down to $4.05\times10^{-4}$ and ratios
+$0.2089$, $0.2087$, $0.2083$ against the same $q$.
+\end{remark}
+
+\provenance{ACE-LD-eps}{\texttt{theory/ace-ld.md} step (1.4) (THEOREM ACE-LD-$\varepsilon$), with lemmas at (1.4).(2.1)--(2.3) and the forced consequences at (1.4).(2.7), (2.9)}{\texttt{theory/checks/ace\_ld\_check.py} gate LD-C7 (green exit $0$; \texttt{--red} exit $1$, RED-OK $23/23$). Gates (b)--(c) certify the conclusion's $\lamt^{d_W}$ rate; gate (e) certifies the hypothesis (K-TAIL) itself site by site, and by Cauchy--Schwarz on the self-adjoint $\dev_x$ the on-site clause is equivalent to the full same-side clause, so (e) certifies (K-TAIL) in full. No gate bears on (K-Q), on the infinite-volume statement, or on the sharp-charge corollary, which is exact algebra}{\texttt{ace-ld-r3.md} \S8(A) (adjudicated scoping), \texttt{ace-ld-r2.md}, \texttt{ace-ld-r4.md} \S0(iv)}
+
+\subsection{Sharp on-site charge, and the refuted product-vacuum reading}
+\label{subsec:sharp-charge}
+
+The forced consequence (i) above deserves its own statement, because it is the
+cleanest description of exactly which corner of the theory the
+$\varepsilon$-theorem occupies --- and because the natural strengthening of it
+is false.
+
+\begin{theorem}[Confined tails force zero on-site charge variance]
+\label{thm:sharp-charge}
+\statusProved\;
+Assume H-MQG(1)--(2), and let $\varphi$ be a unit vector whose state
+$\omega_\varphi$ lies in the kink sector $\Kk_{\alpha\beta}$ of D9(a) and
+satisfies (K-TAIL) with core $K$ and constants $C_K,\lamt$. Then both tail
+vacua have \emph{sharp on-site charge}: for $\gamma\in\{\alpha,\beta\}$ and
+every site $x$,
+\begin{equation}
+  \omega_\gamma\bigl((S^z_x-s_\gamma)^2\bigr)=0,
+  \qquad\text{equivalently}\qquad
+  \omega_\gamma\bigl(\Pi_x^{(s_\gamma)}\bigr)=1,
+  \label{eq:sharp-charge}
+\end{equation}
+where $\Pi_x^{(m)}$ is the on-site spectral projection of $S^z_x$ at
+eigenvalue $m$. Hence the tail density is an on-site \emph{eigenvalue}:
+$s_\alpha=+s\in\spec S^z$ and $s_\beta=-s\in\spec S^z$.
+\end{theorem}
+
+\begin{corollary}[An arithmetic exclusion]
+\label{cor:spin-one-exclusion}
+\statusProved\;
+A spin-$1$ chain with calibration $s=1/2$ admits \emph{no} (K-TAIL) kink
+state, since $\pm1/2\notin\spec S^z=\{-1,0,1\}$.
+\end{corollary}
+
+\begin{scope}
+\label{scope:sharp-charge}
+Sharp on-site charge means zero on-site charge variance and therefore excludes
+every vacuum with nonzero on-site charge variance, in particular generic
+injective matrix product state vacua. It is \emph{not} claimed that the tail
+vacua are fully polarised $S^z$-product states; see \cref{ref:chi-one}. That
+stronger form needs $s_\gamma$ to be a \emph{simple} eigenvalue of $S^z$ ---
+true in the standard spin-$S$ register with on-site dimension $d=2s+1$, and
+true in the exactly solvable model, but not implied by H-MQG(1)--(2), by
+covariance, or by D26(INT), all of which admit degenerate on-site charge
+eigenspaces. The gloss $d=2s+1$ in the notation table is explicitly fenced as
+the fully polarised special case and is not a constraint.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+Every input is named. D9(a) itself supplies the weak-$*$ tail relaxation
+$\omega_\varphi(\tau_x(O))\to\omega_\gamma(O)$ for local $O$, so no extra
+relaxation hypothesis is needed. (K-TAIL) at $x=x'$ gives
+$\omega_\varphi(\dev_x^2)\le C_K^2\lamt^{2\dist(x,K)}\to0$; translating along
+the tail and passing to the limit gives
+$\omega_\gamma\bigl((S^z_x-s_\gamma)^2\bigr)=0$. Cauchy--Schwarz on the
+self-adjoint $S^z_x-s_\gamma$ then pins the on-site spectral weights, and
+translation invariance of $\omega_\gamma$ makes the conclusion site
+independent.
+\end{proof}
+
+\begin{refutedclaim}[The tail vacua are fully polarised product states]
+\label{ref:chi-one}
+\statusRefuted\;
+\emph{Withdrawn statement.} That \cref{thm:sharp-charge} concludes further
+$\omega_\gamma=\bigotimes_x\ket{s_\gamma}\bra{s_\gamma}$, a bond-dimension-one
+$S^z$-product state.
+
+\emph{Why it fails.} Sharp on-site charge names a unique on-site \emph{vector}
+only if $\dim\ker(S^z-s_\gamma)=1$, and no hypothesis in force supplies that
+simplicity. Explicit counterexample: take the on-site space $\C^2\otimes\C^3$
+with $S^z:=\sigma^z/2\otimes\mathbb{1}_3$, so that
+$\spec S^z=\{\pm1/2\}$ with each eigenvalue of multiplicity $3$ and
+$e^{2\pi iS^z}=-\mathbb{1}$, whence D26(INT) holds with $\kappa=1/2$. Put
+\begin{equation}
+  \omega_\alpha=\bigotimes_x\bigl(\ket{\uparrow}\bra{\uparrow}\otimes
+  \varrho_{\mathrm{AKLT}}\bigr),\qquad
+  \omega_\beta=\bigotimes_x\bigl(\ket{\downarrow}\bra{\downarrow}\otimes
+  \varrho_{\mathrm{AKLT}}\bigr).
+  \label{eq:chi-two-counterexample}
+\end{equation}
+These are injective matrix product states of bond dimension $\chi=2$ (bond
+Schmidt spectrum $(1/2,1/2)$, transfer gap $1/3$), covariant for
+$G=U(1)\rtimes\Z_2$, with $\omega_\alpha(S^z)=+1/2=s=-\omega_\beta(S^z)$. The
+sharp domain wall in the $\C^2$ factor lies in $\Kk_{\alpha\beta}$ and has
+$\dev_x\varphi=0$ at \emph{every} site, so it satisfies (K-TAIL) with
+$C_K=0$ --- while its tail vacua are not product states.
+
+\emph{Surviving weaker statement.} \Cref{thm:sharp-charge}: zero on-site charge
+variance, hence $\pm s\in\spec S^z$. When $s_\gamma$ \emph{is} a simple
+eigenvalue of $S^z$ --- the standard spin-$S$ register, and the exactly
+solvable model of \cref{sec:kink-model} --- the sharp-charge conclusion does
+give $\omega_\gamma=\bigotimes_x\ket{s_\gamma}\bra{s_\gamma}$ and $\chi=1$;
+that conditional clause survives as a corollary, not as the theorem.
+\end{refutedclaim}
+
+\provenance{ACE-LD-sharp}{\texttt{theory/ace-ld.md} step (1.4).(2.9)(b)}{\texttt{theory/checks/ace\_ld\_check.py} gate LD-C7(e) certifies the \emph{hypothesis} (K-TAIL) on the exactly solvable instance (per-site ratios $0.20871$ on both sides, $C_K=0.209$, red-armed by \texttt{--red-c7-orientation} at $C_K=2525$); the conclusion is exact algebra and needs no gate. The counterexample to the product form is verified numerically}{\texttt{ace-ld-r3.md} F1 and F1(b) (the refutation, adopted), \texttt{ace-ld-r4.md} (restatement)}
+
+\subsection{The abstract mechanism: spectral diagonality from first-moment escape}
+\label{subsec:spectral-diagonality}
+
+Underneath the model-specific analysis sits a short, entirely abstract lemma.
+It is worth isolating because it shows exactly what local decay of the channel
+charges buys: nothing about the model, but a clean identification of channel
+projections with spectral projections of the window charge, with a constant
+uniform in time.
+
+\begin{definition}[The abstract escape package (A1)--(A5)]
+\label{def:a1-a5}
+\begin{enumerate}
+\item[(A1)] A Hilbert space $\Hilb$, a strongly continuous unitary group
+$e^{-itH}$, a unit vector $\Psi$, and $\Psi_t:=e^{-itH}\Psi$.
+\item[(A2)] A bounded self-adjoint operator $\Qhat$ on $\Hilb$, time
+independent (Schr\"odinger picture), whose spectrum is a \emph{finite} set
+contained in a single coset $\kappa+\Z$, $\kappa\in[0,1)$. In the instance
+$\Qhat=\Qhat_{W,c_0}$ at a fixed finite window, and the coset containment is
+the finite memory-index theorem of \cref{sec:memory-index}, cited and not
+re-proved.
+\item[(A3)] A finite family $\{P_{\mathrm{ch}}\}_{\mathrm{ch}=1}^{n}$ of
+mutually orthogonal projections, each commuting with $e^{-itH}$, with
+$\sum_{\mathrm{ch}}P_{\mathrm{ch}}\Psi=\Psi$.
+\item[(A4)] Real \emph{channel charges}
+$\{q_{\mathrm{ch}}\}_{\mathrm{ch}=1}^{n}$ and first-moment escape:
+$\varepsilon_{\mathrm{ch}}(t):=
+\norm{(\Qhat-q_{\mathrm{ch}})P_{\mathrm{ch}}\Psi_t}\to0$ as $t\to+\infty$ for
+every channel.
+\item[(A5)] The $q_{\mathrm{ch}}$ are pairwise distinct.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Channel projections become spectral projections]
+\label{thm:spectral-diagonality}
+\statusProved\;
+Assume (A1)--(A5). With $E(\cdot)$ the spectral measure of $\Qhat$ and
+$d_{\mathrm{ch}}:=\dist\bigl(q_{\mathrm{ch}},\spec\Qhat\setminus
+\{q_{\mathrm{ch}}\}\bigr)>0$,
+\begin{equation}
+  \norm{E(\{q_{\mathrm{ch}}\})\Psi_t-P_{\mathrm{ch}}\Psi_t}
+  \;\le\;\sum_{\mathrm{ch}'=1}^{n}d_{\mathrm{ch}'}^{-1}
+  \varepsilon_{\mathrm{ch}'}(t)\;\longrightarrow\;0
+  \qquad\text{for every channel,}
+  \label{eq:spectral-diagonality}
+\end{equation}
+the constant $\sum_{\mathrm{ch}'}d_{\mathrm{ch}'}^{-1}$ being independent of
+$t$. If moreover $q_{\mathrm{ch}}\in\kappa+\Z$ then $d_{\mathrm{ch}}\ge1$, so
+under (A2) the constant is at most $n$ for coset-valued charges. The lemma
+holds for $N$ channels and a general on-site spin.
+\end{lemma}
+
+\begin{lemma}[Distinct channel charges are necessary]
+\label{thm:distinct-charges-necessary}
+\statusProved\;
+Assume (A1)--(A4) with $n=2$ and $q_1=q_2=:q$, and
+$w_i:=\liminf_{t\to+\infty}\norm{P_i\Psi_t}>0$ for \emph{both} $i=1,2$. Then
+for \emph{every} $q'\in\R$,
+$\liminf_{t\to+\infty}\norm{E(\{q'\})\Psi_t-P_1\Psi_t}>0$; the diagonality
+display fails for channel $1$ for every charge assignment, and by symmetry for
+channel $2$. Hypothesis (A5) is therefore not an artefact of the proof.
+\end{lemma}
+
+\begin{scope}
+\label{scope:spectral-diagonality}
+Nothing is claimed about any concrete model, no instantiation of (A4) is
+supplied, and no sharpness of the constant beyond the single spectral gap is
+asserted.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+The engine is a one-line gap estimate: if $\Qhat$ has finite spectrum $S$ and
+$d_q:=\dist(q,S\setminus\{q\})>0$, then $\Qhat$ restricted to
+$\ran(1-E(\{q\}))$ has spectrum $S\setminus\{q\}$, so $(\Qhat-q)$ is invertible
+there with inverse norm $d_q^{-1}$, giving
+\begin{equation}
+  \norm{(1-E(\{q\}))\phi}\;\le\;d_q^{-1}\norm{(\Qhat-q)\phi}
+  \qquad\text{for every }\phi\in\Hilb .
+  \label{eq:gap-estimate}
+\end{equation}
+Because the projections resolve $\Psi$ and commute with the dynamics, they
+resolve $\Psi_t$ for all $t$, and
+$E(\{q_{\mathrm{ch}}\})\Psi_t-P_{\mathrm{ch}}\Psi_t
+=-(1-E(\{q_{\mathrm{ch}}\}))P_{\mathrm{ch}}\Psi_t
++\sum_{\mathrm{ch}'\neq\mathrm{ch}}E(\{q_{\mathrm{ch}}\})
+P_{\mathrm{ch}'}\Psi_t$. The diagonal term is bounded by
+\eqref{eq:gap-estimate} directly. For a cross term, distinctness of the charges
+makes the two spectral projections orthogonal, so
+$E(\{q_{\mathrm{ch}}\})P_{\mathrm{ch}'}\Psi_t
+=E(\{q_{\mathrm{ch}}\})(1-E(\{q_{\mathrm{ch}'}\}))P_{\mathrm{ch}'}\Psi_t$ and
+\eqref{eq:gap-estimate} applies again at $q_{\mathrm{ch}'}$. Time uniformity is
+free: $\spec\Qhat$ is a property of the fixed Schr\"odinger-picture operator,
+and only $\Psi_t$ moves. Two distinct points of one coset of $\Z$ differ by a
+nonzero integer, which is where the coset containment enters.
+\end{proof}
+
+\provenance{ACE-LD-abs (with ACE-LD-nec)}{\texttt{theory/ace-ld.md} steps (1.1)--(1.3): the gap estimate at (1.1), the assembly at (1.2), the necessity of distinct charges at (1.3)}{\texttt{theory/checks/ace\_ld\_check.py} gates LD-C1--C4 (green exit $0$; \texttt{--red} exit $1$, $23$ mutation modes, exit paths logged; every LD-C1 sub-gate armed, including orthogonality and resolution)}{\texttt{ace-ld-r2.md} (M4/m4 fixed), \texttt{ace-ld-r3.md}, \texttt{ace-ld-r4.md}}
+
+\subsection{Energy bounds the number of phase boundaries, not their length}
+\label{subsec:edw}
+
+We turn to the complementary corner: the easy-axis kink model of
+\cref{sec:kink-model}, where one would like to \emph{prove} local relaxation
+rather than assume it. There is an unconditional operator inequality, and it
+is instructive precisely because of what it fails to give.
+
+\begin{theorem}[Energy dominates the domain-wall number]
+\label{thm:edw}
+\statusProved\;
+In the easy-axis model, in the two-site basis
+$(\ket{\uparrow\uparrow},\ket{\uparrow\downarrow},
+\ket{\downarrow\uparrow},\ket{\downarrow\downarrow})$, the bond term
+$h^{\mathrm{XXZ}}_{x,x+1}$ annihilates $\ket{\uparrow\uparrow}$ and
+$\ket{\downarrow\downarrow}$ and equals $(J\Delta/2)I-(J/2)\sigma^x$ on the
+domain-wall block, with eigenvalues $(J/2)(\Delta\mp1)$. Hence, with
+$P^{\mathrm{DW}}_x$ the projection onto
+$\mathrm{span}\{\ket{\uparrow\downarrow},\ket{\downarrow\uparrow}\}_{x,x+1}$
+and $\NDW:=\sum_xP^{\mathrm{DW}}_x$ the domain-wall \emph{number},
+\begin{equation}
+  h^{\mathrm{XXZ}}_{x,x+1}\;\succeq\;\tfrac{J}{2}(\Delta-1)P^{\mathrm{DW}}_x,
+  \qquad
+  H_{\mathrm{XXZ}}\;\succeq\;\tfrac{J}{2}(\Delta-1)\NDW\;\succeq\;0,
+  \label{eq:edw-operator}
+\end{equation}
+the sum being a quadratic-form inequality on the finite-deviation core.
+Consequently, \emph{for any state $\Psi$ whose energy
+$E_0:=\braket{\Psi,H_{\mathrm{XXZ}}\Psi}$ is finite and is conserved by the
+dynamics},
+\begin{equation}
+  \braket{\Psi,\alpha_t(\NDW)\Psi}\;\le\;\frac{2E_0}{J(\Delta-1)}
+  \qquad\text{for every }t .
+  \label{eq:edw-bound}
+\end{equation}
+\end{theorem}
+
+\begin{scope}
+\label{scope:edw}
+This bounds the \textbf{number} of phase boundaries uniformly in time and
+\textbf{nothing about their length}: in one dimension a wrong-phase block of
+any length carries the same $O(1)$ Ising cost. It therefore does \emph{not}
+give clause (LR3), and it gives neither clause of the hypothesis (NR) of
+\cref{def:nr}. Finiteness and conservation of $E_0$ are stated as hypotheses
+on the selected state, not derived: the proof step asserts both without proof,
+and the operator-hygiene paragraph of the shard covers only the diagonal
+operators, not $H_{\mathrm{XXZ}}$. Both are expected to hold on an $\ell^1$
+packet of D17 --- $P^{\mathrm{DW}}_x\preceq n_x+n_{x+1}$ and
+$0\preceq h_x\preceq(J/2)(\Delta+1)P^{\mathrm{DW}}_x$ give $E_0<\infty$ from
+the $\ell^1$ clause --- but that derivation is not in the shard. Finally, the
+bond inequality and its sum are exact in infinite volume \emph{and} on any
+finite open chain; a finite-chain certificate must use the
+$H_{\mathrm{XXZ}}$ propagator, because $H_{\mathrm{kink}}$ and
+$H_{\mathrm{XXZ}}$ generate the same derivation only in infinite volume and
+differ at finite $N$ by the boundary term
+$\tfrac{J}{2}\sqrt{\Delta^2-1}\,(S^z_1-S^z_N)$.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+The bond term is block diagonal: it kills the two aligned configurations, and
+on the two-dimensional domain-wall block it is
+$(J\Delta/2)I-(J/2)\sigma^x$, whose eigenvalues are $(J/2)(\Delta\mp1)$. For
+$\Delta>1$ the smaller one is positive, so the bond term dominates
+$(J/2)(\Delta-1)$ times the domain-wall projection. Summing bondwise gives
+\eqref{eq:edw-operator}, and taking the expectation in a state of conserved
+finite energy gives \eqref{eq:edw-bound}. As a sanity check, the bare kink has
+$E_0=C_K=\tfrac{J}{2}\sqrt{\Delta^2-1}$, so
+$\braket{\NDW}\le\sqrt{(\Delta+1)/(\Delta-1)}$, which tends to $1$ as
+$\Delta\to\infty$ (a single sharp wall) and diverges as $\Delta\to1^+$ (the
+kink delocalises) --- both as they must.
+\end{proof}
+
+\provenance{LR-D16-EDW}{\texttt{theory/lr-d16.md} step (1.5).(2.6), named computation LRD-EDW}{\texttt{theory/checks/lr\_d16\_check.py} gate C4: (a) the bond inequality, minimum eigenvalue $-0.0$; (b) $H_{\mathrm{XXZ}}$ energy drift $1.11\mathrm{e}{-14}$ and $\max\braket{\NDW}=3.053\le4.753$; (c) finite-chain calibration $\braket{K|H_{\mathrm{XXZ}}|K}=1.1456439081$ against $C_K=1.1456439237$. Green exit $0$; the mutations \texttt{--red c4-wrong-gap}, \texttt{--red c4-kink-propagator} (caught by the energy-drift gate at $1.007$) and \texttt{--red c4-sharp-calibration} each exit $1$ on exactly that row}{\texttt{lr-d16-r1.md}, \texttt{lr-d16-r2.md}}
+
+\subsection{Tightness transfer: from bounded escaped content to first-moment tightness}
+\label{subsec:nr-transfer}
+
+The gap left open by \cref{thm:edw} --- block length rather than block number
+--- is named, once, as a hypothesis, and clause (LR3) is derived from it.
+
+\begin{definition}[(NR): no unbounded escaped content, two clauses]
+\label{def:nr}
+Let $W_1$ be the smallest window of the padded exhaustion, $\Psi$ the selected
+vector, $E_{W,t}$ the spectral resolution of the Heisenberg translate of
+$\Qhat_{W,c_0}$, and $\Nesc_{W}$ as in \eqref{eq:escaped-content}. Then (NR)
+consists of
+\begin{align}
+  \sup_{t\in\R}\;\braket{\Psi,\alpha_t(\Nesc_{W_1})^2\Psi}&<\infty,
+  \label{eq:nr-clause-1}\\
+  \sup_m\;\sup_{t_-<t_+}\;\sum_q
+  \norm{\alpha_{t_+}(\Nesc_{W_1})E_{W_m,t_-}(\{q\})\Psi}^2&<\infty,
+  \label{eq:nr-clause-2}
+\end{align}
+and $S_{\mathrm{NR}}$ denotes twice the supremum of the sum of the two
+quantities.
+\end{definition}
+
+\begin{theorem}[Bounded escaped content implies first-moment tightness]
+\label{thm:nr-transfer}
+\statusSketch\;
+In the standing register (H1)--(H6) of the easy-axis setting, with clause
+(LR1), the two-clause hypothesis (NR) implies clause (LR3) for the same padded
+exhaustion and the same fixed-window laws, with the explicit tail bound
+\begin{equation}
+  \sup_m\sum_{\abs{\nu}>M}(1+\abs{\nu})\,p_{W_m}(\nu)
+  \;\le\;\frac{2S_{\mathrm{NR}}}{M}\;\longrightarrow\;0 .
+  \label{eq:nr-tail-bound}
+\end{equation}
+\end{theorem}
+
+\begin{scope}
+\label{scope:nr-transfer}
+The status is that of an exact conditional proof with an independent critic
+re-derivation, whose promotion in the claims graph is still pending; the
+implication itself is what is claimed, not its hypothesis. Specifically, the
+following are \emph{not} claimed: (NR) itself; clause (LR2); the optional
+weak-convergence clause of (LR3); and either clause of (NR) as a consequence of
+\cref{thm:edw}, which controls wall number, not block length.
+\end{scope}
+
+\begin{proof}[What is proved, and how]
+Four exact steps and one hypothesis. (1) An exact second-moment identity: with
+$\Delta\Qhat_W:=\Qhat_{W,c_0}(t_+)-\Qhat_{W,c_0}(t_-)$ and
+$\mathcal{D}_{W,t_-}$ the pinching by the spectral projections at $t_-$,
+$\sum_\nu\nu^2p_{W;t_-,t_+}(\nu)
+=\braket{\Psi,\mathcal{D}_{W,t_-}\bigl((\Delta\Qhat_W)^2\bigr)\Psi}$.
+(2) Chebyshev: for any probability $p$ on $\Z$ and $M\ge1$,
+$\sum_{\abs{\nu}>M}(1+\abs{\nu})p(\nu)\le
+2\sum_{\abs{\nu}>M}\abs{\nu}p(\nu)\le(2/M)\sum_\nu\nu^2p(\nu)$, so a uniform
+second moment is exactly first-moment tightness.
+(3) A splitting onto the two window edges: $\Delta\Qhat_W$ equals the
+difference of the two Heisenberg translates of the complementary charge (the
+scalar cancels), and $2X^2+2Y^2-(X-Y)^2\succeq0$ with positivity of the
+pinching gives
+\begin{equation}
+  \sum_\nu\nu^2p_{W;t_-,t_+}
+  \;\le\;2\braket{\Psi,\alpha_{t_-}(\Qhat_{W^c})^2\Psi}
+  +2\sum_q\norm{\alpha_{t_+}(\Qhat_{W^c})\varphi_q}^2 .
+  \label{eq:second-moment-split}
+\end{equation}
+(4) A monotonicity lemma: $\Nesc_{W'}\le\Nesc_W$ for $W\subseteq W'$ and
+$\abs{\Qhat_{W^c,c_0}}\le\Nesc_W$, so both terms may be majorised with the
+\emph{fixed} observable $\Nesc_{W_1}$. That is (NR). The remaining
+$m$-dependence sits in the dephased state, not in the observable --- positivity
+of a pinching does not make its expectation of a non-commuting positive
+observable monotone --- which is exactly why the second clause of (NR) retains
+its supremum over $m$. Convexity of the double Ces\`aro average and Fatou's
+lemma transport the uniform bound to the fixed-window limit laws.
+
+\emph{What is missing.} (NR) itself. It is genuine and non-circular: it
+controls supremum-in-time second moments of the state and of the dephased
+states, whereas (LR3) controls only tails of double-Ces\`aro limit laws, and
+(LR3) does not recover either clause. The honest reading is that
+\cref{thm:edw} bounds the number of wrong-phase blocks unconditionally, (NR)
+is the statement that their length also stays bounded, and this theorem is the
+bridge from the latter to (LR3).
+\end{proof}
+
+\begin{remark}[Why (NR) is the right hypothesis here]
+\label{rem:flatness}
+In the exactly solvable model the closed span of the zero-energy kink family is
+annihilated by the kink Hamiltonian, so the dynamics acts trivially on it up to
+a constant phase: every state in that closed span is exactly stationary. This
+flatness is what makes an assumption about escaped content, rather than about
+transport, the natural residual input. Exhaustion of the kernel by that family
+is a separate conjecture and is not used here.
+\end{remark}
+
+\provenance{LR-D16-NR}{\texttt{theory/lr-d16.md} step (1.5).(2.1)--(2.7), THEOREM LRD-3; independently re-derived in \texttt{theory/verdicts/lr-d16-r2.md} \S4 item 3}{\texttt{theory/checks/lr\_d16\_check.py} gates C3(a)--C3(c) test finite identities and majorants only; no finite checker bears on the asymptotic implication}{\texttt{blitz-m-esc-nr-r1.md} (0F/0M/0m), \texttt{lr-d16-r1.md}, \texttt{lr-d16-r2.md}}
+
+\subsection{The escape dichotomy: mean transport destroys tightness}
+\label{subsec:escape-dichotomy}
+
+The opposite hypothesis --- that the kink's mean position transits the window
+at a rate proportional to the window size --- is incompatible with local
+relaxation, and the argument needs remarkably little.
+
+\begin{definition}[(M-ESC): mean tail transport]
+\label{def:m-esc}
+In the setting of D27 (a D17 vector $\Psi$, a cut $c_0$, a padded exhaustion
+$W_m=[a_m,b_m]\uparrow\Z$ containing $c_0$) with the fixed-window Ces\`aro
+states $\omega^\pm_{W_m}$, the hypothesis \textbf{(M-ESC)} is
+\begin{equation}
+  \theta_{\mathrm{tr}}\;:=\;\liminf_m
+  \frac{\bigl|\omega^+_{W_m}(\wallX_{W_m})
+        -\omega^-_{W_m}(\wallX_{W_m})\bigr|}{\abs{W_m}}\;>\;0 .
+  \label{eq:m-esc}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Mean escape is incompatible with first-moment tightness]
+\label{thm:escape-obstruction}
+\statusProvedConditional\;
+Assume H-MQG(1)--(3), D26(INT), and the D27 setting with clauses (LR1)--(LR2)
+but \emph{not} (LR3); assume (M-ESC). Then
+\begin{enumerate}
+\item[(a)] $\bigl|\sum_\nu\nu\,p_{W_m}(\nu)\bigr|
+\ge2s\,\theta_{\mathrm{tr}}\abs{W_m}(1-o(1))\to\infty$;
+\item[(b)] clause (LR3) \textbf{fails}:
+$\sup_m\sum_{\abs{\nu}>M}(1+\abs{\nu})p_{W_m}(\nu)=\infty$ for every $M$;
+\item[(c)] the ordered wall expectation $\delta x$ of D27 is undefined along
+that exhaustion, its defining differences diverging linearly at rate at least
+$\theta_{\mathrm{tr}}$ per window site.
+\end{enumerate}
+\textbf{Positive form}, which is not a contrapositive: the same step gives
+directly that on any state satisfying (LR) the mean wall transport is
+\emph{uniformly bounded},
+\begin{equation}
+  \sup_m\bigl|\omega^+_{W_m}(\wallX_{W_m})
+  -\omega^-_{W_m}(\wallX_{W_m})\bigr|\;\le\;\frac{M_0+1}{2s},
+  \label{eq:positive-transport-bound}
+\end{equation}
+where $M_0$ is any threshold with
+$\sup_m\sum_{\abs{\nu}>M_0}(1+\abs{\nu})p_{W_m}(\nu)\le1$; in particular
+$\theta_{\mathrm{tr}}=0$.
+\end{theorem}
+
+\begin{scope}
+\label{scope:escape-obstruction}
+\textbf{No model or state realising (M-ESC) is exhibited anywhere in this
+corpus} --- independently confirmed by the parallel lane. The theorem
+therefore constrains a hypothesis class, and until a witness exists it makes no
+clause of any class theorem necessary.
+
+Disclosure: boundedness of the mean transport under (LR3) is the quantitative
+form of D27's own existence corollary, already frozen in D27's definition
+paragraph. The genuine addition is the $M_0$ tightness route, and it is a
+strict strengthening: D27's corollary delivers convergence along the full
+sequence only under D27's optional convenience clause, and otherwise only along
+an (LR3) subsequence, whereas \eqref{eq:positive-transport-bound} is a supremum
+over \emph{all} $m$, with no subsequence, no convenience clause, and no passage
+through weak convergence.
+
+Nothing is claimed about the exactly solvable model or any confined-kink class.
+There $\theta_{\mathrm{tr}}=0$, but only on named conditionals: every state in
+the closed span of the zero-energy kink family is exactly stationary (proved),
+while exhaustion of the kernel by that family is a conjecture; and the
+kink--magnon bound $\abs{\delta x}\le\braket{N_T}/s$ is the conclusion of the
+general memory-quantization theorem, which is proved \emph{conditional} on the
+full asymptotic-decay package D18(AD1)--(AD4) for that vector --- open for this
+model, since (AD3-ex) is a conjecture (\cref{conj:ad3-ex}). Note that D18(AD3)
+is jointly unsatisfiable with (K-TAIL) (\cref{cor:eps-forced}(ii)), so this
+$\theta_{\mathrm{tr}}=0$ fence and the $\varepsilon$-theorem of
+\cref{subsec:eps-theorem} concern \emph{disjoint} state classes: a
+kink--magnon $\ell^1$ packet under the asymptotic-decay package, versus a
+magnon-free confined-tail sector state. Also not claimed: any statement about
+the packet class of D28 as such, which contains $\theta_{\mathrm{tr}}=0$
+members; mass-defectiveness of weak limits (first-moment divergence only); and
+the two-atom law as a theorem --- it is numerically exhibited only.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+Three ingredients, all cited rather than re-proved. First, each $p_{W_m}$ is a
+probability on $\Z$: at fixed $m$ the law is supported on finitely many $\nu$,
+because $\abs{\nu}$ is bounded by the diameter of the finite set
+$\spec\Qhat_{W_m,c_0}$, so no mass escapes in the Ces\`aro limit. Second, the
+exact first-moment identity, valid at every fixed $m$,
+\begin{equation}
+  \sum_\nu\nu\,p_{W_m}(\nu)
+  \;=\;-2s\bigl[\omega^+_{W_m}(\wallX_{W_m})
+  -\omega^-_{W_m}(\wallX_{W_m})\bigr].
+  \label{eq:first-moment-identity}
+\end{equation}
+Third, tightness bounds the first absolute moment: if (LR3) held, pick $M_0$
+with $\sup_m\sum_{\abs{\nu}>M_0}(1+\abs{\nu})p_{W_m}(\nu)\le1$; splitting the
+sum at $M_0$ and using total mass $1$ gives
+$\sum_\nu\abs{\nu}p_{W_m}(\nu)\le M_0+1$ for every $m$. Combining
+\eqref{eq:first-moment-identity} with (M-ESC) makes the left side diverge
+linearly in $\abs{W_m}$, contradicting that uniform bound; the quantitative
+form
+$\sum_{\abs{\nu}>M}(1+\abs{\nu})p_{W_m}(\nu)\ge
+\bigl|\sum_\nu\nu p_{W_m}(\nu)\bigr|-M$ then gives (b), and (c) is D27's
+definition of $\delta x$ read against (a). Reading the third ingredient
+forwards instead of backwards gives \eqref{eq:positive-transport-bound}.
+
+Non-circularity matters here and is checked: the first-moment identity is
+consumed at a step whose own leaf justifications name only (LR1), (LR2), and
+the exact finite-time mean formula --- not the (LR3)-conditional statement of
+the spectral memory-index theorem --- so the proof by contradiction against
+(LR3) does not assume what it refutes.
+
+Finally, the mechanism. If in the incoming Ces\`aro states the window lies
+entirely in one tail in the mean, while in the outgoing states the kink has
+transited beyond $W_m$ with weight $p_{\mathrm{tr}}$ and stayed with weight
+$1-p_{\mathrm{tr}}$, then the definition
+$\wallX_W=a-1+(1/2s)\sum_{x\in W}(S^z_x+s)$ gives
+$\omega^-_{W_m}(\wallX_{W_m})=a_m-1+o(\abs{W_m})$ and
+$\omega^+_{W_m}(\wallX_{W_m})=a_m-1+p_{\mathrm{tr}}\abs{W_m}+o(\abs{W_m})$, so
+$\theta_{\mathrm{tr}}=p_{\mathrm{tr}}$. Only the \emph{mean} tail densities
+enter: no variance hypothesis, no channel projections, no wave operators, no
+sign-definite velocity classes, no incoming-concentration step.
+\end{proof}
+
+\begin{remark}[The dichotomy, and what it costs the memory ledger]
+\label{rem:dichotomy}
+Taken together, \cref{subsec:eps-theorem} and \cref{thm:escape-obstruction}
+partition the reach of the \emph{unsubtracted} window charge. On
+confined-charge sharp-tail states, where (K-TAIL) and (K-Q) hold and
+$\theta_{\mathrm{tr}}=0$, the $\varepsilon$-version is available and
+\cref{cor:ordered-memory-zero} makes the ordered memory exactly zero. On
+mean-transiting states, where $\theta_{\mathrm{tr}}>0$, clause (LR3) fails and
+no ordered outcome measure exists. Neither side of the dichotomy carries a
+nonzero ordered memory for the unsubtracted charge. A two-atom ledger with
+$\delta x\neq0$ therefore requires a \emph{subtracted} or co-moving
+observable --- the leg subtraction of the conservation-trap paragraph, a
+definition-level move which is proposed but not made here.
+
+The two-atom shape itself is real as a mechanism, and is recorded as evidence
+for the arithmetic $\theta_{\mathrm{tr}}=p_{\mathrm{tr}}$ rather than
+re-claimed as a theorem: a critic reproduced it to four digits on a scattering
+model (weights $0.5567$ and $0.4433$, incoming-concentration defect
+$2.4\times10^{-9}$, tail $(1+513)\times0.4433=227.86$ against a measured
+$227.867$), and a checker gate re-certifies the configuration on a barrier
+model.
+\end{remark}
+
+\provenance{ACE-LD-obst-prime}{\texttt{theory/ace-ld.md} step (1.5) (PROPOSITION ACE-LD-obst$'$), with the mechanism remark at (1.5).(2.5) and the fences at (1.5).(2.6)}{\texttt{theory/checks/ace\_ld\_check.py} gate LD-C5 (incoming concentration $\le3.2\times10^{-6}$ at every window, and the exact two-atom support $\{\nu=0,\;\nu=-\abs{W}\}$ including the $\nu=0$ atom, with weights matching independently measured $\abs{r}^2=0.2704$, $\abs{t}^2=0.7296$); gate LD-C6 (bounded-transport contrast at protocol time $t_+=4$: mass at $\abs{\nu}>3$ below $9.1\times10^{-13}$, first moment $\le0.453$, with the bound $1.2$ held across a recorded sweep $t_+\in\{4,20,40,200\}$ whose maximum is $1.0712$; red-armed by \texttt{--red-c6-moving} at $12.4024>1.2$ and \texttt{--red-c6-weaktransit} at mass $3.742\times10^{-2}$). \textbf{Neither certificate exhibits an (M-ESC) state, and no gate bears on claims (a)--(c), which are proved, not tested}; the residual caveat is that the sweep gate itself is reached by no registered mutation and is green-side evidence only}{\texttt{ace-ld-r3.md} (M2 adopted verbatim, M3), \texttt{ace-ld-r4.md} \S0(ii),(iv) (M3 repaired, M1 residual caveat), \texttt{ace-ld-r2.md}; no-witness confirmed independently in \texttt{lr-d16-r1.md} M2(b)1 and \texttt{lr-d16-r2.md} M4(b)3}
+
+\subsection{Composition: mean escape excludes bounded escaped content}
+\label{subsec:m-esc-nr}
+
+The two conditional theorems above point in opposite directions, and composing
+them is pure propositional logic.
+
+\begin{proposition}[Mean escape and bounded escaped content are incompatible]
+\label{thm:m-esc-nr}
+\statusSketch\;
+Under the joint hypotheses of \cref{thm:escape-obstruction} and
+\cref{thm:nr-transfer} --- the same vector $\Psi$, cut, D27 sequence,
+fixed-window laws, and an arbitrary padded exhaustion --- (M-ESC) implies
+$\neg$(NR): at least one of the two bounds \eqref{eq:nr-clause-1},
+\eqref{eq:nr-clause-2} is infinite. This holds exhaustion by exhaustion.
+\end{proposition}
+
+\begin{scope}
+\label{scope:m-esc-nr}
+The status is a sketch that is a candidate for promotion: the argument is a
+pure composition of two exact conditional statements, and review and
+adjudication are pending. Not claimed: \emph{which} clause of (NR) fails; any
+model or state realising (M-ESC); a counterexample in the exactly solvable
+model; or necessity of (NR) outside this named route.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+\Cref{thm:escape-obstruction} gives (M-ESC) $\Rightarrow$ $\neg$(LR3), while
+\cref{thm:nr-transfer} gives (NR) $\Rightarrow$ (LR3). Assuming both (M-ESC)
+and (NR) yields (LR3) and $\neg$(LR3). No new computation is involved, and
+neither source checker exhibits an (M-ESC) witness.
+\end{proof}
+
+\provenance{M-ESC-NR}{\texttt{theory/lr-d16.md} step (1.5).(2.9), THEOREM LRD-MESC-NR; composed from \texttt{theory/ace-ld.md} (1.5) and \texttt{theory/lr-d16.md} (1.5).(2.1)--(2.7)}{No new computation: propositional composition of two exact conditional rows; neither source checker exhibits an (M-ESC) witness}{\texttt{blitz-m-esc-nr-r1.md} (0F/0M/0m)}
+
+\subsection{Kink--magnon wave operators from exact ansatz band data}
+\label{subsec:wave-operators}
+
+The escape analysis above presumes a channel decomposition. This subsection
+records the one construction of such a decomposition that the campaign has
+proved --- conditionally, on an explicitly displayed and unverified
+localization hypothesis. The general two-magnon theory is in
+\cref{sec:two-magnon} and the abstract wave-operator layer in
+\cref{sec:wave-operators}; here we state the kink--magnon case and its
+hypothesis package in full.
+
+\begin{definition}[Exact fixed-packet kink--magnon band data]
+\label{def:d28}
+Assume H-MQG(1)--(3). In addition:
+\begin{enumerate}
+\item \emph{(Covariant kink realization.)} The kink folium has a covariant
+positive-energy Hilbert realization
+$(\Hilb_{\alpha\beta},\pi_{\alpha\beta},U_{\alpha\beta})$ implementing the
+commuting infinite-volume time and lattice translations. This is extra
+structure beyond the state-set definition. The vacuum GNS triples are
+$(\Hilb_\gamma,\pi_\gamma,\Omega_\gamma)$ for $\gamma\in\{\alpha,\beta\}$, with
+$H\Omega_\gamma=0$; there is \emph{no} vacuum vector in
+$\Hilb_{\alpha\beta}$.
+\item \emph{(Exact kink band.)} Its Hamiltonian has an isolated
+finite-multiplicity kink band with dispersion $E_K\in C^2(\mathbb{T})$, matrix
+valued on the finite frame index. A fixed Gram-normalised,
+translation-covariant finite-core ansatz frame gives an \textbf{exact} band map
+$\Gamma_K$ satisfying $H_{\alpha\beta}\Gamma_K=\Gamma_KE_K$; it is not merely
+a Rayleigh--Ritz approximation.
+\item \emph{(Exact magnon bands with momentum-filtered creators.)} Each
+relevant vacuum tail $\gamma$ has an isolated selected magnon band
+$\omega_\gamma$ (written $\omega$ when symmetry relates the tails), gap
+$\Delta_M:=\min_k\omega(k)>0$, and Gram-normalised \textbf{exact} band map
+$\Gamma_{M,\gamma}$. A spacetime-Schwartz energy--momentum filter of a local
+observable gives almost-local creators $a_{\gamma,b}(n)$ with strictly positive
+energy transfer and with the \emph{momentum-filtered normalisation}
+\begin{equation}
+  a_{\gamma,b}(n)\Omega_\gamma
+  \;=\;\Gamma_{M,\gamma}\bigl(\chi_\gamma e_n\otimes e_b\bigr),
+  \qquad e_n(k):=e^{-ikn},
+  \label{eq:filtered-creator}
+\end{equation}
+for a fixed filter $\chi_\gamma\in C_c^\infty(\mathbb{T})$; translation
+covariance makes $\chi_\gamma$ independent of $n$. This \emph{equality}, not
+merely nonzero overlap with the band, is part of the exactness hypothesis. A
+position-delta normalisation, the case $\chi_\gamma\equiv1$, is not assumed and
+is in fact incompatible with a compactly supported energy--momentum filter.
+\item \emph{(Fixed packets, separated velocities, filter compatibility.)}
+Packet amplitudes are finite sums of $C_c^\infty$ products and the resulting
+physical packet states lie in the $\ell^1$ class D17. The dispersions are
+$C^\infty$ on open neighbourhoods $U_K,U_\gamma$ of their packet momentum
+supports (global $C^2$ is retained), their kink and magnon velocity supports
+have distance $\varepsilon_v>0$, and their signs are: incoming-left
+$v_M-v_K\ge\varepsilon_v$ at $t\to-\infty$; outgoing-left
+$v_M-v_K\le-\varepsilon_v$; outgoing-right $v_M-v_K\ge\varepsilon_v$ at
+$t\to+\infty$. This is a fixed-packet condition and excludes equal velocities
+and the soft endpoint. The filters of clause 3 and the kink filter
+$\chi_K\in C_c^\infty(\mathbb{T})$ satisfy $\chi_\bullet\equiv1$ on the
+corresponding packet momentum support with
+$\supp\chi_\bullet\subset U_\bullet$, and companions
+$\widetilde{\chi}_\bullet\in C_c^\infty(\mathbb{T})$ satisfy
+$\widetilde{\chi}_\bullet\equiv1$ on $\supp\chi_\bullet$ with
+$\supp\widetilde{\chi}_\bullet\subset U_\bullet$. The channel Hamiltonian
+symbols $h_K:=E_K\widetilde{\chi}_K$ and
+$h_\gamma:=\omega_\gamma\widetilde{\chi}_\gamma$ are then
+$C^\infty(\mathbb{T})$ and agree with the dispersions on the packet supports.
+\item \emph{(Two-cluster factorization through the vacuum tails.)} Write
+$\kappa_a^{(0)}(x):=\Gamma_K(e_x\otimes e_a)$ for the unfiltered exact kink
+Wannier vectors. There are $C_{\mathrm{cl}}<\infty$ and
+$\lamt\in\bigl(\max(\lambda_{E_\alpha},\lambda_{E_\beta}),1\bigr)$ such that
+for every $\gamma\in\{\alpha,\beta\}$, all frame indices $a,a'$, all
+$x,x'\in\Z$, every $r\ge1$, and every pair $A\in\alg_{\Lambda_\alpha}$,
+$B\in\alg_{\Lambda_\beta}$ with
+$\Lambda_\alpha\subset(-\infty,\min(x,x')-r]$ on the $\alpha$ side and
+$\Lambda_\beta\subset[\max(x,x')+r,\infty)$ on the $\beta$ side (either factor
+may be $\mathbb{1}$),
+\begin{equation}
+  \Bigl|\bigl\langle\kappa_a^{(0)}(x),\,AB\,\kappa_{a'}^{(0)}(x')\bigr\rangle
+  -\omega_\alpha(A)\,\omega_\beta(B)\,
+   \bigl\langle\kappa_a^{(0)}(x),\kappa_{a'}^{(0)}(x')\bigr\rangle\Bigr|
+  \;\le\;C_{\mathrm{cl}}\norm{A}\,\norm{B}\,\lamt^{\,r}.
+  \label{eq:d28-c}
+\end{equation}
+The one-tail case is $B=\mathbb{1}$ (or $A=\mathbb{1}$); the genuinely
+two-sided case is used at exactly one step. The constants depend on the model
+and the frame only --- \emph{not} on $A,B,\Lambda_\alpha,\Lambda_\beta,r,x,x',
+a,a'$, and in particular not on any time parameter, the positions being
+packet-driven and time dependent downstream. This is the localization input
+that turns exact band equations into a two-cluster estimate; isolated
+eigenvalues alone do not imply it. It is the sole replacement for the vacuum
+clustering apparatus of the source literature, and no four-point analogue is
+assumed.
+\end{enumerate}
+The asymptotic channel Hamiltonian is multiplication by
+$E_K(p)+\omega_\gamma(k)$. Smooth packet domains with the three velocity signs
+are denoted $D_-^L,D_+^L,D_+^T$, and $P_L,P_T$ are the two outgoing direct-sum
+projections. We refer to \eqref{eq:d28-c} as the \emph{two-cluster
+inequality}.
+\end{definition}
+
+\begin{remark}[A regime fence, which is not a hypothesis]
+\label{rem:d28-r}
+Put $K_-:=\min E_K$, $K_+:=\max E_K$, $W_K:=K_+-K_-$, and let $I_{\mathrm{in}}$
+be the range of $E_K(p)+\omega(k)$ on the incoming packet support. Same-band
+kink absorption is excluded by
+$d_{\mathrm{abs}}:=\dist(I_{\mathrm{in}},[K_-,K_+])>0$, for which the
+packet-independent sufficient condition is $\Delta_M>W_K$. With
+$\Delta_r:=\min_k\omega_r(k)$ for every other known one-particle vacuum band
+and $K_*:=\inf_{j\ge2,p}E_{K,j}(p)$ for every other known kink band, one asks
+$\sup I_{\mathrm{in}}+\eta_{\mathrm{inel}}<\Theta_{\mathrm{inel}}$ where
+$\Theta_{\mathrm{inel}}:=\min\{K_-+2\Delta_M,\;K_*,\;\inf_r(K_-+\Delta_r)\}$
+and $\eta_{\mathrm{inel}}>0$, absent entries being $+\infty$; the three entries
+respectively exclude an additional magnon, a higher-kink absorption channel,
+and a different one-particle channel. An uncomputed wall--magnon bound band is
+not excluded. \textbf{These inequalities are used nowhere in the proof.} Their
+role is to make the \emph{exactness} hypotheses plausible --- an isolated exact
+band is not to be expected when a competing channel is open --- so they belong
+to the justification of \cref{def:d28}, not to its inferential content. Adding
+or deleting them changes no step.
+\end{remark}
+
+\begin{theorem}[Fixed-packet kink--magnon wave operators exist and are isometric]
+\label{thm:ac-ex}
+\statusProvedConditional\;
+Proved only as the following conditional implication. Assume H-MQG(1)--(3) and
+the whole of \cref{def:d28} --- exact kink and magnon band maps, covariant
+kink-sector realization, momentum-filtered creator normalisation, velocity
+separation $\varepsilon_v>0$, and the displayed \emph{two-sided} two-cluster
+inequality \eqref{eq:d28-c}. Then, on the fixed packet domains:
+\begin{enumerate}
+\item[(ACE.1)] the Cook limits $W_-^L$, $W_+^L$ and $W_+^T$ exist;
+\item[(ACE.2)] $W_-^L$ and $W_+:=W_+^L\oplus W_+^T$ are isometries, and
+$N_T^{\mathrm{ex}}:=W_+P_TW_+^*$ is an orthogonal projection on the
+constructed out-space $\Hilb_{\mathrm{out}}^{\mathrm{ex}}:=\ran W_+$ --- the
+transmitted-channel number of D18 restricted to that range, with nothing
+asserted on its orthogonal complement.
+\end{enumerate}
+A third conclusion is \textbf{triply conditional}, on \emph{all three} of: the
+charge assignment $q_{\mathrm{in}}=q_L=-1$, $q_T=+1$; the named local-decay
+hypothesis (AD3-ex) of \cref{conj:ad3-ex}, which this construction does not
+prove; and the existence of the ordered-limit outcome measure for the vector in
+question, which \cref{def:d28} does not supply. Under all three:
+\begin{enumerate}
+\item[(ACE.3)] for a normalized event vector in
+$\ran W_-^L\cap\Hilb_{\mathrm{out}}^{\mathrm{ex}}$ \emph{for which that outcome
+measure exists}, the constructed-channel part of the measure has support
+\emph{contained in} $\{0,2\}$ (either weight may vanish),
+\begin{equation}
+  p_\nu^{\mathrm{ex}}
+  =\norm{P_LW_+^*\Psi}^2\delta_{\nu,0}
+  +\norm{P_TW_+^*\Psi}^2\delta_{\nu,2},
+  \qquad
+  p_2^{\mathrm{ex}}=\braket{\Psi,N_T^{\mathrm{ex}}\Psi},
+  \label{eq:ace3-ledger}
+\end{equation}
+and the ledger gives $\delta x_{\mathrm{ex}}=-p_2^{\mathrm{ex}}/s$.
+\end{enumerate}
+The order of limits is frozen: infinite-volume dynamics first, then the
+wave-operator time limit, then any fixed-window limit, and the spatial
+exhaustion last. No statement is made at zero momentum or after a packet-soft
+limit.
+\end{theorem}
+
+\begin{scope}
+\label{scope:ac-ex}
+\textbf{The two-cluster inequality \eqref{eq:d28-c} is the load-bearing
+hypothesis and is unverified on any model.} The threshold inequalities of
+\cref{rem:d28-r} are used in no step. No completeness, no implication from raw
+band data, no bound-state exclusion, no threshold-inequality use, and no soft
+limit is claimed. Nothing is asserted about the orthogonal complement of the
+constructed out-space.
+\end{scope}
+
+\begin{proof}[Idea of proof]
+The construction is a Cook argument with the vacuum clustering apparatus
+replaced by the single displayed cut \eqref{eq:d28-c}. One fixes a smooth
+monotone profile $\theta$ with $\theta'$ supported in $[-w,w]$ and
+$\norm{\theta'}_\infty\le C/w$, sets $\theta_T:=\theta$ and
+$\theta_L:=1-\theta$, and defines the kink--magnon precursor identification
+\begin{equation}
+  I_cF\;:=\;\sum_{x,y,a,b}\theta_c(y-x)\,F^{ab}(x,y)\,
+  a_{c,b}(y)\,\kappa_a(x),
+  \label{eq:precursor-identification}
+\end{equation}
+with the filtered Wannier frame $\kappa_a(x)=\Gamma_K(\chi_Ke_x\otimes e_a)$.
+Both profiles are fixed, independent of $t$ and of the packet. The free channel
+Hamiltonian is multiplication by $E_K(p)+\omega_\gamma(k)$, which on the packet
+domain coincides with convolution by the filtered kernels, because the packet
+momentum supports lie where the filters are identically one. Commuting the
+creator past the Hamiltonian produces a defect that splits into an exact
+band-equation term and two kernel-tail terms; velocity separation makes the
+supports of the kink and magnon packets separate ballistically, so the defect
+is integrable in $t$ and the Cook limits exist.
+
+Isometry is where the two-cluster inequality is consumed. One needs a
+four-cluster factorization,
+\begin{equation}
+  \bigl|\braket{a_{\gamma,b}(y)\kappa_a(x),\,
+  a_{\gamma,b'}(y')\kappa_{a'}(x')}
+  -\braket{\kappa_a(x),\kappa_{a'}(x')}\,G_\gamma^{bb'}(y,y')\bigr|
+  \;\le\;C_N\langle r\rangle^{-N},
+  \label{eq:four-cluster}
+\end{equation}
+with $G_\gamma$ the exact magnon Gram form. This is \emph{derived}, not
+assumed: the product $a_{\gamma,b}(y)^\dagger a_{\gamma,b'}(y')$ is almost
+local about $\{y,y'\}$, so it may be truncated to a one-sided region at
+distance $\gtrsim r$ with rapidly decaying error, whereupon the one-tail case
+of \eqref{eq:d28-c} factors it and the vacuum evaluation is exactly the magnon
+Gram form by the filtered-creator normalisation
+\eqref{eq:filtered-creator}. The genuinely two-sided case of \eqref{eq:d28-c}
+is used at one step only. The isometry and the projection property of
+$N_T^{\mathrm{ex}}$ follow on the constructed range, with no completeness
+statement anywhere.
+\end{proof}
+
+\provenance{AC-EX; D28}{\texttt{theory/ansatz-scattering.md}: the theorem at \S0, the almost-locality and defect estimates at step (1.3), velocity separation at (1.4), Cook integrability at (1.5), isometry and channel number at (1.6), and the conditional ledger at (1.7)}{\texttt{theory/checks/ansatz\_scattering\_check.py}, gates ACE-C1a/C1b/C2a/C2b (green exit $0$; \texttt{--red}, \texttt{--red-slow-kernel}, \texttt{--red-equal-velocity}, \texttt{--red-absorption} each exit $1$; all five re-run independently). Kernel decay is red-certified load-bearing on the majorant of step (1.5).(2.4)(i), not on the literal $\ell^2$ defect, which is insensitive to it and whose mutation is registered dead; \texttt{--red-absorption} is a fence regression guard and is \emph{not} a red test of this theorem. \textbf{Neither certificate touches the two-cluster inequality \eqref{eq:d28-c}}}{\texttt{memory-index-r3.md} \S4 (amended sentence; the earlier hold on this row is lifted) and \S0 V6, \S1}
+
+\subsection{The open local-decay hypothesis}
+\label{subsec:ad3-ex}
+
+What separates the conditional ledger (ACE.3) from a theorem is one named
+hypothesis, and it is worth displaying exactly as it stands.
+
+\begin{conjecture}[Local decay on the constructed channels]
+\label{conj:ad3-ex}
+\statusConjecture\;
+Let $\Psi=W_+(F_L,F_T)$ and $\Psi_t:=e^{-itH}\Psi$. For every fixed window $W$
+\textbf{containing the kink core region}, with $E_W(\cdot)$ the spectral
+measure of the regularised window charge and $P_{\mathrm{ch}}$,
+$\mathrm{ch}\in\{L,T\}$, the constructed channel projections,
+\begin{equation}
+  \lim_{t\to+\infty}
+  \norm{E_W(\{q_{\mathrm{ch}}\})\Psi_t-P_{\mathrm{ch}}\Psi_t}=0,
+  \label{eq:ad3-ex}
+\end{equation}
+the limit being taken \emph{before} $W\uparrow\Z$.
+\end{conjecture}
+
+\begin{scope}
+\label{scope:ad3-ex}
+The order of limits is part of the statement: time first at fixed $W$, then the
+window exhaustion. The hypothesis is the corresponding clause of the general
+asymptotic-decay package D18, restricted to the constructed channels;
+\cref{def:d28} deliberately does not contain it. No part of it is proved. What
+\emph{is} proved from it is the vanishing of the inter-channel cross terms, at
+step (1.7).(2.2) of the construction. The gloss ``the outgoing
+boundary-straddling charge on $\partial W$ vanishes in the ordered limit''
+describes the \emph{missing mechanism}, not the hypothesis: the free leg and
+its dressing do leave any fixed window at rate $O(\abs{t}^{-N})$, but
+converting that into convergence of the window-charge \emph{spectral
+projection} requires control of the boundary-straddling charge that no step of
+the construction supplies. \Cref{thm:spectral-diagonality} is the abstract
+statement of what such control would buy, and \cref{thm:eps-theorem} is the
+$\varepsilon$-weakened version available on the confined-tail class --- which,
+by \cref{cor:no-escaping-leg}, is disjoint from the class this hypothesis is
+about.
+\end{scope}
+
+\provenance{AD3-ex}{Displayed in \texttt{theory/ansatz-scattering.md} step (1.7), in the ASSUME block; consumed at (1.7).(2.2)}{---}{---}
