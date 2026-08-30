@@ -99,6 +99,33 @@ titles TeX-verified); LEDGER updated; remote origin EXISTS
 (github.com:tobiasosborne/tns-as-st-me) — the old "no remote" note is
 dead.
 
+## Session 9 (continued) — the reduction program (TJO directive)
+
+TJO: reconciliation with the continuum must be REDUCTION, not analogy —
+"the only acceptable general result reduces, in the right limits, to what
+people actually accept as memory / soft theorem / asymptotic symmetries",
+physics rigor (EFT matching, LSZ) sufficing. Directive persisted in bd
+memory. Executed as 1 Opus + 3 codex lanes; verdicts concur
+(docs/reduction-limits.md is the record; labbook shard 18 presents it;
+lane files theory/lanes/reduction/). **R1** soft theorem: reduces with
+caveats — strict continuum limit is free (Dyson), limits commute, the 1/S
+slope is the matched cutoff-scale scattering length 1/(spin density),
+ordinary σ=1 Adler class (σ=2 note in docs/continuum-antecedents.md was
+WRONG, corrected in place). **R2**: the naive 1+1d specialization of the
+continuum construction is exactly the REFUTED orbit row — the lattice
+corrects the continuum expectation; soft/hard charge split reduces
+cleanly. **R3**: displacement δx=−N_T/s reduces CLEANLY onto magnonics
+(Yan–Wang–Xia, refs/arxiv-1106.4382 fetched+verified, Batch 6), constants
+included; **transmission T(k) DOES NOT REDUCE** (sharp-wall zero vs
+reflectionless continuum wall; regimes disjoint) → **tns-bsk P1,
+referee-critical**. **R4**: edges reduce conditionally; every silent
+continuum assumption mapped to a named lattice hypothesis; new gap:
+Cesàro-vs-pointwise Tauberian bridge (tns-94g). Also tns-1tq (factor-2
+audit in the R1 amplitude match). Honest summary for the Letter: in
+corner B the lattice proves where the continuum computes and computes
+where the continuum proves; the unconditionally computed quantity is the
+two-magnon soft slope.
+
 ## Resume order for session 8
 
 1. **Numerics wave 2 relaunch** (tns-f5r): kink memory + edge contrast;

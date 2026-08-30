@@ -1,0 +1,844 @@
+% SHARD-ID: LB-18-CONTINUUM-REDUCTION
+% SHARD-TITLE: Reduction to the standard continuum setting
+% SHARD-SOURCES: docs/reduction-limits.md (the working physics analysis);
+%   theory/lanes/reduction/r1-smatrix.md, r3-wall.md, r2r4-ward.md
+%   (independent codex calculation lanes, 2026-08-30; verdicts concur);
+%   docs/continuum-antecedents.md (digest, with one correction recorded here);
+%   refs/arxiv-2201.01393 (type-B soft scaling, pole cancellation);
+%   refs/arxiv-1602.08692 (magnon EFT, vanishing ferromagnetic scattering
+%   length); refs/arxiv-1106.4382 (magnon-driven domain-wall motion);
+%   refs/arxiv-1709.05018 (soft-pion triangle); refs/arxiv-1411.5745
+%   (memory as a Fourier residue); refs/arxiv-1703.05448 (triangle logic);
+%   definitions.md D6--D8, D12, D13--D18; claims/CLAIMS.md rows WI, A1, A2,
+%   A2-orbit-r1, G0, G0-soft-r1, OR2, S2-2body, S2-2body-S, S-general, M,
+%   M-flux, M-quant, M-quant-G, M-tk, Bc
+% SHARD-CLAIMS: owns no statement.  Every result it uses is stated and proved
+%   in the section that owns it; the reduction arguments themselves are
+%   physical arguments and are deliberately outside claims/CLAIMS.md.
+
+% --- shard-local semantic macros (rule 10 of the writing guide) -------------
+\providecommand{\spindens}{M_{0}}          % spin (magnetisation) density S/a
+\providecommand{\latconst}{a_{\ell}}       % lattice constant (a is used for windows)
+\providecommand{\softexp}{\sigma}          % soft-scaling exponent of 2201.01393
+\providecommand{\Gdiagr}{G_{\mathrm{diag}}}
+\providecommand{\Aeffr}{\A_{\mathrm{eff}}}
+
+\section{Reduction to the standard continuum setting}
+\label{sec:continuum-reduction}
+
+\subsection{The question}
+
+Every physicist who reads this work will ask the same thing first, and they will
+ask it before they ask anything else:
+
+\begin{quote}
+Does this reduce, in the right limits, to what we already accept as a memory
+effect, a soft theorem, and an asymptotic symmetry?
+\end{quote}
+
+The question is fair and it is answerable. This section answers it in the
+register in which it was asked: effective-field-theory matching, perturbation
+theory, stationary phase, collective coordinates. Four reductions are examined
+and each one ends in a verdict. Two of them come out well, one comes out badly,
+and one comes out well in a way that requires a correction to be issued rather
+than a confirmation to be announced. All four verdicts are stated plainly.
+
+\begin{remark}[Status of everything in this section]
+\label{rem:reduction-status}
+The reduction arguments below are \emph{physical arguments, not part of the
+claims DAG}. They carry no status tag, they are not proved anywhere in the
+repository, and no result elsewhere in this labbook depends on them. Where a
+reduction consumes a lattice result, that result is a theorem owned by another
+section and is cited through its provenance block; where a reduction consumes a
+continuum equation, that equation is transcribed from the local source. The
+purpose of the section is to let a reader decide whether the lattice objects are
+the objects they already know.
+\end{remark}
+
+\bigskip
+
+\noindent Summary of the four verdicts.
+
+\begin{center}
+\begin{tabular}{@{}p{0.20\textwidth}p{0.74\textwidth}@{}}
+\toprule
+soft theorem & Reduces, with caveats. The naive continuum limit is a free
+theory, but the soft \emph{law} survives it intact and matches the accepted
+continuum magnon amplitude term by term. The soft-scaling exponent is
+$\softexp=1$, not $2$. \\
+\midrule
+asymptotic symmetry & Does not reduce as stated. The naive one-dimensional
+specialisation of the continuum construction is exactly the object this campaign
+refuted. The charge-splitting half of the corner does reduce cleanly. \\
+\midrule
+memory & The magnonics reduction is clean, with constants. The Fourier-residue
+reduction reduces in structure but not in content, for a reason the continuum
+literature predicts. The kink-model transmission coefficient does not reduce at
+all. \\
+\midrule
+the edges & Reduce, with caveats. Every silent continuum assumption has a named
+lattice counterpart, and two of them the lattice removes outright rather than
+renames. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{The soft theorem}
+\label{sec:reduction-soft}
+
+\subsubsection*{What the lattice gives}
+
+The lattice side of this reduction is exact. For the fully polarised bilinear
+ferromagnet at any site spin $S$, the exact two-magnon coefficient ratio and its
+soft phase slope are theorems (\cref{sec:two-magnon}): with $z_j=e^{ik_j}$,
+$a=1+z_1z_2$, $b=z_1+z_2$ and $\mu=(2S-1)a+b$,
+\begin{equation}
+  S_{12}(k_1,k_2)=\frac{S\,a\,b-z_1\mu}{z_2\mu-S\,a\,b},
+  \qquad
+  \left.\frac{\partial\delta_{\mathrm{phys}}}{\partial k_s}\right|_{k_s=0}
+  =\frac{\sgn(v_h-v_s)}{S}.
+  \label{eq:red-exact-ratio}
+\end{equation}
+The soft magnon decouples in the plain sense that $S_{12}\to1$; this is a limit,
+not an Adler-zero theorem.
+
+\provenance{S2-2body-S, S2-2body, OR2, D6--D8}{\cref{sec:two-magnon};
+\texttt{theory/spin-s-twomagnon.md}, \texttt{theory/oracle-bethe.md}}{---}{---}
+
+\subsubsection*{The naive continuum limit is free, and this is verified}
+
+Introduce a lattice constant $\latconst$ and physical momenta $p=k/\latconst$,
+and let $\latconst\to0$ at fixed $p$. At $S=\tfrac12$ the exact phase is known
+in closed form through the rapidity $\lambda(k)=\tfrac12\cot(k/2)$, and
+\begin{equation}
+  \lambda(\latconst p)=\frac{1}{\latconst p}-\frac{\latconst p}{12}+O(\latconst^3),
+  \qquad
+  \lambda_1-\lambda_2=\frac{p_2-p_1}{\latconst\,p_1p_2}+O(\latconst),
+  \label{eq:red-rapidity}
+\end{equation}
+so that
+\begin{equation}
+  \delta_{12}
+  =2\arctan\frac{1}{\lambda_1-\lambda_2}
+  =2\arctan\frac{\latconst\,p_1p_2}{p_2-p_1}
+  \;\xrightarrow[\ \latconst\to0\ ]{}\;0 .
+  \label{eq:red-free}
+\end{equation}
+The rapidity difference diverges like $1/\latconst$ and the scattering matrix
+tends to the identity. The naive continuum theory of lattice magnons is free.
+This is the one-dimensional face of Dyson's vanishing ferromagnetic magnon
+scattering length, and the continuum effective-theory literature reaches it
+independently: in the ferromagnet without external fields the scattering length
+vanishes, as a consequence of the derivative couplings demanded by Goldstone's
+theorem.
+
+\subsubsection*{What survives: the doubly soft amplitude}
+
+The free limit is not the end of the story, because the soft theorem is not a
+statement about the size of the interaction. Expanding
+\eqref{eq:red-exact-ratio} to second order in \emph{both} lattice momenta, the
+constant and linear parts of numerator and denominator cancel identically and
+what remains is
+\begin{equation}
+  \boxed{\;
+  S_{12}(k_1,k_2)=1-\frac{i}{S}\,\frac{k_1k_2}{k_1-k_2}+O(k^3).\;}
+  \label{eq:red-doubly-soft}
+\end{equation}
+Two checks. Sending $k_1=k_s\to0$ at fixed $k_2=k_h>0$ returns the exact slope
+$1/S$ of \eqref{eq:red-exact-ratio}. Setting $S=\tfrac12$ returns the frozen
+spin-one-half coefficient $2$ of \cref{sec:two-magnon}.
+
+In physical momenta, \eqref{eq:red-doubly-soft} reads
+\begin{equation}
+  S_{12}=1-\frac{i}{\spindens}\,\frac{p_1p_2}{p_1-p_2}+O(\latconst^2),
+  \qquad
+  \spindens:=\frac{S}{\latconst},
+  \label{eq:red-doubly-soft-phys}
+\end{equation}
+where $\spindens$ is the spin, or magnetisation, density. Every microscopic
+parameter has dropped out. The exchange coupling $J$ is absent, and the site
+spin appears only inside $\spindens$.
+
+\begin{observation}[The soft slope is an inverse spin density]
+\label{obs:slope-is-inverse-density}
+The exact lattice slope $\sgn(v_h-v_s)/S$ is a slope per \emph{lattice}
+momentum. Per physical momentum it is
+\begin{equation}
+  \left.\frac{\partial\delta_{\mathrm{phys}}}{\partial p_s}\right|_{p_s=0}
+  =\frac{\sgn(v_h-v_s)}{\spindens},
+  \label{eq:red-slope-phys}
+\end{equation}
+and as a length --- the Wigner displacement that the soft magnon imparts to the
+hard one --- it is $\latconst/S=1/\spindens$. The combination that stays finite
+in the continuum is the spin density, and the soft law is the statement that the
+displacement equals one inverse spin density.
+\end{observation}
+
+\noindent This resolves the apparent paradox of \eqref{eq:red-free}. A literal
+$\latconst\to0$ at fixed $S$ sends $\spindens\to\infty$, that is, it describes an
+infinitely stiff magnet, and of course the interaction vanishes there. In a real
+magnet $\spindens$ is the saturation magnetisation, a finite measurable number,
+and the magnon effective theory is a low-energy expansion with a physical
+cutoff of order $1/\latconst$ rather than a continuum limit. The soft slope is
+then a perfectly ordinary dimensionful Wilson coefficient.
+
+\subsubsection*{Matching to the continuum magnon effective theory}
+
+Model the magnon as a Schr\"odinger field with $\omega(p)=p^2/2m$. From
+$\omega_S(k)=2JS(1-\cos k)\simeq JSk^2$ one reads $m=1/(2JS\latconst^2)$. In one
+dimension the Born-level two-body scattering matrix for identical bosons is
+$S-1=imM/\bigl(2\abs{p_1-p_2}\bigr)$ with $M$ the on-shell $2\to2$ amplitude, so
+\eqref{eq:red-doubly-soft-phys} matches onto
+\begin{equation}
+  M(p_1,p_2)=-\frac{2p_1p_2}{m\,\spindens}=-4J\latconst^{3}\,p_1p_2 .
+  \label{eq:red-matched-amplitude}
+\end{equation}
+Two consequences. First, writing the leading contact interactions as
+\begin{equation}
+  \mathcal{L}_{\mathrm{int}}
+  =-\frac{g_0}{2}\bigl(\psi^\dagger\psi\bigr)^2
+   -\frac{g_2}{4}\Bigl[\bigl(\partial_x\psi^\dagger\bigr)^2\psi^2+\text{h.c.}\Bigr]
+   +\dotsb,
+\end{equation}
+the matching forces $g_0=0$ and $g_2\propto1/(m\spindens)=2J\latconst^3$: the
+scattering-length operator has vanishing Wilson coefficient and the leading
+magnon self-interaction carries two derivatives. That is Dyson's theorem,
+obtained here as a consequence of \eqref{eq:red-doubly-soft} rather than as an
+input. Second, the accepted continuum computation for the ferromagnet, with
+dispersion $\omega=(F^2/\Sigma)\bm{k}^2$, gives the tree amplitude
+\begin{equation}
+  M\bigl[\pi(\bm{k}_1)+\pi(\bm{k}_2)\to\pi(\bm{k}_3)+\pi(\bm{k}_4)\bigr]
+  =\frac{2F^2}{\Sigma^2}\,\bigl(\bm{k}_1\cdot\bm{k}_2\bigr),
+  \label{eq:red-continuum-amplitude}
+\end{equation}
+stated in the source to agree with Dyson's microscopic analysis. The functional
+form of \eqref{eq:red-matched-amplitude} and \eqref{eq:red-continuum-amplitude}
+is the same, with no constant piece in either; identifying $\Sigma$ with the
+spin density $\spindens$ and $F^2$ with the spin stiffness $JS^2\latconst$ makes
+every parametric dependence agree, and leaves an overall factor of two that
+depends on normalisation conventions this section has not re-derived. That
+factor is recorded as an open point below.
+
+\subsubsection*{Do the soft and continuum limits commute?}
+
+They do, and it is worth saying why the question has a slightly disappointing
+answer. The lattice constant enters the exact scattering matrix only through the
+change of variables $k=\latconst p$, so there is nothing available to fail. On
+the exact spin-one-half function \eqref{eq:red-free}, both orders of the two
+limits give zero, and both orders of the two limits applied to the slope give
+zero as well.
+
+The limit that genuinely fails to commute is a different pair, and it is the one
+that carries the physics.
+
+\begin{observation}[Soft against hard, not soft against continuum]
+\label{obs:soft-hard-noncommute}
+From \eqref{eq:red-doubly-soft},
+\begin{equation}
+  \lim_{k_h\to0}\;
+  \left.\frac{\partial\delta_{\mathrm{phys}}}{\partial k_s}\right|_{k_s=0}
+  =\frac1S,
+  \qquad
+  \left.\frac{\partial}{\partial k_s}
+  \Bigl[\lim_{k_h\to0}\delta_{\mathrm{phys}}\Bigr]\right|_{k_s=0}=0 .
+  \label{eq:red-noncommute}
+\end{equation}
+The two orders differ by the entire content of the theorem.
+\end{observation}
+
+\noindent This is the same non-uniformity that \cref{sec:two-magnon} records
+when it fixes the hard momentum away from the zone centre, and it is visible in
+the quadratic coefficient $\abs{v_h}/\omega_h=\cot(k_h/2)$, which diverges as
+$k_h\to0$. Its physical reading is that ``soft'' is a statement about the
+\emph{ratio} $k_s/k_h=p_s/p_h$, which does not know about $\latconst$ at all.
+That is exactly why the soft law survives a limit in which the scattering matrix
+becomes trivial: the theorem constrains a scale-invariant ratio, and only the
+overall size of the interaction carries the factor of $\latconst$.
+
+\subsubsection*{Where the type-B bound sits, and a correction}
+
+The accepted continuum route to a soft theorem for a non-relativistic Goldstone
+runs through current conservation. With the broken current matrix element
+written as
+\begin{equation}
+  \bra{\Omega}J^{\mu}(x)\ket{\theta(\bm p)}
+  =e^{-ip\cdot x}\bigl[\,ip^{\mu}F_1(\abs{\bm p})+i\delta^{\mu0}F_2(\abs{\bm p})\,\bigr],
+  \qquad
+  \omega^2F_1+\omega F_2-\bm{p}^2F_1=0,
+\end{equation}
+the current matrix element between scattering states factorises on the Goldstone
+pole,
+\begin{equation}
+  \bra{\beta}J^{\mu}(0)\ket{\alpha}
+  =\frac{i}{p^0-\omega(\abs{\bm p})}
+   \bra{\Omega}J^{\mu}(0)\ket{\theta(\bm p)}\braket{\beta+\theta(\bm p)|\alpha}
+   +R^{\mu}(p),
+\end{equation}
+and current conservation cancels that pole exactly, leaving
+\begin{equation}
+  \braket{\beta+\theta(\bm p)|\alpha}
+  =\left.\frac{p^0R_0(p)+p^rR_r(p)}{\omega(\abs{\bm p})F_1+F_2}\right|_{p^0=\omega(\abs{\bm p})} .
+  \label{eq:red-nradler}
+\end{equation}
+The Adler zero then follows only under the additional assumption --- flagged in
+the source as not following from standard polology --- that $R^\mu(p)$ is
+non-singular as $\bm p\to0$ on shell. Counting powers in
+\eqref{eq:red-nradler} with a soft-scaling exponent $\softexp$ defined by
+$\mathcal{A}\propto\varepsilon^{\softexp}$ under $\bm p\mapsto\varepsilon\bm p$
+gives the two bounds
+\begin{equation}
+  \softexp\ge\min(m,n+1)\ \ \text{(type $A_m$, $d\ge m+1$)},
+  \qquad
+  \softexp\ge\min(2m,n+1)\ \ \text{(type $B_{2m}$)},
+  \label{eq:red-sigma-bounds}
+\end{equation}
+where $n$ is the degree of the theory's generalised \emph{spatial} shift
+symmetry, that is, the degree of the polynomial
+$\alpha(x)=\epsilon_{\nu_1\dots\nu_n}x^{\nu_1}\cdots x^{\nu_n}$ under which the
+Goldstone field shifts.
+
+The ferromagnet magnon is type $B_2$, so $m=1$. Its broken generators produce
+only the ordinary constant shift of the Goldstone field, so $n=0$, and
+\eqref{eq:red-sigma-bounds} gives $\softexp\ge\min(2,1)=1$. The exact lattice
+amplitude \eqref{eq:red-doubly-soft} vanishes \emph{linearly} in either soft
+momentum, so $\softexp=1$ exactly. The mechanism is transparent in
+\eqref{eq:red-nradler}: with a quadratic dispersion the temporal piece
+$p^0R_0=\omega R_0$ is already of second order, but the spatial piece
+$p^rR_r$ is of first order unless a spatial shift symmetry of degree at least
+one forces $R_r(0)=0$, and the Heisenberg ferromagnet has no such redundant
+symmetry.
+
+\begin{remark}[Correction to the campaign's reading of the type-B bound]
+\label{rem:sigma-correction}
+An earlier internal digest recorded the expectation that the lattice soft
+theorem should realise the enhanced type-B value $\softexp=2$, and glossed the
+type-B bound as needing no additional shift symmetry. Both readings are wrong.
+Linear vanishing \emph{is} $\softexp=1$. The two type-$B_2$ theories that do
+reach $\softexp=2$ in the source do so because they possess a linear spatial
+generalised shift symmetry, that is $n=1$, whereupon
+$\min(2m,n+1)=2$. What is genuinely special about type B is that $n=1$
+\emph{suffices} to reach $\softexp=2$, whereas type $A_1$ with $n=1$ still
+obtains only $\min(1,2)=1$. The lattice ferromagnet has $n=0$ and lands on
+$\softexp=1$, in agreement with the bound and with the exact two-magnon
+computation. No proved statement of this campaign changes; only the expectation
+was mistaken.
+\end{remark}
+
+\begin{observation}[Verdict for the soft theorem]
+\label{obs:verdict-soft}
+\emph{Reduces, with caveats.} The exact lattice soft law reduces to the accepted
+continuum statement --- a derivative-coupled type-$B_2$ Goldstone with vanishing
+scattering length, tree amplitude proportional to $\bm k_1\cdot\bm k_2$, and an
+ordinary Adler zero --- with the slope $1/S$ per lattice momentum becoming one
+inverse spin density per physical momentum. The caveats are that the literal
+continuum limit at fixed site spin is free and the physical statement therefore
+requires a finite lattice constant; that the soft-scaling exponent is $1$ and
+not $2$; and that an overall factor of two in the amplitude match is a
+normalisation question left unchecked.
+\end{observation}
+
+\subsection{The asymptotic symmetry}
+\label{sec:reduction-symmetry}
+
+\subsubsection*{The specialisation the continuum construction makes}
+
+A continuum asymptotic-symmetry construction assigns one charge per function on
+the celestial sphere. In one spatial dimension the celestial sphere degenerates
+to two points, left and right infinity, a function on it is a pair
+$(g_L,g_R)$, and the diagonal subgroup acts trivially on the physical content of
+the pair. The specialisation is therefore
+\begin{equation}
+  \A=(G_L\times G_R)/\Gdiagr,
+  \qquad\text{complete invariant}\quad [\,g_Lg_R^{-1}\,].
+  \label{eq:red-naive-A}
+\end{equation}
+This is the correct guess, and it is the group this campaign started from.
+
+\subsubsection*{It is the object this campaign refuted}
+
+The refutation is recorded in \cref{sec:corner-a}: the orbit of
+\eqref{eq:red-naive-A} is \emph{not} the set of vacuum pairs, and
+$[\,g_Lg_R^{-1}\,]$ is \emph{not} the complete invariant. What the lattice
+supplies in its place are two different objects. In the unbroken case the orbit
+is $\Aeffr=G/N_\alpha$, where $N_\alpha$ is the kernel of the virtual
+representation $\rho_\alpha\colon G\to\mathrm{PGL}(\chi)$ carried by the bond
+space; the stabiliser contains the diagonal and equals it exactly when
+$N_\alpha$ is trivial. In the broken case, and under transitivity, vacuum pairs
+form $(G/H_\alpha)\times(G/H_\alpha)$ with stabiliser $H_\alpha\times H_\beta$,
+and the complete diagonal invariant is a \emph{double} coset in
+$H_\alpha\backslash G/H_\alpha$.
+
+\provenance{A2-orbit-r1 (refuted), A1(e), A2(e)}{\cref{sec:corner-a};
+\texttt{theory/corner-a.md}, \texttt{theory/corner-a-kinks.md}}{\texttt{theory/checks/corner\_a\_check.py} C6--C8, C7, C11}{\texttt{theory/verdicts/corner-a-r3.md}}
+
+\begin{observation}[Where the two pictures agree and where they part]
+\label{obs:symmetry-agree-part}
+When the virtual representation is faithful and the symmetry is completely
+broken, $N_\alpha$ and $H_\alpha$ are trivial, both lattice classifiers collapse
+to $G$, and \eqref{eq:red-naive-A} is recovered. The continuum answer is
+therefore the lattice answer in the structureless case. The lattice adds three
+things with no continuum counterpart: the finite kernel $N_\alpha$, produced by
+a projective representation on a finite-dimensional bond space that the
+continuum construction has no analogue of; the vacuum stabiliser $H_\alpha$,
+which turns single cosets into double cosets; and the cohomology class
+$[\omega_\alpha]\in H^2(G,U(1))$, an invariant of the \emph{representation}
+rather than of the group, which obstructs removing the multiplier and has no
+image in \eqref{eq:red-naive-A} at all. Conversely, the continuum has one piece
+of machinery with no lattice image, the logarithmic celestial Goldstone
+correlators, which rest on representation theory of the massless little group
+and should not be sought here.
+\end{observation}
+
+\subsubsection*{The soft and hard charges do reduce}
+
+The other half of the corner reduces cleanly, and it is the half a referee will
+recognise immediately. The continuum construction defines a soft charge as the
+zero-frequency antisymmetric combination of Goldstone creation and annihilation
+operators, adds a hard charge built as a bilinear in the matter operators with
+kernel $q^\mu p^\nu\gamma_{\mu\nu}/(p\cdot q)$, and proves that the sum
+commutes with the scattering matrix between physical states. Its lattice mirror
+is built from proved machinery.
+
+The modulated charge $Q[f;\xi]=\sum_xf(x)q_x(\xi)$ obeys the exact continuity
+identity
+\begin{equation}
+  \bigl[H,\,Q[f;\xi]\bigr]=\sum_x(\Delta f)(x)\,j_{x|x+1}(\xi)
+  \label{eq:red-continuity}
+\end{equation}
+for every Lie-algebra element and every finite-range Hamiltonian, with the
+second difference of the profile in the role of the derivative of the celestial
+function; this is the lattice statement of current conservation and it involves
+no boundary at infinity. Acting with $Q[f;\xi]$ on the vacuum creates a magnon
+whose amplitude vanishes like the momentum, which is the soft charge; acting
+with the same charge on a prepared hard magnon deforms the hard leg, and the
+\emph{failure} of the soft charge to be absorbed is exactly the soft factor,
+\begin{equation}
+  Q_{k_s}\ket{k_h}-\ket{B^{\mathrm{in}}}
+  =\bigl(1-S_{12}\bigr)\ket{P_{12}}
+  =-2ik_s\ket{P_{12}}+O(k_s^2)
+  \qquad\text{at }S=\tfrac12 .
+  \label{eq:red-soft-hard-defect}
+\end{equation}
+This is the lattice form of ``soft charge plus hard charge commutes with the
+scattering matrix'', with the exact slope of \cref{sec:two-magnon} in the role
+of the continuum spin-rotation kernel. In both settings the soft factor is of
+order one and not of order $1/\omega$: the lattice sits in the soft-pion
+universality class, where the leading pole is absent, not in the photon or
+graviton class.
+
+\provenance{G0(e), G0(c), WI, AC-EX-2M-D29, S2-2body}{\cref{sec:symmetry-noether},
+\cref{sec:corner-a}, \cref{sec:two-magnon}}{\texttt{theory/checks/corner\_a\_check.py} C3--C5, C9, C10}{---}
+
+\begin{observation}[Verdict for the asymptotic symmetry]
+\label{obs:verdict-symmetry}
+\emph{Does not reduce as stated.} The naive one-dimensional specialisation of
+the continuum asymptotic-symmetry group is literally the statement this campaign
+refuted. The correct lattice classifiers reduce to it in the structureless case,
+and the difference between them is precisely the structure the continuum
+construction cannot see. The charge-splitting half of the corner --- continuity
+equation, Ward identity, soft and hard charges --- reduces cleanly. For an
+external presentation this means Corner A should be offered as a correction of
+the naive specialisation, not as its confirmation.
+\end{observation}
+
+\subsection{The memory effect}
+\label{sec:reduction-memory}
+
+There are two different accepted continuum statements here, and the lattice must
+be mapped onto both. They are not the same statement and they do not fare the
+same way.
+
+\subsubsection*{The magnonics reduction, with constants}
+
+The accepted continuum result is that a spin wave passing a transverse domain
+wall in an easy-axis ferromagnet drives the wall. The linearised
+Landau--Lifshitz problem around the Walker profile becomes a Schr\"odinger
+equation with a reflectionless P\"oschl--Teller potential,
+\begin{equation}
+  q^2\varphi(\xi)=\Bigl[-\frac{d^2}{d\xi^2}-2\,\mathrm{sech}^2\xi\Bigr]\varphi(\xi),
+  \qquad
+  \xi=\frac{z}{\Delta_W},\qquad q^2=\frac{\omega}{K}-1,
+  \label{eq:red-pt}
+\end{equation}
+whose scattering solution has unit transmission and a pure phase shift. The
+magnon's spin is $-\hbar$ on one side of the wall and $+\hbar$ on the other, so
+each transmitted magnon deposits $2\hbar$ of angular momentum on the wall, and
+the wall must move against the spin-wave direction at
+\begin{equation}
+  V_{\mathrm{DW}}=-\frac{\rho^2}{2}\,V_g,
+  \qquad V_g=\frac{\partial\omega}{\partial k},
+  \label{eq:red-ywx}
+\end{equation}
+with $\rho$ the dimensionless spin-wave amplitude.
+
+The lattice side is the windowed memory theorem of
+\cref{sec:memory-quantization}. With the frozen windowed wall coordinate
+$\wallX_W$ and asymptotic densities $\pm s$, charge conservation gives the
+displacement and the ledger
+\begin{equation}
+  \delta x=-\frac{\langle N_T\rangle}{s},
+  \qquad
+  2s\,\delta x+\bigl(q_{\mathrm{out}}-q_{\mathrm{in}}\bigr)=0,
+  \qquad q_{\mathrm{in}}=-1,\quad q_{\mathrm{out}}=+1 .
+  \label{eq:red-ledger}
+\end{equation}
+
+\provenance{M-quant, M-quant-G, M-flux, D13(a), D14, D17, D18}{\cref{sec:memory-quantization};
+\texttt{theory/memory-quantization.md}, \texttt{theory/memory-quantization-general.md}}{\texttt{theory/checks/mquant\_check.py}, \texttt{theory/checks/mquant\_general\_check.py}}{corpus-r2, \texttt{theory/verdicts/mquant-g-r2.md}}
+
+These are the same equation. The lattice arithmetic
+$q_{\mathrm{out}}-q_{\mathrm{in}}=2$ \emph{is} the continuum statement that the
+magnon spin flips from $-\hbar$ to $+\hbar$. To see it, write $\spindens=s/a_{\ell}$
+for the spin density --- the same quantity that appeared in
+\cref{obs:slope-is-inverse-density} --- and $\delta X=\latconst\,\delta x$ for
+the physical displacement. Then $2s\,\delta x=2\spindens\,\delta X$ and
+\eqref{eq:red-ledger} becomes
+\begin{equation}
+  2\spindens\,\delta X+\bigl(q_{\mathrm{out}}-q_{\mathrm{in}}\bigr)=0
+  \quad\Longrightarrow\quad
+  \delta X=-\frac{1}{\spindens}\ \ \text{per transmitted magnon},
+  \label{eq:red-memory-phys}
+\end{equation}
+and, at a transmitted-magnon flux $\Phi$,
+\begin{equation}
+  V_{\mathrm{DW}}=-\frac{\Phi}{\spindens} .
+  \label{eq:red-vdw}
+\end{equation}
+It remains to evaluate the flux for the continuum spin wave. The magnetisation
+is a unit vector with transverse amplitude $\rho$ in the asymptotic domains, so
+$m_z\simeq1-\rho^2/2$; each magnon removes one unit of spin, so the magnon
+number density is $n=\spindens\rho^2/2$. The wall is reflectionless, so
+$\Phi=nV_g$, and \eqref{eq:red-vdw} gives
+\begin{equation}
+  V_{\mathrm{DW}}=-\frac{\rho^2}{2}\,V_g,
+\end{equation}
+which is \eqref{eq:red-ywx} exactly, constants included, independently of the
+exchange coupling, the anisotropy, the wall profile and the magnon momentum.
+
+\begin{remark}[The two displacements are one inverse spin density]
+\label{rem:two-twos-continuum}
+The physical displacement per transmitted magnon in
+\eqref{eq:red-memory-phys} and the Wigner displacement of
+\cref{obs:slope-is-inverse-density} are numerically the same length,
+$1/\spindens$. This gives the campaign's ``two twos'' cross-reference a
+continuum reading: both quantities are one inverse spin density. It is an
+observation about units and a physical argument only; the corresponding
+conjecture is unaffected and remains a conjecture.
+\end{remark}
+
+\subsubsection*{The Fourier-residue chain}
+
+The canonical continuum argument writes the memory as the residue of a
+zero-frequency pole. Fourier transforming the radiative field by stationary
+phase and assuming that it approaches finite but different values at early and
+late retarded times, one obtains the memory as the coefficient of the pole in
+frequency, and identifies that coefficient with the soft factor. In slogan form,
+the Fourier transform of a pole in frequency space is a step function in time.
+
+The residue \emph{structure} reduces correctly. The exact finite-time flux
+identity of \cref{sec:memory-quantization} reads
+\begin{equation}
+  \delta x=\frac{1}{2s}\Bigl[\tilde{\jmath}_{a-1|a}(0)-\tilde{\jmath}_{b|b+1}(0)\Bigr],
+  \label{eq:red-flux}
+\end{equation}
+which is precisely the zero-frequency weight of the physical boundary current,
+obtained by exact telescoping of the windowed coordinate; and the spectral dress
+of the memory observable writes the same number as a genuine direct-current
+residue, $\delta x=\frac{1}{2s}\sum_{x\in W}\bigl[m_x(+\infty)-m_x(-\infty)\bigr]$.
+
+What does \emph{not} reduce is the identification of that residue with the soft
+factor. The continuum chain works because the product of frequency and radiative
+field has a finite nonzero limit; there is a genuine pole, supplied by
+Weinberg's soft factor. The lattice soft factor has no pole: the scattering
+ratio tends to one and the soft-scaling exponent is $1$. Multiplying a regular
+function by a vanishing frequency gives zero. The campaign's literal memory
+conjecture --- displacement equals the zero-frequency limit of the soft factor
+--- is refuted for exactly this reason, and what survives is the boundary-current
+weight \eqref{eq:red-flux} together with the conditional quantisation
+\eqref{eq:red-ledger}, into which soft data enter only through the transmission
+probability.
+
+\provenance{M (refuted), M-flux, D13(b)}{\cref{sec:memory-quantization};
+\texttt{theory/memory-quantization.md} \S1}{\texttt{theory/checks/mquant\_check.py}}{corpus-r2}
+
+This is not a lattice pathology. It is what the continuum literature predicts
+for a derivative-coupled Goldstone. In the soft-pion triangle the leading soft
+theorem is absent and the memory consequently lives in the \emph{subleading}
+falloff coefficient of the pion field, where it equals a linear functional of
+the escaped hard charge. The lattice reproduces that pattern exactly.
+
+\begin{observation}[Which lattice observable is which falloff coefficient]
+\label{obs:falloff-dictionary}
+The leading radiative coefficient of the continuum field corresponds to the
+outgoing one-magnon wave amplitudes on the two legs, that is to the reflection
+and transmission amplitudes; these carry the phase and no direct-current shift.
+The subleading coefficient, where the pion memory lives, corresponds to the
+\emph{integrated} asymptotic tail content $\sum_{x>b}\bigl(\varrho(S^z_x)+s\bigr)=2sN_T$.
+The continuum hard charge corresponds to $q_{\mathrm{out}}-q_{\mathrm{in}}=2N_T$,
+and the continuum statement that the subleading coefficient equals a linear
+functional of the hard charge corresponds to $\delta x=-\langle N_T\rangle/s$.
+Both sides say the same thing: memory is a linear functional of the integrated
+hard charge that escaped, not the residue of a soft pole.
+\end{observation}
+
+\begin{observation}[What plays the role of the falloff assumption]
+\label{obs:falloff-hypotheses}
+The continuum needs the radiative field to approach finite but different values
+at early and late retarded times, and it needs the frequency and radius limits
+taken in a definite order. The lattice counterparts are named hypotheses rather
+than footnotes: the summability class of \cref{sec:local-relaxation}, which
+requires the deviation of the magnetisation profile from its two asymptotic
+values to be summable on each side, is the lattice ``finite but different
+values''; the wave-operator and local-decay hypothesis is the lattice ``the
+radiation has left''; and the spectral dress requires the time derivative of
+each site magnetisation to be integrable in time. The lattice also states its
+own order-of-limits fence in the same place, and it is the exact counterpart of
+the continuum footnote: a plane-wave magnon is not summable, so every soft
+statement about memory must fix the wave packet first and take the momentum to
+zero afterwards, and the zero-frequency limit must be taken after the
+thermodynamic limit.
+\end{observation}
+
+\subsubsection*{The kink model in its continuum scaling limit}
+
+The easy-axis kink model of \cref{sec:kink-model} carries an unconditional
+projected transmission coefficient,
+\begin{equation}
+  t(k)=\Bigl[1+\frac{iJ^2}{4\,\omega(k)\,v(k)}\Bigr]^{-1},
+  \qquad
+  T(k)=16(\Delta-1)^2k^2+O(k^4)\ \ \text{as }k\to0,
+  \label{eq:red-tk}
+\end{equation}
+with crossover momentum $k_*=1/\bigl(4(\Delta-1)\bigr)$. The natural continuum
+comparison is the calculation \eqref{eq:red-pt}. The comparison has one clean
+half and one bad half.
+
+The clean half is the dispersion. Writing the kink parameter
+$q=\Delta-\sqrt{\Delta^2-1}$ and $\Delta=1+\epsilon$, the wall width in lattice
+units is $\xi_{\mathrm{DW}}=1/\ln(1/q)\simeq1/\sqrt{2\epsilon}$, matching the
+continuum $\Delta_W=\sqrt{A/K}$ up to a factor $\sqrt2$ under
+$A\sim J\latconst^2$ and $K\sim J(\Delta-1)$; and in the scaling limit
+$\Delta\to1^+$, $k\to0$ with $q_c:=k\,\xi_{\mathrm{DW}}$ fixed,
+\begin{equation}
+  \omega(k)=J(\Delta-\cos k)\simeq\omega_{\mathrm{gap}}\bigl(1+q_c^2\bigr),
+  \label{eq:red-scaling-dispersion}
+\end{equation}
+which is exactly the continuum relation $q^2=\omega/K-1$. The lattice magnon
+sector reduces cleanly to the continuum Landau--Lifshitz magnon on a wide wall.
+
+The bad half is the transmission. In the same scaling limit
+$v=J\sin k\simeq Jq_c\sqrt{2\epsilon}$ and $\omega\simeq J\epsilon(1+q_c^2)$, so
+\begin{equation}
+  \frac{J^2}{4\omega v}\simeq\frac{1}{4\sqrt2\,\epsilon^{3/2}q_c(1+q_c^2)}
+  \;\longrightarrow\;\infty,
+  \qquad
+  T\simeq\Bigl[4\sqrt2\,\epsilon^{3/2}q_c(1+q_c^2)\Bigr]^{2}
+  \;\longrightarrow\;0 .
+  \label{eq:red-tk-scaling}
+\end{equation}
+The projected lattice wall becomes totally reflecting exactly where the
+continuum wall is exactly reflectionless.
+
+\begin{remark}[Why the transmission comparison fails, and what it costs]
+\label{rem:tk-mismatch}
+The two computations are controlled in opposite regimes. The kink at
+$\Delta\to1^+$ is a wide object: its exact zero-energy product family has
+$q\to1$, and in the magnetisation product basis it is a broad superposition over
+configurations carrying many domain walls. The sector reduction that makes
+\eqref{eq:red-tk} exact keeps only the three-wall component, and the measured
+leakage into five-wall configurations grows like the inverse square of the
+anisotropy, from below one per cent at $\Delta=8$ to about ten per cent at
+$\Delta=2$; extrapolated to $\Delta\to1^+$ it is of order one. Physically, the
+continuum reflectionlessness comes from the wall's translational zero mode
+sitting exactly at threshold, which is what makes the potential in
+\eqref{eq:red-pt} transparent; the truncated model does have a side-coupled kink
+level, but its detuning stays finite as the momentum vanishes, so the threshold
+cancellation is absent. At large anisotropy the two do agree: the lattice
+reflection probability falls off like the inverse square of the anisotropy and
+the wall is transparent for all momenta above the small crossover scale, which
+is the continuum reflectionless answer. The cost is a presentational one and it
+should be paid openly: \eqref{eq:red-tk} must not be offered as the lattice
+version of magnon-driven wall motion. The memory law \eqref{eq:red-ledger} is
+that, it is a conservation law, and it is independent of the transmission
+probability; the transmission probability only sets the size of the effect,
+through the expected transmitted number, in the Ising regime.
+\end{remark}
+
+\begin{observation}[Verdict for memory]
+\label{obs:verdict-memory}
+The magnonics reduction \emph{reduces cleanly}, with constants, and it is the
+strongest reduction in this section; its one caveat is that the lattice
+statement is conditional on an asymptotic-completeness hypothesis which the
+continuum derivation replaces by a closed-form solution, so that the lattice
+assumes what the continuum computes. The Fourier-residue reduction
+\emph{reduces with caveats}: the direct-current structure and the falloff
+hypotheses have exact counterparts, but the identification of the memory with
+the residue of the soft factor does not reduce, and the campaign's refutation of
+that identification is what the continuum literature predicts for a
+derivative-coupled Goldstone. The transmission coefficient of the kink model
+\emph{does not reduce}.
+\end{observation}
+
+\subsection{The edges}
+\label{sec:reduction-edges}
+
+\subsubsection*{From Ward identity to soft theorem}
+
+The cleanest continuum precedent proves that the asymptotic-symmetry derivation
+of a soft theorem and the textbook broken-Ward--Takahashi derivation are the
+same derivation. Its recipe is short: take the Ward--Takahashi identity for the
+broken current, Fourier transform to an on-shell massless momentum, apply the
+reduction formula to the remaining fields, and take the soft limit; the contact
+terms on the right-hand side drop out, one term on the left gives the amplitude
+with one soft Goldstone, and the matter term gives the soft factor.
+
+The lattice runs the same four steps, and the first two are theorems. The
+continuity identity \eqref{eq:red-continuity} is the lattice conservation law
+and needs no boundary at infinity, matching the local continuum programme rather
+than a null-infinity construction. The truncated-symmetry identity of
+\cref{sec:corner-a} telescopes the symmetry to exactly two boundary-bond
+insertions, which is the lattice contact term; and the lattice version is finite
+and computed, with both boundary terms retained, since discarding them is
+demonstrably false at any finite window. The third step replaces the plane-wave
+Fourier transform by momentum superpositions of window vectors and the reduction
+formula by the wave-operator construction of \cref{sec:wave-operators}. The
+fourth step is a theorem at two legs: on the separated-preparation subclass the
+fixed-time readout has the exact first jet with phase slope $\sgn(v_h-v_s)/S$.
+
+The caveat is the load-bearing one, and it is stated in
+\cref{sec:triangle-status}: at $n$ legs this is the general soft conjecture, and
+the hypothesis that supports it has no exhibited instance. The lattice therefore
+reproduces the continuum pattern as a template, and as a theorem at two legs,
+not as a theorem at $n$ legs.
+
+\subsubsection*{From soft theorem to memory}
+
+This edge does not reduce, and the reason has already been given: on the lattice
+the soft factor has no pole, so the Fourier residue of the soft factor is zero,
+and the corresponding conjecture is refuted. The surviving lattice edge runs
+through charge conservation instead, which is the soft-pion pattern rather than
+the graviton pattern. An external presentation may still use the slogan about
+poles and step functions expositorily, provided it says in the same breath that
+the lattice pole is absent and that the memory is therefore carried by
+integrated charge rather than by a residue.
+
+\subsubsection*{The silent assumptions, matched}
+
+Every continuum derivation quoted in this section makes assumptions it does not
+prove. The following correspondence records, as fact, which named lattice
+hypothesis occupies each slot.
+
+\begin{center}
+\begin{tabular}{@{}p{0.44\textwidth}p{0.50\textwidth}@{}}
+\toprule
+\textbf{continuum assumption} & \textbf{lattice counterpart, with status} \\
+\midrule
+The remainder function is non-singular on shell as the momentum vanishes; the
+source flags this as not following from standard polology. &
+The remainder bounds of the uninstantiated reduction hypothesis, and the
+continuous-extension clause of the universality class. The telescoping identity
+is the mechanism intended to \emph{prove} rather than assume this. The
+hypothesis has no exhibited instance; this is the campaign's advertised
+technical advantage and it is not yet cashed. \\
+\midrule
+No singularities beyond the Goldstone pole; no bilinear current insertions on
+external legs. &
+The claim that the naive kinematic prefactor is a universal soft factor is
+\statusRefuted: hard data can enter at first order through the current. The
+lattice found the loophole rather than assuming it shut. \\
+\midrule
+The radiative field approaches finite but different values at early and late
+retarded times. &
+The summability class of \cref{sec:local-relaxation}, the wave-operator and
+local-decay hypothesis, and integrability in time of each site magnetisation
+rate. The local-decay hypothesis is open on the full chain. \\
+\midrule
+The product of frequency and radius is large when the limits are taken. &
+The order-of-limits fence: fix the wave packet, then take the momentum to zero;
+take the zero-frequency limit after the thermodynamic limit. Frozen in the
+definitions. \\
+\midrule
+Stationary-phase mode expansion at large radius, with no zeroth-order term in
+the falloff expansion. &
+The wave-packet construction of \cref{sec:wave-operators}, with disjoint
+velocity supports. Established as a construction; its interface with the
+fixed-time readout has named gaps. \\
+\midrule
+No surface terms in the Ward identity. &
+The truncated-symmetry identity keeps both boundary-bond insertions
+\emph{explicitly}, and setting them to zero is recorded as false at finite
+window. \statusProved, with the surface terms computed. \\
+\midrule
+A hyperbolic foliation with prescribed falloff near timelike infinity, needed to
+make the hard charge a finite integral. &
+The windowed wall coordinate is a bounded local observable unconditionally, so
+the displacement exists on every state and at finite volume, with no asymptotic
+hypothesis and no order-of-limits clause. This slot the lattice removes rather
+than renames. \\
+\midrule
+A physical-mode condition and a transversality condition, imposed by hand. &
+The admissible-profile conditions on the charge profile, with the type
+discipline that forbids quoting a fixed-momentum identity under a decaying-profile
+hypothesis. Frozen in the definitions. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{observation}[Verdict for the edges]
+\label{obs:verdict-edges}
+\emph{Reduce, with caveats.} Every silent continuum assumption has a named
+lattice counterpart, and in two slots --- windowed memory and surface terms ---
+the lattice eliminates the assumption rather than renaming it. The caveats are
+that the symmetry-to-soft edge is a theorem only at two legs; that the
+soft-to-memory edge does not run through a Fourier residue of the soft factor
+and must not be advertised as doing so; and that the regularity slot, the one
+this campaign claims as its chief contribution relative to the continuum, is
+still occupied by a hypothesis with no exhibited instance.
+\end{observation}
+
+\subsection{What is still owed}
+
+The reductions above rest in places on physical judgement rather than
+computation, and those places are listed here rather than left implicit.
+
+\begin{enumerate}
+\item The amplitude match of \eqref{eq:red-matched-amplitude} against
+      \eqref{eq:red-continuum-amplitude} agrees in form and in every parametric
+      dependence and differs by an overall factor of two. That factor is
+      believed to be a normalisation convention relating the amplitude to the
+      scattering ratio for identical particles, together with the normalisation
+      of the order-parameter density in the continuum source. It has not been
+      checked.
+\item The vanishing of the contact coupling is read off the leading doubly soft
+      expansion. Higher orders in the lattice constant are not computed and could
+      in principle generate a contact term at second order.
+\item The assertion that the structureless case of the lattice classification is
+      the correct continuum corner is a matching statement, not a theorem.
+\item The magnon number density used to convert the continuum spin-wave
+      amplitude into a magnon flux is the linear-spin-wave identification, exact
+      to second order in the amplitude. The match of \eqref{eq:red-ywx} is
+      therefore a leading-order match, as is the continuum derivation itself.
+\item The lattice memory law is conditional on an asymptotic-completeness
+      hypothesis that is open on the full chain. A referee may reasonably say
+      that the lattice has assumed the physics and derived the bookkeeping.
+\item The statement that the sector-reduction leakage is of order one at
+      $\Delta\to1^+$ is an extrapolation from three measured anisotropies, not a
+      bound.
+\item The threshold explanation of the transmission mismatch in
+      \cref{rem:tk-mismatch} is a physical reading. What is established is only
+      that the two computations disagree in the limit.
+\item The assignment of degree zero to the ferromagnet's generalised spatial
+      shift symmetry in \cref{rem:sigma-correction} is read off the structure of
+      the broken generators; no Lie-algebraic classification has been run to
+      exclude a redundant symmetry.
+\end{enumerate}
+
+\noindent Finally, the single most exposed point. The memory corner is proved
+where the continuum computes, and computed where the continuum is proved: the
+memory law, which reduces cleanly, is conditional on an open
+asymptotic-completeness hypothesis, while the only unconditionally computed
+quantity in the kink model is computed in a regime disjoint from the one in
+which the continuum comparison lives. A reader who accepts the magnonics
+reduction will ask next what the lattice computes that is neither assumed nor
+restricted to a projection, and the honest answer today is the two-magnon soft
+slope of \cref{sec:two-magnon}, and nothing else in the memory corner.

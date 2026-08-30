@@ -6,6 +6,15 @@
 
 # Continuum antecedents: what the lattice triangle must mirror
 
+> **CORRECTION (2026-08-30, reduction lanes r1-smatrix.md + independent codex
+> recomputation).** §5's translation obligation and "Surprise 2" are WRONG
+> about the exponent: the ferromagnet has generalized-shift degree `n = 0`,
+> so eq. (B) gives `σ ≥ min(2,1) = 1`, and 2201.01393 L.525–527 reaches
+> `σ = 2` only for its `n = 1` examples. The proved lattice slope saturates
+> the ORDINARY `σ = 1` type-B₂ Adler bound. Do not cite this file for a
+> `σ = 2` claim; see `theory/lanes/reduction/r1-smatrix.md` and
+> `docs/reduction-limits.md` §R1.
+
 Seven sources, read from local TeX (`refs/arxiv-<id>/`, verified against
 `refs/LEDGER.md`). Corner vocabulary follows `HANDOFF_MPS_SOFT_THEOREM.md`:
 **Corner A** = asymptotic symmetry (𝒜 = (G_L×G_R)/G_diag, virtual insertions

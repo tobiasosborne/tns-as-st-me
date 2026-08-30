@@ -145,3 +145,20 @@ and checked against the ogata blitz lane's expected attribution
 | 2004.06458 | General Lieb-Schultz-Mattis type theorems for quantum spin chains | OgataTachikawaTasaki.tex | OGA-LSM (on-site symmetry, split-state no-go) |
 | 1808.08740 | Lieb-Schultz-Mattis type theorems for quantum spin chains without continuous symmetry | main.tex | OGA-LSM (no continuous symmetry) |
 | 1301.5737 | Normal states of type III factors | (single tex) | OGA-TYPEIII: general type-III normal-state results |
+
+## Batch 6 — continuum-reduction lane (fetched 2026-08-30, R1--R4 directive)
+
+One id, title verified from its own TeX before use. Consumed by
+`docs/reduction-limits.md` §3.1 and `labbook/sections/18_continuum_reduction.tex`.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 1106.4382 | All-magnonic spin-transfer torque and domain wall propagation | swstt.tex | R3 reduction: the accepted continuum magnon-driven domain-wall statement (Yan--Wang--Xia, PRL 107, 177207). Load-bearing quotes: reflectionless Pöschl--Teller spin-wave equation (L.163--172), "a magnon changes its spin by 2ħ … absorbed by the DW" (L.81--84), spin-current reversal (L.213--217), and `V_DW = −(ρ²/2)V_g` (L.219--222). |
+
+**MISMATCH RECORD (L3).** The reduction directive named arXiv:1108.5570 for
+Yan--Wang--Xia. That id was fetched, and its TeX is a mathematics paper on
+submanifolds and constrained variational calculus (`\documentclass{amsart}`,
+Spanish-language macros) — an outright title mismatch. It was NOT retained and
+no file under `refs/` carries it. The correct id, 1106.4382, was located by an
+arXiv title query and then verified against `\title{}` in its own fetched TeX
+before any quotation.
