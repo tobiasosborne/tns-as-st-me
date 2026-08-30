@@ -158,6 +158,34 @@ discipline is a TJO decision (P1 bead): safe names are charge ledger /
 Fourier response / TPM statistics / exact-band scattering; the skeleton's
 "exact 1D lattice avatar" framing must be revisited.**
 
+## Session 9 (continued 3) — the operational wave (O1–O4) + framing
+
+TJO directives: (i) OPERATIONAL RAZOR — representations are never
+operational; only observable/implementable quantities are (injective-MPS
+boundary algebra passes); (ii) one-species framing — sector separation
+replaces species separation, memory needs a probe ⟹ soliton, no assembled
+one-species continuum triangle exists; (iii) pure gravity INCLUDED —
+JT/SYK appreciated. Four codex lanes DONE, adjudicated in
+**theory/verdicts/operational-wave-adjudication-r1.md**: O1 = 48-row
+operational registry (endpoint states/class/TPM/phases OBSERVABLE or
+IMPLEMENTABLE — TJO's claim substantiated; V(g) GAUGE with conjugacy+[ω]
+surviving; PT1–PT3 GAUGE pending circuits); O2 = six explicit experiments
++ PROVED-style impossibility: ansatz gauge X has zero quantum Fisher
+information — exactly non-identifiable (scaffolding fence, no DAG row);
+O3 = boundary-observables school audit (JNPW 2307.12552, Bhardwaj
+2410.21454, Ogata–PG–RdA 2509.23734 tensor-network Haag duality, Corbelli
+2510.23790 — refs batch 7, all title-verified): IMPORT Haag duality as
+the cut-exhaustiveness theorem (tns-r7q), CITE per the §5.3 debt table
+(tns-bfc P1, blocks Letter prose), novelty narrowed but scoped theorems +
+soft/memory links stand; O4 = SYK/JT one-soft-species pure-gravity
+triangle CANDIDATE (refs batch 8) with the named decisive computation
+(T.1)–(T.3) on tns-62n (two-sided Schwarzian plateau vs DC soft residue;
+decisive both ways — "butterfly shift = 2d memory" or its sharp refusal).
+Also tns-0g9 (operational-registry lockstep restatements). Labbook shard
+19 integration lane in flight. Ops: codex roots workspace at LAUNCH CWD
+(launch from repo root only); codex network unreliable — orchestrator
+pre-fetches + title-verifies, lanes get local paths.
+
 ## Resume order for session 8
 
 1. **Numerics wave 2 relaunch** (tns-f5r): kink memory + edge contrast;
@@ -177,6 +205,12 @@ Fourier response / TPM statistics / exact-band scattering; the skeleton's
 
 ## Ops notes (session-7 additions; prior notes stand where PRD allows)
 
+- codex exec roots its writable workspace at the LAUNCH CWD: always launch
+  from the repo root, never from a subdirectory (a lane launched from
+  `refs/` could not write `theory/`; session 9 lost one lane run to this).
+  Codex network access is also unreliable (DNS-blocked in some sessions):
+  pre-fetch arXiv sources yourself, title-verify, then hand lanes local
+  paths.
 - codex exec: config defaults gpt-5.6-sol xhigh; `-s workspace-write`
   BEFORE the `resume` subcommand; on a transport timeout mid-write,
   `codex exec -s workspace-write resume --last "<finish instruction>"`

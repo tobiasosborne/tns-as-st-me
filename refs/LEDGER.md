@@ -162,3 +162,28 @@ Spanish-language macros) — an outright title mismatch. It was NOT retained and
 no file under `refs/` carries it. The correct id, 1106.4382, was located by an
 arXiv title query and then verified against `\title{}` in its own fetched TeX
 before any quotation.
+
+## Batch 7 — boundary-observables school (fetched 2026-08-30, operational/definitional audit)
+
+Fetched by orchestrator via https://arxiv.org/e-print/<id> with 3 s waits;
+every title verified from the fetched TeX itself (exact match). Consumed by
+theory/lanes/reduction/o3-boundary-algebra-lit.md.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 2307.12552 | Local topological order and boundary algebras | LTO.tex | Jones–Naaijkens–Penneys–Wallick LTO axioms via ground-state projections; boundary nets — operational grounding for boundary observables (TJO pointer) |
+| 2410.21454 | Superselection sectors for posets of von Neumann algebras | PosetSuperselectionSectors.tex | sector theory for lattice systems (DHR-style), corner-A comparison |
+| 2509.23734 | Haag Duality for 2D Quantum Spin Systems | haagduality.tex | Haag duality — the rigor behind "boundary algebra is everything at the cut" |
+| 2510.23790 | On Symmetry-Compatible Superselection Structures for Product States in 2D Quantum Spin Systems | aPaperFromChapter.tex | symmetry-compatible sectors; bridge to Naaijkens–Ogata constructions |
+
+## Batch 8 — SYK/JT one-species gravity triangle recon (fetched 2026-08-30)
+
+Fetched by orchestrator, 3 s waits, titles verified from fetched TeX (exact).
+Consumed by theory/lanes/reduction/o4-syk-jt-recon.md. TJO directive: pure
+gravity NOT excluded from the one-species triangle map; JT/SYK appreciated.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 1606.01857 | Conformal symmetry and its breaking in two dimensional Nearly Anti-de-Sitter space | GravityReparametrizationsRevised.tex | corner A of JT: Diff(S^1)->SL(2,R) breaking, Schwarzian as the boundary Goldstone |
+| 2412.14799 | Nonlinear soft mode action for the large-p SYK model | (single tex) | corner C of SYK: the soft-mode action and its universal dressing of correlators |
+| 1306.0622 | Black holes and the butterfly effect | (single tex) | corner B candidate: the shockwave/frame shift as a 2d memory effect |

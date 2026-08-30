@@ -1,0 +1,1755 @@
+% SHARD-ID: LB-19-OPERATIONAL-STATUS
+% SHARD-TITLE: Operational status -- what is observable, what is
+%   implementable, what is gauge
+% SHARD-SOURCES: theory/lanes/reduction/o1-operational-audit.md (the status
+%   registry and the re-anchor list); theory/lanes/reduction/o2-experiments.md
+%   (the six protocols and the impossibility result);
+%   theory/lanes/reduction/o3-boundary-algebra-lit.md (the operator-algebraic
+%   boundary-observable literature, the import obligation, and the citation
+%   debt); theory/lanes/reduction/o4-syk-jt-recon.md (the one-species
+%   pure-gravity reconnaissance); theory/verdicts/operational-wave-adjudication-r1.md
+%   (the binding adjudication A1--A4); owner directives 2026-08-30 (the
+%   operational razor; the one-species/sector-separation framing; pure gravity
+%   included).  Literature ground truth: refs/arxiv-2307.12552,
+%   refs/arxiv-2410.21454, refs/arxiv-2509.23734, refs/arxiv-2510.23790,
+%   refs/arxiv-1606.01857, refs/arxiv-2412.14799, refs/arxiv-1306.0622,
+%   refs/arxiv-2011.12127, refs/arxiv-0802.0447.
+% SHARD-CLAIMS: owns no statement.  Nothing here changes a status in
+%   claims/CLAIMS.md, and the adjudication records that no lane required a
+%   status change.  The material is of two kinds: operational annotations on
+%   objects owned by other shards, and physics-argument reconnaissance.
+%   Campaign identifiers appear in the registry table (where the object under
+%   audit IS the numbered definition) and in provenance blocks, nowhere else.
+
+% --- shard-local semantic macros (rule 10 of the writing guide) -------------
+\providecommand{\opObs}{\textsc{observable}}
+\providecommand{\opImp}{\textsc{implementable}}
+\providecommand{\opGauge}{\textsc{gauge}}
+\providecommand{\lamt}{\tilde{\lambda}}          % the sub-unit transfer rate
+\providecommand{\PGL}{\mathrm{PGL}}
+\providecommand{\Schw}{\operatorname{Sch}}       % Schwarzian derivative
+\providecommand{\Diffop}{\operatorname{Diff}}
+
+\section{Operational status: what is observable, what is implementable, what
+is gauge}
+\label{sec:operational-status}
+
+\subsection{The razor}
+
+One methodological rule governs the whole campaign, and it is stated here in
+the form the owner set it on 30 August 2026:
+
+\begin{quote}
+A representation is never operationally meaningful. Tensors, canonical forms,
+virtual bond spaces, intertwiners, ansatz frames and gauge data are
+bookkeeping. Only a quantity that some describable quantum-mechanical
+experiment can measure, or some describable quantum operation can implement,
+is operationally meaningful.
+\end{quote}
+
+The rule is a razor, not a slogan: applied literally it cuts the campaign into
+two layers, and every object in the campaign has to fall on one side of the
+cut and say which. Three labels do the sorting.
+
+\begin{description}
+  \item[\opObs] the object is the statistics of a specified projective
+    measurement, positive-operator-valued measure, local observable,
+    spectroscopy, tomography, or interferometric scattering measurement.
+  \item[\opImp] the object is a finite quantum operation, or a controlled
+    limit of finite operations. When it is a limit, the topology and the error
+    bound are \emph{part of} the status and are displayed with it.
+  \item[\opGauge] the object is a representation, coordinate, frame, ansatz or
+    piece of analytic bookkeeping that no apparatus reads. The entry then has
+    to name the invariant physical content that the bookkeeping supports.
+\end{description}
+
+Three points about the labels have to be made before anything is labelled.
+First, they are \emph{operational types, not truth statuses}. Nothing in this
+section promotes, demotes or otherwise touches a status in the campaign's
+claim ledger, and nothing here converts an unproved hypothesis into an
+established one: an object can be perfectly observable and the statement made
+about it still be a conjecture. Second, the label attaches to the
+\emph{load-bearing object as the campaign uses it}. A protocol may contain
+gauge scaffolding inside it and still be implementable as a whole; that is
+noted in the entry rather than by assigning a second label. Third, the razor
+applies to \emph{statements}, not only to objects: if changing a tensor, an
+ansatz frame, an edge register or a categorical realisation changes something
+quantified over in the public statement --- not merely something convenient in
+the proof --- then the statement itself must be re-anchored.
+
+The verdict of applying the razor is short. The campaign's observable layer
+--- endpoint states, the projective class, the two-time charge ledger, the
+scattering phases --- passes, and now carries explicit experiments. The
+campaign's scaffolding layer --- tensors, bond implementers, ansatz gauge data,
+typing hypotheses --- does not pass, is provably non-identifiable where the
+question can be posed sharply, and is labelled accordingly. Both halves of
+that verdict are recorded below.
+
+The one positive result that the owner's directive predicted, and that this
+section substantiates, is that \emph{the injective-MPS boundary algebra passes
+the razor}. That is the subject of the next subsection, and it is worth
+stating why it is not obvious: the boundary algebra is presented to the reader
+as a space of $\chi\times\chi$ matrices attached to a virtual bond, which is
+exactly the kind of object the razor is designed to reject.
+
+\begin{remark}[Register of this section]
+\label{rem:op-register}
+Everything in this section is either an operational annotation on an object
+owned elsewhere, or a physics argument. No theorem is stated here and no
+provenance block carries a status tag. Where the underlying result is a
+campaign theorem, the owning section is cross-referenced and its status is the
+one printed there.
+\end{remark}
+
+\subsection{Why the injective-MPS boundary algebra passes}
+\label{sec:op-boundary-passes}
+
+\subsubsection*{The algebra is a functional of the state, not of the tensor}
+
+For a uniform injective (normal) matrix-product state the boundary algebra is
+$M_\chi(\C)$ \emph{up to algebra isomorphism}, and that isomorphism class is
+fixed by the physical state. This is the content of the fundamental theorem of
+matrix-product states: two normal states are equal if and only if their
+tensors are gauge related, the bond dimensions then coincide, the similarity
+is $A^i=XB^iX^{-1}$, and in the unital canonical gauge $X$ may be taken
+unitary. Consequently the state --- not a choice of tensor --- fixes $\chi$,
+the abstract algebra $M_\chi(\C)$, the projective endpoint torsor, and the
+symmetry action up to inner conjugacy. The individual matrices $A^s$, the bond
+implementer $V(g)$, an inserted $M\in\mathrm{GL}(\chi)$ and a basis of
+$\C^\chi$ remain gauge; every conjugation-invariant and projective invariant
+built from them is state-functional. This is the first reason the boundary
+algebra is not an artefact of a representation.
+
+\subsubsection*{The half-line operation is a limit of executable strings, at an
+honest rate}
+
+Every truncated symmetry $U_{[x,y]}(g)=\prod_{z=x}^{y}u_z(g)$ is a depth-one
+parallel product of on-site unitaries: a single pulse, executable exactly. The
+windowed intertwining identity says that this pulse leaves exactly two
+endpoint insertions. In the unbroken, normal-ordered register the action on
+any fixed local algebra $\alg_W$ is \emph{eventually exact}: once the far
+endpoint has passed beyond $W$ the error is zero. In the broken register the
+statement is genuinely asymptotic, and the campaign proves, for
+$O\in\alg_W$, $w=\max W$ and every $\lamt\in(\lambda_E,1)$,
+\begin{equation}
+  \bigl|\,\omega_\alpha\bigl(U_{[x,y]}(g)^{\dagger}\,O\,U_{[x,y]}(g)\bigr)
+        -\varrho^{(g)}_{x}(O)\,\bigr|
+  \;\le\; C_{\lamt}\,\norm{O}\,\lamt^{\,y-w}.
+  \label{eq:op-string-rate}
+\end{equation}
+A bare $\lambda_E^{\,y-w}$ is \emph{not} claimed: the transfer map may carry a
+Jordan block, and \eqref{eq:op-string-rate} is the Jordan-safe form. A
+finite-resolution experiment on $W$ with tolerance $\varepsilon$ therefore
+chooses
+\begin{equation}
+  y-w \;\ge\; \frac{\log\bigl(C_{\lamt}\norm{O}/\varepsilon\bigr)}
+                   {-\log\lamt}
+\end{equation}
+and applies one finite depth-one string. What converges is the prepared
+\emph{state on every fixed local measurement algebra} --- weak-$*$
+convergence, exact in the unbroken case, exponentially controlled in the
+broken one. No infinite product is being declared an element of the
+quasi-local algebra.
+
+\subsubsection*{Two direct readouts}
+
+The boundary data are observable in two complementary ways. The first is
+string-order interferometry: the measured object is
+$S_N=\braket{x\otimes u^{\otimes N}\otimes y}$, with $u$ a local unitary and
+$x,y$ local operators, and its non-vanishing obeys a selection rule tied to a
+unitary $V$ on the virtual space precisely at modulus-one twisted-transfer
+radius. An ancilla-controlled string followed by a Hadamard or phase test
+reads its real and imaginary parts. The endpoint probes may be chosen on
+blocks large enough that their transfer images span the full $\chi\times\chi$
+matrix space, which is why endpoint \emph{blocks} rather than single sites are
+essential.
+
+The second is tomography of a padded reduced density matrix. The
+asymptotic-symmetry corner proves that two bond insertions give the same
+endpoint state exactly when they differ by a nonzero scalar, so
+informationally complete tomography on a window padded by the injectivity
+length on each side recovers the endpoint point $[M]\in\PGL(\chi)$ without
+ever selecting virtual coordinates. Repeating the string-and-tomography
+experiment for $g$, $h$ and $hg$ reconstructs the projective multiplication
+phase up to rephasing, hence its class $[\omega]\in H^2(G,U(1))$. That last
+inference is a physical argument built on the measured endpoint maps and the
+campaign's endpoint theorem; it is not a claim that the string-order
+literature states the later classification.
+
+\subsubsection*{The reconciliation with the non-implementability theorem}
+
+There is an apparent contradiction here, and it is the most important
+distinction in this section. The asymptotic-symmetry corner proves that when
+$V(g)$ is non-scalar the vectors $\Psi_y=U_{[x,y]}(g)\Omega_A$ are \emph{not}
+Cauchy: no sequence of truncated strings converges strongly on the vacuum
+representation. There is therefore no coherent half-chain unitary gate, no
+norm-convergent endpoint vector prepared by that sequence, and no experiment
+that may treat the formal infinite product as a single operator while
+retaining interference between all cut-offs. If $V(g)$ is scalar the sequence
+is constant on the vacuum and the obstruction vanishes exactly.
+
+What survives is weaker and is exactly what a laboratory needs: for each finite
+measurement window and each accuracy, one sufficiently long finite string, and
+then a comparison of local statistics. Those statistics converge, at the rate
+\eqref{eq:op-string-rate}. The two statements are about different things ---
+\emph{norm-convergent global implementer} versus \emph{window-local weak-$*$
+implementability} --- and the campaign asserts only the second. In the broken
+case the limit may leave the vacuum folium altogether; in the unbroken case the
+local endpoint state is determined, while its realisation as a vector in the
+GNS representation remains the explicitly incomplete split-property step of the
+symmetry corner.
+
+\subsubsection*{The fence: injectivity is doing the work}
+
+All three routes above use injectivity, and the fence must be stated. For a
+non-injective matrix-product state the canonical form has several normal blocks
+or peripheral fixed points: equal-state representations need not select one
+minimal boundary algebra, the transfer map need not converge to a rank-one
+projector, and a half-string can retain cut-off and sector data. Neither the
+single-algebra conclusion, nor the exponential mixing bound, nor the padded
+tomography bijection transfers without extra block or sector choices --- and
+those choices are gauge until an operational superselection measurement fixes
+them.
+
+In two dimensions the situation is worse in a specific way. The fundamental
+theorem has only a restricted analogue for normal projected entangled-pair
+states; a two-dimensional cut carries a boundary system whose size grows with
+the perimeter rather than one fixed $M_\chi$; topological and other
+non-injective cases require matrix-product-operator intertwiners; and the
+review literature is explicit that the general one-dimensional theorem has no
+easy two-dimensional generalisation, with the symmetry-to-virtual-tensor
+implication described as ``less straight'' in two dimensions. The campaign's
+two-dimensional typing hypotheses can therefore support an operational
+finite-annulus theorem once instantiated, but they are not yet a
+state-functional boundary algebra for an arbitrary microscopic
+projected-entangled-pair state.
+
+One earlier objection is \emph{not} revived here. That a boundary algebra in
+quantum electrodynamics is not a fixed finite $M_\chi$ is a difference between
+physical theories, not a defect in the asymptotic-symmetry scheme
+(\cref{obs:da-verdict-gauss}). The question this subsection answers is the
+narrower and fairer one: does the spin chain's own boundary algebra have its
+own experiments? It does.
+
+\provenance{A1, A2, WI, D1, D4}{\cref{sec:corner-a};
+audit in \texttt{theory/lanes/reduction/o1-operational-audit.md} \S1}{---}{\texttt{theory/verdicts/operational-wave-adjudication-r1.md} (A1)}
+
+\subsection{The operational registry}
+\label{sec:op-registry}
+
+The table below is the campaign's operational ledger. Every numbered
+definition and every separately load-bearing object carries exactly one label
+together with a named experiment or a named piece of gauge-invariant content,
+and an action: \emph{none} means the object may be used as it stands;
+\emph{restate} means the public statement should quantify over the operational
+column instead of the representation; \emph{flag} means the gauge statement may
+remain but must be identified in the text as conditional scaffolding wherever
+it appears.
+
+The adjudication refers to this as the forty-eight-row registry; the audit's
+closing table in fact carries forty-seven rows, one per object, and all
+forty-seven are reproduced here. The definition numbers appear in the object
+column because in this table the numbered definition \emph{is} the object under
+audit; a short English gloss accompanies each, and the section that owns the
+definition states it in full.
+
+{\small
+\begin{longtable}{@{}p{0.19\textwidth}p{0.115\textwidth}p{0.53\textwidth}p{0.075\textwidth}@{}}
+\toprule
+\textbf{object} & \textbf{status} & \textbf{experiment, or gauge-invariant content} & \textbf{action} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{object} & \textbf{status} & \textbf{experiment, or gauge-invariant content} & \textbf{action} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r@{}}{\footnotesize\itshape continued on the next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+injective-MPS boundary algebra &
+\opObs &
+Finite string interferometry plus padded reduced-state tomography reconstructs
+$M_\chi$ up to isomorphism, the endpoint torsor and $[\omega]$; finite strings
+approximate the state action at the rate \eqref{eq:op-string-rate}. & none \\
+\midrule
+D1 --- vacuum tensor, canonical form, window decorations &
+\opGauge &
+Tensor, canonical form, transfer map and decorations; the invariant content is
+the physical state, its reduced densities, its correlations, and the abstract
+boundary algebra. & flag \\
+\midrule
+D2 --- on-site symmetry and the intertwining relation &
+\opGauge &
+The intertwiner, its phase section and its derivative are coordinates; finite
+reduced-state symmetry tests and $[\omega]$ are the invariants. & restate \\
+\midrule
+D3 --- admissible profiles; truncated and modulated symmetry &
+\opImp &
+Depth-one finite on-site strings; weak-$*$ half-string state preparation,
+exact in the unbroken register and exponentially controlled in the broken one.
+& none \\
+\midrule
+D4 --- bond implementers and the charge algebra &
+\opGauge &
+Virtual left multiplication; the operational content is the string-induced
+$\PGL(\chi)$ endpoint action and the multiplier class. & restate \\
+\midrule
+D5 --- excitation ansatz, kink sectors, null directions &
+\opGauge &
+The ansatz tensor modulo its null directions; physical particle content
+requires a spectral-band or creator theorem. & flag \\
+\midrule
+D6 --- Heisenberg-ferromagnet oracle model &
+\opImp &
+Prepare spins and magnon packets; quench with the finite Heisenberg
+Hamiltonian. & none \\
+\midrule
+D7 --- ordered-coordinate Bethe scattering convention &
+\opObs &
+Channel populations, bound-state spectroscopy, and the interferometric
+scattering phase. & none \\
+\midrule
+D8 --- the Bethe-oracle soft limit &
+\opImp &
+Fixed hard packet, one-sided soft packets, and a momentum scan at fixed
+velocity ordering. & none \\
+\midrule
+D9 --- vacuum and kink superselection sectors &
+\opObs &
+Tail tomography reads the ordered vacuum pair; padded tomography reads the
+endpoint states. & none \\
+\midrule
+D10 --- the lattice Noether pair &
+\opObs &
+Site-charge, weighted-charge and cut-current measurements; the virtual bond
+potential only proves the response identity. & restate \\
+\midrule
+D11 --- the Goldstone tensor &
+\opGauge &
+A tensor tangent space and a quotient count; the invariant content is the
+physical charge response and the spectral Goldstone branches. & restate \\
+\midrule
+D12 --- limits in which the ansatz gauge remainder vanishes &
+\opGauge &
+A null-representative boundary remainder; the content is invariance of packet
+observables in the named topology, and no stronger convergence. & flag \\
+\midrule
+D13 --- windowed wall position and its two dresses &
+\opObs &
+Site-resolved magnetization gives the wall coordinate and its before/after
+expectation. & restate \\
+\midrule
+D14 --- transmitted and reflected magnon number &
+\opObs &
+Left, right and central magnetization counting after the scattering event.
+& none \\
+\midrule
+D15 --- kink--magnon scattering data &
+\opObs &
+Outgoing channel counts, and coherent phase or delay measurement. & none \\
+\midrule
+D16 --- the easy-axis XXZ kink model &
+\opImp &
+Finite XXZ quench with boundary-polarized kink preparation. & none \\
+\midrule
+D17 --- the summable kink class &
+\opObs &
+Growing-window tail magnetization and first-moment convergence. & none \\
+\midrule
+D18 --- wave operators, channels and local decay &
+\opGauge &
+A M\o{}ller/channel representation; the content is an exhaustive list of
+detector channels, their probabilities and charges, and local decay near the
+kink. & flag \\
+\midrule
+D19 --- soft profiles and the fixed edge register &
+\opGauge &
+A transfer/Schmidt register; a physical edge response only under the
+physical-edge hypothesis. & flag \\
+\midrule
+D20 --- operator-valued soft insertions and form factors &
+\opGauge &
+A compressed operator with chosen embeddings and Gram gauges; physical matrix
+elements require prepared channel states or an edge realisation. & flag \\
+\midrule
+D21 --- endpoint module and shifted charge lattice &
+\opGauge &
+A virtual edge module, lift and offset; conditionally, edge degeneracy and
+charge spectroscopy under the split hypothesis. & flag \\
+\midrule
+D22 --- twists, ordered endpoint products, edge memory &
+\opImp &
+The same finite boundary charge measured twice around a physical evolution;
+repetition gives the two-time law. & none \\
+\midrule
+D23 --- exact comparison tensors and boundary Hamiltonians &
+\opGauge &
+Comparison tensors; the invariant content is the implementable parent or
+boundary Hamiltonian and its spectrum. & restate \\
+\midrule
+D24 --- hard sources and the no-contact class &
+\opImp &
+A local or quasi-local source pulse, and asymptotic scattering tomography in a
+fixed calibration; class membership must be verified, not assumed. & flag \\
+\midrule
+D25 --- the soft multiplier &
+\opObs &
+A conditional soft scattering ratio: its magnitude, its phase, and its
+momentum scaling. & flag \\
+\midrule
+D26 --- the circle-integral on-site charge &
+\opObs &
+On-site charge spectroscopy, and the $2\pi$ rotation phase. & restate \\
+\midrule
+D27 --- charge-history local relaxation &
+\opImp &
+The finite-window wall-charge two-time protocol, repeated over time slabs and
+a window exhaustion. & restate \\
+\midrule
+D28 --- exact fixed-packet kink--magnon band data &
+\opGauge &
+Exact ansatz frames; the physical anchor is spectral bands, localized
+creators, uniform clustering and detector-defined channels. & restate \\
+\midrule
+D29 (proposed) --- the fixed-time protocol datum &
+\opImp &
+A charge-created packet, a finite quench, and an interferometric overlap
+against the free reference. & flag \\
+\midrule
+D30 (proposed) --- scaling regularity of those readouts &
+\opObs &
+Scaling regularity and tightness of repeated readouts; no soft coefficient is
+fixed by them. & flag \\
+\midrule
+D31 --- exact fixed-packet two-magnon data &
+\opGauge &
+An exact band map, rigging and channel inventory; the physical anchor is
+spectral projectors, calibrated creators and channel spectroscopy. & restate \\
+\midrule
+the bond implementer $V(g)$ &
+\opGauge &
+Only the class $[V(g)]$, its conjugacy data and $[\omega]$ survive the tensor
+and phase gauge; matrix entries never do. & restate \\
+\midrule
+endpoint states &
+\opObs &
+Informationally complete padded-window tomography; the symmetry orbit is
+prepared by finite strings. & none \\
+\midrule
+the projective class $[\omega]$ &
+\opObs &
+Reconstruct the endpoint $\PGL$ action and the string-order selection rules,
+then infer the obstruction to a unitary lift. & none \\
+\midrule
+the truncated symmetry &
+\opImp &
+Parallel finite on-site gates, followed by measurements near either endpoint.
+& none \\
+\midrule
+the modulated charge &
+\opObs &
+Weighted site-charge measurement of the Hermitian form; a packet limit for
+profiles that do not decay. & none \\
+\midrule
+the two-time protocol and escaped-charge law &
+\opImp &
+Sequential projective measurement, evolution, second projective measurement,
+and the repeated-shot frequency law. & none \\
+\midrule
+the windowed wall coordinate &
+\opObs &
+A commuting site-magnetization measurement and its ensemble mean; it observes
+window magnetization, and observes wall position only after core centring and
+exterior-charge control. & restate \\
+\midrule
+the two-magnon physical phase &
+\opObs &
+Coherent interference of the outgoing packet with a reference arm, at a fixed
+channel convention. & none \\
+\midrule
+the fixed-time protocol datum &
+\opImp &
+Finite charge insertion, quench, and a momentum-window overlap or tomography;
+distinct from an asymptotic scattering amplitude. & flag \\
+\midrule
+the ansatz tensor and its gauge datum &
+\opGauge &
+Only the quotient physical packet, and any independently established spectral
+data, are invariant. & flag \\
+\midrule
+tube-algebra measurement hypothesis (PT1) &
+\opGauge &
+Abstract tube idempotents; a microscopic annular measurement circuit is
+needed. & flag \\
+\midrule
+pure-endpoint hypothesis (PT2) &
+\opGauge &
+Tensor typing; a deterministic small-circle sector measurement is needed.
+& flag \\
+\midrule
+pulling-through module action (PT3) &
+\opGauge &
+Tensor identities; the physical content is zero probability for forbidden
+fusion outcomes. & flag \\
+\midrule
+protocol-instrument hypothesis (PT4) &
+\opImp &
+A normalized Kraus family, or one recorded postselected Kraus operation ---
+executable once supplied microscopically. & flag \\
+\midrule
+the toric-code endpoint label &
+\opObs &
+The same-circle electric or magnetic measurement shift, plus a complementary
+closed-ribbon braiding character. & none \\
+\end{longtable}
+}
+
+\noindent Two consequences of the registry are worth naming. The
+\emph{survivors} are the conclusions whose content does not mention a
+representation at all: the sector jump is detected from physical tail states;
+the lattice continuity equation is an operator identity; the wall and magnon
+counting statements, and the finite-window memory index, are local
+magnetization arithmetic; the finite toric-code row is an explicit
+measurement-and-ribbon experiment; and every two-body scattering conclusion
+concerns packet probabilities or interferometric phases once its physical
+packet hypotheses hold. Changing a tensor, an ansatz frame or a channel basis
+conjugates the description and cannot change a measured on-shell phase.
+
+The \emph{obligations} are the rows marked \emph{restate} and \emph{flag}. The
+adjudication turns these into a lockstep task rather than a piece of advice:
+the restatements owed on D13, D23, D26, D27, D28 and D31, and the flags owed
+on the two-dimensional typing hypotheses PT1--PT4, are to be carried out in
+step with the definitions file and the shards that own those definitions.
+Until they are, the statements concerned may stand, but they must be read as
+conditional scaffolding wherever they are used.
+
+\provenance{D1--D31, PT1--PT4, A-INDEX-TC-fin}{registry in
+\texttt{theory/lanes/reduction/o1-operational-audit.md} \S2--\S8; re-anchor
+list \S6}{---}{\texttt{theory/verdicts/operational-wave-adjudication-r1.md} (A1)}
+
+\subsection{Six experiments}
+\label{sec:op-experiments}
+
+The protocols below use operations and measurements on physical spins only. A
+transfer matrix or a virtual operator may be used to \emph{predict} a result,
+but is never treated as an apparatus observable. Every limit is an
+extrapolation from finite chains, finite windows and finite times. None of
+them changes a campaign status; where feasibility or noise is discussed, the
+statement is a physical argument and says so.
+
+\subsubsection*{Experiment 1: the projective class by string-order selection}
+
+\paragraph{Preparation.} Prepare many copies of the same injective, unbroken,
+$G$-symmetric vacuum on a chain much longer than a string of length $L$.
+Calibrate the on-site unitaries $u(g)$ by single-spin process tomography.
+Choose a commuting pair $g,h\in G$. On endpoint \emph{blocks} of at least the
+injectivity length --- single sites will not do, since only a padded block
+spans the full endpoint operator space --- choose a basis of physical
+operators $O_L,O_R$ and resolve it into $h$-charge channels, fixing the
+right-end convention by
+$U_{B_R}(h)\,O_R\,U_{B_R}(h)^{\dagger}=\chi_R(h)\,O_R$.
+
+\paragraph{Operation.} On each copy apply, or coherently control, the physical
+string $U_{[1,L]}(g)=\prod_{x=1}^{L}u_x(g)$ between the two endpoint blocks.
+Repeat over all endpoint charge channels and over a set of commuting pairs
+generating the commuting-pair invariants of the group. A control qubit is
+encoded in an additional addressable physical spin; no virtual leg is ever
+addressed. For a finite on-site symmetry this is a parallel pulse; for a
+compact Lie group, a calibrated finite-angle pulse generated by the on-site
+charge.
+
+\paragraph{Measurement.} Measure the complex string correlator
+\begin{equation}
+  S_L(O_L,O_R;g)=\operatorname{Tr}\bigl[\rho\,O_L\,U_{[1,L]}(g)\,O_R\bigr],
+  \label{eq:op-string-correlator}
+\end{equation}
+its real and imaginary parts by a Hadamard or Ramsey test of the controlled
+physical-spin unitary, or by decomposing the non-Hermitian product into
+Hermitian strings.
+
+\paragraph{Readout.} For commuting $g,h$ define the gauge-invariant endpoint
+commutator
+\begin{equation}
+  c_g(h):=V(h)V(g)V(h)^{-1}V(g)^{-1}
+        =\exp\bigl(i[\omega(h,g)-\omega(g,h)]\bigr),
+  \label{eq:op-commutator-invariant}
+\end{equation}
+a scalar despite being written with matrices. With the right-end convention
+above, covariance of the endpoint trace gives the selection rule
+\begin{equation}
+  S_\infty(O_L,O_R;g)\neq0
+  \quad\text{only if}\quad
+  \chi_R(h)=c_g(h).
+  \label{eq:op-selection}
+\end{equation}
+Reversing the endpoint, or conjugating the other way, replaces both sides by
+their reciprocals. The nonvanishing physical charge channel therefore reads out
+$c_g(h)$ with no matrix representative for $V$ chosen anywhere. For a finite
+abelian group the table of $c_g(h)$ is the alternating bicharacter that labels
+the class. For a group whose second cohomology contains classes invisible to
+commuting-pair commutators, \eqref{eq:op-selection} is only a partial
+invariant and must be combined with Experiment~2; it is not advertised as a
+complete classifier on its own.
+
+\paragraph{Error and convergence.} With endpoint blocks of total width $\ell$,
+$\abs{S_L-S_\infty}\le C_{\lamt,O}\,\lamt^{\,L-\ell}$ for every
+$\lamt\in(\lambda_E,1)$. For $M$ shots of a bounded interferometric readout the
+statistical standard error is at most $M^{-1/2}$ before mitigation, so if the
+smallest deliberately excited nonzero channel has magnitude $A_{\min}$ a safe
+classification condition is
+\begin{equation}
+  C\lamt^{\,L-\ell}+\frac{z}{\sqrt{M}}+\varepsilon_{\mathrm{cal}}
+  <\frac{A_{\min}}{2},
+  \label{eq:op-string-budget}
+\end{equation}
+with $z$ fixing the confidence and $\varepsilon_{\mathrm{cal}}$ the calibrated
+pulse and readout bias. Varying $L$ is part of the protocol: an exponential fit
+separates a true selection zero from a short-string accident.
+
+\paragraph{What failure looks like.} Persistent weight in two incompatible
+charge channels, above the transfer bound and the shot budget, falsifies the
+assumed symmetric injective description or the pulse calibration. Exponential
+decay of every endpoint correlator tried does \emph{not} establish a trivial
+class: the chosen endpoint basis may simply have zero overlap. Inferred values
+of $c_g(h)$ that violate their group consistency relations indicate a failed
+preparation, not a new cohomology class.
+
+\subsubsection*{Experiment 2: physical edge process tomography and relator
+phases}
+
+\paragraph{Preparation.} Prepare the gapped parent Hamiltonian, or any
+Hamiltonian in the same symmetric phase, on an open chain. Resolve a
+low-energy edge multiplet spectroscopically and prepare a tomographically
+complete set of states in it with fields on physical spins near the two ends,
+keeping the ends much farther apart than the correlation length. This route is
+conditional on the physical-edge (split) hypothesis: the low-energy edge
+register must be isolated and locally controllable, and the campaign does not
+derive that realisation from the endpoint theorem alone.
+
+\paragraph{Operation.} Apply the global physical symmetry for a generating set
+of $G$; with independently addressable boundary pulses, perform process
+tomography on the two-edge ground space and factor the reconstructed action
+into spatially separated left and right actions using the two physical
+boundary algebras. No invariant right-edge reference is assumed; the
+compensating right action is reconstructed as well. Write $R(g)$ for the left
+matrices, leaving their basis and overall phases free.
+
+\paragraph{Measurement.} Projective or informationally complete measurements on
+boundary spins only. Spectroscopy first measures the edge degeneracy; Ramsey
+and process tomography then measure transition amplitudes and relative phases
+inside the edge code space. A robust multiplet of dimension at least the
+minimal projective irreducible dimension of the class is a useful capacity
+check, but degeneracy alone is not a class measurement.
+
+\paragraph{Readout.} For every tested product form
+\begin{equation}
+  \hat\omega(h,g):=\operatorname{Arg}
+    \operatorname{Tr}\bigl[R(h)R(g)R(hg)^{\dagger}\bigr],
+  \label{eq:op-relator-phase}
+\end{equation}
+after checking that $R(h)R(g)R(hg)^{\dagger}$ is proportional to the identity
+on the resolved edge space --- more robustly, take the phase of the nearest
+scalar unitary in the polar decomposition. For a finite presentation
+$G=\langle g_i\mid r_a=e\rangle$, also multiply the reconstructed $R(g_i)$
+along every relator; the scalar relator phases together with
+\eqref{eq:op-relator-phase} determine the class. Under an arbitrary
+reconstructed-edge basis change and phase convention,
+$R(g)\mapsto e^{i\phi(g)}\,W R(g)W^{\dagger}$, the quantity $\hat\omega$
+changes only by the coboundary $\phi(h)+\phi(g)-\phi(hg)$ and the conjugation
+drops out. What is reported is therefore $[\hat\omega]$, never the individual
+table. Together with \eqref{eq:op-selection} these are explicitly
+representation-independent readouts: neither depends on a tensor gauge, an
+edge basis, or a phase choice for $V(g)$.
+
+\paragraph{Error and convergence.} With physical edge blocks of width
+$\ell_B$ on a chain of $N$ sites, a conservative systematic budget is
+\begin{equation}
+  \varepsilon_{\mathrm{edge}}
+  \le C\,\lamt^{\,\min(\ell_B,\,N-2\ell_B)}
+     +\varepsilon_{\mathrm{split}}+\varepsilon_{\mathrm{leak}},
+  \label{eq:op-edge-budget}
+\end{equation}
+with $\varepsilon_{\mathrm{split}}$ the spectroscopically measured
+finite-chain edge splitting and $\varepsilon_{\mathrm{leak}}$ the leakage out
+of the selected multiplet. Full process tomography has shot error scaling at
+least polynomially in the edge dimension; bootstrap the inferred relator
+phases rather than assigning an unwrapped phase error by hand. A class is
+resolved only when every admissible class outside the reported one lies
+farther away than the combined phase-confidence region.
+
+\paragraph{What failure looks like.} A product that stays non-scalar as $N$ and
+$\ell_B$ grow signals leakage, unresolved edge sectors, symmetry breaking, or
+failure of the split hypothesis. A multiplet whose splitting does not decay
+with edge separation is not a protected register. If string selection and edge
+tomography disagree once their orientation conventions are aligned, the common
+preparation assumptions have failed; one must not pick whichever answer
+matches a desired label.
+
+\subsubsection*{Experiment 3: preparing and observing the boundary action}
+
+\paragraph{Preparation.} Prepare an injective $G$-symmetric vacuum on a chain
+whose physical ends are far outside the region of interest. Fix the near
+endpoint at a bond, put the remote endpoint at distance $L$, choose $g$,
+calibrate $u(g)$, and reserve a fixed tomography window $W=[-w,w]$ around the
+near endpoint. Repeat for an increasing sequence of $L>w$. In the unbroken
+experiment $g$ lies in the vacuum stabiliser; a broken $g$ is also allowed,
+but then the limiting state is a physical kink with different vacua on the two
+sides rather than an endpoint state in one sector.
+
+\paragraph{Operation.} Apply the sudden finite-region pulse
+$U_{[0,L]}(g)=\prod_{x=0}^{L}u_x(g)$, a local unitary for every finite $L$.
+The windowed identity says it leaves two endpoint insertions, inverse to one
+another, and changes the interior vacuum only in the broken case. The pulse
+must be short compared with the intrinsic Hamiltonian timescale, or the known
+evolution during the pulse must be included in the tomographic model;
+otherwise the applied unitary is not the one analysed.
+
+\paragraph{Measurement.} Immediately after the pulse, perform informationally
+complete tomography on the physical spins in $W$ and reconstruct
+$\rho_W^{(L,g)}$; measure in addition a selected set of bounded local
+observables directly, as a cheaper convergence check. Full reduced-state
+tomography is the observation of the endpoint datum itself.
+
+\paragraph{Readout.} The operational endpoint state is defined by its
+compatible finite-window reductions,
+\begin{equation}
+  \rho_W^{(\infty,g)}:=\lim_{L\to\infty}\rho_W^{(L,g)}.
+  \label{eq:op-endpoint-state}
+\end{equation}
+For the unbroken normal-ordered case the endpoint theorem identifies
+\eqref{eq:op-endpoint-state} with the reduced state of a single near-endpoint
+insertion. That identification does \emph{not} instruct the apparatus to
+measure $V(g)$: the apparatus reports $\rho_W^{(\infty,g)}$ and the values
+$\operatorname{Tr}[\rho_W^{(\infty,g)}O]$. Two insertions give the same
+endpoint state exactly when they differ by a nonzero scalar, so the state-level
+readout lives in the representation-independent $\PGL(\chi)$ orbit.
+
+\paragraph{Error and convergence, and the preparation rate.} For fixed $W$ and
+every $\lamt\in(\lambda_E,1)$ there is a constant with
+\begin{equation}
+  \sup_{O\in\alg_W,\ \norm{O}\le1}
+  \bigl|\operatorname{Tr}\bigl[O\bigl(\rho_W^{(L,g)}
+        -\rho_W^{(\infty,g)}\bigr)\bigr]\bigr|
+  \le C_{W,g,\lamt}\,\lamt^{\,L-w}.
+  \label{eq:op-endpoint-rate}
+\end{equation}
+In the ideal infinite unbroken case the endpoint theorem is stronger --- the
+remote endpoint is exactly invisible once it lies beyond $W$, and the left-hand
+side is eventually zero --- and \eqref{eq:op-endpoint-rate} is the conservative
+finite-chain and broken-sector extrapolation. Absorbing $w$ and the constant
+into the tolerance, \textbf{an endpoint state is preparable to local accuracy
+$\varepsilon$ using a region of length}
+\begin{equation}
+  L \;\ge\; w+\left\lceil
+        \frac{\log(C/\varepsilon)}{\abs{\log\lamt}}\right\rceil
+    \;=\;O\bigl(\log(1/\varepsilon)\bigr).
+  \label{eq:op-endpoint-cost}
+\end{equation}
+This logarithmic rate is the quantitative core of the claim that the boundary
+data are operational: exponential accuracy costs linear length. To
+\eqref{eq:op-endpoint-rate} one adds a tomographic confidence radius; full
+tomography is exponentially costly in $\abs{W}$, whereas estimating a fixed
+list of endpoint observables can scale as the logarithm of the number of
+observables over the squared accuracy with suitable randomized measurements.
+Pulse infidelity and imperfect initial preparation enter as additive
+trace-distance errors, measured by controls with the identity group element and
+with two inverse pulses.
+
+\paragraph{What the impossibility does and does not forbid.} When $V(g)$ is
+non-scalar, the vectors $U_{[0,L]}(g)\Omega_A$ are not Cauchy, so there is no
+norm-convergent global unitary obtained by sending $L$ to infinity. That
+forbids reading \eqref{eq:op-endpoint-state} as conjugation by a quasi-local
+half-chain unitary. It forbids neither any finite pulse nor the convergence of
+every expectation value in a fixed window --- which is precisely what
+\eqref{eq:op-endpoint-rate} quantifies and what the experiment prepares.
+
+\paragraph{What failure looks like.} If the trace distance between successive
+$\rho_W^{(L,g)}$ does not fall at the fitted transfer rate once preparation and
+tomography errors are removed, the assumed injectivity, transfer gap, on-site
+symmetry or finite-pulse model has failed. A vanishing endpoint signal is not
+failure: it is the correct answer when $V(g)$ is scalar. Conversely, claiming a
+globally converged half-chain unitary from local convergence would be a
+category error even if every finite-window fit were excellent.
+
+\subsubsection*{Experiment 4: the charge-history memory experiment}
+
+This measures a two-time probability law. It is not simulated by subtracting
+two expectation values measured on unrelated, unmeasured copies.
+
+\paragraph{Preparation.} Prepare many identical copies of a localized kink
+and, when a scattering event is being tested, an incoming magnon packet. Fix a
+window $W=[a,b]$ containing the kink core and a cut $c_0\in W$. At both
+measurement times the core is padded from the window edges and the propagating
+packet lies outside $W$ up to a measured leakage probability
+$\eta_{\mathrm{pkt}}$. Form the physical window charge
+\begin{equation}
+  \Qhat_{W,c_0}=2s\bigl(\wallX_W-c_0\bigr)
+  =\sum_{x=a}^{b}S^z_x+s\,(a+b-1-2c_0),
+  \label{eq:op-window-charge}
+\end{equation}
+whose scalar background is programmed once and is identical at both times.
+
+\paragraph{Operation.} At an early time $t_-$, before the packet reaches the
+kink, projectively measure \eqref{eq:op-window-charge} and record $q_-$,
+retaining the post-measurement state. Evolve that same copy through the
+collision with the physical Hamiltonian. At a late time $t_+$, after
+propagating content has left $W$, projectively measure the \emph{same}
+observable and record $q_+$. Repeat the whole two-measurement history on fresh
+copies.
+
+\paragraph{Measurement apparatus.} A quantum-non-demolition collective
+magnetometry pulse can resolve the eigenspaces of the sum, provided its
+resolution is finer than one charge unit and it does not resolve degeneracies
+within a fixed total charge. A quantum-gas microscope measures every $S^z_x$
+and adds in software; that is an immediate and sufficient \emph{final}
+readout. At the \emph{first} measurement, however, site resolution is a
+refinement of the total-charge measurement and generally causes extra
+back-action: to realise the law below, the microscope implementation must
+coherently sum into a meter and record only the total, or erase the
+which-site information before it becomes a record. Coarse-graining a stored
+site record afterwards does not recover the correct instrument; a deliberately
+refined first measurement is a different protocol whose integer support
+survives but whose history weights and dephasing map must be reported
+separately. In every platform the first measurement must be non-destructive.
+A calibrated positive-operator-valued measure followed by confusion-matrix
+inversion is acceptable; calling an uncalibrated analog magnetization trace
+``projective'' is not.
+
+\paragraph{Readout.} With $\Pi_q$ the spectral projector of
+\eqref{eq:op-window-charge}, $U_{+,-}$ the evolution between the two times and
+$\rho_-$ the state just before the first measurement, the laboratory joint law
+is
+$P_W(q_-,q_+)=\operatorname{Tr}[\Pi_{q_+}U_{+,-}\Pi_{q_-}\rho_-\Pi_{q_-}U_{+,-}^{\dagger}]$,
+binned by escaped charge $\nu:=q_--q_+$ into
+\begin{equation}
+  p_W(\nu)=\sum_q\norm{\Pi_{q-\nu}(t_+)\,\Pi_q(t_-)\,\Psi}^2 .
+  \label{eq:op-escaped-law}
+\end{equation}
+Because the on-site charge generates a circle, the spectrum of
+\eqref{eq:op-window-charge} lies in a single coset $\kappa_{W,c_0}+\Z$, and
+because both measurements use the same window, cut and background, the offset
+cancels in every history:
+\begin{equation}
+  \nu=(\kappa+n_-)-(\kappa+n_+)=n_--n_+\in\Z .
+  \label{eq:op-integer-support}
+\end{equation}
+The raw signature is thus a normalized histogram with peaks on integers ---
+exact finite-window charge arithmetic, and not evidence for any particular
+channel inventory. The same data give the displacement,
+\begin{equation}
+  2s\,\delta x=\mathbb{E}[\Delta Q_W]=-\sum_{\nu\in\Z}\nu\,p(\nu),
+  \qquad
+  \delta x=-\frac{1}{2s}\sum_{\nu\in\Z}\nu\,p(\nu),
+  \label{eq:op-ledger-displacement}
+\end{equation}
+where $p$ is an ordered large-time, large-window limit law when the relaxation
+hypotheses are used. At finite time and fixed window the right-hand side is the
+ledger \emph{estimator} and is not yet identified with the unmeasured wall
+displacement. On a separate unmeasured ensemble microscopy gives the
+independent estimator
+$\delta x_{\mathrm{direct}}=\operatorname{Tr}[\wallX_W(\rho_+-\rho_-)]$, and
+the two need not agree at finite time, because the ledger's first moment
+contains the dephased final charge,
+\begin{equation}
+  \sum_\nu\nu\,p_W(\nu)
+  =\braket{\Qhat(t_-)}-\braket{\mathcal{D}_{t_-}\bigl(\Qhat(t_+)\bigr)},
+  \label{eq:op-dephasing-defect}
+\end{equation}
+rather than the naive unmeasured difference. The campaign's relaxation
+hypothesis is exactly the asymptotic condition under which the averaged
+dephasing defect in \eqref{eq:op-dephasing-defect} vanishes. No commutativity
+of the two Heisenberg observables is assumed anywhere.
+
+\paragraph{Error and convergence.} From $M$ accepted histories the standard
+error of the ledger displacement is $\sqrt{\operatorname{Var}_p(\nu)/M}/(2s)$;
+bootstrap it when several integer channels are populated. With $d_W$ the
+minimum core-to-edge distance the spatial tail contributes $C\lamt^{\,d_W}$,
+and for a packet whose escaped charge is bounded by $q_{\max}$ a practical
+total budget is
+\begin{equation}
+  \bigl|\widehat{\delta x}-\delta x\bigr|
+  \le\frac{1}{2s}\sqrt{\frac{\operatorname{Var}(\nu)}{M}}
+    +C\lamt^{\,d_W}
+    +\frac{q_{\max}\eta_{\mathrm{pkt}}}{2s}
+    +\varepsilon_{\det}+\varepsilon_{\mathrm{relax}} .
+  \label{eq:op-tpm-budget}
+\end{equation}
+The campaign supplies \emph{no} quantitative rate for the time relaxation, so
+$\varepsilon_{\mathrm{relax}}$ must be bounded empirically by increasing the
+time separation at fixed window, with time averaging if the signal oscillates;
+only after that fixed-window test is stable may the window be increased.
+First-moment tightness must be checked separately: probability leaking to ever
+larger $\abs{\nu}$ can preserve normalization while destroying convergence of
+\eqref{eq:op-ledger-displacement}. Detector validation precedes rounding, the
+posterior mass farther than the calibrated resolution from every integer is
+reported, and the experiment is repeated at several window lengths. Changing
+$W$ between the two measurements would replace
+\eqref{eq:op-integer-support} by two different offsets and can fake fractional
+escaped charge.
+
+\paragraph{What failure looks like.} Persistent off-integer mass after detector
+deconvolution and same-window verification falsifies the integrality input or
+the claimed charge measurement. A persistent gap between the ledger and the
+direct estimator, as times and windows grow, is direct evidence against the
+relaxation hypothesis or against packet--core isolation. Loss of first-moment
+tightness is failure of the tightness hypothesis. Extra peaks at other
+\emph{integers} are allowed and may signal bound, absorbed or additional
+channels; and a non-integer \emph{mean} is also allowed, since the outcomes are
+quantized but their probability-weighted average is not.
+
+\subsubsection*{Experiment 5: the soft phase slope}
+
+The observable is the derivative of the \emph{physical} outgoing-to-incoming
+phase, not the phase of an arbitrarily ordered Bethe coefficient. The hard
+momentum stays away from $0$ and $\pm\pi$, the velocities stay unequal, and the
+physical scattering operator is selected by the actual velocity ordering.
+
+\paragraph{Preparation.} In the fully polarised vacuum of the isotropic
+ferromagnet prepare two well-separated one-magnon packets: a hard packet
+centred at $k_h$ with width $\sigma_h$ and a soft packet centred at $k_s$ with
+width $\sigma_s$. Put the faster packet behind the slower one so that exactly
+one collision occurs, with initial separation much larger than both widths.
+Repeat with signed soft centres $\pm k_s$ at fixed velocity ordering, and
+measure each packet's free dispersion and group velocity independently before
+using any collision data.
+
+\paragraph{Operation.} Either evolve the two packets through the collision and
+evolve the soft packet freely on reference copies with the same preparation and
+duration; or encode two branches in an addressable control spin, apply opposite
+momentum kicks so that the soft packet is centred at $k_s\pm\Delta k/2$ in the
+two branches, undo the kicks after the collision and recombine, subtracting the
+known free dynamical phase by a no-collision run or a spin echo. Both act on
+physical spins. The interferometric route is preferable when outgoing centres
+overlap too strongly to locate a small spatial shift; the position route avoids
+controlled many-body evolution.
+
+\paragraph{Measurement.} For the position route, measure the site-resolved
+outgoing magnon density and fit its centroid only after the packets have
+separated again. For the interferometric route, measure the control spin in two
+quadratures to obtain the complex visibility. In both cases measure leakage
+into bound or additional channels and reject data in which the regular
+two-magnon channel does not dominate.
+
+\paragraph{Readout.} Multiplying a narrow outgoing packet by
+$e^{i\delta_{\mathrm{phys}}(k_s,k_h)}$ produces the spatial shift
+$\Delta x_s=-\partial_{k_s}\delta_{\mathrm{phys}}$, so $-\Delta x_s$
+extrapolated to $k_s=0$ is the desired slope. The interferometric
+central-difference estimator is
+\begin{equation}
+  \hat a(k_s,k_h)=\frac{1}{\Delta k}\operatorname{unwrap}
+    \Bigl[\hat\delta\bigl(k_s+\tfrac{\Delta k}{2},k_h\bigr)
+         -\hat\delta\bigl(k_s-\tfrac{\Delta k}{2},k_h\bigr)\Bigr],
+  \label{eq:op-slope-estimator}
+\end{equation}
+and the signed average removes the term linear in the chosen soft centre:
+\begin{equation}
+  \hat a_0=\tfrac12\bigl[\hat a(+k_s,k_h)+\hat a(-k_s,k_h)\bigr]
+  \;\longrightarrow\;\frac{\sgn(v_h-v_s)}{S}.
+  \label{eq:op-slope-target}
+\end{equation}
+The statement being observed is the exact spin-$S$ two-magnon soft slope of
+\cref{sec:two-magnon}.
+
+\paragraph{Error and convergence.} On a compact hard-momentum set away from the
+endpoints the exact ratio has uniformly bounded derivatives, and for symmetric
+envelopes with the signed extrapolation a useful error model is
+\begin{equation}
+  \Bigl|\hat a_0-\frac{\sgn(v_h-v_s)}{S}\Bigr|
+  \le C_s\bigl(k_s^2+\sigma_s^2\bigr)+C_h\sigma_h^2+C_{\mathrm{fd}}(\Delta k)^2
+     +\varepsilon_{\mathrm{sep}}+\varepsilon_{\mathrm{chan}}
+     +\frac{\varepsilon_{\mathrm{phase}}}{\Delta k}.
+  \label{eq:op-slope-budget}
+\end{equation}
+The first two terms are packet averaging, the third central differencing,
+$\varepsilon_{\mathrm{sep}}$ residual overlap or finite-time error,
+$\varepsilon_{\mathrm{chan}}$ measured leakage, and the last shows that a phase
+uncertainty is amplified by $1/\Delta k$. Equation
+\eqref{eq:op-slope-budget} exposes the trade-off: shrinking $\sigma_s$ makes
+the packet long, while shrinking $\Delta k$ magnifies phase noise. Convergence
+therefore requires a joint scan in width, separation, $\Delta k$ and signed
+$k_s$; one small-momentum point is not a slope measurement. Equal velocities
+and the momentum endpoints lie outside this budget.
+
+\paragraph{What the campaign's numerics already mirror.} The real-space
+collision cross-check reproduces preparation, collision, free-arm comparison
+and packet extrapolation: at $k_h=1.5$ it reports $2.0093\pm0.0044$ for
+$S=\tfrac12$, $1.0026\pm0.0043$ for $S=1$ and $0.6650\pm0.0035$ for
+$S=\tfrac32$ (\cref{sec:numerics}). Those runs do not test pulse noise, a
+physical ancilla, equal velocities, the momentum endpoints, generic many-body
+channels, or the separate memory conjecture.
+
+\paragraph{What failure looks like.} A fitted derivative drifting under
+increasing separation or decreasing width is an unresolved packet or
+finite-time effect. Lost visibility or appreciable bound-channel weight makes
+\eqref{eq:op-slope-estimator} undefined for the claimed elastic channel.
+Failure to reverse sign when the velocity ordering is reversed identifies a
+channel-convention error. If the extrapolated value stays inconsistent with
+$\sgn(v_h-v_s)/S$ once every term in \eqref{eq:op-slope-budget} is closed and
+the Hamiltonian is independently verified, the exact two-body model has been
+experimentally falsified --- and none of these outcomes, by itself, settles the
+campaign's broader universality or memory claims.
+
+\subsubsection*{Experiment 6 (\textsc{proposed}): the reduced-state memory
+readout}
+
+This last protocol is different in kind from the five above: it is the
+operational \emph{target} of a reconstruction theorem the campaign does not
+have. It is recorded here as a proposal, and the identity it would test is
+labelled a conjecture in its own statement. It is stated because naming the
+experiment fixes what the missing theorem must be about, and rules out
+substituting bond data for either of the two physical objects involved.
+
+\paragraph{Preparation.} Choose a physical boundary or interface and a nested
+family of boundary-spin windows $B_\ell$. Prepare a localized incoming
+excitation and an endpoint state. Choose $t_-$ before the excitation reaches
+the boundary and $t_+$ after all propagating density has left $B_\ell$ to a
+measured tolerance. Prepare three matched ensembles: one for tomography at
+$t_-$, one for tomography at $t_+$, and one for the ledger of Experiment~4. If
+the event is meant to leave permanent memory, repeat the late measurement over
+an increasing waiting time rather than selecting a favourable time.
+
+\paragraph{Operation.} Evolve all ensembles with the same physical Hamiltonian
+through the transit. Apply no virtual insertion and make no tensor-gauge
+choice. On the ledger ensemble use the same window, cut and background at both
+times. On the tomography ensembles, do \emph{not} make the first ledger
+measurement: that preserves any boundary coherence whose loss would otherwise
+be caused by the ledger apparatus.
+
+\paragraph{Measurement.} Perform informationally complete physical-spin
+tomography on $B_\ell$ before and after the transit, reconstructing
+$\rho^{\pm}_{\partial,\ell}$; measure on the same boundary spins the calibrated
+local boundary charge $Q^{\partial}_\ell$, with its vacuum background fixed so
+that a positive change means charge gained by $B_\ell$; and on the ledger
+ensemble measure the escaped-charge law \eqref{eq:op-escaped-law}. A stronger
+version performs the late boundary tomography conditioned on each recorded
+ledger outcome, which would reconstruct a charge-labelled boundary instrument
+rather than only an average state.
+
+\paragraph{Readout.} The field-side memory datum is the physical state change
+\begin{equation}
+  \mathcal{M}_{\partial,\ell}
+  :=\rho^{+}_{\partial,\ell}-\rho^{-}_{\partial,\ell},
+  \label{eq:op-boundary-memory}
+\end{equation}
+equivalently the functional
+$O\mapsto\operatorname{Tr}[\mathcal{M}_{\partial,\ell}O]$ on the boundary
+algebra. One reports the full matrix with a tomographic confidence region, the
+trace distance, and a preregistered list of local expectation changes: these
+are basis-independent properties of a physical reduced state, and no virtual
+matrix is the readout. The minimal candidate reconstruction identity is
+\begin{equation}
+  \lim_{\ell\to\infty}
+    \operatorname{Tr}\bigl[Q^{\partial}_\ell\,\mathcal{M}_{\partial,\ell}\bigr]
+  \;\overset{?}{=}\;
+  \lim_{m\to\infty}\mathbb{E}\bigl[\Delta Q_{W_m}\bigr]
+  \;=\;2s\,\delta x
+  \;=\;-\sum_{\nu\in\Z}\nu\,p(\nu),
+  \label{eq:op-reconstruction}
+\end{equation}
+with the opposite sign if $B_\ell$ is oriented as the complementary receiver of
+escaped charge --- an orientation to be fixed before data collection. Equation
+\eqref{eq:op-reconstruction} is a \emph{conjectured} identity, not a campaign
+theorem; the existence and sequence-independence of both limits are part of
+what is conjectured, and no infinite-window charge operator is assumed.
+
+The ledger alone cannot reconstruct every matrix element of
+\eqref{eq:op-boundary-memory}: charge-neutral rotations and coherences change
+the boundary state without changing its charge moment. A genuine
+reconstruction theorem would need experimentally reconstructible
+charge-conditioned completely positive maps satisfying a limit of the form
+\begin{equation}
+  \rho^{+}_{\partial,\ell}
+  \;\overset{?}{=}\;\sum_\nu p(\nu)\,
+     \mathcal{T}_{\ell,\nu}\bigl(\rho^{-}_{\partial,\ell}\bigr),
+  \label{eq:op-reconstruction-full}
+\end{equation}
+together with a charge-selection rule for each map and control of coherences
+between charge sectors. Equation \eqref{eq:op-reconstruction-full} is a
+proposed theorem target and not an identity smuggled in by defining the maps
+from the final state; conditional process tomography is what would specify
+them independently.
+
+\paragraph{Error and convergence.} With tomographic accuracies
+$\varepsilon^{\pm}_{\mathrm{tom}}$ and $M_{\mathrm{TPM}}$ ledger histories, a
+conservative acceptance budget for the residual between the two sides of
+\eqref{eq:op-reconstruction} is
+\begin{equation}
+  R_{\ell,m}\le
+  \norm{Q^{\partial}_\ell}
+    \bigl(\varepsilon^{+}_{\mathrm{tom}}+\varepsilon^{-}_{\mathrm{tom}}\bigr)
+  +\sqrt{\frac{\operatorname{Var}(\Delta Q)}{M_{\mathrm{TPM}}}}
+  +C\lamt^{\,r}+q_{\max}\eta_{\mathrm{pkt}}
+  +\varepsilon_{\mathrm{relax}},
+  \label{eq:op-reconstruction-budget}
+\end{equation}
+with $r$ the minimum padding or separation scale. Again the transfer term has
+the campaign's proved rate while the relaxation term has none and must be
+scanned. Full tomography costs exponentially in $\ell$, so one uses it for the
+smallest windows containing the endpoint and randomized measurements of a fixed
+nested operator set at larger $\ell$ --- the latter tests convergence of the
+functional and does not silently count as full-state tomography.
+
+\paragraph{What failure looks like.} A nonzero limiting residual, after signs
+and backgrounds are checked, falsifies \eqref{eq:op-reconstruction} for that
+preparation. A nonzero boundary change with a zero ledger identifies neutral or
+coherent boundary memory that the scalar ledger does not reconstruct. A nonzero
+ledger with a boundary change decaying at late times means charge crossed the
+window but left no permanent boundary record. And agreement of the one charge
+moment does not establish \eqref{eq:op-reconstruction-full}: unaccounted
+coherences defeat full reconstruction even when the moment matches. These are
+scientifically distinct negative results --- not reasons to rename a virtual
+bond matrix as the missing observable.
+
+\provenance{WI, A1, D26, D27, M-INDEX-fin, S2-2body-S, D13, D22}{\cref{sec:corner-a},
+\cref{sec:memory-index}, \cref{sec:two-magnon};
+protocols in \texttt{theory/lanes/reduction/o2-experiments.md} \S1--\S5}{\texttt{numerics/results/spin1-bc-crosscheck.json},
+\texttt{numerics/results/spin1-bc-falsifier.json}}{\texttt{theory/verdicts/operational-wave-adjudication-r1.md} (A2)}
+
+\subsection{A gauge datum that no experiment can read}
+\label{sec:op-impossibility}
+
+The razor cuts in the other direction too, and in one case it cuts sharply
+enough to be stated as a small theorem. The object is the matrix $X$ appearing
+in the excitation ansatz's null direction
+\begin{equation}
+  \mathcal{N}_k(X)^s=e^{ik}A_\alpha^s X-X A_\beta^s,
+  \qquad B\longmapsto B+\mathcal{N}_k(X),
+  \label{eq:op-null-direction}
+\end{equation}
+the replacement under which two ansatz tensors represent the same physical
+excitation.
+
+\begin{observation}[The ansatz gauge datum is exactly non-identifiable]
+\label{obs:op-x-impossible}
+No quantum-mechanical experiment on the spin chain measures the matrix $X$ of
+\eqref{eq:op-null-direction}. There is no preparation that singles it out: the
+gauge-related tensor $B+\mathcal{N}_k(X)$ represents the same infinite-volume
+generalized vector in the declared limits. There is no operation: the
+replacement in \eqref{eq:op-null-direction} is not a unitary, a channel, a
+quench or a measurement, but a change of coordinates, so there is no ``apply
+$X$'' branch to compare against an unshifted branch. And there is no
+measurement: every positive-operator-valued measure on the physical spins
+depends only on the resulting density operator, and gauge-related
+representatives give the same density operator. Suppose an estimator $F$
+extracted $X$ from physical outcome probabilities. Gauge equivalence would
+require both
+\begin{equation}
+  F\bigl[\rho_{\Phi(B)}\bigr]=0
+  \qquad\text{and}\qquad
+  F\bigl[\rho_{\Phi(B+\mathcal{N}_k(X))}\bigr]=X ,
+  \label{eq:op-x-contradiction}
+\end{equation}
+while the two density operators appearing in \eqref{eq:op-x-contradiction} are
+\emph{equal}. For nonzero $X$ this is a direct contradiction. Equivalently: the
+quantum Fisher information along this gauge direction vanishes.
+\end{observation}
+
+Three consequences follow, and the third is the reason this is stated at all.
+First, this is exact non-identifiability and not a small signal with an
+unfavourable error bar --- increasing the shot count does not produce a
+consistent estimator, ever. Second, on a finite window the formal null
+direction does leave two boundary terms,
+$e^{ik(b+1)}\,\ket{X\,@\,(b|b{+}1)}-e^{ika}\,\ket{X\,@\,(a{-}1|a)}$; measuring
+those would measure the chosen finite boundary vectors and the truncation
+convention, and they disappear only in the declared limits, so they cannot be
+used to reconstruct a unique infinite-volume $X$. Third, the diagnostic is
+sharp: \emph{any} claimed readout of $X$ changes when the tensor gauge, the
+boundary vectors or the finite-window convention is changed while every
+physical-spin prediction stays fixed. That dependence is precisely the
+signature of an apparatus that has measured scaffolding rather than physics.
+
+\begin{remark}[A scaffolding fence, not a claim]
+\label{rem:op-x-fence}
+\Cref{obs:op-x-impossible} carries no status in the campaign's claim ledger and
+is not proposed for one: it is a negative statement about a gauge coordinate,
+and the ledger records statements about physics. Its role is a fence. The
+ansatz gauge datum remains useful as calculational scaffolding for quotienting
+the excitation ansatz, and it may be fixed by an explicit numerical convention;
+but it may never be described as an observable, a memory record, or an
+experimental endpoint datum, and wherever it appears the surrounding text must
+say so.
+\end{remark}
+
+\provenance{D5, D12}{\cref{sec:mps-setting};
+argument in \texttt{theory/lanes/reduction/o2-experiments.md} \S6}{---}{\texttt{theory/verdicts/operational-wave-adjudication-r1.md} (A2)}
+
+\subsection{Boundary observables in the operator-algebraic literature}
+\label{sec:op-boundary-lit}
+
+The razor is not a private campaign standard. An operator-algebraic school has
+been constructing boundary algebras out of physical observables for some years,
+and the campaign has to be placed against it honestly: partly because that work
+is the right citation frame for the campaign's own boundary layer, and partly
+because it preempts a broad originality claim the campaign might otherwise have
+been tempted to make.
+
+\subsubsection*{What four sources prove}
+
+\paragraph{Jones, Naaijkens, Penneys and Wallick (arXiv:2307.12552).} Starting
+from a translation-invariant net of local observable algebras and a
+reverse-isotone family of nonzero local ground-state projections --- if
+$\Lambda\subset\Delta$ then $p_\Delta\le p_\Lambda$ --- they compress the local
+algebra of a boundary-touching region and impose four exact finite-region
+axioms: bulk local indistinguishability, identification of the
+boundary-touching compression, stability under enlarging the inner region
+without changing the touched boundary, and injectivity of further compression.
+These are axioms on physical local observable algebras and their local
+ground-space projectors, not on tensor injectivity. From a half-space the
+construction builds a codimension-one net whose inductive limit is a boundary
+quasi-local algebra, and compression defines a canonical Heisenberg-picture
+channel through $p_\Delta x p_\Delta=E(x)p_\Delta$, independent of the region
+and extending uniquely to a unital completely positive map; every boundary
+state then gives a bulk-boundary state agreeing with the canonical ground state
+in the deep bulk. Their model theorems are that ``the Toric Code and Levin-Wen
+models satisfy the LTO axioms\ldots{} [and] the boundary nets are fusion
+categorical nets over the lattice $\Z$'', and that for those identified nets the
+boundary superselection category is the Drinfeld centre of the input fusion
+category. The general statement that any two-dimensional bulk order equals the
+braided category of its boundary net is expressly a \emph{conjecture} in that
+paper, and weak algebraic Haag duality --- sufficient for a canonical braiding
+and stable under bounded-spread isomorphism --- is stated there \emph{not} to be
+automatic from their axioms.
+
+\paragraph{Bhardwaj, Brisky, Chuah, Kawagoe, Keslin, Penneys and Wallick
+(arXiv:2410.21454).} A net indexed by a poset with an order-reversing
+involution, on a common Hilbert space, satisfying isotony, Haag duality
+$\mathcal{A}_{p'}=\mathcal{A}_p'$ and absorption of normal separable
+representations. A sector is a compatible family of normal representations,
+localized at $p$ when it is trivial on the complement. Under their geometric
+axioms the localized sectors carry a strict tensor product and a unitary
+braiding; a bounded-spread version replaces exact duality by a uniform
+inclusion on cones and reaches the same conclusion; intertwined nets have
+braided-equivalent sector categories; and for a planar spin system with a pure
+reference state, bounded-spread cone duality and infinite cone factors, their
+category is braided monoidally equivalent to the Naaijkens category. Every one
+of these is a theorem \emph{about} nets satisfying duality and absorption, not
+a proof that an arbitrary spin-system state satisfies them.
+
+\paragraph{Ogata, P\'erez-Garc\'ia and Ruiz-de-Alarc\'on (arXiv:2509.23734).}
+For a pure state's GNS representation, Haag duality is the maximality equality
+\begin{equation}
+  \pi\bigl(\alg_{\Lambda^c}\bigr)'=\pi\bigl(\alg_{\Lambda}\bigr)''
+  \label{eq:op-haag-duality}
+\end{equation}
+for every cone, with an approximate version allowing a fattened or translated
+cone and a unitary approximable by increasingly well-localized ones. Their
+proved model class is not arbitrary two-dimensional tensor networks: it is the
+renormalization-fixed-point, weak-Hopf-injective family, with corollaries
+stated for biconnected algebras, and the reduction assumes a pure unique
+frustration-free state of a positive uniformly bounded finite-range
+interaction. They prove \eqref{eq:op-haag-duality} for lattice-adapted
+cone-like regions in that class, hence approximate Haag duality for those
+states and exact duality after grouping plaquettes into coarse sites; the same
+models have a commuting parent Hamiltonian whose local ground space is the
+tensor-network space, and satisfy local topological order for rectangular bulk
+regions --- which is not, by itself, a verification of the four stronger axioms
+above. Notably, the proof projects local observable algebras onto inside and
+outside zero-energy spaces rather than assuming string operators.
+
+\paragraph{Corbelli (arXiv:2510.23790).} On a two-dimensional Delone lattice
+with an on-site action of a \emph{compact abelian} group, the ordinary
+selection criterion asks for unitary equivalence to a reference representation
+on the complement of every cone; the refined criterion asks the identifying
+unitaries also to intertwine the global group actions. With irreducible
+covariant factors on a cone and its complement, each irreducible representation
+satisfying the refined criterion has a unique grade in the dual group, and this
+classifies the refined sectors up to equivariant unitary equivalence --- in
+particular for the GNS representation of a pure invariant product state. The
+paper proves no second-cohomology classification, no projective endpoint
+action, no broken-vacuum double-coset sectors and no braided fusion theorem.
+
+\subsubsection*{What is operational there, and what is not}
+
+At its entry point the first construction gives almost exactly the foundation
+the razor asks for. Its primitives are finite-support spin observables,
+spectral projections onto finite-region zero-energy spaces, compression,
+multiplication, inclusion and norm completion, and states --- hence ordinary
+preparation and measurement probabilities. The decisive statement is not that
+a virtual tensor carries an edge index; it is the physical compression identity
+$p_\Delta x p_\Delta = E(x)p_\Delta$, followed by the proved fact that
+\emph{every} state of the resulting boundary algebra extends through the
+channel to a bulk-boundary state agreeing with the ground state in the deep
+bulk. Three qualifications apply. Exact local ground projections are idealized
+spectral operations, concrete for commuting projectors and demanding in
+general --- a feasibility issue, not a status issue. The inductive-limit
+boundary algebra is an abstract corner rather than a unital subalgebra of the
+original quasi-local algebra, so the channel is only
+conditional-expectation-like and one must not pretend that every boundary
+element is a microscopic operator with the original unit. And cone von Neumann
+algebras, GNS closures, absorbing representations, braidings and category
+equivalences are mathematical organization of observable response, not
+laboratory observables; they become operational only when tied back to local
+algebras, state restrictions, intertwiners or a stated instrument --- which is
+precisely what the Haag-duality paper does by deriving the von Neumann equality
+from finite zero-energy projections. The verdict is therefore: \emph{yes at the
+boundary-observable layer, no if one tries to call the whole
+representation-and-category layer operational}.
+
+The campaign's own construction passes in its own scoped register --- the
+padded-window insertion map is injective, so left multiplication is a genuine
+finite-window linear operation, and the endpoint states form a $\PGL(\chi)$
+torsor with an honest homomorphism from the symmetry group into it --- but the
+success should not be overstated. The endpoint-state space is a space of
+states, not a $C^*$-algebra; $\PGL(\chi)$ is its label torsor, not its
+observable algebra; and the symmetry corner explicitly leaves unproved the GNS
+realisation of every bond-insertion state. Because a one-dimensional bulk has a
+zero-dimensional boundary, the natural bridge would be the degenerate case of
+the boundary-net construction, not a one-dimensional boundary \emph{net} like
+the toric-code example. The honest classification of the relationship is:
+\emph{same operational principle; plausible zero-dimensional specialization;
+presently different mathematical objects, with no proved equivalence}.
+
+\subsubsection*{The import obligation: exhaustiveness at the cut}
+
+There is one thing the campaign should import from this literature, and it
+should import it as a \emph{missing theorem}, not cite it as a completed one.
+Haag duality \eqref{eq:op-haag-duality} is the rigorous version of the sentence
+``the region algebra is all there is at the cut'': it says that locality's
+automatic inclusion is saturated, so every bounded operator invisible to the
+complement already lies in the region algebra. The campaign uses that sentence
+informally whenever it treats the boundary algebra as exhausting the data at a
+cut. Making it a theorem requires four steps: form the half-chain von Neumann
+algebras in the injective-MPS GNS representation; prove the appropriate cut
+duality, or a precisely stated split or twisted variant; identify the resulting
+cut corner or module with the virtual matrix data; and only then claim
+exhaustiveness together with a physical GNS action of the charge algebra. None
+of the four sources supplies this. The boundary-net paper warns that even its
+strong axioms do not automatically give weak algebraic Haag duality, and the
+2025 duality theorem is two-dimensional and weak-Hopf/matrix-product-operator
+injective, not the one-dimensional injective-MPS cut theorem required. This is
+a named future lane and a proof strategy; it is not a closed gap, and no
+statement in this labbook may quietly assume it.
+
+\subsubsection*{Novelty, narrowed}
+
+The narrowing is best stated bluntly, because it is a constraint on prose that
+has not yet been written.
+
+A broad claim that the campaign is the first to ground a lattice boundary
+algebra in physical observables is untenable, and must not appear anywhere. The
+boundary-net construction builds exactly such an algebra from local observable
+algebras and ground-state projections, with a channel and a parametrization of
+bulk-boundary states; the duality paper derives a maximal cone-observable
+algebra from finite zero-energy spaces for a large fixed-point class. Generic
+sector bookkeeping --- local equivalence to a vacuum, transportability,
+intertwiners, fusion, braiding, bounded-spread stability, equivalence of sector
+formalisms --- is likewise prior art, as is the statement that requiring
+symmetry-compatible equivalence can make an otherwise trivial sector theory
+nontrivial. The campaign may not advertise ``symmetry makes otherwise invisible
+sectors nontrivial'' or ``boundary sectors encode bulk anyons'' as new
+principles.
+
+What is \emph{not} preempted is narrower and survives intact: the campaign's
+exact same-circle finite two-time selection law and its explicit two-bit
+toric-code braiding readout; the endpoint theorem that the bond-insertion
+endpoint-state locus is a $\PGL(\chi)$ torsor with the multiplier class as the
+obstruction to a unitary lift; the ordered tail-vacuum classification, the
+diagonal double coset, and the explicit weak-$*$ escape from a vacuum folium
+under a half-infinite symmetry string; and every proposed link to soft limits
+and memory. No audited source contains a soft theorem, a soft momentum limit,
+a domain-wall memory theorem, or any identification of these with a boundary
+sector category, a dual-group grade or a multiplier class. The campaign's
+central novelty finding --- the absence of a lattice/matrix-product synthesis
+of the infrared triangle --- is untouched by this audit. What the audit narrows
+are the auxiliary claims about boundary observables and sector organization,
+and what it creates is the citation debt below.
+
+\subsubsection*{Citation debt}
+
+``Owed'' below means \emph{cite and distinguish}. It does not mean import the
+cited theorem as a premise: none of these hypotheses has been verified in the
+campaign's setting, and importing them silently would be exactly the failure
+mode the razor exists to prevent.
+
+{\small
+\begin{longtable}{@{}p{0.22\textwidth}p{0.24\textwidth}p{0.47\textwidth}@{}}
+\toprule
+\textbf{campaign location} & \textbf{citations owed} & \textbf{what the text must say} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{campaign location} & \textbf{citations owed} & \textbf{what the text must say} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+endpoint action and boundary algebra (A1) &
+Jones--Naaijkens--Penneys--Wallick, arXiv:2307.12552; Corbelli,
+arXiv:2510.23790 &
+The first is the direct observable/ground-projection boundary-algebra
+antecedent, the second the symmetry-compatible-sector antecedent. Distinguish
+a compressed $C^*$ net and a dual-group grade from the campaign's
+finite-window $M_\chi$ action, its $\PGL(\chi)$ state torsor, and its
+second-cohomology lifting obstruction. \\
+\midrule
+kink sectors and double cosets (A2) &
+Bhardwaj et al., arXiv:2410.21454; Corbelli, arXiv:2510.23790 &
+State that the standard sectors are complement-localized and transportable,
+whereas the campaign's kink sector is solitonic with a weak-$*$ folium escape.
+State that symmetry-compatible refinement is prior art, while the
+double-coset/tail classification is not supplied there. \\
+\midrule
+the folium implementer row &
+Corbelli, arXiv:2510.23790; Bhardwaj et al., arXiv:2410.21454 &
+Cite the covariant-representation and normal-sector frameworks, then say
+explicitly that neither constructs a common-unbroken-circle implementer in a
+fixed kink folium, nor a window-charge limit. \\
+\midrule
+the finite toric-code row &
+Jones--Naaijkens--Penneys--Wallick, arXiv:2307.12552 &
+Cite the toric-code boundary net and its Drinfeld-centre identification as the
+infinite, operator-algebraic counterpart; retain the campaign's finite Pauli
+measurement-and-ribbon proof as the operational theorem. \\
+\midrule
+the two-dimensional anyon-label row &
+Jones--Naaijkens--Penneys--Wallick, arXiv:2307.12552; Bhardwaj et al.,
+arXiv:2410.21454; Ogata--P\'erez-Garc\'ia--Ruiz-de-Alarc\'on,
+arXiv:2509.23734 &
+Cite respectively ground-projection boundary nets with the model-level centre
+identification; abstract and bounded-spread sector categories with the
+Naaijkens equivalence; and exact/approximate Haag duality for the biconnected
+weak-Hopf fixed-point class. Preserve the fence that none supplies a
+microscopic pure-endpoint instrument or its normalization. \\
+\midrule
+the flatness row &
+Jones--Naaijkens--Penneys--Wallick, arXiv:2307.12552; Bhardwaj et al.,
+arXiv:2410.21454 &
+Cite bounded-spread invariance as the categorical stability backdrop, while
+stating that it does not prove equality of specific code-projected path
+morphisms; the local cleaning identity remains separate. \\
+\midrule
+the two-dimensional finite memory row &
+none at theorem level &
+Add at most a scope sentence separating additive on-site two-time charge from
+topological charge. Do not imply that this literature proves the row. \\
+\end{longtable}
+}
+
+\noindent For the Letter the minimum defensible placement is: the boundary-net
+paper in the first paragraph that calls the matrix-product cut a boundary
+algebra; the poset and Haag-duality papers wherever ``all observables at the
+cut'', superselection sectors or phase-stable anyon categories are invoked; and
+Corbelli wherever the Letter says that enforcing global-symmetry compatibility
+refines a trivial sector theory. The fuller distinctions stay here.
+
+\provenance{A1, A2, M-INDEX-LA-folium, A-INDEX-TC-fin, A-INDEX-PEPS, SHAPE-FLAT, M-INDEX-2D-fin}{\cref{sec:corner-a},
+\cref{sec:two-plus-one}; audit in
+\texttt{theory/lanes/reduction/o3-boundary-algebra-lit.md} \S1--\S5, sources
+\texttt{refs/arxiv-2307.12552}, \texttt{refs/arxiv-2410.21454},
+\texttt{refs/arxiv-2509.23734}, \texttt{refs/arxiv-2510.23790}}{---}{\texttt{theory/verdicts/operational-wave-adjudication-r1.md} (A3)}
+
+\subsection{One species, and pure gravity: the reconnaissance}
+\label{sec:op-one-species}
+
+\subsubsection*{The framing this section serves}
+
+The canonical infrared triangle is a \emph{two-species} story: matter radiates
+a mediator, the mediator carries the soft leg, and a matter detector records the
+memory. A one-dimensional spin chain has no second species. What it has instead
+is \emph{superselection-sector separation}: kinks play the role of matter,
+magnons the role of radiation, and the two are separated not by carrying
+different fields but by living in different sectors of the same field. This is
+the campaign's structural substitution, and it forces a corollary that is easy
+to state and easy to forget --- \emph{memory needs a probe}, and in a
+one-species world the probe must itself be a soliton of the same field. That is
+why the campaign's memory corner is a domain wall and not a test particle.
+
+Two consequences follow for positioning. First, to the best of the campaign's
+source-controlled searching, no assembled one-species continuum triangle exists
+in the literature: what exists is the Adler-zero corner in isolation, and the
+assembly is what would be new (\cref{sec:continuum-reduction}). Second --- and
+this is the correction the owner insisted on --- \emph{pure gravity is included
+in the map}, not excluded from it. Two-dimensional dilaton gravity with its
+Schwarzian boundary mode is a one-soft-species candidate in which the soft
+carrier is a single boundary collective field. It is the pure-gravity sibling of
+the lattice construction, and it comes with a named decisive computation. The
+rest of this subsection records what the reconnaissance found, in the register
+of a physics argument: a candidate, not a claim, and nothing here is offered
+for the claim ledger.
+
+\subsubsection*{The corner map}
+
+\begin{center}
+{\small
+\begin{tabular}{@{}p{0.19\textwidth}p{0.38\textwidth}p{0.36\textwidth}@{}}
+\toprule
+\textbf{role} & \textbf{SYK / JT} & \textbf{campaign spin chain} \\
+\midrule
+microscopic system &
+$N$ Majoranas with random $p$-body couplings; one such cluster per site in the
+chain version &
+local spins with fixed local couplings \\
+infrared collective mode &
+one time reparametrization $f(u)$ per boundary, modulo $SL(2,\R)$ &
+the magnon Goldstone field; the kink collective coordinate in the broken
+sector \\
+broken symmetry &
+emergent $\Diffop(S^1)\to SL(2,\R)$, explicitly broken at finite coupling &
+a microscopic internal breaking, exact unless the Hamiltonian is deformed \\
+soft effective theory &
+the Schwarzian, with a single stiffness &
+low-momentum magnon theory, plus exact lattice scattering data \\
+hard objects &
+fermion or matter-primary insertions, grouped into bilocals &
+hard magnons and kinks \\
+candidate memory carrier &
+a relative boundary/Kruskal frame shift, or a piecewise relative M\"obius frame
+&
+a permanent kink displacement, or a changed vacuum sector \\
+operational detector &
+fermion bilocals, two-sided correlators, mutual information, charge response &
+local spin measurements, the kink-position window, the interferometric
+scattering phase \\
+gauge-like scaffolding &
+a representative $f$, including its three zero modes &
+the excitation-ansatz tensor and its null datum \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+
+\noindent The last row is an exact analogy at the level of \emph{operational
+logic} and not an identification of two gauge structures. Two representatives
+related by the M\"obius action describe the same geometry and the corresponding
+directions cancel from invariant bilocals, so a plotted $f(u)$ is not an
+observable while its orbit, its charge jump and its effect on a fermion
+correlator are --- exactly as the campaign's ansatz coordinate is unmeasurable
+while the scattering phase inferred with it is measurable. Importantly, not all
+of $f$ is gauge: only the representative and the three exact zero modes are.
+
+\subsubsection*{What is there, corner by corner}
+
+The asymptotic-symmetry corner is strong. The asymptotic symmetries of
+two-dimensional anti-de Sitter space are \emph{all} the time reparametrizations
+of the boundary, and distinct geometries are reparametrizations modulo the
+M\"obius action, so the soft configuration space is
+$\mathcal{M}_{\mathrm{soft}}=\Diffop(S^1)/SL(2,\R)$ --- the breaking pattern and
+the campaign's required quotient by trivially-acting transformations, in one
+object. The zero modes are described in the source as Goldstone bosons, and the
+boundary action
+\begin{equation}
+  I_{\mathrm{Sch}}[t]=-\frac{1}{8\pi G}\int\!du\;\phi_r(u)\,\Schw(t,u),
+  \qquad
+  \Schw(t,u)=-\frac12\frac{t''^2}{t'^2}+\left(\frac{t''}{t'}\right)',
+  \label{eq:op-schwarzian-action}
+\end{equation}
+is M\"obius-invariant but lifts every other direction, making this a
+pseudo-Goldstone. Three conserved charges are constructed explicitly, the
+Hamiltonian is their quadratic Casimir, the two-sided state has equal and
+opposite one-sided charges, and with matter the total charge
+$Q^a_T=Q^a[t]+q^a_M$ is conserved with
+$\partial_u(Q^-,Q^0,Q^+)=T_{tz}\,t'\,(1,t,t^2)$ --- already the soft/hard
+charge ledger an edge would need. The qualification is load-bearing: those are
+the charges of the \emph{unbroken} M\"obius subgroup, not a charge for every
+asymptotic generator, and the source itself says that neither the algebra nor
+the central charge has been addressed. Under the campaign's strong definition
+this corner is structurally present but not closed.
+
+The soft corner is strong in a different way and weak in the way that matters.
+After dropping the ultraviolet kinetic term the microscopic bilocal equations
+are reparametrization-invariant; restoring that term breaks the invariance
+explicitly; and the resulting thermal action is the nonlinear Schwarzian with a
+coefficient \emph{derived}, not fitted, from the large-$p$ collective theory,
+with the orthogonal hard directions parametrically stiffer. A matter correlator
+evaluated at reparametrized times receives one factor per insertion, and the
+source states the all-correlator scope explicitly. Expanding about the thermal
+saddle gives an invariant vertex attached to each hard bilocal,
+\begin{equation}
+  \mathcal{B}_{12}[\varepsilon]
+  =\varepsilon'(u_1)+\varepsilon'(u_2)
+   -\frac{\varepsilon(u_1)-\varepsilon(u_2)}{\tan(u_{12}/2)},
+  \label{eq:op-soft-vertex}
+\end{equation}
+so that the leading connected piece of two hard bilocals is
+\begin{equation}
+  \frac{\braket{V_1V_2W_3W_4}_{\mathrm{grav}}}
+       {\braket{V_1V_2}\braket{W_3W_4}}
+  =\Delta_V\Delta_W\,
+   \braket{\mathcal{B}_{12}\mathcal{B}_{34}}_{\mathrm{Sch}} .
+  \label{eq:op-soft-dressing}
+\end{equation}
+The dictionary is then exactly the campaign's: hard legs are the microscopic
+insertions, the universal soft factor is \eqref{eq:op-soft-vertex} contracted
+with the soft propagator, and the hard-data dependence collapses onto
+representation data and a single stiffness. But this is a \emph{dressing}, not
+a demonstrated external-soft-leg theorem. The quadratic action
+$I^{(2)}_\varepsilon=\tfrac{C}{2}\int du\,[(\varepsilon'')^2-(\varepsilon')^2]$
+has its three lowest modes removed as redundancies, and the enhanced remaining
+propagator plays the role of a soft pole; there is no demonstrated Adler zero,
+the closest thing being that \eqref{eq:op-soft-vertex} annihilates the three
+pure-M\"obius directions --- decoupling of a redundancy, not vanishing of an
+on-shell amplitude. A zero-dimensional model has neither spatial asymptotic
+states nor a soft-particle limit of the campaign's magnon type.
+
+The memory corner is a strong candidate and no more. A small early pulse on one
+side of a thermofield double backreacts as a null shock, and matching across it
+shifts the null coordinate by
+\begin{equation}
+  \tilde v=v+\alpha,\qquad \alpha=\frac{E}{4M}\,e^{R t_w/\ell^2},
+  \label{eq:op-shock-shift}
+\end{equation}
+so that the two horizons miss by a finite amount afterwards. That the absolute
+shift is scaffolding and the \emph{mismatch} is the datum is stated in the
+source itself: a M\"obius transformation can remove the effect before the
+insertion or after it, but not both. The detector is not the coordinate but the
+untouched second copy --- the two-sided correlator in the perturbed state, and
+independently the two-sided mutual information --- which is an ordinary joint
+correlation protocol on microscopic fermions and realises the campaign's maxim
+that memory needs a probe. What is established is \emph{geometric} step
+permanence: with the step response $\delta V(U)=\alpha\theta(U)$ one has the
+kinematic zero-mode identity
+\begin{equation}
+  \widetilde{\delta V}(\omega)
+  =\alpha\Bigl[\pi\delta(\omega)+i\,\mathrm{PV}\tfrac{1}{\omega}\Bigr],
+  \qquad
+  \partial_U\delta V=\alpha\,\delta(U),
+  \label{eq:op-shock-dc}
+\end{equation}
+which follows from the sourced metric and is not a dynamical soft theorem. What
+is \emph{not} established is operational late-time permanence: the source varies
+how far in the past the perturbation sits while measuring at a fixed reference
+time, and the general geodesic answer contains a decaying factor, so an equal
+late-time probe can see the correction die away even though the coordinate
+matching keeps its step. A permanent coordinate matching is not automatically a
+permanent operational record.
+
+\subsubsection*{The decisive computation}
+
+The cheapest calculation that settles the question is classical Schwarzian
+response at large stiffness, before any collective-field path integral. Prepare
+two boundaries in the thermofield-double saddle, apply a compactly supported
+matter source on the right during $u\in[u_i,u_f]$, and record the final energy
+--- using either a balanced source with zero net energy or a comparison against
+the equilibrium saddle at that same final energy, since otherwise a permanent
+temperature change masquerades as frame memory. Then:
+\begin{align}
+  C\,\frac{\partial_u\Schw(t,u)}{t'(u)}
+    &=-t'(u)\,T_{tz}(u),
+    \label{eq:op-T1}\\[2pt]
+  \delta G_{LR}(T)
+    &=G^{\mathrm{pulse}}_{LR}(T,T)-G^{\mathrm{eq}}_{LR}(T,T;E_f)
+     \;\simeq\;-\Delta u_{\mathrm{rel}}\,\partial_T G^{\mathrm{eq}}_{LR},
+    \label{eq:op-T2}\\[2pt]
+  \Delta u_{\mathrm{rel}}
+    &=\lim_{\omega\to0}\bigl[-i\omega\,\delta u_{\mathrm{rel}}(\omega)\bigr]
+     \;\overset{?}{=}\;
+     \lim_{\omega\to0}\mathcal{S}_{\mathrm{Sch}}
+       (\omega;\text{same hard source}).
+    \label{eq:op-T3}
+\end{align}
+Equation \eqref{eq:op-T1} is the sourced Schwarzian equation; outside the
+compact source the charges are constant, so the before and after solutions are
+thermal maps related by definite M\"obius data, and one fixes the single
+simultaneous redundancy and keeps only the \emph{relative} transformation
+between the two clocks. Equation \eqref{eq:op-T2} reads only an observable: the
+memory test is whether the fitted relative displacement approaches a nonzero
+constant as the detector time runs away, not whether a chosen representative
+contains a step. Equation \eqref{eq:op-T3} does the zero-mode comparison inside
+the same calculation, with $\mathcal{S}_{\mathrm{Sch}}$ obtained by attaching
+the invariant vertex \eqref{eq:op-soft-vertex} to the same hard insertion and
+using the retarded continuation of the soft propagator --- its normalization
+fixed by \eqref{eq:op-T1} and the measured hard charge, never fitted
+independently.
+
+The computation is decisive in every direction, which is the point of naming
+it:
+
+\begin{center}
+{\small
+\begin{tabular}{@{}p{0.34\textwidth}p{0.60\textwidth}@{}}
+\toprule
+\textbf{outcome} & \textbf{what it settles} \\
+\midrule
+nonzero plateau in \eqref{eq:op-T2} \emph{and} the equality
+\eqref{eq:op-T3} &
+a genuine operational memory corner, together with the soft-to-memory edge:
+the one-species pure-gravity triangle closes. \\
+\midrule
+plateau, but \eqref{eq:op-T3} fails &
+memory without a triangle: a permanent record exists but is not the
+zero-frequency content of the soft response. \\
+\midrule
+no plateau after final-state subtraction &
+the butterfly shift is a transient relational time delay and \emph{not} memory
+in the campaign's sense, even though the ideal metric contains the step. This
+negative reading sharpens the campaign's own rule that a coordinate shift
+without a persistent probe record is not memory. \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+
+\noindent Only if the tree-level test passes is the expensive version
+justified: the same three steps in the large-$p$ collective theory, then in a
+fixed disorder realization, and only afterwards the chain version to test
+spatial propagation.
+
+\subsubsection*{Honest missing pieces}
+
+Six scope conditions travel with everything above and none of them is
+cosmetic. A single cluster is zero-dimensional: its asymptotics and softness
+concern time and low frequency, and it has no spatial scattering problem; the
+chain version adds space but not the campaign's internal-symmetry Goldstone
+mechanism. There is no propagating bulk mode, so ``one-species pure gravity''
+means a single boundary collective field and not a single on-shell graviton ---
+matter is still required to make the event and to read the result, and ``pure''
+describes the carrier sector, not an empty experiment. The Goldstone is a
+pseudo-Goldstone, so every soft statement carries a regime and calculable
+corrections in the inverse coupling, in $1/p$ and in $1/N$; a theorem without
+that hierarchy would overstate the sources, and sufficiently light additional
+fields can even outrun the breaking term. The kinematics are thermal and
+chaotic rather than vacuum scattering, so the exponential out-of-time-order
+continuation is not an Adler limit and its late-time decay is physics rather
+than nuisance. The model is an ensemble and the collective action is obtained
+with annealed disorder averaging, whereas a laboratory Hamiltonian is one
+realization: an operational triangle must either demonstrate the identity
+sample by sample or supply a self-averaging statement, and no source consulted
+does. And the second boundary is substantive, not a convenience --- it is the
+reference clock that makes an otherwise gauge-like frame displacement
+observable, and a one-sided formulation would need an explicit clock degree of
+freedom, since the difference of a representative between the far past and the
+far future is not a substitute.
+
+\begin{remark}[Status of the reconnaissance]
+\label{rem:op-syk-status}
+This subsection is a candidate and not a claim. The two-dimensional
+gravity setting has a strong symmetry and soft backbone and a physically
+compelling memory candidate; it is not an established triangle, because the
+charge algebra for the full asymptotic group, an external-soft-leg or response
+theorem, and an operationally permanent memory identity are all missing. It is
+a companion and extension setting: it does not gate the Letter, nothing in it
+enters the claim ledger, and every ``known'' statement above means
+\emph{exhibited in the three sources consulted}, not established in the
+literature at large.
+\end{remark}
+
+\provenance{---}{reconnaissance in
+\texttt{theory/lanes/reduction/o4-syk-jt-recon.md} \S1--\S5; sources
+\texttt{refs/arxiv-1606.01857}, \texttt{refs/arxiv-2412.14799},
+\texttt{refs/arxiv-1306.0622}}{---}{\texttt{theory/verdicts/operational-wave-adjudication-r1.md} (A4)}
+
+\subsection{What the wave settles, and what it leaves open}
+
+Three independent lines of enquiry converged on the same cut, which is the
+reason this section exists rather than a set of scattered annotations. The
+campaign's observable layer --- endpoint states, the projective class, the
+two-time ledger, the scattering phases --- is operational and now carries
+explicit protocols with explicit error budgets. Its scaffolding layer is
+provably non-operational exactly where the question can be posed sharply
+(\cref{obs:op-x-impossible}) and is labelled as such throughout the registry.
+The operator-algebraic school that formalizes boundary observables is the
+correct citation frame for the first layer and narrows the campaign's claim to
+originality there. And the two-dimensional gravity setting exhibits the same
+observable-versus-collective-coordinate split in a pure-gravity theory. The
+analogies line up where they must.
+
+Four obligations remain, and they are recorded rather than resolved: the
+citation debt above must be discharged in the labbook and in any Letter passage
+making the corresponding claim; the restate-and-flag rows of the registry must
+be carried out in lockstep with the definitions they touch; the
+exhaustiveness-at-the-cut theorem is a named future lane and may not be assumed
+in the meantime; and the decisive gravity computation \eqref{eq:op-T1} to
+\eqref{eq:op-T3} is named but not performed. No claim status changed in this
+wave, and none was required to.
