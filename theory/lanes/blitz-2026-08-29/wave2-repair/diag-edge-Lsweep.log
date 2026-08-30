@@ -7,3 +7,84 @@ RES Haldane L=24 chi=24 mL_half=-0.407644 eps=8.362e-09  t=3.5s
 CUM Haldane L=24 chi=24  4:-0.30006 6:-0.35313 8:-0.38497 10:-0.40218 12:-0.40764 16:-0.38497 20:-0.30006 24:-0.00000
 RES Haldane L=24 chi=48 mL_half=-0.407643 eps=2.234e-11  t=4.7s
 CUM Haldane L=24 chi=48  4:-0.30006 6:-0.35313 8:-0.38497 10:-0.40218 12:-0.40764 16:-0.38497 20:-0.30006 24:+0.00000
+
+[365164] signal 15: Terminated
+in expression starting at /tmp/claude-1000/-home-tobias-Projects-tns-as-st-me/08aaec36-9ee9-4e37-9e97-dc7b96aab79a/scratchpad/diag_edge.jl:27
+unknown function (ip: 0x7796eaa98e4f) at /lib/x86_64-linux-gnu/libc.so.6
+pthread_cond_wait at /lib/x86_64-linux-gnu/libc.so.6 (unknown line)
+uv_cond_wait at /workspace/srcdir/libuv/src/unix/thread.c:822
+ijl_task_get_next at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/scheduler.c:523
+poptask at ./task.jl:1216
+wait at ./task.jl:1228
+#wait#398 at ./condition.jl:141
+_trywait at ./asyncevent.jl:163
+profile_printing_listener at ./Base.jl:332
+#start_profile_listener##0 at ./Base.jl:352
+jfptr_YY.start_profile_listenerYY.YY.0_6779.1 at /home/tobias/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/lib/julia/sys.so (unknown line)
+jl_apply at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/julia.h:2391 [inlined]
+start_task at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/task.c:1252
+unknown function (ip: (nil)) at (unknown file)
+inner_thread at /home/tobias/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/bin/../lib/julia/libopenblas64_.so (unknown line)
+exec_blas at /home/tobias/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/bin/../lib/julia/libopenblas64_.so (unknown line)
+gemm_driver.isra.0 at /home/tobias/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/bin/../lib/julia/libopenblas64_.so (unknown line)
+zgemm_thread_nn at /home/tobias/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/bin/../lib/julia/libopenblas64_.so (unknown line)
+zgemm_64_ at /home/tobias/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/bin/../lib/julia/libopenblas64_.so (unknown line)
+gemm! at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/usr/share/julia/stdlib/v1.12/LinearAlgebra/src/blas.jl:1642
+_threaded_blas_mul! at /home/tobias/.julia/packages/Strided/yVKLF/src/linalg.jl:134
+blas_mul! at /home/tobias/.julia/packages/Strided/yVKLF/src/linalg.jl:119 [inlined]
+_mul! at /home/tobias/.julia/packages/Strided/yVKLF/src/linalg.jl:103
+mul! at /home/tobias/.julia/packages/Strided/yVKLF/src/linalg.jl:70
+_unsafe_blas_contract! at /home/tobias/.julia/packages/TensorOperations/WNMzk/src/implementation/blascontract.jl:90
+_blas_contract! at /home/tobias/.julia/packages/TensorOperations/WNMzk/src/implementation/blascontract.jl:58
+blas_contract! at /home/tobias/.julia/packages/TensorOperations/WNMzk/src/implementation/blascontract.jl:20 [inlined]
+tensorcontract! at /home/tobias/.julia/packages/TensorOperations/WNMzk/src/implementation/strided.jl:88
+tensorcontract! at /home/tobias/.julia/packages/TensorOperations/WNMzk/src/interface.jl:179 [inlined]
+tensorcontract! at /home/tobias/.julia/packages/TensorKit/zSHBV/src/tensors/tensoroperations.jl:140 [inlined]
+tensorcontract! at /home/tobias/.julia/packages/TensorOperations/WNMzk/src/interface.jl:166 [inlined]
+tensorcontract! at /home/tobias/.julia/packages/TensorOperations/WNMzk/src/interface.jl:155 [inlined]
+JordanMPO_AC2_Hamiltonian at /home/tobias/.julia/packages/MPSKit/NXsUL/src/algorithms/derivatives/hamiltonian_derivatives.jl:412
+apply at /home/tobias/.julia/packages/KrylovKit/bEE7W/src/apply.jl:2 [inlined]
+lanczosrecurrence at /home/tobias/.julia/packages/KrylovKit/bEE7W/src/factorizations/lanczos.jl:327
+#expand!#23 at /home/tobias/.julia/packages/KrylovKit/bEE7W/src/factorizations/lanczos.jl:250
+expand! at /home/tobias/.julia/packages/KrylovKit/bEE7W/src/factorizations/lanczos.jl:250 [inlined]
+#eigsolve#54 at /home/tobias/.julia/packages/KrylovKit/bEE7W/src/eigsolve/lanczos.jl:78
+eigsolve at /home/tobias/.julia/packages/KrylovKit/bEE7W/src/eigsolve/lanczos.jl:1 [inlined]
+fixedpoint at /home/tobias/.julia/packages/MPSKit/NXsUL/src/algorithms/fixedpoint.jl:11
+unknown function (ip: 0x77964e1eebee) at (unknown file)
+#find_groundstate!##6 at /home/tobias/.julia/packages/MPSKit/NXsUL/src/algorithms/groundstate/dmrg.jl:162
+#30 at /home/tobias/.julia/packages/LoggingExtras/VLO3o/src/verbosity.jl:103 [inlined]
+with_logstate at ./logging/logging.jl:542
+with_logger at ./logging/logging.jl:653 [inlined]
+#withlevel#27 at /home/tobias/.julia/packages/LoggingExtras/VLO3o/src/verbosity.jl:99
+unknown function (ip: 0x7796b356f06e) at (unknown file)
+withlevel at /home/tobias/.julia/packages/LoggingExtras/VLO3o/src/verbosity.jl:98
+withlevel at /home/tobias/.julia/packages/LoggingExtras/VLO3o/src/verbosity.jl:98 [inlined]
+find_groundstate! at /home/tobias/.julia/packages/MPSKit/NXsUL/src/algorithms/groundstate/dmrg.jl:130
+with_logstate at ./logging/logging.jl:542
+unknown function (ip: 0x77964d8afe64) at (unknown file)
+with_logger at ./logging/logging.jl:653
+#gs_profile#1 at /tmp/claude-1000/-home-tobias-Projects-tns-as-st-me/08aaec36-9ee9-4e37-9e97-dc7b96aab79a/scratchpad/diag_edge.jl:15
+gs_profile at /tmp/claude-1000/-home-tobias-Projects-tns-as-st-me/08aaec36-9ee9-4e37-9e97-dc7b96aab79a/scratchpad/diag_edge.jl:10
+unknown function (ip: 0x7796d4dbf306) at (unknown file)
+macro expansion at ./timing.jl:461 [inlined]
+top-level scope at /tmp/claude-1000/-home-tobias-Projects-tns-as-st-me/08aaec36-9ee9-4e37-9e97-dc7b96aab79a/scratchpad/diag_edge.jl:30
+jl_toplevel_eval_flex at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/toplevel.c:1024
+jl_toplevel_eval_flex at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/toplevel.c:975
+ijl_toplevel_eval at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/toplevel.c:1047
+ijl_toplevel_eval_in at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/toplevel.c:1092
+eval at ./boot.jl:489
+include_string at ./loading.jl:2870
+_include at ./loading.jl:2930
+include at ./Base.jl:306
+exec_options at ./client.jl:317
+_start at ./client.jl:550
+jfptr__start_74358.1 at /home/tobias/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/lib/julia/sys.so (unknown line)
+jl_apply at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/julia.h:2391 [inlined]
+true_main at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/jlapi.c:971
+jl_repl_entrypoint at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/src/jlapi.c:1139
+main at /cache/build/builder-amdci5-3/julialang/julia-release-1-dot-12/cli/loader_exe.c:58
+unknown function (ip: 0x7796eaa2a1c9) at /lib/x86_64-linux-gnu/libc.so.6
+__libc_start_main at /lib/x86_64-linux-gnu/libc.so.6 (unknown line)
+unknown function (ip: 0x4010b8) at /workspace/srcdir/glibc-2.17/csu/../sysdeps/x86_64/start.S
+unknown function (ip: (nil)) at (unknown file)
+Allocations: 856827130 (Pool: 856822418; Big: 4712); GC: 1674

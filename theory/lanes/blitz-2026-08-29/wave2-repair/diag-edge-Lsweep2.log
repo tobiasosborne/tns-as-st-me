@@ -1,0 +1,13 @@
+# L chi mL_half eps t  (mL_half = sum_{x=1}^{L/2} <Sz_x>); deficit = 0.5 - |mL|
+RES Haldane L=16 chi=48 mL_half=-0.333234 deficit=0.166766 eps=1.24e-11 t=927.3s
+ARG Haldane L=16 best_ell=15 |cum|=0.750243  (L/2=8)
+RES Haldane L=24 chi=48 mL_half=-0.407643 deficit=0.092357 eps=2.22e-11 t=175.5s
+ARG Haldane L=24 best_ell=1 |cum|=0.745339  (L/2=12)
+RES Haldane L=32 chi=48 mL_half=-0.451133 deficit=0.048867 eps=6.76e-11 t=72.2s
+ARG Haldane L=32 best_ell=1 |cum|=0.743879  (L/2=16)
+RES Haldane L=40 chi=48 mL_half=-0.474615 deficit=0.025385 eps=4.19e-11 t=91.0s
+ARG Haldane L=40 best_ell=1 |cum|=0.743474  (L/2=20)
+RES Haldane L=48 chi=48 mL_half=-0.486891 deficit=0.013109 eps=3.18e-11 t=102.8s
+ARG Haldane L=48 best_ell=1 |cum|=0.743364  (L/2=24)
+RES Haldane L=64 chi=48 mL_half=-0.496518 deficit=0.003482 eps=3.37e-11 t=147.8s
+ARG Haldane L=64 best_ell=1 |cum|=0.743328  (L/2=32)

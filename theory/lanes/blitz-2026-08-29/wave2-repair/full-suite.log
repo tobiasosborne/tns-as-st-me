@@ -1,0 +1,23 @@
+┌ Warning: GR7 failed to converge: normres = 2.950454785705994
+└ @ MPSKit ~/.julia/packages/MPSKit/NXsUL/src/environments/infinite_envs.jl:277
+┌ Warning: GR3 failed to converge: normres = 2.950454785705994
+└ @ MPSKit ~/.julia/packages/MPSKit/NXsUL/src/environments/infinite_envs.jl:277
+┌ Warning: GR1 failed to converge: normres = 9.465188312737379e51
+└ @ MPSKit ~/.julia/packages/MPSKit/NXsUL/src/environments/infinite_envs.jl:277
+┌ Info: spin-1 memory ratio
+│   ratio = -0.9939581453345594
+│   T = 0.9748081454704814
+│   dx = -0.9689184963288611
+│   bc_survives = true
+└   bc_falsified = false
+┌ Info: spin-1 soft slope
+│   slope = 0.9976698203016027
+│   err = 0.004113666733828403
+│   bc_survives = true
+└   bc_falsified = false
+
+[Bc falsifier B] spin-1 dx/N_T = -1.00606 (dx2 est -0.99855, T = 0.99387); Bc predicts -1.0, spin-independent predicts -2.0
+
+[Bc falsifier A] spin-1 soft phase slope = 1.00257 +- 0.02476 (Bc predicts 1.0, spin-independent predicts 2.0)
+Test Summary: | Pass  Total      Time
+TriangleMPS   | 3842   3842  20m47.6s

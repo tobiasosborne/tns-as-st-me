@@ -45,6 +45,21 @@
 # The physics assertions (velocity, coefficient, integer support, sharp control)
 # passed on that first run and were not retuned.
 #
+# SECOND RED→GREEN (wave-2 repair lane, 2026-08-30).  The committed-unverified
+# shard ran 51 passed / 1 failed:
+#   (iv)  `abs(rh.mL[1]) > MEDGE_HALDANE` evaluated 0.4076 > 0.45.  DIAGNOSED,
+#         not retuned.  The failing quantity is m_L at t = 0, i.e. a property of
+#         the DMRG ground state BEFORE any evolution, so dt/nsteps/chi_max could
+#         not be the cause; and χ = 24 vs 48 change it by 1·10⁻⁶, so truncation
+#         was not the cause either.  A ground-state scan over L gave
+#         |m_L| = 0.333, 0.408, 0.451, 0.475, 0.487, 0.497 at L = 16…64: the
+#         deficit from ½ falls as 0.70 e^{−L/2ξ} with ξ = 6.0 sites, the spin-1
+#         Heisenberg correlation length.  The half unit is exactly quantised and
+#         the L = 24 WINDOW (2ξ wide) simply could not contain it.  Fixed by
+#         running the protocol at L = 40, its production geometry, where the gate
+#         passes as written; MEDGE_HALDANE was NOT lowered.  The L-scaling itself
+#         is now asserted in the "half unit is quantised" testset.
+#
 # All runs here are deliberately small (χ = 16, short windows, short times) so
 # that the suite stays a suite.  The production numbers live in
 # numerics/results/lambdaD-kink-*.json and lambdaD-edge-memory.json.
@@ -193,11 +208,63 @@ const C0 = 20
         @test abs(r.dx_X3 - r.dx_X2) < 0.1 * abs(r.dx_X2)
     end
 
+    @testset "the edge half unit is quantised: |m_L| → ½ as L → ∞" begin
+        # GROUND STATE ONLY (nsteps = 0), so this costs seconds: m_L(0) is a
+        # property of the prepared state, not of the evolution.  Kept BEFORE the
+        # dynamical testset so a fault here surfaces in a minute, not in forty.
+        #
+        # This is the assertion the edge contrast actually rests on, and it is
+        # what the L = 24 gate failure recorded in (iv) above was really
+        # reporting.  MEASURED (χ-converged; χ = 24/32/48 agree to 5·10⁻⁶):
+        #
+        #     L     ℓ=L/2    |m_L|       ½ − |m_L|
+        #     16      8      0.333234    0.166766
+        #     24     12      0.407643    0.092357
+        #     32     16      0.451133    0.048867
+        #     40     20      0.474613    0.025387
+        #     48     24      0.486891    0.013109
+        #     64     32      0.496518    0.003482
+        #
+        # The deficit falls as ½ − |m_L| ≈ 0.70 · e^{−L/2ξ} with ξ = 6.0 sites —
+        # the known correlation length of the spin-1 Heisenberg chain — and the
+        # fit reproduces every L ≥ 32 to better than 1 %.  So the edge charge is
+        # a half unit that the window truncates, NOT a non-quantised number.
+        mhalf(L, chi) = abs(edge_experiment(LDE.HALDANE_POINT; L = L, chi = chi,
+                                            nsteps = 0, sample_every = 1,
+                                            chi_max = chi, gs_maxiter = 100).mL[1])
+        m24 = mhalf(24, 32); m40 = mhalf(40, 32); m64 = mhalf(64, 48)
+        # approached monotonically FROM BELOW, and never overshooting ½
+        @test m24 < m40 < m64 < 0.5
+        # by L = 64 the half-chain window holds the half unit to better than 2 %
+        @test m64 > 0.49
+        # and the approach is exponential on the Haldane correlation length:
+        # ½ − |m_L| ∝ e^{−L/2ξ}  ⟹  ξ = ΔL / (2 ln(deficit ratio))
+        xi = (64 - 24) / (2 * log((0.5 - m24) / (0.5 - m64)))
+        @test 5.0 < xi < 7.0
+    end
+
     @testset "edge memory: Haldane remembers, large-D forgets" begin
         # h_R = −h_L: both phases sit in S^z_tot = 0, so m_L is a measurement
         # and not half of a conserved total (see the module docstring).
-        common = (L = 24, chi = 24, hL = 0.5, hR = -0.5, dt = 0.12, nsteps = 25,
-                  sample_every = 5, chi_max = 32)
+        #
+        # WHY L = 40 AND NOT 24.  `m_L` is a WINDOWED charge, so it can only see
+        # the part of the edge spin-½ that fits inside the half-chain window
+        # ℓ = L/2.  The Haldane edge mode decays on ξ ≈ 6 sites, so the window
+        # misses a tail of weight ~ e^{−ℓ/ξ} and, worse, the two oppositely
+        # pinned edge clouds overlap in the middle of a short chain.  At L = 24
+        # the window is only 2ξ wide and |m_L| saturates at 0.4076 — the peak of
+        # the running sum sits exactly at ℓ = L/2, so no other window choice
+        # recovers it either.  The half unit is exact; the CHAIN was too short.
+        # The measured approach to ½ is tabulated in the testset above.  L = 40
+        # gives |m_L| = 0.4746, clears MEDGE_HALDANE = 0.45 as written, and is
+        # also the geometry `scripts/run_lambdaD_memory.jl` uses in production.
+        #
+        # WHY χ = 32 AND NOT 24.  Not accuracy — χ = 24/32/48 give the same m_L
+        # to 5·10⁻⁶.  At L = 40, DMRG2 at rank 24 floors at a residual 1.09e−8,
+        # a hair ABOVE the 1e−8 tolerance, so it never declares convergence and
+        # burns every sweep of `gs_maxiter`: 1607 s against 4.0 s at χ = 32.
+        common = (L = 40, chi = 32, hL = 0.5, hR = -0.5, dt = 0.12, nsteps = 25,
+                  sample_every = 5, chi_max = 48)
         rh = edge_experiment(LDE.HALDANE_POINT; common...)
         rd = edge_experiment(LDE.LARGED_POINT; common...)
         @test rh.gs_residual < 1.0e-6

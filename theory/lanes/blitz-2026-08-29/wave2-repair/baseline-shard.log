@@ -1,0 +1,30 @@
+ERROR: LoadError: Some tests did not pass: 51 passed, 1 failed, 0 errored, 0 broken.
+in expression starting at /home/tobias/Projects/tns-as-st-me/numerics/test/test_lambdaD_memory.jl:52
+edge memory: Haldane remembers, large-D forgets: Test Failed at /home/tobias/Projects/tns-as-st-me/numerics/test/test_lambdaD_memory.jl:213
+  Expression: abs(rh.mL[1]) > MEDGE_HALDANE
+   Evaluated: 0.4076443086527567 > 0.45
+
+Stacktrace:
+ [1] top-level scope
+   @ ~/Projects/tns-as-st-me/numerics/test/test_lambdaD_memory.jl:96
+ [2] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+ [3] macro expansion
+   @ ~/Projects/tns-as-st-me/numerics/test/test_lambdaD_memory.jl:199 [inlined]
+ [4] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+ [5] macro expansion
+   @ ~/Projects/tns-as-st-me/numerics/test/test_lambdaD_memory.jl:213 [inlined]
+ [6] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.5+0.x64.linux.gnu/share/julia/stdlib/v1.12/Test/src/Test.jl:680 [inlined]
+Test Summary:                                                         | Pass  Fail  Total      Time
+λ–D kink transport and memory (bd tns-f5r wave 2)                     |   51     1     52  58m35.7s
+  the two Néel vacua and the calibration s                            |    6            6      1.2s
+  kink dispersion lives in the topological sector                     |    7            7      5.1s
+  the packet is a one-kink state; the sharp junction is not           |    4            4     21.1s
+  LD-ID: Q̂_{W,c₀} = 2s(𝔛_W − c₀), exactly                             |    4            4      2.8s
+  integer support of the charge; the wall coordinate is NOT quantised |    4            4      1.2s
+  DECISION: transport, group velocity, and the memory coefficient     |   10           10  23m01.4s
+  edge memory: Haldane remembers, large-D forgets                     |   10     1     11  21m20.1s
+  JSON records                                                        |    6            6  13m42.7s
+RNG of the outermost testset: Random.Xoshiro(0xbe1f4597241836f7, 0x34c74f91b9819b85, 0x6d9949433f2a69d5, 0xfbedbe95c3ef5e01, 0x63f3d8b4e7fcacb6)

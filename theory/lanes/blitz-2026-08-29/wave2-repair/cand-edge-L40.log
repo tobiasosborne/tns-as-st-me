@@ -1,0 +1,21 @@
+=== PHASE 1: DMRG-only at L=40 (maxiter capped at 100) ===
+P1 Haldane L=40 chi=24  mL=-0.474611  eps=1.09e-08  t=1607.1s  gate(>0.45)=PASS
+P1 Haldane L=40 chi=32  mL=-0.474613  eps=6.55e-09  t=4.0s  gate(>0.45)=PASS
+P1 Haldane L=40 chi=48  mL=-0.474615  eps=4.27e-11  t=6.6s  gate(>0.45)=PASS
+
+===== CANDIDATE B : L=40 chi=32 chi_max=48 nsteps=25
+  Haldane 1492.1s gs_res=6.29e-09 mL0=-0.474613 mLend=-0.474611 sz1 -0.74348->-0.44020
+  largeD  169.5s gs_res=1.67e-15 |mL|max=1.552e-08
+  --- edge testset assertions ---
+   gs_res H<1e-6              PASS (6.29e-09)
+   gs_res D<1e-6              PASS (1.67e-15)
+   Edrift H<1e-3              PASS (2.15e-06)
+   Edrift D<1e-3              PASS (5.12e-09)
+   norm H<1e-5                PASS (5.45e-07)
+   norm D<1e-5                PASS (5.55e-10)
+   |mL0|>0.45  [THE GATE]     PASS (0.474613)
+   |mLend-mL0|<0.02           PASS (1.43e-06)
+   |sz1end|<0.85|sz1_0|       PASS (0.44020 vs 0.63195)
+   max|mL_D|<0.05             PASS (1.552e-08)
+   |mLend_H|>10max|mL_D|      PASS
+  TOTAL 1661.6s
