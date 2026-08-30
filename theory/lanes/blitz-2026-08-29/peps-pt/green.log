@@ -1,0 +1,14 @@
+MODE: GREEN
+PEPS-PT-C0-explicit-tensors: PASS residual=0.000e+00 bound=2.0e-12
+PEPS-PT-C1-exact-contraction: PASS residual=0.000e+00 bound=2.0e-12
+PEPS-PT-C2-toric-stabilizers: PASS residual=0.000e+00 bound=2.0e-12
+PEPS-PT-C3-microscopic-pure-endpoint: PASS residual=0.000e+00 bound=2.0e-12
+PEPS witness: L=3, E=18, nonzero amplitudes=256, common raw amplitude=2, state norm=1.000000000000
+PEPS-PT-C4-PT1-tube-PVM: PASS residual=0.000e+00 bound=2.0e-12
+PEPS-PT-C5-PT2-pure-endpoint: PASS residual=0.000e+00 bound=2.0e-12
+PEPS-PT-C6-PT3-zipper-associator: PASS residual=0.000e+00 bound=2.0e-12
+PEPS-PT-C7-PT3-fusion-module: PASS residual=0.000e+00 bound=2.0e-12
+PEPS-PT-C8-PT3-allowed-liveness: PASS value=2.828427 lower=1.000000
+PEPS-PT-C9-PT4-unitary-instrument: PASS residual=0.000e+00 bound=2.0e-12
+Tube witness: boundary N=4, dimension=32, four D(Z2) projectors, minimum allowed block Frobenius norm=2.828427
+ALL PEPS-PT GATES PASS
