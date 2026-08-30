@@ -51,4 +51,4 @@ affected figure) **in the same commit**. Session close runs
 | `sections/15_negative_results.tex` | `sec:negative-results` | refutation ledger; AMP obstruction, DH hunt, NO-CAT-SOFT |
 | `sections/16_numerics.tex` | `sec:numerics` | numerics program, all figures |
 | `sections/17_triangle_status.tex` | `sec:triangle-status` | edges, gap ledger, open problems |
-| `sections/18_continuum_reduction.tex` | `sec:continuum-reduction` | reduction to the accepted continuum statements (R1–R4); physics-argument register, not claims-DAG |
+| `sections/18_continuum_reduction.tex` | `sec:continuum-reduction` | reduction to the accepted continuum statements (R1–R4), **and** the definitional audit against 3+1 compact lattice QED (Q1–Q4 lanes + adjudication): Gauss-law nucleus, memory verdict, soft-insertion verdict, ranked hostile findings, naming discipline. Physics-argument register throughout, not claims-DAG |

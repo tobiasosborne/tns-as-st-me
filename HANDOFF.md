@@ -126,6 +126,34 @@ corner B the lattice proves where the continuum computes and computes
 where the continuum proves; the unconditionally computed quantity is the
 two-magnon soft slope.
 
+## Session 9 (continued 2) — the definitional audit (TJO: "suspicious of
+## the definitions"; 3+1 lattice QED as control)
+
+Four codex lanes (q1 Gauss / q2 memory / q3 soft / q4 HOSTILE, run blind),
+verdicts concur; adjudicated in
+**theory/verdicts/reduction-defs-adjudication-r1.md** (the record). Net:
+**no L5 status was wrong — the exposure is in NAMING.** New findings:
+(N1, FATAL to a generic-memory reading) D26+D27 = integer charge-transfer
+counting statistics, NOT radiative memory (Maxwell counterexample: soft
+endpoint shift with δ₀ matter TPM); missing reconstruction theorem
+(charge ledger ↔ bond/potential-side field memory — exactly where
+framing.md said memory lives) → new P1 bead. (N2, FATAL to a QED reading
+of D4) finite-χ bond algebra ≠ compact-QED boundary Gauss algebra under
+ANY limit sequence; what survives EXACT at finite spacing: (WI) = the
+constant-profile Gauss telescope on H_phys, with a [physical argument]
+arrow to Strominger's Q_hard+Q_soft. (N3) D24(d)'s class is a bootstrap
+(conditions restate the factorization) — tns-axg now framing-critical.
+(N4) D24(b) IS the accepted LSZ leg definition; the D29 fixed-time datum
+is pre-asymptotic, equal to it only on the separated class (proved), else
+O(k) off — proto-LSZ is a DEFINITIONAL gap. (N5) D13(a) centering
+amendment owed (charged-dressing masquerade) → P2 bead. Weinberg control
+PASSES: the definitions correctly distinguish gauge (1/k pole, outside
+the regular class) from global (Adler zero). Magnonics reduction keeps
+the word "memory" defensible WITHIN magnetism only. **Letter naming
+discipline is a TJO decision (P1 bead): safe names are charge ledger /
+Fourier response / TPM statistics / exact-band scattering; the skeleton's
+"exact 1D lattice avatar" framing must be revisited.**
+
 ## Resume order for session 8
 
 1. **Numerics wave 2 relaunch** (tns-f5r): kink memory + edge contrast;

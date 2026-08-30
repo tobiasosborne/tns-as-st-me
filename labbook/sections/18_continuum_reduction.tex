@@ -3,6 +3,10 @@
 % SHARD-SOURCES: docs/reduction-limits.md (the working physics analysis);
 %   theory/lanes/reduction/r1-smatrix.md, r3-wall.md, r2r4-ward.md
 %   (independent codex calculation lanes, 2026-08-30; verdicts concur);
+%   theory/lanes/reduction/q1-gauss.md, q2-memory-defs.md, q3-soft-defs.md,
+%   q4-adversarial-defs.md (the DEFINITIONAL audit against 3+1 compact
+%   Hamiltonian lattice QED, 2026-08-30; q4 hostile and run blind to q1-q3);
+%   theory/verdicts/reduction-defs-adjudication-r1.md (adjudication);
 %   docs/continuum-antecedents.md (digest, with one correction recorded here);
 %   refs/arxiv-2201.01393 (type-B soft scaling, pole cancellation);
 %   refs/arxiv-1602.08692 (magnon EFT, vanishing ferromagnetic scattering
@@ -796,6 +800,662 @@ this campaign claims as its chief contribution relative to the continuum, is
 still occupied by a hypothesis with no exhibited instance.
 \end{observation}
 
+\subsection{The definitional audit: what the discrete and continuous
+definitions say about each other}
+\label{sec:reduction-defaudit}
+
+The four reductions above ask whether the campaign's \emph{results} land on the
+accepted continuum statements. They do not answer a sharper and prior question:
+whether the campaign's \emph{definitions} denote the objects whose names they
+borrow. That question was put separately, and it was put in the form that makes
+it hardest to dodge --- compare each definition, clause by clause, with compact
+Hamiltonian lattice electrodynamics in three spatial dimensions, which is a
+regulator in which the Maxwell photon and the Weinberg pole demonstrably exist.
+Four independent audits were run, one of them hostile and run without sight of
+the other three. They agree on every overlapping item. This subsection records
+what they found.
+
+Nothing here changes a status. No lane asked for one and none was needed: the
+statuses in the claims DAG were already scoped honestly. What the audit changes
+is the vocabulary the campaign is entitled to use.
+
+\begin{remark}[Register of this subsection]
+\label{rem:defaudit-register}
+As with the rest of this section, everything below is physical argument. Where
+a lattice-gauge fact is standard it is used as such; where a continuum equation
+appears it is transcribed from the local sources; where a limit is asserted it
+is asserted, not proved. The audit's value is negative and definitional: it
+tells the reader which sentences about this campaign would be false.
+\end{remark}
+
+\subsubsection*{The Gauss-law nucleus, and the exact statement it supports}
+
+Fix a finite oriented cubic lattice of spacing $\latconst$. Each link carries
+the rotor Hilbert space $L^2(U(1))$, with holonomy $U_\ell=e^{i\theta_\ell}$ and
+integer electric flux $E_\ell=-i\,\partial/\partial\theta_\ell$, so that
+\begin{equation}
+  [E_\ell,U_{\ell'}]=\delta_{\ell\ell'}U_\ell,
+  \qquad
+  \spec E_\ell=\Z .
+  \label{eq:da-rotor}
+\end{equation}
+Matter of integral charge sits on vertices with charge operator $\rho_x$. Write
+$s_{x\ell}=+1$ if $x$ is the tail of $\ell$, $-1$ if it is the head, and $0$
+otherwise. The Gauss operator and the physical subspace are
+\begin{equation}
+  G_x=(\operatorname{div}E)_x-\rho_x,
+  \qquad
+  (\operatorname{div}E)_x=\sum_\ell s_{x\ell}E_\ell,
+  \qquad
+  G_xP_{\mathrm{phys}}=0 .
+  \label{eq:da-gauss}
+\end{equation}
+
+The first thing the audit establishes is which lattice-QED operator the
+campaign's regional symmetry is allowed to be compared with, and it is not the
+obvious one. The full local gauge transformation
+$\Gamma[\varepsilon]=\exp\bigl(i\sum_x\varepsilon_xG_x\bigr)$ is a redundancy:
+$\Gamma[\varepsilon]P_{\mathrm{phys}}=P_{\mathrm{phys}}$, so its orbit is a
+point and it cannot be the nontrivial transplant of a truncated on-site
+symmetry. The correct counterpart is the matter-only regional rotation
+\begin{equation}
+  W_R(\alpha)=\exp\Bigl(i\alpha\sum_{x\in R}\rho_x\Bigr),
+  \label{eq:da-Wr}
+\end{equation}
+the gauged descendant of a global on-site matter symmetry. This distinction
+carries the whole comparison.
+
+With it, the match is exact and not merely suggestive. The finite-graph
+divergence theorem is an operator identity, every interior link occurring once
+with each sign,
+\begin{equation}
+  \sum_{x\in R}(\operatorname{div}E)_x=\sum_{\ell\in\partial R}\sigma_{R\ell}E_\ell,
+  \qquad
+  \sigma_{R\ell}=\pm1\ \text{as $\ell$ exits or enters $R$},
+  \label{eq:da-divthm}
+\end{equation}
+and combining \eqref{eq:da-gauss} with \eqref{eq:da-divthm} on the physical
+subspace gives
+\begin{equation}
+  \boxed{\;
+  W_R(\alpha)P_{\mathrm{phys}}
+  =\prod_{\ell\in\partial R}e^{\,i\alpha\sigma_{R\ell}E_\ell}\,P_{\mathrm{phys}} .\;}
+  \label{eq:da-telescope}
+\end{equation}
+This is the gauge-theory avatar of the truncated-symmetry identity of
+\cref{sec:corner-a}. In one spatial dimension the entering left link
+contributes $e^{-i\alpha E}$ and the exiting right link contributes
+$e^{+i\alpha E}$, which is exactly the orientation of the two virtual bond
+insertions --- the inverse implementer on the left cut, the implementer on the
+right cut. The dictionary is one line,
+\begin{equation}
+  V_\alpha\bigl(e^{i\alpha}\bigr)^{\sigma_{R\ell}}
+  \;\longleftrightarrow\;
+  e^{\,i\alpha\sigma_{R\ell}E_\ell},
+  \label{eq:da-dictionary}
+\end{equation}
+and it is quantitative, not pictorial. Two differences must be stated with it:
+the lattice-QED equality holds only after projection onto the Gauss-law
+physical subspace, whereas the campaign identity is a tensor identity before any
+local constraint is imposed; and the campaign identity starts from a genuine
+global on-site symmetry, with no local constraint anywhere in sight.
+
+For an angle-dependent profile the identity acquires the term that the
+continuum calls soft. Summation by parts against a real profile
+$\varepsilon_x$, with $(d\varepsilon)_\ell=\varepsilon_y-\varepsilon_x$ on an
+internal link $\ell=(x\to y)$, gives the three operators
+\begin{equation}
+  Q^{\partial}_R[\varepsilon]=\sum_{\ell\in\partial R}\sigma_{R\ell}
+      \varepsilon_{x_{\mathrm{in}}(\ell)}E_\ell,
+  \qquad
+  Q^{H}_R[\varepsilon]=\sum_{x\in R}\varepsilon_x\rho_x,
+  \qquad
+  Q^{\nabla}_R[\varepsilon]=\sum_{\ell\subset R}(d\varepsilon)_\ell E_\ell,
+  \label{eq:da-three-charges}
+\end{equation}
+and Gauss's law then supplies the finite-spacing soft/hard dictionary
+\begin{equation}
+  \boxed{\;
+  Q^{\partial}_R[\varepsilon]\,P_{\mathrm{phys}}
+  =\bigl(Q^{H}_R[\varepsilon]+Q^{\nabla}_R[\varepsilon]\bigr)P_{\mathrm{phys}} .\;}
+  \label{eq:da-soft-hard}
+\end{equation}
+For constant $\varepsilon$ the gradient term vanishes and
+\eqref{eq:da-soft-hard} collapses to \eqref{eq:da-telescope}. The converse
+statement is the honest one and it is worth displaying, because the naive
+slogan is false: the modulated matter rotation on its own obeys
+\begin{equation}
+  e^{iQ^{H}_R[\varepsilon]}P_{\mathrm{phys}}
+  =e^{\,i\bigl(Q^{\partial}_R[\varepsilon]-Q^{\nabla}_R[\varepsilon]\bigr)}P_{\mathrm{phys}},
+  \label{eq:da-not-boundary-only}
+\end{equation}
+which is \emph{not} boundary-only when $d\varepsilon\neq0$. A claim that every
+modulated on-site operation telescopes purely to the cut would be wrong.
+
+\begin{observation}[The arrow to the accepted soft/hard split, and what it costs]
+\label{obs:da-gauss-arrow}
+Under a limit sequence that keeps the ultraviolet, thermodynamic and null
+stages separate --- send the spacing to zero at fixed physical sphere radius
+$R$, box size $L$ and retarded time $u$, then $L\to\infty$, then $R\to\infty$ at
+fixed $u=t-R$, then $u\to-\infty$ --- the three operators of
+\eqref{eq:da-three-charges} become
+\begin{equation}
+  Q^{\partial}\longrightarrow Q^{+}_{\varepsilon},
+  \qquad
+  Q^{H}\longrightarrow Q^{+}_{H},
+  \qquad
+  Q^{\nabla}\longrightarrow Q^{+}_{S},
+  \label{eq:da-arrows}
+\end{equation}
+with $Q^+_\varepsilon=Q^+_S+Q^+_H$ the single sphere-flux charge of the
+continuum construction, not a sphere flux plus a further hard part. Each arrow
+is a physical argument resting on Riemann-sum control of the flux, the
+prescribed falloffs, and the null-boundary assumptions; none is a theorem of
+this campaign. Two fences travel with them. At finite spacing $Q^{\nabla}$
+should be called a gradient term and not a soft-photon operator: softness needs
+the null and zero-frequency limits that come later, and the zero mode is itself
+defined as a frequency limit, $N_z=\lim_{\omega\to0}\int du\,F^{(0)}_{uz}
+e^{i\omega u}$. And for massive charged matter the hard charge does not all
+cross null infinity, so the decomposition is null hard plus timelike hard plus
+soft, not the two null integrals of \eqref{eq:da-arrows}.
+\end{observation}
+
+\provenance{WI, A1, A2, D3, D4, D10}{\cref{sec:corner-a},
+\cref{sec:symmetry-noether}; audit in
+\texttt{theory/lanes/reduction/q1-gauss.md} \S1--\S3 and
+\texttt{theory/lanes/reduction/q4-adversarial-defs.md} \S5}{---}{\texttt{theory/verdicts/reduction-defs-adjudication-r1.md} (N2)}
+
+\subsubsection*{The honest converse: the bond-implementer package does not
+transplant}
+
+Equation \eqref{eq:da-telescope} is the one continuum-facing statement of the
+symmetry corner that survives intact. The rest of the package does not, and the
+failure is not a matter of technical difficulty: no limit sequence inside the
+bond-implementer definition repairs it, because four separate pieces of
+structure are wrong. Displaying them is the point.
+
+\begin{center}
+\begin{tabular}{@{}p{0.20\textwidth}p{0.74\textwidth}@{}}
+\toprule
+\textbf{what fails} & \textbf{why, at the level of the definition} \\
+\midrule
+the quotient &
+The campaign divides the symmetry group by
+$N_\alpha=\{g:\rho_\alpha(g)\ \text{scalar}\}$, a state-level projective
+kernel: a phase invisible on one bond space. Lattice QED divides
+\emph{allowed} boundary transformations by those acting \emph{trivially on
+physical data}. A constant phase can be scalar on one fixed charge sector and
+still be physically measurable as a character across charged sectors, where it
+enters the hard soft factor. The two quotients discard different things. \\
+\midrule
+locality &
+The campaign residue is a virtual insertion defined only through padded windows
+of a matrix-product state. The boundary flux
+$\sum_{\ell\in\partial R}\sigma_{R\ell}E_\ell$ is a physical boundary-link
+observable --- or, after a subregion factorisation choice, an edge-mode
+generator. No canonical isomorphism identifies a $\chi$-dimensional virtual
+space with $L^2(U(1))$ on a cut link. \\
+\midrule
+boundary multiplicity &
+The campaign has one finite group at each of two ends of a one-dimensional cut.
+A three-dimensional region has $O(R^2/\latconst^2)$ independent boundary
+samples and tends to a function group on the sphere; the continuum has one
+conserved charge for \emph{every} boundary function. That enlargement is not
+contained in the definition as written, and the eventually-constant profile
+class, which has only two ends, cannot encode an angular function at all. \\
+\midrule
+spectrum &
+Compact electric flux is unbounded and integer valued. A fixed
+finite-dimensional bond cannot realise the rotor algebra: $[E,U]=U$ makes the
+unitary $U$ shift every flux eigenvalue up by one, which no finite spectrum
+admits. A genuine limit would need $\chi\to\infty$, a boundary-surface tensor
+product, and a proved convergence of the flux algebra. None of this is in the
+definition. \\
+\midrule
+the extra datum &
+Abelian electric boundary charges commute; the finite electric boundary algebra
+carries no multiplier. The campaign's load-bearing extra datum is precisely a
+finite-dimensional projective multiplier, the cohomology class
+$[\omega_\alpha]\in H^2(G,U(1))$. That class is not the Gauss-charge algebra of
+this target, and the asymptotic-symmetry quotient does not manufacture it. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Two smaller points complete the picture. The padding that makes the
+window insertion map injective has no continuum falloff counterpart at all: at
+fixed padding depth its physical thickness even vanishes as the spacing goes to
+zero, and it implies neither the field falloffs nor smoothness of the boundary
+profile. And the finite-total-variation profile condition is a
+\emph{one}-dimensional total-variation condition; a radially constant,
+angularly nonconstant profile in three dimensions generally fails its naive
+analogue, the appropriate sufficient replacement being angular $C^2$ regularity
+together with falloff-weighted bounds. What survives from the profile
+definition is structural discipline --- a compactly supported profile gives a
+bona fide operator, a non-decaying profile must be defined by a limiting action,
+a distributional kernel is not itself an admissible operator --- and not
+definitional equality.
+
+\begin{observation}[Verdict for the Gauss corner]
+\label{obs:da-verdict-gauss}
+There is a real quantitative nucleus and it should be stated as exactly what it
+is: on the physical subspace, regional matter charge equals oriented cut-link
+electric flux, exactly at finite spacing, with the same orientation as the
+campaign's two bond insertions; and the weighted version splits the boundary
+charge into a hard matter term and a gradient term which, under the ordered
+limits, become the accepted hard and soft charges. This is a connection to
+accepted continuum electrodynamics, not an analogy. It is \emph{not} an
+instantiation of the bond-implementer definition, which fails on quotient,
+locality, boundary multiplicity and spectrum, nor of the profile classes, nor
+of the modulated charge, which supplies the hard Noether part only. And it
+would still require a separate scattering and reduction argument to reach the
+Weinberg pole.
+\end{observation}
+
+\subsubsection*{The memory verdict: correct rotor arithmetic, wrong observable}
+
+The accepted electromagnetic datum is a real transverse one-form. In the
+boundary gauge the local source gives the endpoint identity
+\begin{equation}
+  e^2\partial_zN=\int_{-\infty}^{\infty}du\,F^{(0)}_{uz}
+  =A^{(0)}_z\big|_{\mathcal I^+_+}-A^{(0)}_z\big|_{\mathcal I^+_-},
+  \label{eq:da-memory-field}
+\end{equation}
+and the operational readout attached to it is a probe kick or a relative phase:
+integrating the Lorentz force through the radiation epoch gives
+$m\,\Delta v_A=q_{\mathrm p}\int dt\,E_A=-q_{\mathrm p}\Delta A_A$. The lattice
+discretisation of \eqref{eq:da-memory-field} is the \emph{link angle}: with
+$\theta_\ell=\latconst e A_i+O(\latconst^2e)$ and a principal lift,
+$\Delta\widetilde\theta_\ell/(\latconst e)\to\Delta A_i$ as $\latconst e\to0$,
+the compact period $2\pi/(\latconst e)$ receding to infinity. That is the
+object a discretisation of memory has to reach.
+
+The campaign's circle-charge integrality clause reaches something else, and it
+reaches it exactly. The compact rotor statement and the campaign clause are the
+same theorem:
+\begin{equation}
+  e^{2\pi in_\kappa}=e^{2\pi i\kappa}I
+  \iff
+  \spec n_\kappa\subset\kappa+\Z
+  \qquad\text{versus}\qquad
+  e^{2\pi iS^z_x}=cI
+  \iff
+  \spec S^z_x\subset\kappa+\Z,\ c=e^{2\pi i\kappa},
+  \label{eq:da-int-clause}
+\end{equation}
+clause for clause, including the affine offset and its role as a background or
+twist label. A twisted rotor sector, a background electric flux, and the
+campaign's projective on-site phase all produce the same coset structure, and
+they cancel identically in a difference taken with the same normalisation. But
+in lattice electrodynamics the statement belongs to the \emph{link electric
+field}, conjugate to a gauge angle; in the campaign it belongs to an
+\emph{on-site matter charge}. Compactness alone identifies neither with the
+other, and the difference has a quantitative consequence: the link rotor has
+unbounded spectrum, so $\latconst e\,n_\ell$ has vanishing level spacing and can
+tend to a real canonical momentum, whereas a fixed finite on-site spectrum gives
+$\latconst e\,S^z\to0$ and fills nothing. A real limit from on-site weights
+would need the available weight range to grow --- a growing local
+representation, or a collective many-site sum with occupied weights of order
+$1/(\latconst e)$ --- and no such representation-scaling limit is stated.
+
+What the protocol measures is therefore charge-transfer counting statistics. At
+fixed window and reference the windowed charge has spectrum in one affine coset,
+$\spec\Qhat_{W,c_0}\subset\kappa_{W,c_0}+\Z$ with
+$\kappa_{W,c_0}\equiv L\kappa+s(a+b-1-2c_0)$ modulo the integers; time
+evolution is an automorphism and preserves the spectrum; hence for two
+sequential projective readouts
+\begin{equation}
+  \nu=q_--q_+\in\Z .
+  \label{eq:da-tpm-integer}
+\end{equation}
+This is offset cancellation between two classical outcomes, not commutativity
+of two operators and not a dynamical memory theorem. It is a legitimate
+full-counting-statistics protocol; the lattice theorem that consumes it is
+correct; the naming is what fails.
+
+\begin{observation}[The free-Maxwell counterexample]
+\label{obs:da-maxwell-counterexample}
+Separate the asymptotically free radiative sector of a scattering solution from
+the hard charged sector that fixes the constraint data. Free Maxwell already
+carries infinitely many large-gauge symmetries, and one may choose data whose
+radiation-zone field has a smooth finite-energy pulse with a nonzero endpoint
+shift \eqref{eq:da-memory-field}. This is accepted electromagnetic soft memory,
+measurable as a relative phase between adjacent charged probes. Now transplant
+the protocol. Applied to the separated radiative sector, the windowed
+\emph{matter} charge has no charge to measure: every spectral projection is the
+zero-charge projection, every counting law is the point mass $\delta_0$, and the
+protocol returns zero while the accepted memory is nonzero --- the transplant is
+vacuous. Replacing the measured observable by the radiative memory coordinate
+does not repair it: that is a field quadrature with continuous spectrum, so the
+integrality clause fails outright and the support theorem disappears.
+Substituting photon number to recover an integer spectrum changes both the
+symmetry charge and the observable, and a sharp memory step is carried by an
+infrared coherent cloud whose photon number need not be finite even when its
+energy and its classical memory are, so the first-moment tightness clause can
+fail too. The same obstruction is plainer still in gravity, where the memory
+tensor varies continuously with the hard momenta and no integer on-site circle
+spectrum can be its discretisation.
+\end{observation}
+
+\provenance{D13, D26, D27, M-flux, M-INDEX-fin, M-INDEX-spec}{\cref{sec:memory-quantization},
+\cref{sec:memory-index}; audit in
+\texttt{theory/lanes/reduction/q2-memory-defs.md} \S2--\S5 and
+\texttt{theory/lanes/reduction/q4-adversarial-defs.md} \S2}{---}{\texttt{theory/verdicts/reduction-defs-adjudication-r1.md} (N1)}
+
+Two further mismatches are worth displaying because each is a named, closable
+gap rather than a vague worry. The first is the endpoint. A settled detector
+record implies the protocol's time-averaged endpoint,
+\begin{equation}
+  \Bigl|\tfrac1T\!\int_T^{2T}\!f(t)\,dt-f_+\Bigr|
+  \le\sup_{t\in[T,2T]}\abs{f(t)-f_+}\longrightarrow0,
+  \label{eq:da-cesaro-forward}
+\end{equation}
+but the converse is false: for $f(t)=\cos\omega t$ the same average is bounded
+by $2/(\abs{\omega}T)$ and tends to zero although $f$ never settles. The
+protocol can therefore assign an endpoint to a persistent local oscillation for
+which the accepted final reading does not exist. This is an infrared, long-time
+issue; no refinement of the spatial discretisation touches it, and closing it
+needs a Tauberian upgrade that is not proved. The second is conjugacy. If a
+projective measurement resolves the integer flux sharply, then for the angle
+unitary $U\ket{n}=\ket{n+1}$ and the associated dephasing map $\mathcal D$,
+\begin{equation}
+  \operatorname{tr}\bigl[\mathcal D(\rho)\,U\bigr]=0
+  \qquad\text{for every trace-class }\rho:
+  \label{eq:da-conjugate-kill}
+\end{equation}
+a sharp charge measurement destroys exactly the phase coherence one would need
+to read an angle. The campaign's protocol is one step further removed still,
+measuring on-site matter charge rather than link flux.
+
+\begin{observation}[The missing bridge, and the name that survives]
+\label{obs:da-memory-name}
+To pass from a hard charge history to a field memory one must impose Maxwell's
+constraint, specify early and late Coulombic data and boundary conditions, and
+invert the angular differential operator. Different angular current profiles
+can share one total escaped integer and yet have different
+$\Delta A_A(z,\bar z)$; the map is not determined by the counting law. No such
+reconstruction is present in any of the audited definitions or claims, and no
+limit can manufacture it. This is the campaign's principal outstanding
+definitional debt, and it is the object the background framing always said
+memory should live in.
+
+What does survive is a narrower and quite defensible name. The lattice
+displacement law $\delta x=-\braket{N_T}/s$ reduces cleanly, constants
+included, onto accepted magnon-driven domain-wall motion --- that reduction is
+\cref{sec:reduction-memory} above, and it is the strongest reduction in this
+section. So ``memory'' is justified in the magnonics sense, as a permanent
+displacement of a real object produced by a passing wave. It is not justified
+as generic electromagnetic or gravitational radiative memory, and the package
+must not be advertised that way without the reconstruction theorem.
+\end{observation}
+
+\subsubsection*{The soft-insertion verdict: which definition is the accepted one}
+
+Here the audit's finding is partly favourable and the favourable half should be
+said first. The campaign's asymptotic-leg definition --- one additional
+delta-normalised asymptotic excitation of unit leg weight, with the same
+amputation applied to the amplitudes with and without it, and with an explicit
+statement that this is \emph{not} a charge-created or current-created vector ---
+is the accepted LSZ-type definition, transcribed into lattice-magnon language.
+Its normalisation fence is what makes it so, and it is exact: with
+$Q_k\ket{\Omega}=\sqrt{Z_\rho}\,\ket{k}$ one has
+\begin{equation}
+  \frac{\norm{Q_q\ket{h}}}{\sqrt N}=\sqrt{Z_\rho-2/N}\longrightarrow\sqrt{Z_\rho},
+  \label{eq:da-leg-norm}
+\end{equation}
+so a charge-created leg becomes the asymptotic leg only after this conversion in
+the reduction limit, and a common finite-state factor must never be used to set
+the leg constant.
+
+The fixed-time protocol datum is a different object. It is deliberately
+pre-asymptotic: it applies the modulated charge to an already prepared hard
+packet at finite time and reads a normalised projection ratio, declining to
+define reduction exhaustiveness, wave operators, or on-shell matching. On the
+spin-one-half ferromagnet the difference from the incoming scattering wave is
+computed exactly,
+\begin{equation}
+  Q_{k_s}\ket{k_h}-\ket{B^{\mathrm{in}}}
+  =\bigl(1-S_{12}\bigr)\ket{P_{12}}
+  =-2ik_s\ket{P_{12}}+O(k_s^2),
+  \label{eq:da-d6-defect}
+\end{equation}
+with relative size $\sqrt2\,\abs{k_s}\bigl(1+O(k_s)\bigr)$. Because the
+protocol ties its soft momentum to its soft scale $\epsilon$, this is a
+first-order discrepancy --- and the sought first jet is first order too, since
+$S_{\mathrm{phys}}-1=2i\sgn(v_h-v_s)k_s+O(k_s^2)$. The two definitions can
+therefore agree on the intercept and disagree on the jet, which is the entire
+content of the theorem. This is why the unrestricted identification is left
+open rather than assumed.
+
+The order in which the two can be reconciled is fixed, and the protocol gets it
+right. Writing the stages explicitly,
+\begin{equation}
+  \underbrace{N\to\infty}_{\text{thermodynamic}}
+  \;\prec\;
+  \underbrace{T\to\pm\infty}_{\text{scattering}}
+  \;\prec\;
+  \underbrace{\bigl(W\uparrow\Z,\ \sigma\downarrow0\bigr)}_{\text{window and packet width}}
+  \;\prec\;
+  \underbrace{\epsilon\downarrow0}_{\text{soft, last}} ,
+  \label{eq:da-order}
+\end{equation}
+and the two definitions sit at two different points of that chain:
+\begin{equation}
+  \text{fixed-time datum}
+  \;\xrightarrow[\ \text{separated-preparation class only}\ ]
+              {\ \text{outer limit at fixed }\epsilon\ }\;
+  \text{asymptotic-leg multiplier average}
+  \;\xrightarrow{\ \epsilon\downarrow0\ }\;
+  \text{soft theorem.}
+  \label{eq:da-soft-diagram}
+\end{equation}
+On the separated-preparation class --- smooth compactly supported packets in one
+regular primitive two-magnon channel, with disjoint velocity supports at each
+fixed $\epsilon$, growing initial separation, shrinking hard width, a settling
+time that grows, and the ring size chosen last --- a norm bridge of the form
+\begin{equation}
+  \bigl\|e^{-iH_ST}I_SF_R-I_SU_0(T)M_{S_{\mathrm{phys}}}F_R\bigr\|
+  \le K_{M,\epsilon}\,s_M(f_\epsilon)\,s_M(g_\sigma)
+     \Bigl[(1+R)^{3-M}+(1+d_\epsilon T-R)^{3-M}\Bigr]
+  \label{eq:da-norm-bridge}
+\end{equation}
+makes every readout error vanish at each fixed $\epsilon$, and the protocol's
+ratio equals the accepted on-shell multiplier average exactly,
+\begin{equation}
+  \mathcal A_*(\epsilon)=\int\bigl[S_{\mathrm{phys}}(k,h)-1\bigr]\,d\mu_{*,\epsilon}(k,h),
+  \label{eq:da-zero-remainder}
+\end{equation}
+with \emph{zero} remainder after the outer limit --- so automatically $o(\epsilon)$
+when the soft limit is finally taken. No bound uniform in $\epsilon$ is asserted
+or needed. Outside that class no such theorem exists and
+\eqref{eq:da-d6-defect} is the control. The gap between the two definitions is
+therefore definitional, not merely technical.
+
+\provenance{D24, D25, D29, AC-EX-2M-D29, S-IDX-MATCH-HS-SEP, ML6-HS-SEP}{\cref{sec:two-magnon},
+\cref{sec:wave-operators}, \cref{sec:soft-index}, \cref{sec:universality};
+audit in \texttt{theory/lanes/reduction/q3-soft-defs.md} \S2, \S5}{---}{\texttt{theory/verdicts/reduction-defs-adjudication-r1.md} (N4)}
+
+\begin{observation}[The Weinberg-pole control experiment]
+\label{obs:da-weinberg-control}
+The audit ran the obvious hostile test: put a real gauge photon through the
+campaign's soft-insertion definitions and see whether they notice. They do.
+In lattice electrodynamics with a hard charged leg of dispersion $E(\bm p)$ and
+velocity $\bm v(\bm p)$, the propagator adjacent to emission of a transverse
+photon of momentum $\bm k$ and energy $\omega_\gamma$ has denominator
+\begin{equation}
+  \bigl(p^0+\omega_\gamma\bigr)^2-E(\bm p+\bm k)^2
+  =2E(\bm p)\bigl[\omega_\gamma-\bm v(\bm p)\cdot\bm k\bigr]+O(\abs{k}^2),
+  \label{eq:da-adjacent-prop}
+\end{equation}
+and the lattice Ward--Takahashi identity
+$\widehat q_\mu\Gamma^\mu(p+q,p)=eQ\bigl[G^{-1}(p+q)-G^{-1}(p)\bigr]$ ties the
+vertex numerator to the same derivative of the inverse propagator. Summing
+attachments over outgoing and incoming legs gives
+\begin{equation}
+  \mathsf S_{\mathrm{gauge}}(q)
+  =\sum_i\eta_i\,eQ_i\,\frac{p_i\cdot\varepsilon}{p_i\cdot q}
+  =\frac{\mathsf S_{-1}(\hat k)}{\abs{k}}+O(1),
+  \qquad \eta_i=\pm1\ \text{for outgoing/incoming},
+  \label{eq:da-weinberg}
+\end{equation}
+the leading term being a \emph{Laurent} residue, not a Taylor derivative:
+$\abs{k}\mathsf S_{\mathrm{gauge}}$ has a finite directional limit while
+$\mathsf S_{\mathrm{gauge}}$ has no value or derivative at zero momentum. This
+sharply violates the campaign's regularity hypotheses --- the twice-differentiable
+soft map with zero intercept and finite contact first jet, and the conjectured
+linear vanishing of the soft multiplier. The definitions therefore reject the
+gauge amplitude, and they reject it for the right and observable reason, namely
+its negative first Laurent power. The complementary half of the control is
+equally sharp: a literal transplant of the campaign's modulated \emph{matter}
+charge does not create the pole, and does not create the photon leg either,
+because on the physical subspace it is the hard part of a large-gauge charge by
+\eqref{eq:da-soft-hard} and the soft radiative part is missing. The correct
+statement is thus narrow and true: the definitions distinguish the gauge and
+global infrared classes by scope and by failed regularity, not by one unified
+charge-insertion definition, and the absence of a $1/\omega$ pole in the
+one-dimensional spin chain is consistent with, and does not exclude, the
+standard pole in three spatial dimensions.
+\end{observation}
+
+\noindent One further distinction from the same lane deserves recording,
+because the two vocabularies collide on the phrase ``pure gauge''. The
+campaign's Goldstone analysis calls a direction pure gauge when its tensor is a
+virtual coboundary $A_\alpha X-XA_\alpha$, which changes no local bulk quantity;
+the continuum calls the large-gauge mode locally pure gauge while
+\emph{retaining} its asymptotic endpoint data as a physical charge and vacuum
+label. The exact statement common to both is only that a zero-momentum
+coboundary changes no local bulk field or state but can leave boundary data.
+The campaign's null direction is the analogue of a \emph{proper}, small gauge
+redundancy; the soft photon is the boundary mode of a \emph{broken large} one.
+Equating the two would reverse the broken and unbroken content of both
+definitions. An exact analogue would need an enlarged asymptotic or edge phase
+space in which the telescoping endpoint vectors are retained and charged rather
+than removed, and the current definitions do not construct one.
+
+\subsubsection*{The hostile lane's ranked findings}
+
+The fourth audit was run adversarially and without sight of the other three. It
+was asked to find rats, it found some, and it ranked them by severity. The
+ranking is reproduced here in substance because the severities, not the prose,
+are the useful part.
+
+\begin{center}
+\begin{tabular}{@{}p{0.12\textwidth}p{0.24\textwidth}p{0.56\textwidth}@{}}
+\toprule
+\textbf{severity} & \textbf{object} & \textbf{finding} \\
+\midrule
+fatal &
+the no-contact universality class &
+Source-dependent, and selected by conditions on the very amplitudes whose
+factorisation is at issue, so that the membership clauses substantially restate
+the desired conclusion. It has no proved microscopic member and it is not the
+asymptotic-state domain the continuum theorems use. The conditional implication
+built on it remains correct as an implication; it is not presently a nonvacuous
+continuum-style soft theorem, and must never be described as one. \\
+\midrule
+fatal &
+the bond implementer as a QED boundary charge &
+Wrong quotient, wrong locality, wrong boundary multiplicity, wrong spectrum, as
+displayed above. No limit sequence inside the definition yields the unbounded
+integer flux algebra or the allowed-modulo-trivial gauge quotient. \\
+\midrule
+fatal &
+the integrality-plus-counting package as generic memory &
+It measures integer compact-charge counting statistics. A free radiative sector
+can carry a nonzero soft endpoint shift while the matter-charge counting law is
+$\delta_0$; substituting the field shift destroys integrality
+(\cref{obs:da-maxwell-counterexample}). \\
+\midrule
+major &
+the wall coordinate, charged-dressing masquerade &
+The windowed observable tends to a soliton centre only for a fixed, centred core
+profile. Its physical change is
+$\Delta X+\Delta C_f+(\Delta\,\text{core charge})/(2\spindens)$, so a change of
+charged core dressing at fixed geometric centre is indistinguishable from a
+translation. The stated packet-outside and padding conditions do not exclude it;
+a centring condition is owed. \\
+\midrule
+major &
+the dynamical dress, undefined subtraction &
+The displayed dynamical coordinate is exactly the conserved regularised total
+magnetisation, so its displayed memory is identically zero --- the trap the
+definition itself records. Invoking the asymptotic hypothesis cannot change the
+value of a formula: a leg-subtracted replacement operator must first be defined,
+and it is not. \\
+\midrule
+major &
+the excitation ansatz called a ``particle'' &
+The ansatz supplies a tangent-space quotient and a boundary-remainder limit, not
+a spectral band, a resolvent pole, or a wave operator. Particle status is
+legitimate only where exactness is supplied independently, by the exact-band
+hypotheses or a separate spectral theorem. The audit checked and found no
+currently proved row that crosses this gap silently. \\
+\midrule
+major &
+integrality read as an asymptotic QED charge &
+It captures the constant compact weight lattice. For a generic real angular
+profile the weighted hard sum is not integer valued, and the radiative term is
+not an on-site weight-lattice operator at all. \\
+\midrule
+minor &
+``spectral dress'' as a name &
+An exact Fourier rewrite of the finite-window response; the word can suggest a
+radiative-field or soft-amplitude identification that the identity does not
+supply. \\
+\midrule
+minor &
+the projective phase in a gauge reading &
+Ordinary compact rotor flux has trivial phase; a nontrivial offset needs
+additional background or projective matter structure and should not be
+presented as the generic gauge-field case. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{observation}[What survived the hostile hunt]
+\label{obs:da-survivors}
+The summary sentence is the one worth remembering: \emph{every definition is
+internally exact lattice mathematics; what fails are three continuum-facing
+identifications.} Specifically, the wall coordinate survives narrowly as a
+centred rigid-soliton collective coordinate; the spectral dress survives as
+exact endpoint-jump and Fourier-residue kinematics at fixed window with an
+integrable rate; the integrality clause survives as the correct compact circle
+arithmetic, matching a trivial-phase rotor flux; the counting protocol survives,
+renamed, as a coherent conditional two-time-measurement full-counting-statistics
+definition for lattice charge transfer; the locality, packet-norm, amputation
+and zero-intercept clauses survive as useful analytic definitions, the
+asymptotic-leg clause being the accepted reduction-type definition; the bond
+implementer survives internally as a valid finite endpoint construction on
+padded windows and states; and the truncated-symmetry identity survives as the
+exact constant-profile Gauss telescope of \eqref{eq:da-telescope}. What does
+not survive is the identification of the second group with the continuum objects
+whose names they carry.
+\end{observation}
+
+\begin{observation}[Naming discipline]
+\label{obs:da-naming}
+The audit's operative conclusion is a vocabulary rule, and it binds every
+external presentation of this campaign. The safe names are: a
+\emph{collective-coordinate charge ledger} for the wall displacement and its
+conservation law; a \emph{finite-window Fourier response} for the spectral
+dress; \emph{compact-charge measurement statistics} for the integrality and
+counting package; and \emph{conditional exact-band scattering} for the
+asymptotic-state construction. ``Memory'' is defensible in the magnonics sense
+only, as in \cref{obs:da-memory-name}. Absent the missing bridges, the campaign
+may not describe the counting package as generic electromagnetic or
+gravitational radiative memory, may not use boundary-charge or asymptotic-gauge
+language for the bond implementer, and may not present the conditional
+factorisation implication as a nonvacuous continuum-style soft theorem. Three
+bridges would lift these restrictions, and only these three: a reconstruction
+theorem tying the charge ledger to the field-side memory; an exhibited
+microscopic member of the no-contact class; and a centring amendment to the wall
+coordinate.
+\end{observation}
+
+\provenance{D4, D5, D12, D13, D24, D26, D27, ML5-B, D24-VAL, S-general}{\cref{sec:corner-a},
+\cref{sec:kink-model}, \cref{sec:memory-index}, \cref{sec:universality};
+audit in \texttt{theory/lanes/reduction/q4-adversarial-defs.md} \S6--\S7}{---}{\texttt{theory/verdicts/reduction-defs-adjudication-r1.md} \S1--\S4}
+
 \subsection{What is still owed}
 
 The reductions above rest in places on physical judgement rather than
@@ -831,6 +1491,20 @@ computation, and those places are listed here rather than left implicit.
       shift symmetry in \cref{rem:sigma-correction} is read off the structure of
       the broken generators; no Lie-algebraic classification has been run to
       exclude a redundant symmetry.
+\item The three missing bridges of \cref{obs:da-naming} are owed and none is
+      started. A reconstruction theorem tying the charge ledger to the
+      field-side memory is the largest of them, and until it exists the
+      counting package may be called radiative memory in no sense at all.
+\item Every arrow of \cref{obs:da-gauss-arrow} --- the Riemann-sum convergence
+      of the boundary flux, the spacelike-to-null deformation, and the
+      hard/soft split at null infinity --- is a matrix-element or classical
+      statement. No operator-norm continuum limit of the unbounded flux is
+      asserted, and the interacting scaling limit in which it would hold is not
+      constructed.
+\item The centring amendment owed to the wall coordinate is a change to a
+      definition, not to a proof. Until it lands, every downstream use of that
+      observable carries the charged-dressing ambiguity as an unstated
+      hypothesis.
 \end{enumerate}
 
 \noindent Finally, the single most exposed point. The memory corner is proved
