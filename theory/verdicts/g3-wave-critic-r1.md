@@ -598,3 +598,122 @@ because a dressed separated-core route is open and the numerical
 nonzero-mode control is not small.
 
 FAIL(G3-C1, G3-N1, G3-O1)
+
+## r1a: delta adjudication
+
+Delta basis: `theory/lanes/syk-jt/repair-g3-r1-response.md` and the
+`HEAD~1` diff of `g3-construct.md`, `g3-obstruct.md`, and
+`g3-ward-report.md`.  This adjudication rechecks only the repaired
+dispositions against r1; it does not reopen unchanged claims.
+
+- **VERIFIED — `G3-C1 / G3-O` relabel.**  `G3-O` is now
+  “Proposition G3-O (source-closed insufficiency audit),” the exact usable
+  scope “The four sources and qualitative moment hypothesis do not supply
+  G3; algebraic non-descent is not yet independently proved” is present, and
+  the proof/failure headings and terminal summary now say missing proof,
+  missing bridge, or source insufficiency rather than matter-coupled no-go.
+- **VERIFIED — `G3-C1 / algebraic non-descent` downgrade.**  The repair
+  explicitly sets \(D=\iota(ab)-\iota(a)\iota(b)\), records the four-term
+  joint-moment cancellation in \(\omega(D^*D)\), and leaves multiplicativity
+  and descent OPEN pending faithfulness, domain, and two-sided analysis.
+  Fresh expansion reproduces that cancellation, so no countermodel or
+  non-descent theorem remains claimed.
+- **VERIFIED — matter-coupled fixed-separated route residue.**  Both analytic
+  lanes now name the matter-dressed one-boundary or explicitly relational
+  two-boundary, nonconserved route on a fixed separated/heat-regulated core,
+  with UV correction, finite-\(N\) approximants, and joint \(N\)/coupling
+  rate, as OPEN.  Searches for matter/no-go language find only explicit
+  denials, pure-JT fences, bare-mode fences, or the quotation of the held
+  proposition; no residual text closes this route.
+- **VERIFIED — `G3-PURE-JT-TRIVIAL`.**  The heading, theorem conclusion,
+  scope, matrix, and honesty ledger all say pure JT only; the text states
+  that pure JT has no matter bilocal and supplies no matter-coupled no-go.
+- **VERIFIED — `G3-O1 / G3-NOT-CONSERVED`.**  The theorem fixes
+  \(\epsilon^L_{2,c}(t)=\cos2t\), distinguishes \(\cosh2t\), uses compactly
+  supported contact-separated smearings, and declares one common invariant
+  Jacobi core for every required product and iterated commutator.  Fresh
+  computation gives
+  \([\delta_1,\delta_{\epsilon^L_{2,c}}]
+    =\delta_{\dot\epsilon^L_{2,c}}
+    =-2\delta_{\sin2t}\);
+  hence commuting \(H_X\) and \(Q_{2,c}\) would contradict the assumed
+  nonzero derived action.  The repaired scope matches the r1-directed form
+  and does not exclude a nonconserved or controlled approximately conserved
+  implementer.
+- **VERIFIED — `G3-LL-NOCLOSURE` downgrade.**  The periodic continuation,
+  common analytic Jacobi core, covariance, and strong exponentiation are
+  explicit hypotheses.  The result is labeled conditional G4-strength and
+  HOLD as G3, with other continuations and common-core failure outside scope.
+- **VERIFIED — candidate row (ii) / `G3-UV-SOFT-TANGENT`.**  The r1 section
+  8.2 sentence is present byte-for-byte.  The following status fence retains
+  separated one-sided bilocal statistics, explicit breaking, and
+  non-generator status.
+- **VERIFIED — `G3-N1` / candidate row (i).**  The non-small \(n=1\) caveat
+  is the first content under “Numerical verdict,” before any \(n=2\)
+  interpretation.  Fresh JSON aggregation gives filtered means
+  \(1.000000\)--\(1.000906\) and ledger means
+  \(0.384850\)--\(0.475754\).  The r1 narrow replacement and exclusion fence
+  are present byte-for-byte, and the single \(N_m=14\) point is explicitly
+  excluded from the promoted grid.
+- **VERIFIED — candidate row (iii).**  The r1 section 8.3 sentence is present
+  byte-for-byte.  Fresh aggregation reproduces
+  \(0.5500685252\le d_N\le1.0124367234\), and all eight reported
+  candidate/temperature/width fits select the constant model.  The row
+  remains candidate-specific finite-grid evidence.
+- **VERIFIED — no claim re-expansion in changed text.**  Every assertive
+  addition in the three-file diff is either one of the approved narrow
+  results, an explicit OPEN/HOLD/conditional fence, or a denial of a broader
+  claim.  No changed sentence introduces a universal no-go, new charge,
+  conservation, permanence, frame observable, enlarged size grid, or
+  asymptotic extrapolation.
+
+### Final promotable sentences for direct ledger copy
+
+#### Row 8.2 — surviving weaker object
+
+> After \(N\to\infty\), in the large-\(p\) expansion and on Euclidean bilocal
+> smearings supported a fixed distance \(\ell>0\) from contact with
+> \(\delta v/\ell\to0\), the Bucca--Mezei boundary-condition-preserving
+> Ansatz defines the mode-2 tangent
+> \(\mathsf V_{2,c}\gamma_*=2\sin(2\bar\tau)(1-\cos d)\), inducing
+> \(dG/ds=\operatorname{sgn}(d)\mathsf V_{2,c}\gamma_*/(2p)+O(p^{-2})\);
+> this is an explicitly broken kinematic response of allowed bilocal
+> expectations, not an affiliated charge, finite-\(N\) operation, or
+> controlled Ward identity.
+
+#### Row 8.3 — candidate-specific numerical evidence
+
+> In \(q=4\) two-dot SYK exact diagonalization with
+> \(N_m=8,10,12\), \(\beta J=5,10\), three disorder seeds,
+> \(\delta J=0.15\), three mixed-bilocal probes, and the declared
+> real-oscillatory convention, the frequency-filtered and naive-ledger
+> mode-2 candidates have projected relative Ward defects
+> \(0.5501\le d_N\le1.0124\), constant-model fits, and no observed decay
+> toward zero with size; because the
+> corresponding \(n=1\) candidate defects are also not small and the EFT/ED
+> windows are not parametrically overlapping, this is finite-grid evidence
+> against only those two candidate definitions, not a universal
+> non-Möbius-charge no-go.
+
+#### Promotable obstruct-theorem scopes
+
+`G3-UV-NOEXACT`:
+
+> literal primary rule on a diagonal-stable same-side finite-\(N\) UV core;
+> uniform contact-localizing defect
+
+`G3-PURE-JT-TRIVIAL`:
+
+> affiliated adjoint actions in pure JT's abelian boundary algebra and its
+> identical two-sided join
+
+`G3-NOT-CONSERVED`:
+
+> a nonzero implementer of a declared nonconstant Lorentzian continuation on
+> a common Jacobi core cannot commute with physical time translation
+
+`G3-BARE-DESCENT`:
+
+> bare nonzero-weight mode only; dressed constraint scalars remain open
+
+PASS
