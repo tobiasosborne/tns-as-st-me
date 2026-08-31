@@ -244,3 +244,21 @@ mode, 2108.04841 Harlow–Wu, 2005.08999 Godet–Marteau, 2603.18154 Maxfield,
 soft gravitons in 3d, 2512.15796 sound infrared triangle (C5 landscape).
 2025-26 ids (2603.18509, 2601.23019, 2603.18154, 2409.15415) fetched OK —
 sweep's authorship caveat resolves at the summary pass.
+
+**Batch-12 MISMATCH (recorded per L3):** the sweep's fetch list cited
+1408.6560 for Stanford–Susskind "Complexity and Shock Wave Geometries";
+the fetched TeX is actually Adams–Roberts–Saremi, "Hawking-Page transition
+in holographic massive gravity" (phase.ARS.tex:47) — the SWEEP's id was
+wrong, not the fetch. Correct id fetched instead: 1406.2678 (verify title
+below); arxiv-1408.6560/ retained but must NOT be cited for complexity
+content.
+
+**Batch-12 verification updates (summary pass, 2026-08-31):** 1406.2678
+title verified "Complexity and Shock Wave Geometries" (Stanford–Susskind,
+length.tex titlepage). 2406.07106 verified "Displacement versus velocity
+memory effects from a gravitational plane wave" (Ben Achour–Uzan,
+MEM-DRAFT-Revised.tex:277 — earlier NO-TITLE flag was a long-preamble
+false alarm). Previously-unconfirmed 2025–26 authorships now confirmed
+from TeX: 2603.18509 = Joshi–Mishra (IIT-BHU); 2601.23019 = Zosso, Magaña
+Zertuche, Gasparotto, Cogez, Inchauspé, Jacobs. Full quotes and
+positioning: docs/companion-cite-notes.md.
