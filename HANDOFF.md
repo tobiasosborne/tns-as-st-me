@@ -2,10 +2,95 @@
 
 # HANDOFF — live state
 
-Updated: 2026-08-30, session 9 (the labbook session). Read order gate:
+Updated: 2026-08-31, session 10 (the SYK/JT session). Read order gate:
 CLAUDE.md → **PRD.md (the process constitution — where it conflicts with
 older habits recorded here or anywhere, PRD WINS)** →
 HANDOFF_MPS_SOFT_THEOREM.md → this file → paper/skeleton.md.
+
+## Session 10 — SYK/JT: the decisive computation, two memory registers, corner A, companion paper
+
+**TJO directives this session (all persisted):** (i) execute the SYK/JT
+decisive computation with codex; (ii) OPERATIONAL RAZOR sharpened — "this
+question cannot be correctly answered unless you specify the physically
+allowed observables clearly," now a lane-scoped 3-layer C*-algebra spec
+(theory/lanes/syk-jt/observables-spec.md: Layer 0 even-CAR bedrock /
+Layer 1 uniform bilocals + E_L,E_R / Layer 2 emergent vN factors, with
+the iterated-limit convention C→∞ first, 1≪κT≪κC); (iii) **TJO RULING —
+two memory registers, now D32/D33 in definitions.md**: D32 = memory
+(unqualified, absolute-response, reserved word), D33 = calibrated
+relational memory susceptibility (declared-cost ratio functional, DC
+identity). Lattice kinks pass D32; SYK/JT passes D33 only; GW strain both
+(persistent ruler — the registers coincide iff the ruler persists);
+(iv) **L7 AMENDED (revokes 2026-08-25 exception): NO Fable prose writer
+ever — "Fable is not good at prose"; paper skeletons bullet-level only**
+(CLAUDE.md updated in-repo, bd memory + auto-memory updated).
+
+**Nine claims registered, all L6-converged, scopes copied verbatim from
+critic rulings:** the decisive computation (T.1)–(T.3), two blind lanes
+(analytic + Julia TDD) → critic r1 FAIL(8) → repair → r2 FAIL(1) → r2a
+PASS gave **JT-B-susc** (balanced-pulse calibrated susceptibility = DC
+soft residue at O(1/C), numerics to 0.011%), **JT-bfly-decay** (the
+Shenker–Stanford butterfly shift has ZERO plateau — transient relational
+time delay, NOT memory), **JT-noplat-abs** (no absolute late plateau even
+when the ratio plateaus; unbalanced sector retracted — no implementable
+equal-(E_L,E_R) reference exists). Corner-A precision memo
+(corner-a-precision.md: PW internals — only the Casimir descends; gap
+list G1–G6) then the G3 wave (construct/obstruct/ward-numeric, mutually
+blind → critic FAIL(3) → repair → r1a PASS) gave **JT-A-tangent,
+JT-A-ward-grid, JT-A-uv-noexact, JT-A-purejt, JT-A-notconserved,
+JT-A-baredescent**. The STRONG n=2 refutation is explicitly HELD (not
+claimed): open route = matter-dressed one-boundary or explicitly
+relational two-boundary implementer on a separated regulated core (LMZ
+1904.12820 builds exactly the SL(2) relational version — natural next
+theory lane). Physics frame on the bead: TFD = Hartle–Hawking vacuum of
+the two-boundary problem; thermality is modular (Rindler), kinematically
+forced in 0+1d (S^0 realized as horizon-split boundaries); spin chain ~
+GR vacuum-sector memory, SYK/JT ~ Rindler-wedge memory.
+
+**Microscopic ladder (tns-7wd, in progress):** ED rung DONE — honest
+negative: at N_m=8–14, βJ=5–10 the EFT and ED windows do not overlap
+(absolute difference non-decaying at N_m≥10 = finite-size
+quasiperiodicity; calibrated ratio NOT self-averaging, sign flips across
+seeds). Layer-0 evidence only; no claim rows touched. Liouville rung
+queued.
+
+**Companion paper (tns-wvp, P1 epic) — all campaign-side gates
+discharged:** novelty swept three ways (pass-1 agent; 16-agent Workflow,
+159 hits, 88 deduped, docs/syk-jt-novelty-sweep-deep.md; exact INSPIRE
+citer intersections: Strominger-lectures ∩ MS-SYK = 13, ∩ MSY-NAdS2 = 21,
+union ~30, NONE poses the triangle question — quantitative C5 support).
+Verdicts: **C2 NOVEL unconditional** (the flagged kill-shot grep of
+GJW/MSY-diving/Maldacena–Qi/LMTV/Kourkoulou–Maldacena full TeX found NO
+DC/ω→0 identification and zero "memory" mentions — batch 11); **C4
+(D32/D33) NOVEL**; **C5 NOVEL** (wording per cite-notes); C1/C3
+PARTIAL-OVERLAP with exact citation obligations mapped (C1: He–Raclariu–
+Zurek + Donnay et al. in first memory paragraph; C3: reposition as
+operational sharpening of Grumiller-menagerie/Godet–Marteau/Harlow–Wu/
+Maxfield; so(2,2) extension 2410.10768 forces plain-JT scoping; PW
+type-II size vs charge-algebra conflation fence; 2409.15415 defused).
+Refs batches 9–12 fetched + title-verified (~30 sources; LEDGER records
+the sweep's 1408.6560 wrong-id → correct Stanford–Susskind 1406.2678).
+**paper/skeleton-syk-jt.md** landed (Opus, 127 bullets, claim-id-backed,
+bullet-only per amended L7) + **docs/companion-cite-notes.md** (4 Sonnet
+lanes, all quotes file:line).
+
+**Resume order for session 11:** (1) TJO writes the companion prose from
+the skeleton (campaign side does NOT draft prose); (2) fetch pass for
+the 18 cited ids without local TeX (skeleton L3-gate list; 3 load-bearing:
+2604.19866, 2512.02825, 2201.05054); (3) TJO decision: C5 headline as
+literature observation vs stronger; (4) Liouville rung (tns-7wd); (5)
+optional corner-A lane: extend LMZ relational construction to n=2 (the
+named open route); (6) β-sweep (future work, unbacked). Main-campaign
+queue (tns-bfc, tns-25h, tns-94j, tns-kng, tns-bsk, tns-7ou…) untouched
+this session — tns-25h and tns-94j now carry D32/D33 context notes.
+
+**Ops notes (additions):** gpt-5.6-sol "model at capacity" errors are
+transient — `codex exec -s workspace-write resume <session-id>` recovers
+with context intact (used 4×, including across a network outage; kill
+hung trees first, logs frozen >30 min = hung). The launch-cwd trap bit
+again (a critic resumed from refs/ could not write theory/) — ALWAYS
+launch codex from repo root. Agent-tool transcripts are JSONL; extract
+final reports via last long assistant text block.
 
 ## Session 9 — the labbook (TJO directive 2026-08-30)
 
