@@ -1369,3 +1369,44 @@ No clustering inequality is assumed.  D1(c,d) implies, for every `λ̃∈(λ_E,1
 
 After uniformly almost-local truncation this implies (D31-C4) of `theory/ansatz-scattering-2m.md` ⟨1⟩3.  Both estimates
 are consequences, not hypotheses.  The theorem is fixed-packet only; a soft scale and its limit are not part of D31.
+
+## D32 (memory, absolute-response register — TJO ruling 2026-08-31)
+
+Fix an operational specification: a C*-algebra `A` of allowed observables
+(for two coupled systems: with its stated superselection rules and
+one-sided subalgebras), a family of implementable protocols (preparation,
+evolution, at most one compact perturbation), each protocol `P` defining
+states `ω_T^P` at detector time `T`, and a declared asymptotic window (the
+order in which large-parameter limits are taken BEFORE `T`, and the
+admissible `T`-range within stated validity).  Two protocols
+`ω^pulse, ω^ref` are **comparable** when they agree on every exactly
+conserved allowed charge of the specification.  A comparable pair exhibits
+**memory** (unqualified) iff there exists a single allowed observable
+`O ∈ A`, fixed in advance with `T`-independent norm bound, such that
+`lim_T [ω_T^pulse(O) − ω_T^ref(O)]` exists in the declared window and is
+nonzero.  The word "memory" without qualifier is reserved for this
+register throughout the campaign.  (Relation to D26/D27: those are
+charge-ledger/counting definitions; D32 is the detector register.  The
+reconstruction obligation connecting them is tracked, not assumed.)
+
+## D33 (calibrated relational memory susceptibility — TJO ruling 2026-08-31)
+
+Same operational data as D32.  A **calibrated relational memory
+susceptibility** is a detector functional `F_T` — a ratio or finite
+algebraic combination of finitely many allowed expectations in the two
+comparable protocols, with its measurement cost (shot count for a stated
+relative error at time `T`) declared as part of any claim — such that:
+(i) `lim_T F_T` exists in the declared window and is nonzero; (ii) `F_T`
+is invariant under the specification's gauge redundancies (simultaneous
+reframings acting trivially on `A`); (iii) the limit equals the declared
+zero-frequency (DC) datum of the corresponding soft-theorem statement,
+with normalization fixed by measured injected charge, nothing fitted.
+Satisfying D33 does NOT license the unqualified word "memory" (D32).  A
+system may satisfy D33 while failing D32 — the adjudicated instance is the
+two-boundary Schwarzian setting (claims JT-B-susc and JT-noplat-abs),
+where the divergence has a structural cause worth reporting in its own
+right: a thermal reference frame erodes its own record, and the readout
+cost grows exponentially in detector time.  Gravitational-wave strain is
+the paradigm D33 functional that ALSO passes D32 because its calibrating
+denominator does not decay; the two registers coincide exactly when the
+ruler is persistent.
