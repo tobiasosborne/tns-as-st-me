@@ -211,3 +211,22 @@ position against both. Titles verified from fetched TeX.
 |---|---|---|---|
 | 1904.12820 | Symmetries Near the Horizon | Symmetries-draft.tex | Lin–Maldacena–Zhao: gauge-invariant relational SL(2) operators moving matter relative to the two boundaries (exact up to nonperturbative corrections) — closest prior art to finite operational corner A and to the relational-SL(2) framing; consistent with the G3 negative (their construction stops at SL(2)) |
 | 1708.08471 | Menagerie of AdS2 boundary conditions | AdS2.tex (\mytitle macro) | Grumiller et al.: asymptotic algebras on-shell reduce to finite-dimensional ones, "reminiscent of SYK" |
+
+## Batch 11 — traversable-wormhole lineage: the C2 decisive check (fetched 2026-08-31)
+
+Fetched to execute the deep novelty sweep's flagged highest-value check
+(docs/syk-jt-novelty-sweep-deep.md, C2): does this lineage already identify
+the permanent relative boundary-time shift with a zero-frequency soft
+response? RESULT OF CHECK: full-text grep for zero-frequency / DC / Kubo /
+susceptibility / static response / omega->0 across all five: NO such
+identification anywhere; zero mentions of "memory" in all five. C2 stands
+NOVEL; these are prior computations of the SHIFT by a different route
+(traversability), to be cited as such. Titles verified from fetched TeX.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 1608.05687 | Traversable Wormholes via a Double Trace Deformation | Draft_Aug18.tex | GJW: the mechanism |
+| 1704.05333 | Diving into traversable wormholes | (single tex) | MSY: nearest prior computation of a permanent relative time shift |
+| 1804.00491 | Eternal traversable wormhole | (single tex) | Maldacena–Qi: the two-sided coupled setup |
+| 1804.09834 | Shockwave S-matrix from Schwarzian Quantum Mechanics | (single tex) | LMTV: technical home for shock amplitudes |
+| 1707.02325 | Pure states in the SYK model and nearly-AdS2 gravity | QuenchRevisedSubmitted.tex | Kourkoulou–Maldacena: pulse-protocol ancestor |
