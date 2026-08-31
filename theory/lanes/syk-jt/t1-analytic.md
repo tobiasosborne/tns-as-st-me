@@ -15,16 +15,19 @@ says that the Schwarzian is of order \(1/G\) and is therefore perturbatively
 evaluated around a solution, and that its effective coupling is \(\beta/C\)
 (`refs/arxiv-1606.01857/GravityReparametrizationsRevised.tex:680-684,717-719`).
 
-⟨1⟩0.⟨2⟩2. **ASSUME (thermal representatives and orientation).** Fix the early
-simultaneous two-sided \(SL(2,\mathbb R)\) redundancy by
+⟨1⟩0.⟨2⟩2. **ASSUME (thermal representatives, orientation, and one
+synchronization event).** Choose one physical synchronization event \(u_*\)
+and fix the early simultaneous two-sided \(SL(2,\mathbb R)\) redundancy by
 
 \[
-t_R^{\,i}(u)=e^{\kappa_i u},\qquad
-t_L^{\,i}(u)=-e^{-\kappa_i u},\qquad u=0\text{ is the synchronized origin}.
+t_R^{\,i}(u)=e^{\kappa_i (u-u_*)},\qquad
+t_L^{\,i}(u)=-e^{-\kappa_i (u-u_*)}.
 \tag{0.2}
 \]
 
-Both maps have positive derivative.  They have charges
+All numerical formulas below use the coordinate choice \(u_*=0\), but no
+later event is used to resynchronize the clocks.  Both maps have positive
+derivative.  They have charges
 \(Q_R=(0,-C\kappa_i,0)\) and \(Q_L=-Q_R\), as follows by inserting (0.2)
 in the displayed charge formula below; the equal-and-opposite two-sided
 constraint is stated explicitly in
@@ -123,9 +126,12 @@ H={-Q^+Q^-+(Q^0)^2\over2C}=-C\operatorname{Sch}(t,u),
 \tag{0.9}
 \]
 
-For (0.2), this is (0.1).  The first equality is the printed Hamiltonian
-relation at `GravityReparametrizationsRevised.tex:921-929`; the second and
-third follow from (0.5)--(0.7) by elementary differentiation.  The source also
+For (0.2), this is (0.1).  The equality
+\(H=-C\operatorname{Sch}(t,u)\) is the Lorentzian ADM relation at
+`GravityReparametrizationsRevised.tex:586-592`, while the Casimir expression
+for \(H\) is printed at
+`GravityReparametrizationsRevised.tex:921-929`; the second and third relations
+in (0.9) follow from (0.5)--(0.7) by elementary differentiation.  The source also
 explains that two factors of \(t'\) convert the flux to boundary-time power
 (`GravityReparametrizationsRevised.tex:618-622`).
 
@@ -143,39 +149,48 @@ support in \([u_i,u_f]\), let
 and require the square root to be real.  Equation (1.1) is the integral of
 (0.9), hence is a displayed-prior-equation computation.
 
-⟨1⟩1.⟨2⟩2. **ASSUME (the two protocols).** Protocol (a) imposes
-\(\Delta E=0\), so \(\kappa_f=\kappa_i\).  Protocol (b) permits
-\(\Delta E\ne0\), but compares with the synchronized equilibrium saddle of
-stiffness \(C\) and inverse temperature \(2\pi/\kappa_f\); no term proportional
-to \((\kappa_f-\kappa_i)T\) is called memory.  This implements the requested
-final-energy subtraction using (1.1); the source identifies the thermal
-solutions as \(\tau=2\pi u/\beta\)
+⟨1⟩1.⟨2⟩2. **ASSUME (retained and retracted protocols).** Protocol
+(a) imposes \(\Delta E=0\), so \(\kappa_f=\kappa_i=: \kappa\), and is the only
+protocol for which this shard retains an operational detector verdict.
+Protocol (b), with \(\Delta E\ne0\) on the right only, leaves the allowed exact
+left energy at \(E_L=C\kappa_i^2/2\) while changing the right energy to
+\(E_R=C\kappa_f^2/2\).  The previous comparison changed both reference clocks
+to \(\kappa_f\), hence changed \(E_L\); all protocol-(b) detector claims are
+therefore **RETRACTED**.  The exact one-kick transfer matrix below is retained
+only as Schwarzian trajectory algebra, not as an allowed-observable memory
+verdict.  The source identifies the thermal solutions as
+\(\tau=2\pi u/\beta\)
 (`GravityReparametrizationsRevised.tex:535-551`) and gives their energy through
 the charge Casimir (`GravityReparametrizationsRevised.tex:912-929`).
 
-⟨1⟩1.⟨2⟩3. **ASSUME [physical argument] (unbalanced reference clock).**
-For protocol (b), “equilibrium at \(E_f\)” must include a synchronization
-choice in addition to an energy: use the same origin \(u=0\) as (0.2), and use
+⟨1⟩1.⟨2⟩3. **ASSUME [physical argument] (the retained synchronized
+reference).** For the balanced sector use the same synchronization event
+\(u_*\) fixed in (0.2), with
 
 \[
-t_L^{\rm eq}(u;E_f)=-e^{-\kappa_f u},\qquad
-t_R^{\rm eq}(u;E_f)=e^{\kappa_f u}.
+t_L^{\rm eq}(u)=-e^{-\kappa (u-u_*)},\qquad
+t_R^{\rm eq}(u)= e^{ \kappa (u-u_*)}.
 \tag{1.2}
 \]
 
-Energy alone does not fix the relative origin; changing only one factor in
-(1.2) is precisely the relational clock shift being tested.  This need for
-both sides is supported by the source statement that one-sided charges can be
-arbitrary while the two-sided charges are equal and opposite
-(`GravityReparametrizationsRevised.tex:902-909`).
+This reference is prepared by the same TFD preparation and source-free
+Hamiltonian evolution as the early state, with the clock origins set together
+at \(u_*\).  It has the same measured pair
+\((E_L,E_R)=(C\kappa^2/2,C\kappa^2/2)\) as every retained balanced protocol.
+No reference state with measured pair
+\((C\kappa_i^2/2,C\kappa_f^2/2)\) is constructed here, which is why no
+unbalanced operational conclusion is drawn.
 
-⟨1⟩1.⟨2⟩4. **PROVE (subtraction removes temperature drift).** If the
-late right solution has exponent \(\kappa_f\), subtracting (1.2) removes the
-only possible secular term \((\kappa_f-\kappa_i)u\) in its logarithmic clock.
-What remains is a constant-\(\kappa_f\) Möbius mismatch.  This follows from the
-constant-Schwarzian solution classified in (2.1) below and the elementary
-identity \(\operatorname{Sch}(e^{\kappa u},u)=-\kappa^2/2\); it is not an
-assumption that the mismatch is nonzero.
+⟨1⟩1.⟨2⟩4. **PROVE (scope of the subtraction).** In the retained
+balanced sector there is no temperature drift to subtract: both the pulsed
+trajectory and (1.2) have exponent \(\kappa\), and their difference is a
+constant-\(\kappa\) Möbius mismatch.  More generally, a formal right comparator
+\(e^{\kappa_f(u-u_*)}\) removes the secular term
+\((\kappa_f-\kappa_i)(u-u_*)\), but without the matched-energy reference
+retracted in ⟨1⟩1.⟨2⟩2 it does not license a two-sided protocol-(b)
+detector.  These statements follow from the constant-Schwarzian classification
+in (2.1) and
+\(\operatorname{Sch}(e^{\kappa u},u)=-\kappa^2/2\).
 
 ## ⟨1⟩2. Step 2 / (T.1) — exact late solution and relative Möbius data
 
@@ -353,7 +368,7 @@ missing from the final charges.  Equations (2.10)–(2.11) are direct repeated
 application of (2.8); compact source support and zero balanced net energy
 follow from (2.9).
 
-## ⟨1⟩3. Step 3 / (T.2) — exact two-sided detector and the plateau test
+## ⟨1⟩3. Step 3 / (T.2) — balanced two-sided detector and the plateau test
 
 ⟨1⟩3.⟨2⟩1. **ASSUME (future projective chart).** Write the reconstructed
 late relative matrix as
@@ -369,22 +384,24 @@ future chart has \(a>0\).  This is the matrix of (2.6); the source identifies
 Möbius-related representatives as the relevant \(SL(2)\) action
 (`GravityReparametrizationsRevised.tex:373-382`).
 
-⟨1⟩3.⟨2⟩2. **PROVE (exact correlator).** Put
-\(x=e^{\kappa_fT}\) and use the final-energy reference (1.2).  Direct
-substitution of \(t_R=g_{\rm rel}\cdot x\) and \(t_L=-x^{-1}\) into (0.4)
+⟨1⟩3.⟨2⟩2. **PROVE (exact balanced correlator).** Restrict to
+\(\kappa_f=\kappa_i=:\kappa\), put
+\(\bar T=T-u_*\), \(x=e^{\kappa\bar T}\), and use the synchronized reference
+(1.2).  Direct substitution of \(t_R=g_{\rm rel}\cdot x\) and
+\(t_L=-x^{-1}\) into (0.4)
 gives
 
 \[
 \begin{aligned}
 D_g(T)&:=a x+(b+c)+{d\over x},\\
 G_{LR}^{\rm pulse}(T,T)
- &= {\cal N}_\Delta\left[{\kappa_f^2\over D_g(T)^2}\right]^\Delta,\\
-G_{LR}^{\rm eq}(T,T;E_f)
+ &= {\cal N}_\Delta\left[{\kappa^2\over D_g(T)^2}\right]^\Delta,\\
+G_{LR}^{\rm eq}(T,T)
  &= {\cal N}_\Delta
- \left[{\kappa_f^2\over(x+x^{-1})^2}\right]^\Delta,\\
+ \left[{\kappa^2\over(x+x^{-1})^2}\right]^\Delta,\\
 \boxed{\;
 \delta G_{LR}(T)
- ={\cal N}_\Delta\kappa_f^{2\Delta}
+ ={\cal N}_\Delta\kappa^{2\Delta}
 \left[D_g(T)^{-2\Delta}-(x+x^{-1})^{-2\Delta}\right].
 \;}
 \end{aligned}
@@ -401,7 +418,7 @@ equilibrium derivative and exact ratio are
 
 \[
 {\partial_TG_{LR}^{\rm eq}\over G_{LR}^{\rm eq}}
- =-2\Delta\kappa_f\tanh(\kappa_fT),\qquad
+ =-2\Delta\kappa\tanh(\kappa\bar T),\qquad
 R_g(T):={G_{LR}^{\rm pulse}\over G_{LR}^{\rm eq}}
  =\left[{x+x^{-1}\over D_g(T)}\right]^{2\Delta}.
 \tag{3.3}
@@ -413,12 +430,12 @@ Therefore the displacement defined *literally* by
 \[
 \boxed{\;
 \Delta u_{\rm rel}^{\rm lin}(T)
- ={R_g(T)-1\over2\Delta\kappa_f\tanh(\kappa_fT)}
+ ={R_g(T)-1\over2\Delta\kappa\tanh(\kappa\bar T)}
 \;}
 \tag{3.4}
 \]
 
-when \(|R_g-1|\ll1\) and \(\tanh(\kappa_fT)\ne0\).  Equations (3.3)–(3.4)
+when \(|R_g-1|\ll1\) and \(\tanh(\kappa\bar T)\ne0\).  Equations (3.3)–(3.4)
 are named differentiation and first-order Taylor computations from (3.2).
 
 ⟨1⟩3.⟨2⟩4. **PROVE (exact nonlinear clock readout).** Whenever
@@ -427,7 +444,7 @@ are named differentiation and first-order Taylor computations from (3.2).
 \[
 G_{LR}^{\rm pulse}(T,T)
 =G_{LR}^{\rm eq}(T-\Delta u_{\rm rel}^{\rm NL},
-                 T-\Delta u_{\rm rel}^{\rm NL};E_f).
+                 T-\Delta u_{\rm rel}^{\rm NL}).
 \tag{3.5}
 \]
 
@@ -436,7 +453,7 @@ Solving (3.5) gives
 \[
 \boxed{\;
 \Delta u_{\rm rel}^{\rm NL}(T)
-=T-{1\over\kappa_f}\operatorname{arcosh}{D_g(T)\over2}.
+=\bar T-{1\over\kappa}\operatorname{arcosh}{D_g(T)\over2}.
 \;}
 \tag{3.6}
 \]
@@ -447,22 +464,23 @@ so only the exact observable (3.2) is used.  Equation (3.6) is the named
 inverse-hyperbolic-cosine computation from displayed equations (3.2) and
 (3.5).
 
-⟨1⟩3.⟨2⟩5. **PROVE (late behavior).** As \(T\to+\infty\),
+⟨1⟩3.⟨2⟩5. **PROVE (tree-level late behavior).** As
+\(\bar T\to+\infty\),
 
 \[
 \begin{aligned}
 \delta G_{LR}(T)
-&={\cal N}_\Delta\kappa_f^{2\Delta}e^{-2\Delta\kappa_fT}
+&={\cal N}_\Delta\kappa^{2\Delta}e^{-2\Delta\kappa\bar T}
 \left[
 a^{-2\Delta}-1
--{2\Delta(b+c)\over a^{2\Delta+1}}e^{-\kappa_fT}
-+O(e^{-2\kappa_fT})
+-{2\Delta(b+c)\over a^{2\Delta+1}}e^{-\kappa\bar T}
++O(e^{-2\kappa\bar T})
 \right],\\
 \Delta u_{\rm rel}^{\rm lin}(T)
-&={a^{-2\Delta}-1\over2\Delta\kappa_f}
-+O(e^{-\kappa_fT}),\\
+&={a^{-2\Delta}-1\over2\Delta\kappa}
++O(e^{-\kappa\bar T}),\\
 \Delta u_{\rm rel}^{\rm NL}(T)
-&=-{\log a\over\kappa_f}+O(e^{-\kappa_fT}).
+&=-{\log a\over\kappa}+O(e^{-\kappa\bar T}).
 \end{aligned}
 \tag{3.7}
 \]
@@ -470,7 +488,9 @@ a^{-2\Delta}-1
 This is the named binomial and \(\operatorname{arcosh}z=\log(2z)+O(z^{-2})\)
 expansion of (3.2)–(3.6).  The absolute correlator difference always decays
 for \(\Delta>0\), but the relational clock readout has a nonzero plateau
-exactly when \(a\ne1\).
+exactly when \(a\ne1\).  The moment criterion derived in ⟨1⟩4 is only a
+criterion for the leading \(O(C^{-1})\) coefficient, not for this exact
+finite-amplitude condition.
 
 ⟨1⟩3.⟨2⟩6. **PROVE (balanced protocol).** Put
 \(\eta=\frac12\log(\kappa_1/\kappa)\).  Multiplication of (2.11) gives
@@ -492,7 +512,7 @@ For \(\delta\kappa=\kappa_1-\kappa\) small,
 \[
 \Delta u_{{\rm rel,bal}}^{\rm NL}(\infty)
 =-{\delta\kappa\,L\over2\kappa}
-O(\delta\kappa^2).
++O(\delta\kappa^2).
 \tag{3.10}
 \]
 
@@ -500,30 +520,33 @@ Equations (3.8)–(3.10) are elementary \(2\times2\) multiplication and Taylor
 expansion of displayed equation (2.11).  They also exhibit constructively the
 charge-phase underdetermination proved in ⟨1⟩2.⟨2⟩6.
 
-⟨1⟩3.⟨2⟩7. **PROVE (unbalanced protocol with final-energy subtraction).**
-For the one-kick family (2.10),
+⟨1⟩3.⟨2⟩7. **RETRACT (unbalanced detector; algebraic diagnostic
+only).** For the one-kick family (2.10), the matrix coefficient is still
 \[
 a_{\rm un}={\kappa_f+\kappa_i\over2\sqrt{\kappa_i\kappa_f}}
 =\cosh\!\left({1\over2}\log{\kappa_f\over\kappa_i}\right),
 \tag{3.11}
 \]
-and hence
+The expression previously called its final-energy-subtracted detector plateau
+was
 \[
 \Delta u_{{\rm rel,un}}^{\rm NL}(\infty)
 =-{1\over\kappa_f}\log a_{\rm un}.
 \tag{3.12}
 \]
-This is nonzero for every finite \(\kappa_f\ne\kappa_i\), but begins at
-quadratic response:
+It begins at quadratic response:
 \[
 \Delta u_{{\rm rel,un}}^{\rm NL}(\infty)
 =-{(\kappa_f-\kappa_i)^2\over8\kappa_i^3}
 +O((\kappa_f-\kappa_i)^3).
 \tag{3.13}
 \]
-A finite-duration unbalanced pulse can additionally carry a linear plateau,
-computed in (4.10) below.  Equations (3.11)–(3.13) are direct substitution of
-(2.10) into (3.7) and a named Taylor expansion.
+Equations (3.11)–(3.13) are correct matrix algebra and remain useful as a
+counterexample to replacing the exact condition \(a\ne1\) by a moment
+condition beyond leading order.  They are **not** an allowed detector claim:
+the comparator used to obtain (3.12) changed \(E_L\), and no implementable
+equal-\((E_L,E_R)\) reference has been supplied.  No unbalanced plateau verdict
+or finite-duration extension is retained.
 
 ⟨1⟩3.⟨2⟩8. **PROVE (why the Shenker–Stanford shock decays).** The pure
 horizon translation is
@@ -537,9 +560,9 @@ D_{\rm shock}=x+x^{-1}+\alpha .
 Because \(a_{\rm shock}=1\), (3.7) gives
 \[
 \Delta u_{\rm rel}^{\rm NL}(T)
-=-{\alpha\over\kappa_f}e^{-\kappa_fT}
-+O(e^{-2\kappa_fT}),\qquad
-\delta G_{LR}=O(e^{-(2\Delta+1)\kappa_fT}).
+=-{\alpha\over\kappa}e^{-\kappa\bar T}
++O(e^{-2\kappa\bar T}),\qquad
+\delta G_{LR}=O(e^{-(2\Delta+1)\kappa\bar T}).
 \tag{3.15}
 \]
 
@@ -559,7 +582,8 @@ double-scaling limit sets to one.
 ⟨1⟩4.⟨2⟩1. **ASSUME (linear one-soft expansion).** Around a thermal
 trajectory of exponent \(\kappa\), write
 \[
-t_R(u)=e^{\tau(u)},\qquad \tau(u)=\kappa u+\varepsilon(u),
+t_R(u)=e^{\tau(u)},\qquad
+\tau(u)=\kappa(u-u_*)+\varepsilon(u),
 \qquad \varepsilon=O(C^{-1}),
 \tag{4.1}
 \]
@@ -571,7 +595,7 @@ Schwarzian action and removes its three \(SL(2)\) modes
 ⟨1⟩4.⟨2⟩2. **PROVE (retarded soft equation and normalization).** The
 Schwarzian and (0.7) linearize to
 \[
-\operatorname{Sch}(e^{\kappa u+\varepsilon},u)
+\operatorname{Sch}(e^{\kappa(u-u_*)+\varepsilon},u)
 =-{\kappa^2\over2}+{\varepsilon'''\over\kappa}
  -\kappa\varepsilon'+O(\varepsilon^2),
 \tag{4.2}
@@ -601,56 +625,61 @@ Lorentzian homogeneous solutions \(e^u,e^{-u},u,1\)
 (`GravityReparametrizationsRevised.tex:849-879`), so no oscillatory-pole
 assumption has been imported.
 
-⟨1⟩4.⟨2⟩3. **PROVE (final-energy subtraction before \(\omega\to0\)).**
-At linear order represent the comparison with the final stationary saddle by
+⟨1⟩4.⟨2⟩3. **PROVE (the \(u_*\)-synchronized DC subtraction before
+\(\omega\to0\)).** At linear order represent comparison with the right
+stationary clock synchronized at the unique event \(u_*\) by
 \[
-P_{\rm sub}(u)=P(u)-\Delta E\,\delta(u-u_f),\qquad
+P_{\rm sub}(u)=P(u)-\Delta E\,\delta(u-u_*),\qquad
 \int P_{\rm sub}=0.
 \tag{4.6}
 \]
-This is a subtraction, not an additional physical kick.  Its first moment
+This is a comparator subtraction, not an additional physical kick.  It is
+used operationally below only for the balanced sector, where \(\Delta E=0\).
+Its first moment
 defines
 \[
-{\cal A}:={1\over C\kappa}\int_{u_i}^{u_f}(u_f-u)P(u)\,du,
+{\cal A}_*:=-{1\over C\kappa}\int_{u_i}^{u_f}(u-u_*)P(u)\,du,
 \qquad
 \widetilde P_{\rm sub}(\omega)
-=-i\omega C\kappa{\cal A}+O(\omega^2).
+=-i\omega C\kappa{\cal A}_*+O(\omega^2).
 \tag{4.7}
 \]
 Equations (4.6)–(4.7) are the named Taylor expansion of (4.4), using
-\(\Delta E=\int P\) from (1.1).  For a balanced pulse, the answer is
-independent of the arbitrary subtraction time because \(\Delta E=0\).
+\(\Delta E=\int P\) from (1.1).  For a balanced pulse the answer is independent
+of the coordinate value assigned to the same synchronization event because
+\(\int P=0\); no second synchronization convention is introduced.
 
 ⟨1⟩4.⟨2⟩4. **PROVE (final-value identity).** Equations (4.5)–(4.7) give
 \[
 \widetilde\varepsilon_{\rm sub}(\omega)
-={i{\cal A}\over\omega+i0}+O(\omega^0),\qquad
-\varepsilon_{\rm sub}(u\to+\infty)={\cal A}.
+={i{\cal A}_*\over\omega+i0}+O(\omega^0),\qquad
+\varepsilon_{\rm sub}(u\to+\infty)={\cal A}_*.
 \tag{4.8}
 \]
 Consequently the literal diagonal clock readout of (3.4) has
 \[
 \boxed{\;
 \Delta u_{\rm rel}^{(1)}
-=-{ {\cal A}\over2\kappa}
-=-{1\over2C\kappa^2}
-  \int_{u_i}^{u_f}(u_f-u)P(u)\,du .
+=-{ {\cal A}_*\over2\kappa}
+={1\over2C\kappa^2}
+  \int_{u_i}^{u_f}(u-u_*)P(u)\,du .
 \;}
 \tag{4.9}
 \]
 For the balanced two-kick profile
 \(P=\Delta E_1[\delta(u)-\delta(u-L)]\), (4.9) gives
 \(-\Delta E_1L/(2C\kappa^2)\), equal to the expansion (3.10) because
-\(\delta\kappa=\Delta E_1/(C\kappa)+O(C^{-2})\).  For an unbalanced pulse,
+\(\delta\kappa=\Delta E_1/(C\kappa)+O(C^{-2})\).  Thus
 \[
-\Delta u_{\rm rel}^{(1)}
-=-{1\over2C\kappa^2}
-  \int_{u_i}^{u_f}(u_f-u)P(u)\,du
+\Delta u_{\rm rel}^{(1)}\ne0
+\quad\Longleftrightarrow\quad
+\int_{u_i}^{u_f}(u-u_*)P(u)\,du\ne0
+\qquad\text{at leading }O(C^{-1})
 \tag{4.10}
 \]
-after the same final-energy subtraction; an endpoint delta has zero linear
-residue, consistently with the quadratic onset (3.13).  These are elementary
-moment evaluations of displayed equation (4.9).
+in the retained balanced sector.  A zero moment kills only the leading
+coefficient; it leaves the \(O(C^{-2})\) nonlinear answer undetermined.
+These are elementary moment evaluations and order counting from (4.9).
 
 ⟨1⟩4.⟨2⟩5. **PROVE (the invariant hard vertex).** Directly varying the
 two-sided kernel (0.4) with the right perturbation (4.1) gives
@@ -659,7 +688,7 @@ two-sided kernel (0.4) with the right perturbation (4.1) gives
 =\Delta\,{\cal B}_{LR}[\varepsilon](T),\qquad
 {\cal B}_{LR}[\varepsilon](T)
 ={\varepsilon'(T)\over\kappa}
- -\tanh(\kappa T)\varepsilon(T).
+ -\tanh(\kappa(T-u_*))\varepsilon(T).
 \tag{4.11}
 \]
 This is the Lorentzian two-sided continuation of the printed invariant
@@ -685,16 +714,17 @@ factor \(-i\omega\) extracts the step residue.  Since (4.11) tends to
 \(-\varepsilon\), (4.8) yields
 \[
 \boxed{\;
-\lim_{T\to\infty}\Delta u_{\rm rel}^{(1)}(T)
+\lim_{T-u_*\to\infty}\Delta u_{\rm rel}^{(1)}(T)
 =\lim_{\omega\to0}[-i\omega\,
  \widetilde{\delta u}_{\rm rel}^{(1)}(\omega)]
 =\lim_{\omega\to0}{\cal S}_{\rm Sch}(\omega;P_{\rm sub})
-=-{{\cal A}\over2\kappa}.
+=-{{\cal A}_*\over2\kappa}.
 \;}
 \tag{4.13}
 \]
 This is the elementary final-value theorem applied to (4.8), after the
-Fourier transform and final-energy subtraction have already been performed.
+Fourier transform and \(u_*\)-synchronized comparator subtraction have already
+been performed.
 It is independent of the detector dimension \(\Delta\), which cancels between
 the vertex and the detector Jacobian.
 
@@ -702,17 +732,20 @@ the vertex and the detector Jacobian.
 **holds at leading one-soft/tree response**, \(O(C^{-1})\), for every compact
 source with finite first moment.  It is not an exact finite-amplitude identity
 if \({\cal S}_{\rm Sch}\) is defined using only the linear vertex (4.11): the
-exact classical plateau is \(-\log a/\kappa_f\) by (3.7), and differs by
-\(O(C^{-2})\) for a fixed source.  The unbalanced endpoint kick makes the
-distinction explicit: both sides of (4.13) vanish at \(O(C^{-1})\), while
-(3.13) is generally nonzero at \(O(C^{-2})\).  This is order counting between
-displayed equations (3.13), (4.5), and (4.13).
+exact balanced classical plateau is \(-\log a/\kappa\) by (3.7), and differs by
+\(O(C^{-2})\) for a fixed source.  The formal one-kick algebra (3.13) makes the
+order distinction explicit, although its unbalanced detector interpretation
+has been retracted: its linear coefficient vanishes while its matrix
+coefficient begins at \(O(C^{-2})\).  In the retained balanced sector the
+single-soft calculation likewise leaves all \(O(C^{-2})\) higher-moment terms
+undetermined.  This is order counting between (3.13), (4.5), and (4.13), not
+an unbalanced operational claim.
 
 ⟨1⟩4.⟨2⟩8. **PROVE (pulse-width and coupling errors).** Let
 \(w=u_f-u_i\), and hold \(P\) and \(w\) fixed while \(C\to\infty\).  Then
 \[
 \Delta u_{\rm rel}
-=-{1\over2C\kappa^2}\int(u_f-u)P(u)\,du
+={1\over2C\kappa^2}\int(u-u_*)P(u)\,du
 +O(C^{-2}).
 \tag{4.14}
 \]
@@ -744,76 +777,114 @@ tree Schwarzian computation.
 
 ## ⟨1⟩5. Verdict
 
-⟨1⟩5.⟨2⟩1. **VERDICT — plateau, protocol (a): YES, generically, but not
-source-universally.** The explicit balanced family (2.11) has the nonzero
-plateau (3.9), already at \(O(C^{-1})\) when its energy dwell-time moment is
-nonzero.  A tuned balanced source with \(a=1\), equivalently zero moment in
-(4.9) at leading order, has NO plateau.  This is the exact if-and-only-if
-criterion \(a\ne1\) in displayed equation (3.7).
+⟨1⟩5.⟨2⟩1. **VERDICT — plateau, protocol (a): YES as a calibrated
+large-\(C\)-first susceptibility, generically but not source-universally.**
+The explicit balanced family (2.11) has the nonzero tree-level plateau (3.9).
+The exact classical criterion is if and only if \(a\ne1\), by (3.7).  At
+leading \(O(C^{-1})\) only, a nonzero dwell-time moment is if and only if the
+leading plateau coefficient is nonzero, by (4.9)–(4.10).  A zero moment leaves
+the \(O(C^{-2})\) nonlinear answer undetermined and is not equivalent to
+\(a=1\).
 
-⟨1⟩5.⟨2⟩2. **VERDICT — plateau, protocol (b): YES, generically after the
-specified final-energy synchronization, but order-sensitive.** The exact
-unbalanced kick (2.10) has (3.12), which is nonzero but starts at
-\(O(C^{-2})\); a finite-duration unbalanced event has the \(O(C^{-1})\)
-plateau (4.10) when its dwell-time moment is nonzero.  A source with \(a=1\)
-has NO plateau.  This is direct application of (3.7), (3.12), and (4.10).
+⟨1⟩5.⟨2⟩2. **VERDICT — plateau, protocol (b): RETRACTED.** A
+right-only unbalanced source changes the measured pair to
+\((E_L,E_R)=(C\kappa_i^2/2,C\kappa_f^2/2)\), whereas the former comparator
+changed both clocks to \(\kappa_f\) and therefore changed \(E_L\).  Because
+this shard constructs no implementable reference with the same unbalanced
+energy pair, (3.11)–(3.13) license transfer-matrix algebra only and no
+protocol-(b) detector or memory conclusion.  Every retained verdict is
+restricted to the balanced sector.
 
 ⟨1⟩5.⟨2⟩3. **VERDICT — the butterfly shift itself: NO plateau.** The
 Shenker–Stanford translation has \(a=1\), so its detector delay decays as
-\(e^{-\kappa_fT}\) by (3.15), in agreement with the printed geodesic factor
+\(e^{-\kappa(T-u_*)}\) by (3.15), in agreement with the printed geodesic factor
 \(\alpha e^{-R(t_L+t_R)/(2\ell^2)}\)
 (`refs/arxiv-1306.0622/shock.tex:223-234`).  Its surviving statement is
 “a transient, boost-enhanced relational time delay,” not stationary-subtracted
 memory.
 
-⟨1⟩5.⟨2⟩4. **VERDICT — (T.3): CONDITIONAL.** It **HOLDS** exactly as
-(4.13) at leading \(O(C^{-1})\) one-soft/tree response, for compact sources
-with finite first moment and with final energy subtracted before
-\(\omega\to0\).  It **FAILS as an exact finite-amplitude equality** if the
+⟨1⟩5.⟨2⟩4. **VERDICT — (T.3), balanced sector: CONDITIONAL.** It
+**HOLDS** exactly as (4.13) at leading \(O(C^{-1})\) one-soft/tree response,
+for compact balanced sources with finite first moment and with the
+\(u_*\)-synchronized DC subtraction made before \(\omega\to0\).  It **FAILS
+as an exact finite-amplitude equality** if the
 right side retains only the single invariant vertex and retarded propagator:
-the missing terms begin at \(O(C^{-2})\), as the endpoint-kick example
-(3.13) proves.  This is the order comparison in ⟨1⟩4.⟨2⟩7.
+the uncomputed nonlinear/multi-soft terms begin at \(O(C^{-2})\) for fixed
+compact source.  This is the order comparison in ⟨1⟩4.⟨2⟩7.
 
-⟨1⟩5.⟨2⟩5. **VERDICT — operational qualification [physical argument].**
-For every \(\Delta>0\), the *absolute* stationary-subtracted difference
-\(\delta G_{LR}\) tends to zero, while the normalized correlator ratio and
-the calibrated relative clock readout tend to constants when \(a\ne1\), by
-(3.7).  Thus the YES above uses the brief's explicit relative-clock criterion;
-a stronger definition demanding a nonzero absolute late correlator difference
-would return NO for both protocols.
+⟨1⟩5.⟨2⟩5. **VERDICT — operational window and cost [physical
+argument].** Every late statement uses the iterated convention
+\[
+C\to\infty\ \text{first},\qquad
+1\ll\kappa(T-u_*)\ll\kappa C,
+\quad\text{equivalently }\kappa(T-u_*)\to\infty
+\text{ with }(T-u_*)/C\to0.
+\tag{5.1}
+\]
+At fixed compact \(P\), fixed width \(w\), and fixed detector time, the
+supported classical Schwarzian response is (4.14): an \(O(C^{-1})\) first
+moment plus an uncomputed \(O(C^{-2})\) nonlinear remainder.  Finite-\(N\)
+and quantum-loop corrections are not bounded here.  The tree-level approach
+to the calibrated ratio is \(O(e^{-\kappa(T-u_*)})\); no bound uniform in
+\(T\), finite-\(C\)
+maximum detector time, or fixed-\(N\) \(T=\infty\) limit is established.
+For bounded single-shot Layer-1 observables, resolving
+\(\Delta u_{\rm rel}\) to fixed absolute error \(\eta\) by independent repeated
+preparations costs
+\[
+M_{\rm shots}=O\!\left({e^{4\Delta\kappa(T-u_*)}\over\eta^2}\right)
+\tag{5.2}
+\]
+up to protocol-dependent variance and finite-difference calibration constants,
+because both \(\delta G_{LR}\) and \(\partial_TG_{LR}^{\rm eq}\) decay as
+\(e^{-2\Delta\kappa(T-u_*)}\).  Thus \(\Delta u_{\rm rel}\) is an allowed
+finite-time detector functional but practical permanence is not established.
+Separately, the absolute allowed difference \(\delta G_{LR}\) has no plateau
+and decays for every \(\Delta>0\), by (3.7).
 
-⟨1⟩5.⟨2⟩6. **One-sentence surviving statement suitable for a future row
-(not registered here).** At leading large-\(C\) Schwarzian response, a compact
-right-boundary power pulse leaves the final-energy-subtracted two-sided
-relative-clock shift
-\(\Delta u_{\rm rel}=-(2C\kappa^2)^{-1}
-\int_{u_i}^{u_f}(u_f-u)P(u)\,du+O(C^{-2})\), equal to the DC residue of the
-same invariant bilocal soft attachment, whereas the pure butterfly
-translation has zero plateau and decays as \(e^{-\kappa T}\).  This is a
-one-sentence restatement of displayed equations (3.15), (4.13), and (4.14).
+⟨1⟩5.⟨2⟩6. **Promotable surviving statement for a future row (not
+registered here).** At leading large-\(C\)-first Schwarzian response, a compact
+balanced right-boundary power pulse leaves the calibrated susceptibility
+\[
+\Delta u_{\rm rel}
+={1\over2C\kappa^2}\int_{u_i}^{u_f}(u-u_*)P(u)\,du+O(C^{-2}),
+\tag{5.3}
+\]
+equal to the DC residue of the same invariant bilocal soft attachment; the DC
+coefficient is exact in pulse width at \(O(C^{-1})\), while replacing a pulse
+by a delta at small nonzero frequency has error \(O((\omega w)^2/C)\) for a
+centered symmetric profile and \(O(\omega w/C)\) if only its area is matched.
+The absolute allowed correlator difference has no late plateau and is
+\(O(e^{-2\Delta\kappa(T-u_*)})\).  Independently, the pure butterfly translation
+has zero plateau and its calibrated delay decays as \(e^{-\kappa(T-u_*)}\).
+These are the separately scoped conclusions of (3.7), (3.15), and
+(4.13)–(4.14).
 
 ## ⟨1⟩6. Numeric handshake
 
-⟨1⟩6.⟨2⟩1. **ASSUME (shared numerical conventions).** In this table
-\({\cal N}_\Delta=1\), \(\Delta=1\), and every listed number uses the exact
-nonlinear readout (3.6) and exact \(\delta G_{LR}\) in (3.2).  Impulses are
-compactly supported distributions; an event-driven ODE code should impose
+⟨1⟩6.⟨2⟩1. **ASSUME (shared balanced numerical conventions).** Only
+the balanced A rows remain claim-bearing detector handshakes.  In this table
+\(u_*=0\), \({\cal N}_\Delta=1\), \(\Delta=1\), and every listed number uses
+the exact nonlinear readout (3.6) and exact \(\delta G_{LR}\) in (3.2).
+Impulses are compactly supported distributions; an event-driven ODE code should impose
 the \(t,t',t''\) matching (2.8).  Equivalently it may integrate
 \(T_{tz}=P/t'^2\) with the delta coefficients below; this is displayed
 equation (2.9).
 
-| id | \(C,\beta\) | protocol and explicit \(T_{tz}(u)\) | \([u_i,u_f]\) | exact \(g_{\rm rel}=(a,b;c,d)\) | predicted plateau \(-\log a/\kappa_f\) |
+| id | \(C,\beta\) | protocol and explicit \(T_{tz}(u)\) | \([u_i,u_f]\) | exact \(g_{\rm rel}=(a,b;c,d)\) | predicted plateau \(-\log a/\kappa\) |
 |---|---|---|---|---|---|
 | A1 | \(100,\,2\pi\) | balanced \(1\to1.1\to1\): \(10.5000000\,\delta(u)-1.64891095412\,\delta(u-1)\) | \([0,1]\) | \((1.05286503580,-0.0909883081018;\ 0.0334727279376,0.946896647924)\) | \(-0.0515150538087\) |
 | A2 | \(50,\,\pi\) | balanced \(2\to2.3\to2\): \(8.06250000\,\delta(u)-1.36885338854\,\delta(u-0.5)\) | \([0,0.5]\) | \((1.08148701912,-0.140375094800;\ 0.0516411114295,0.917949875063)\) | \(-0.0391684818398\) |
-| B1 | \(100,\,2\pi\) | unbalanced \(1\to1.1\): \(10.5000000\,\delta(u)\) | \([0,0]\) | \((1.00113571871,0.0476731294623;\ 0.0476731294623,1.00113571871)\) | \(-0.00103188569752\) |
-| B2 | \(80,\,4\pi\) | unbalanced \(0.5\to0.6\): \(17.6000000\,\delta(u)\) | \([0,0]\) | \((1.00415802209,0.0912870929175;\ 0.0912870929175,1.00415802209)\) | \(-0.00691566901225\) |
 
 Each coefficient is \(\Delta E/t'(s)^2\) from (2.9).  In A1 and A2 the
 pre-second-kick derivatives are respectively \(2.52345780917\) and
 \(4.85385045516\); hence the unequal positive/negative \(T_{tz}\) coefficients
 still give exactly opposite *power* kicks.  This is direct numerical
 evaluation of (2.7)–(2.11), not a fit.
+
+The formerly listed unbalanced B1/B2 matrices remain reproducible from
+(2.10), but their plateau and finite-time correlator targets used the
+wrong-charge-sector comparator and are **RETRACTED**, not handshake targets.
 
 ⟨1⟩6.⟨2⟩2. **PROVE (finite-time targets).** The values to compare are:
 
@@ -825,16 +896,9 @@ evaluation of (2.7)–(2.11), not a fit.
 | A2 | 1 | \(-0.0334367183536\) | \(-8.56539591783\times10^{-3}\) |
 | A2 | 2 | \(-0.0384152771109\) | \(-1.90891673143\times10^{-4}\) |
 | A2 | 4 | \(-0.0391547192603\) | \(-6.52569291811\times10^{-8}\) |
-| B1 | 1 | \(-0.0329831010648\) | \(-6.17931010335\times10^{-3}\) |
-| B1 | 3 | \(-0.00422674604349\) | \(-1.51531004613\times10^{-5}\) |
-| B1 | 6 | \(-0.00114966288269\) | \(-5.65638658713\times10^{-9}\) |
-| B2 | 2 | \(-0.105063956171\) | \(-2.76776253804\times10^{-3}\) |
-| B2 | 6 | \(-0.0151914003817\) | \(-4.84087396276\times10^{-6}\) |
-| B2 | 12 | \(-0.00714189958382\) | \(-1.71236483051\times10^{-9}\) |
 
 Every entry is direct high-precision evaluation of displayed equations
-(3.2) and (3.6).  The slow approach of B1/B2 to a small plateau while
-\(\delta G_{LR}\) becomes tiny is itself a useful conditioning check.
+(3.2) and (3.6) in the balanced, same-energy sector.
 
 ## ⟨1⟩7. Honesty ledger
 
@@ -844,8 +908,8 @@ Every entry is direct high-precision evaluation of displayed equations
    is printed at
    `refs/arxiv-1606.01857/GravityReparametrizationsRevised.tex:611-623`.
 2. The three \(SL(2)\) charges, their two-sided cancellation, their Casimir
-   Hamiltonian, and the matter split are printed at
-   `GravityReparametrizationsRevised.tex:889-929,955-972`.
+   Hamiltonian, the Lorentzian ADM identity, and the matter split are printed
+   at `GravityReparametrizationsRevised.tex:586-592,889-929,955-972`.
 3. Reparametrization dressing of arbitrary matter correlators and the
    invariant linear bilocal vertex are printed at
    `GravityReparametrizationsRevised.tex:645-675,729-753`.
@@ -862,9 +926,10 @@ These five items are quotations/pointers to local TeX, not novelty claims.
 1. Equations (2.2)–(2.6) give the closed charge-orbit reconstruction and prove
    that the integrated charges alone miss the stabilizer phase measured by
    the relative clock.
-2. Equations (3.2), (3.7), and (3.14)–(3.15) give the exact
-   final-energy-subtracted two-sided response and isolate \(a\ne1\) dilation
-   memory from the \(a=1\) transient butterfly translation.
+2. Equations (3.2), (3.7), and (3.14)–(3.15) give the exact balanced,
+   \(u_*\)-synchronized two-sided response and isolate the \(a\ne1\)
+   calibrated susceptibility from the \(a=1\) transient butterfly
+   translation.
 3. Equations (4.9) and (4.13) give the normalized leading DC identity with no
    fitted coefficient and expose its first-moment dependence.
 
@@ -873,15 +938,18 @@ priority beyond the three-source window is asserted.
 
 ⟨1⟩7.⟨2⟩3. **Open or conditional.**
 
-1. Whether a ratio of exponentially small correlators is accepted as a
-   practically robust permanent record is an operational choice; the exact
-   mathematical distinction is recorded in ⟨1⟩5.⟨2⟩5.
+1. The ratio of exponentially small correlators is an allowed finite-time
+   detector functional, but no practically robust permanent record is
+   established; its limit order and sample cost are recorded in
+   ⟨1⟩5.⟨2⟩5.
 2. Equality of the *finite-amplitude* plateau with a soft object requires the
    nonlinear/multi-soft completion omitted from the single vertex (4.11);
    only (4.13) is established.
 3. Finite-\(N\), finite-\(p\), finite-\(\beta{\cal J}\), disorder-sample, and
-   loop corrections are not computed; (4.15) is only the controlled embedding
-   point supplied by `refs/arxiv-2412.14799/Main.tex:291-311`.
+   loop corrections are not computed; in particular the \(O(C^{-2})\)
+   remainder is not uniform in detector time.  Equation (4.15) is only the
+   controlled embedding point supplied by
+   `refs/arxiv-2412.14799/Main.tex:291-311`.
 4. The charge algebra and possible extension of the full asymptotic
    \(\mathrm{Diff}\), beyond the displayed three \(SL(2)\) charges, are out of
    scope.  The local source itself says that it has discussed neither that
