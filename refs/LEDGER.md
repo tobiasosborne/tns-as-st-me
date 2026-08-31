@@ -230,3 +230,17 @@ NOVEL; these are prior computations of the SHIFT by a different route
 | 1804.00491 | Eternal traversable wormhole | (single tex) | Maldacena–Qi: the two-sided coupled setup |
 | 1804.09834 | Shockwave S-matrix from Schwarzian Quantum Mechanics | (single tex) | LMTV: technical home for shock amplitudes |
 | 1707.02325 | Pure states in the SYK model and nearly-AdS2 gravity | QuenchRevisedSubmitted.tex | Kourkoulou–Maldacena: pulse-protocol ancestor |
+
+## Batch 12 — companion-paper citation set (fetched 2026-08-31, 21/21 OK)
+
+The deep novelty sweep's fetch list (docs/syk-jt-novelty-sweep-deep.md), less
+ids already local. 19/21 titles verified by orchestrator at fetch; 1408.6560
+and 2406.07106 have nonstandard TeX layouts — title verification delegated to
+the summary pass and recorded in docs/companion-cite-notes.md. Highlights:
+2305.14411 "From Shockwaves to the Gravitational Memory Effect" (C1 framing
+precedent), 1809.07266 "Black hole memory effect", 1711.08467 Kitaev–Suh soft
+mode, 2108.04841 Harlow–Wu, 2005.08999 Godet–Marteau, 2603.18154 Maxfield,
+1901.00021/2109.03832 persistent observables (C4 prior-art home), 2411.13633
+soft gravitons in 3d, 2512.15796 sound infrared triangle (C5 landscape).
+2025-26 ids (2603.18509, 2601.23019, 2603.18154, 2409.15415) fetched OK —
+sweep's authorship caveat resolves at the summary pass.
