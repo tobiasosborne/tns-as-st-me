@@ -246,16 +246,28 @@ reaches `kappa*T_max` about `10`, but its shot estimates are already
 `10^18--10^21`.  This is why the table licenses a large-C-first
 susceptibility, not a practical finite-C memory record.
 
-**Decisive numerical verdict.**  Every extracted relative-delay detector
-approaches a nonzero large-C-first susceptibility, and its extrapolated DC
-residue agrees with the independently normalized soft vertex to 0.24% or
-better.  Nevertheless, the raw
-final-energy-subtracted observable `delta G_LR` is exponentially decaying at
-all eight points, with exponential RSS many orders below constant RSS.  Thus
-this computation finds a formal ratio plateau only in the declared iterated
-limit and no nonzero late plateau in the specified two-sided correlator.  The
-finite-C cost table shows that practical permanence is not established.  Under
-the strict operational T.2 criterion this remains a negative result for B.
+**Decisive numerical verdict** (scope restricted per critic r2, Objection
+9 — the operational conclusions below are supported ONLY by the two
+energy-balanced derivative-Gaussian rows; the six unbalanced rows are
+formal trajectory/DC diagnostics of the Schwarzian kernels, because no
+implementable two-dot reference protocol with the same measured unequal
+pair of one-sided energies has been exhibited, and their comparator is a
+formal EFT kernel rather than a demonstrated expectation difference
+between two preparable states).  On the two energy-balanced rows, the
+extracted relative-delay detector approaches a nonzero large-C-first
+susceptibility, and its extrapolated DC residue agrees with the
+independently normalized soft vertex to 0.011% or better (extrapolated
+vertex ratios 1.000110 and 0.999988 in the results table).  Nevertheless,
+the raw final-energy-subtracted observable `delta G_LR` on those balanced
+rows is exponentially decaying, with exponential RSS many orders below
+constant RSS.  Thus this computation finds a formal ratio plateau only in
+the declared iterated limit and no nonzero late plateau in the specified
+two-sided correlator.  The finite-C cost statement, likewise restricted
+to the balanced rows, shows that practical permanence is not established.
+Under the strict operational T.2 criterion this remains a negative result
+for B.  The six unbalanced rows reproduce the same formal series and
+non-circular DC transforms numerically, but license no operational
+detector conclusion.
 
 ## Caveats
 
