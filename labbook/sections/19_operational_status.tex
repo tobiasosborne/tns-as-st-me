@@ -1730,6 +1730,51 @@ literature at large.
 \texttt{refs/arxiv-1606.01857}, \texttt{refs/arxiv-2412.14799},
 \texttt{refs/arxiv-1306.0622}}{---}{\texttt{theory/verdicts/operational-wave-adjudication-r1.md} (A4)}
 
+\subsubsection*{First execution of the decisive computation (unadjudicated)}
+
+The computation \eqref{eq:op-T1}--\eqref{eq:op-T3} has now been executed by
+two independent lanes whose outputs are awaiting adversarial adjudication;
+nothing in this paragraph enters the claim ledger. Before the lanes ran, the
+allowed observables were fixed as an algebra, at the principal
+investigator's direction: at finite size the even part of the canonical
+anticommutation algebra of the two clusters of Majorana fermions, with
+detectors the positive operator-valued measures whose effects lie in that
+even part; the quantities the computation uses are the uniformly normalized
+two-sided bilocal averages together with the two boundary energies; and the
+collective reparametrization field, any relative frame element, and the
+non-energy boundary charges are scaffolding unless reduced to the former
+(\texttt{theory/lanes/syk-jt/observables-spec.md}). An exact tree-level
+lane solved the sourced boundary equation in closed form by gluing thermal
+maps across the pulse; a separate numerical lane, written test-first with
+eighty-one machine checks including deliberate failure modes, integrated
+the same equation and measured the same detector at prescribed parameter
+points. Both lanes, independently, found the same structure: the
+final-energy-subtracted two-sided correlator difference itself decays
+exponentially at every parameter point examined, while the calibrated
+relative-clock readout extracted from it approaches a nonzero constant
+precisely when the source's energy dwell-time moment is nonzero, and that
+constant agrees with the independently normalized zero-frequency soft
+response at leading order in the inverse stiffness, at the percent level
+numerically. The pure shockwave translation of the butterfly-effect source
+sits exactly at the tuned point where the criterion vanishes, and its
+detector response decays at the printed geodesic rate: on this evidence the
+celebrated frame shift is a transient relational time delay rather than a
+memory effect, while generic compact pulses do leave a record --- but only
+in the ratio observable, whose measurement cost grows exponentially with
+the detector time because numerator and denominator decay together.
+Whether the campaign's notion of memory admits such calibrated-ratio
+detectors is an open definitional decision for the principal investigator,
+not a computational question. A genuine sign ambiguity in the primary
+source's displayed equations, flagged by an editorial comment in its \TeX{}
+source, is under adjudication together with the cross-comparison of the two
+lanes' numbers.
+
+\provenance{---}{\texttt{theory/lanes/syk-jt/t1-analytic.md};
+\texttt{theory/lanes/syk-jt/t2-numeric.md};
+\texttt{numerics/src/schwarzian\_memory.jl};
+\texttt{numerics/results/schwarzian\_memory.json}}{---}{adjudication in
+flight: \texttt{theory/lanes/syk-jt/BRIEF-critic-r1.md}}
+
 \subsection{What the wave settles, and what it leaves open}
 
 Three independent lines of enquiry converged on the same cut, which is the
