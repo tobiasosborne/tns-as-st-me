@@ -110,13 +110,42 @@ end
                              fit_g.rss_constant, fit_g.rss_exponential))
 
         dc = dc_identity(run, obs.delta_u[end])
+        # Circular-DC regression: the late detector is only a comparison
+        # target.  A decoy value must not enter the transform or change its
+        # absolute extrapolated residue.
+        decoy_late = 2 * obs.delta_u[end]
+        dc_decoy = dc_identity(run, decoy_late)
+        residue = dc.residue_ratio[end] * obs.delta_u[end]
+        decoy_residue = dc_decoy.residue_ratio[end] * decoy_late
+        @test isapprox(decoy_residue, residue; rtol = 1.0e-2)
+        @test dc_decoy.extrapolated_residue == dc.extrapolated_residue
+        @test dc_decoy.fitted_mobius_tail == dc.fitted_mobius_tail
         @test length(dc.omega) >= 3
+        @test dc.horizon == [20.0, 40.0, 80.0]
         @test all(isfinite, dc.residue_ratio)
         @test all(isfinite, dc.soft_ratio)
         @test abs(dc.residue_ratio[end] - 1.0) < 5.0e-2
         @test abs(dc.soft_ratio[end] - 1.0) < 5.0e-2
+        @test abs(dc.extrapolated_late_ratio - 1.0) < 5.0e-3
+        @test dc.horizon_error < 1.0e-7 * abs(dc.extrapolated_residue)
         @test abs(dc.residue_ratio[end] - 1.0) <=
               abs(dc.residue_ratio[1] - 1.0)
+    end
+
+    @testset "operator dimension API and Delta=1 handshake" begin
+        M = [1.05286503580 -0.0909883081018;
+             0.0334727279376 0.946896647924]
+        ts = [2.0, 4.0, 8.0]
+        half = observable_series(Matrix{Float64}(I, 2, 2), M, 1.0, 1.0, ts)
+        one = observable_series(Matrix{Float64}(I, 2, 2), M, 1.0, 1.0, ts;
+                                Delta = 1.0)
+        @test one.pulse ≈ half.pulse .^ 2 rtol = 1.0e-12
+        @test one.equilibrium ≈ half.equilibrium .^ 2 rtol = 1.0e-12
+        @test one.delta_g ≈ [-1.43615624490e-3, -3.21934849346e-5,
+                                  -1.10134890247e-8] rtol = 2.0e-9
+        @test all(isfinite, one.delta_u)
+        @test_throws ArgumentError observable_series(Matrix{Float64}(I, 2, 2),
+                                                      M, 1.0, 1.0, ts; Delta = 0.0)
     end
 
     @testset "finiteness and fail-closed output" begin
@@ -143,6 +172,12 @@ end
         results = run_campaign(; h = 5.0e-4)
         @test length(results["parameter_points"]) == 8
         @test results["late_time_grid"] == [2.0, 5.0, 10.0, 20.0, 40.0]
+        @test results["operator_dimension"] == 0.5
+        @test haskey(results, "limit_convention")
+        @test all(p -> p["detector_window"]["maximum_usable_T"] > 0,
+                  results["parameter_points"])
+        @test all(p -> isfinite(p["detector_window"]["sample_cost_for_10pct_late_delta"]),
+                  results["parameter_points"])
         @test validate_results(results)
         CAMPAIGN[] = results
     end

@@ -31,6 +31,12 @@
     20.0,
     40.0
   ],
+  "limit_convention": {
+    "finite_C_cutoff": "kappa*T_max = sqrt(kappa*C)",
+    "order": "C -> infinity first; then kappa*T -> infinity with T/C -> 0",
+    "status": "conservative scaling convention, not a uniform finite-C error bound",
+    "window": "1 << kappa*T << kappa*C"
+  },
   "operator_dimension": 0.5,
   "parameter_points": [
     {
@@ -61,23 +67,62 @@
       ],
       "charge_jump_error": 2.175804092452438e-9,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          0.00012478041834523414,
+          0.00012478041330870126,
+          0.00012478040875729928
+        ],
+        "extrapolated_late_ratio": 0.9998156518660521,
+        "extrapolated_residue": 0.00012478040875729928,
+        "extrapolated_vertex_ratio": 0.9995865701524473,
+        "fitted_mobius_tail": 0.00012480341607387134,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.551401979911371e-12,
         "injected_charge_norm": 0.015829761883627447,
+        "late_detector": 0.0001248034160341555,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            9.947109482862493e-5,
+            0.00011799597814491554,
+            0.00012306913393740905,
+            0.00012436777160102332
+          ],
+          [
+            9.94711314037721e-5,
+            0.00011799597654484438,
+            0.00012306912456187236,
+            0.0001243677706778587
+          ],
+          [
+            9.947113329664736e-5,
+            0.00011799599022433239,
+            0.00012306912327288293,
+            0.00012436776823736983
+          ]
         ],
         "residue_ratio": [
-          0.7970225211707681,
-          0.945454811845653,
-          0.9861038039394657
+          0.7970225211577915,
+          0.9454548118461751,
+          0.9861038037548754,
+          0.9965093279444656
         ],
         "soft_ratio": [
-          0.7968399042207426,
-          0.9452381855025573,
-          0.9858778639386494
+          0.7968399042077691,
+          0.9452381855030793,
+          0.9858778637541014,
+          0.9962810037888649
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 0.00012483201803948705
@@ -116,6 +161,17 @@
         0.0001248034142260724,
         0.0001248034160341555
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.316159897251872,
+        "delta_u_at_max": 8.652260533990587e-5,
+        "kappa_T_at_max": 3.1629564935091685,
+        "kappa_effective": 1.0004293779831814,
+        "maximum_usable_T": 3.16159897251872,
+        "sample_cost_exponential_factor": 558.8678198795491,
+        "sample_cost_for_10pct_late_delta": 3.588030759750435e12,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.2480341607387135e-5
+      },
       "energy_change": 0.00859124697267788,
       "epsilon": 0.01,
       "final_energy": 5.008591246972678,
@@ -174,23 +230,62 @@
       ],
       "charge_jump_error": 2.1725343940515174e-8,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          0.0012303853785120996,
+          0.0012303853288764947,
+          0.0012303852839971078
+        ],
+        "extrapolated_late_ratio": 0.999818023958091,
+        "extrapolated_residue": 0.0012303852839971078,
+        "extrapolated_vertex_ratio": 0.9976681039712758,
+        "fitted_mobius_tail": 0.0012306092257398221,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.4879386882148986e-11,
         "injected_charge_norm": 0.1582817130187574,
+        "late_detector": 0.0012306092253930815,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            0.0009823954525375901,
+            0.0011639358440994746,
+            0.0012136252929705361,
+            0.0012263430590651154
+          ],
+          [
+            0.0009823958130673854,
+            0.0011639358284396,
+            0.0012136252005901468,
+            0.001226343049982032
+          ],
+          [
+            0.000982395831731696,
+            0.0011639359633252029,
+            0.0012136251878799333,
+            0.0012263430259170129
+          ]
         ],
         "residue_ratio": [
-          0.7983003958320223,
-          0.9458209310537627,
-          0.986198675451508
+          0.7983003958205326,
+          0.9458209310542249,
+          0.9861986752880686,
+          0.9965332622346416
         ],
         "soft_ratio": [
-          0.7965838014764941,
-          0.9437871216255523,
-          0.9840780413035756
+          0.7965838014650292,
+          0.9437871216260135,
+          0.9840780411404877,
+          0.9943904055080517
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 0.001233261120706864
@@ -229,6 +324,17 @@
         0.0012306092091346808,
         0.0012306092253930815
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.31555373661482733,
+        "delta_u_at_max": 0.0008549223459689063,
+        "kappa_T_at_max": 3.169032351597929,
+        "kappa_effective": 1.0042766045474303,
+        "maximum_usable_T": 3.1555373661482733,
+        "sample_cost_exponential_factor": 565.7004530391869,
+        "sample_cost_for_10pct_late_delta": 3.7354780887152985e10,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 0.00012306092257398222
+      },
       "energy_change": 0.08589787787770642,
       "epsilon": 0.1,
       "final_energy": 5.085897877877707,
@@ -287,23 +393,62 @@
       ],
       "charge_jump_error": 2.17579438667459e-9,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          1.2495725384207877e-5,
+          1.2495724879766122e-5,
+          1.249572442392246e-5
+        ],
+        "extrapolated_late_ratio": 0.9998154094185172,
+        "extrapolated_residue": 1.249572442392246e-5,
+        "extrapolated_vertex_ratio": 0.9997923622733356,
+        "fitted_mobius_tail": 1.249803144722128e-5,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.558436622419636e-13,
         "injected_charge_norm": 0.015829920967333908,
+        "late_detector": 1.249803144281388e-5,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            9.959587929828364e-6,
+            1.1815858022504154e-5,
+            1.2324236960912857e-5,
+            1.245437486125321e-5
+          ],
+          [
+            9.959591592700206e-6,
+            1.1815857862106382e-5,
+            1.2324236021888429e-5,
+            1.2454374768759459e-5
+          ],
+          [
+            9.959591782245817e-6,
+            1.1815859232040789e-5,
+            1.2324235892780677e-5,
+            1.2454374524308383e-5
+          ]
         ],
         "residue_ratio": [
-          0.7968928409243287,
-          0.9454176272558064,
-          0.9860941662475508
+          0.7968928409099487,
+          0.9454176272563848,
+          0.9860941660429946,
+          0.9965068964096263
         ],
         "soft_ratio": [
-          0.7968744714284938,
-          0.9453958340556743,
-          0.9860714353962374
+          0.796874471414114,
+          0.9453958340562526,
+          0.9860714351916859,
+          0.9964839255303023
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 1.2498319546580238e-5
@@ -342,6 +487,17 @@
         1.2498031260724396e-5,
         1.249803144281388e-5
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09999785231321616,
+        "delta_u_at_max": 1.2493926175692355e-5,
+        "kappa_T_at_max": 10.000214773291042,
+        "kappa_effective": 1.000042955119484,
+        "maximum_usable_T": 9.999785231321615,
+        "sample_cost_exponential_factor": 4.8537364122661334e8,
+        "sample_cost_for_10pct_late_delta": 3.107369950263588e20,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.249803144722128e-6
+      },
       "energy_change": 0.008591392925239028,
       "epsilon": 0.01,
       "final_energy": 50.00859139292524,
@@ -400,23 +556,62 @@
       ],
       "charge_jump_error": 2.1758040952279956e-8,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          0.00012478041834523414,
+          0.00012478041330870126,
+          0.00012478040875729928
+        ],
+        "extrapolated_late_ratio": 0.9998156518660521,
+        "extrapolated_residue": 0.00012478040875729928,
+        "extrapolated_vertex_ratio": 0.9995865701524469,
+        "fitted_mobius_tail": 0.00012480341607387134,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.551401979911371e-12,
         "injected_charge_norm": 0.15829761883627452,
+        "late_detector": 0.0001248034160341555,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            9.947109482862493e-5,
+            0.00011799597814491554,
+            0.00012306913393740905,
+            0.00012436777160102332
+          ],
+          [
+            9.94711314037721e-5,
+            0.00011799597654484438,
+            0.00012306912456187236,
+            0.0001243677706778587
+          ],
+          [
+            9.947113329664736e-5,
+            0.00011799599022433239,
+            0.00012306912327288293,
+            0.00012436776823736983
+          ]
         ],
         "residue_ratio": [
-          0.7970225211707681,
-          0.945454811845653,
-          0.9861038039394657
+          0.7970225211577915,
+          0.9454548118461751,
+          0.9861038037548754,
+          0.9965093279444656
         ],
         "soft_ratio": [
-          0.7968399042207422,
-          0.945238185502557,
-          0.985877863938649
+          0.7968399042077687,
+          0.9452381855030788,
+          0.9858778637541009,
+          0.9962810037888644
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 0.0001248320180394871
@@ -455,6 +650,17 @@
         0.0001248034142260724,
         0.0001248034160341555
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09997853801207249,
+        "delta_u_at_max": 0.00012476252434974225,
+        "kappa_T_at_max": 10.002146659508554,
+        "kappa_effective": 1.0004293779831814,
+        "maximum_usable_T": 9.997853801207249,
+        "sample_cost_exponential_factor": 4.872526422007651e8,
+        "sample_cost_for_10pct_late_delta": 3.1282485872291205e18,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.2480341607387135e-5
+      },
       "energy_change": 0.0859124697267788,
       "epsilon": 0.1,
       "final_energy": 50.08591246972678,
@@ -513,23 +719,62 @@
       ],
       "charge_jump_error": 2.1181615489362926e-12,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          0.0001321001770003656,
+          0.0001321001716645141,
+          0.0001321001668460015
+        ],
+        "extrapolated_late_ratio": 0.9997950508875778,
+        "extrapolated_residue": 0.0001321001668460015,
+        "extrapolated_vertex_ratio": 0.9997225340527978,
+        "fitted_mobius_tail": 0.00013212724626019488,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.8185126136530976e-12,
         "injected_charge_norm": 0.018780987630090604,
+        "late_detector": 0.00013212724620783857,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            0.00010268971467243221,
+            0.00012420977416342945,
+            0.00013010971573725361,
+            0.00013162042223846554
+          ],
+          [
+            0.00010268975341022038,
+            0.00012420977245277708,
+            0.00013010970580217067,
+            0.0001316204212583374
+          ],
+          [
+            0.00010268975541413927,
+            0.00012420978693510144,
+            0.00013010970443747447,
+            0.00013162041867467174
+          ]
         ],
         "residue_ratio": [
-          0.7772034789459047,
-          0.9400770128791703,
-          0.9847303126501192
+          0.7772034789297464,
+          0.9400770128798202,
+          0.9847303124202674,
+          0.9961640952361213
         ],
         "soft_ratio": [
-          0.7771471070562628,
-          0.9400088274952129,
-          0.984658888486415
+          0.7771471070401056,
+          0.9400088274958628,
+          0.9846588882565798,
+          0.9960918417607275
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 0.00013213683031678563
@@ -568,6 +813,17 @@
         0.00013212724408557554,
         0.00013212724620783857
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.3161457510844886,
+        "delta_u_at_max": 8.671394033061067e-5,
+        "kappa_T_at_max": 3.1630980222560523,
+        "kappa_effective": 1.000518909840015,
+        "maximum_usable_T": 3.161457510844886,
+        "sample_cost_exponential_factor": 559.0260339947806,
+        "sample_cost_for_10pct_late_delta": 3.2021912476825093e12,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.3212724626019488e-5
+      },
       "energy_change": 0.01038358214874191,
       "epsilon": 0.05,
       "final_energy": 5.010383582148742,
@@ -626,23 +882,62 @@
       ],
       "charge_jump_error": 1.7877422632539552e-12,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          2.582964712722553e-5,
+          2.5829646090634887e-5,
+          2.582964514864987e-5
+        ],
+        "extrapolated_late_ratio": 0.9999748651026156,
+        "extrapolated_residue": 2.582964514864987e-5,
+        "extrapolated_vertex_ratio": 1.0001099789167864,
+        "fitted_mobius_tail": 2.5830294399536394e-5,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 9.419850153808557e-13,
         "injected_charge_norm": 0.0007767626552236475,
+        "late_detector": 2.5830294390448784e-5,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            2.4539419286627495e-5,
+            2.549383972590805e-5,
+            2.574526775946364e-5,
+            2.5808979802717575e-5
+          ],
+          [
+            2.4539426831578687e-5,
+            2.5493839420254617e-5,
+            2.5745265833422378e-5,
+            2.5808979615949195e-5
+          ],
+          [
+            2.4539427223323728e-5,
+            2.5493842251376073e-5,
+            2.574526556668883e-5,
+            2.580897911080221e-5
+          ]
         ],
         "residue_ratio": [
-          0.9500250695078486,
-          0.9869745139562937,
-          0.9967081746261454
+          0.9500250694935023,
+          0.9869745139568707,
+          0.9967081744220695,
+          0.9991747953265891
         ],
         "soft_ratio": [
-          0.9501534342449823,
-          0.9871078711992844,
-          0.9968428470542121
+          0.950153434230634,
+          0.9871078711998615,
+          0.9968428468501086,
+          0.999309801037564
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 2.582680474464e-5
@@ -681,6 +976,17 @@
         2.5830294373157552e-5,
         2.5830294390448784e-5
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.31622776579341705,
+        "delta_u_at_max": 2.5276077410118964e-5,
+        "kappa_T_at_max": 3.1622776624025883,
+        "kappa_effective": 1.0000000014130377,
+        "maximum_usable_T": 3.1622776579341707,
+        "sample_cost_exponential_factor": 558.1095809909594,
+        "sample_cost_for_10pct_late_delta": 8.364900240536361e13,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 2.5830294399536395e-6
+      },
       "energy_change": 2.8260755957632e-8,
       "epsilon": 0.05,
       "final_energy": 5.0000000282607555,
@@ -739,23 +1045,62 @@
       ],
       "charge_jump_error": 1.8921982036790297e-12,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          1.3233741188521054e-5,
+          1.323374065398084e-5,
+          1.3233740171329447e-5
+        ],
+        "extrapolated_late_ratio": 0.9997947438133555,
+        "extrapolated_residue": 1.3233740171329447e-5,
+        "extrapolated_vertex_ratio": 0.999787236494853,
+        "fitted_mobius_tail": 1.323645703956238e-5,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.826513927430219e-13,
         "injected_charge_norm": 0.018781012018065216,
+        "late_detector": 1.3236457036025345e-5,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            1.028531402653705e-5,
+            1.2442682432671547e-5,
+            1.303418455983667e-5,
+            1.3185643971071968e-5
+          ],
+          [
+            1.0285317907411949e-5,
+            1.2442682261145834e-5,
+            1.3034183564508142e-5,
+            1.3185643872876607e-5
+          ],
+          [
+            1.0285318108170594e-5,
+            1.2442683711934498e-5,
+            1.3034183427818313e-5,
+            1.318564361411406e-5
+          ]
         ],
         "residue_ratio": [
-          0.7770446487546874,
-          0.9400312846605208,
-          0.9847184480254181
+          0.7770446487437909,
+          0.9400312846609592,
+          0.9847184478704152,
+          0.9961611009824617
         ],
         "soft_ratio": [
-          0.7770388140354063,
-          0.9400242260974508,
-          0.9847110539127062
+          0.7770388140245099,
+          0.9400242260978893,
+          0.9847110537577043,
+          0.9961536209484736
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 1.323655642747103e-5
@@ -794,6 +1139,17 @@
         1.3236456818915122e-5,
         1.3236457036025345e-5
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09999740433398811,
+        "delta_u_at_max": 1.3231585208248035e-5,
+        "kappa_T_at_max": 10.000259573338843,
+        "kappa_effective": 1.0000519153415521,
+        "maximum_usable_T": 9.999740433398811,
+        "sample_cost_exponential_factor": 4.8541713269966114e8,
+        "sample_cost_for_10pct_late_delta": 2.7705857216733482e20,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.3236457039562382e-6
+      },
       "energy_change": 0.01038360735096111,
       "epsilon": 0.05,
       "final_energy": 50.01038360735096,
@@ -852,23 +1208,62 @@
       ],
       "charge_jump_error": 3.2492509117326707e-12,
       "dc": {
-        "computed_horizon": 80.0,
+        "extrapolated_by_horizon": [
+          2.5828637173105607e-6,
+          2.582863613620838e-6,
+          2.5828635193756737e-6
+        ],
+        "extrapolated_late_ratio": 0.9999748677080538,
+        "extrapolated_residue": 2.5828635193756737e-6,
+        "extrapolated_vertex_ratio": 0.9999883690609472,
+        "fitted_mobius_tail": 2.582928435320834e-6,
         "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 9.424516449844651e-14,
         "injected_charge_norm": 0.0007767505435096067,
+        "late_detector": 2.5829284342871606e-6,
         "omega": [
           0.2,
           0.1,
-          0.05
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            2.453852498081938e-6,
+            2.549286052726311e-6,
+            2.574426555506547e-6,
+            2.5807971725175086e-6
+          ],
+          [
+            2.4538532525674055e-6,
+            2.5492860221486236e-6,
+            2.574426362860509e-6,
+            2.5807971538230315e-6
+          ],
+          [
+            2.4538532917392184e-6,
+            2.5492863052885685e-6,
+            2.574426336168459e-6,
+            2.580797103259309e-6
+          ]
         ],
         "residue_ratio": [
-          0.9500275962770088,
-          0.9869751989432987,
-          0.996708349559264
+          0.9500275962606899,
+          0.986975198943955,
+          0.9967083493271279,
+          0.9991748393027235
         ],
         "soft_ratio": [
-          0.9500404232572163,
-          0.9869885247786655,
-          0.9967218068086349
+          0.950040423240897,
+          0.9869885247793219,
+          0.9967218065764957,
+          0.9991883298538798
         ],
         "uniform_dt": 0.02,
         "vertex_soft_prediction": 2.5828935608532597e-6
@@ -907,6 +1302,17 @@
         2.5829284325035557e-6,
         2.5829284342871606e-6
       ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09999999999929321,
+        "delta_u_at_max": 2.5828691148696515e-6,
+        "kappa_T_at_max": 10.000000000070678,
+        "kappa_effective": 1.0000000000141358,
+        "maximum_usable_T": 9.99999999992932,
+        "sample_cost_exponential_factor": 4.8516519547837096e8,
+        "sample_cost_for_10pct_late_delta": 7.272184543237884e21,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 2.582928435320834e-7
+      },
       "energy_change": 2.8271607277474686e-9,
       "epsilon": 0.05,
       "final_energy": 50.000000002827164,
@@ -938,6 +1344,6 @@
       "profile": "derivative_gaussian_balanced"
     }
   ],
-  "schema_version": 1,
+  "schema_version": 2,
   "source_equation": "GravityReparametrizationsRevised.tex:611-623"
 }

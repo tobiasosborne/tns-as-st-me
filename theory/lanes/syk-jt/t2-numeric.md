@@ -1,8 +1,7 @@
 # T2 numeric lane: sourced two-sided Schwarzian computation
 
-Status: **GREEN; computation complete.**  This report was updated
-incrementally.  The lane created or edited only the four paths authorized by
-`BRIEF-t2-numeric.md`.
+Status: **GREEN; repair r1 complete.**  This report was updated incrementally.
+The repair edited only the five paths authorized by `BRIEF-repair-r1-t2.md`.
 
 ## Failing-first evidence (law L1)
 
@@ -78,20 +77,40 @@ closed form.  This is a numerical chart repair, not a changed test or tolerance.
    two-sided Möbius move to `1e-8`.
 5. Constant-versus-decaying-exponential fits for both `delta G_LR(T)` and the
    extracted `Delta u_rel(T)` on `T={2,5,10,20,40}`.
-6. Discrete low-frequency response residue, charge-normalized soft response,
-   and convergence toward the late displacement.
+6. Decoy-target independence, three-horizon Abel transforms, an
+   `omega^2 -> 0` intercept, and comparison with separately computed late and
+   charge-normalized soft-vertex targets.
 7. Fail-closed validation: NaN, empty samples, and charge violation are tested
    both as thrown validation errors and as child processes with nonzero exit;
    none may create a JSON file.
-8. The exact eight-point campaign grid and final all-finite JSON validation.
+8. The exact eight-point campaign grid, finite-C detector-window/sample-cost
+   fields, and final all-finite JSON validation.
+9. Public `Delta` validation and the `Delta=1` A1 handshake correlator.
 
 The final execution was:
 
 ```text
 $ julia --project=numerics numerics/test/test_schwarzian_memory.jl
 Test Summary:                       | Pass  Total   Time
-sourced two-sided Schwarzian memory |   81     81  55.4s
+sourced two-sided Schwarzian memory |   96     96  15.8s
 ```
+
+### Repair-r1 circular-DC RED
+
+Before the production repair, the O4 regression reran one fixed trajectory
+with the supplied late comparison doubled.  A valid transform cannot change,
+but the old target-valued tail did:
+
+```text
+isapprox(decoy_residue, residue; rtol = 0.01)
+Evaluated: isapprox(5.067586228816479e-5,
+                    0.00012306912331812398; rtol = 0.01)
+Test Summary: sourced two-sided Schwarzian memory | 81 pass, 1 fail, 82 total
+exit code: 1
+```
+
+After the repair the same assertion is part of the 96/96 green suite; the
+comparison value changes only `DC/late`, never the absolute transform.
 
 The three explicit poison entry modes also establish the promised process exit
 contract:
@@ -104,8 +123,8 @@ poison=charge exit=1 json_created=no
 
 ## What was implemented
 
-The 472-line standalone module is within the brief's 200--500 line L2 bound.
-With state `y=(t,v,a,j)=(t,t',t'',t''')`, differentiating the quoted
+The 500-line standalone module remains dependency-light and within the lane's
+200--500 line L2 bound.  With state `y=(t,v,a,j)=(t,t',t'',t''')`, differentiating the quoted
 Schwarzian and imposing T.1 gives
 
 ```text
@@ -124,26 +143,37 @@ simultaneous two-sided gauge by `M_L=I` and retain only
 `M_rel=M_L^{-1}M_R` (`:194`).  Both `M_rel` and the bilocal were tested after
 the simultaneous move `(M_L,M_R)->(gM_L,gM_R)`.
 
-The Lorentzian two-sided continuation of the cited dressed kernel, with
-operator dimension `Delta=1/2`, is at `:199-225`.  The reported relative delay
-is extracted only from the observable,
+The Lorentzian two-sided continuation of the cited dressed kernel exposes
+operator dimension `Delta` in `observable_series` (campaign default `1/2`,
+recorded in JSON).  The `Delta=1` path reproduces the analytic A1 handshake
+correlator at all three registered times.  The reported relative delay is
+extracted only from the observable,
 `Delta u_rel=-delta G_LR/(partial_T G_LR^eq)`.  Constant and pure decaying
-exponential models are fitted with an AIC penalty (`:227-247`).  Raw values are
+exponential models are fitted with an AIC penalty (`:229-247`).  Raw values are
 kept at all five prescribed times; the model comparison uses the settled late
 tail `T={5,10,20,40}` because the small projective coefficient can still be
 turning on at `T=2`.
 
-T.3 uses an Abel-damped direct DFT (`eta=omega^2`, uniform `dt=0.02`) of the
-computed response through `T=80`, followed by the analytic transform of its
-already-constant tail (`:294-328`).  Its soft-side comparison is independent:
+T.3 now uses Abel-damped direct DFTs (`eta=omega^2`, uniform `dt=0.02`) through
+three numerical horizons `T_h={20,40,80}`.  The completed tail is not supplied
+by the detector: the fitted post-pulse matrix independently gives
+
+```text
+Delta u_fit = (|det(M)/M_11^2|^Delta - 1)/(Delta*(1+k_f)).
+```
+
+At each horizon this coefficient alone completes the tail.  The final DC is
+the linear intercept in `omega^2` over `omega={0.1,0.05,0.025}` and is compared
+only afterwards with `Delta u_rel(40)`.  Its soft-side comparison is also
+independent:
 linearizing `t=exp(u+epsilon)` gives
-`epsilon''''-epsilon''=-exp(2u)T_tz/C`; `:249-292` solves that equation and
+`epsilon''''-epsilon''=-exp(2u)T_tz/C`; `:249-294` solves that equation and
 attaches the infinitesimal dressed-bilocal vertex, normalized by the measured
 three-component injected-charge norm rather than a fit.
 
-Finally, `:331-382` recursively rejects every non-finite or required-empty
+Finally, `:349-385` recursively rejects every non-finite or required-empty
 value and any charge violation before opening the output path.  Campaign
-assembly and its second validation are at `:397-472`.
+assembly and its second validation are at `:397-500`.
 
 ## Results
 
@@ -163,37 +193,69 @@ assembly and its second validation are at `:397-472`.
   `O(10^-2)` for the ordinary Gaussian.
 
 Here `RSS u c/e` and `RSS G c/e` are constant/exponential residual sums on
-`T={5,10,20,40}`.  `DC/late` is
-`Re[-i omega delta u(omega)]/Delta u_rel(40)` at the smallest sampled
-`omega=0.05`; `DC/vertex` uses the independent charge-normalized linear soft
-vertex.
+`T={5,10,20,40}`.  `DC/late` is the extrapolated zero-frequency residue divided
+by the separately evaluated `Delta u_rel(40)`; `DC/vertex` divides the same
+extrapolated residue by the independent charge-normalized linear soft vertex.
 
 | C | pulse, epsilon | Delta u_rel at T=2,5,10,20,40 | u verdict; RSS c/e | delta G verdict; RSS c/e | DC/late | DC/vertex |
 |---:|---|---|---|---|---:|---:|
-| 10 | top-hat, .01 | `3.684e-7, 1.18731e-4, 1.24763e-4, 1.24803e-4, 1.24803e-4` | constant; `2.754e-11/2.971e-11` | exponential; `4.764e-13/1.553e-23` | .98610 | .98588 |
-| 10 | top-hat, .1 | `1.093e-5, 1.17189e-3, 1.23022e-3, 1.23061e-3, 1.23061e-3` | constant; `2.575e-9/2.783e-9` | exponential; `4.535e-11/6.278e-21` | .98620 | .98408 |
-| 100 | top-hat, .01 | `2.941e-8, 1.18887e-5, 1.24939e-5, 1.24980e-5, 1.24980e-5` | constant; `2.772e-13/2.991e-13` | exponential; `4.788e-15/5.719e-25` | .98609 | .98607 |
-| 100 | top-hat, .1 | `3.684e-7, 1.18731e-4, 1.24763e-4, 1.24803e-4, 1.24803e-4` | constant; `2.754e-11/2.971e-11` | exponential; `4.764e-13/1.553e-23` | .98610 | .98588 |
-| 10 | Gaussian, .05 | `-1.549e-5, 1.24925e-4, 1.32079e-4, 1.32127e-4, 1.32127e-4` | constant; `3.873e-11/4.144e-11` | exponential; `5.271e-13/8.808e-22` | .98473 | .98466 |
-| 10 | balanced dGaussian, .05 | `2.40285e-5, 2.57422e-5, 2.58297e-5, 2.58303e-5, 2.58303e-5` | constant; `5.791e-15/1.685e-14` | exponential; `2.246e-14/3.288e-26` | .99671 | .99684 |
-| 100 | Gaussian, .05 | `-1.561e-6, 1.25133e-5, 1.32316e-5, 1.32365e-5, 1.32365e-5` | constant; `3.904e-13/4.177e-13` | exponential; `5.304e-15/1.985e-23` | .98472 | .98471 |
-| 100 | balanced dGaussian, .05 | `2.40280e-6, 2.57412e-6, 2.58287e-6, 2.58293e-6, 2.58293e-6` | constant; `5.788e-17/1.685e-16` | exponential; `2.246e-16/3.257e-28` | .99671 | .99672 |
+| 10 | top-hat, .01 | `3.684e-7, 1.18731e-4, 1.24763e-4, 1.24803e-4, 1.24803e-4` | constant; `2.754e-11/2.971e-11` | exponential; `4.764e-13/1.553e-23` | .999816 | .999587 |
+| 10 | top-hat, .1 | `1.093e-5, 1.17189e-3, 1.23022e-3, 1.23061e-3, 1.23061e-3` | constant; `2.575e-9/2.783e-9` | exponential; `4.535e-11/6.278e-21` | .999818 | .997668 |
+| 100 | top-hat, .01 | `2.941e-8, 1.18887e-5, 1.24939e-5, 1.24980e-5, 1.24980e-5` | constant; `2.772e-13/2.991e-13` | exponential; `4.788e-15/5.719e-25` | .999815 | .999792 |
+| 100 | top-hat, .1 | `3.684e-7, 1.18731e-4, 1.24763e-4, 1.24803e-4, 1.24803e-4` | constant; `2.754e-11/2.971e-11` | exponential; `4.764e-13/1.553e-23` | .999816 | .999587 |
+| 10 | Gaussian, .05 | `-1.549e-5, 1.24925e-4, 1.32079e-4, 1.32127e-4, 1.32127e-4` | constant; `3.873e-11/4.144e-11` | exponential; `5.271e-13/8.808e-22` | .999795 | .999723 |
+| 10 | balanced dGaussian, .05 | `2.40285e-5, 2.57422e-5, 2.58297e-5, 2.58303e-5, 2.58303e-5` | constant; `5.791e-15/1.685e-14` | exponential; `2.246e-14/3.288e-26` | .999975 | 1.000110 |
+| 100 | Gaussian, .05 | `-1.561e-6, 1.25133e-5, 1.32316e-5, 1.32365e-5, 1.32365e-5` | constant; `3.904e-13/4.177e-13` | exponential; `5.304e-15/1.985e-23` | .999795 | .999787 |
+| 100 | balanced dGaussian, .05 | `2.40280e-6, 2.57412e-6, 2.58287e-6, 2.58293e-6, 2.58293e-6` | constant; `5.788e-17/1.685e-16` | exponential; `2.246e-16/3.257e-28` | .999975 | .999988 |
 
-The DFT ratios converge monotonically as `omega={0.2,0.1,0.05}`.  Across the
-ordinary top-hat/Gaussian rows, `DC/late` moves from `0.777--0.798` through
-`0.940--0.946` to `0.9847--0.9862`; balanced rows move from `0.9500` through
-`0.9870` to `0.9967`.  The independent soft-vertex ratios have the same
-convergent range and differ nontrivially from `DC/late` at finite amplitude.
+Across all rows the extrapolated `DC/late` range is
+`0.999795--0.999975`; `DC/vertex` is `0.997668--1.000110`.  Changing the
+horizon from 40 to 80 changes the extrapolated residue by at most
+`3.65e-8` relatively; this is retained in
+each JSON row rather than hidden in a rounded column.
 
-**Decisive numerical verdict.**  Every extracted relative delay approaches a
-nonzero constant, and its DC residue agrees with the independently normalized
-soft vertex at the 0.3--1.6% level at `omega=0.05`.  Nevertheless, the raw
+### Large-C-first detector window and cost
+
+The binding convention is `C -> infinity` first and then
+`1 << kappa*T << kappa*C`, invariantly `kappa*T -> infinity` with `T/C -> 0`.
+No cited source supplies a uniform finite-C error bound or a sharp endpoint.
+For a reproducible finite-C proxy I define `kappa=(1+k_f)/2` and the
+geometric-mean cutoff `kappa*T_max=sqrt(kappa*C)`.  It lies parametrically
+between the thermal and Schwarzian scales, but it is a conservative scaling
+convention, not a derived validity theorem.
+
+For bounded single-shot observables the ratio detector costs
+`M_shots ~ exp(4 Delta kappa T)/eta^2`.  The last column instantiates
+`eta=0.1 |Delta u_fit|` (10% absolute accuracy relative to the fitted late
+shift); constants from variances and finite differencing are not known.
+
+| C | pulse, epsilon | T_max | kappa T_max | Delta u(T_max) | exp factor | shots at 10% late shift |
+|---:|---|---:|---:|---:|---:|---:|
+| 10 | top-hat, .01 | 3.16160 | 3.16296 | 8.6523e-5 | 5.589e2 | 3.588e12 |
+| 10 | top-hat, .1 | 3.15554 | 3.16903 | 8.5492e-4 | 5.657e2 | 3.735e10 |
+| 100 | top-hat, .01 | 9.99979 | 10.00021 | 1.24939e-5 | 4.854e8 | 3.107e20 |
+| 100 | top-hat, .1 | 9.99785 | 10.00215 | 1.24763e-4 | 4.873e8 | 3.128e18 |
+| 10 | Gaussian, .05 | 3.16146 | 3.16310 | 8.6714e-5 | 5.590e2 | 3.202e12 |
+| 10 | balanced dGaussian, .05 | 3.16228 | 3.16228 | 2.52761e-5 | 5.581e2 | 8.365e13 |
+| 100 | Gaussian, .05 | 9.99974 | 10.00026 | 1.32316e-5 | 4.854e8 | 2.771e20 |
+| 100 | balanced dGaussian, .05 | 10.00000 | 10.00000 | 2.58287e-6 | 4.852e8 | 7.272e21 |
+
+For `C=10`, `kappa*T_max` is only about `3.16`, so there is no broad
+parametric late-time window; those rows are finite-C diagnostics.  `C=100`
+reaches `kappa*T_max` about `10`, but its shot estimates are already
+`10^18--10^21`.  This is why the table licenses a large-C-first
+susceptibility, not a practical finite-C memory record.
+
+**Decisive numerical verdict.**  Every extracted relative-delay detector
+approaches a nonzero large-C-first susceptibility, and its extrapolated DC
+residue agrees with the independently normalized soft vertex to 0.24% or
+better.  Nevertheless, the raw
 final-energy-subtracted observable `delta G_LR` is exponentially decaying at
 all eight points, with exponential RSS many orders below constant RSS.  Thus
-this computation finds a permanent *relative-frame/time-delay parameter* but
-no nonzero late plateau in the specified two-sided correlator.  Under the
-strict operational T.2 criterion in the reconstruction memo, this is a clean
-negative result for B rather than a completed SYK/JT triangle.
+this computation finds a formal ratio plateau only in the declared iterated
+limit and no nonzero late plateau in the specified two-sided correlator.  The
+finite-C cost table shows that practical permanence is not established.  Under
+the strict operational T.2 criterion this remains a negative result for B.
 
 ## Caveats
 
@@ -202,8 +264,9 @@ negative result for B rather than a completed SYK/JT triangle.
   `t=exp(tau)` for Lorentzian finite-temperature computations at line 901.
   Therefore the regression uses three regular tan charts, while the sourced
   two-sided observable uses the pole-free Lorentzian exponential chart.
-- The primary dimension was not specified; the run fixes `Delta=1/2` and
-  records it in JSON.  Absolute correlator amplitudes depend on this choice.
+- The campaign default is `Delta=1/2` and is recorded in JSON, while the
+  observable and campaign APIs accept any finite positive `Delta`.  Absolute
+  correlator amplitudes depend on this choice.
 - “Equilibrium at final energy” means the left ruler retains its unsourced
   `k_L=1`, while the right equilibrium comparator has the measured `k_f` but
   no relative Möbius transform.  This isolates the frame effect from the right
@@ -219,10 +282,10 @@ negative result for B rather than a completed SYK/JT triangle.
   thermal redshift `exp[-2(u-0.25)]`, so the physically relevant
   `t'^2 T_tz` flux, rather than merely `integral T_tz`, is balanced.  Its tiny
   residual energy is nonlinear/numerical, not fitted away.
-- The `omega->0` result uses Abel damping and a constant-tail completion; it is
-  not an FFT-bin extrapolation.  The three-frequency convergence is explicit,
-  but a continuum analytic Ward identity remains the role of the independent
-  analytic lane.
+- The `omega->0` result uses Abel damping, a fitted-Mobius tail completion,
+  three numerical horizons, and an explicit low-frequency intercept; it is
+  not an FFT-bin extrapolation.  A continuum Ward identity remains the role of
+  the independent analytic lane.
 
 ## MERGE PROPOSALS
 

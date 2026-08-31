@@ -209,16 +209,18 @@ function _bilocal(ML, MR, kL::Real, kR::Real, T::Real; Delta::Real = 0.5)
 end
 
 function observable_series(ML::AbstractMatrix, MR::AbstractMatrix,
-                           kL::Real, kR::Real, times::AbstractVector)
+                           kL::Real, kR::Real, times::AbstractVector;
+                           Delta::Real = 0.5)
     isempty(times) && throw(ArgumentError("late-time sample set is empty"))
-    gp = [_bilocal(ML, MR, kL, kR, T) for T in times]
-    ge = [_bilocal(ML, ML, kL, kR, T) for T in times]
+    Delta > 0 && isfinite(Delta) || throw(ArgumentError("Delta must be finite and positive"))
+    gp = [_bilocal(ML, MR, kL, kR, T; Delta = Delta) for T in times]
+    ge = [_bilocal(ML, ML, kL, kR, T; Delta = Delta) for T in times]
     dg = gp .- ge
     du = Vector{Float64}(undef, length(times))
     for (i, T) in enumerate(times)
         h = 1e-5
-        dge = (_bilocal(ML, ML, kL, kR, T + h) -
-               _bilocal(ML, ML, kL, kR, T - h)) / (2h)
+        dge = (_bilocal(ML, ML, kL, kR, T + h; Delta = Delta) -
+               _bilocal(ML, ML, kL, kR, T - h; Delta = Delta)) / (2h)
         du[i] = -dg[i] / dge
     end
     return (pulse = gp, equilibrium = ge, delta_g = dg, delta_u = du)
@@ -263,7 +265,7 @@ function _linear_segment(z0, u0, u1, hmax, C, pulse)
     return us, z
 end
 
-function _linear_vertex_prediction(run; h = 5e-4)
+function _linear_vertex_prediction(run; h = 5e-4, Delta = 0.5)
     _, zpre = _linear_segment(zeros(4), -0.5, 0.0, h, run.C, ZeroPulse())
     up, zp = _linear_segment(zpre[:, end], 0.0, 0.5, h, run.C, run.source)
     uo, zo = _linear_segment(zp[:, end], 0.5, 1.25, h, run.C, ZeroPulse())
@@ -282,7 +284,7 @@ function _linear_vertex_prediction(run; h = 5e-4)
                             (Mlin - Matrix{Float64}(I, 2, 2)))
     kvertex = 1 + lambda * (klin - 1)
     duvertex = observable_series(Matrix{Float64}(I, 2, 2), Mvertex,
-                                 1.0, kvertex, [40.0]).delta_u[1] / lambda
+                                 1.0, kvertex, [40.0]; Delta = Delta).delta_u[1] / lambda
     qlin = zeros(3)
     for i in 1:length(up)-1
         f(u) = exp(u) * run.source(u) .* [1.0, exp(u), exp(2u)]
@@ -290,49 +292,53 @@ function _linear_vertex_prediction(run; h = 5e-4)
     end
     return duvertex * norm(run.flux) / norm(qlin)
 end
-
-"""Abel-damped direct DFT of the computed retarded displacement."""
-function dc_identity(run, late_delta::Real)
-    omegas = [0.2, 0.1, 0.05]
-    ratios = Float64[]
-    soft_ratios = Float64[]
+"""Abel DFT with a fitted-Mobius tail, followed by an omega^2 intercept."""
+function dc_identity(run, late_detector::Real; Delta::Real = 0.5)
+    omegas, horizons = [0.2, 0.1, 0.05, 0.025], [20.0, 40.0, 80.0]
     charge_norm = norm(run.flux)
     charge_norm > 0 || error("DC normalization needs nonzero injected charge")
-    soft_prediction = _linear_vertex_prediction(run)
+    isfinite(late_detector) && late_detector != 0 ||
+        error("late detector comparison must be finite and nonzero")
+    soft_prediction = _linear_vertex_prediction(run; Delta = Delta)
     ML = Matrix{Float64}(I, 2, 2)
-    for omega in omegas
-        eta = omega^2
-        dt = 0.02
-        # Transform the computed transient on a uniform grid.  Beyond T=80
-        # delta_u has reached its projective late limit; integrate that
-        # constant tail exactly.  This avoids evaluating exp(kT) outside its
-        # floating-point chart while retaining the infinite-time Abel limit.
-        horizon = 80.0
+    # This coefficient comes only from the independently fitted post-pulse
+    # matrix: G_pulse/G_eq -> |det(M)/M_11^2|^Delta.
+    asymptotic_ratio = abs(det(run.mobius) / run.mobius[1, 1]^2)^Delta
+    fitted_tail = (asymptotic_ratio - 1) / (Delta * (1 + run.k_final))
+    residues = Matrix{Float64}(undef, length(horizons), length(omegas))
+    dt = 0.02
+    for (ih, horizon) in enumerate(horizons)
         ts = collect(0.5:dt:horizon)
-        response = observable_series(ML, run.mobius, 1.0, run.k_final, ts).delta_u
-        s = im * omega - eta
-        weights = exp.(s .* (ts .- 0.5))
-        transient = dt * (sum(response .* weights) -
-                          (response[1] * weights[1] + response[end] * weights[end]) / 2)
-        tail = -late_delta * exp(s * (horizon - 0.5)) / s
-        transform = transient + tail
-        residue = real(-im * omega * transform)
-        push!(ratios, residue / late_delta)
-        # Compare the nonlinear DFT residue with the independently linearized
-        # dressed vertex, normalized only by the quadratured hard charge.
-        push!(soft_ratios, residue / soft_prediction)
+        response = observable_series(ML, run.mobius, 1.0, run.k_final, ts;
+                                     Delta = Delta).delta_u
+        for (iw, omega) in enumerate(omegas)
+            s = im * omega - omega^2
+            weights = exp.(s .* (ts .- 0.5))
+            finite = dt * (sum(response .* weights) -
+                     (response[1] * weights[1] + response[end] * weights[end]) / 2)
+            tail = -fitted_tail * exp(s * (horizon - 0.5)) / s
+            residues[ih, iw] = real(-im * omega * (finite + tail))
+        end
     end
-    return (omega = omegas, residue_ratio = ratios, soft_ratio = soft_ratios,
-            injected_charge_norm = charge_norm,
-            vertex_soft_prediction = soft_prediction)
+    # The low three frequencies exhibit the even Abel correction.  Fit the
+    # intercept before comparing it with either independent target.
+    X = hcat(ones(3), omegas[2:end].^2)
+    extrapolated = [(X \ vec(residues[i, 2:end]))[1] for i in eachindex(horizons)]
+    final = extrapolated[end]
+    return (omega = omegas, horizon = horizons, residue = vec(residues[end, :]),
+            residue_by_horizon = residues,
+            residue_ratio = vec(residues[end, :]) / late_detector,
+            soft_ratio = vec(residues[end, :]) / soft_prediction,
+            extrapolated_by_horizon = extrapolated, extrapolated_residue = final,
+            extrapolated_late_ratio = final / late_detector, extrapolated_vertex_ratio = final / soft_prediction,
+            horizon_error = abs(extrapolated[end] - extrapolated[end - 1]),
+            fitted_mobius_tail = fitted_tail, late_detector = Float64(late_detector),
+            injected_charge_norm = charge_norm, vertex_soft_prediction = soft_prediction)
 end
-
-
 struct ResultValidationError <: Exception
     message::String
 end
 Base.showerror(io::IO, e::ResultValidationError) = print(io, e.message)
-
 function _finite_tree(x)
     x isa Number && return isfinite(x)
     x isa AbstractDict && return all(_finite_tree(v) for v in values(x))
@@ -340,7 +346,6 @@ function _finite_tree(x)
     x isa Tuple && return all(_finite_tree, x)
     return true
 end
-
 function validate_results(results::AbstractDict)
     _finite_tree(results) || throw(ResultValidationError("non-finite or empty result data"))
     points = get(results, "parameter_points", Any[])
@@ -357,13 +362,11 @@ function validate_results(results::AbstractDict)
     end
     return true
 end
-
 function validation_fixture()
     point = Dict("charge_jump_error" => 0.0, "pre_charge_drift" => 0.0,
                  "post_charge_drift" => 0.0, "delta_u_rel" => [1.0])
     return Dict("late_time_grid" => [2.0], "parameter_points" => [point])
 end
-
 function poisoned_result(mode::Symbol)
     r = validation_fixture()
     mode == :nan && (r["parameter_points"][1]["delta_u_rel"][1] = NaN)
@@ -372,7 +375,6 @@ function poisoned_result(mode::Symbol)
     mode in (:nan, :empty, :charge) || throw(ArgumentError("unknown poison mode"))
     return r
 end
-
 function write_results(path::AbstractString, results::AbstractDict)
     validate_results(results)
     open(path, "w") do io
@@ -381,12 +383,10 @@ function write_results(path::AbstractString, results::AbstractDict)
     end
     return path
 end
-
 _profile_name(::TopHatPulse) = "top_hat"
 _profile_name(::GaussianPulse) = "gaussian"
 _profile_name(::DerivativeGaussianPulse) = "derivative_gaussian_balanced"
 _epsilon(p::AbstractPulse) = p.epsilon
-
 _fit_dict(f) = Dict("winner" => f.winner, "rss_constant" => f.rss_constant,
                     "rss_exponential" => f.rss_exponential,
                     "constant" => f.constant, "amplitude" => f.amplitude,
@@ -394,16 +394,22 @@ _fit_dict(f) = Dict("winner" => f.winner, "rss_constant" => f.rss_constant,
                     "aic_constant" => f.aic_constant,
                     "aic_exponential" => f.aic_exponential)
 
-function _point(C::Real, pulse::AbstractPulse, h::Real)
+function _point(C::Real, pulse::AbstractPulse, h::Real, Delta::Real)
     run = simulate_pulse(C, pulse; h = h)
     obs = observable_series(Matrix{Float64}(I, 2, 2), run.mobius,
-                            1.0, run.k_final, LATE_GRID)
+                            1.0, run.k_final, LATE_GRID; Delta = Delta)
     # T=2 can precede the small-c projective crossover.  Fit the late tail
     # T>=5, while retaining and reporting all five prescribed samples.
     fitrange = 2:length(LATE_GRID)
     fu = compare_models(LATE_GRID[fitrange], obs.delta_u[fitrange])
     fg = compare_models(LATE_GRID[fitrange], obs.delta_g[fitrange])
-    dc = dc_identity(run, obs.delta_u[end])
+    dc = dc_identity(run, obs.delta_u[end]; Delta = Delta)
+    kappa = (1 + run.k_final) / 2
+    max_T = sqrt(C / kappa) # geometric-mean cutoff: kappa*T=sqrt(kappa*C)
+    at_max = observable_series(Matrix{Float64}(I, 2, 2), run.mobius, 1.0,
+                               run.k_final, [max_T]; Delta = Delta).delta_u[1]
+    cost_factor = exp(4Delta * kappa * max_T)
+    target_error = 0.1abs(dc.fitted_mobius_tail)
     jump_error = norm(run.charge_before - run.charge_after - run.flux, Inf)
     return Dict(
         "C" => Float64(C), "profile" => _profile_name(pulse),
@@ -419,10 +425,24 @@ function _point(C::Real, pulse::AbstractPulse, h::Real)
         "delta_G_LR" => obs.delta_g, "delta_u_rel" => obs.delta_u,
         "fit_time_grid" => LATE_GRID[fitrange],
         "delta_u_model" => _fit_dict(fu), "delta_G_model" => _fit_dict(fg),
+        "detector_window" => Dict("kappa_effective" => kappa, "maximum_usable_T" => max_T,
+            "kappa_T_at_max" => kappa * max_T, "T_over_C_at_max" => max_T / C,
+            "delta_u_at_max" => at_max,
+            "sample_cost_model" => "M_shots ~ exp(4 Delta kappa T)/eta^2",
+            "sample_cost_exponential_factor" => cost_factor, "sample_cost_target_eta" => target_error,
+            "sample_cost_for_10pct_late_delta" => cost_factor / target_error^2),
         "dc" => Dict("omega" => dc.omega, "residue_ratio" => dc.residue_ratio,
-                     "soft_ratio" => dc.soft_ratio,
+                     "soft_ratio" => dc.soft_ratio, "horizon" => dc.horizon,
+                     "residue_by_horizon" => [vec(dc.residue_by_horizon[i, :]) for i in axes(dc.residue_by_horizon, 1)],
+                     "extrapolated_by_horizon" => dc.extrapolated_by_horizon,
+                     "extrapolated_residue" => dc.extrapolated_residue,
+                     "extrapolated_late_ratio" => dc.extrapolated_late_ratio,
+                     "extrapolated_vertex_ratio" => dc.extrapolated_vertex_ratio,
+                     "horizon_error" => dc.horizon_error, "fitted_mobius_tail" => dc.fitted_mobius_tail,
+                     "late_detector" => dc.late_detector,
                      "fourier_convention" => "sum exp(+i omega t), Abel eta=omega^2",
-                     "uniform_dt" => 0.02, "computed_horizon" => 80.0,
+                     "omega_extrapolation" => "linear intercept in omega^2 on 0.1,0.05,0.025",
+                     "uniform_dt" => 0.02,
                      "injected_charge_norm" => dc.injected_charge_norm,
                      "vertex_soft_prediction" => dc.vertex_soft_prediction))
 end
@@ -448,7 +468,7 @@ function _integrator_diagnostics()
                 "tan_three_period_chart_max_error" => regression_error)
 end
 
-function run_campaign(; h::Real = 5e-4)
+function run_campaign(; h::Real = 5e-4, Delta::Real = 0.5)
     jobs = Tuple{Float64,AbstractPulse}[]
     for C in (10.0, 100.0), epsilon in (0.01, 0.1)
         push!(jobs, (C, TopHatPulse(epsilon)))
@@ -457,10 +477,15 @@ function run_campaign(; h::Real = 5e-4)
         push!(jobs, (C, GaussianPulse(0.05)))
         push!(jobs, (C, DerivativeGaussianPulse(0.05)))
     end
-    points = [_point(C, pulse, h) for (C, pulse) in jobs]
+    points = [_point(C, pulse, h, Delta) for (C, pulse) in jobs]
     results = Dict(
-        "schema_version" => 1, "beta" => 2pi, "operator_dimension" => 0.5,
+        "schema_version" => 2, "beta" => 2pi, "operator_dimension" => Float64(Delta),
         "late_time_grid" => LATE_GRID,
+        "limit_convention" => Dict("order" =>
+            "C -> infinity first; then kappa*T -> infinity with T/C -> 0",
+            "window" => "1 << kappa*T << kappa*C",
+            "finite_C_cutoff" => "kappa*T_max = sqrt(kappa*C)",
+            "status" => "conservative scaling convention, not a uniform finite-C error bound"),
         "integration_method" => "fixed-step classical RK4",
         "source_equation" => "GravityReparametrizationsRevised.tex:611-623",
         "charge_equations" => "GravityReparametrizationsRevised.tex:889-900",
