@@ -4,12 +4,14 @@
 
 **Lane verdict: G3 is not solved.**  I do not exhibit an operator that meets
 the definition of $Q[\epsilon_{2,c}]$.  The sharp surviving result is an
-obstruction theorem about the stated hypotheses and the four allowed source
+insufficiency audit of the stated hypotheses and the four allowed source
 packages:
 
-> **Theorem G3-O (source-closed obstruction).**  The G3 hypotheses determine
+> **Proposition G3-O (source-closed insufficiency audit).**  The four sources
+> and qualitative moment hypothesis do not supply G3; algebraic non-descent
+> is not yet independently proved.  More explicitly, the sources determine
 > the infinitesimal action of $\epsilon_{2,c}(\tau)=\cos 2\tau$ on formal
-> infrared bilocal kernels, but they do not determine
+> infrared bilocal kernels, but do not supply a proof of
 >
 > 1. a well-defined derivation of the physical regulated bilocal algebra;
 > 2. a spatial implementation of that derivation in either
@@ -22,8 +24,8 @@ packages:
 > the missing estimate.  Consequently no parity-even microscopic
 > $Q_N[\epsilon_{2,c}]$ with the required controlled Ward defect is licensed.
 
-This is a failure of construction, not a theorem that such an operator is
-impossible in every completion of SYK/JT.  The exact failure point is the lift
+This is a failure of construction, not a no-go theorem.  In particular, it
+does not exclude the matter-coupled route.  The exact missing lift is
 
 \[
  \boxed{
@@ -34,6 +36,14 @@ impossible in every completion of SYK/JT.  The exact failure point is the lift
  \text{a quantitatively convergent even-CAR sequence}.}
 \tag{1.1}
 \]
+
+The four sources do not license G3.  The still-open route is a
+matter-dressed one-boundary or explicitly relational two-boundary,
+nonconserved $Q_{2,c}$, acting on a fixed heat-regulated core separated from
+the contact diagonal, with a UV-corrected target/breaking insertion,
+parity-even finite-$N$ approximants, and a proved joint $N$/coupling Ward
+rate.  A larger-$N$ realization in a different regulator class is likewise
+outside this audit.
 
 The mode is therefore classified here as **KINEMATIC ONLY**.  It is not an
 exactly conserved charge.  It is also not called an approximately conserved
@@ -274,9 +284,9 @@ These are meaningful controls on an effective action.  They are not:
 Calling the estimate “controlled” in the effective-action sense therefore
 does not produce the $r_N$ demanded by (2.4).
 
-## 4. Proof of Theorem G3-O
+## 4. Source audit supporting Proposition G3-O
 
-### 4.1 First obstruction: the Ward rule has not descended from words to operators
+### 4.1 First missing bridge: physical descent is not source-established
 
 Let $\mathfrak F_\delta$ be the free unital *-algebra on symbols for the
 regulated primary bilocals in (2.5), before imposing any operator relations.
@@ -313,23 +323,28 @@ exactly (4.3).  Conversely, (4.3) makes the value independent of the chosen
 representative; (4.1)--(4.2) then descend to the quotient.  $\square$
 
 G3 assumes a *-preserving **linear** moment-preserving map $\iota$ from the
-Layer-1 bilocal core to the regulated JT core.  It does not assume that
-$\iota$ is a *-homomorphism, is injective modulo the common GNS null ideal,
-is onto the stated JT bilocal core, or intertwines $\delta_2$.  In particular
-it does not imply
+Layer-1 bilocal core to the regulated JT core.  It does not explicitly assume
+that $\iota$ is a *-homomorphism, is injective modulo the common GNS null
+ideal, is onto the stated JT bilocal core, or intertwines $\delta_2$.  The
+needed descent condition is
 
 \[
  \delta_2(\ker\iota)\subset\ker\iota.
 \tag{4.4}
 \]
 
-Without (4.4), the prescription
-$\delta_2\iota(x):=\iota(\delta_2x)$ depends on the preimage $x$.
-Preservation of the finitely declared TFD joint moments does not repair this:
-those moments can identify vectors only modulo their protocol GNS null
-spaces, whereas (4.3) concerns **all** operator relations in the represented
-algebra.  No cited passage in MSY, PW, LL, or Bucca--Mezei proves (4.3) or
-(4.4).
+If (4.4) fails, the prescription
+$\delta_2\iota(x):=\iota(\delta_2x)$ depends on the preimage $x$.  But the
+present hypotheses do not prove that it fails.  Indeed, set
+$D=\iota(ab)-\iota(a)\iota(b)$.  Preservation of every stated joint moment
+makes the four terms in $\omega(D^*D)$ cancel after pullback.  If the target
+TFD functional is faithful on the relevant one-sided bounded algebra, this
+forces $D=0$ and supplies multiplicativity modulo the faithful GNS null
+ideal.  The lane has not resolved that faithfulness inference, the relevant
+domains, or its two-sided version.  Consequently algebraic descent is
+**OPEN**: no cited passage in MSY, PW, LL, or Bucca--Mezei proves the needed
+physical descent and closability, but the stated moment hypothesis has not
+been shown to forbid them either.
 
 Even if descent were granted, algebraic descent would not prove closability.
 For a densely represented derivation $\delta$, closability requires that
@@ -342,7 +357,8 @@ For a densely represented derivation $\delta$, closability requires that
 
 in the chosen operator topology.  Neither the topology nor an estimate
 implying (4.5) is part of the moment-preserving hypothesis.  Thus item 1 of
-the checklist fails before one asks for a charge.
+the proposition is a source-level missing proof, not an independent
+algebraic no-go.
 
 This distinction is not cosmetic.  The microscopic Majorana bilocal has a
 fixed contact condition following from the CAR algebra, while the conformal
@@ -355,7 +371,7 @@ restores/breaks reparametrization invariance
 to control the regulated contact region; it cannot be inferred from the
 separated-point conformal kernel.
 
-### 4.2 Second obstruction: no spatial implementation is constructed
+### 4.2 Second missing bridge: no spatial implementation is constructed
 
 Suppose, for comparison, that the desired charge existed in the exact sense
 of G3.  Affiliation with a named von Neumann algebra $\mathcal N$ would give
@@ -420,11 +436,12 @@ allowed sources.  Averaging over the noncompact diagonal group is not a
 substitute: convergence, domain preservation, and nontriviality of that
 average would each need proof.
 
-This establishes item 2 of Theorem G3-O.  It does **not** establish that the
+This completes the source audit for item 2 of Proposition G3-O.  It does
+**not** establish that the
 derivation is outer on every possible completion; there is not yet a
 well-defined physical derivation to classify as inner or outer.
 
-### 4.3 Third obstruction: qualitative convergence cannot supply $r_N$
+### 4.3 Rate insufficiency: qualitative convergence cannot supply $r_N$
 
 > **Lemma 4.2 (no rate from convergence).**  Fix any positive sequence
 > $r_N\to0$.  Qualitative convergence $a_N\to0$ does not imply
@@ -464,8 +481,8 @@ $\beta J$ into a vanishing error as $N$ grows.
 Finally, their collective action is disorder averaged, whereas Layer 0 fixes
 one microscopic disorder realization.  Passing from an annealed saddle to
 (2.4) for that realization requires a concentration or high-probability
-theorem.  No allowed source supplies one.  This proves item 3 of Theorem
-G3-O.
+theorem.  No allowed source supplies one.  This establishes item 3 of
+Proposition G3-O.
 
 ### 4.4 Consequence for self-adjointness and the core
 
@@ -482,8 +499,8 @@ no densely defined physical operator whose deficiency indices could be
 studied.  Naming the algebraic span of heat-regulated insertions does not
 prove that it is invariant under an unknown generator.  Accordingly I do
 not claim essential self-adjointness, affiliation, strong density of the
-commutator register, or a quadratic-form identity.  This completes the proof
-of Theorem G3-O.  $\square$
+commutator register, or a quadratic-form identity.  This completes the
+source-closed audit supporting Proposition G3-O.  $\square$
 
 ## 5. Route triage
 
@@ -739,14 +756,14 @@ has not produced a candidate that numerics can honestly validate.
 |---|---|---|
 | Binding mode and bilocal variation | **DONE, formal** | Equations (2.1)--(2.2), sourced to MSY's reparametrized kernel. |
 | Action on free regulated words | **DONE** | Proposition 6.1; elementary Leibniz/* construction. |
-| Respect for physical operator relations | **OPEN** | Criterion (4.3) is proved, but its hypothesis is not; the assumed map $\iota$ need not preserve products or the derivation kernel. |
+| Respect for physical operator relations | **OPEN** | Criterion (4.3) is proved, but its hypothesis is not.  The faithful-GNS joint-moment argument may force multiplicativity; its domain, faithfulness, and two-sided applicability have not been settled. |
 | Closability | **OPEN** | No topology/domain estimate of the form (4.5). |
 | Named one-boundary affiliated generator | **ABSENT** | PW name $\mathcal A_R^{\mathrm{JT}}$ but construct no mode-2 unitary. |
 | Explicit relational two-boundary generator | **ABSENT** | Bare right and right-minus-left modes fail the diagonal constraint test (4.9)--(4.10); no dressing is supplied. |
 | Dense invariant Hilbert-space core | **ABSENT** | The heat-regulated algebra is a candidate algebraic domain, not a proved invariant core for an unknown operator. |
 | Essential self-adjointness/unitary construction | **ABSENT** | There is neither a candidate symmetric operator nor a candidate unitary group. |
 | Parity-even finite-$N$ approximants | **NOT DEFINED** | The filtered-bilinear search space has no source-backed kernel or uniform inverse estimate. |
-| Explicit finite-$N$ and finite-coupling $r_N$ | **OBSTRUCTED BY THE HYPOTHESES** | Lemma 4.2; additionally, fixed finite coupling leaves explicit breaking and no joint limit schedule is declared. |
+| Explicit finite-$N$ and finite-coupling $r_N$ | **NOT SUPPLIED** | Lemma 4.2 shows that qualitative convergence alone supplies no prescribed rate; additionally, fixed finite coupling leaves explicit breaking and no joint limit schedule is declared. |
 | Exactly conserved | **REFUTED for this mode in the EFT** | Only translations survive as physical-time symmetries; the non-Möbius direction is explicitly broken. |
 | Approximately conserved with controlled insertion | **NOT ESTABLISHED** | Effective breaking action exists; microscopic operator insertion and bound do not. |
 | Kinematic classification | **ESTABLISHED** | Formal correlator/word action only. |
@@ -760,10 +777,10 @@ hypotheses, of a self-adjoint
 $Q[\epsilon_{2,c}]$ affiliated with $\mathcal A_R^{\mathrm{JT}}$ or an explicitly
 relational $\mathcal A_{LR}^{\mathrm{JT}}$, no invariant commutator core on which
 (G3a) is proved, and no parity-even microscopic sequence with an explicit
-finite-$N$/finite-coupling rate.  The first sharp failure is algebraic
-descent, (4.3); the second is spatial/gauge-invariant implementation,
-(4.6)--(4.10); the independently decisive third is the missing rate,
-Lemma 4.2 and (4.11).
+finite-$N$/finite-coupling rate.  The first missing proof is algebraic
+descent, (4.3); the second missing bridge is spatial/gauge-invariant
+implementation, (4.6)--(4.10); the independently decisive third is the
+missing rate, Lemma 4.2 and (4.11).
 
 What survives is the kinematic derivation (2.2) on free infrared bilocal
 words and the large-$p$ derivation of its explicit-breaking effective action.

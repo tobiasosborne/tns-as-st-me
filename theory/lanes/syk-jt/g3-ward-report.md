@@ -156,6 +156,45 @@ Ward mismatch.
 
 ## Numerical verdict
 
+**Interpretive gate — the \(n=1\) control is not small.**  The filtered
+\(n=1\) defects are \(1.0000\)--\(1.0009\), while the ledger defects are
+\(0.3849\)--\(0.4758\), with no size decay.  Moreover, the declared
+real-oscillatory profile is not the hyperbolic Lorentzian continuation of the
+Euclidean Möbius mode.  The pipeline therefore does not establish the
+expected nonzero-mode constraint structure before comparing \(n=2\), so the
+mode-2 mismatch cannot be isolated as a specifically non-Möbius failure.
+
+The controlling numerical verdict is:
+
+> In \(q=4\) two-dot SYK exact diagonalization with
+> \(N_m=8,10,12\), \(\beta J=5,10\), three disorder seeds,
+> \(\delta J=0.15\), three mixed-bilocal probes, and the declared
+> real-oscillatory convention, the frequency-filtered and naive-ledger
+> mode-2 candidates have projected relative Ward defects
+> \(0.5501\le d_N\le1.0124\), constant-model fits, and no observed decay
+> toward zero with size; because the
+> corresponding \(n=1\) candidate defects are also not small and the EFT/ED
+> windows are not parametrically overlapping, this is finite-grid evidence
+> against only those two candidate definitions, not a universal
+> non-Möbius-charge no-go.
+
+The held strong-refutation row is replaced only by the following narrower
+statement:
+
+> For the two explicitly defined finite-\(N\) candidate families, the declared
+> real-oscillatory mode-2 commutator action fails to approximate the target
+> bilocal variation on the tested TFD/one-insertion sector at
+> \(N_m=8,10,12\), \(\beta J=5,10\), three disorder seeds, and
+> \(\delta J=0.15\); this refutes those candidate implementations on that
+> grid, not the existence of a matter-dressed operational \(n=2\) charge.
+
+This finite-grid refutation does **not** rule out larger \(N_m\), a genuine
+joint Schwarzian scaling limit, other regulators or regulator-removal
+schedules, contact-corrected Ward targets, hyperbolic/other Lorentzian
+continuations, different microscopic candidate families, a matter-dressed
+one-boundary implementer, an explicitly relational two-boundary implementer,
+or constructions using information beyond the four allowed sources.
+
 Neither candidate supplies a controlled \(r_N\to0\) on the accessible
 sizes.  Across all 216 n=2 main rows, the projected matrix defect lies in
 \([0.550069,1.012437]\), while the stronger action-norm defect lies in
@@ -178,12 +217,12 @@ and 0.8653, 0.9402, 0.5667 for the ledger.
 | filtered, w=1 | 1.000644 | 1.000573 | 1.003378 |
 | ledger, w=1 | .865337 | .940200 | .566663 |
 
-This is evidence against these two explicit constructions, not a no-go
-theorem for every parity-even finite-N approximant.  The sizes also do not
-open a parametric conformal window: \(1\ll\beta J\ll N_m\) is not satisfied
-uniformly.  The limit order tested is fixed \(\beta J\), fixed regulated
-times in units of \(\beta\), then increasing \(N_m=8,10,12\), with a single
-\(N_m=14\) check.  No late-time or strict Schwarzian limit is inferred.
+The single \(N_m=14\) check does not enlarge the promoted finite grid or cure
+the control failure.  The tested sizes do not open a parametric conformal
+window: \(1\ll\beta J\ll N_m\) is not satisfied uniformly.  The limit order
+is fixed \(\beta J\), fixed regulated times in units of \(\beta\), then
+increasing \(N_m=8,10,12\), with the one \(N_m=14\) check reported
+separately.  No late-time or strict Schwarzian limit is inferred.
 
 ## Scaling fits and fluctuation bands
 
