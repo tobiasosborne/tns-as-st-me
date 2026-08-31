@@ -200,3 +200,14 @@ quote with file+line before any load-bearing use.
 |---|---|---|---|
 | 2110.05497 | Causal connectability between quantum systems and the black hole interior in holographic duality | causal_connectability_PRD.tex (title at :329; a commented-out draft title precedes it) | emergent type III_1 one-sided algebra at large N in the TFD sector |
 | 2301.07257 | Algebras and States in JT Gravity | (single tex) | JT boundary observable algebra: crossed product / type II, diagonal SL(2) as constraint |
+
+## Batch 10 — novelty-sweep priority prior art (fetched 2026-08-31)
+
+Flagged PRIORITY by the SYK/JT novelty sweep (docs/syk-jt-novelty-sweep.md):
+prior art for the finite-asymptotic-symmetry claim; companion paper must
+position against both. Titles verified from fetched TeX.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 1904.12820 | Symmetries Near the Horizon | Symmetries-draft.tex | Lin–Maldacena–Zhao: gauge-invariant relational SL(2) operators moving matter relative to the two boundaries (exact up to nonperturbative corrections) — closest prior art to finite operational corner A and to the relational-SL(2) framing; consistent with the G3 negative (their construction stops at SL(2)) |
+| 1708.08471 | Menagerie of AdS2 boundary conditions | AdS2.tex (\mytitle macro) | Grumiller et al.: asymptotic algebras on-shell reduce to finite-dimensional ones, "reminiscent of SYK" |
