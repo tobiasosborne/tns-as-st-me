@@ -86,8 +86,11 @@ the lanes' verdicts must stand on Layers 0–1 alone.
   of allowed observables under (pulse protocol) differ from (equilibrium
   protocol at the same measured E_f). The plateau computation (T.2) is
   constitutive of the transition, not a check on a pre-existing label.
-- "Permanent" requires a declared limit order: N → ∞ (equivalently
-  tree-level large C) FIRST, then detector time large WITHIN the stated
-  EFT-validity window; the window must be stated quantitatively.
+- "Permanent" requires a declared limit order. Convention (adopted from
+  critic r1, Objection 6): C → ∞ FIRST, then 1 ≪ κT ≪ κC (invariantly:
+  κT → ∞ with T/C → 0). Taking T → ∞ first at fixed C or fixed N is NOT
+  supported by the sources; any permanence claim must state this
+  iterated limit, a finite-C error or maximum usable detector time, and
+  the detector's sample cost at that time.
 - Any conclusion phrased in frame/label language that does not reduce to
   1–3 is a razor violation: FATAL-class objection.
