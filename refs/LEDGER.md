@@ -187,3 +187,16 @@ gravity NOT excluded from the one-species triangle map; JT/SYK appreciated.
 | 1606.01857 | Conformal symmetry and its breaking in two dimensional Nearly Anti-de-Sitter space | GravityReparametrizationsRevised.tex | corner A of JT: Diff(S^1)->SL(2,R) breaking, Schwarzian as the boundary Goldstone |
 | 2412.14799 | Nonlinear soft mode action for the large-p SYK model | (single tex) | corner C of SYK: the soft-mode action and its universal dressing of correlators |
 | 1306.0622 | Black holes and the butterfly effect | (single tex) | corner B candidate: the shockwave/frame shift as a 2d memory effect |
+
+## Batch 9 — observable algebras for the SYK/JT triangle (fetched 2026-08-31)
+
+Fetched by orchestrator after TJO razor directive ("specify the physically
+allowed observables — usually as a C*-algebra"). Titles verified from fetched
+TeX (exact). Ground truth for the algebraic formulation in
+theory/lanes/syk-jt/observables-spec.md; internals not yet quoted anywhere —
+quote with file+line before any load-bearing use.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 2110.05497 | Causal connectability between quantum systems and the black hole interior in holographic duality | causal_connectability_PRD.tex (title at :329; a commented-out draft title precedes it) | emergent type III_1 one-sided algebra at large N in the TFD sector |
+| 2301.07257 | Algebras and States in JT Gravity | (single tex) | JT boundary observable algebra: crossed product / type II, diagonal SL(2) as constraint |
