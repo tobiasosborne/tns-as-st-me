@@ -320,3 +320,28 @@ operationally supported balanced sector or an implementable unbalanced
 reference is supplied.
 
 FAIL(9)
+
+## r2a: Objection 9 delta adjudication
+
+**O9 disposition: FIX VERIFIED; CLOSED.**  The revised decisive-numerical-
+verdict paragraph restricts the susceptibility, absolute-correlator
+no-plateau, and finite-\(C\) cost conclusions to the two
+energy-balanced derivative-Gaussian rows, at the report's declared
+large-\(C\)-first/leading balanced scope.  It explicitly labels all six
+unbalanced rows as formal Schwarzian trajectory/DC diagnostics and denies
+them any operational detector conclusion, exactly matching O9's accepted
+first fix-demand branch.
+
+Fresh evaluation of the JSON `extrapolated_vertex_ratio` values gives
+\(1.000109978916786\) at \(C=10\) and \(0.999988369060947\) at \(C=100\).
+Their deviations from unity are respectively \(0.010997891679\%\) and
+\(0.001163093905\%\); the worst rounds to \(0.011\%\), so “0.011% or better”
+is correct.
+
+The `HEAD~1` delta adds no competing operational claim: the response says
+that no implementable unequal-\((E_L,E_R)\) reference is claimed, and every
+added reference to the six unbalanced rows calls them formal diagnostics or
+states that they license no operational detector conclusion.  Objection 9 is
+therefore discharged, superseding the historical r2 terminal line above.
+
+PASS
