@@ -346,3 +346,34 @@ These must be checked against local TeX and recorded in `refs/LEDGER.md`.
 | **2603.18509, 2601.23019, 2603.18154, 2409.15415, 2602.14079, 2607.18675, 2604.19866, 2603.12670, 2608.09295, 2606.27308, 2604.26600** | Authors and/or titles unconfirmed; reached the sweep via search summaries. | Verify each id against its fetched title on arrival; record every mismatch. |
 | **2504.12521, 2512.21239, 2602.20037** | Ids and authorship unverified. | Verify before citing. |
 | **"test" record** | A junk entry (`id: test`, `title: test`) appears in the gap-round hit list. | Ignore; noted so the deduped count is not misread. |
+---
+
+## Appendix (orchestrator, 2026-08-31): exact citer-set intersections via INSPIRE
+
+TJO asked for the intersection of the citers of Strominger's IR-triangle
+lectures with the citers of "the SYK paper." Computed exactly from the
+INSPIRE citation graph (recids 1517745 / 1452588 / 1467447):
+
+- Strominger lectures (1703.05448): 1169 citers. Maldacena–Stanford SYK
+  (1604.07818): 2152 citers. MSY nearly-AdS2 (1606.01857): 1266 citers.
+- **∩ with Maldacena–Stanford SYK: 13 papers.**
+- **∩ with MSY nearly-AdS2: 21 papers.** Union of both lists ≈ 30
+  (four papers appear in both: 1907.01422, 2003.12252, 2201.05054,
+  2407.03866).
+
+Reading of the lists: NO member assembles an IR triangle for SYK/JT.
+Categories: (a) celestial/Carrollian holography using SYK-side tools —
+2201.05054 Pasterski–Verlinde "Mapping SYK to the sky" is the standout,
+and it runs the OPPOSITE direction (2D SYK generalization as a toy model
+of the 4D celestial soft sector; no 0+1d triangle) — must-cite,
+non-overlapping; (b) 3d/flat reductions touching JT — 2211.13415 (JT from
+3d flat holographic reduction), 2411.13633 (soft gravitons in 3d, already
+on the fetch list); (c) soft-mode effective actions in 4d modeled on the
+Schwarzian — 2008.03321 (superrotation effective action), again the
+reverse direction; (d) horizon-symmetry work — 2112.13853, 2608.26725,
+2312.08353; (e) unrelated (Krylov complexity, energy correlators, etc.).
+
+Quantitative C5 support: out of ~1200–2200 citers each, only ~30 papers
+even cite both programs, and none of them poses the triangle question for
+SYK/JT itself. The union list doubles as the highest-risk prior-art set
+and as a must-cite shortlist for the companion's introduction.
