@@ -1,5 +1,6 @@
 refs/prose-exemplars/
 refs/arxiv-*/
+refs/strominger-videos/raw/
 !refs/LEDGER.md
 numerics/Manifest.toml
 paper/*.aux

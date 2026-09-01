@@ -1,0 +1,63 @@
+# asymptotic-symmetries
+
+Pointer convention `[id @ hh:mm:ss]` and all caveats: [../INDEX.md](../INDEX.md).
+
+---
+
+## The name, and what the objects are
+
+- **He dislikes the term "asymptotic symmetries" and says so at the outset** — "asymptotic" suggests approximate, whereas these are ordinary exact symmetries with exact conserved charges, and the adjective only records where they take a recognisable form. `[lvyyxkjwSCg @ 00:01:06]` — [L1](../lectures/01-lvyyxkjwSCg-digest.md). He repeats the complaint in almost identical words at `[wg-4Rm-kk70 @ 00:02:14]` — [extra-02](../lectures/extra-02-wg-4Rm-kk70-digest.md) and `[F42XbX45Dzw @ 00:04:54]` — [extra-05](../lectures/extra-05-F42XbX45Dzw-digest.md); its recurrence is itself the datum, since he evidently expects the confusion in every audience. Note: in the TeX this survives only as a *commented-out* footnote, so the spoken version is the only place it is asserted.
+- **He is not confident in the name even for the new fermionic objects, and keeps it only because they act naturally on the asymptotic Hilbert space.** `[WxCY-K-Jb4A @ 00:18:08]` — [L5](../lectures/05-WxCY-K-Jb4A-digest.md)
+- **The methodological credo: an asymptotic symmetry group has to earn its keep** — "what exactly you mean by it changes with every new application … my point of view is that it should be useful … it should tell us relationships between physical quantities that we can measure that we didn't know about before". `[7S3Eg4VlZf0 @ 00:10:35]` — [extra-03](../lectures/extra-03-7S3Eg4VlZf0-digest.md)
+- **Applied to 2d CFT, the same standard: meromorphic vector fields are kept because "it's good for something"** — the resulting Ward identities give checkable relations among correlators. He first notes that practitioners each give a different answer and that the common local-patch one does not fully convince him. `[60U7_P2XJlQ @ 00:31:19]`, `[60U7_P2XJlQ @ 00:32:22]` — [L8](../lectures/08-60U7_P2XJlQ-digest.md)
+- **The criterion for what counts as a symmetry: it must act on in-states *and* out-states, i.e. commute with the Hamiltonian — "those are the useful things".** `[Yx7PWgfC1dw @ 01:25:10]` — [L7](../lectures/07-Yx7PWgfC1dw-digest.md)
+- **What "a symmetry of scattering" buys you, in plain words:** if we do the same experiment on Earth and then on Mars, we should be able to predict the second from the first. `[6kH2pl_zvMA @ 00:18:53]` — [cstq](../lectures/cstq-6kH2pl_zvMA-digest.md)
+- **These symmetries are "more physical than gauge symmetries"** — they give Ward identities, relate scattering amplitudes and constrain the theory; and nobody ever promised that all interesting symmetries would be subgroups of a local gauge symmetry. `[xZ2FG1kLb9I @ 01:50:44]`, `[xZ2FG1kLb9I @ 01:52:50]` — [L4](../lectures/04-xZ2FG1kLb9I-digest.md)
+
+## The construction, and its squishy parts
+
+- **Both halves of "ASG = allowed / trivial" are, in his word, "squishy"** — deciding what to allow at infinity is a judgment, constructing charges to decide triviality is often impractical, and a vanishing charge does not reliably mean the transformation is trivial. `[swrNwD0ypaE @ 00:13:01]` — [L3](../lectures/03-swrNwD0ypaE-digest.md)
+- **"More of an art than a science" — plus the spoken-only clause "and the rules keep changing".** The art/science line itself is verbatim in the written notes (§2.10) and must be cited from the TeX; only the instability clause is a delta. `[swrNwD0ypaE @ 00:10:50]` — [L3](../lectures/03-swrNwD0ypaE-digest.md). See the trap list in [../INDEX.md](../INDEX.md#43-the-verbatim-in-notes-trap-list).
+- **How the symmetries were originally found:** gauge-fix, look at the residual gauge transformations, do an asymptotic expansion, and see what is left over. `[yeMZKViadhw @ 01:15:48]` — [L2](../lectures/02-yeMZKViadhw-digest.md)
+- **How Brown and Henneaux calibrated their boundary conditions:** they already knew three-dimensional black holes existed and made the conditions just weak enough to admit them — the method needs a known physical target. `[swrNwD0ypaE @ 00:17:11]` — [L3](../lectures/03-swrNwD0ypaE-digest.md)
+- **What makes a falloff condition the right one: it has to be weak enough to let gravitational waves out.** `[OXl7IXT7_Cw @ 01:20:49]` — [L6](../lectures/06-OXl7IXT7_Cw-digest.md)
+- **Boundary conditions at scri are not like boundary conditions in a box, and the box intuition actively misleads** — scri is not a reflecting wall; radiation boils off and leaves, so you have to know what behaviour to expect rather than choose it. `[OXl7IXT7_Cw @ 01:10:06]`, `[OXl7IXT7_Cw @ 01:11:14]` — [L6](../lectures/06-OXl7IXT7_Cw-digest.md)
+- **The falloff derivation from finite energy flux is partly improvised, and a student supplies the missing constraint** (a `1/r` long-range field gives infinite charge as well as infinite energy). Worth knowing, since the falloffs are the input to everything downstream. `[swrNwD0ypaE @ 00:22:34]` — [L3](../lectures/03-swrNwD0ypaE-digest.md)
+- **A "no first-principles proof" admission about the antipodal matching condition** — see [charges.md](charges.md) and [open-problems.md](open-problems.md); it is the sharpest open-problem statement in lecture 1. `[lvyyxkjwSCg @ 01:26:02]` — [L1](../lectures/01-lvyyxkjwSCg-digest.md)
+- **A boost picture for why the orthonormal-frame condition excludes boosts:** the boost vector field grows towards the ends of scri even though it fixes the light cone of the origin. `[60U7_P2XJlQ @ 00:23:47]`, `[60U7_P2XJlQ @ 00:24:50]` — [L8](../lectures/08-60U7_P2XJlQ-digest.md)
+
+## Why they exist at all
+
+- **Null infinity is ultralocal:** its points are out of causal contact, so nothing ties them together, and it would violate causality to have a principle forcing them all to move together. Flagged as his own way of thinking about it. `[CdFyoaNv8GI @ 00:37:46]` — [extra-01](../lectures/extra-01-CdFyoaNv8GI-digest.md)
+- **There is no preferred sphere at infinity, so general relativity gives no way to tie together "the same time" at different angles** — everything else follows from that. `[6kH2pl_zvMA @ 00:15:47]` (continues `00:16:49`) — [cstq](../lectures/cstq-6kH2pl_zvMA-digest.md)
+- **General relativity does not reduce to special relativity at long distance, because there is an infinite amount of zero-energy structure out there and special relativity has no infinite vacuum degeneracy to match it.** `[F42XbX45Dzw @ 01:05:22]` — [extra-05](../lectures/extra-05-F42XbX45Dzw-digest.md)
+- **A student's picture for the antipodal map, endorsed:** a free particle flying through the middle enters at one angle and leaves at the opposite one — "it's not surprising when you think about it the right way". `[yeMZKViadhw @ 01:12:34]` — [L2](../lectures/02-yeMZKViadhw-digest.md)
+- **Counting settles the fermionic case before any computation: an infinite family cannot sit inside a four-parameter one.** `[WxCY-K-Jb4A @ 00:58:15]` — [L5](../lectures/05-WxCY-K-Jb4A-digest.md)
+
+## Finite regions, cutoffs and boxes
+
+- **A gauge transformation cut off away from infinity is a null direction of the symplectic form; the boundary term at infinity is exactly what makes it non-degenerate, hence physical.** Given in answer to a proposal that causal-diamond boundary transformations should go over into supertranslations in the large-region limit — and he agrees they should. `[CdFyoaNv8GI @ 01:20:25]` — [extra-01](../lectures/extra-01-CdFyoaNv8GI-digest.md). (Attribution of the symplectic result to "car and somebody in the late 80s" is unresolved; Crnkovic–Witten is a plausible but unverified reading.)
+- **…but a finite system generically has *less* symmetry than the infinite one it grows into.** Whatever boundary conditions you impose restrict you to their symmetries, and the AdS₃ cutoff is the cautionary example: you never get the full conformal group back, and "in all known ways of doing it it's difficult to recover the full group". `[CdFyoaNv8GI @ 01:22:31]` — [extra-01](../lectures/extra-01-CdFyoaNv8GI-digest.md)
+- **…and the intermediate position he does allow:** work at finite distance, impose extra boundary conditions, and look for an analogue of BMS — whether this works in Minkowski space is a technical question, not a conceptual obstruction. `[CdFyoaNv8GI @ 01:21:28]` — [extra-01](../lectures/extra-01-CdFyoaNv8GI-digest.md)
+- **AdS seems not to have a version of the triangle "because it's gapped"** — the sharpest available necessary condition for importing the structure into a new system. `[CdFyoaNv8GI @ 00:04:31]` — [extra-01](../lectures/extra-01-CdFyoaNv8GI-digest.md)
+- **…with the matching methodological complaint:** "if you were to study quantum gravity by putting it in a box and taking that box out to infinity you would miss all of this". `[CdFyoaNv8GI @ 01:07:45]` — [extra-01](../lectures/extra-01-CdFyoaNv8GI-digest.md)
+- **The well-posed initial-value problem is *not* the scattering problem:** evolving diffeomorphism-invariant Cauchy data is well defined, but scattering involves infinitely many quantities that are not diffeomorphism invariant and are nonetheless physical. `[6kH2pl_zvMA @ 00:02:12]` — [cstq](../lectures/cstq-6kH2pl_zvMA-digest.md)
+- **The load-bearing assumption stated plainly: "if we don't assume there's some kind of matching conditions we just don't have a theory".** `[H4IZ3jwTDp4 @ 00:28:37]` — [L10](../lectures/10-H4IZ3jwTDp4-digest.md)
+
+## Answering "it's just a diffeomorphism"
+
+- **The boost intuition pump:** a boost is a diffeomorphism, yet nobody says an electron at rest and a moving electron are the same state — general relativity just makes the same phenomenon subtler. `[6kH2pl_zvMA @ 00:03:12]` — [cstq](../lectures/cstq-6kH2pl_zvMA-digest.md)
+- **The measuring-device criterion:** two gravitons supertranslated so that one departs fifty years early and the other a hundred years late are diffeomorphic and distinguishable by an instrument — "we can measure things that are not related by diffeomorphisms". `[6kH2pl_zvMA @ 00:16:49]`, `[6kH2pl_zvMA @ 00:17:52]` — [cstq](../lectures/cstq-6kH2pl_zvMA-digest.md)
+- **The one-line reply:** the charges are non-zero, conserved and coordinate invariant, so something coordinate invariant is changing. `[60U7_P2XJlQ @ 00:13:09]` — [L8](../lectures/08-60U7_P2XJlQ-digest.md)
+- **The pulse-relabelling example needs no charge computation** — it is manifestly a different physical configuration, "just like you boost a black hole you change its energy". `[Yx7PWgfC1dw @ 01:01:07]`, signposted at `[Yx7PWgfC1dw @ 00:58:45]` — [L7](../lectures/07-Yx7PWgfC1dw-digest.md)
+- **Physical states are annihilated by all gauge transformations only when those transformations are trivial at infinity** — large gauge symmetries act non-trivially on the Hilbert space precisely because they do not die off. `[yeMZKViadhw @ 01:14:42]` — [L2](../lectures/02-yeMZKViadhw-digest.md)
+
+## Status of the programme
+
+- **We know there is at least an infinite-dimensional symmetry group, but not whether we have the whole of it** — and the community not only did not know the answer, it knew it did not know. `[lvyyxkjwSCg @ 00:11:57]` — [L1](../lectures/01-lvyyxkjwSCg-digest.md)
+- **There is not even a proposal on the table for what the whole tower is.** `[6kH2pl_zvMA @ 00:35:42]` — [cstq](../lectures/cstq-6kH2pl_zvMA-digest.md)
+- **The classification problem is open and he says he does not know what to do about it** — many symmetries with real physical consequences, no method for finding them all. `[WxCY-K-Jb4A @ 00:19:13]` — [L5](../lectures/05-WxCY-K-Jb4A-digest.md)
+- **A larger theory with auxiliary fields might make everything manifest, but the lesson he draws is the negative one:** given a theory as handed to you, some of its real symmetries may simply not be visible as local symmetries. `[WxCY-K-Jb4A @ 00:17:05]`, continuing `[WxCY-K-Jb4A @ 00:18:08]` — [L5](../lectures/05-WxCY-K-Jb4A-digest.md)
+- **Roughly 500 possible triangles, roughly 30 papers written** — the arithmetic behind "in its infancy". `[lvyyxkjwSCg @ 00:07:38]` — [L1](../lectures/01-lvyyxkjwSCg-digest.md)
+- **The BMS boundary conditions "were both too strong and too weak"** — too strong because they killed the superrotations, too weak because they missed the antipodal structure. `[6kH2pl_zvMA @ 00:34:37]` — [cstq](../lectures/cstq-6kH2pl_zvMA-digest.md)
+- **EARLY PERIOD (2013), later revised — "we don't have a Hilbert space at scri plus"**, offered as the reason not to build the symmetry as an operator algebra on states; the mature programme does exactly that. `[7S3Eg4VlZf0 @ 00:10:35]` — [extra-03](../lectures/extra-03-7S3Eg4VlZf0-digest.md)

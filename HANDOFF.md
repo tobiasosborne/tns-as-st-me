@@ -2,10 +2,67 @@
 
 # HANDOFF — live state
 
-Updated: 2026-08-31, session 10 (the SYK/JT session). Read order gate:
-CLAUDE.md → **PRD.md (the process constitution — where it conflicts with
-older habits recorded here or anywhere, PRD WINS)** →
+Updated: 2026-09-01, session 11 (Strominger wisdom + batch-13 + Liouville).
+Read order gate: CLAUDE.md → **PRD.md (the process constitution — where it
+conflicts with older habits recorded here or anywhere, PRD WINS)** →
 HANDOFF_MPS_SOFT_THEOREM.md → this file → paper/skeleton.md.
+
+## Session 11 — wisdom-of-Strominger database, refs batch-13, Liouville rung
+
+**Wisdom of Strominger (tns-t66, CLOSED).** TJO directive: mine the SIDE
+REMARKS of Strominger's video lectures, not the arXiv-notes content, into a
+queryable secondary source. Built: 16 cleaned timestamped transcripts in
+`refs/strominger-videos/` (the 10-lecture Harvard IR-structure course, the
+CSTQ colloquium, 5 extra talks; pipeline `scripts/vtt2md.py` + current
+yt-dlp — the system yt-dlp 2024.04 is too old for subtitles), a 41-item
+source manifest (`docs/strominger-video-manifest.md`; PIRSA/Cornell have no
+captions), and `docs/strominger-wisdom/`: INDEX + 16 digests + 22 topic
+files (676 entries) + **campaign-hooks.md (30 hooks — read this first)**.
+Highest-value finds: (i) lecture-9 "the word calibrated is extremely
+important" vs Strominger's extra-05 "flat connections are physical, you
+don't care about the device" — an explicit inter-source TENSION mapping
+onto the D32/D33 two-register ruling (external support that the split is
+substantive); (ii) extra-01: finite systems generically have LESS symmetry
+than their infinite limits (AdS3 cutoff cautionary tale) — predicts the
+shape of the R2 refuted-orbit finding; (iii) antipodal matching has no
+first-principles proof ("sitting there for 130 years") and its firmness
+varies across talks; (iv) a hooks-NOT-found section (no lattice/MPS, no
+SYK/JT, no measurement-cost material in the corpus — don't re-search).
+Cautions: lecture 9 is GUEST-lectured (likely Zhiboedov — never attribute
+to Strominger); three famous-sounding asides are verbatim in the written
+notes (cite TeX, list in INDEX §4.3); the whole database is secondary —
+NOT L3 ground truth. Raw VTTs are gitignored (regenerable).
+
+**Refs batch-13 (tns-8gu, CLOSED).** All 21 skeleton-cited ids without
+local TeX fetched + title-verified (LEDGER Batch 13); the companion paper's
+L3 gate section is DISCHARGED in `paper/skeleton-syk-jt.md`. One real bug
+found: the C3 universality-bound citation **2201.03650 was the wrong id**
+(a BKT paper); correct Kruthoff id **2204.09685** fetched+verified and
+substituted at every occurrence (skeleton + deep-sweep doc). The stale
+"companion-cite-notes.md does not exist" UNBACKED flag was corrected (it
+exists and records the 1408.6560 mismatch). **TJO companion prose writing
+is now fully unblocked on references.**
+
+**Liouville rung (tns-7wd, CLOSED — ladder complete).** codex, 904-line
+Lamport report `theory/lanes/syk-jt/liouville-rung-report.md`: Q1
+HOLD/underdetermined — the large-p sources do not fix the microscopic
+two-time forcing, so plateau existence is not determined; conditionally,
+IF the completed sourced problem satisfies the displayed relaxation
+condition (L.23) THEN the plateau survives and equals the DC residue.
+Q2: first truncation-lifting correction δv = 2/(βJ) + O((βJ)⁻²). Q3:
+Schwarzian butterfly decay recovered; no controlled finite-v reversal.
+Absolute-decay scale T ~ p/κ sits outside the controlled 1/p window
+(echoes the ED rung's non-overlap one rung up). NO CLAIMS merge proposals;
+per PRD value gate no critic rounds spent.
+
+**Resume order for session 12:** (1) TJO writes companion prose from
+`paper/skeleton-syk-jt.md` (references all local now; consult
+`docs/strominger-wisdom/campaign-hooks.md` for framing support, citing TeX
+only); (2) TJO decision: C5 headline strength; (3) optional corner-A lane:
+LMZ relational construction to n=2 (still the named open route); (4)
+main-campaign queue unchanged: tns-bfc, tns-25h, tns-94j (the D32/D33
+naming decision — note hook H1 and the H10 higher-moments disagreement
+bear on it directly), tns-kng, tns-bsk, tns-7ou.
 
 ## Session 10 — SYK/JT: the decisive computation, two memory registers, corner A, companion paper
 

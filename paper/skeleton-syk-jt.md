@@ -90,7 +90,7 @@
 - **Structural fact + four prior formulations in ONE sentence.** Infinite naive reparametrization symmetry, finite surviving algebra: cite **1708.08471 / 2005.08999 / 2108.04841 / 2603.18154** together (deep sweep §1 C3).
 - **C3 fence.** Do NOT present "only SL(2) survives" as a discovery; restate as a sharpened, quantified version of a known structural fact (deep sweep §1 C3).
 - **C3 fence.** Cite **1904.12820** (Lin–Maldacena–Zhao exact SL(2) generators vs approximate constructions) — pass-1 sweep PRIORITY; a referee who knows it will ask why this is not a restatement.
-- **C3 universality bound.** Phrase as "a finite subalgebra set by the isometry content", with plain JT/SYK giving SL(2,R); cite **2503.13680**, **2506.02629**, **2410.10768**, **2201.03650** in that sentence.
+- **C3 universality bound.** Phrase as "a finite subalgebra set by the isometry content", with plain JT/SYK giving SL(2,R); cite **2503.13680**, **2506.02629**, **2410.10768**, **2204.09685** in that sentence.
 - **Result [JT-A-tangent].** The Bucca–Mezei Ansatz mode-2 tangent `V_{2,c}γ_* = 2 sin(2τ̄)(1−cos d)`, inducing `dG/ds = sgn(d)V_{2,c}γ_*/(2p) + O(p^{-2})`.
 - **Result [JT-A-tangent], scope, verbatim.** "an explicitly broken kinematic response of allowed bilocal expectations, not an affiliated charge, finite-`N` operation, or controlled Ward identity."
 - **Wording fence [JT-A-tangent].** No "charge", "memory", "symmetry generator", "conserved" or "permanent" wording may attach to this row (`theory/verdicts/g3-wave-critic-r1.md` §8.2).
@@ -172,11 +172,19 @@
 
 ## L3 gate — citation obligations with NO local TeX yet
 
+**DISCHARGED 2026-09-01 (refs Batch 13, bd tns-8gu):** every id listed below
+is now fetched and title-verified in `refs/` — see `refs/LEDGER.md` Batch 13.
+One correction found in the process: the C3 universality-bound citation
+**2201.03650 was the WRONG id** (it is a BKT-transitions paper); the intended
+Kruthoff higher-spin JT paper is **2204.09685** (fetched, verified; this file
+and the deep-sweep doc corrected in place). Original obligation list kept for
+provenance:
+
 - Not in `refs/`: **2604.19866**, **2512.02825** (both load-bearing for the C2 framing sentence).
 - Not in `refs/`: **2201.05054** (must-cite, Pasterski–Verlinde reverse-direction note).
-- Not in `refs/`: **2503.13680**, **2506.02629**, **2201.03650** (three of the four C3 universality-bound ids; 2410.10768 is local).
+- Not in `refs/`: **2503.13680**, **2506.02629**, **2204.09685** (three of the four C3 universality-bound ids; 2410.10768 is local; NOTE: 2204.09685 replaces the wrong id 2201.03650 recorded pre-batch-13 — see refs/LEDGER.md Batch 13).
 - Not in `refs/`: **1406.2678** (switchback origin), **2304.15008**, **2406.04397** (2506.19013 is local).
 - Not in `refs/`: **1912.13449** (FGHN), **2608.09295**, **2402.02594**, **2312.10454**, **1912.12806** (C4 comparison set; 1901.00021, 2109.03832, 2601.23019, 2406.07106 are local).
 - Not in `refs/`: **2002.05725**, **2102.06647** (C3 finite-`N` methodological neighbours), **2412.16142 / 2412.16149**, **2602.14079** (watch item), **2307.15725**.
 - Unresolved LEDGER conflicts touching cited ids: **1709.09871** (author/content), **2112.14609** (author), **1711.08467** (author), **2310.19885** (content) — deep sweep §7.
-- `docs/companion-cite-notes.md` is referenced by `refs/LEDGER.md` Batch 12 but does not exist; 1408.6560 and 2406.07106 title verification is recorded nowhere. [UNBACKED]
+- ~~`docs/companion-cite-notes.md` is referenced by `refs/LEDGER.md` Batch 12 but does not exist~~ — STALE FLAG, corrected 2026-09-01: the file exists and records the 1408.6560 mismatch (LEDGER concurs) and the 2406.07106 verification.

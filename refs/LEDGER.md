@@ -262,3 +262,58 @@ false alarm). Previously-unconfirmed 2025–26 authorships now confirmed
 from TeX: 2603.18509 = Joshi–Mishra (IIT-BHU); 2601.23019 = Zosso, Magaña
 Zertuche, Gasparotto, Cogez, Inchauspé, Jacobs. Full quotes and
 positioning: docs/companion-cite-notes.md.
+
+## Batch 13 — remaining paper/skeleton-syk-jt.md citations (fetched 2026-09-01, bd tns-8gu)
+
+The 21 candidate ids grepped from `paper/skeleton-syk-jt.md` §"Not in
+`refs/`" lines, cross-checked against context in the skeleton and against
+`docs/syk-jt-novelty-sweep-deep.md` / `docs/syk-jt-novelty-sweep.md` for
+expected title/authors (companion-cite-notes.md had no entries for any of
+these 21 — all expected titles came from the sweep docs instead). All 21
+confirmed as genuine citations (no false positives among the grep hits).
+Fetched via `https://arxiv.org/e-print/<id>`, 4 s between requests; every
+title extracted from the fetched TeX itself. The three load-bearing ids
+(2604.19866, 2512.02825, 2201.05054 — C2's flat-space framing sentence and
+the Pasterski–Verlinde reverse-direction note) were fetched first and
+verified before the rest. 20/21 VERIFIED; 1 MISMATCH (below), correct id
+fetched in its place.
+
+| arXiv id | verified title | main tex | role |
+|---|---|---|---|
+| 2604.19866 | Asymptotic charges as detectors and the memory effect in massive QED and perturbative quantum gravity | main.tex:23 | LOAD-BEARING: C2 framing sentence, flat-space memory<->soft-charge pairing (Oertel–Moult–Pasterski) |
+| 2512.02825 | Memory Correlators and Ward Identities in the `in-in' Formalism | draft.tex:241 | LOAD-BEARING: C2 framing sentence, same structure via supertranslation Ward identity in Schwinger–Keldysh |
+| 2201.05054 | Mapping SYK to the Sky | syk-in-sky-final.tex:74 | LOAD-BEARING: Pasterski–Verlinde reverse-direction note (C5 first-ness paragraph) |
+| 1912.12806 | Black Hole Memory | bhmemfinal.tex:78 | C4: published memory-vs-charge structural-tension precedent |
+| 1912.13449 | Persistent gravitational wave observables: Nonlinear plane wave spacetimes | ms_ii.tex:55 | C4: FGHN persistent-observable programme (comparison, not citation) |
+| 2002.05725 | Many-Body Chaos in the Sachdev-Ye-Kitaev Model | main.tex:38 | C3: nearest finite-N ED methodological neighbour (Lyapunov/OTOC, not Ward defects) |
+| 2102.06647 | Non-local reparametrization action in coupled Sachdev--Ye--Kitaev models | no_sch.tex:253 | C3: nearest analytic finite-N reparametrization-action neighbour (Milekhin) |
+| 2304.15008 | The Cosmological Switchback Effect | Draft_CV20_shocks.tex:138 | C1: switchback lineage (Baiguera–Berman I) |
+| 2307.15725 | A symmetry algebra in double-scaled SYK | draftQdeformed.tex:129 | Lin–Stanford DSSYK chord algebra (genre/context) |
+| 2312.10454 | Gravitational wave memory and quantum Michelson interferometer | Michelson_quantum_PRD.tex:66 | C4: memory as a quantum-noise floor |
+| 2402.02594 | Gravitational Wave Displacement and Velocity Memory Effects | velocitymemorrevision2.tex:107 | C4: displacement-vs-velocity two-register split (companion to 2406.07106) |
+| 2406.04397 | The Cosmological Switchback Effect II | Draft_CVCA.tex:105 | C1: switchback lineage (Baiguera–Berman II) |
+| 2412.05038 | BMS$_3$ fermionic localization | BMS3_localization.tex:46 | C5 negative evidence: citer-intersection member (Simon–Yu), no triangle content |
+| 2412.16142 | The Classical Super-Rotation Infrared Triangle | triangleGravity.tex:60 | genre fence: active 4D triangle-completion programme (Choi–Laddha–Puhm) |
+| 2412.16149 | The Classical Super-Phaserotation Infrared Triangle | triangleQED.tex:60 | genre fence: companion paper (Choi–Laddha–Puhm, scalar QED) |
+| 2503.13680 | On the Explicit Asymptotic Symmetry Breaking of $sl(3,\mathbb{R})$ Jackiw--Teitelboim Gravity | OZER_arXiv.v2.tex:220 | C3 universality bound: W3->sl(3,R) via the dilaton (Özer–Filiz) |
+| 2506.02629 | $\mathcal{N}=1$ Jackiw--Teitelboim supergravity beyond the Schwarzian regime | ArXiv.v2.tex:218 | C3 universality bound: affine osp(1|2)_k -> OSp(1|2) stabilizer (Özer–Filiz) |
+| 2602.14079 | Holonomies and Boundary Symmetries in Discrete BF Formulation of Jackiw--Teitelboim Gravity | ArXiv_v2.tex:162 | watch item: lattice-level JT asymptotic symmetry algebras (Özer–Filiz, v2 retitled Aug 2026 — file timestamp confirms Aug 14 2026 revision) |
+| 2603.12902 | Carroll symmetries in field theory and gravity | main.tex:64 (`\thesistitle`) | C5 negative evidence: citer-intersection member (Ecker PhD thesis), no triangle content |
+| 2608.09295 | Detector Dependence of Inspiral Christodoulou Gravitational Wave Memory in Binary Black Hole Systems | main.tex:19 | C4: detector-dependence of observable memory (Varghese–Shaji–Joseph) |
+
+**Batch-13 MISMATCH (recorded per L3).** The skeleton/sweep cited
+**2201.03650** for Kruthoff's "Higher spin JT gravity and a matrix model
+dual" (one of the four C3 universality-bound ids). The fetched TeX at that
+id is an outright different paper: Giachetti–Trombettoni, "$BKT$
+transitions in classical and quantum long-range systems"
+(main.tex:45, confirmed against the arXiv abs-page `<title>` too) — no
+JT/SYK content whatsoever. `refs/arxiv-2201.03650/` is retained for the
+record but MUST NOT be cited for higher-spin-JT content. The correct id,
+located via an arXiv title-search API query, is **2204.09685** ("Higher
+spin JT gravity and a matrix model dual", Jorrit Kruthoff, main.tex:172,
+VERIFIED); fetched and stored at `refs/arxiv-2204.09685/`. Any future use
+of the C3 universality-bound sentence must cite 2204.09685, not
+2201.03650.
+
+No PDF-only submissions and no SKIPPED-not-a-citation ids in this batch —
+all 21 grep hits were genuine citations in `paper/skeleton-syk-jt.md`.
