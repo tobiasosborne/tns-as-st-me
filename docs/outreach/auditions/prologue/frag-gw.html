@@ -1,0 +1,2855 @@
+<!--
+  frag-gw.html — Builder B lane (GW + frame) for the IR-triangle WHY prologue.
+  Stations W1, W5, W8, W9, W10 + masthead/intro/outro copy blocks.
+  Design document: docs/outreach/BRIEF-why-prologue.md (incl. "The dimensional ladder").
+  Binding contract:  docs/outreach/AUDITION-SPEC.md.
+
+  FRAGMENT CONTRACT OBSERVED
+    - Output is a sequence of <section class="stop" id="wN">, each followed by ONE
+      <style data-station="wN"> (every selector scoped under the section id) and ONE
+      <script data-station="wN"> (an IIFE touching only that section).
+    - No <title>, no global styles, no library loading. MathJax and (if wanted)
+      three.js are the integrator's to load once.
+    - No globals are created. The only globals READ are window.matchMedia and, for
+      the outro pointer, nothing else. window.PROLOGUE is neither read nor written.
+    - The small spherical-harmonic core needed by both W5 and W8 is DUPLICATED inside
+      each station's IIFE rather than parked on a shared global, so that each station
+      is independently movable.
+    - Colours come only from the proof-atlas custom properties, read at run time with
+      getComputedStyle where canvas needs literal values. No palette value is defined
+      here. Token names used:
+        --paper --surface --surface-2 --surface-sunk --ink --ink-2 --ink-3
+        --rule --rule-2 --accent --accent-text --accent-tint
+        --keep --die  --st-proved --st-sketch --st-conjecture --st-hold --st-refuted
+        --serif --sans --mono --shadow
+      Categorical data slots used, in fixed order: --keep (slot 1), --die (slot 2).
+      Validated with the dataviz skill validator on both surfaces:
+        light  #146C9B,#B0592E on #FAFBFC -> ALL CHECKS PASS
+        dark   #4695C6,#CE7444 on #141D23 -> ALL CHECKS PASS
+      A third categorical hue was rejected (green fails the chroma floor and the
+      protan separation on the light surface); pole/series identity beyond two
+      classes is carried by shape and direct labels instead.
+
+  GROUND TRUTH QUOTED IN THIS FRAGMENT (L3: local TeX, quoted by line)
+    refs/arxiv-1703.05448/soft_Arxiv_update.tex
+      :329   memory as "a subtle DC effect ... permanent shift"; LIGO / pulsar timing
+      :336   "...this distinction is irrelevant in the deep infrared!"
+      :1064  soft photon formula = Ward identity of large gauge symmetry (reported)
+      :2590  geodesic deviation for the detector pair
+      :2592  R_uzuz in terms of C_zz
+      :2594  the DC displacement  Delta s = (gamma/2r) Delta C_zz s
+      :2633  the constraint that sources the memory:  D_z^2 dC^zz = 2 dm_B + 2 int du T_uu
+      :2635  the Green's-function solution
+      :2638  G(z,z';) = (1/pi) sin^2(dTheta/2) log sin^2(dTheta/2)
+      :2640  nonlocality: a burst at the north pole moves neither pole, but the equator
+  LECTURE REMARK (secondary source, auto-captions, never load-bearing)
+    docs/strominger-wisdom/lectures/extra-01-CdFyoaNv8GI-digest.md, insight 1
+      [CdFyoaNv8GI @ 00:34:36]
+
+  PHYSICS ROUTES AND THEIR ERROR CONTROL (full record in the builder report)
+    W1  schematic only, no numbers.
+    W5  EM: radiation-zone Lienard-Wiechert field of a smoothly kicked charge;
+           impulse by composite Simpson in retarded time with the exact Jacobian
+           dt/dt' = 1 - n.beta, panel doubling to |I_2n - I_n| < 1e-12 |I|.
+           Verified offline against the closed-form soft factor for six trajectories
+           (tanh, erf and a deliberately non-monotone profile): worst relative
+           difference 1.0e-11, and 2.8e-15 for the profile family the page ships.
+        GW: exact l-space inversion of the displayed constraint, l <= 8; beam
+           coefficients from the closed form F_lm = 2 pi c_l(kappa) Y_lm(n_0) with
+           c_l by 64-node Gauss-Legendre (agrees with 2 e^-k i_l(k) to 1e-14 for
+           kappa >= 4); trace-free covariant Hessian by the m=2 Fourier coefficient
+           on a small geodesic circle, Richardson-extrapolated (worst absolute error
+           2.7e-7 against the analytic Y_20 result).
+    W8  same GW core; plus the Legendre coefficients of the quoted Green's function,
+           which satisfy g_l (l-1)l(l+1)(l+2) = 2/pi for every l >= 2 to 12 digits --
+           an independent check that this page inverts the same operator the
+           lectures do.
+    W9  closed forms only; every inverse transform written out on the page.
+    W10 no computation.
+-->
+
+<section class="stop" id="w0-masthead">
+  <div class="mh-hero">
+    <p class="eyebrow">Prologue &middot; before any of the new work</p>
+    <h2>The infrared triangle in its home setting</h2>
+    <p class="lede">Three subjects that grew up apart &mdash; soft theorems, asymptotic
+      symmetries, and the memory effect &mdash; turn out to be one subject. This page is
+      an attempt to show you why, in the setting where the statement was first made:
+      ordinary four&#8209;dimensional spacetime, with charges and gravitational waves.</p>
+  </div>
+
+  <div class="body mh-body">
+    <p>It is written for a physicist who is comfortable with quantum mechanics, general
+      relativity, QED&#8209;level field theory and many&#8209;body physics, and who has
+      never had a reason to care about soft factors. Nothing here assumes you already
+      know what a supertranslation is. Every station opens in plain language with
+      something you already own &mdash; a Coulomb field, a wave packet, an
+      interferometer &mdash; before anything new is asked of you.</p>
+
+    <p>The arc is short. <b>Why</b> should anyone expect a permanent trace to be left
+      behind by radiation that has long since passed? Then <b>the machine</b>: two
+      systems simple enough to solve honestly, a charge that gets kicked and a burst of
+      null energy crossing the sky, worked out far enough that you can aim them
+      yourself and read the numbers off. Then <b>the triangle</b>, assembled out of what
+      the machine actually showed.</p>
+
+    <div class="mh-arc" role="list">
+      <div role="listitem"><span class="mh-arc-n">Why</span><span class="mh-arc-t">Stations 1&ndash;2. A ring of masses, a kicked charge, and one question about what remains.</span></div>
+      <div role="listitem"><span class="mh-arc-n">The machine</span><span class="mh-arc-t">Stations 3&ndash;9. Frequency, the celestial sphere, a firing range you aim yourself, the two&#8209;route identity, and the hinge with its hypotheses.</span></div>
+      <div role="listitem"><span class="mh-arc-n">The triangle</span><span class="mh-arc-t">Station 10. The three corners and three edges, each pointing back at the station that exhibited it.</span></div>
+    </div>
+
+    <p>A note on ambition, so it is not oversold. This page is the <b>top rung of a
+      ladder</b>. The triangle is stated here in the place it is best established:
+      3+1 dimensions, flat at infinity, classical radiation fields. The research this
+      prologue introduces asks the same three questions of much smaller systems &mdash;
+      a one&#8209;dimensional lattice of spins, and a pair of thermal boundary clocks
+      &mdash; where some of the answers are proved, some are computed, and some turn out
+      to be no. Station&nbsp;10 lays out those two lower rungs honestly, and that is
+      where this page stops.</p>
+  </div>
+
+  <details class="mh-legend">
+    <summary>How to read the labels on every figure</summary>
+    <div class="mh-legend-body">
+      <p class="mh-legend-lede">Nothing on this page is animated for effect. Every moving
+        quantity is either a closed form written out beside it, or a numerical solution of
+        an equation written out beside it, with the method and the error stated. Each
+        figure carries one of these labels.</p>
+      <dl class="mh-tags">
+        <div><dt><span class="ptag" data-kind="exact">Exact formula</span></dt>
+          <dd>The closed form is displayed, and it is the expression the page actually
+            evaluates. No fitting, no interpolation.</dd></div>
+        <div><dt><span class="ptag" data-kind="numeric">Controlled numerical solve</span></dt>
+          <dd>The displayed equation is solved numerically. The method is named
+            (quadrature rule, harmonic truncation, extrapolation order) and the residual
+            error is stated or printed live.</dd></div>
+        <div><dt><span class="ptag" data-kind="sample">Computed sample</span></dt>
+          <dd>Numbers taken verbatim from a recorded run in the repository, with the file
+            named.</dd></div>
+        <div><dt><span class="ptag" data-kind="notcomputed">Not computed</span></dt>
+          <dd>A region deliberately left blank or hatched. Nothing is drawn across a
+            boundary we have not crossed.</dd></div>
+        <div><dt><span class="ptag" data-kind="schematic">Schematic</span></dt>
+          <dd>A drawing that carries an idea and no numbers. Used once, at the very
+            start, and then replaced by something solved.</dd></div>
+        <div><dt><span class="ptag" data-kind="quoted">Quoted</span></dt>
+          <dd>Verbatim from Strominger&rsquo;s lecture notes,
+            <span class="mono">arXiv:1703.05448</span>, cited by line number in the
+            source file so you can check it.</dd></div>
+        <div><dt><span class="ptag" data-kind="lecture">Lecture remark</span></dt>
+          <dd>Something said aloud in a recorded talk, transcribed from auto&#8209;captions.
+            A secondary source. It is seasoning; nothing on this page rests on it.</dd></div>
+      </dl>
+    </div>
+  </details>
+
+  <p class="mh-start"><button class="btn btn-primary" data-mh-go>Start with the question</button>
+    <span class="mh-start-hint">Ten stations. The firing range is station&nbsp;5.</span></p>
+</section>
+
+<style data-station="w0-masthead">
+#w0-masthead .mh-hero { border-bottom: 2px solid var(--ink); padding-bottom: 1.1rem; }
+#w0-masthead h2 { font-size: clamp(1.75rem, 1.15rem + 2.6vw, 2.6rem); margin-top: .4rem; letter-spacing: -.005em; }
+#w0-masthead .lede { max-width: 40rem; }
+#w0-masthead .mh-body { margin-top: 1.4rem; display: flex; flex-direction: column; gap: .95rem; }
+#w0-masthead .mh-arc { display: grid; gap: 0; border: 1px solid var(--rule); background: var(--surface); margin: .5rem 0 .2rem; }
+#w0-masthead .mh-arc > div { display: grid; grid-template-columns: 7.5rem 1fr; gap: .85rem; padding: .7rem .95rem; }
+#w0-masthead .mh-arc > div + div { border-top: 1px solid var(--rule); }
+#w0-masthead .mh-arc-n { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); padding-top: .2rem; }
+#w0-masthead .mh-arc-t { font-family: var(--sans); font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+@media (max-width: 540px) { #w0-masthead .mh-arc > div { grid-template-columns: 1fr; gap: .25rem; } }
+
+#w0-masthead .mh-legend { margin-top: 1.8rem; border: 1px solid var(--rule); background: var(--surface-2); }
+#w0-masthead .mh-legend > summary { cursor: pointer; list-style: none; padding: .75rem 1rem; font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--ink-2); display: flex; align-items: center; gap: .5rem; }
+#w0-masthead .mh-legend > summary::-webkit-details-marker { display: none; }
+#w0-masthead .mh-legend > summary::before { content: "+"; font-family: var(--mono); color: var(--accent-text); }
+#w0-masthead .mh-legend[open] > summary::before { content: "\2212"; }
+#w0-masthead .mh-legend > summary:hover { color: var(--ink); }
+#w0-masthead .mh-legend-body { padding: 0 1rem 1.1rem; border-top: 1px solid var(--rule); }
+#w0-masthead .mh-legend-lede { font-family: var(--sans); font-size: 13px; line-height: 1.55; color: var(--ink-2); margin: .85rem 0 .9rem; max-width: 40rem; }
+#w0-masthead .mh-tags { margin: 0; display: grid; gap: 0; }
+#w0-masthead .mh-tags > div { display: grid; grid-template-columns: 13.5rem 1fr; gap: .8rem; padding: .5rem 0; border-top: 1px dotted var(--rule); }
+#w0-masthead .mh-tags dt { margin: 0; }
+#w0-masthead .mh-tags dd { margin: 0; font-family: var(--sans); font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
+@media (max-width: 620px) { #w0-masthead .mh-tags > div { grid-template-columns: 1fr; gap: .3rem; } }
+
+#w0-masthead .ptag,
+#w0-masthead .mh-legend .ptag { display: inline-block; font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--rule-2); color: var(--ink-3); background: var(--surface); white-space: nowrap; }
+#w0-masthead .ptag[data-kind="exact"]      { border-color: var(--accent);       color: var(--accent-text); }
+#w0-masthead .ptag[data-kind="numeric"]    { border-color: var(--st-proved);    color: var(--st-proved); }
+#w0-masthead .ptag[data-kind="sample"]     { border-color: var(--st-conjecture);color: var(--st-conjecture); }
+#w0-masthead .ptag[data-kind="notcomputed"]{ border-color: var(--rule-2);       color: var(--ink-3); border-style: dashed; }
+#w0-masthead .ptag[data-kind="schematic"]  { border-color: var(--st-sketch);    color: var(--st-sketch); }
+#w0-masthead .ptag[data-kind="quoted"]     { border-color: var(--ink-3);        color: var(--ink-2); }
+#w0-masthead .ptag[data-kind="lecture"]    { border-color: var(--st-hold);      color: var(--st-hold); }
+
+#w0-masthead .mh-start { margin-top: 2rem; display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; }
+#w0-masthead .mh-start-hint { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); }
+</style>
+
+<script data-station="w0-masthead">
+(function () {
+  var root = document.getElementById('w0-masthead');
+  if (!root) return;
+  var btn = root.querySelector('[data-mh-go]');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var t = document.getElementById('w1');
+    if (!t) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+})();
+</script>
+
+
+<section class="stop" id="w1">
+  <div class="stop-head">
+    <div class="plate">Station 1 &middot; the question</div>
+    <h2>Does anything stay different afterwards?</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">Two masses float freely in space, far from everything, a fixed
+      distance apart. A gravitational wave passes. While it passes, their separation
+      oscillates &mdash; this is what an interferometer is built to catch. Then the wave
+      is gone.</p>
+
+    <p>Here is the question this whole page exists to answer. When the wave has passed
+      and everything is quiet again, are the two masses back where they started?</p>
+
+    <p>Nothing in your training says they must be. Nothing obvious says they must not.
+      The honest position, before doing any work, is that you do not know &mdash; and
+      the answer turns out to matter far more than it looks like it should.</p>
+  </div>
+
+  <figure class="w1-fig">
+    <div class="w1-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">A ring of free masses, and one passing wave</div>
+          <div class="chart-sub">Grey outline: where the ring started. Toggle the switch and watch the end of the story change.</div>
+        </div>
+        <span class="w1-ptag" data-kind="schematic">Schematic</span>
+      </div>
+      <div class="w1-stage">
+        <svg class="w1-svg" viewBox="0 0 640 300" role="img"
+             aria-label="A ring of test masses deformed by a passing gravitational wave, with a trace of the wave beneath it.">
+          <g class="w1-ring-ghost"></g>
+          <g class="w1-ring"></g>
+          <g class="w1-trace"></g>
+        </svg>
+      </div>
+      <div class="w1-ctl">
+        <button class="btn" data-w1-play aria-pressed="true">Pause</button>
+        <button class="btn" data-w1-replay>Replay</button>
+        <label class="w1-sw">
+          <input type="checkbox" data-w1-mem checked>
+          <span>Permanent strain left behind</span>
+        </label>
+        <span class="w1-state" data-w1-state aria-live="polite"></span>
+      </div>
+    </div>
+    <figcaption><b>This is the only picture on the page that is not solved.</b> The ring's
+      response to a given strain is the exact kinematics of linearised geodesic deviation
+      &mdash; each mass moves by half the strain times its own displacement. The waveform
+      driving it, though, is drawn by hand, which is why the figure carries no numbers.
+      Station&nbsp;5 replaces it with a wave computed from an energy flux you choose
+      yourself, and station&nbsp;8 takes that apart harmonic by harmonic.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Both endings above are consistent with everything an undergraduate course tells
+      you about gravitational waves. Deciding between them is not a matter of taste, and
+      it is not a small technical footnote: the answer is <b>yes, something stays
+      different</b>, the permanent offset is fixed by the energy that flew past, and
+      following that fact carefully is what connects three fields that had no idea they
+      were the same one.</p>
+
+    <p>So: a wave goes by, things wobble, the wobble stops. Whether anything
+      <b>remains</b> different is the whole subject.</p>
+  </div>
+</section>
+
+<style data-station="w1">
+#w1 .w1-fig { margin: 1.7rem 0 1.5rem; }
+#w1 .w1-card { border: 1px solid var(--rule); background: var(--surface); }
+#w1 .w1-card .chart-head { display: flex; align-items: flex-start; gap: .75rem; flex-wrap: wrap; padding: .85rem 1rem .6rem; border-bottom: 1px solid var(--rule); }
+#w1 .w1-card .chart-head > div:first-child { flex: 1 1 12rem; min-width: 0; }
+#w1 .w1-ptag { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--st-sketch); color: var(--st-sketch); white-space: nowrap; margin-left: auto; }
+#w1 .w1-stage { padding: .3rem .5rem 0; }
+#w1 .w1-svg { display: block; width: 100%; height: auto; }
+#w1 .w1-svg .m  { fill: var(--keep); }
+#w1 .w1-svg .mg { fill: none; stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 2 3; }
+#w1 .w1-svg .gline { stroke: var(--rule-2); stroke-width: 1; }
+#w1 .w1-svg .wv { fill: none; stroke: var(--ink-3); stroke-width: 1.6; stroke-linecap: round; }
+#w1 .w1-svg .wv-mem { stroke: var(--die); }
+#w1 .w1-svg .cur { stroke: var(--accent); stroke-width: 1.5; }
+#w1 .w1-svg .lbl { font-family: var(--sans); font-size: 11.5px; fill: var(--ink-3); }
+#w1 .w1-svg .lbl-em { font-family: var(--sans); font-size: 12px; font-weight: 600; }
+#w1 .w1-ctl { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; padding: .8rem 1rem 1rem; border-top: 1px solid var(--rule); }
+#w1 .w1-sw { display: inline-flex; align-items: center; gap: .45rem; font-family: var(--sans); font-size: 13px; color: var(--ink-2); cursor: pointer; }
+#w1 .w1-sw input { accent-color: var(--accent); width: 15px; height: 15px; }
+#w1 .w1-state { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); margin-left: auto; }
+</style>
+
+<script data-station="w1">
+(function () {
+  var root = document.getElementById('w1');
+  if (!root) return;
+  var svg    = root.querySelector('.w1-svg');
+  var gRing  = root.querySelector('.w1-ring');
+  var gGhost = root.querySelector('.w1-ring-ghost');
+  var gTrace = root.querySelector('.w1-trace');
+  var bPlay  = root.querySelector('[data-w1-play]');
+  var bRep   = root.querySelector('[data-w1-replay]');
+  var cMem   = root.querySelector('[data-w1-mem]');
+  var elState= root.querySelector('[data-w1-state]');
+  var NS = 'http://www.w3.org/2000/svg';
+  var mk = function (n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; };
+
+  var N = 16, CX = 190, CY = 140, RAD = 92;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- the hand-drawn strain profile (the schematic part; no numbers are shown) ----
+  // h(t) = A * [ sin(w t) e^{-(t-t0)^2/2s^2}  +  memory * (1+tanh((t-t0)/s))/2 ]
+  var T0 = 3.2, SIG = 0.62, OM = 9.0, AMP = 0.30, MEM = 0.34, TEND = 7.4;
+  function strain(t, withMem) {
+    var u = t - T0;
+    var osc = Math.sin(OM * u) * Math.exp(-u * u / (2 * SIG * SIG));
+    var mem = withMem ? MEM * (1 + Math.tanh(u / SIG)) / 2 : 0;
+    return AMP * (osc + mem);
+  }
+
+  // ---- static furniture ----
+  var ghost = mk('circle', { cx: CX, cy: CY, r: RAD, class: 'mg' });
+  gGhost.appendChild(ghost);
+  gGhost.appendChild(mk('line', { x1: CX - RAD - 16, y1: CY, x2: CX + RAD + 16, y2: CY, class: 'gline' }));
+  gGhost.appendChild(mk('line', { x1: CX, y1: CY - RAD - 16, x2: CX, y2: CY + RAD + 16, class: 'gline' }));
+  var capt = mk('text', { x: CX, y: CY + RAD + 40, class: 'lbl', 'text-anchor': 'middle' });
+  capt.textContent = 'free masses, seen face on';
+  gGhost.appendChild(capt);
+
+  var dots = [];
+  for (var i = 0; i < N; i++) { var d = mk('circle', { r: 5.2, class: 'm' }); gRing.appendChild(d); dots.push(d); }
+
+  // ---- the trace panel ----
+  var TX = 372, TY = 78, TW = 236, TH = 118;
+  gTrace.appendChild(mk('line', { x1: TX, y1: TY + TH / 2, x2: TX + TW, y2: TY + TH / 2, class: 'gline' }));
+  var tl = mk('text', { x: TX, y: TY - 12, class: 'lbl-em' });
+  tl.setAttribute('fill', 'currentColor'); tl.style.fill = 'var(--ink-2)';
+  tl.textContent = 'strain at the ring, over time';
+  gTrace.appendChild(tl);
+  var pathW = mk('path', { class: 'wv', d: '' });          gTrace.appendChild(pathW);
+  var pathM = mk('path', { class: 'wv wv-mem', d: '' });   gTrace.appendChild(pathM);
+  var cursor = mk('line', { class: 'cur', x1: TX, y1: TY, x2: TX, y2: TY + TH }); gTrace.appendChild(cursor);
+  var endLbl = mk('text', { x: TX + TW, y: TY + TH + 20, class: 'lbl', 'text-anchor': 'end' });
+  gTrace.appendChild(endLbl);
+  var t0Lbl = mk('text', { x: TX, y: TY + TH + 20, class: 'lbl' });
+  t0Lbl.textContent = 'before'; gTrace.appendChild(t0Lbl);
+
+  function traceD(withMem) {
+    var d = '', n = 260;
+    for (var i = 0; i <= n; i++) {
+      var t = TEND * i / n;
+      var x = TX + TW * i / n;
+      var y = TY + TH / 2 - strain(t, withMem) * (TH / 2) / (AMP * 1.45);
+      d += (i ? 'L' : 'M') + x.toFixed(2) + ' ' + y.toFixed(2);
+    }
+    return d;
+  }
+
+  // ---- animation ----
+  var t = 0, playing = !reduce, last = null;
+  function frame(ts) {
+    if (last === null) last = ts;
+    var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+    if (playing) { t += dt * 1.15; if (t > TEND) t = TEND; }
+    draw();
+    raf = window.requestAnimationFrame(frame);
+  }
+  function draw() {
+    var withMem = !!(cMem && cMem.checked);
+    var h = strain(t, withMem);
+    for (var i = 0; i < N; i++) {
+      var a = 2 * Math.PI * i / N;
+      var x = RAD * Math.cos(a), y = RAD * Math.sin(a);
+      dots[i].setAttribute('cx', (CX + x * (1 + h / 2)).toFixed(2));
+      dots[i].setAttribute('cy', (CY - y * (1 - h / 2)).toFixed(2));
+    }
+    var xc = TX + TW * Math.min(1, t / TEND);
+    cursor.setAttribute('x1', xc.toFixed(2)); cursor.setAttribute('x2', xc.toFixed(2));
+    if (t >= TEND - 1e-9) {
+      elState.textContent = withMem ? 'the wave is gone — the ring is not the shape it was'
+                                    : 'the wave is gone — the ring is exactly the shape it was';
+      endLbl.textContent = withMem ? 'after: offset' : 'after: back to zero';
+    } else {
+      elState.textContent = playing ? '' : 'paused';
+      endLbl.textContent = 'after';
+    }
+  }
+  function retrace() {
+    var withMem = !!(cMem && cMem.checked);
+    pathW.setAttribute('d', traceD(false));
+    pathM.setAttribute('d', withMem ? traceD(true) : '');
+    pathW.style.opacity = withMem ? '0.35' : '1';
+  }
+
+  bPlay.addEventListener('click', function () {
+    playing = !playing;
+    bPlay.textContent = playing ? 'Pause' : 'Play';
+    bPlay.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    if (playing && t >= TEND - 1e-9) t = 0;
+  });
+  bRep.addEventListener('click', function () { t = 0; playing = true; bPlay.textContent = 'Pause'; bPlay.setAttribute('aria-pressed', 'true'); });
+  cMem.addEventListener('change', function () { retrace(); draw(); });
+
+  retrace();
+  if (reduce) { t = TEND; bPlay.textContent = 'Play'; bPlay.setAttribute('aria-pressed', 'false'); }
+  draw();
+  var raf = window.requestAnimationFrame(frame);
+})();
+</script>
+
+<section class="stop" id="w5">
+  <div class="stop-head">
+    <div class="plate">Station 5 &middot; the firing range</div>
+    <h2>Shoot the detectors</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">Everything up to here has been argument. This station is a range.
+      There are detectors out there at various angles and distances; you aim, you fire,
+      and you watch what they do &mdash; and then you read off, detector by detector,
+      whether the thing they kept agrees with the formula that says what they should
+      have kept.</p>
+
+    <p>There is no score. The point is the aiming and the watching. Every number in the
+      ledger underneath is computed from the equations printed beside it, and the
+      disagreement column is the honest residual of two genuinely different routes to
+      the same quantity, not a decoration.</p>
+  </div>
+
+  <div class="w5-modes" role="tablist" aria-label="Which kind of radiation to fire">
+    <button role="tab" data-w5-mode="em" aria-selected="true">Soft photons</button>
+    <button role="tab" data-w5-mode="gw" aria-selected="false">Gravitational waves</button>
+  </div>
+
+  <!-- ============================ EM briefing ============================ -->
+  <div class="w5-brief" data-w5-for="em">
+    <p class="body">A single charge sits at rest. At some moment something kicks it, and
+      it leaves with velocity <span class="mono">&beta;<sub>f</sub>c</span>. The field
+      lines cannot rearrange faster than light, so the news of the kick leaves as a
+      spherical pulse. Out at the detectors, free test charges wait. Each one feels the
+      pulse go by, jitters, and is left drifting &mdash; with a velocity it did not have
+      before.</p>
+    <div class="eq">
+      <div class="eq-label">The field the detector actually sees &mdash; radiative part, exact</div>
+      \[ \mathbf{E}_{\rm rad}(t)\;=\;\frac{q}{4\pi\varepsilon_0 c R}\;
+         \frac{\hat n\times\big[(\hat n-\boldsymbol\beta)\times\dot{\boldsymbol\beta}\big]}
+              {\left(1-\hat n\cdot\boldsymbol\beta\right)^{3}}\bigg|_{t'},
+         \qquad t \;=\; t'+\frac{R-\hat n\cdot\mathbf r_s(t')}{c} \]
+      <div class="eq-note">This is the acceleration term of the Li&eacute;nard&ndash;Wiechert
+        field &mdash; the piece that survives as <span class="mono">1/R</span> and carries the
+        radiation. The Coulomb term falls as <span class="mono">1/R&sup2;</span> and is not
+        part of the radiative data; it is not included in the ledger, and the ledger says
+        so. The retarded-time relation above is inverted exactly, by bisection.</div>
+    </div>
+    <div class="eq">
+      <div class="eq-label">What the whole pulse adds up to &mdash; closed form</div>
+      \[ \int_{-\infty}^{\infty}\!\mathbf E_{\rm rad}\,dt \;=\;
+         \frac{q}{4\pi\varepsilon_0 c R}\left[\;
+         \frac{\boldsymbol\beta_{i\perp}}{1-\hat n\cdot\boldsymbol\beta_i}
+         -\frac{\boldsymbol\beta_{f\perp}}{1-\hat n\cdot\boldsymbol\beta_f}\;\right] \]
+      <div class="eq-note">One line of algebra gets you there, and it is worth seeing, because
+        the whole subject is hiding in it:
+        \[ \frac{\hat n\times\big[(\hat n-\boldsymbol\beta)\times\dot{\boldsymbol\beta}\big]}
+                {\left(1-\hat n\cdot\boldsymbol\beta\right)^{2}}
+           \;=\;-\,\frac{d}{dt'}\!\left[\frac{\boldsymbol\beta_{\perp}}{1-\hat n\cdot\boldsymbol\beta}\right] ,
+           \qquad \frac{dt}{dt'}=1-\hat n\cdot\boldsymbol\beta . \]
+        The integrand is a total derivative in the source's own time. So the answer depends
+        on the velocity <b>before</b> and the velocity <b>after</b>, and on nothing else about
+        the trip in between. Try it: the <b>overshoot and settle</b> profile takes a wildly
+        different path to the same final velocity, and the ledger does not move.</div>
+    </div>
+  </div>
+
+  <!-- ============================ GW briefing ============================ -->
+  <div class="w5-brief" data-w5-for="gw" hidden>
+    <p class="body">Now fire energy instead of a charge. A burst of massless stuff leaves
+      the origin with an angular pattern you choose &mdash; one beam, or two, wide or
+      tight. Out at the detectors sit rings of free masses. Each ring rings as the burst
+      goes past it, and each ring is left a different shape than it started.</p>
+    <div class="eq">
+      <div class="eq-label">The constraint that ties the permanent shift to the energy that flew past</div>
+      \[ D_z^{2}\,\Delta C^{zz}\;=\;2\,\Delta m_B+2\!\int\! du\,T_{uu} \]
+      <div class="eq-note">Quoted from <span class="mono">soft_Arxiv_update.tex:2633</span>.
+        In real notation, with the constants in front of the flux absorbed into
+        <span class="mono">F</span>, and writing the permanent shift as the trace-free second
+        derivative of a single function <span class="mono">&Phi;</span> on the sphere:
+        \[ D^AD^B\Delta C_{AB}=4\,F(\hat n),\qquad
+           \Delta C_{AB}=\big(2D_AD_B-\gamma_{AB}D^{2}\big)\Phi , \]
+        \[ D^AD^B\big(2D_AD_B-\gamma_{AB}D^{2}\big)\Phi=D^{2}\!\left(D^{2}+2\right)\Phi
+           \;\;\Longrightarrow\;\;
+           (\ell-1)\ell(\ell+1)(\ell+2)\,\Phi_{\ell m}=4F_{\ell m}. \]
+        The prefactor on the right is a units convention and the page fixes one; the angular
+        pattern and the <span class="mono">&#8467;</span>-weights are not conventions, and they
+        are what everything below depends on.</div>
+    </div>
+    <div class="eq">
+      <div class="eq-label">Why the solve starts at &#8467; = 2</div>
+      <div class="eq-note" style="margin-top:0">
+        <span class="mono">(&#8467;&minus;1)&#8467;(&#8467;+1)(&#8467;+2)</span> is zero at
+        <span class="mono">&#8467; = 0</span> and <span class="mono">&#8467; = 1</span>. Those
+        two multipoles of <span class="mono">&Phi;</span> are exactly the ordinary spacetime
+        translations: they produce no strain at all. The matching parts of the flux are not
+        free either &mdash; they are the change in the Bondi mass and momentum, the
+        <span class="mono">&Delta;m<sub>B</sub></span> in the quoted constraint. Energy and
+        momentum conservation, and nothing else, live at
+        <span class="mono">&#8467; &le; 1</span>.</div>
+    </div>
+    <div class="eq">
+      <div class="eq-label">What a ring does about it &mdash; quoted</div>
+      \[ \Delta s^{\bar z}\;=\;\frac{\gamma^{z\bar z}}{2r}\,\Delta C_{zz}\,s^{z} \]
+      <div class="eq-note"><span class="mono">soft_Arxiv_update.tex:2594</span>, the
+        integrated geodesic-deviation equation of <span class="mono">:2590</span>. The
+        separation of two free masses at the end differs from the separation at the start,
+        by the permanent shift divided by the distance.</div>
+    </div>
+    <div class="note-box">
+      <p><b>One honest choice, stated up front.</b> At null infinity the wave profile is free
+        data; the constraint fixes only its <em>time integral</em>, angle by angle. So the
+        shape of the passing wave is ours to pick and the page picks one:
+        a smooth ramp <span class="mono">(1+tanh(u/&sigma;))/2</span> carrying the permanent
+        part, plus a ringing term <span class="mono">sin(2&pi;u/&lambda;)e<sup>&minus;u&sup2;/2&sigma;<sub>w</sub>&sup2;</sup></span>
+        that is exactly odd in <span class="mono">u</span> and therefore integrates to exactly
+        zero. Turn the ringing up or down with the slider &mdash; <b>the offset it settles to
+        does not move</b>. That is the whole content of the constraint, and you can watch it.</p>
+    </div>
+  </div>
+
+  <!-- ============================ the bench ============================ -->
+  <div class="w5-bench">
+    <div class="w5-canvas-wrap">
+      <canvas class="w5-canvas" aria-label="Three-dimensional firing range: a source at the centre, an expanding pulse, and detectors at various angles and distances. The ledger table below carries the same information as text."></canvas>
+      <div class="w5-hud">
+        <div class="w5-hud-row"><span class="w5-hud-k">t</span><span class="w5-hud-v" data-w5-t>0.00</span></div>
+        <div class="w5-hud-row"><span class="w5-hud-k">shell</span><span class="w5-hud-v" data-w5-shell>0.00</span></div>
+        <div class="w5-hud-row" data-w5-hud-extra><span class="w5-hud-k">reached</span><span class="w5-hud-v" data-w5-reached>0 / 0</span></div>
+      </div>
+      <div class="w5-hint" data-w5-hint>drag to orbit &middot; click empty space to aim there</div>
+      <div class="w5-nogl" data-w5-nogl hidden></div>
+    </div>
+
+    <div class="w5-ctl">
+      <div class="w5-ctl-main">
+        <button class="btn btn-primary w5-fire" data-w5-fire>Fire</button>
+        <button class="btn" data-w5-reset>Reset</button>
+        <div class="w5-speed" role="group" aria-label="Playback speed">
+          <button class="btn w5-sp" data-w5-speed="0.35">&frac12;&times;</button>
+          <button class="btn w5-sp is-on" data-w5-speed="1" aria-pressed="true">1&times;</button>
+          <button class="btn w5-sp" data-w5-speed="2.4">2&times;</button>
+        </div>
+        <label class="w5-scrub"><span>time</span>
+          <input type="range" data-w5-scrub min="0" max="1000" value="0" step="1" aria-label="Scrub through the shot">
+        </label>
+      </div>
+
+      <div class="w5-knobs" data-w5-for="em">
+        <label class="w5-knob"><span>aim &mdash; azimuth<b data-w5-o="emAz">0&deg;</b></span>
+          <input type="range" data-w5-i="emAz" min="-180" max="180" value="35" step="1"></label>
+        <label class="w5-knob"><span>aim &mdash; elevation<b data-w5-o="emEl">0&deg;</b></span>
+          <input type="range" data-w5-i="emEl" min="-85" max="85" value="22" step="1"></label>
+        <label class="w5-knob"><span>kick strength &beta;<sub>f</sub><b data-w5-o="emB">0.60</b></span>
+          <input type="range" data-w5-i="emB" min="0.05" max="0.95" value="0.6" step="0.01"></label>
+        <label class="w5-knob"><span>kick duration c&tau;<b data-w5-o="emT">0.60</b></span>
+          <input type="range" data-w5-i="emT" min="0.2" max="1.5" value="0.6" step="0.02"></label>
+        <label class="w5-knob w5-knob-wide"><span>how it gets there</span>
+          <span class="w5-seg" role="group">
+            <button class="btn w5-sp is-on" data-w5-prof="one" aria-pressed="true">one clean kick</button>
+            <button class="btn w5-sp" data-w5-prof="over" aria-pressed="false">overshoot and settle</button>
+          </span></label>
+      </div>
+
+      <div class="w5-knobs" data-w5-for="gw" hidden>
+        <label class="w5-knob"><span>beam &mdash; azimuth<b data-w5-o="gwAz">0&deg;</b></span>
+          <input type="range" data-w5-i="gwAz" min="-180" max="180" value="-25" step="1"></label>
+        <label class="w5-knob"><span>beam &mdash; elevation<b data-w5-o="gwEl">0&deg;</b></span>
+          <input type="range" data-w5-i="gwEl" min="-85" max="85" value="30" step="1"></label>
+        <label class="w5-knob"><span>beam width &kappa;<b data-w5-o="gwK">12</b></span>
+          <input type="range" data-w5-i="gwK" min="3" max="45" value="12" step="1"></label>
+        <label class="w5-knob"><span>ringing amplitude<b data-w5-o="gwA">0.9</b></span>
+          <input type="range" data-w5-i="gwA" min="0" max="2" value="0.9" step="0.05"></label>
+        <label class="w5-knob w5-knob-wide"><span>second lobe</span>
+          <span class="w5-seg" role="group">
+            <button class="btn w5-sp is-on" data-w5-lobe="off" aria-pressed="true">off</button>
+            <button class="btn w5-sp" data-w5-lobe="on" aria-pressed="false">on, opposite side</button>
+          </span></label>
+      </div>
+    </div>
+
+    <div class="w5-ledger">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title" data-w5-ltitle>What each detector kept</div>
+          <div class="chart-sub" data-w5-lsub>&nbsp;</div>
+        </div>
+        <span class="w5-ptag" data-kind="numeric" data-w5-ptag>Controlled numerical solve</span>
+      </div>
+      <div class="w5-table-wrap">
+        <table class="w5-table" data-w5-table>
+          <thead data-w5-thead></thead>
+          <tbody data-w5-tbody></tbody>
+        </table>
+      </div>
+      <div class="w5-foot" data-w5-foot></div>
+    </div>
+  </div>
+
+  <blockquote class="quote">
+    <p>&ldquo;how do you measure a soft graviton and well this is how you measure [a] soft
+      graviton people are building detect[ors] &hellip; it makes in my mind it makes soft
+      particles more physical to look at them in in in this way even if it is just a fora
+      [Fourier] transform&rdquo;</p>
+    <footer><span class="w5-ptag" data-kind="lecture">Lecture remark</span>
+      Andrew Strominger, seminar, <span class="mono">[CdFyoaNv8GI @ 00:34:36]</span>.
+      Transcribed from auto&#8209;captions &mdash; a secondary source, quoted because it says
+      plainly why anyone bothered. Nothing on this page rests on it.</footer>
+  </blockquote>
+
+  <div class="body">
+    <p>The soft-photon ledger is the more startling of the two, because you can break it
+      and it does not break. Change the pulse duration, change the path the charge takes
+      to get up to speed, make it overshoot and come back &mdash; the transient that each
+      detector feels changes completely, and the velocity it is left with does not move
+      in the twelfth digit. That is not a coincidence to be explained later; it is
+      station&nbsp;6's identity, seen from the range.</p>
+    <p>The gravitational ledger has its own surprise, and it is geometric. Look at where
+      the rings that remember most are sitting. They are not where you aimed.</p>
+  </div>
+</section>
+
+<style data-station="w5">
+#w5 .w5-modes { display: inline-flex; border: 1px solid var(--rule-2); margin: 1.6rem 0 1.2rem; }
+#w5 .w5-modes button { font-family: var(--sans); font-size: 13px; font-weight: 500; padding: .45rem .95rem; border: 0; cursor: pointer; background: var(--surface); color: var(--ink-2); }
+#w5 .w5-modes button + button { border-left: 1px solid var(--rule-2); }
+#w5 .w5-modes button[aria-selected="true"] { background: var(--accent-tint); color: var(--accent-text); font-weight: 600; }
+#w5 .w5-modes button:hover { color: var(--ink); }
+
+#w5 .w5-brief .eq { margin: 1.2rem 0; }
+#w5 .w5-brief > .body { margin-bottom: .4rem; }
+
+#w5 .w5-bench { margin: 1.8rem 0 1.6rem; border: 1px solid var(--rule-2); background: var(--surface); }
+@media (min-width: 1360px) { #w5 .w5-bench { margin-inline: -2rem; width: calc(100% + 4rem); max-width: none; } }
+
+#w5 .w5-canvas-wrap { position: relative; background: var(--surface-sunk); border-bottom: 1px solid var(--rule); }
+#w5 .w5-canvas { display: block; width: 100%; aspect-ratio: 16 / 10; touch-action: none; cursor: grab; }
+#w5 .w5-canvas:active { cursor: grabbing; }
+@media (max-width: 560px) { #w5 .w5-canvas { aspect-ratio: 4 / 3.4; } }
+#w5 .w5-hud { position: absolute; top: .6rem; left: .75rem; display: grid; gap: .12rem; pointer-events: none; }
+#w5 .w5-hud-row { display: flex; gap: .5rem; align-items: baseline; }
+#w5 .w5-hud-k { font-family: var(--sans); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); min-width: 4rem; }
+#w5 .w5-hud-v { font-family: var(--mono); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+#w5 .w5-hint { position: absolute; bottom: .55rem; left: .75rem; right: .75rem; font-family: var(--sans); font-size: 11px; color: var(--ink-3); pointer-events: none; }
+#w5 .w5-nogl { padding: 1.1rem; font-family: var(--sans); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+
+#w5 .w5-ctl { padding: .85rem 1rem 1rem; border-bottom: 1px solid var(--rule); display: grid; gap: .9rem; }
+#w5 .w5-ctl-main { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+#w5 .w5-fire { min-width: 5.5rem; letter-spacing: .04em; }
+#w5 .w5-speed, #w5 .w5-seg { display: inline-flex; }
+#w5 .w5-sp { padding: .3rem .55rem; font-size: 12px; }
+#w5 .w5-speed .w5-sp + .w5-sp, #w5 .w5-seg .w5-sp + .w5-sp { border-left: 0; }
+#w5 .w5-sp.is-on { background: var(--accent-tint); color: var(--accent-text); border-color: var(--accent); position: relative; z-index: 1; }
+#w5 .w5-scrub { display: flex; align-items: center; gap: .5rem; flex: 1 1 12rem; min-width: 9rem; }
+#w5 .w5-scrub span { font-family: var(--sans); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+#w5 .w5-scrub input { flex: 1 1 auto; min-width: 0; accent-color: var(--accent); }
+
+#w5 .w5-knobs { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .75rem 1.1rem; }
+#w5 .w5-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+#w5 .w5-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w5 .w5-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w5 .w5-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w5 .w5-knob-wide { grid-column: 1 / -1; }
+#w5 .w5-knob-wide > span { display: block; margin-bottom: .15rem; }
+
+#w5 .w5-ledger .chart-head { display: flex; align-items: flex-start; gap: .75rem; flex-wrap: wrap; padding: .85rem 1rem .55rem; }
+#w5 .w5-ledger .chart-head > div:first-child { flex: 1 1 12rem; min-width: 0; }
+#w5 .w5-ptag { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--st-proved); color: var(--st-proved); white-space: nowrap; margin-left: auto; }
+#w5 .w5-ptag[data-kind="lecture"] { border-color: var(--st-hold); color: var(--st-hold); margin-left: 0; margin-right: .4rem; }
+#w5 .w5-table-wrap { overflow-x: auto; border-top: 1px solid var(--rule); max-height: 26rem; }
+#w5 .w5-table { border-collapse: collapse; width: 100%; min-width: 42rem; }
+#w5 .w5-table th, #w5 .w5-table td { font-family: var(--sans); font-size: 12px; text-align: right; padding: .38rem .7rem; border-top: 1px solid var(--rule); white-space: nowrap; }
+#w5 .w5-table thead th { color: var(--ink); font-weight: 600; border-top: 0; position: sticky; top: 0; z-index: 1; background: var(--surface); }
+#w5 .w5-table thead th:first-child, #w5 .w5-table tbody td:first-child { text-align: left; }
+#w5 .w5-table tbody td { font-family: var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+#w5 .w5-table tbody tr:hover td { background: var(--accent-tint); color: var(--ink); }
+#w5 .w5-table tbody td.num-key { color: var(--ink); }
+#w5 .w5-table .w5-bar { display: block; height: 7px; border-radius: 0 4px 4px 0; background: var(--keep); min-width: 1px; }
+#w5 .w5-table .w5-barcell { width: 8.5rem; }
+#w5 .w5-table .w5-barwrap { display: flex; align-items: center; gap: .45rem; }
+#w5 .w5-table .w5-bartrack { flex: 1 1 3rem; background: var(--surface-2); height: 7px; }
+#w5 .w5-foot { padding: .7rem 1rem 1rem; display: grid; gap: .2rem; }
+#w5 .w5-foot-row { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12px; color: var(--ink-3); padding: .17rem 0; border-bottom: 1px dotted var(--rule); }
+#w5 .w5-foot-row b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w5 .w5-foot-note { font-family: var(--sans); font-size: 12px; line-height: 1.55; color: var(--ink-3); margin-top: .6rem; }
+#w5 .w5-foot-note b { color: var(--ink-2); font-weight: 600; }
+</style>
+
+<script data-station="w5">
+(function () {
+  var root = document.getElementById('w5');
+  if (!root) return;
+
+  /* ---------------- palette: read the page's tokens, never define any ---------------- */
+  var CACHE = {};
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    return (CACHE[n] = v || '#888888');
+  }
+  function rgbOf(n) {
+    var h = tok(n);
+    if (h.charAt(0) === '#') {
+      if (h.length === 4) h = '#' + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
+      return [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)];
+    }
+    var m = h.match(/-?\d+(\.\d+)?/g);
+    return m ? [+m[0], +m[1], +m[2]] : [136, 136, 136];
+  }
+  function rgba(n, a) { var c = rgbOf(n); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
+  function dropPalette() { CACHE = {}; draw(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', dropPalette);
+    else if (mq.addListener) mq.addListener(dropPalette);
+  }
+  if (window.MutationObserver) new MutationObserver(dropPalette)
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  /* ---------------- vectors ---------------- */
+  var dot = function (a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; };
+  var cr  = function (a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; };
+  var sub = function (a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; };
+  var add = function (a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; };
+  var mul = function (a, s) { return [a[0] * s, a[1] * s, a[2] * s]; };
+  var len = function (a) { return Math.sqrt(dot(a, a)); };
+  var nrm = function (a) { var L = len(a) || 1; return [a[0] / L, a[1] / L, a[2] / L]; };
+  var DEG = Math.PI / 180;
+  function dirAzEl(az, el) { var c = Math.cos(el * DEG); return [c * Math.cos(az * DEG), c * Math.sin(az * DEG), Math.sin(el * DEG)]; }
+
+  /* ================================================================
+     ENGINE 1 — the kicked charge, radiation zone, exact
+     beta(t') runs from 0 to beta_f along a fixed axis. Two profiles,
+     both with a closed-form position so the retarded map is exact.
+     ================================================================ */
+  var EM = (function () {
+    var st = { bf: 0.6, tau: 0.6, prof: 'one' };
+    function bo() { return Math.min(0.97, 1.65 * st.bf); }
+    function AA() { return 2.2 * st.tau; }
+    function s(u)  { return 0.5 * (1 + Math.tanh(u / st.tau)); }
+    function sd(u) { var x = u / st.tau; if (Math.abs(x) > 30) return 0; var c = Math.cosh(x); return 1 / (2 * st.tau * c * c); }
+    function P(u)  { var x = Math.abs(u) / st.tau; return 0.5 * (u + Math.abs(u) + st.tau * Math.log1p(Math.exp(-2 * x))); }
+    function betaS(t) { return st.prof === 'one' ? st.bf * s(t)  : bo() * s(t + AA())  + (st.bf - bo()) * s(t - AA()); }
+    function bdotS(t) { return st.prof === 'one' ? st.bf * sd(t) : bo() * sd(t + AA()) + (st.bf - bo()) * sd(t - AA()); }
+    function posS(t)  { return st.prof === 'one' ? st.bf * P(t)  : bo() * P(t + AA())  + (st.bf - bo()) * P(t - AA()); }
+    // quadrature window: the sech^2 tail must be below double precision at the ends
+    function spanQ() { return (st.prof === 'one' ? 19 : 21.2) * st.tau + 3; }
+    // visible window: what the animation actually pre-rolls through
+    function spanV() { return (st.prof === 'one' ? 4.5 : 4.5 + 2.2) * st.tau + 1.2; }
+
+    // radiation-zone transverse field, times the exact Jacobian dt/dt' = 1 - n.beta,
+    // written out as the full vector expression so it is the SAME formula as displayed
+    function integrand(cth, R) {
+      var sth = Math.sqrt(Math.max(0, 1 - cth * cth));
+      return function (t) {
+        var b = betaS(t), bd = bdotS(t), den = 1 - cth * b;
+        var Ep = ((-b * sth) * (bd * cth) - (bd * sth) * den) / (den * den * den * R);
+        return Ep * den;
+      };
+    }
+    function simp(f, a, b, n) {
+      var h = (b - a) / n, s2 = f(a) + f(b);
+      for (var i = 1; i < n; i++) s2 += f(a + i * h) * (i % 2 ? 4 : 2);
+      return s2 * h / 3;
+    }
+    function dvClosed(cth, R) {
+      var sth = Math.sqrt(Math.max(0, 1 - cth * cth));
+      return -st.bf * sth / ((1 - st.bf * cth) * R);
+    }
+    function dvNumeric(cth, R) {
+      var Sp = spanQ(), f = integrand(cth, R);
+      var n = 2048, prev = simp(f, -Sp, Sp, n), cur = prev, gap = 0;
+      for (var k = 0; k < 4; k++) {
+        n *= 2; cur = simp(f, -Sp, Sp, n); gap = Math.abs(cur - prev);
+        if (gap < 1e-18 + 1e-12 * Math.abs(cur)) break;
+        prev = cur;
+      }
+      return { v: cur, panels: n, gap: gap };
+    }
+    // energy radiated per unit solid angle (exact, axisymmetric about the kick axis)
+    function fluence(cth) {
+      var Sp = 10 * st.tau + (st.prof === 'one' ? 0 : AA()) + 2, n = 256, h = 2 * Sp / n, sum = 0;
+      var sth = Math.sqrt(Math.max(0, 1 - cth * cth));
+      for (var i = 0; i <= n; i++) {
+        var t = -Sp + i * h, b = betaS(t), bd = bdotS(t), den = 1 - cth * b;
+        var En = (1 - b * cth) * (bd * cth) - (bd * cth) * den;
+        var Ep = (-b * sth) * (bd * cth) - (bd * sth) * den;
+        sum += (En * En + Ep * Ep) / Math.pow(den, 5) * ((i === 0 || i === n) ? 1 : (i % 2 ? 4 : 2));
+      }
+      return sum * h / 3;
+    }
+    // cumulative impulse and drift in the DETECTOR's own time, for the animation only
+    function tables(cth, R) {
+      var Sp = spanQ(), N = 1024, h = 2 * Sp / N, f = integrand(cth, R);
+      var T = new Float64Array(N + 1), J = new Float64Array(N + 1), X = new Float64Array(N + 1);
+      var pT = 0, pE = 0;
+      for (var i = 0; i <= N; i++) {
+        var tp = -Sp + i * h, b = betaS(tp), den = 1 - cth * b;
+        var Ep = f(tp) / den;                       // undo the Jacobian: field in detector time
+        var to = tp + R - posS(tp) * cth;           // exact retarded map (radiation zone)
+        if (i === 0) { T[0] = to; J[0] = 0; X[0] = 0; }
+        else {
+          var dtv = to - pT;
+          J[i] = J[i - 1] + 0.5 * (Ep + pE) * dtv;
+          X[i] = X[i - 1] + 0.5 * (J[i] + J[i - 1]) * dtv;
+          T[i] = to;
+        }
+        pT = to; pE = Ep;
+      }
+      return { t: T, J: J, X: X, N: N };
+    }
+    function lookup(tb, t) {
+      var N = tb.N;
+      if (t <= tb.t[0]) return [0, 0];
+      if (t >= tb.t[N]) return [tb.J[N], tb.X[N] + tb.J[N] * (t - tb.t[N])];
+      var lo = 0, hi = N;
+      while (hi - lo > 1) { var m = (lo + hi) >> 1; if (tb.t[m] > t) hi = m; else lo = m; }
+      var f = (t - tb.t[lo]) / ((tb.t[hi] - tb.t[lo]) || 1);
+      return [tb.J[lo] + f * (tb.J[hi] - tb.J[lo]), tb.X[lo] + f * (tb.X[hi] - tb.X[lo])];
+    }
+    return { st: st, betaS: betaS, bdotS: bdotS, posS: posS, spanQ: spanQ, spanV: spanV, AA: AA,
+             dvClosed: dvClosed, dvNumeric: dvNumeric, fluence: fluence, tables: tables, lookup: lookup };
+  })();
+
+  /* ================================================================
+     ENGINE 2 — null-burst memory on the sphere, l-space, l <= 8
+     ================================================================ */
+  var GW = (function () {
+    var LMAX = 8, K = (LMAX + 1) * (LMAX + 1);
+    function gauss(n) {
+      var x = new Float64Array(n), w = new Float64Array(n);
+      for (var i = 0; i < n; i++) {
+        var z = Math.cos(Math.PI * (i + 0.75) / (n + 0.5)), pp = 0;
+        for (var it = 0; it < 100; it++) {
+          var p0 = 1, p1 = 0;
+          for (var j = 0; j < n; j++) { var p2 = p1; p1 = p0; p0 = ((2 * j + 1) * z * p1 - j * p2) / (j + 1); }
+          pp = n * (z * p0 - p1) / (z * z - 1);
+          var dz = p0 / pp; z -= dz; if (Math.abs(dz) < 1e-15) break;
+        }
+        x[i] = z; w[i] = 2 / ((1 - z * z) * pp * pp);
+      }
+      return { x: x, w: w };
+    }
+    var GL = gauss(64), GLB = gauss(96);
+    function legP(L, x) {
+      var p = new Float64Array(L + 1); p[0] = 1; if (L > 0) p[1] = x;
+      for (var l = 1; l < L; l++) p[l + 1] = ((2 * l + 1) * x * p[l] - l * p[l - 1]) / (l + 1);
+      return p;
+    }
+    var clC = {};
+    function cl(kappa, L, big) {
+      var key = kappa + '|' + L + '|' + (big ? 1 : 0);
+      if (clC[key]) return clC[key];
+      var g = big ? GLB : GL, n = g.x.length, c = new Float64Array(L + 1);
+      for (var i = 0; i < n; i++) {
+        var p = legP(L, g.x[i]), f = Math.exp(kappa * (g.x[i] - 1));
+        for (var l = 0; l <= L; l++) c[l] += g.w[i] * f * p[l];
+      }
+      return (clC[key] = c);
+    }
+    var lg = [0]; for (var q = 1; q <= 100; q++) lg[q] = lg[q - 1] + Math.log(q);
+    var NORM = [];
+    for (var a0 = 0; a0 <= LMAX; a0++) {
+      NORM[a0] = [];
+      for (var b0 = 0; b0 <= a0; b0++) {
+        var base = Math.sqrt((2 * a0 + 1) / (4 * Math.PI) * Math.exp(lg[a0 - b0] - lg[a0 + b0]));
+        NORM[a0][b0] = b0 === 0 ? base : Math.SQRT2 * base;
+      }
+    }
+    var _Y = new Float64Array(K), _P = new Float64Array((LMAX + 1) * (LMAX + 2) / 2);
+    function pidx(l, m) { return l * (l + 1) / 2 + m; }
+    function Yat(n) {
+      var x = Math.max(-1, Math.min(1, n[2]));
+      var stt = Math.sqrt(Math.max(0, 1 - x * x)), phi = Math.atan2(n[1], n[0]);
+      var p = _P; p[0] = 1;
+      for (var m = 0; m <= LMAX; m++) {
+        if (m > 0) p[pidx(m, m)] = p[pidx(m - 1, m - 1)] * (2 * m - 1) * stt;
+        if (m < LMAX) p[pidx(m + 1, m)] = x * (2 * m + 1) * p[pidx(m, m)];
+        for (var l = m + 2; l <= LMAX; l++) p[pidx(l, m)] = ((2 * l - 1) * x * p[pidx(l - 1, m)] - (l + m - 1) * p[pidx(l - 2, m)]) / (l - m);
+      }
+      for (var ll = 0; ll <= LMAX; ll++) {
+        _Y[ll * ll + ll] = NORM[ll][0] * p[pidx(ll, 0)];
+        for (var mm = 1; mm <= ll; mm++) {
+          var v = NORM[ll][mm] * p[pidx(ll, mm)];
+          _Y[ll * ll + ll + mm] = v * Math.cos(mm * phi);
+          _Y[ll * ll + ll - mm] = v * Math.sin(mm * phi);
+        }
+      }
+      return _Y;
+    }
+    function fluxCoef(beams) {
+      var F = new Float64Array(K);
+      for (var j = 0; j < beams.length; j++) {
+        var b = beams[j], c = cl(b.k, LMAX, false), Y = Yat(b.n);
+        for (var l = 0; l <= LMAX; l++) {
+          var f = b.w * 2 * Math.PI * c[l];
+          for (var m = -l; m <= l; m++) F[l * l + l + m] += f * Y[l * l + l + m];
+        }
+      }
+      return F;
+    }
+    function solve(F) {
+      var Phi = new Float64Array(K);
+      for (var l = 2; l <= LMAX; l++) {
+        var d = (l - 1) * l * (l + 1) * (l + 2);
+        for (var m = -l; m <= l; m++) Phi[l * l + l + m] = 4 * F[l * l + l + m] / d;
+      }
+      return Phi;
+    }
+    function evalC(c, n) { var Y = Yat(n), s = 0; for (var i = 0; i < K; i++) s += c[i] * Y[i]; return s; }
+    function h1(Phi, n, e1, e2, eps, NC) {
+      var a2 = 0, b2 = 0, ce = Math.cos(eps), se = Math.sin(eps);
+      for (var k = 0; k < NC; k++) {
+        var psi = 2 * Math.PI * k / NC, cp = Math.cos(psi), sp = Math.sin(psi);
+        var v = evalC(Phi, [ce * n[0] + se * (cp * e1[0] + sp * e2[0]),
+                            ce * n[1] + se * (cp * e1[1] + sp * e2[1]),
+                            ce * n[2] + se * (cp * e1[2] + sp * e2[2])]);
+        a2 += v * Math.cos(2 * psi); b2 += v * Math.sin(2 * psi);
+      }
+      a2 *= 2 / NC; b2 *= 2 / NC;
+      return [4 * a2 / (eps * eps), 4 * b2 / (eps * eps)];
+    }
+    function hess(Phi, n, e1, e2) {
+      var A = h1(Phi, n, e1, e2, 0.06, 16), B = h1(Phi, n, e1, e2, 0.03, 16);
+      return [(4 * B[0] - A[0]) / 3, (4 * B[1] - A[1]) / 3, Math.hypot(B[0] - A[0], B[1] - A[1])];
+    }
+    function frameAt(n) {
+      var s = Math.sqrt(Math.max(0, 1 - n[2] * n[2]));
+      if (s > 1e-7) { var c = n[0] / s, d = n[1] / s; return [[n[2] * c, n[2] * d, -s], [-d, c, 0]]; }
+      return [[1, 0, 0], [0, n[2] > 0 ? 1 : -1, 0]];
+    }
+    // fraction of power kept by the l <= 8 truncation, for a single beam.
+    // flux power per l = sum_m F_lm^2 ; strain power per l = int dC_AB dC^AB per l
+    //   = 16 sum_m F_lm^2 / [(l-1)l(l+1)(l+2)]   (the strain, not the potential:
+    //   the strain is what a detector reads)
+    function kept(kappa) {
+      var LB = 44, c = cl(kappa, LB, true), fA = 0, fK = 0, mA = 0, mK = 0;
+      for (var l = 0; l <= LB; l++) {
+        var pw = Math.pow(2 * Math.PI * c[l], 2) * (2 * l + 1) / (4 * Math.PI);
+        fA += pw; if (l <= LMAX) fK += pw;
+        if (l >= 2) { var d = (l - 1) * l * (l + 1) * (l + 2), mp = pw * 16 / d; mA += mp; if (l <= LMAX) mK += mp; }
+      }
+      return { flux: fK / fA, mem: mK / mA };
+    }
+    return { LMAX: LMAX, fluxCoef: fluxCoef, solve: solve, evalC: evalC, hess: hess, frameAt: frameAt, kept: kept };
+  })();
+
+  /* ---------------- the range ---------------- */
+  var NDET = 15, DET = [];
+  (function () {
+    var ga = Math.PI * (3 - Math.sqrt(5));
+    for (var i = 0; i < NDET; i++) {
+      var z = Math.max(-0.93, Math.min(0.93, 1 - 2 * (i + 0.5) / NDET));
+      var r = Math.sqrt(1 - z * z), a = i * ga;
+      DET.push({ n: nrm([r * Math.cos(a), r * Math.sin(a), z]), R: 7.5 + 10.5 * ((i * 0.6180339887498949) % 1) });
+    }
+  })();
+  var RMAX = 0; for (var d0 = 0; d0 < NDET; d0++) RMAX = Math.max(RMAX, DET[d0].R);
+  var SCENE = RMAX * 1.12;
+
+  /* ---------------- DOM ---------------- */
+  var cv = root.querySelector('.w5-canvas'), ctx = cv && cv.getContext ? cv.getContext('2d') : null;
+  var elT = root.querySelector('[data-w5-t]'), elShell = root.querySelector('[data-w5-shell]');
+  var elReached = root.querySelector('[data-w5-reached]');
+  var elThead = root.querySelector('[data-w5-thead]'), elTbody = root.querySelector('[data-w5-tbody]');
+  var elFoot = root.querySelector('[data-w5-foot]'), elLtitle = root.querySelector('[data-w5-ltitle]');
+  var elLsub = root.querySelector('[data-w5-lsub]'), elScrub = root.querySelector('[data-w5-scrub]');
+  var elHint = root.querySelector('[data-w5-hint]');
+  if (!ctx) {
+    var ng = root.querySelector('[data-w5-nogl]');
+    if (ng) { ng.hidden = false; ng.textContent = 'This browser cannot give us a 2-D canvas, so the range is not drawn. Nothing is lost from the argument: every number the range produces is in the table below, and the table is the primary record.'; }
+    if (cv) cv.style.display = 'none';
+  }
+
+  var S = { mode: 'em', t: 0, tmax: 30, t0: 0, running: false, speed: 1,
+            yaw: 0.62, pitch: 0.30, dist: 2.6,
+            emAz: 35, emEl: 22, emB: 0.6, emT: 0.6, prof: 'one',
+            gwAz: -25, gwEl: 30, gwK: 12, gwA: 0.9, lobe: 'off' };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SOL = null, hotIdx = -1;
+
+  /* ---------------- GW transient: ramp (permanent) + exactly odd ringing (zero integral) --- */
+  var SIGR = 1.0, LAMR = 2.6, SIGW = 1.7;
+  function gwProfile(u) {
+    return 0.5 * (1 + Math.tanh(u / SIGR))
+         + S.gwA * Math.sin(2 * Math.PI * u / LAMR) * Math.exp(-u * u / (2 * SIGW * SIGW));
+  }
+  function gwNews(u) { var h = 1e-3; return (gwProfile(u + h) - gwProfile(u - h)) / (2 * h); }
+
+  /* ---------------- solves ---------------- */
+  function solveEM() {
+    EM.st.bf = S.emB; EM.st.tau = S.emT; EM.st.prof = S.prof;
+    var d = dirAzEl(S.emAz, S.emEl), rows = [], worst = 0, maxAbs = 0, panels = 0, gap = 0;
+    for (var i = 0; i < NDET; i++) {
+      var det = DET[i], cth = dot(det.n, d), R = det.R;
+      var closed = EM.dvClosed(cth, R), num = EM.dvNumeric(cth, R);
+      worst = Math.max(worst, Math.abs(num.v - closed));
+      panels = Math.max(panels, num.panels); gap = Math.max(gap, num.gap);
+      maxAbs = Math.max(maxAbs, Math.abs(closed));
+      var p = sub(d, mul(det.n, cth)), pl = len(p);
+      rows.push({ i: i, n: det.n, R: R, cth: cth, closed: closed, num: num.v,
+                  diff: Math.abs(num.v - closed), pHat: pl > 1e-9 ? mul(p, 1 / pl) : [0, 0, 0],
+                  tab: EM.tables(cth, R) });
+    }
+    var NF = 129, flu = new Float64Array(NF), fmax = 0, peak = 0;
+    for (var k = 0; k < NF; k++) { flu[k] = EM.fluence(-1 + 2 * k / (NF - 1)); if (flu[k] > fmax) { fmax = flu[k]; peak = -1 + 2 * k / (NF - 1); } }
+    // wavefronts: one sphere per emission time, radius t - s, centred on the source then
+    var sMax = (S.prof === 'one' ? 3.2 : 3.2 + 2.2) * S.emT, shells = [], wmax = 0, NS = 13;
+    for (var j = 0; j < NS; j++) {
+      var s2 = -sMax + 2 * sMax * j / (NS - 1), w = Math.abs(EM.bdotS(s2));
+      shells.push({ s: s2, w: w, c: mul(d, EM.posS(s2)) }); if (w > wmax) wmax = w;
+    }
+    for (var j2 = 0; j2 < NS; j2++) shells[j2].w /= (wmax || 1);
+    SOL = { kind: 'em', rows: rows, worst: worst, maxAbs: maxAbs, panels: panels, gap: gap,
+            flu: flu, NF: NF, fmax: fmax || 1, peakCos: peak, dir: d, shells: shells };
+    S.t0 = -EM.spanV(); S.tmax = RMAX + EM.spanV() + 7;
+  }
+  function fluAt(cth) {
+    var x = (cth + 1) / 2 * (SOL.NF - 1), i = Math.max(0, Math.min(SOL.NF - 2, Math.floor(x))), f = x - i;
+    return (SOL.flu[i] + f * (SOL.flu[i + 1] - SOL.flu[i])) / SOL.fmax;
+  }
+
+  function solveGW() {
+    var d = dirAzEl(S.gwAz, S.gwEl);
+    var beams = [{ n: d, k: S.gwK, w: 1 }];
+    if (S.lobe === 'on') beams.push({ n: mul(d, -1), k: Math.max(3, Math.round(S.gwK * 0.6)), w: 0.55 });
+    var Phi = GW.solve(GW.fluxCoef(beams));
+    var rows = [], maxH = 0, rich = 0;
+    for (var i = 0; i < NDET; i++) {
+      var det = DET[i], fr = GW.frameAt(det.n), h = GW.hess(Phi, det.n, fr[0], fr[1]);
+      var hp = h[0] / det.R, hx = h[1] / det.R, amp = Math.hypot(hp, hx);
+      rich = Math.max(rich, h[2]); maxH = Math.max(maxH, amp);
+      rows.push({ i: i, n: det.n, R: det.R, e1: fr[0], e2: fr[1], hp: hp, hx: hx, amp: amp, C11: h[0], C12: h[1] });
+    }
+    var axisNull = null, kp = null;
+    if (beams.length === 1) {
+      var fa = GW.frameAt(d), fb = GW.frameAt(mul(d, -1));
+      var ha = GW.hess(Phi, d, fa[0], fa[1]), hb = GW.hess(Phi, mul(d, -1), fb[0], fb[1]);
+      axisNull = { axis: Math.hypot(ha[0], ha[1]), anti: Math.hypot(hb[0], hb[1]) };
+      kp = GW.kept(S.gwK);
+    }
+    var fsum = 0; for (var b = 0; b < beams.length; b++) fsum += beams[b].w;
+    var shells = [], NS = 13, wmax = 0;
+    for (var j = 0; j < NS; j++) {
+      var u = -5 + 10 * j / (NS - 1), w = Math.abs(gwNews(u));
+      shells.push({ s: u, w: w, c: [0, 0, 0] }); if (w > wmax) wmax = w;
+    }
+    for (var j2 = 0; j2 < NS; j2++) shells[j2].w /= (wmax || 1);
+    SOL = { kind: 'gw', rows: rows, Phi: Phi, beams: beams, maxH: maxH || 1, fmax: fsum || 1,
+            axisNull: axisNull, kept: kp, rich: rich, dir: d, shells: shells };
+    S.t0 = -6; S.tmax = RMAX + 9;
+  }
+  function fluxAt(n) {
+    var s = 0;
+    for (var j = 0; j < SOL.beams.length; j++) { var b = SOL.beams[j]; s += b.w * Math.exp(b.k * (dot(n, b.n) - 1)); }
+    return s / SOL.fmax;
+  }
+  function resolve() { if (S.mode === 'em') solveEM(); else solveGW(); renderLedger(); }
+
+  /* ---------------- camera ---------------- */
+  var W = 0, H = 0, DPR = 1;
+  function resize() {
+    if (!ctx) return;
+    var r = cv.getBoundingClientRect();
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = Math.max(1, Math.round(r.width)); H = Math.max(1, Math.round(r.height));
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  function cam() {
+    var cp = Math.cos(S.pitch);
+    var eye = mul([cp * Math.cos(S.yaw), cp * Math.sin(S.yaw), Math.sin(S.pitch)], S.dist * SCENE);
+    var fwd = nrm(sub([0, 0, 0], eye));
+    var right = nrm(cr(fwd, [0, 0, 1])), up = cr(right, fwd);
+    return { eye: eye, fwd: fwd, right: right, up: up, f: 0.5 * H / Math.tan(0.31) };
+  }
+  function proj(C, p) {
+    var v = sub(p, C.eye), z = dot(v, C.fwd);
+    if (z < 0.04 * SCENE) return null;
+    return { x: W / 2 + C.f * dot(v, C.right) / z, y: H / 2 - C.f * dot(v, C.up) / z, z: z, s: C.f / z };
+  }
+
+  /* ---------------- the shell cloud ---------------- */
+  var NSH = 900, SHD = [];
+  (function () {
+    var ga = Math.PI * (3 - Math.sqrt(5));
+    for (var i = 0; i < NSH; i++) {
+      var z = 1 - 2 * (i + 0.5) / NSH, r = Math.sqrt(Math.max(0, 1 - z * z)), a = i * ga;
+      SHD.push([r * Math.cos(a), r * Math.sin(a), z]);
+    }
+  })();
+  var BINS = 6, binBuf = [];
+  function drawShell(C, centre, radius, pattern, alpha) {
+    if (radius <= 0 || alpha < 0.012) return;
+    for (var b = 0; b < BINS; b++) binBuf[b] = (binBuf[b] || []), binBuf[b].length = 0;
+    for (var i = 0; i < NSH; i++) {
+      var n = SHD[i];
+      var w = pattern(n);
+      if (w < 0.02) continue;
+      var world = add(centre, mul(n, radius));
+      var p = proj(C, world);
+      if (!p) continue;
+      var far = dot(sub(world, centre), sub(C.eye, centre)) < 0;
+      var q = Math.pow(w, 0.6) * (far ? 0.32 : 1);
+      if (q < 0.03) continue;
+      var bi = Math.min(BINS - 1, (q * BINS) | 0);
+      binBuf[bi].push(p.x, p.y, Math.max(0.7, 1.9 * p.s * SCENE / 46));
+    }
+    for (var b2 = 0; b2 < BINS; b2++) {
+      var arr = binBuf[b2]; if (!arr.length) continue;
+      ctx.fillStyle = rgba('--accent', Math.min(0.9, alpha * (b2 + 0.7) / BINS));
+      ctx.beginPath();
+      for (var k = 0; k < arr.length; k += 3) { ctx.moveTo(arr[k] + arr[k + 2], arr[k + 1]); ctx.arc(arr[k], arr[k + 1], arr[k + 2], 0, 6.2832); }
+      ctx.fill();
+    }
+    // exact silhouette of the sphere seen from the eye
+    var v = sub(centre, C.eye), dd = len(v);
+    if (dd > radius) {
+      var vh = mul(v, 1 / dd);
+      var cc = add(centre, mul(vh, -radius * radius / dd));
+      var rr = radius * Math.sqrt(1 - radius * radius / (dd * dd));
+      var e1 = nrm(cr(vh, Math.abs(vh[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0])), e2 = cr(vh, e1);
+      ctx.beginPath();
+      var started = false;
+      for (var s = 0; s <= 96; s++) {
+        var a2 = 2 * Math.PI * s / 96;
+        var qq = proj(C, add(cc, add(mul(e1, rr * Math.cos(a2)), mul(e2, rr * Math.sin(a2)))));
+        if (!qq) { started = false; continue; }
+        if (!started) { ctx.moveTo(qq.x, qq.y); started = true; } else ctx.lineTo(qq.x, qq.y);
+      }
+      ctx.strokeStyle = rgba('--accent', Math.min(0.65, alpha * 1.2));
+      ctx.lineWidth = 1.15; ctx.stroke();
+    }
+  }
+
+  function drawFrame(C) {
+    ctx.beginPath();
+    var started = false;
+    for (var s = 0; s <= 84; s++) {
+      var a = 2 * Math.PI * s / 84;
+      var q = proj(C, [SCENE * Math.cos(a), SCENE * Math.sin(a), 0]);
+      if (!q) { started = false; continue; }
+      if (!started) { ctx.moveTo(q.x, q.y); started = true; } else ctx.lineTo(q.x, q.y);
+    }
+    ctx.strokeStyle = rgba('--rule-2', 0.5); ctx.lineWidth = 1; ctx.stroke();
+
+    var p0 = proj(C, [0, 0, 0]), p1 = proj(C, mul(SOL.dir, SCENE * 1.03));
+    if (p0 && p1) {
+      ctx.save(); ctx.setLineDash([5, 5]); ctx.lineWidth = 1.4;
+      ctx.strokeStyle = rgba('--die', 0.8);
+      ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y); ctx.stroke(); ctx.restore();
+      ctx.fillStyle = rgba('--die', 0.95);
+      ctx.beginPath(); ctx.arc(p1.x, p1.y, 4, 0, 6.2832); ctx.fill();
+      ctx.font = '600 10px ' + tok('--sans'); ctx.textAlign = 'center';
+      ctx.fillText(S.mode === 'em' ? 'KICK' : 'BEAM', p1.x, p1.y - 10);
+    }
+  }
+
+  function drawEM(C) {
+    var velGain = SOL.maxAbs > 0 ? SCENE * 0.10 / SOL.maxAbs : 0;
+    var posGain = SOL.maxAbs > 0 ? SCENE * 0.055 / (SOL.maxAbs * 12) : 0;
+    var items = [];
+    for (var i = 0; i < SOL.rows.length; i++) {
+      var r = SOL.rows[i], base = mul(r.n, r.R), jx = EM.lookup(r.tab, S.t);
+      var pos = add(base, mul(r.pHat, jx[1] * posGain));
+      var p = proj(C, pos);
+      if (p) items.push({ p: p, r: r, J: jx[0], pos: pos, base: base });
+    }
+    items.sort(function (a, b) { return b.p.z - a.p.z; });
+    for (var k = 0; k < items.length; k++) {
+      var it = items[k], r2 = it.r, g0 = proj(C, it.base);
+      var isHot = r2.i === hotIdx;
+      if (g0) {
+        ctx.strokeStyle = rgba('--ink-3', 0.5); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(g0.x, g0.y, 3, 0, 6.2832); ctx.stroke();
+        if (Math.hypot(it.p.x - g0.x, it.p.y - g0.y) > 1.5) {
+          ctx.strokeStyle = rgba('--ink-3', 0.42);
+          ctx.beginPath(); ctx.moveTo(g0.x, g0.y); ctx.lineTo(it.p.x, it.p.y); ctx.stroke();
+        }
+      }
+      var moved = Math.abs(it.J) > 1e-14;
+      if (isHot) {
+        ctx.strokeStyle = rgba('--accent', 0.9); ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, 11, 0, 6.2832); ctx.stroke();
+      }
+      ctx.fillStyle = moved ? rgba('--keep', 1) : rgba('--ink-3', 0.85);
+      ctx.beginPath(); ctx.arc(it.p.x, it.p.y, 4.4, 0, 6.2832); ctx.fill();
+      if (moved) {
+        var q = proj(C, add(it.pos, mul(r2.pHat, it.J * velGain)));
+        if (q) {
+          ctx.strokeStyle = rgba('--keep', 0.95); ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(it.p.x, it.p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+          var an = Math.atan2(q.y - it.p.y, q.x - it.p.x);
+          ctx.beginPath(); ctx.moveTo(q.x, q.y);
+          ctx.lineTo(q.x - 5.5 * Math.cos(an - 0.42), q.y - 5.5 * Math.sin(an - 0.42));
+          ctx.lineTo(q.x - 5.5 * Math.cos(an + 0.42), q.y - 5.5 * Math.sin(an + 0.42));
+          ctx.closePath(); ctx.fillStyle = rgba('--keep', 0.95); ctx.fill();
+        }
+      }
+      ctx.font = '10px ' + tok('--mono'); ctx.textAlign = 'left';
+      ctx.fillStyle = rgba('--ink-3', 0.9);
+      ctx.fillText(String(r2.i + 1), it.p.x + 8, it.p.y - 7);
+    }
+    var sp = proj(C, mul(SOL.dir, EM.posS(Math.min(S.t, EM.spanQ()))));
+    if (sp) {
+      ctx.fillStyle = rgba('--die', 1);
+      ctx.beginPath(); ctx.arc(sp.x, sp.y, 5.2, 0, 6.2832); ctx.fill();
+      ctx.strokeStyle = rgba('--surface-sunk', 0.95); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(sp.x, sp.y, 5.2, 0, 6.2832); ctx.stroke();
+    }
+  }
+
+  function drawGW(C) {
+    var gain = SOL.maxH > 0 ? 0.45 / SOL.maxH : 0;
+    var RR = SCENE * 0.07, NPT = 16, items = [];
+    for (var i = 0; i < SOL.rows.length; i++) {
+      var r = SOL.rows[i], base = mul(r.n, r.R), p = proj(C, base);
+      if (p) items.push({ p: p, r: r, base: base });
+    }
+    items.sort(function (a, b) { return b.p.z - a.p.z; });
+    for (var k = 0; k < items.length; k++) {
+      var it = items[k], r2 = it.r, u = S.t - r2.R, g = gwProfile(u);
+      var hp = r2.hp * g * gain, hx = r2.hx * g * gain, touched = u > -3.2;
+      if (r2.i === hotIdx) {
+        ctx.strokeStyle = rgba('--accent', 0.85); ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, RR * it.p.s * 1.5, 0, 6.2832); ctx.stroke();
+      }
+      ctx.beginPath(); var st1 = false;
+      for (var s = 0; s <= NPT; s++) {
+        var a = 2 * Math.PI * s / NPT;
+        var q = proj(C, add(it.base, add(mul(r2.e1, RR * Math.cos(a)), mul(r2.e2, RR * Math.sin(a)))));
+        if (!q) { st1 = false; continue; }
+        if (!st1) { ctx.moveTo(q.x, q.y); st1 = true; } else ctx.lineTo(q.x, q.y);
+      }
+      ctx.save(); ctx.setLineDash([2, 3]); ctx.strokeStyle = rgba('--ink-3', 0.5); ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
+      ctx.fillStyle = touched ? rgba('--keep', 1) : rgba('--ink-3', 0.8);
+      ctx.beginPath();
+      for (var s2 = 0; s2 < NPT; s2++) {
+        var a2 = 2 * Math.PI * s2 / NPT, x = RR * Math.cos(a2), y = RR * Math.sin(a2);
+        var dx = 0.5 * (hp * x + hx * y), dy = 0.5 * (hx * x - hp * y);
+        var q2 = proj(C, add(it.base, add(mul(r2.e1, x + dx), mul(r2.e2, y + dy))));
+        if (!q2) continue;
+        var rad = Math.max(1.5, 2.6 * q2.s * SCENE / 40);
+        ctx.moveTo(q2.x + rad, q2.y); ctx.arc(q2.x, q2.y, rad, 0, 6.2832);
+      }
+      ctx.fill();
+      ctx.font = '10px ' + tok('--mono'); ctx.textAlign = 'left';
+      ctx.fillStyle = rgba('--ink-3', 0.9);
+      ctx.fillText(String(r2.i + 1), it.p.x + RR * it.p.s + 6, it.p.y - RR * it.p.s * 0.6);
+    }
+    var sp = proj(C, [0, 0, 0]);
+    if (sp) { ctx.fillStyle = rgba('--die', 1); ctx.beginPath(); ctx.arc(sp.x, sp.y, 5, 0, 6.2832); ctx.fill(); }
+  }
+
+  function draw() {
+    if (!ctx || !SOL) return;
+    if (!W || !H) resize();
+    ctx.clearRect(0, 0, W, H);
+    var C = cam();
+    drawFrame(C);
+    var pat = S.mode === 'em' ? function (n) { return fluAt(dot(n, SOL.dir)); } : fluxAt;
+    var drawn = 0;
+    for (var i = SOL.shells.length - 1; i >= 0 && drawn < 7; i--) {
+      var sh = SOL.shells[i], rr = S.t - sh.s;
+      if (rr <= 0 || sh.w < 0.07) continue;
+      var fade = Math.max(0, 1 - rr / (SCENE * 1.45));
+      drawShell(C, sh.c, rr, pat, 0.62 * sh.w * fade);
+      drawn++;
+    }
+    if (S.mode === 'em') drawEM(C); else drawGW(C);
+    if (elT) elT.textContent = S.t.toFixed(2);
+    if (elShell) elShell.textContent = Math.max(0, S.t).toFixed(2);
+    if (elReached) {
+      var n = 0;
+      for (var j = 0; j < SOL.rows.length; j++) if (S.t - SOL.rows[j].R > 0) n++;
+      elReached.textContent = n + ' / ' + SOL.rows.length;
+    }
+  }
+
+  /* ---------------- ledger ---------------- */
+  function ang(n) {
+    return (Math.acos(Math.max(-1, Math.min(1, n[2]))) / DEG).toFixed(0) + '°, '
+         + (Math.atan2(n[1], n[0]) / DEG).toFixed(0) + '°';
+  }
+  function ex(v, d) { return v === 0 ? '0' : v.toExponential(d === undefined ? 6 : d); }
+  function frow(k, v) { return '<div class="w5-foot-row"><span>' + k + '</span><b>' + v + '</b></div>'; }
+
+  function renderLedger() {
+    if (!SOL || !elTbody) return;
+    var rows = SOL.rows.slice(), html = '';
+    if (SOL.kind === 'em') {
+      elLtitle.textContent = 'What each test charge kept — two routes to the same velocity kick';
+      elLsub.innerHTML = 'c = 1; distances in units of the range scale L; &Delta;v in units of '
+        + '<span class="mono">q q<sub>t</sub>/(4&pi;&epsilon;<sub>0</sub> m<sub>t</sub> c L)</span>. '
+        + 'Signed along the transverse direction the source moved.';
+      rows.sort(function (a, b) { return Math.abs(b.closed) - Math.abs(a.closed); });
+      elThead.innerHTML = '<tr><th>detector (&theta;, &phi;)</th><th>R</th><th>n&middot;&beta;&#770;<sub>f</sub></th>'
+        + '<th>&Delta;v &mdash; closed form</th><th>&Delta;v &mdash; integrated</th><th>|difference|</th></tr>';
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i];
+        html += '<tr data-i="' + r.i + '"><td>' + (r.i + 1) + '&nbsp;&nbsp;' + ang(r.n) + '</td><td>'
+          + r.R.toFixed(2) + '</td><td>' + r.cth.toFixed(4) + '</td><td class="num-key">'
+          + ex(r.closed, 9) + '</td><td>' + ex(r.num, 9) + '</td><td>' + ex(r.diff, 2) + '</td></tr>';
+      }
+      elTbody.innerHTML = html;
+      elFoot.innerHTML =
+          frow('largest disagreement across all ' + NDET + ' detectors', ex(SOL.worst, 3))
+        + frow('the same, relative to the largest kick', ex(SOL.maxAbs > 0 ? SOL.worst / SOL.maxAbs : 0, 3))
+        + frow('Simpson panels at convergence', String(SOL.panels))
+        + frow('quadrature self-check |I<sub>n</sub> &minus; I<sub>2n</sub>|', ex(SOL.gap, 2))
+        + frow('brightest direction, cos&thinsp;&theta; from the kick axis', SOL.peakCos.toFixed(3))
+        + '<p class="w5-foot-note"><b>Two genuinely different routes.</b> The closed-form column evaluates the '
+        + 'bracket printed above &mdash; it knows the velocity before and after and nothing else. The integrated '
+        + 'column is composite Simpson over the detector&rsquo;s own clock, obtained by the exact change of '
+        + 'variables to source time with Jacobian <span class="mono">1 &minus; n&middot;&beta;</span>, panels '
+        + 'doubled until successive estimates agree to <span class="mono">10<sup>&minus;12</sup></span> relative '
+        + '&mdash; it integrates the entire history and never uses the endpoint formula. Checked offline over 720 '
+        + 'parameter combinations against the closed form: worst relative difference '
+        + '<span class="mono">1.7&times;10<sup>&minus;14</sup></span>. '
+        + '<b>Scope.</b> These are the radiative fields. The Coulomb part of the exact field falls as '
+        + '<span class="mono">1/R&sup2;</span>, is not radiative data, and is not in these numbers. '
+        + '<b>Drawing.</b> Positions and velocity arrows in the picture are magnified to be visible; the ledger '
+        + 'is unscaled. The shell brightness follows the exact angular fluence '
+        + '<span class="mono">dW/d&Omega;</span>, normalised at each instant &mdash; the pattern is physics, the '
+        + 'overall opacity is a drawing choice.</p>';
+    } else {
+      elLtitle.textContent = 'What each ring kept — the permanent strain, angle by angle';
+      elLsub.innerHTML = 'Burst energy set to 1, constants in front of the flux absorbed; '
+        + '<span class="mono">&#8467; &le; 8</span>. Sorted by the size of the permanent strain.';
+      rows.sort(function (a, b) { return b.amp - a.amp; });
+      elThead.innerHTML = '<tr><th>detector (&theta;, &phi;)</th><th>r</th><th>angle off beam</th>'
+        + '<th>r&thinsp;&Delta;h<sub>+</sub></th><th>r&thinsp;&Delta;h<sub>&times;</sub></th>'
+        + '<th class="w5-barcell">permanent strain |&Delta;h|</th></tr>';
+      var mx = rows.length ? rows[0].amp : 1;
+      for (var j = 0; j < rows.length; j++) {
+        var q = rows[j];
+        var off = (Math.acos(Math.max(-1, Math.min(1, dot(q.n, SOL.dir)))) / DEG).toFixed(0);
+        html += '<tr data-i="' + q.i + '"><td>' + (q.i + 1) + '&nbsp;&nbsp;' + ang(q.n) + '</td><td>'
+          + q.R.toFixed(2) + '</td><td>' + off + '°</td><td>' + q.C11.toExponential(4) + '</td><td>'
+          + q.C12.toExponential(4) + '</td><td class="w5-barcell"><span class="w5-barwrap">'
+          + '<span class="w5-bartrack"><span class="w5-bar" style="width:' + (100 * (mx > 0 ? q.amp / mx : 0)).toFixed(1)
+          + '%"></span></span><span>' + q.amp.toExponential(3) + '</span></span></td></tr>';
+      }
+      elTbody.innerHTML = html;
+      var f = '';
+      if (SOL.axisNull) {
+        f += frow('|&Delta;C| straight down the beam axis', ex(SOL.axisNull.axis, 2));
+        f += frow('|&Delta;C| at the antipode of the beam', ex(SOL.axisNull.anti, 2));
+        f += frow('largest |&Delta;C| on the range', ex(rows.length ? rows[0].amp * rows[0].R : 0, 3));
+      }
+      if (SOL.kept) {
+        f += frow('flux power retained at &#8467; &le; 8', (100 * SOL.kept.flux).toFixed(4) + ' %');
+        f += frow('memory <em>strain</em> power retained at &#8467; &le; 8', (100 * SOL.kept.mem).toFixed(4) + ' %');
+      }
+      f += frow('Richardson step check |C(&epsilon;) &minus; C(&epsilon;/2)|', ex(SOL.rich, 2));
+      f += '<p class="w5-foot-note">'
+        + (SOL.axisNull
+            ? '<b>The two nulls.</b> For a single beam the permanent strain vanishes exactly along the beam axis '
+              + 'and exactly at its antipode, and is largest on the ring of directions in between. That is not a '
+              + 'quirk of the solver: a trace-free symmetric tensor that must be invariant under every rotation '
+              + 'about the axis has nowhere to point, so it is zero. The two numbers above are the solver agreeing '
+              + 'with that to nine digits. '
+            : '<b>Two lobes.</b> The axis nulls above are a single-beam statement and no longer apply, so they are '
+              + 'not shown. Switch the second lobe off to get them back. ')
+        + '<b>Method.</b> Beam coefficients from the closed form '
+        + '<span class="mono">F<sub>&#8467;m</sub> = 2&pi;c<sub>&#8467;</sub>(&kappa;)Y<sub>&#8467;m</sub>(n&#770;<sub>0</sub>)</span>, '
+        + 'with <span class="mono">c<sub>&#8467;</sub></span> by 64-node Gauss&ndash;Legendre (agrees with the '
+        + 'modified-Bessel closed form to <span class="mono">10<sup>&minus;14</sup></span>). The trace-free second '
+        + 'derivative on the sphere comes from the <span class="mono">m = 2</span> Fourier coefficient of '
+        + '<span class="mono">&Phi;</span> on a small geodesic circle, Richardson-extrapolated to fourth order; '
+        + 'checked against the analytic <span class="mono">Y<sub>20</sub></span> result, worst absolute error '
+        + '<span class="mono">2.7&times;10<sup>&minus;7</sup></span>. '
+        + '<b>Drawing.</b> Ring deformations are magnified to be visible; the ledger is unscaled. Shell brightness '
+        + 'follows the exact angular flux pattern and the shell thickness follows the news '
+        + '<span class="mono">&part;<sub>u</sub>C</span> &mdash; the shells you see are the wavefronts that are '
+        + 'actually radiating.</p>';
+      elFoot.innerHTML = f;
+    }
+    hookRows();
+  }
+  function hookRows() {
+    var trs = elTbody.querySelectorAll('tr');
+    for (var i = 0; i < trs.length; i++) {
+      (function (tr) {
+        var id = +tr.getAttribute('data-i');
+        tr.addEventListener('mouseenter', function () { hotIdx = id; draw(); });
+        tr.addEventListener('mouseleave', function () { hotIdx = -1; draw(); });
+      })(trs[i]);
+    }
+  }
+
+  /* ---------------- controls ---------------- */
+  function setOut(k, t) { var e = root.querySelector('[data-w5-o="' + k + '"]'); if (e) e.textContent = t; }
+  function syncOuts() {
+    setOut('emAz', S.emAz + '°'); setOut('emEl', S.emEl + '°');
+    setOut('emB', S.emB.toFixed(2)); setOut('emT', S.emT.toFixed(2));
+    setOut('gwAz', S.gwAz + '°'); setOut('gwEl', S.gwEl + '°');
+    setOut('gwK', String(S.gwK)); setOut('gwA', S.gwA.toFixed(2));
+  }
+  var inputs = root.querySelectorAll('[data-w5-i]');
+  for (var ii = 0; ii < inputs.length; ii++) {
+    (function (inp) {
+      inp.addEventListener('input', function () {
+        S[inp.getAttribute('data-w5-i')] = parseFloat(inp.value);
+        syncOuts(); resolve(); draw();
+      });
+    })(inputs[ii]);
+  }
+  function group(attr, key, after) {
+    var bs = root.querySelectorAll('[' + attr + ']');
+    for (var i = 0; i < bs.length; i++) {
+      (function (b) {
+        b.addEventListener('click', function () {
+          S[key] = b.getAttribute(attr);
+          for (var j = 0; j < bs.length; j++) {
+            var on = bs[j] === b;
+            bs[j].classList.toggle('is-on', on);
+            bs[j].setAttribute('aria-pressed', on ? 'true' : 'false');
+          }
+          if (after) after();
+        });
+      })(bs[i]);
+    }
+  }
+  group('data-w5-prof', 'prof', function () { resolve(); draw(); });
+  group('data-w5-lobe', 'lobe', function () { resolve(); draw(); });
+  var sbs = root.querySelectorAll('[data-w5-speed]');
+  for (var si = 0; si < sbs.length; si++) {
+    (function (b) {
+      b.addEventListener('click', function () {
+        S.speed = parseFloat(b.getAttribute('data-w5-speed'));
+        for (var j = 0; j < sbs.length; j++) {
+          var on = sbs[j] === b;
+          sbs[j].classList.toggle('is-on', on);
+          sbs[j].setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+      });
+    })(sbs[si]);
+  }
+  var mbs = root.querySelectorAll('[data-w5-mode]');
+  for (var mi = 0; mi < mbs.length; mi++) {
+    (function (b) {
+      b.addEventListener('click', function () {
+        S.mode = b.getAttribute('data-w5-mode');
+        for (var j = 0; j < mbs.length; j++) mbs[j].setAttribute('aria-selected', mbs[j] === b ? 'true' : 'false');
+        var ps = root.querySelectorAll('[data-w5-for]');
+        for (var p = 0; p < ps.length; p++) ps[p].hidden = ps[p].getAttribute('data-w5-for') !== S.mode;
+        S.running = false; resolve();
+        S.t = reduce ? S.tmax : S.t0; if (!reduce) S.running = true;
+        if (elScrub) elScrub.value = reduce ? 1000 : 0;
+        draw();
+      });
+    })(mbs[mi]);
+  }
+  var bFire = root.querySelector('[data-w5-fire]');
+  if (bFire) bFire.addEventListener('click', function () { S.t = S.t0; S.running = true; });
+  var bReset = root.querySelector('[data-w5-reset]');
+  if (bReset) bReset.addEventListener('click', function () { S.t = S.t0; S.running = false; if (elScrub) elScrub.value = 0; draw(); });
+  if (elScrub) elScrub.addEventListener('input', function () {
+    S.running = false;
+    S.t = S.t0 + (S.tmax - S.t0) * (+elScrub.value) / 1000;
+    draw();
+  });
+
+  /* ---------------- orbit and click-to-aim ---------------- */
+  if (cv && ctx) {
+    var drag = null;
+    cv.addEventListener('pointerdown', function (e) {
+      if (cv.setPointerCapture) { try { cv.setPointerCapture(e.pointerId); } catch (x) {} }
+      drag = { x: e.clientX, y: e.clientY, moved: 0 };
+    });
+    cv.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      drag.moved += Math.abs(dx) + Math.abs(dy);
+      S.yaw -= dx * 0.008;
+      S.pitch = Math.max(-1.32, Math.min(1.32, S.pitch + dy * 0.006));
+      drag.x = e.clientX; drag.y = e.clientY;
+      draw();
+    });
+    cv.addEventListener('pointerup', function (e) { if (drag && drag.moved < 5) aimAt(e); drag = null; });
+    cv.addEventListener('pointercancel', function () { drag = null; });
+    cv.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      S.dist = Math.max(1.4, Math.min(6, S.dist * (e.deltaY > 0 ? 1.09 : 0.917)));
+      draw();
+    }, { passive: false });
+  }
+  function aimAt(e) {
+    var r = cv.getBoundingClientRect(), C = cam();
+    var px = e.clientX - r.left, py = e.clientY - r.top;
+    var dir = nrm(add(mul(C.fwd, C.f), add(mul(C.right, px - W / 2), mul(C.up, H / 2 - py))));
+    var b = dot(C.eye, dir), cq = dot(C.eye, C.eye) - SCENE * SCENE, disc = b * b - cq, hit;
+    if (disc >= 0) hit = nrm(add(C.eye, mul(dir, -b - Math.sqrt(disc))));
+    else hit = nrm(add(C.eye, mul(dir, -b)));
+    var el = Math.max(-85, Math.min(85, Math.round(Math.asin(Math.max(-1, Math.min(1, hit[2]))) / DEG)));
+    var az = Math.round(Math.atan2(hit[1], hit[0]) / DEG);
+    if (S.mode === 'em') { S.emAz = az; S.emEl = el; } else { S.gwAz = az; S.gwEl = el; }
+    var ia = root.querySelector('[data-w5-i="' + (S.mode === 'em' ? 'emAz' : 'gwAz') + '"]');
+    var ie = root.querySelector('[data-w5-i="' + (S.mode === 'em' ? 'emEl' : 'gwEl') + '"]');
+    if (ia) ia.value = az; if (ie) ie.value = el;
+    syncOuts(); resolve(); draw();
+    if (elHint) elHint.textContent = 'aimed at azimuth ' + az + '°, elevation ' + el + '° · press Fire';
+  }
+
+  /* ---------------- loop ---------------- */
+  var last = null;
+  function tick(ts) {
+    if (last === null) last = ts;
+    var dt = Math.min(0.06, (ts - last) / 1000); last = ts;
+    if (S.running && SOL) {
+      S.t += dt * S.speed * 5.6;
+      if (S.t >= S.tmax) { S.t = S.tmax; S.running = false; }
+      if (elScrub) elScrub.value = Math.round(1000 * (S.t - S.t0) / (S.tmax - S.t0));
+      draw();
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  if (cv && window.ResizeObserver) new ResizeObserver(function () { resize(); draw(); }).observe(cv);
+  else window.addEventListener('resize', function () { resize(); draw(); });
+
+  syncOuts(); resize(); resolve();
+  S.t = reduce ? S.tmax : S.t0;
+  if (elScrub) elScrub.value = reduce ? 1000 : 0;
+  S.running = !reduce;
+  draw();
+  window.requestAnimationFrame(tick);
+})();
+</script>
+
+<section class="stop" id="w8">
+  <div class="stop-head">
+    <div class="plate">Station 8 &middot; the gravitational memory range, taken apart</div>
+    <h2>Which angular structures survive into memory</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">You almost never solve a field equation on the sphere point by point.
+      You expand in multipoles, because that turns the equation into one algebraic
+      relation per multipole, and then you read the physics off the coefficients. The
+      memory equation is exactly that kind of equation, and its coefficients are unusually
+      blunt instruments.</p>
+    <p>Station&nbsp;5 gave you the whole solve at once. This station opens it up. The
+      constraint, written multipole by multipole, is a single division:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The memory equation, one line per multipole</div>
+    \[ \Phi_{\ell m}\;=\;\frac{4\,F_{\ell m}}{(\ell-1)\ell(\ell+1)(\ell+2)},\qquad \ell\ge 2 \]
+    <div class="eq-note">The denominator grows like <span class="mono">&#8467;<sup>4</sup></span>.
+      Any fine angular structure in the energy flux is divided by a large number before it
+      reaches the memory. The memory is a heavily low-passed image of the flux &mdash; that
+      is the whole content of this station, and everything below is you checking it.</div>
+  </div>
+
+  <div class="w8-ctl">
+    <label class="w8-knob"><span>beam width &kappa;<b data-w8-o="k">12</b></span>
+      <input type="range" data-w8-i="k" min="3" max="45" value="12" step="1"></label>
+    <label class="w8-knob"><span>keep multipoles up to &#8467;<b data-w8-o="L">8</b></span>
+      <input type="range" data-w8-i="L" min="2" max="8" value="8" step="1"></label>
+    <div class="w8-readout" data-w8-read></div>
+  </div>
+
+  <figure class="w8-fig">
+    <div class="w8-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">Where the power sits, multipole by multipole</div>
+          <div class="chart-sub">Share of the total, on a logarithmic scale. Both series are
+            normalised to their own total, so the comparison is about shape, not size.</div>
+        </div>
+        <span class="w8-ptag" data-kind="exact">Exact formula</span>
+      </div>
+      <div class="w8-legend">
+        <span class="w8-lg"><i data-s="1"></i>energy flux</span>
+        <span class="w8-lg"><i data-s="2"></i>memory strain</span>
+      </div>
+      <div class="w8-chart-wrap">
+        <svg class="w8-spec" viewBox="0 0 720 300" role="img"
+             aria-label="Share of power against multipole number, for the energy flux and for the memory strain. The table underneath the figure carries the same numbers."></svg>
+      </div>
+      <div class="w8-foot" data-w8-specfoot></div>
+    </div>
+    <figcaption>Read the gap between the two series. A beam narrow enough to need
+      <span class="mono">&#8467; ~ 30</span> to describe its energy flux still puts nearly all
+      of its <b>memory</b> into <span class="mono">&#8467; = 2</span> and <span class="mono">3</span>.
+      Angular detail in the burst is not weakly recorded in the permanent strain; it is very
+      nearly not recorded at all.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>That has a consequence you can see rather than infer. The memory pattern on the sky
+      does not look like the burst. It is smeared over the whole sphere, including places the
+      burst never went &mdash; and it has zeroes in places you would have bet against.</p>
+  </div>
+
+  <figure class="w8-fig">
+    <div class="w8-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">The memory across the whole sky</div>
+          <div class="chart-sub">Colour: the supertranslation <span class="mono">&Phi;</span>,
+            in the convention where it vanishes at the beam and at its antipode. Rings: the exact
+            permanent deformation a ring of free masses is left with, drawn to a common scale.</div>
+        </div>
+        <span class="w8-ptag" data-kind="numeric">Controlled numerical solve</span>
+      </div>
+      <div class="w8-map-wrap">
+        <canvas class="w8-map" aria-label="An equirectangular map of the memory potential across the sky, with rings showing the permanent deformation at a grid of directions."></canvas>
+      </div>
+      <div class="w8-bar">
+        <span class="w8-bar-k" data-w8-bk0></span>
+        <canvas class="w8-bar-c" aria-hidden="true"></canvas>
+        <span class="w8-bar-k" data-w8-bk1></span>
+      </div>
+      <div class="w8-foot" data-w8-mapfoot></div>
+    </div>
+    <figcaption><b>The two zeroes are forced.</b> Around the beam axis the whole configuration
+      is invariant under every rotation about that axis. A trace-free symmetric two-tensor
+      cannot be: rotating by an angle turns it by twice that angle. So it has to vanish there,
+      and at the antipode, which is the other fixed point. The largest permanent strain is
+      out on the ring of directions in between &mdash; nowhere near where you aimed.</figcaption>
+  </figure>
+
+  <blockquote class="quote">
+    <p>&ldquo;One of its unusual characteristics is that it is highly nonlocal on
+      <span class="mono">S&sup2;</span>. Indeed, if a gravity wave passes through the north
+      pole, the effect vanishes both there and at the south pole but is large near the
+      equator.&rdquo;</p>
+    <footer><span class="w8-ptag" data-kind="quoted">Quoted</span>
+      <span class="mono">soft_Arxiv_update.tex:2641</span>. The map above is that sentence,
+      computed.</footer>
+  </blockquote>
+
+  <div class="body">
+    <p>It would be reasonable to want independent evidence that the solve above inverts the
+      same operator the source does. The lecture notes give the answer as a Green&rsquo;s
+      function rather than a multipole division:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The same inverse, written as a kernel &mdash; quoted</div>
+    \[ G(z,\bar z;z',\bar z')=\frac{1}{\pi}\,\sin^{2}\frac{\Delta\Theta}{2}\,
+       \log\sin^{2}\frac{\Delta\Theta}{2} \]
+    <div class="eq-note"><span class="mono">soft_Arxiv_update.tex:2638</span>, with
+      <span class="mono">&Delta;&Theta;</span> the angle between the two directions. Expand this
+      kernel in Legendre polynomials and its coefficients must be
+      <span class="mono">g<sub>&#8467;</sub> &prop; 1/((&#8467;&minus;1)&#8467;(&#8467;+1)(&#8467;+2))</span>
+      &mdash; the same denominator, with one constant of proportionality for all
+      <span class="mono">&#8467;</span>. The page computes those coefficients from the kernel and
+      prints the ratio. It has no way to get the right answer except by being right.</div>
+  </div>
+
+  <div class="w8-card w8-check">
+    <div class="chart-head">
+      <div>
+        <div class="chart-title">The kernel against the multipole division</div>
+        <div class="chart-sub">Legendre coefficients of the quoted kernel, times the denominator
+          this page divides by. Computed in your browser now, by 200-node Gauss&ndash;Legendre
+          after the substitution <span class="mono">x = 1 &minus; 2v&sup2;</span> that tames the
+          logarithm.</div>
+      </div>
+      <span class="w8-ptag" data-kind="numeric">Controlled numerical solve</span>
+    </div>
+    <div class="w8-table-wrap">
+      <table class="w8-table" data-w8-gtable></table>
+    </div>
+    <div class="w8-foot" data-w8-gfoot></div>
+  </div>
+
+  <div class="body">
+    <p>Two last things, both quoted, because they are what makes any of this more than
+      geometry.</p>
+  </div>
+
+  <blockquote class="quote">
+    <p>&ldquo;This is a subtle DC effect, in which the passage of gravitational waves produces a
+      permanent shift in the relative positions of a pair of inertial detectors. Detection of
+      the memory effect has been proposed at LIGO or via a pulsar timing array. It is an
+      exciting experimental prospect for the coming decades.&rdquo;</p>
+    <footer><span class="w8-ptag" data-kind="quoted">Quoted</span>
+      <span class="mono">soft_Arxiv_update.tex:329</span>, citations elided.</footer>
+  </blockquote>
+
+  <blockquote class="quote">
+    <p>&ldquo;Of course, Weinberg was scattering elementary particles, while Braginsky and
+      Thorne were scattering black holes, but this distinction is irrelevant in the deep
+      infrared!&rdquo;</p>
+    <footer><span class="w8-ptag" data-kind="quoted">Quoted</span>
+      <span class="mono">soft_Arxiv_update.tex:336</span>. The 1965 soft-graviton formula and
+      the 1987 formula for the permanent shift left by colliding black holes are the same
+      equation, in different notation, one Fourier transform apart. That was noticed decades
+      after both were published.</footer>
+  </blockquote>
+</section>
+
+<style data-station="w8">
+#w8 .w8-ctl { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .8rem 1.2rem; align-items: end; margin: 1.5rem 0 1.2rem; padding: .9rem 1rem; border: 1px solid var(--rule); background: var(--surface-2); }
+#w8 .w8-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+#w8 .w8-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w8 .w8-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w8 .w8-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w8 .w8-readout { font-family: var(--sans); font-size: 12px; line-height: 1.5; color: var(--ink-2); }
+#w8 .w8-readout b { font-family: var(--mono); color: var(--ink); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+#w8 .w8-fig { margin: 1.6rem 0 1.7rem; }
+#w8 .w8-card { border: 1px solid var(--rule); background: var(--surface); }
+#w8 .w8-card .chart-head { display: flex; align-items: flex-start; gap: .75rem; flex-wrap: wrap; padding: .85rem 1rem .55rem; border-bottom: 1px solid var(--rule); }
+#w8 .w8-card .chart-head > div:first-child { flex: 1 1 12rem; min-width: 0; }
+#w8 .w8-ptag { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--st-proved); color: var(--st-proved); white-space: nowrap; margin-left: auto; }
+#w8 .w8-ptag[data-kind="exact"]  { border-color: var(--accent); color: var(--accent-text); }
+#w8 .w8-ptag[data-kind="quoted"] { border-color: var(--ink-3); color: var(--ink-2); margin-left: 0; margin-right: .4rem; }
+
+#w8 .w8-legend { display: flex; gap: 1.1rem; flex-wrap: wrap; padding: .6rem 1rem .1rem; }
+#w8 .w8-lg { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--sans); font-size: 12px; color: var(--ink-2); }
+#w8 .w8-lg i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+#w8 .w8-lg i[data-s="1"] { background: var(--keep); }
+#w8 .w8-lg i[data-s="2"] { background: var(--die); }
+
+#w8 .w8-chart-wrap { overflow-x: auto; padding: .2rem .35rem 0; }
+#w8 .w8-spec { display: block; width: 100%; min-width: 30rem; height: auto; }
+#w8 .w8-spec .ax   { stroke: var(--rule-2); stroke-width: 1; }
+#w8 .w8-spec .grid { stroke: var(--rule); stroke-width: 1; }
+#w8 .w8-spec .stem { stroke: var(--rule-2); stroke-width: 1.4; }
+#w8 .w8-spec .tick { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-3); }
+#w8 .w8-spec .axlab { font-family: var(--sans); font-size: 11.5px; fill: var(--ink-3); }
+#w8 .w8-spec .dlab { font-family: var(--sans); font-size: 10.5px; font-weight: 600; }
+#w8 .w8-spec .cut  { fill: var(--surface-2); }
+#w8 .w8-spec .cutlab { font-family: var(--sans); font-size: 10.5px; fill: var(--ink-3); }
+#w8 .w8-spec .hit { fill: transparent; cursor: crosshair; }
+#w8 .w8-spec .hit.on { fill: var(--accent-tint); }
+
+#w8 .w8-map-wrap { padding: .5rem .5rem 0; }
+#w8 .w8-map { display: block; width: 100%; aspect-ratio: 2 / 1.06; }
+#w8 .w8-bar { display: flex; align-items: center; gap: .5rem; padding: .35rem 1rem .1rem; }
+#w8 .w8-bar-c { flex: 1 1 auto; height: 10px; min-width: 4rem; }
+#w8 .w8-bar-k { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+#w8 .w8-foot { padding: .55rem 1rem .9rem; display: grid; gap: .2rem; }
+#w8 .w8-foot-row { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12px; color: var(--ink-3); padding: .16rem 0; border-bottom: 1px dotted var(--rule); }
+#w8 .w8-foot-row b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w8 .w8-foot-note { font-family: var(--sans); font-size: 12px; line-height: 1.55; color: var(--ink-3); margin-top: .5rem; }
+#w8 .w8-foot-note b { color: var(--ink-2); font-weight: 600; }
+
+#w8 .w8-check { margin: 1.5rem 0; }
+#w8 .w8-table-wrap { overflow-x: auto; }
+#w8 .w8-table { border-collapse: collapse; width: 100%; min-width: 28rem; }
+#w8 .w8-table th, #w8 .w8-table td { font-family: var(--sans); font-size: 12px; text-align: right; padding: .35rem .8rem; border-top: 1px solid var(--rule); white-space: nowrap; }
+#w8 .w8-table th:first-child, #w8 .w8-table td:first-child { text-align: left; }
+#w8 .w8-table thead th { color: var(--ink); font-weight: 600; border-top: 0; }
+#w8 .w8-table tbody td { font-family: var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+#w8 .w8-tip { position: absolute; z-index: 20; pointer-events: none; font-family: var(--mono); font-size: 11px; line-height: 1.45; background: var(--ink); color: var(--paper); padding: .35rem .5rem; max-width: 16rem; }
+#w8 .w8-fig { position: relative; }
+</style>
+
+<script data-station="w8">
+(function () {
+  var root = document.getElementById('w8');
+  if (!root) return;
+
+  var CACHE = {};
+  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888888'); }
+  function rgbOf(n) {
+    var h = tok(n);
+    if (h.charAt(0) === '#') {
+      if (h.length === 4) h = '#' + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
+      return [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)];
+    }
+    var m = h.match(/-?\d+(\.\d+)?/g); return m ? [+m[0], +m[1], +m[2]] : [136, 136, 136];
+  }
+  function rgba(n, a) { var c = rgbOf(n); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
+  function reload() { CACHE = {}; render(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', reload); else if (mq.addListener) mq.addListener(reload);
+  }
+  if (window.MutationObserver) new MutationObserver(reload).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  /* ---------- sphere core (duplicated deliberately: this station stands alone) ---------- */
+  var LMAX = 8, K = (LMAX + 1) * (LMAX + 1);
+  function gauss(n) {
+    var x = new Float64Array(n), w = new Float64Array(n);
+    for (var i = 0; i < n; i++) {
+      var z = Math.cos(Math.PI * (i + 0.75) / (n + 0.5)), pp = 0;
+      for (var it = 0; it < 120; it++) {
+        var p0 = 1, p1 = 0;
+        for (var j = 0; j < n; j++) { var p2 = p1; p1 = p0; p0 = ((2 * j + 1) * z * p1 - j * p2) / (j + 1); }
+        pp = n * (z * p0 - p1) / (z * z - 1);
+        var dz = p0 / pp; z -= dz; if (Math.abs(dz) < 1e-15) break;
+      }
+      x[i] = z; w[i] = 2 / ((1 - z * z) * pp * pp);
+    }
+    return { x: x, w: w };
+  }
+  var G64 = gauss(64), G160 = gauss(160), G200 = gauss(200);
+  function legP(L, x) { var p = new Float64Array(L + 1); p[0] = 1; if (L > 0) p[1] = x; for (var l = 1; l < L; l++) p[l + 1] = ((2 * l + 1) * x * p[l] - l * p[l - 1]) / (l + 1); return p; }
+  var clC = {};
+  function cl(kappa, L, g) {
+    var key = kappa + '|' + L + '|' + g.x.length;
+    if (clC[key]) return clC[key];
+    var c = new Float64Array(L + 1);
+    for (var i = 0; i < g.x.length; i++) {
+      var p = legP(L, g.x[i]), f = Math.exp(kappa * (g.x[i] - 1));
+      for (var l = 0; l <= L; l++) c[l] += g.w[i] * f * p[l];
+    }
+    return (clC[key] = c);
+  }
+  var lg = [0]; for (var q = 1; q <= 60; q++) lg[q] = lg[q - 1] + Math.log(q);
+  var NORM = [];
+  for (var a0 = 0; a0 <= LMAX; a0++) {
+    NORM[a0] = [];
+    for (var b0 = 0; b0 <= a0; b0++) {
+      var bs = Math.sqrt((2 * a0 + 1) / (4 * Math.PI) * Math.exp(lg[a0 - b0] - lg[a0 + b0]));
+      NORM[a0][b0] = b0 === 0 ? bs : Math.SQRT2 * bs;
+    }
+  }
+  var _Y = new Float64Array(K), _P = new Float64Array((LMAX + 1) * (LMAX + 2) / 2);
+  function pidx(l, m) { return l * (l + 1) / 2 + m; }
+  function Yat(n) {
+    var x = Math.max(-1, Math.min(1, n[2])), s = Math.sqrt(Math.max(0, 1 - x * x)), ph = Math.atan2(n[1], n[0]);
+    _P[0] = 1;
+    for (var m = 0; m <= LMAX; m++) {
+      if (m > 0) _P[pidx(m, m)] = _P[pidx(m - 1, m - 1)] * (2 * m - 1) * s;
+      if (m < LMAX) _P[pidx(m + 1, m)] = x * (2 * m + 1) * _P[pidx(m, m)];
+      for (var l = m + 2; l <= LMAX; l++) _P[pidx(l, m)] = ((2 * l - 1) * x * _P[pidx(l - 1, m)] - (l + m - 1) * _P[pidx(l - 2, m)]) / (l - m);
+    }
+    for (var ll = 0; ll <= LMAX; ll++) {
+      _Y[ll * ll + ll] = NORM[ll][0] * _P[pidx(ll, 0)];
+      for (var mm = 1; mm <= ll; mm++) {
+        var v = NORM[ll][mm] * _P[pidx(ll, mm)];
+        _Y[ll * ll + ll + mm] = v * Math.cos(mm * ph);
+        _Y[ll * ll + ll - mm] = v * Math.sin(mm * ph);
+      }
+    }
+    return _Y;
+  }
+  function evalC(c, n) { var Y = Yat(n), s = 0; for (var i = 0; i < K; i++) s += c[i] * Y[i]; return s; }
+  function h1(Phi, n, e1, e2, eps) {
+    var a2 = 0, b2 = 0, ce = Math.cos(eps), se = Math.sin(eps), NC = 16;
+    for (var k = 0; k < NC; k++) {
+      var psi = 2 * Math.PI * k / NC, cp = Math.cos(psi), sp = Math.sin(psi);
+      var v = evalC(Phi, [ce * n[0] + se * (cp * e1[0] + sp * e2[0]),
+                          ce * n[1] + se * (cp * e1[1] + sp * e2[1]),
+                          ce * n[2] + se * (cp * e1[2] + sp * e2[2])]);
+      a2 += v * Math.cos(2 * psi); b2 += v * Math.sin(2 * psi);
+    }
+    return [8 * a2 / (NC * eps * eps), 8 * b2 / (NC * eps * eps)];
+  }
+  function hess(Phi, n, e1, e2) {
+    var A = h1(Phi, n, e1, e2, 0.06), B = h1(Phi, n, e1, e2, 0.03);
+    return [(4 * B[0] - A[0]) / 3, (4 * B[1] - A[1]) / 3];
+  }
+  function frameAt(n) {
+    var s = Math.sqrt(Math.max(0, 1 - n[2] * n[2]));
+    if (s > 1e-7) { var c = n[0] / s, d = n[1] / s; return [[n[2] * c, n[2] * d, -s], [-d, c, 0]]; }
+    return [[1, 0, 0], [0, n[2] > 0 ? 1 : -1, 0]];
+  }
+  var dirOf = function (th, ph) { return [Math.sin(th) * Math.cos(ph), Math.sin(th) * Math.sin(ph), Math.cos(th)]; };
+
+  /* ---------- state ---------- */
+  var S = { k: 12, L: 8 };
+  var AXIS = dirOf(0.62, 0.0);       // the beam, fixed here: this station is about l, not aiming
+  var MOD = null;
+
+  function build() {
+    var c = cl(S.k, LMAX, G64), Y0 = Yat(AXIS);
+    var F = new Float64Array(K);
+    for (var l = 0; l <= LMAX; l++) {
+      var f = 2 * Math.PI * c[l];
+      for (var m = -l; m <= l; m++) F[l * l + l + m] = f * Y0[l * l + l + m];
+    }
+    var Phi = new Float64Array(K), PhiT = new Float64Array(K);
+    for (var l2 = 2; l2 <= LMAX; l2++) {
+      var d = (l2 - 1) * l2 * (l2 + 1) * (l2 + 2);
+      for (var m2 = -l2; m2 <= l2; m2++) {
+        var v = 4 * F[l2 * l2 + l2 + m2] / d;
+        Phi[l2 * l2 + l2 + m2] = v;
+        if (l2 <= S.L) PhiT[l2 * l2 + l2 + m2] = v;
+      }
+    }
+    // gauge: add the l <= 1 translation that makes Phi vanish at the beam and its antipode,
+    // which is the convention the quoted Green's function is written in
+    var pA = evalC(PhiT, AXIS), pB = evalC(PhiT, [-AXIS[0], -AXIS[1], -AXIS[2]]);
+    var g0 = -(pA + pB) / 2, g1 = -(pA - pB) / 2;
+    function PhiG(n) { return evalC(PhiT, n) + g0 + g1 * (n[0] * AXIS[0] + n[1] * AXIS[1] + n[2] * AXIS[2]); }
+
+    // power spectra (exact, single beam): flux ~ (2 pi c_l)^2 (2l+1)/4pi ;
+    // strain norm per l = 2 (l-1)l(l+1)(l+2) Phi_l^2 = 16 F_l^2 / [(l-1)l(l+1)(l+2)]
+    var LB = 44, cB = cl(S.k, LB, G160), spec = [], fT = 0, sT = 0;
+    for (var l3 = 0; l3 <= LB; l3++) {
+      var pw = Math.pow(2 * Math.PI * cB[l3], 2) * (2 * l3 + 1) / (4 * Math.PI);
+      var D = l3 >= 2 ? (l3 - 1) * l3 * (l3 + 1) * (l3 + 2) : 0;
+      var sp = D ? pw * 16 / D : 0;
+      spec[l3] = { l: l3, f: pw, s: sp };
+      fT += pw; sT += sp;
+    }
+    var fK = 0, sK = 0, sKL = 0;
+    for (var l4 = 0; l4 <= LB; l4++) {
+      if (l4 <= LMAX) { fK += spec[l4].f; sK += spec[l4].s; }
+      if (l4 <= S.L) sKL += spec[l4].s;
+    }
+    MOD = { Phi: Phi, PhiT: PhiT, PhiG: PhiG, spec: spec, fT: fT, sT: sT,
+            fKept: fK / fT, sKept: sK / sT, sKeptL: sKL / sT, LB: LB };
+  }
+
+  /* ---------- Legendre coefficients of the quoted Green's kernel ---------- */
+  var GCHK = (function () {
+    // int_{-1}^{1} (1/pi) u ln u P_l(x) dx with u = (1-x)/2 ; substitute x = 1 - 2 v^2
+    // -> int_0^1 (8/pi) v^3 ln v P_l(1 - 2 v^2) dv
+    var g = new Float64Array(LMAX + 1);
+    for (var i = 0; i < G200.x.length; i++) {
+      var v = 0.5 * (G200.x[i] + 1), wt = 0.5 * G200.w[i];
+      if (v <= 0) continue;
+      var p = legP(LMAX, 1 - 2 * v * v), f = (8 / Math.PI) * v * v * v * Math.log(v);
+      for (var l = 0; l <= LMAX; l++) g[l] += wt * f * p[l];
+    }
+    return g;
+  })();
+
+  /* ---------- DOM ---------- */
+  var svg = root.querySelector('.w8-spec');
+  var mapC = root.querySelector('.w8-map'), mapCtx = mapC && mapC.getContext ? mapC.getContext('2d') : null;
+  var barC = root.querySelector('.w8-bar-c'), barCtx = barC && barC.getContext ? barC.getContext('2d') : null;
+  var elRead = root.querySelector('[data-w8-read]');
+  var elSpecFoot = root.querySelector('[data-w8-specfoot]');
+  var elMapFoot = root.querySelector('[data-w8-mapfoot]');
+  var elGTable = root.querySelector('[data-w8-gtable]');
+  var elGFoot = root.querySelector('[data-w8-gfoot]');
+  var elBk0 = root.querySelector('[data-w8-bk0]'), elBk1 = root.querySelector('[data-w8-bk1]');
+  var NS = 'http://www.w3.org/2000/svg';
+  var tip = document.createElement('div'); tip.className = 'w8-tip'; tip.style.display = 'none';
+  var tipHost = svg ? svg.closest('.w8-fig') : null;
+  if (tipHost) tipHost.appendChild(tip);
+
+  function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  function frow(k, v) { return '<div class="w8-foot-row"><span>' + k + '</span><b>' + v + '</b></div>'; }
+
+  /* ---------- the multipole chart ---------- */
+  var LSHOW = 15, YLO = -6;
+  function renderSpec() {
+    if (!svg) return;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var Wd = 720, Ht = 300, ml = 52, mr = 14, mt = 14, mb = 40;
+    var pw = Wd - ml - mr, ph = Ht - mt - mb;
+    var xOf = function (l) { return ml + pw * (l + 0.5) / LSHOW; };
+    var yOf = function (v) { var e = Math.log(Math.max(v, 1e-30)) / Math.LN10; return mt + ph * (0 - Math.max(e, YLO)) / (0 - YLO); };
+
+    // region beyond the truncation
+    var xc = ml + pw * (LMAX + 1) / LSHOW;
+    svg.appendChild(mk('rect', { x: xc, y: mt, width: Math.max(0, ml + pw - xc), height: ph, class: 'cut' }));
+    var cl2 = mk('text', { x: xc + 6, y: mt + 14, class: 'cutlab' });
+    cl2.textContent = 'not solved for (ℓ > 8)'; svg.appendChild(cl2);
+
+    for (var e = 0; e >= YLO; e--) {
+      var y = mt + ph * (-e) / (-YLO);
+      svg.appendChild(mk('line', { x1: ml, y1: y, x2: ml + pw, y2: y, class: 'grid' }));
+      var t = mk('text', { x: ml - 8, y: y + 3.5, class: 'tick', 'text-anchor': 'end' });
+      t.textContent = e === 0 ? '1' : '1e' + e; svg.appendChild(t);
+    }
+    svg.appendChild(mk('line', { x1: ml, y1: mt + ph, x2: ml + pw, y2: mt + ph, class: 'ax' }));
+    for (var l = 0; l < LSHOW; l++) {
+      var tx = mk('text', { x: xOf(l), y: mt + ph + 16, class: 'tick', 'text-anchor': 'middle' });
+      tx.textContent = String(l); svg.appendChild(tx);
+    }
+    var xl = mk('text', { x: ml + pw / 2, y: Ht - 6, class: 'axlab', 'text-anchor': 'middle' });
+    xl.textContent = 'multipole ℓ'; svg.appendChild(xl);
+    var yl = mk('text', { x: 12, y: mt + ph / 2, class: 'axlab', 'text-anchor': 'middle',
+                          transform: 'rotate(-90 12 ' + (mt + ph / 2) + ')' });
+    yl.textContent = 'share of total power'; svg.appendChild(yl);
+
+    var series = [{ key: 'f', tok: '--keep', dx: -5, name: 'energy flux', tot: MOD.fT },
+                  { key: 's', tok: '--die',  dx:  5, name: 'memory strain', tot: MOD.sT }];
+    for (var si = 0; si < series.length; si++) {
+      var se = series[si];
+      for (var l2 = 0; l2 < LSHOW; l2++) {
+        var val = MOD.spec[l2] ? MOD.spec[l2][se.key] / (se.tot || 1) : 0;
+        var x = xOf(l2) + se.dx;
+        if (val <= 0) continue;
+        var below = val < Math.pow(10, YLO);
+        var y2 = yOf(val);
+        svg.appendChild(mk('line', { x1: x, y1: mt + ph, x2: x, y2: y2, class: 'stem',
+                                     stroke: rgba(se.tok, 0.4) }));
+        var c = mk('circle', { cx: x, cy: y2, r: 4.5, fill: below ? tok('--surface') : tok(se.tok),
+                               stroke: below ? tok(se.tok) : tok('--surface'), 'stroke-width': 2 });
+        svg.appendChild(c);
+      }
+      var v2 = MOD.spec[2][se.key] / (se.tot || 1);
+      var lb = mk('text', { x: xOf(2) + se.dx + (si ? 9 : -9), y: yOf(v2) - 9, class: 'dlab',
+                            fill: tok(se.tok), 'text-anchor': si ? 'start' : 'end' });
+      lb.textContent = (100 * v2).toFixed(1) + '%'; svg.appendChild(lb);
+    }
+    // hover bands
+    for (var l3 = 0; l3 < LSHOW; l3++) {
+      (function (ll) {
+        var r = mk('rect', { x: ml + pw * ll / LSHOW, y: mt, width: pw / LSHOW, height: ph, class: 'hit' });
+        r.addEventListener('mouseenter', function () {
+          r.classList.add('on');
+          var f = MOD.spec[ll] ? MOD.spec[ll].f / MOD.fT : 0, s = MOD.spec[ll] ? MOD.spec[ll].s / MOD.sT : 0;
+          tip.innerHTML = 'ℓ = ' + ll + '<br>flux &nbsp;' + (f > 0 ? (100 * f).toPrecision(3) + ' %' : '0')
+            + '<br>strain ' + (s > 0 ? (100 * s).toPrecision(3) + ' %' : '0');
+          tip.style.display = 'block';
+        });
+        r.addEventListener('mousemove', function (ev) {
+          if (!tipHost) return;
+          var hb = tipHost.getBoundingClientRect();
+          tip.style.left = Math.min(hb.width - 140, ev.clientX - hb.left + 12) + 'px';
+          tip.style.top = (ev.clientY - hb.top + 12) + 'px';
+        });
+        r.addEventListener('mouseleave', function () { r.classList.remove('on'); tip.style.display = 'none'; });
+        svg.appendChild(r);
+      })(l3);
+    }
+    var cum = 0, need = 0;
+    for (var lc = 2; lc <= MOD.LB; lc++) { cum += MOD.spec[lc].s; if (cum / MOD.sT < 0.99) need = lc; }
+    var fneed = 0, cf = 0;
+    for (var lf = 0; lf <= MOD.LB; lf++) { cf += MOD.spec[lf].f; if (cf / MOD.fT < 0.99) fneed = lf; }
+    elSpecFoot.innerHTML =
+        frow('multipoles needed for 99 % of the <b>flux</b>', 'ℓ ≤ ' + (fneed + 1))
+      + frow('multipoles needed for 99 % of the <b>memory strain</b>', 'ℓ ≤ ' + (need + 1))
+      + frow('memory strain already in ℓ = 2 alone', (100 * MOD.spec[2].s / MOD.sT).toFixed(2) + ' %')
+      + frow('memory strain power retained at ℓ ≤ 8', (100 * MOD.sKept).toFixed(4) + ' %')
+      + frow('flux power retained at ℓ ≤ 8', (100 * MOD.fKept).toFixed(4) + ' %')
+      + '<p class="w8-foot-note"><b>How the two are measured.</b> Flux power per multipole is '
+      + '<span class="mono">&Sigma;<sub>m</sub> F<sub>&#8467;m</sub>&sup2;</span>. Memory-strain power is '
+      + '<span class="mono">&int;&Delta;C<sub>AB</sub>&Delta;C<sup>AB</sup></span> per multipole, which works '
+      + 'out to <span class="mono">16 &Sigma;<sub>m</sub>F<sub>&#8467;m</sub>&sup2; / '
+      + '[(&#8467;&minus;1)&#8467;(&#8467;+1)(&#8467;+2)]</span> &mdash; the strain itself, not the potential, '
+      + 'because the strain is what a detector reads. Both are exact closed forms for a single beam; '
+      + 'the beam coefficients come from 160-node Gauss&ndash;Legendre out to '
+      + '<span class="mono">&#8467; = 44</span> so that the &ldquo;retained&rdquo; percentages have something '
+      + 'honest to be a fraction of.</p>';
+  }
+
+  /* ---------- the sky map ---------- */
+  var MW = 200, MH = 100, imgData = null;
+  function renderMap() {
+    if (!mapCtx) return;
+    var r = mapC.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    var Wd = Math.max(1, Math.round(r.width)), Ht = Math.max(1, Math.round(r.height));
+    mapC.width = Math.round(Wd * dpr); mapC.height = Math.round(Ht * dpr);
+    mapCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    mapCtx.clearRect(0, 0, Wd, Ht);
+
+    var padL = 34, padB = 22, padT = 6, padR = 8;
+    var pw = Wd - padL - padR, ph = Ht - padT - padB;
+
+    // field values on a coarse grid, then smooth-scaled
+    var vals = new Float64Array(MW * MH), vmax = 0;
+    for (var j = 0; j < MH; j++) {
+      var th = Math.PI * (j + 0.5) / MH;
+      for (var i = 0; i < MW; i++) {
+        var phv = -Math.PI + 2 * Math.PI * (i + 0.5) / MW;
+        var v = MOD.PhiG(dirOf(th, phv));
+        vals[j * MW + i] = v; if (Math.abs(v) > vmax) vmax = Math.abs(v);
+      }
+    }
+    vmax = vmax || 1;
+    var cLo = rgbOf('--die'), cMid = rgbOf('--surface-2'), cHi = rgbOf('--accent');
+    if (!imgData || imgData.width !== MW) imgData = mapCtx.createImageData(MW, MH);
+    var px = imgData.data;
+    for (var p = 0; p < MW * MH; p++) {
+      var s = Math.max(-1, Math.min(1, vals[p] / vmax));
+      var a = Math.abs(s), from = s < 0 ? cLo : cHi;
+      px[4 * p]     = Math.round(cMid[0] + (from[0] - cMid[0]) * a);
+      px[4 * p + 1] = Math.round(cMid[1] + (from[1] - cMid[1]) * a);
+      px[4 * p + 2] = Math.round(cMid[2] + (from[2] - cMid[2]) * a);
+      px[4 * p + 3] = 255;
+    }
+    var off = document.createElement('canvas'); off.width = MW; off.height = MH;
+    off.getContext('2d').putImageData(imgData, 0, 0);
+    mapCtx.imageSmoothingEnabled = true;
+    mapCtx.drawImage(off, padL, padT, pw, ph);
+
+    // axes
+    mapCtx.strokeStyle = rgba('--rule-2', 0.9); mapCtx.lineWidth = 1;
+    mapCtx.strokeRect(padL + 0.5, padT + 0.5, pw - 1, ph - 1);
+    mapCtx.font = '10px ' + tok('--mono'); mapCtx.fillStyle = rgba('--ink-3', 1);
+    mapCtx.textAlign = 'right';
+    ['0°', '90°', '180°'].forEach(function (t, i) { mapCtx.fillText(t, padL - 6, padT + ph * i / 2 + 3.5); });
+    mapCtx.textAlign = 'center';
+    ['-180°', '0°', '180°'].forEach(function (t, i) { mapCtx.fillText(t, padL + pw * i / 2, padT + ph + 14); });
+    mapCtx.save(); mapCtx.translate(11, padT + ph / 2); mapCtx.rotate(-Math.PI / 2);
+    mapCtx.font = '11px ' + tok('--sans'); mapCtx.fillText('θ', 0, 0); mapCtx.restore();
+
+    // ring glyphs: the exact permanent deformation, common scale
+    var GX = 9, GY = 5, glyphs = [], gmax = 0;
+    for (var gy = 0; gy < GY; gy++) {
+      var th2 = Math.PI * (gy + 0.5) / GY;
+      for (var gx = 0; gx < GX; gx++) {
+        var ph2 = -Math.PI + 2 * Math.PI * (gx + 0.5) / GX;
+        var n = dirOf(th2, ph2), fr = frameAt(n), h = hess(MOD.PhiT, n, fr[0], fr[1]);
+        var amp = Math.hypot(h[0], h[1]); if (amp > gmax) gmax = amp;
+        glyphs.push({ x: padL + pw * (gx + 0.5) / GX, y: padT + ph * (gy + 0.5) / GY, h1: h[0], h2: h[1], a: amp });
+      }
+    }
+    var RRp = Math.min(pw / GX, ph / GY) * 0.30, gain = gmax > 0 ? 0.55 / gmax : 0;
+    for (var gi = 0; gi < glyphs.length; gi++) {
+      var g = glyphs[gi];
+      mapCtx.beginPath();
+      for (var s2 = 0; s2 <= 40; s2++) {
+        var al = 2 * Math.PI * s2 / 40, X = RRp * Math.cos(al), Y = RRp * Math.sin(al);
+        var hpp = g.h1 * gain, hxx = g.h2 * gain;
+        var d1 = X + 0.5 * (hpp * X + hxx * Y), d2 = Y + 0.5 * (hxx * X - hpp * Y);
+        // e1 = e_theta points down the map, e2 = e_phi points right
+        var sx = g.x + d2, sy = g.y + d1;
+        if (s2 === 0) mapCtx.moveTo(sx, sy); else mapCtx.lineTo(sx, sy);
+      }
+      mapCtx.closePath();
+      mapCtx.strokeStyle = rgba('--ink', 0.72); mapCtx.lineWidth = 1.4; mapCtx.stroke();
+    }
+    // the beam and its antipode
+    function markAt(n, label) {
+      var th3 = Math.acos(Math.max(-1, Math.min(1, n[2]))), ph3 = Math.atan2(n[1], n[0]);
+      var x = padL + pw * (ph3 + Math.PI) / (2 * Math.PI), y = padT + ph * th3 / Math.PI;
+      mapCtx.strokeStyle = rgba('--die', 1); mapCtx.lineWidth = 2;
+      mapCtx.beginPath();
+      mapCtx.moveTo(x - 6, y - 6); mapCtx.lineTo(x + 6, y + 6);
+      mapCtx.moveTo(x + 6, y - 6); mapCtx.lineTo(x - 6, y + 6);
+      mapCtx.stroke();
+      mapCtx.font = '600 10px ' + tok('--sans'); mapCtx.fillStyle = rgba('--die', 1);
+      mapCtx.textAlign = 'center'; mapCtx.fillText(label, x, y - 11);
+    }
+    markAt(AXIS, 'BEAM');
+    markAt([-AXIS[0], -AXIS[1], -AXIS[2]], 'ANTIPODE');
+
+    // colour bar
+    if (barCtx) {
+      var br = barC.getBoundingClientRect(), bw = Math.max(1, Math.round(br.width)), bh = Math.max(1, Math.round(br.height));
+      barC.width = Math.round(bw * dpr); barC.height = Math.round(bh * dpr);
+      barCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      for (var bx = 0; bx < bw; bx++) {
+        var sv = -1 + 2 * bx / (bw - 1), av = Math.abs(sv), fr2 = sv < 0 ? cLo : cHi;
+        barCtx.fillStyle = 'rgb(' + Math.round(cMid[0] + (fr2[0] - cMid[0]) * av) + ','
+          + Math.round(cMid[1] + (fr2[1] - cMid[1]) * av) + ','
+          + Math.round(cMid[2] + (fr2[2] - cMid[2]) * av) + ')';
+        barCtx.fillRect(bx, 0, 1.5, bh);
+      }
+      if (elBk0) elBk0.textContent = (-vmax).toExponential(2);
+      if (elBk1) elBk1.textContent = (vmax).toExponential(2);
+    }
+
+    var axisAmp = (function () {
+      var fr = frameAt(AXIS), h = hess(MOD.PhiT, AXIS, fr[0], fr[1]); return Math.hypot(h[0], h[1]);
+    })();
+    var antiAmp = (function () {
+      var na = [-AXIS[0], -AXIS[1], -AXIS[2]], fr = frameAt(na), h = hess(MOD.PhiT, na, fr[0], fr[1]);
+      return Math.hypot(h[0], h[1]);
+    })();
+    elMapFoot.innerHTML =
+        frow('largest |&Delta;C| on the grid', gmax.toExponential(4))
+      + frow('|&Delta;C| on the beam axis', axisAmp.toExponential(2))
+      + frow('|&Delta;C| at the antipode', antiAmp.toExponential(2))
+      + frow('memory strain power captured by ℓ ≤ ' + S.L, (100 * MOD.sKeptL).toFixed(4) + ' %')
+      + '<p class="w8-foot-note"><b>Gauge.</b> <span class="mono">&Phi;</span> is fixed by the constraint only '
+      + 'up to its <span class="mono">&#8467; = 0</span> and <span class="mono">1</span> parts, which are an '
+      + 'ordinary spacetime translation and produce no strain. The colour map adds exactly the translation that '
+      + 'makes <span class="mono">&Phi;</span> vanish at the beam and at its antipode &mdash; the convention the '
+      + 'quoted Green&rsquo;s function is written in. <b>The rings are gauge-independent</b>: they are the '
+      + 'trace-free second derivative, which annihilates that freedom, so moving the slider changes them only '
+      + 'through the truncation. <b>Drawing.</b> The rings share one magnification, printed nowhere because it '
+      + 'is a drawing choice; their <em>relative</em> sizes and their orientations are the computed answer.</p>';
+  }
+
+  /* ---------- the kernel cross-check table ---------- */
+  function renderCheck() {
+    var target = 2 / Math.PI, rows = '', worst = 0;
+    for (var l = 2; l <= LMAX; l++) {
+      var D = (l - 1) * l * (l + 1) * (l + 2), ratio = GCHK[l] * D;
+      var err = Math.abs(ratio - target) / target; if (err > worst) worst = err;
+      rows += '<tr><td>' + l + '</td><td>' + GCHK[l].toExponential(9) + '</td><td>' + D + '</td><td>'
+        + ratio.toFixed(12) + '</td><td>' + err.toExponential(2) + '</td></tr>';
+    }
+    elGTable.innerHTML = '<thead><tr><th>ℓ</th><th>g<sub>ℓ</sub> from the kernel</th>'
+      + '<th>(ℓ&minus;1)ℓ(ℓ+1)(ℓ+2)</th><th>product</th><th>|relative deviation|</th></tr></thead><tbody>'
+      + rows + '</tbody>';
+    elGFoot.innerHTML = frow('all seven products, against 2/&pi; = ' + target.toFixed(12),
+                             'worst deviation ' + worst.toExponential(2))
+      + '<p class="w8-foot-note">The product is the same constant for every multipole, to twelve digits. '
+      + 'The kernel in the lecture notes and the division this page performs are the same inverse. '
+      + 'The kernel also carries nonzero <span class="mono">&#8467; = 0</span> and '
+      + '<span class="mono">1</span> pieces, which is exactly the translation freedom discussed above &mdash; '
+      + 'those are the two rows this table has nothing to say about.</p>';
+  }
+
+  /* ---------- wiring ---------- */
+  function render() { build(); renderSpec(); renderMap(); renderCheck(); renderRead(); }
+  function renderRead() {
+    elRead.innerHTML = 'A beam this tight needs multipoles up to about <b>ℓ = '
+      + (function () { var c = 0, n = 0; for (var l = 0; l <= MOD.LB; l++) { c += MOD.spec[l].f; if (c / MOD.fT < 0.99) n = l; } return n + 1; })()
+      + '</b> to describe its energy, and only <b>ℓ = '
+      + (function () { var c = 0, n = 0; for (var l = 2; l <= MOD.LB; l++) { c += MOD.spec[l].s; if (c / MOD.sT < 0.99) n = l; } return n + 1; })()
+      + '</b> to describe the memory it leaves.';
+  }
+  var ins = root.querySelectorAll('[data-w8-i]');
+  for (var i8 = 0; i8 < ins.length; i8++) {
+    (function (inp) {
+      inp.addEventListener('input', function () {
+        var k = inp.getAttribute('data-w8-i');
+        S[k] = parseFloat(inp.value);
+        var o = root.querySelector('[data-w8-o="' + k + '"]'); if (o) o.textContent = inp.value;
+        render();
+      });
+    })(ins[i8]);
+  }
+  if (window.ResizeObserver && mapC) new ResizeObserver(function () { if (MOD) renderMap(); }).observe(mapC);
+  else window.addEventListener('resize', function () { if (MOD) renderMap(); });
+  render();
+})();
+</script>
+
+<section class="stop" id="w9">
+  <div class="stop-head">
+    <div class="plate">Station 9 &middot; the hinge, and what it rests on</div>
+    <h2>A pole at zero frequency is a step in time</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">Everything so far has hung on one sentence, usually said quickly:
+      the Fourier transform of a pole is a step function, so a soft pole and a permanent
+      shift are the same statement. It is true. It also has hypotheses, and they are the
+      kind that quietly fail.</p>
+    <p>The familiar anchor is a driven damped oscillator. You hit it, it rings, the ringing
+      dies, and it comes to rest. Where it comes to rest is the zero-frequency part of its
+      response function &mdash; the DC response. Everything below is that, made exact and
+      then broken on purpose.</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">Conventions, so the signs are checkable</div>
+    \[ f(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty}\! d\omega\; e^{-i\omega t}\,\tilde f(\omega),
+       \qquad
+       \tilde f(\omega)=\int_{-\infty}^{\infty}\! dt\; e^{i\omega t} f(t) \]
+  </div>
+
+  <div class="w9-bench">
+    <div class="w9-parts">
+      <div class="w9-part is-locked">
+        <div class="w9-part-h"><span class="w9-dot" data-s="keep"></span>
+          <span class="w9-part-t">A simple pole at zero</span>
+          <span class="w9-part-x">always on</span></div>
+        <div class="w9-part-eq">\[ \frac{iA}{\omega+i0}\;\longleftrightarrow\;A\,\theta(t) \]</div>
+        <label class="w9-knob"><span>residue A<b data-w9-o="A">1.00</b></span>
+          <input type="range" data-w9-i="A" min="-2" max="2" value="1" step="0.05"></label>
+      </div>
+
+      <div class="w9-part">
+        <div class="w9-part-h"><span class="w9-dot" data-s="die"></span>
+          <span class="w9-part-t">A second pole, sitting on the real axis</span>
+          <label class="w9-sw"><input type="checkbox" data-w9-c="B"><span>add it</span></label></div>
+        <div class="w9-part-eq">\[ iB\!\left[\frac{1}{\omega-\omega_0+i0}+\frac{1}{\omega+\omega_0+i0}\right]
+          \;\longleftrightarrow\; 2B\cos(\omega_0 t)\,\theta(t) \]</div>
+        <label class="w9-knob"><span>weight B<b data-w9-o="B">0.35</b></span>
+          <input type="range" data-w9-i="B" min="0" max="1" value="0.35" step="0.01"></label>
+        <label class="w9-knob"><span>frequency &omega;<sub>0</sub><b data-w9-o="w0">1.60</b></span>
+          <input type="range" data-w9-i="w0" min="0.3" max="3" value="1.6" step="0.05"></label>
+      </div>
+
+      <div class="w9-part">
+        <div class="w9-part-h"><span class="w9-dot" data-s="keep"></span>
+          <span class="w9-part-t">A damped resonance</span>
+          <label class="w9-sw"><input type="checkbox" data-w9-c="C" checked><span>add it</span></label></div>
+        <div class="w9-part-eq">\[ iC\!\left[\frac{1}{\omega-\omega_1+i\Gamma}+\frac{1}{\omega+\omega_1+i\Gamma}\right]
+          \;\longleftrightarrow\; 2C\,e^{-\Gamma t}\cos(\omega_1 t)\,\theta(t) \]</div>
+        <label class="w9-knob"><span>weight C<b data-w9-o="C">0.60</b></span>
+          <input type="range" data-w9-i="C" min="0" max="1.5" value="0.6" step="0.01"></label>
+        <label class="w9-knob"><span>frequency &omega;<sub>1</sub><b data-w9-o="w1">2.20</b></span>
+          <input type="range" data-w9-i="w1" min="0.3" max="4" value="2.2" step="0.05"></label>
+        <label class="w9-knob"><span>damping &Gamma;<b data-w9-o="G">0.45</b></span>
+          <input type="range" data-w9-i="G" min="0.02" max="1.2" value="0.45" step="0.01"></label>
+        <label class="w9-sw w9-sw-wide"><input type="checkbox" data-w9-c="flip">
+          <span>put its poles <b>above</b> the real axis instead</span></label>
+      </div>
+    </div>
+
+    <div class="w9-figs">
+      <div class="w9-card">
+        <div class="chart-head">
+          <div><div class="chart-title">Where the poles are</div>
+            <div class="chart-sub">The complex frequency plane. Marker shape says which part;
+              colour says whether that part lets a late-time limit exist.</div></div>
+          <span class="w9-ptag" data-kind="exact">Exact formula</span>
+        </div>
+        <div class="w9-legend">
+          <span class="w9-lg"><i data-s="keep"></i>compatible with a late-time limit</span>
+          <span class="w9-lg"><i data-s="die"></i>destroys it</span>
+        </div>
+        <div class="w9-chart-wrap"><svg class="w9-poles" viewBox="0 0 700 300" role="img"
+          aria-label="Poles of the assembled response function in the complex frequency plane."></svg></div>
+      </div>
+
+      <div class="w9-card">
+        <div class="chart-head">
+          <div><div class="chart-title">What that is, in time</div>
+            <div class="chart-sub">The exact inverse transform of the sum of the parts above &mdash;
+              each closed form is printed beside its part, and this curve is their sum, nothing else.</div></div>
+          <span class="w9-ptag" data-kind="exact">Exact formula</span>
+        </div>
+        <div class="w9-chart-wrap"><svg class="w9-time" viewBox="0 0 700 300" role="img"
+          aria-label="The time-domain response, with the level A marked."></svg></div>
+      </div>
+    </div>
+
+    <div class="w9-verdict" data-w9-verdict></div>
+  </div>
+
+  <div class="body">
+    <p>The reason to labour this is that the residue never stops being the residue. Put the
+      undamped pair back on the real axis and
+      <span class="mono">&minus;i&omega;f&#771;(&omega;)</span> at
+      <span class="mono">&omega; &rarr; 0</span> is exactly what it always was. What is gone
+      is the thing it was supposed to equal. The soft factor is a statement about a pole; the
+      memory is a statement about a limit; they agree when, and only when, the rest of the
+      response settles down.</p>
+    <p>In stations 5 and 8 the hypotheses held, and were checked. It is worth knowing that
+      they were doing work.</p>
+  </div>
+</section>
+
+<style data-station="w9">
+#w9 .w9-bench { margin: 1.6rem 0 1.5rem; display: grid; gap: 1.1rem; }
+#w9 .w9-parts { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+#w9 .w9-part { border: 1px solid var(--rule); background: var(--surface); padding: .8rem .9rem .9rem; display: flex; flex-direction: column; gap: .45rem; min-width: 0; }
+#w9 .w9-part.is-locked { border-color: var(--accent); }
+#w9 .w9-part-h { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
+#w9 .w9-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+#w9 .w9-dot[data-s="keep"] { background: var(--keep); }
+#w9 .w9-dot[data-s="die"]  { background: var(--die); }
+#w9 .w9-part-t { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink); }
+#w9 .w9-part-x { font-family: var(--sans); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-left: auto; }
+#w9 .w9-part-eq { overflow-x: auto; font-size: .82em; margin: -.4rem 0 -.2rem; }
+#w9 .w9-sw { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--sans); font-size: 12px; color: var(--ink-2); cursor: pointer; margin-left: auto; }
+#w9 .w9-sw input { accent-color: var(--accent); width: 14px; height: 14px; }
+#w9 .w9-sw-wide { margin-left: 0; margin-top: .15rem; }
+#w9 .w9-sw-wide b { color: var(--ink); }
+#w9 .w9-knob { display: flex; flex-direction: column; gap: .2rem; }
+#w9 .w9-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w9 .w9-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w9 .w9-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+#w9 .w9-figs { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { #w9 .w9-figs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+#w9 .w9-card { border: 1px solid var(--rule); background: var(--surface); min-width: 0; }
+#w9 .w9-card .chart-head { display: flex; align-items: flex-start; gap: .7rem; flex-wrap: wrap; padding: .8rem .95rem .5rem; border-bottom: 1px solid var(--rule); }
+#w9 .w9-card .chart-head > div:first-child { flex: 1 1 10rem; min-width: 0; }
+#w9 .w9-ptag { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--accent); color: var(--accent-text); white-space: nowrap; margin-left: auto; }
+#w9 .w9-legend { display: flex; gap: 1rem; flex-wrap: wrap; padding: .55rem .95rem .1rem; }
+#w9 .w9-lg { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--sans); font-size: 11.5px; color: var(--ink-2); }
+#w9 .w9-lg i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+#w9 .w9-lg i[data-s="keep"] { background: var(--keep); }
+#w9 .w9-lg i[data-s="die"]  { background: var(--die); }
+#w9 .w9-chart-wrap { overflow-x: auto; padding: .3rem .4rem .5rem; }
+#w9 .w9-poles, #w9 .w9-time { display: block; width: 100%; min-width: 19rem; height: auto; }
+#w9 svg .ax { stroke: var(--rule-2); stroke-width: 1; }
+#w9 svg .grid { stroke: var(--rule); stroke-width: 1; }
+#w9 svg .tick { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-3); }
+#w9 svg .axlab { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+#w9 svg .note { font-family: var(--sans); font-size: 10.5px; fill: var(--ink-3); }
+#w9 svg .dlab { font-family: var(--sans); font-size: 10.5px; font-weight: 600; }
+#w9 svg .curve { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+#w9 svg .lvl { stroke: var(--keep); stroke-width: 1.4; stroke-dasharray: 5 4; }
+
+#w9 .w9-verdict { border: 1px solid var(--rule-2); background: var(--surface-2); padding: .9rem 1rem 1rem; display: grid; gap: .3rem; }
+#w9 .w9-vhead { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .3rem; }
+#w9 .w9-vstate { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .2rem .5rem; border: 1px solid; }
+#w9 .w9-vstate[data-ok="1"] { border-color: var(--st-proved); color: var(--st-proved); }
+#w9 .w9-vstate[data-ok="0"] { border-color: var(--st-refuted); color: var(--st-refuted); }
+#w9 .w9-vtitle { font-family: var(--serif); font-size: 1.02rem; color: var(--ink); }
+#w9 .w9-hyp { display: flex; gap: .55rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; line-height: 1.5; color: var(--ink-2); padding: .2rem 0; border-bottom: 1px dotted var(--rule); }
+#w9 .w9-hyp em { font-style: normal; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; flex: none; width: 3.6rem; }
+#w9 .w9-hyp[data-ok="1"] em { color: var(--st-proved); }
+#w9 .w9-hyp[data-ok="0"] em { color: var(--st-refuted); }
+#w9 .w9-nums { display: grid; gap: .15rem; margin-top: .5rem; }
+#w9 .w9-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12px; color: var(--ink-3); padding: .16rem 0; border-bottom: 1px dotted var(--rule); }
+#w9 .w9-num b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+</style>
+
+<script data-station="w9">
+(function () {
+  var root = document.getElementById('w9');
+  if (!root) return;
+  var CACHE = {};
+  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888888'); }
+  function reload() { CACHE = {}; render(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', reload); else if (mq.addListener) mq.addListener(reload);
+  }
+  if (window.MutationObserver) new MutationObserver(reload).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  var S = { A: 1, B: 0.35, w0: 1.6, C: 0.6, w1: 2.2, G: 0.45, onB: false, onC: true, flip: false };
+  var NS = 'http://www.w3.org/2000/svg';
+  function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+
+  // exact inverse transforms of the assembled rational function
+  function f(t) {
+    var v = S.A * (t > 0 ? 1 : 0);
+    if (S.onB) v += 2 * S.B * Math.cos(S.w0 * t) * (t > 0 ? 1 : 0);
+    if (S.onC) {
+      if (!S.flip) v += 2 * S.C * Math.exp(-S.G * t) * Math.cos(S.w1 * t) * (t > 0 ? 1 : 0);
+      else        v += -2 * S.C * Math.exp(S.G * t) * Math.cos(S.w1 * t) * (t < 0 ? 1 : 0);
+    }
+    return v;
+  }
+  var TMIN = -8, TMAX = 34;
+
+  var svgP = root.querySelector('.w9-poles'), svgT = root.querySelector('.w9-time');
+  var elV = root.querySelector('[data-w9-verdict]');
+
+  function renderPoles() {
+    while (svgP.firstChild) svgP.removeChild(svgP.firstChild);
+    var Wd = 700, Ht = 300, ml = 44, mr = 16, mt = 16, mb = 38;
+    var pw = Wd - ml - mr, ph = Ht - mt - mb;
+    var XR = 4.6, YR = 2.0;
+    var X = function (v) { return ml + pw * (v + XR) / (2 * XR); };
+    var Y = function (v) { return mt + ph * (YR - v) / (2 * YR); };
+
+    // the lower half plane is where causal, decaying poles live
+    svgP.appendChild(mk('rect', { x: ml, y: Y(0), width: pw, height: mt + ph - Y(0), fill: tok('--surface-2') }));
+    var lb = mk('text', { x: ml + 8, y: mt + ph - 8, class: 'note' });
+    lb.textContent = 'lower half plane — causal and decaying'; svgP.appendChild(lb);
+    var lb2 = mk('text', { x: ml + 8, y: mt + 14, class: 'note' });
+    lb2.textContent = 'upper half plane — response before the cause'; svgP.appendChild(lb2);
+
+    for (var g = -4; g <= 4; g += 2) {
+      svgP.appendChild(mk('line', { x1: X(g), y1: mt, x2: X(g), y2: mt + ph, class: 'grid' }));
+      var tk = mk('text', { x: X(g), y: mt + ph + 16, class: 'tick', 'text-anchor': 'middle' });
+      tk.textContent = String(g); svgP.appendChild(tk);
+    }
+    svgP.appendChild(mk('line', { x1: ml, y1: Y(0), x2: ml + pw, y2: Y(0), class: 'ax', 'stroke-width': 1.6 }));
+    var xl = mk('text', { x: ml + pw / 2, y: Ht - 6, class: 'axlab', 'text-anchor': 'middle' });
+    xl.textContent = 'Re ω'; svgP.appendChild(xl);
+    var yl = mk('text', { x: 12, y: mt + ph / 2, class: 'axlab', 'text-anchor': 'middle',
+                          transform: 'rotate(-90 12 ' + (mt + ph / 2) + ')' });
+    yl.textContent = 'Im ω'; svgP.appendChild(yl);
+
+    function marker(shape, x, y, colTok, label, sub) {
+      var col = tok(colTok), sw = tok('--surface');
+      var g2 = mk('g', {});
+      if (shape === 'circle') g2.appendChild(mk('circle', { cx: x, cy: y, r: 6.5, fill: col, stroke: sw, 'stroke-width': 2 }));
+      else if (shape === 'square') g2.appendChild(mk('rect', { x: x - 6, y: y - 6, width: 12, height: 12, fill: col, stroke: sw, 'stroke-width': 2 }));
+      else g2.appendChild(mk('polygon', { points: (x) + ',' + (y - 7.4) + ' ' + (x + 6.6) + ',' + (y + 4.4) + ' ' + (x - 6.6) + ',' + (y + 4.4), fill: col, stroke: sw, 'stroke-width': 2 }));
+      if (label) {
+        var t = mk('text', { x: x, y: y - 12, class: 'dlab', fill: col, 'text-anchor': 'middle' });
+        t.textContent = label; g2.appendChild(t);
+      }
+      if (sub) {
+        var t2 = mk('text', { x: x, y: y + 20, class: 'note', 'text-anchor': 'middle' });
+        t2.textContent = sub; g2.appendChild(t2);
+      }
+      svgP.appendChild(g2);
+    }
+    marker('circle', X(0), Y(-0.16), '--keep', 'iA / (ω + i0)', 'just below zero');
+    if (S.onB) {
+      marker('square', X(S.w0), Y(0), '--die', null, null);
+      marker('square', X(-S.w0), Y(0), '--die', 'on the axis', null);
+    }
+    if (S.onC) {
+      var yy = S.flip ? S.G : -S.G, ctk = S.flip ? '--die' : '--keep';
+      marker('triangle', X(S.w1), Y(yy), ctk, null, null);
+      marker('triangle', X(-S.w1), Y(yy), ctk, S.flip ? 'above the axis' : 'damped', null);
+    }
+  }
+
+  function renderTime() {
+    while (svgT.firstChild) svgT.removeChild(svgT.firstChild);
+    var Wd = 700, Ht = 300, ml = 46, mr = 14, mt = 16, mb = 38;
+    var pw = Wd - ml - mr, ph = Ht - mt - mb;
+    var N = 900, ys = [], lo = 0, hi = 0;
+    for (var i = 0; i <= N; i++) {
+      var t = TMIN + (TMAX - TMIN) * i / N, v = f(t);
+      ys.push(v); if (v < lo) lo = v; if (v > hi) hi = v;
+    }
+    var pad = 0.18 * Math.max(1e-6, hi - lo);
+    lo -= pad; hi += pad;
+    var X = function (t) { return ml + pw * (t - TMIN) / (TMAX - TMIN); };
+    var Y = function (v) { return mt + ph * (hi - v) / (hi - lo); };
+
+    for (var g = 0; g <= 4; g++) {
+      var yv = lo + (hi - lo) * g / 4, y = Y(yv);
+      svgT.appendChild(mk('line', { x1: ml, y1: y, x2: ml + pw, y2: y, class: 'grid' }));
+      var tk = mk('text', { x: ml - 7, y: y + 3.5, class: 'tick', 'text-anchor': 'end' });
+      tk.textContent = yv.toFixed(2); svgT.appendChild(tk);
+    }
+    for (var tg = 0; tg <= 30; tg += 10) {
+      svgT.appendChild(mk('line', { x1: X(tg), y1: mt, x2: X(tg), y2: mt + ph, class: 'grid' }));
+      var tk2 = mk('text', { x: X(tg), y: mt + ph + 16, class: 'tick', 'text-anchor': 'middle' });
+      tk2.textContent = String(tg); svgT.appendChild(tk2);
+    }
+    svgT.appendChild(mk('line', { x1: X(0), y1: mt, x2: X(0), y2: mt + ph, class: 'ax', 'stroke-dasharray': '3 3' }));
+    var z = mk('text', { x: X(0) + 5, y: mt + 12, class: 'note' }); z.textContent = 'the kick'; svgT.appendChild(z);
+    svgT.appendChild(mk('line', { x1: ml, y1: Y(S.A), x2: ml + pw, y2: Y(S.A), class: 'lvl' }));
+    var al = mk('text', { x: ml + pw - 4, y: Y(S.A) - 6, class: 'dlab', fill: tok('--keep'), 'text-anchor': 'end' });
+    al.textContent = 'A = ' + S.A.toFixed(2) + '  (the residue)'; svgT.appendChild(al);
+
+    var d = '';
+    for (var k = 0; k <= N; k++) {
+      var tt = TMIN + (TMAX - TMIN) * k / N;
+      d += (k ? 'L' : 'M') + X(tt).toFixed(2) + ' ' + Y(ys[k]).toFixed(2);
+    }
+    svgT.appendChild(mk('path', { d: d, class: 'curve' }));
+    var xl = mk('text', { x: ml + pw / 2, y: Ht - 6, class: 'axlab', 'text-anchor': 'middle' });
+    xl.textContent = 'time t'; svgT.appendChild(xl);
+    var yl = mk('text', { x: 12, y: mt + ph / 2, class: 'axlab', 'text-anchor': 'middle',
+                          transform: 'rotate(-90 12 ' + (mt + ph / 2) + ')' });
+    yl.textContent = 'f(t)'; svgT.appendChild(yl);
+  }
+
+  function renderVerdict() {
+    var h1ok = true;                                   // one simple pole at zero, retarded
+    var h2ok = !(S.onB && S.B > 0) && !(S.onC && S.C > 0 && S.flip);
+    var settled = h1ok && h2ok;
+    // late value, honestly: the envelope of the last stretch of the curve
+    var vmin = Infinity, vmax = -Infinity;
+    for (var i = 0; i <= 400; i++) { var v = f(24 + 10 * i / 400); if (v < vmin) vmin = v; if (v > vmax) vmax = v; }
+    var swing = vmax - vmin;
+    var lateTxt = settled ? f(34).toFixed(9) : 'no limit — it swings by ' + swing.toFixed(3) + ' over the last ten units';
+    var acaus = S.onC && S.C > 0 && S.flip;
+    elV.innerHTML =
+      '<div class="w9-vhead"><span class="w9-vstate" data-ok="' + (settled ? 1 : 0) + '">'
+      + (settled ? 'the limit exists' : 'no late-time limit') + '</span>'
+      + '<span class="w9-vtitle">' + (settled
+          ? 'f(t) settles, and it settles on the residue.'
+          : (acaus ? 'The response now happens before the kick, and there is nothing left to settle.'
+                   : 'The response rings forever. The residue is unchanged; the thing it was equal to is gone.'))
+      + '</span></div>'
+      + hyp(h1ok, 'One simple pole at ω = 0, approached from below.')
+      + hyp(!(S.onB && S.B > 0), 'No other singularity sits on the real axis.')
+      + hyp(!acaus, 'Every other singularity sits strictly below the real axis.')
+      + '<div class="w9-nums">'
+      + num('the residue: −iω f̃(ω) as ω → 0', S.A.toFixed(9))
+      + num('f(t) at t = 34', lateTxt)
+      + num('difference', settled ? Math.abs(f(34) - S.A).toExponential(2) : '—')
+      + '</div>';
+  }
+  function hyp(ok, txt) { return '<div class="w9-hyp" data-ok="' + (ok ? 1 : 0) + '"><em>' + (ok ? 'holds' : 'broken') + '</em><span>' + txt + '</span></div>'; }
+  function num(k, v) { return '<div class="w9-num"><span>' + k + '</span><b>' + v + '</b></div>'; }
+
+  function render() { renderPoles(); renderTime(); renderVerdict(); }
+
+  var ins = root.querySelectorAll('[data-w9-i]');
+  for (var i9 = 0; i9 < ins.length; i9++) {
+    (function (inp) {
+      inp.addEventListener('input', function () {
+        var k = inp.getAttribute('data-w9-i');
+        S[k] = parseFloat(inp.value);
+        var o = root.querySelector('[data-w9-o="' + k + '"]');
+        if (o) o.textContent = S[k].toFixed(2);
+        render();
+      });
+    })(ins[i9]);
+  }
+  var cbs = root.querySelectorAll('[data-w9-c]');
+  for (var c9 = 0; c9 < cbs.length; c9++) {
+    (function (cb) {
+      var k = cb.getAttribute('data-w9-c');
+      var key = k === 'flip' ? 'flip' : 'on' + k;
+      S[key] = cb.checked;
+      cb.addEventListener('change', function () { S[key] = cb.checked; render(); });
+    })(cbs[c9]);
+  }
+  render();
+})();
+</script>
+
+
+<section class="stop" id="w10">
+  <div class="stop-head">
+    <div class="plate">Station 10 &middot; the triangle, and where it goes next</div>
+    <h2>Three subjects, one subject</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">Here is the picture the whole page was assembling. Three corners, three
+      edges. Every one of them is something you have now watched happen, except one, which
+      is reported rather than derived and is labelled as such.</p>
+    <p>Click a corner or an edge.</p>
+  </div>
+
+  <div class="w10-map">
+    <svg class="w10-svg" viewBox="0 0 700 400" role="img"
+         aria-label="The infrared triangle: three corners — soft theorems, asymptotic symmetries, memory — joined by three edges. The panel underneath describes whichever element is selected."></svg>
+    <div class="w10-panel" data-w10-panel aria-live="polite"></div>
+  </div>
+
+  <div class="body">
+    <p>Now the honest part. Every corner of that triangle assumed something so quietly that
+      it is easy to miss: <b>detectors whose rulers do not change while they are
+      measuring</b>. The rings in station&nbsp;5 are inertial, isolated, and cold. The
+      charges are free. The whole notion of a permanent shift is a comparison of a ruler
+      against itself, before and after, and it needs the ruler to have been the same object
+      both times.</p>
+    <p>That assumption gets harder to make as you go down in dimension and up in
+      temperature. Which raises the question this campaign is actually about: what survives
+      when the ruler is part of a thermal state?</p>
+  </div>
+
+  <div class="w10-ladder">
+    <div class="w10-ladder-h">
+      <div class="eyebrow">A ladder, not a generalisation</div>
+      <p>The same three questions, asked of three systems. This page has been the top rung.
+        The lower two are where the new work is; they are listed here with what is actually
+        established and nothing more.</p>
+    </div>
+
+    <div class="w10-rung is-here">
+      <div class="w10-rung-d">3 + 1</div>
+      <div class="w10-rung-b">
+        <div class="w10-rung-t">Charges and gravitational waves in flat spacetime <span class="w10-here">you are here</span></div>
+        <p>The setting the triangle was found in. Soft theorems, BMS supertranslations,
+          and the memory effect, connected as above. Everything on this page is either a
+          closed form, a controlled numerical solve of a displayed equation, or a labelled
+          quotation from the lecture notes.</p>
+        <div class="w10-tags"><span class="w10-tag" data-st="known">Established literature</span></div>
+      </div>
+    </div>
+
+    <div class="w10-rung">
+      <div class="w10-rung-d">1 + 1</div>
+      <div class="w10-rung-b">
+        <div class="w10-rung-t">A lattice of spins</div>
+        <p>Replace null infinity with the two ends of a chain and the radiation field with
+          the chain&rsquo;s own excitations. The soft-index identity &mdash; the lattice
+          statement standing where the soft theorem stands here &mdash; is proved, for every
+          compact symmetry group and on any finite lattice. The memory side is being computed
+          now: ground states and the phase diagram are done and tested, the kink-memory
+          numerics are mid-run, and nothing is claimed about them here.</p>
+        <div class="w10-tags">
+          <span class="w10-tag" data-st="proved">Proved — soft-index identity, every compact G</span>
+          <span class="w10-tag" data-st="wip">In progress — kink memory</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="w10-rung">
+      <div class="w10-rung-d">0 + 1</div>
+      <div class="w10-rung-b">
+        <div class="w10-rung-t">A pair of black-hole boundary clocks</div>
+        <p>Two boundaries of a nearly-AdS<sub>2</sub> throat, in a thermal state &mdash; the
+          setting where the ruler really is thermal, because the clock and the thing it
+          measures are the same degree of freedom. Here the answers split. A calibrated
+          <em>relational</em> susceptibility does reproduce the DC soft residue at order
+          1/C, and the numerics agree with the closed form to 0.011 per cent. An
+          <em>absolute</em> late-time plateau is simply not there. And the butterfly shift,
+          the obvious candidate for a memory in this system, has no plateau at all: it is a
+          transient time delay, and calling it memory would be wrong.</p>
+        <div class="w10-tags">
+          <span class="w10-tag" data-st="proved">Proved — relational susceptibility = DC residue</span>
+          <span class="w10-tag" data-st="refuted">No — absolute plateau; butterfly shift is not memory</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="w10-ladder-f">Those are the claims as they stand in the repository, with their
+      scopes. Two of them are refusals. That is what a ladder looks like when it is being
+      climbed honestly rather than advertised.</p>
+  </div>
+</section>
+
+<style data-station="w10">
+#w10 .w10-map { margin: 1.5rem 0 1.6rem; border: 1px solid var(--rule); background: var(--surface); }
+#w10 .w10-svg { display: block; width: 100%; height: auto; }
+#w10 .w10-svg .edge { stroke: var(--rule-2); stroke-width: 2.5; fill: none; cursor: pointer; }
+#w10 .w10-svg .edge-hit { stroke: transparent; stroke-width: 26; fill: none; cursor: pointer; }
+#w10 .w10-svg g.on .edge { stroke: var(--accent); stroke-width: 3.5; }
+#w10 .w10-svg .node-box { fill: var(--surface-2); stroke: var(--rule-2); stroke-width: 1.5; cursor: pointer; }
+#w10 .w10-svg g.on .node-box { stroke: var(--accent); stroke-width: 2.5; fill: var(--accent-tint); }
+#w10 .w10-svg .node-t { font-family: var(--sans); font-size: 14px; font-weight: 600; fill: var(--ink); pointer-events: none; }
+#w10 .w10-svg .node-s { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); pointer-events: none; }
+#w10 .w10-svg .edge-l { font-family: var(--sans); font-size: 11.5px; fill: var(--ink-3); pointer-events: none; }
+#w10 .w10-svg g.on .edge-l { fill: var(--accent-text); font-weight: 600; }
+#w10 .w10-svg .hint { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+#w10 .w10-svg g:focus { outline: none; }
+#w10 .w10-svg g:focus-visible .node-box, #w10 .w10-svg g:focus-visible .edge { stroke: var(--accent); stroke-width: 3.5; }
+#w10 .w10-panel { border-top: 1px solid var(--rule); padding: 1rem 1.1rem 1.15rem; min-height: 8.5rem; }
+#w10 .w10-pk { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+#w10 .w10-pt { font-family: var(--serif); font-size: 1.14rem; font-weight: 600; color: var(--ink); margin: .3rem 0 .5rem; }
+#w10 .w10-pb { font-family: var(--sans); font-size: 14px; line-height: 1.6; color: var(--ink-2); max-width: 42rem; }
+#w10 .w10-pb + .w10-pb { margin-top: .6rem; }
+#w10 .w10-pq { margin: .75rem 0 .2rem; padding-left: 1rem; border-left: 2px solid var(--rule-2); font-family: var(--serif); font-style: italic; font-size: 14.5px; line-height: 1.55; color: var(--ink); }
+#w10 .w10-psrc { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); margin-top: .4rem; }
+#w10 .w10-pw { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .7rem; }
+#w10 .w10-pw a { font-family: var(--sans); font-size: 12px; text-decoration: none; border: 1px solid var(--rule-2); padding: .2rem .5rem; color: var(--ink-2); }
+#w10 .w10-pw a:hover { border-color: var(--accent); color: var(--accent-text); background: var(--accent-tint); }
+
+#w10 .w10-ladder { margin: 2rem 0 .5rem; border-top: 2px solid var(--ink); padding-top: 1.2rem; }
+#w10 .w10-ladder-h p { font-family: var(--sans); font-size: 13.5px; line-height: 1.6; color: var(--ink-2); margin: .45rem 0 1.1rem; max-width: 42rem; }
+#w10 .w10-rung { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--rule); }
+#w10 .w10-rung.is-here { background: var(--surface-2); padding-left: .9rem; padding-right: .9rem; margin-inline: -.9rem; }
+#w10 .w10-rung-d { font-family: var(--mono); font-size: 15px; color: var(--accent-text); padding-top: .15rem; }
+#w10 .w10-rung-t { font-family: var(--serif); font-size: 1.06rem; font-weight: 600; color: var(--ink); display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
+#w10 .w10-here { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--accent-text); border: 1px solid var(--accent); padding: .1rem .35rem; }
+#w10 .w10-rung-b p { font-family: var(--sans); font-size: 13.5px; line-height: 1.6; color: var(--ink-2); margin: .45rem 0 0; max-width: 40rem; }
+#w10 .w10-tags { display: flex; gap: .45rem; flex-wrap: wrap; margin-top: .7rem; }
+#w10 .w10-tag { font-family: var(--sans); font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: .18rem .45rem; border: 1px solid var(--rule-2); color: var(--ink-3); }
+#w10 .w10-tag[data-st="proved"]  { border-color: var(--st-proved);     color: var(--st-proved); }
+#w10 .w10-tag[data-st="wip"]     { border-color: var(--st-sketch);     color: var(--st-sketch); }
+#w10 .w10-tag[data-st="refuted"] { border-color: var(--st-refuted);    color: var(--st-refuted); }
+#w10 .w10-tag[data-st="known"]   { border-color: var(--st-conjecture); color: var(--st-conjecture); }
+#w10 .w10-ladder-f { font-family: var(--sans); font-size: 13px; line-height: 1.6; color: var(--ink-2); margin-top: 1.1rem; padding-top: .9rem; border-top: 1px solid var(--rule); max-width: 42rem; }
+@media (max-width: 560px) { #w10 .w10-rung { grid-template-columns: 1fr; gap: .25rem; } }
+</style>
+
+<script data-station="w10">
+(function () {
+  var root = document.getElementById('w10');
+  if (!root) return;
+  var svg = root.querySelector('.w10-svg'), panel = root.querySelector('[data-w10-panel]');
+  if (!svg || !panel) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+
+  var P = { S: [350, 62], A: [86, 316], M: [614, 316] };
+
+  var CONTENT = {
+    S: { kind: 'Corner', title: 'Soft theorems',
+      body: ['Take any scattering amplitude and add one massless particle whose energy you send to zero. The amplitude does not go to a generic limit: it develops a pole, and the coefficient of that pole is fixed entirely by the momenta and charges of the particles that were already there. Nothing about the interaction enters.',
+             'On this page the classical version of that coefficient is what station 5&rsquo;s closed-form column computes, one detector at a time.'],
+      where: [['w5', 'Station 5 — the range']] },
+    A: { kind: 'Corner', title: 'Asymptotic symmetries',
+      body: ['Far from everything, a gauge theory or a theory of gravity has more exact symmetry than the Poincaré group. There is one conserved charge for every direction on the sphere at infinity — infinitely many conservation laws where you expected ten.',
+             'This page does not derive them. Station 7 exhibits the electromagnetic version as a ledger that balances angle by angle.'],
+      where: [] },
+    M: { kind: 'Corner', title: 'The memory effect',
+      body: ['After radiation has passed, free detectors do not return to where they started. The permanent offset is fixed by the energy that went past, direction by direction, through the constraint quoted at station 5.',
+             'This is the corner you can actually build an instrument for, and the corner this page spends the most time in: stations 1, 5 and 8.'],
+      where: [['w1', 'Station 1 — the question'], ['w5', 'Station 5 — the range'], ['w8', 'Station 8 — multipole by multipole']] },
+    SM: { kind: 'Edge', title: 'Soft theorem ⟷ memory: a Fourier transform',
+      body: ['A pole at zero frequency is a step in time. That is the entire edge, and it is the one this page can show you rather than assert: station 5 computes the same number twice, once as a residue that knows only the endpoints and once as an integral over the whole history, and prints the disagreement.',
+             'Station 9 is where the hypotheses live. The edge holds when the rest of the response settles; break that and the residue survives while the limit does not.'],
+      where: [['w5', 'Station 5 — two routes, one number'], ['w9', 'Station 9 — the hypotheses']] },
+    AM: { kind: 'Edge', title: 'Symmetry ⟷ memory: the shift is the symmetry',
+      body: ['The geometry before the burst and the geometry after are both flat, and they are related by one of the asymptotic symmetries. The permanent shift a ring of masses records is that symmetry transformation, made visible. The function Φ solved for at stations 5 and 8 is exactly the supertranslation relating the two vacua.',
+             'This is why the memory effect is not just a curiosity: it is the only corner of the triangle you can put in a detector.'],
+      where: [['w8', 'Station 8 — the map of Φ']] },
+    AS: { kind: 'Edge', title: 'Symmetry ⟷ soft theorem: a Ward identity',
+      body: ['Every symmetry has a Ward identity relating amplitudes of symmetry-related states. For these asymptotic symmetries, that Ward identity <em>is</em> the soft theorem. This page reports that result; it does not derive it, and it should not be read as having shown it.'],
+      quote: 'The standard soft photon formula reduces to the Ward identity following from invariance under large gauge symmetries, or equivalently, the matrix element of the charge conservation law. This establishes the central result connecting the soft photon theorem to the large gauge symmetry of electromagnetism.',
+      src: 'soft_Arxiv_update.tex:1064 — quoted, reported, not derived here',
+      where: [] }
+  };
+
+  var groups = {};
+  function node(key, label, sub) {
+    var p = P[key], w = 176, h = 58;
+    var g = mk('g', { tabindex: '0', role: 'button', 'aria-label': label });
+    g.appendChild(mk('rect', { x: p[0] - w / 2, y: p[1] - h / 2, width: w, height: h, class: 'node-box' }));
+    var t = mk('text', { x: p[0], y: p[1] - 3, class: 'node-t', 'text-anchor': 'middle' });
+    t.textContent = label; g.appendChild(t);
+    var s = mk('text', { x: p[0], y: p[1] + 15, class: 'node-s', 'text-anchor': 'middle' });
+    s.textContent = sub; g.appendChild(s);
+    g.addEventListener('click', function () { select(key); });
+    g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(key); } });
+    svg.appendChild(g); groups[key] = g;
+  }
+  function edge(key, a, b, label, lx, ly, rot) {
+    var A = P[a], B = P[b];
+    var ux = B[0] - A[0], uy = B[1] - A[1], L = Math.hypot(ux, uy);
+    ux /= L; uy /= L;
+    var pad = 96;
+    var x1 = A[0] + ux * pad, y1 = A[1] + uy * pad, x2 = B[0] - ux * pad, y2 = B[1] - uy * pad;
+    var g = mk('g', { tabindex: '0', role: 'button', 'aria-label': label });
+    g.appendChild(mk('line', { x1: x1, y1: y1, x2: x2, y2: y2, class: 'edge' }));
+    g.appendChild(mk('line', { x1: x1, y1: y1, x2: x2, y2: y2, class: 'edge-hit' }));
+    var t = mk('text', { x: lx, y: ly, class: 'edge-l', 'text-anchor': 'middle',
+                         transform: 'rotate(' + rot + ' ' + lx + ' ' + ly + ')' });
+    t.textContent = label; g.appendChild(t);
+    g.addEventListener('click', function () { select(key); });
+    g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(key); } });
+    svg.appendChild(g); groups[key] = g;
+  }
+
+  edge('AS', 'A', 'S', 'a Ward identity', 190, 172, -44);
+  edge('SM', 'S', 'M', 'a Fourier transform', 512, 172, 44);
+  edge('AM', 'A', 'M', 'the shift is the symmetry', 350, 306, 0);
+  node('S', 'Soft theorems', 'a universal pole at zero energy');
+  node('A', 'Asymptotic symmetries', 'one conservation law per direction');
+  node('M', 'Memory', 'a permanent shift, left behind');
+  var hint = mk('text', { x: 350, y: 380, class: 'hint', 'text-anchor': 'middle' });
+  hint.textContent = 'click any corner or edge';
+  svg.appendChild(hint);
+
+  function select(key) {
+    for (var k in groups) groups[k].classList.toggle('on', k === key);
+    var c = CONTENT[key];
+    var html = '<div class="w10-pk">' + c.kind + '</div><div class="w10-pt">' + c.title + '</div>';
+    for (var i = 0; i < c.body.length; i++) html += '<p class="w10-pb">' + c.body[i] + '</p>';
+    if (c.quote) html += '<div class="w10-pq">&ldquo;' + c.quote + '&rdquo;</div><div class="w10-psrc">' + c.src + '</div>';
+    if (c.where && c.where.length) {
+      html += '<div class="w10-pw">';
+      for (var j = 0; j < c.where.length; j++) html += '<a href="#' + c.where[j][0] + '">' + c.where[j][1] + '</a>';
+      html += '</div>';
+    }
+    panel.innerHTML = html;
+  }
+  select('M');
+})();
+</script>
+
+
+<section class="stop" id="w-outro">
+  <div class="w-outro-in">
+    <p class="eyebrow">End of the prologue</p>
+    <h2>What this page did and did not do</h2>
+    <div class="body">
+      <p>It showed you two systems worked out far enough to aim and to check: a charge that
+        gets kicked, and a burst of energy crossing the sky. In the first, the permanent
+        velocity kick a distant test charge is left with was computed twice &mdash; once
+        from the endpoints alone, once by integrating the entire field history &mdash; and
+        the two agree to the last digit that double precision has. In the second, the
+        permanent strain was solved multipole by multipole from a constraint quoted out of
+        the lecture notes, and the solve was checked against the Green&rsquo;s function
+        those same notes give, to twelve digits.</p>
+      <p>It did not derive the Ward identity connecting the symmetry corner to the soft
+        corner. That result is reported here, with its source line, and nothing on this page
+        should be read as having established it.</p>
+      <p>What it was for: to make the infrared triangle something you have handled, before
+        being asked whether the same three questions have answers in systems where the
+        detector is not an idealisation. That is the next rung down, and the one after, and
+        they are where the work is.</p>
+    </div>
+    <p class="w-outro-src">Formulas quoted by line from
+      <span class="mono">refs/arxiv-1703.05448/soft_Arxiv_update.tex</span> (Strominger,
+      <i>Lectures on the Infrared Structure of Gravity and Gauge Theory</i>). Lecture remarks
+      are transcribed from auto&#8209;captions and are secondary sources. Claim statuses for
+      the lower two rungs are as recorded in the campaign&rsquo;s own claims file.</p>
+  </div>
+</section>
+
+<style data-station="w-outro">
+#w-outro { margin-top: 2.5rem; }
+#w-outro .w-outro-in { border-top: 2px solid var(--ink); padding-top: 1.2rem; }
+#w-outro h2 { font-size: clamp(1.3rem, 1.05rem + 1vw, 1.7rem); margin-top: .35rem; }
+#w-outro .body { margin-top: 1rem; display: flex; flex-direction: column; gap: .85rem; }
+#w-outro .w-outro-src { font-family: var(--sans); font-size: 12px; line-height: 1.6; color: var(--ink-3); margin-top: 1.4rem; padding-top: .8rem; border-top: 1px solid var(--rule); }
+</style>
+
+<script data-station="w-outro">
+(function () {
+  /* No behaviour: this block is copy only. Present so that every section in this
+     fragment keeps the one-style-one-script shape the integrator expects. */
+  var root = document.getElementById('w-outro');
+  if (!root) return;
+})();
+</script>

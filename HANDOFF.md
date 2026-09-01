@@ -7,6 +7,92 @@ Read order gate: CLAUDE.md → **PRD.md (the process constitution — where it
 conflicts with older habits recorded here or anywhere, PRD WINS)** →
 HANDOFF_MPS_SOFT_THEOREM.md → this file → paper/skeleton.md.
 
+## Session 11 (continued) — THE OUTREACH PIVOT (interrupted by network outage)
+
+**TJO pivot directive (2026-09-01, afternoon):** traditional publishing is
+treated as dead; explore creative communication channels for the SYK/JT
+results first. All rulings persisted on epic **tns-i8p**:
+(i) target audience = traditional physicist (QM, GR, QFT≤QED, many-body/
+Fock space — no more); maximize wow/magic; narrative arc why→how→what;
+(ii) the L7 no-prose rule is LIFTED for these channels (paper prose rule
+unaffected); (iii) TRUTH CONSTRAINT, verbatim: "no oversimplifications are
+allowed: only true statements, no vague pop sci bullshit. One is allowed to
+speak in generalities, and conjectures, but everything must be
+mathematically correct" — later AMENDED: "exactly solvable is surely not
+necessary, just numerically tractable!" (honest controlled numerics of the
+true equations allowed; cartoon dynamics forbidden).
+
+**Done and committed (a629277):** 18 formats brainstormed → codex audit
+(docs/outreach/format-audit.md, opinionated scoring) → 3 picks built as
+audition prototypes by Opus builders → codex constructive critiques (34
+fatal truth items total) → repair round (all closed; repair logs appended
+to docs/outreach/auditions/NOTES-*.md) → published as private artifacts:
+- Memory Lab (tns-024): https://claude.ai/code/artifact/44d40504-c103-4864-be7c-add666df2286
+- Butterfly Trial (tns-274): https://claude.ai/code/artifact/1bea06c3-8121-4009-bc1e-37e833c3aefa
+- Proof Atlas (tns-959): https://claude.ai/code/artifact/7ff944a1-489f-4e48-8e5b-3f92f928e3ce
+Republishing: same file path from the owning session, or pass the URL as
+`url` from a new session. NOTE: the Memory Lab builder found
+schwarzian_memory.json stores its Möbius matrix COLUMN-MAJOR — bug filed.
+
+**TJO audition verdict (corrected, binding): NO winner.** Each audition has
+liked and disliked parts; the Proof Atlas is distinguished ONLY as the sole
+presentation starting with a proper "why?" — and even that why is far too
+short, no interactivity, "abrupt and pitiless". Format decision for the
+SYK/JT material remains OPEN.
+
+**Priority directive — the WHY prologue (tns-ka2, IN PROGRESS, interrupted):**
+5–10+ interactive visualisations of the IR triangle BEFORE any SYK/JT; 2D
+and 3D apps/games; verbatim: "I want to see a bunch of detectors or
+charges, in 3d with three.js maybe, I want to shoot grav waves or soft
+photons at them. Try 2d first if that is too hard." Then: "Ideally I would
+love a 1d, 2d, 3d vis, each illustrating the IR triangle on different
+systems (maybe the 1d version IS the SYK/JT story)" — the DIMENSIONAL
+LADDER (this prologue = the 3+1 rung; future rungs: 1D lattice spin chain
+from the campaign's OWN results, 2D from the 2+1 toric-code corner, 0+1
+SYK/JT). And: "I unreasonably want this to be awesome."
+**Design document: docs/outreach/BRIEF-why-prologue.md** — 10 stations
+(W1–W10) fully specified, incl. the EM kicked-charge engine, the GW
+null-burst spherical-harmonic memory engine, the flagship
+shoot-the-detectors game (W5), the fragment contract, and the ladder
+section. Build plan: 2 parallel Opus fragment builders → Opus integrator →
+codex physics critic → repair → publish.
+
+**Recovery state after the network outage (what the next agent inherits):**
+- `docs/outreach/auditions/prologue/frag-gw.html` (165KB, committed):
+  Builder B's lane — W1, W5 (the game), W8, W9, W10 + masthead/outro, all
+  present, fragment contract observed — but the builder was killed DURING
+  its QA phase (its last words: the QA harness had bugs). Treat as
+  structurally complete, UNVERIFIED. Needs: QA pass (both themes,
+  viewports, WebGL-absent fallback, JS error sweep) before integration.
+- `frag-em.html` does NOT exist: Builder A (stations W2 kicked-charge field
+  lines, W3 soft spectrum, W4 celestial sphere, W6 two-route identity, W7
+  conservation-per-angle + antipodal) died on the outage mid-W6 WITHOUT
+  writing its fragment. Rebuild from the brief (its lane spec is complete
+  there; nothing to salvage).
+
+**Resume order for the next agent:** (1) relaunch Builder A (Opus) on the
+EM lane per BRIEF-why-prologue.md — same prompt shape as Builder B: load
+artifact-design + dataviz skills, obey the fragment contract, palette from
+proof-atlas.html :root; (2) QA/repair frag-gw.html (fresh Opus agent may
+both QA B and build A's missing lane, or two agents); (3) Opus integrator
+assembles ir-triangle-prologue.html per the brief (single MathJax + pinned
+three.js from cdnjs, standalone page, do NOT edit proof-atlas.html);
+(4) codex critic (physics-correctness first) using
+docs/outreach/BRIEF-audition-critic.md pattern; (5) repair; (6) publish as
+a NEW artifact (own URL) + commit/push. Main campaign queue untouched by
+the pivot (tns-bfc, tns-25h, tns-94j, tns-kng, tns-bsk, tns-7ou…).
+
+**Ops notes (pivot additions):** Opus builders reliably produce 150–200KB
+single-file interactive HTML in one run (~45–60 min, 300–420k tokens);
+codex critiques are sharp but occasionally wrong — repair agents caught 5
+critic errors with evidence, so instruct repair agents to verify before
+applying. Subagent transcripts do NOT survive context summarization —
+resuming a builder via SendMessage can fail with "No transcript found";
+relaunch fresh with file-based context instead (critique + notes + spec
+files carry everything). Network outages kill codex AND Agent-tool lanes;
+fragments written incrementally to disk survive, in-context work does not
+— instruct builders to write files early and often.
+
 ## Session 11 — wisdom-of-Strominger database, refs batch-13, Liouville rung
 
 **Wisdom of Strominger (tns-t66, CLOSED).** TJO directive: mine the SIDE
