@@ -1,0 +1,3241 @@
+<title>The Butterfly Effect on Trial</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+
+<style>
+/* ------------------------------------------------------------------ *
+ * The Butterfly Effect on Trial — audition slice (bd tns-274)
+ * Palette: cool ledger neutrals + petrol seal + ochre objection.
+ * Chart series validated with dataviz scripts/validate_palette.js:
+ *   light surface #F7F9F8 : #00819B #B45309 #6D4B9A  -> all six checks PASS
+ *   dark  surface #161D1F : #2FA2BC #CE7E22 #9280D4  -> all six checks PASS
+ * ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+
+  --paper:      #e9edec;
+  --panel:      #f7f9f8;
+  --panel-2:    #eef2f1;
+  --ink:        #12191b;
+  --ink-2:      #4a5759;
+  --ink-3:      #63716f;
+  --rule:       #ccd5d4;
+  --rule-2:     #a6b4b2;
+  --grid:       #dde4e3;
+
+  --seal:       #075e6b;
+  --seal-tint:  #dfeaeb;
+  --objection:  #8a4b12;
+  --objection-tint: #f2e8db;
+  --refuted:    #8f2f2a;
+  --held:       #4f4a66;
+
+  --s1: #00819b;
+  --s2: #b45309;
+  --s3: #6d4b9a;
+
+  --serif: Spectral, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --measure: 66ch;
+  --rail: 9.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper:      #0e1314;
+    --panel:      #161d1f;
+    --panel-2:    #1c2426;
+    --ink:        #e4eae9;
+    --ink-2:      #9dacab;
+    --ink-3:      #7a8988;
+    --rule:       #26302f;
+    --rule-2:     #3d4b4a;
+    --grid:       #232c2e;
+
+    --seal:       #5fc0cf;
+    --seal-tint:  #14282c;
+    --objection:  #d5943c;
+    --objection-tint: #26200f;
+    --refuted:    #e08079;
+    --held:       #a79fc4;
+
+    --s1: #2fa2bc;
+    --s2: #ce7e22;
+    --s3: #9280d4;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper:      #0e1314;
+  --panel:      #161d1f;
+  --panel-2:    #1c2426;
+  --ink:        #e4eae9;
+  --ink-2:      #9dacab;
+  --ink-3:      #7a8988;
+  --rule:       #26302f;
+  --rule-2:     #3d4b4a;
+  --grid:       #232c2e;
+
+  --seal:       #5fc0cf;
+  --seal-tint:  #14282c;
+  --objection:  #d5943c;
+  --objection-tint: #26200f;
+  --refuted:    #e08079;
+  --held:       #a79fc4;
+
+  --s1: #2fa2bc;
+  --s2: #ce7e22;
+  --s3: #9280d4;
+}
+
+/* ---------- base ---------- */
+
+.trial {
+  background: var(--paper);
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  padding: 0 1.25rem 6rem;
+  overflow-x: hidden;
+}
+.trial * { box-sizing: border-box; }
+.wrap { max-width: 1090px; margin: 0 auto; }
+
+.trial p { margin: 0 0 0.95em; }
+.trial p:last-child { margin-bottom: 0; }
+.trial a { color: var(--seal); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+.trial :focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+.trial em { font-style: italic; }
+.trial strong { font-weight: 600; }
+
+h1, h2, h3, h4 { font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.18; }
+
+/* ---------- masthead ---------- */
+
+.masthead { padding: 3.2rem 0 1.4rem; border-bottom: 2px solid var(--ink); }
+.eyebrow {
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 1.1rem;
+}
+.masthead h1 {
+  font-size: clamp(2.3rem, 6.4vw, 3.6rem);
+  font-weight: 300; letter-spacing: -0.018em; line-height: 1.03;
+  max-width: 15ch;
+}
+.masthead h1 em { font-style: italic; font-weight: 400; }
+.deck {
+  margin-top: 1.35rem; max-width: 58ch;
+  font-size: 1.1875rem; line-height: 1.5; color: var(--ink-2); font-weight: 300;
+}
+.masthead-foot {
+  display: flex; flex-wrap: wrap; gap: 0.7rem 2rem; align-items: baseline;
+  margin-top: 1.8rem; font-family: var(--mono); font-size: 0.6875rem;
+  letter-spacing: 0.06em; color: var(--ink-3); text-transform: uppercase;
+}
+.theme-btn {
+  font: inherit; letter-spacing: inherit; text-transform: inherit;
+  background: none; border: 0; border-bottom: 1px solid var(--rule-2);
+  color: var(--ink-3); cursor: pointer; padding: 0 0 1px; margin-left: auto;
+}
+.theme-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ---------- provenance legend + tags ---------- */
+
+.legend {
+  display: grid; gap: 0.55rem 1.6rem; margin: 1.5rem 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  border-top: 1px solid var(--rule); padding-top: 1.1rem;
+}
+.legend div { font-size: 0.8125rem; color: var(--ink-2); line-height: 1.45; }
+
+.tag {
+  display: inline-block; font-family: var(--mono); font-size: 0.625rem;
+  font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-2); border-bottom: 2px solid var(--rule-2);
+  padding-bottom: 1px; white-space: nowrap;
+}
+.tag.proved  { color: var(--seal);      border-color: var(--seal); }
+.tag.evald   { color: var(--s3);        border-color: var(--s3); }
+.tag.sample  { color: var(--s2);        border-color: var(--s2); }
+.tag.quoted  { color: var(--ink-2);     border-color: var(--rule-2); }
+.tag.none    { color: var(--ink-3);     border-color: var(--ink-3); border-bottom-style: dashed; }
+
+/* a one-line local provenance note under a derived table */
+.derived {
+  font-family: var(--mono); font-size: 0.6875rem; line-height: 1.6;
+  color: var(--ink-3); display: block; margin-top: 0.55rem;
+}
+
+/* ---------- finding at a glance (flat, no ornament) ---------- */
+
+.finding {
+  margin-top: 2.1rem; border-top: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule-2); padding: 1.2rem 0;
+}
+.finding .finding-k {
+  font-family: var(--mono); font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 0.75rem;
+}
+.finding ol { margin: 0; padding-left: 1.35rem; max-width: 68ch; }
+.finding li { margin-bottom: 0.5rem; font-size: 1rem; line-height: 1.5; }
+.finding li:last-child { margin-bottom: 0; }
+.finding .foot { margin-top: 0.9rem; font-size: 0.8125rem; color: var(--ink-2); max-width: 68ch; }
+
+/* ---------- math-rendering failure notice ---------- */
+
+.mathfail {
+  border: 1px solid var(--objection); background: var(--objection-tint);
+  color: var(--ink); padding: 0.7rem 0.9rem; margin: 1.2rem 0 0;
+  font-family: var(--mono); font-size: 0.75rem; line-height: 1.6;
+}
+.mathfail[hidden] { display: none; }
+
+/* ---------- record / voices ---------- */
+
+section { padding-top: 3.4rem; }
+.act-head { border-top: 1px solid var(--rule-2); padding-top: 1.1rem; margin-bottom: 2rem; }
+.act-no {
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);
+}
+.act-head h2 {
+  font-size: clamp(1.6rem, 3.4vw, 2.15rem); font-weight: 400;
+  letter-spacing: -0.012em; margin-top: 0.5rem; max-width: 24ch;
+}
+.act-head .sub { margin-top: 0.7rem; max-width: var(--measure); color: var(--ink-2); }
+
+.turn { display: grid; grid-template-columns: 1fr; gap: 0.35rem; margin-bottom: 1.7rem; }
+@media (min-width: 940px) {
+  .turn { grid-template-columns: var(--rail) minmax(0, var(--measure)); gap: 0 2.2rem; }
+  .turn-rail { text-align: right; padding-top: 0.32rem; }
+}
+.turn-rail { font-family: var(--mono); font-size: 0.6875rem; line-height: 1.5; }
+.voice {
+  display: block; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.turn[data-voice="prover"] .voice     { color: var(--s1); }
+.turn[data-voice="critic"] .voice     { color: var(--objection); }
+.turn[data-voice="adjudicator"] .voice{ color: var(--seal); }
+.turn[data-voice="clerk"] .voice      { color: var(--ink-3); }
+.stamp { display: block; color: var(--ink-3); letter-spacing: 0.02em; margin-top: 0.2rem; word-break: break-word; }
+
+.turn-body { max-width: var(--measure); }
+.turn[data-voice="critic"] .turn-body,
+.turn[data-voice="adjudicator"] .turn-body,
+.turn[data-voice="prover"] .turn-body { border-left: 2px solid var(--rule); padding-left: 1.1rem; }
+.turn[data-voice="critic"] .turn-body      { border-color: var(--objection); }
+.turn[data-voice="adjudicator"] .turn-body { border-color: var(--seal); }
+.turn[data-voice="prover"] .turn-body      { border-color: var(--s1); }
+.turn[data-voice="adjudicator"] .turn-body { font-weight: 500; }
+.turn q { quotes: none; }
+.turn-body.quoted { font-style: normal; color: var(--ink); }
+
+.prose { max-width: var(--measure); }
+@media (min-width: 940px) { .prose { margin-left: calc(var(--rail) + 2.2rem); } }
+.prose h3 {
+  font-size: 1.15rem; font-weight: 600; margin: 2.2rem 0 0.7rem;
+  letter-spacing: -0.005em;
+}
+
+/* ---------- instruments (flatter than the page, on purpose) ---------- */
+
+.instrument {
+  background: var(--panel); border: 1px solid var(--rule);
+  padding: 1.4rem 1.4rem 1.2rem; margin: 2rem 0;
+}
+.instrument-head {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; align-items: baseline;
+  justify-content: space-between; border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.8rem; margin-bottom: 1.1rem;
+}
+.instrument-head h3 {
+  font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink);
+}
+.instrument-note { font-size: 0.8125rem; color: var(--ink-2); max-width: 68ch; margin-top: 0.9rem; line-height: 1.5; }
+.instrument-note code, .kbd { font-family: var(--mono); font-size: 0.9em; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; align-items: center; margin-bottom: 1rem; }
+.ctl-group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.45rem; }
+.ctl-label {
+  font-family: var(--mono); font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3);
+}
+.seg { display: inline-flex; border: 1px solid var(--rule-2); }
+.seg button {
+  font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+  background: transparent; color: var(--ink-2); border: 0;
+  border-right: 1px solid var(--rule-2); padding: 0.32rem 0.7rem; cursor: pointer;
+  line-height: 1.4;
+}
+.seg button:last-child { border-right: 0; }
+.seg button:hover { color: var(--ink); background: var(--panel-2); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+
+figure { margin: 0; }
+figcaption {
+  font-size: 0.8125rem; color: var(--ink-2); line-height: 1.5;
+  margin-top: 0.85rem; max-width: 72ch;
+}
+.chart-wrap { overflow-x: auto; }
+/* Charts scale to the panel, but never below the width at which their axis
+   labels stop being legible; below that the panel scrolls, never the page. */
+.chart-wrap svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.num { font-family: var(--mono); font-size: 0.9em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+svg text { font-family: var(--mono); }
+svg text:not([fill]) { fill: var(--ink-3); }
+.ax-line { stroke: var(--rule-2); stroke-width: 1; }
+.gridline { stroke: var(--grid); stroke-width: 1; }
+.ser1 { stroke: var(--s1); }
+.ser2 { stroke: var(--s2); }
+.ser3 { stroke: var(--s3); }
+.mark-data { fill: var(--panel); stroke: var(--ink); stroke-width: 2; }
+.mark-out  { fill: var(--panel); stroke: var(--ink-3); stroke-width: 1.5; stroke-dasharray: 2 2; }
+.hit { fill: transparent; cursor: crosshair; }
+
+.chart-legend {
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.3rem; align-items: center;
+  font-family: var(--mono); font-size: 0.6875rem; color: var(--ink-2);
+  margin: 0 0 0.85rem;
+}
+.chart-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.swatch { width: 15px; height: 3px; display: inline-block; border-radius: 1px; }
+.swatch.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--panel); border: 2px solid var(--ink); }
+.swatch.hatch {
+  width: 15px; height: 10px; border: 1px solid var(--rule);
+  background: repeating-linear-gradient(45deg, var(--rule-2) 0 1px, transparent 1px 5px);
+}
+
+.tip {
+  position: absolute; pointer-events: none; z-index: 30;
+  background: var(--ink); color: var(--paper); font-family: var(--mono);
+  font-size: 0.6875rem; line-height: 1.5; padding: 0.4rem 0.55rem;
+  white-space: pre; opacity: 0; transition: opacity 0.09s linear;
+  max-width: 90vw; overflow: hidden;
+}
+.tip[data-on="1"] { opacity: 1; }
+.chart-host { position: relative; }
+
+/* ---------- tables ---------- */
+
+.tbl-wrap { overflow-x: auto; margin: 0.4rem 0 0; }
+table.data { border-collapse: collapse; font-family: var(--mono); font-size: 0.75rem; width: 100%; min-width: 460px; }
+table.data th, table.data td { text-align: right; padding: 0.34rem 0.55rem; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+table.data th {
+  font-weight: 600; color: var(--ink-3);
+  letter-spacing: 0.07em; font-size: 0.625rem; border-bottom: 1px solid var(--rule-2);
+}
+table.data td:first-child, table.data th:first-child { text-align: left; }
+table.data td { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+table.data td.key { color: var(--ink); }
+table.data tr.pick td { background: var(--seal-tint); color: var(--ink); }
+table.data tr.selectable { cursor: pointer; }
+table.data tr.selectable:hover td { background: var(--panel-2); }
+table.data tr.selectable:focus-visible { outline: 2px solid var(--seal); outline-offset: -2px; }
+.ok  { color: var(--seal); }
+.bad { color: var(--refuted); }
+
+/* ---------- route ledger + headline ratios (Exhibit C) ---------- */
+
+.routes { display: grid; gap: 0.9rem; grid-template-columns: 1fr; margin: 0.2rem 0 1.3rem; }
+@media (min-width: 820px) { .routes { grid-template-columns: repeat(3, 1fr); } }
+.route { border-top: 2px solid var(--rule-2); padding-top: 0.7rem; }
+.route.r1 { border-color: var(--ink); }
+.route.r2 { border-color: var(--s1); }
+.route.r3 { border-color: var(--s3); }
+.route .rk {
+  font-family: var(--mono); font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3);
+  display: block; margin-bottom: 0.35rem;
+}
+.route p { font-size: 0.8125rem; color: var(--ink-2); line-height: 1.5; margin: 0; }
+.route .rv { font-family: var(--mono); font-size: 0.8125rem; color: var(--ink); display: block; margin-top: 0.45rem; font-variant-numeric: tabular-nums; }
+
+.ratios { display: grid; gap: 1rem 2.4rem; grid-template-columns: 1fr; margin: 1.2rem 0 0; }
+@media (min-width: 620px) { .ratios { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ratio .rl { font-family: var(--mono); font-size: 0.6875rem; color: var(--ink-3); display: block; letter-spacing: 0.05em; }
+.ratio .rn {
+  font-family: var(--mono); font-size: clamp(1.5rem, 4vw, 2.05rem); font-weight: 500;
+  color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.15; display: block; margin-top: 0.3rem;
+}
+.ratio .rs { font-size: 0.8125rem; color: var(--ink-2); display: block; margin-top: 0.3rem; max-width: 40ch; }
+
+/* ---------- comparator constructor (cross-examination I) ---------- */
+
+.comparator { display: grid; gap: 1.1rem; grid-template-columns: minmax(0, 1fr); }
+.comparator > * { min-width: 0; }
+@media (min-width: 860px) { .comparator { grid-template-columns: minmax(0, 1fr) minmax(0, 23rem); align-items: start; } }
+.cmp-out { border-left: 2px solid var(--rule-2); padding-left: 1.1rem; }
+.cmp-out.match { border-color: var(--seal); }
+.cmp-out.clash { border-color: var(--refuted); }
+.cmp-out .cmp-v {
+  font-family: var(--mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums;
+  color: var(--ink); display: flex; flex-wrap: wrap; gap: 0.2rem 1.3rem;
+}
+.cmp-out .cmp-verdict {
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; display: block; margin-bottom: 0.55rem;
+}
+.cmp-out.match .cmp-verdict { color: var(--seal); }
+.cmp-out.clash .cmp-verdict { color: var(--refuted); }
+.cmp-out p { font-size: 0.875rem; color: var(--ink-2); margin-top: 0.6rem; }
+
+/* ---------- decisions ---------- */
+
+.decision {
+  border: 1px solid var(--ink); background: var(--panel);
+  padding: 1.4rem; margin: 2.2rem 0;
+}
+.decision-q {
+  font-size: 1.1rem; font-weight: 500; max-width: 60ch; margin-bottom: 0.35rem;
+}
+.decision-kicker {
+  font-family: var(--mono); font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 0.7rem;
+}
+.opts { display: grid; gap: 0.6rem; margin-top: 1.1rem; }
+.opt {
+  display: block; width: 100%; text-align: left; font: inherit;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--rule-2); padding: 0.75rem 0.95rem; cursor: pointer;
+  line-height: 1.45;
+}
+.opt:hover { border-color: var(--ink); }
+.opt .opt-k {
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
+  color: var(--ink-3); margin-right: 0.65rem;
+}
+.opt[aria-pressed="true"] { border-color: var(--ink); border-left-width: 4px; padding-left: 0.72rem; }
+.opt[aria-pressed="true"] .opt-k { color: var(--ink); }
+
+.settle { margin-top: 1.5rem; border-top: 1px solid var(--rule-2); padding-top: 1.2rem; }
+.settle[hidden] { display: none; }
+.settle-lead {
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.7rem;
+}
+.settle-lead.miss { color: var(--objection); }
+.settle-lead.hit  { color: var(--seal); }
+.settle p { max-width: 62ch; }
+.reveal { animation: rise 0.22s ease-out both; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { animation: none; }
+  .trial * { transition-duration: 0.01ms !important; }
+}
+
+/* ---------- drawers ---------- */
+
+details.drawer { border-top: 1px solid var(--rule); margin: 1.1rem 0 0; }
+details.drawer > summary {
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.06em; color: var(--ink-2); cursor: pointer;
+  padding: 0.6rem 0; list-style: none; display: flex; gap: 0.6rem; align-items: baseline;
+}
+details.drawer > summary::-webkit-details-marker { display: none; }
+details.drawer > summary::before { content: "+"; color: var(--ink-3); font-weight: 600; }
+details.drawer[open] > summary::before { content: "\2212"; }
+details.drawer > summary:hover { color: var(--ink); }
+.drawer-body {
+  padding: 0.3rem 0 1.1rem 1.2rem; border-left: 1px solid var(--rule);
+  margin-left: 0.28rem; font-size: 0.9375rem; color: var(--ink-2); max-width: 74ch;
+}
+.drawer-body p { margin-bottom: 0.75em; }
+.src {
+  font-family: var(--mono); font-size: 0.6875rem; line-height: 1.6; color: var(--ink-3);
+  display: block; margin-top: 0.5rem; word-break: break-word;
+}
+.verbatim {
+  font-family: var(--mono); font-size: 0.75rem; line-height: 1.65;
+  color: var(--ink); background: var(--panel-2); border-left: 2px solid var(--rule-2);
+  padding: 0.75rem 0.9rem; margin: 0.6rem 0; white-space: pre-wrap; overflow-x: auto;
+}
+
+/* ---------- verdict + timeline + dockets ---------- */
+
+.verdicts { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+@media (min-width: 1000px) { .verdicts { grid-template-columns: repeat(3, 1fr); } }
+.vcard { border: 1px solid var(--rule-2); background: var(--panel); padding: 1.2rem; display: flex; flex-direction: column; }
+.vcard .cid {
+  font-family: var(--mono); font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 0.6rem;
+}
+.vcard h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.6rem; line-height: 1.3; }
+.vcard p { font-size: 0.9375rem; color: var(--ink-2); }
+.status {
+  font-family: var(--mono); font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.8rem;
+  display: inline-block; border: 1px solid currentColor; padding: 0.15rem 0.4rem;
+}
+.status.proved { color: var(--seal); }
+.status.hold   { color: var(--held); }
+.status.notmem { color: var(--refuted); }
+.vcard .register {
+  margin-top: auto; padding-top: 0.9rem; border-top: 1px solid var(--rule);
+  font-family: var(--mono); font-size: 0.6875rem; color: var(--ink-2); line-height: 1.6;
+}
+
+.timeline { list-style: none; padding: 0; margin: 1.6rem 0 0; }
+.tl-item {
+  display: grid; gap: 0.15rem 1.4rem; grid-template-columns: 1fr;
+  padding: 0.85rem 0; border-top: 1px solid var(--rule);
+}
+@media (min-width: 780px) { .tl-item { grid-template-columns: 6.5rem 5.5rem minmax(0, 1fr); align-items: baseline; } }
+.tl-date, .tl-ref { font-family: var(--mono); font-size: 0.6875rem; color: var(--ink-3); }
+.tl-ref { color: var(--ink-2); }
+.tl-what { max-width: 62ch; font-size: 0.9375rem; }
+.tl-what b { font-weight: 600; }
+.tl-item.pivot .tl-what b { color: var(--objection); }
+.tl-item.pass .tl-what b  { color: var(--seal); }
+
+.dockets { display: grid; gap: 1rem; grid-template-columns: 1fr; margin-top: 1.5rem; }
+@media (min-width: 860px) { .dockets { grid-template-columns: repeat(3, 1fr); } }
+.docket { border: 1px solid var(--rule); border-left: 3px solid var(--held); background: var(--panel); padding: 1.1rem; }
+.docket h3 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.5rem; }
+.docket p { font-size: 0.875rem; color: var(--ink-2); }
+
+/* ---------- math ---------- */
+
+.eq {
+  margin: 1.15rem 0; padding: 0.2rem 0; overflow-x: auto; overflow-y: hidden;
+  font-family: var(--mono); font-size: 0.9rem; color: var(--ink);
+}
+.eq-tag {
+  font-family: var(--mono); font-size: 0.6875rem; color: var(--ink-3);
+  display: block; margin-top: 0.25rem;
+}
+mjx-container[display="true"] { margin: 0 !important; }
+
+/* ---------- colophon ---------- */
+
+.colophon { margin-top: 4rem; border-top: 2px solid var(--ink); padding-top: 1.4rem; }
+.colophon ul { list-style: none; padding: 0; margin: 1rem 0 0; }
+.colophon li {
+  font-family: var(--mono); font-size: 0.75rem; color: var(--ink-2);
+  padding: 0.3rem 0; border-bottom: 1px solid var(--rule); word-break: break-word;
+}
+.colophon li b { color: var(--ink); font-weight: 600; }
+</style>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+
+<!-- SELECTED FIELDS from numerics/results/schwarzian_memory.json
+     (repository tns-as-st-me, file last written at commit
+     b766eabf1182c0234e5d2fa7dc04d7a08a1f6fb6, "syk-jt repair r1 (T2)"),
+     copied value-for-value into this smaller wrapper.  The source file's
+     "parameter_points" list becomes "ledger" (the eight summary rows) and
+     "rows" (the two balanced points, in full).  No number is rounded,
+     rescaled, smoothed or interpolated.  Keys beginning with an underscore
+     are added by this page and are NOT in the source file; each names the
+     repository file it is taken from. -->
+<script type="application/json" id="schwarzian-data">
+{
+ "_source": "numerics/results/schwarzian_memory.json",
+ "_commit": "b766eabf1182c0234e5d2fa7dc04d7a08a1f6fb6",
+ "_note": "Selected fields, copied value-for-value. schema_version 2.",
+ "_balance_scope_source": "theory/verdicts/syk-jt-joint-critic-r2.md, Objection 9 (adjudicated at r2a): the six listed rows are unbalanced; only the two redshift-balanced derivative-Gaussian rows have zero energy change at leading order, with full-run residuals 2.83e-8 and 2.83e-9.",
+ "schema_version": 2,
+ "beta": 6.283185307179586,
+ "operator_dimension": 0.5,
+ "late_time_grid": [2.0, 5.0, 10.0, 20.0, 40.0],
+ "limit_convention": {
+  "finite_C_cutoff": "kappa*T_max = sqrt(kappa*C)",
+  "order": "C -> infinity first; then kappa*T -> infinity with T/C -> 0",
+  "status": "conservative scaling convention, not a uniform finite-C error bound",
+  "window": "1 << kappa*T << kappa*C"
+ },
+ "source_equation": "GravityReparametrizationsRevised.tex:611-623",
+ "bilocal_rule": "GravityReparametrizationsRevised.tex:645-675",
+ "charge_jump_orientation": "Q_before-Q_after = integral t' T (1,t,t^2)",
+ "integration_method": "fixed-step classical RK4",
+ "ledger": [
+  {"i": 0, "profile": "top_hat", "C": 10.0, "epsilon": 0.01, "energy_change": 0.00859124697267788, "k_final": 1.0008587559663629, "charge_jump_error": 2.175804092452438e-09, "_balance_scope": "unbalanced", "mobius_fit_residual": 3.552713678800501e-15},
+  {"i": 1, "profile": "top_hat", "C": 10.0, "epsilon": 0.1, "energy_change": 0.08589787787770642, "k_final": 1.0085532090948603, "charge_jump_error": 2.1725343940515174e-08, "_balance_scope": "unbalanced", "mobius_fit_residual": 3.9968028886505635e-15},
+  {"i": 2, "profile": "top_hat", "C": 100.0, "epsilon": 0.01, "energy_change": 0.008591392925239028, "k_final": 1.0000859102389679, "charge_jump_error": 2.17579438667459e-09, "_balance_scope": "unbalanced", "mobius_fit_residual": 2.220446049250313e-15},
+  {"i": 3, "profile": "top_hat", "C": 100.0, "epsilon": 0.1, "energy_change": 0.0859124697267788, "k_final": 1.0008587559663629, "charge_jump_error": 2.1758040952279956e-08, "_balance_scope": "unbalanced", "mobius_fit_residual": 3.552713678800501e-15},
+  {"i": 4, "profile": "gaussian", "C": 10.0, "epsilon": 0.05, "energy_change": 0.01038358214874191, "k_final": 1.00103781968003, "charge_jump_error": 2.1181615489362926e-12, "_balance_scope": "unbalanced", "mobius_fit_residual": 4.884981308350689e-15},
+  {"i": 5, "profile": "derivative_gaussian_balanced", "C": 10.0, "epsilon": 0.05, "energy_change": 2.8260755957632e-08, "k_final": 1.0000000028260756, "charge_jump_error": 1.7877422632539552e-12, "_balance_scope": "leading-order balanced", "mobius_fit_residual": 3.1086244689504383e-15},
+  {"i": 6, "profile": "gaussian", "C": 100.0, "epsilon": 0.05, "energy_change": 0.01038360735096111, "k_final": 1.0001038306831043, "charge_jump_error": 1.8921982036790297e-12, "_balance_scope": "unbalanced", "mobius_fit_residual": 3.9968028886505635e-15},
+  {"i": 7, "profile": "derivative_gaussian_balanced", "C": 100.0, "epsilon": 0.05, "energy_change": 2.8271607277474686e-09, "k_final": 1.0000000000282716, "charge_jump_error": 3.2492509117326707e-12, "_balance_scope": "leading-order balanced", "mobius_fit_residual": 3.1086244689504383e-15}
+ ],
+ "rows": {
+  "5": {
+   "profile": "derivative_gaussian_balanced", "C": 10.0, "epsilon": 0.05,
+   "energy_change": 2.8260755957632e-08, "k_final": 1.0000000028260756,
+   "fit_time_grid": [5.0, 10.0, 20.0, 40.0],
+   "delta_G_LR": [3.0785410063960406e-06, 1.7342614992525707e-07, 1.1726665927229906e-09, 5.3240203460554115e-14, 1.0973623523536027e-22],
+   "delta_u_rel": [2.402851110192189e-05, 2.574222871163894e-05, 2.582970104513806e-05, 2.5830294373157552e-05, 2.5830294390448784e-05],
+   "delta_G_model": {"aic_constant": 0.8311995775426957, "aic_exponential": -106.16830205031383, "amplitude": 1.7342615115106054e-07, "constant": 4.3649717439545907e-08, "decay_rate": 0.9993252400059783, "rss_constant": 2.245681329462947e-14, "rss_exponential": 3.2875896649023446e-26, "winner": "exponential"},
+   "delta_u_model": {"aic_constant": -50.156635284691156, "aic_exponential": -43.88406122382806, "amplitude": 2.584354016236878e-05, "constant": 2.5808129630095836e-05, "decay_rate": 0.00010000000000000009, "rss_constant": 5.7908094368817796e-15, "rss_exponential": 1.685109426353274e-14, "winner": "constant"},
+   "mobius": [[0.9999741703727507, -2.0139910994070715e-05], [3.320874217275979e-05, 1.0000258296255977]],
+   "injected_charge": [-0.00040280862395754454, 1.4884401143716289e-08, 0.0006641576881991017],
+   "detector_window": {"T_over_C_at_max": 0.31622776579341705, "delta_u_at_max": 2.5276077410118964e-05, "kappa_T_at_max": 3.1622776624025883, "kappa_effective": 1.0000000014130377, "maximum_usable_T": 3.1622776579341707, "sample_cost_exponential_factor": 558.1095809909594, "sample_cost_for_10pct_late_delta": 83649002405363.61, "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2", "sample_cost_target_eta": 2.5830294399536395e-06},
+   "dc": {
+    "omega": [0.2, 0.1, 0.05, 0.025],
+    "horizon": [20.0, 40.0, 80.0],
+    "residue_by_horizon": [
+     [2.4539419286627495e-05, 2.549383972590805e-05, 2.574526775946364e-05, 2.5808979802717575e-05],
+     [2.4539426831578687e-05, 2.5493839420254617e-05, 2.5745265833422378e-05, 2.5808979615949195e-05],
+     [2.4539427223323728e-05, 2.5493842251376073e-05, 2.574526556668883e-05, 2.580897911080221e-05]
+    ],
+    "extrapolated_by_horizon": [2.582964712722553e-05, 2.5829646090634887e-05, 2.582964514864987e-05],
+    "extrapolated_residue": 2.582964514864987e-05,
+    "extrapolated_late_ratio": 0.9999748651026156,
+    "extrapolated_vertex_ratio": 1.0001099789167864,
+    "late_detector": 2.5830294390448784e-05,
+    "fitted_mobius_tail": 2.5830294399536394e-05,
+    "vertex_soft_prediction": 2.582680474464e-05,
+    "residue_ratio": [0.9500250694935023, 0.9869745139568707, 0.9967081744220695, 0.9991747953265891],
+    "soft_ratio": [0.950153434230634, 0.9871078711998615, 0.9968428468501086, 0.999309801037564],
+    "horizon_error": 9.419850153808557e-13,
+    "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+    "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+    "uniform_dt": 0.02,
+    "injected_charge_norm": 0.0007767626552236475
+   }
+  },
+  "7": {
+   "profile": "derivative_gaussian_balanced", "C": 100.0, "epsilon": 0.05,
+   "energy_change": 2.8271607277474686e-09, "k_final": 1.0000000000282716,
+   "fit_time_grid": [5.0, 10.0, 20.0, 40.0],
+   "delta_G_LR": [3.0784716695264613e-07, 1.7341949544794066e-08, 1.1726207565989234e-10, 5.323812293587742e-15, 1.0973195002582657e-23],
+   "delta_u_rel": [2.4027969923973976e-06, 2.5741240857737575e-06, 2.5828691148938746e-06, 2.5829284325035557e-06, 2.5829284342871606e-06],
+   "delta_G_model": {"aic_constant": 0.8311995905185496, "aic_exponential": -106.20545625759897, "amplitude": 1.734194966680175e-08, "constant": 4.3648042360665654e-09, "decay_rate": 0.9993252400059783, "rss_constant": 2.2455090033186097e-16, "rss_exponential": 3.256944145002391e-28, "winner": "exponential"},
+   "delta_u_model": {"aic_constant": -50.15834023013773, "aic_exponential": -43.88496464538708, "amplitude": 2.584253432921652e-06, "constant": 2.580712516864587e-06, "decay_rate": 0.00010000000000000009, "rss_constant": 5.787891144122726e-17, "rss_exponential": 1.6845977387979638e-16, "winner": "constant"},
+   "mobius": [[0.9999974170782363, -2.0140834181682717e-06], [3.3206985963677697e-06, 1.0000025829217472]],
+   "injected_charge": [-0.0004028177239277618, 1.4884356635523428e-09, 0.0006641380038289568],
+   "detector_window": {"T_over_C_at_max": 0.09999999999929321, "delta_u_at_max": 2.5828691148696515e-06, "kappa_T_at_max": 10.000000000070678, "kappa_effective": 1.0000000000141358, "maximum_usable_T": 9.99999999992932, "sample_cost_exponential_factor": 485165195.47837096, "sample_cost_for_10pct_late_delta": 7.272184543237884e+21, "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2", "sample_cost_target_eta": 2.582928435320834e-07},
+   "dc": {
+    "omega": [0.2, 0.1, 0.05, 0.025],
+    "horizon": [20.0, 40.0, 80.0],
+    "residue_by_horizon": [
+     [2.453852498081938e-06, 2.549286052726311e-06, 2.574426555506547e-06, 2.5807971725175086e-06],
+     [2.4538532525674055e-06, 2.5492860221486236e-06, 2.574426362860509e-06, 2.5807971538230315e-06],
+     [2.4538532917392184e-06, 2.5492863052885685e-06, 2.574426336168459e-06, 2.580797103259309e-06]
+    ],
+    "extrapolated_by_horizon": [2.5828637173105607e-06, 2.582863613620838e-06, 2.5828635193756737e-06],
+    "extrapolated_residue": 2.5828635193756737e-06,
+    "extrapolated_late_ratio": 0.9999748677080538,
+    "extrapolated_vertex_ratio": 0.9999883690609472,
+    "late_detector": 2.5829284342871606e-06,
+    "fitted_mobius_tail": 2.582928435320834e-06,
+    "vertex_soft_prediction": 2.5828935608532597e-06,
+    "residue_ratio": [0.9500275962606899, 0.986975198943955, 0.9967083493271279, 0.9991748393027235],
+    "soft_ratio": [0.950040423240897, 0.9869885247793219, 0.9967218065764957, 0.9991883298538798],
+    "horizon_error": 9.424516449844651e-14,
+    "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+    "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+    "uniform_dt": 0.02,
+    "injected_charge_norm": 0.0007767505435096067
+   }
+  }
+ }
+}
+</script>
+
+<div class="trial">
+<div class="wrap">
+
+<!-- ============================= MASTHEAD ============================= -->
+
+<header class="masthead">
+  <div class="eyebrow">Adversarial record &middot; SYK/JT lane &middot; audition slice</div>
+  <h1>The Butterfly Effect <em>on Trial</em></h1>
+  <p class="deck">
+    A shock hits one side of a two&#8209;sided black hole and the two boundary clocks
+    stop agreeing. The claim under examination is that this shift is a
+    <em>memory effect</em>. You are the referee. Three cross&#8209;examinations, each
+    settled by an equation or by data that is on this page.
+  </p>
+
+  <div class="finding">
+    <div class="finding-k">The finding, before the argument for it</div>
+    <ol>
+      <li>In the Schwarzian effective theory, the pure butterfly translation has
+      zero late plateau.</li>
+      <li>The fixed two&#8209;sided correlator also decays.</li>
+      <li>A different object &mdash; a balanced, calibrated, large&#8209;\(C\)&#8209;first
+      susceptibility &mdash; survives, and equals a zero&#8209;frequency soft
+      residue.</li>
+    </ol>
+    <p class="foot">
+      Those three sentences are the result. The three votes below are the route by
+      which you can check them against the equations and the computed points; they
+      are not a device for withholding the answer. Each sentence carries a scope,
+      and the scopes are stated where the sentence is proved.
+    </p>
+  </div>
+
+  <div class="masthead-foot">
+    <span>Main path ~15 min; the adversarial record is an appendix</span>
+    <span>Nothing here executes; recorded runs are labelled</span>
+    <button class="theme-btn" id="theme-btn" type="button" aria-live="polite">Theme: auto</button>
+  </div>
+  <div class="legend">
+    <div><span class="tag proved">Proved formula</span> &mdash; a closed form from a proof shard or claim row, displayed with its source; not evaluated here.</div>
+    <div><span class="tag evald">Page-evaluated</span> &mdash; the displayed closed form is the one this page&rsquo;s JavaScript actually evaluates.</div>
+    <div><span class="tag sample">Computed sample</span> &mdash; numbers copied value&#8209;for&#8209;value from the campaign&rsquo;s results file.</div>
+    <div><span class="tag quoted">Recorded quote / run</span> &mdash; text or a recorded test run reproduced from a repository file, with its path.</div>
+    <div><span class="tag none">Outside window</span> &mdash; shown, but outside a declared scope; never interpolated across it.</div>
+  </div>
+  <div class="mathfail" id="mathfail" hidden>
+    Mathematics rendering is unavailable &mdash; the MathJax script did not load.
+    Every formula on this page remains present as TeX source, and every number
+    is in the tables, so nothing is lost except the typesetting.
+  </div>
+</header>
+
+<!-- ============================= ACT I — WHY ============================= -->
+
+<section id="why">
+  <div class="act-head">
+    <div class="act-no">Exhibit A</div>
+    <h2>Two late effects. Only one of them is a record.</h2>
+    <p class="sub">
+      Before anything about black holes, a question you can settle with ordinary
+      physics: what does it take for a disturbance to leave something
+      <em>behind</em>? Two familiar answers sit side by side below. They look
+      alike, and they are not.
+    </p>
+  </div>
+
+  <div class="prose">
+    <p>
+      For this case we need two operational registers that ordinary language can
+      blur: a nonzero late difference in a <em>fixed</em> observable, which the
+      campaign writes down as D32; and a <em>calibrated ratio</em> with a nonzero
+      late limit tied to a zero&#8209;frequency datum, which it writes down as D33.
+      Both registers describe real effects. Only the first is a record, and on
+      this page the whole case turns on which of the two is in play.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>A&#8239;&mdash;&#8239;1 &nbsp; A delay in ordinary scattering</h3>
+      <span class="tag evald">Page-evaluated</span>
+    </div>
+    <div style="max-width:66ch">
+      <p style="font-size:0.9375rem;color:var(--ink-2)">
+        Restrict, exactly, to one isolated s&#8209;wave Breit&ndash;Wigner resonance at
+        \(E_r\) of width \(\Gamma\) with <em>no background phase</em>. The
+        resonant phase, taken on its continuous branch so that it rises by
+        \(\pi\) across the resonance, is
+      </p>
+    </div>
+    <div class="eq">
+      \[ \delta(E)=\frac{\pi}{2}+\arctan\frac{E-E_r}{\Gamma/2},\qquad
+         2\hbar\,\frac{d\delta}{dE}
+         =\frac{\hbar\,\Gamma}{(E-E_r)^{2}+(\Gamma/2)^{2}}. \]
+      <span class="eq-tag">The right&#8209;hand equality is one differentiation of the left&#8209;hand definition, and the curve below is that closed form evaluated in this page. Taking the principal branch of \(\arctan[(\Gamma/2)/(E_r-E)]\) instead would put a jump at \(E=E_r\), and its derivative would not be this Lorentzian.</span>
+    </div>
+    <div style="max-width:66ch">
+      <p style="font-size:0.9375rem;color:var(--ink-2)">
+        That combination is a delay because of one stationary&#8209;phase line. The
+        outgoing s&#8209;wave carries phase \(kr+2\delta(E)\); the packet&rsquo;s peak
+        sits where \(\partial_E[\,kr+2\delta(E)-Et/\hbar\,]=0\), that is at
+        \(t=r/v+2\hbar\,\delta'(E)\). The second term is the shift relative to
+        free propagation, and it is what the curve shows.
+      </p>
+    </div>
+    <figure>
+      <div class="chart-host">
+        <div class="chart-wrap" id="chart-wigner"></div>
+      </div>
+      <figcaption>
+        The delay peaks at \(4\hbar/\Gamma\) on resonance and falls off as
+        \((E-E_r)^{-2}\). It is finite, it is measurable, and it is read at the
+        moment of arrival &mdash; there is nothing left to read afterwards. The
+        statement below says that in a form you can check.
+      </figcaption>
+    </figure>
+    <div style="max-width:68ch;margin-top:1.5rem">
+      <p style="font-size:0.9375rem">
+        <b>Why nothing survives, computed rather than asserted.</b> Take the
+        free run first, in one dimension with a Gaussian packet of initial width
+        \(\sigma\) and group velocity \(v\). The free evolution is exactly
+        solvable:
+      </p>
+    </div>
+    <div class="eq">
+      \[ |\psi_t(x)|^{2}=\frac{1}{\sqrt{2\pi}\,\sigma_t}
+         \exp\!\left[-\frac{(x-vt)^{2}}{2\sigma_t^{2}}\right],\qquad
+         \sigma_t=\sigma\sqrt{1+\left(\frac{\hbar t}{2m\sigma^{2}}\right)^{2}}. \]
+      <span class="eq-tag">The standard free Gaussian, written out so that the next line is arithmetic. Displayed, not evaluated by this page.</span>
+    </div>
+    <p class="instrument-note" style="max-width:68ch">
+      Now fix, in advance, any observable \(O\) supported in a bounded region
+      \(B\) of length \(L\) near the detector, with \(\|O\|\le1\). Then
+      \(|\langle\psi_t,O\psi_t\rangle|\le\int_B|\psi_t|^{2}\,dx\le
+      L/(\sqrt{2\pi}\,\sigma_t)\), which falls like \(1/t\). The packet leaves,
+      so the reading goes to zero. <b>Restriction, stated rather than hidden:</b>
+      for the scattered run we assume what the resonance picture already assumes
+      &mdash; no bound&#8209;state component, and a state that is asymptotically a
+      free outgoing packet. The delay then only replaces \(t\) by \(t-\Delta t\)
+      in the same bound, which does not change the limit. So both runs go to
+      zero and the limit of their difference is zero. This is an assumption about
+      the toy, made explicit; it is not proved here, and nothing later on this
+      page rests on it.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>A&#8239;&mdash;&#8239;2 &nbsp; A displacement at null infinity</h3>
+      <span class="tag quoted">Recorded quote</span>
+    </div>
+    <div style="max-width:66ch">
+      <p style="font-size:0.9375rem;color:var(--ink-2)">
+        Two inertial detectors sit near future null infinity in a region with no
+        Bondi news at early and at late times. Gravitational radiation passes
+        between them. Integrating the geodesic deviation equation gives a DC
+        effect: the initial and final separations differ by
+      </p>
+    </div>
+    <div class="eq">
+      \[ \Delta s^{\bar z}=\frac{\gamma^{z\bar z}}{2r}\,\Delta C_{zz}\,s^{z}. \]
+      <span class="eq-tag">Quoted from refs/arxiv-1703.05448/soft_Arxiv_update.tex:2594 (Strominger, <em>Lectures on the Infrared Structure of Gravity and Gauge Theory</em>).</span>
+    </div>
+    <div class="turn" data-voice="clerk" style="margin-bottom:0">
+      <div class="turn-rail"><span class="voice">Record</span><span class="stamp">1703.05448:329</span></div>
+      <div class="turn-body quoted">
+        <p>&ldquo;This is a subtle DC effect, in which the passage of gravitational
+        waves produces a permanent shift in the relative positions of a pair of
+        inertial detectors.&rdquo;</p>
+      </div>
+    </div>
+    <p class="instrument-note">
+      The thing being compared here &mdash; the separation of two freely falling
+      masses &mdash; does not itself decay. \(\Delta C_{zz}\) need not vanish,
+      because flatness does not require \(C_{zz}=0\). A fixed observable retains
+      a nonzero difference as \(t\to\infty\).
+    </p>
+  </div>
+
+  <div class="decision" id="d0">
+    <div class="decision-kicker">A preliminary vote &middot; settles nothing, on purpose</div>
+    <div class="decision-q">Which of the two deserves the word <em>memory</em>?</div>
+    <p style="font-size:0.9375rem;color:var(--ink-2);max-width:60ch">
+      Both are effects of a disturbance. Both are still there after the
+      disturbance is gone, in some sense of &ldquo;there&rdquo;.
+    </p>
+    <div class="opts" role="group" aria-label="Preliminary vote">
+      <button class="opt" type="button" data-d="0" data-k="a"><span class="opt-k">A</span>The scattering delay &mdash; the packet really does arrive late.</button>
+      <button class="opt" type="button" data-d="0" data-k="b"><span class="opt-k">B</span>The detector displacement &mdash; the separation is permanently changed.</button>
+      <button class="opt" type="button" data-d="0" data-k="c"><span class="opt-k">C</span>Both &mdash; each is a lasting consequence of what passed through.</button>
+    </div>
+    <div class="settle" id="d0-settle" hidden></div>
+  </div>
+
+  <div class="prose">
+    <h3>The two registers, written down</h3>
+    <p>
+      The campaign settled this by writing two definitions instead of arguing
+      about one word. They are quoted here because every later ruling on this
+      page turns on which of the two is in play.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>D32 &nbsp;/&nbsp; D33 &nbsp; the two registers</h3>
+      <span class="tag quoted">Recorded quote</span>
+    </div>
+    <div style="max-width:70ch">
+      <p style="font-size:0.9375rem">
+        <b>D32 &mdash; memory, absolute register.</b> Two protocols are
+        <em>comparable</em> when they agree on every exactly conserved allowed
+        charge of the specification. A comparable pair exhibits <em>memory</em>
+        (unqualified) if and only if there is a single allowed observable \(O\),
+        fixed in advance with a \(T\)&#8209;independent norm bound, such that
+        \(\lim_{T}\left[\omega_T^{\rm pulse}(O)-\omega_T^{\rm ref}(O)\right]\)
+        exists in the declared window and is nonzero.
+      </p>
+      <p style="font-size:0.9375rem">
+        <b>D33 &mdash; calibrated relational memory susceptibility.</b> A detector
+        <em>functional</em> \(F_T\) &mdash; a ratio or finite algebraic combination
+        of finitely many allowed expectations in the two comparable protocols,
+        with its measurement cost declared as part of any claim &mdash; whose limit
+        exists, is nonzero, is invariant under the specification&rsquo;s gauge
+        redundancies, and equals the declared zero&#8209;frequency datum of the
+        corresponding soft&#8209;theorem statement, <b>with normalization fixed by
+        measured injected charge</b>, nothing fitted.
+      </p>
+      <span class="src">Condensed from definitions.md, D32 and D33 (TJO ruling 2026&#8209;08&#8209;31). Both share an operational preamble stated in the file and assumed here: an algebra of allowed observables with its superselection rules, a family of implementable protocols, and a declared asymptotic window fixing the order in which large&#8209;parameter limits are taken before the detector time.</span>
+    </div>
+    <details class="drawer">
+      <summary>Both definitions, verbatim, including the sentence that decides this case</summary>
+      <div class="drawer-body">
+        <div class="verbatim">## D32 (memory, absolute-response register — TJO ruling 2026-08-31)
+
+Fix an operational specification: a C*-algebra `A` of allowed observables
+(for two coupled systems: with its stated superselection rules and
+one-sided subalgebras), a family of implementable protocols (preparation,
+evolution, at most one compact perturbation), each protocol `P` defining
+states `ω_T^P` at detector time `T`, and a declared asymptotic window (the
+order in which large-parameter limits are taken BEFORE `T`, and the
+admissible `T`-range within stated validity).  Two protocols
+`ω^pulse, ω^ref` are **comparable** when they agree on every exactly
+conserved allowed charge of the specification.  A comparable pair exhibits
+**memory** (unqualified) iff there exists a single allowed observable
+`O ∈ A`, fixed in advance with `T`-independent norm bound, such that
+`lim_T [ω_T^pulse(O) − ω_T^ref(O)]` exists in the declared window and is
+nonzero.  The word "memory" without qualifier is reserved for this
+register throughout the campaign.  (Relation to D26/D27: those are
+charge-ledger/counting definitions; D32 is the detector register.  The
+reconstruction obligation connecting them is tracked, not assumed.)
+
+## D33 (calibrated relational memory susceptibility — TJO ruling 2026-08-31)
+
+Same operational data as D32.  A **calibrated relational memory
+susceptibility** is a detector functional `F_T` — a ratio or finite
+algebraic combination of finitely many allowed expectations in the two
+comparable protocols, with its measurement cost (shot count for a stated
+relative error at time `T`) declared as part of any claim — such that:
+(i) `lim_T F_T` exists in the declared window and is nonzero; (ii) `F_T`
+is invariant under the specification's gauge redundancies (simultaneous
+reframings acting trivially on `A`); (iii) the limit equals the declared
+zero-frequency (DC) datum of the corresponding soft-theorem statement,
+with normalization fixed by measured injected charge, nothing fitted.
+Satisfying D33 does NOT license the unqualified word "memory" (D32).  A
+system may satisfy D33 while failing D32 — the adjudicated instance is the
+two-boundary Schwarzian setting (claims JT-B-susc and JT-noplat-abs),
+where the divergence has a structural cause worth reporting in its own
+right: a thermal reference frame erodes its own record, and the readout
+cost grows exponentially in detector time.  Gravitational-wave strain is
+the paradigm D33 functional that ALSO passes D32 because its calibrating
+denominator does not decay; the two registers coincide exactly when the
+ruler is persistent.</div>
+        <span class="src">definitions.md, D32 (lines 1373&ndash;1390) and D33 (lines 1392&ndash;1412), TJO ruling 2026&#8209;08&#8209;31, both complete and contiguous in the file. Reproduced character for character, including the file&rsquo;s Markdown emphasis markers, code ticks and blank lines; nothing transliterated, nothing omitted.</span>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============================= ACT II — THE ACCUSED ============================= -->
+
+<section id="accused">
+  <div class="act-head">
+    <div class="act-no">The docket</div>
+    <h2>What is actually accused, and of what</h2>
+    <p class="sub">
+      One page of setup. No holography is required to follow it, and none is
+      used below.
+    </p>
+  </div>
+
+  <div class="prose">
+    <p>
+      Take two copies prepared in the thermofield&#8209;double state. In the
+      Schwarzian regime each boundary has a trajectory \(t_L(u)\) or \(t_R(u)\)
+      with stiffness \(C\). A simultaneous \(SL(2,\mathbb R)\) M&ouml;bius
+      transformation is redundant; the allowed two&#8209;sided correlator depends on
+      their relative configuration. SYK supplies a microscopic realization of this
+      effective regime, but no finite&#8209;\(N\) conclusion is used here. Its own
+      separate verdict is in the open dockets at the end.
+    </p>
+    <p>
+      A binding specification fixes what may be measured. The readout is the
+      two&#8209;sided correlator \(G_{LR}\) between the two boundaries. From it the
+      record builds exactly two quantities, and the entire case is about telling
+      them apart.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>The two boundaries, and the two readouts</h3>
+      <span class="tag quoted">Recorded quote</span>
+    </div>
+    <figure>
+      <div class="chart-wrap" id="fig-setup"></div>
+      <figcaption>
+        Schematic only &mdash; no numerical content. Two thermofield&#8209;double
+        copies; no inter&#8209;copy interaction is assumed during this protocol.
+        Simultaneous M&ouml;bius motion is gauge; the relative bilocal is
+        observable. A compact power pulse \(P(u)\) is applied to the right
+        boundary at the single synchronization event \(u_*\), and the
+        cross&#8209;boundary correlator \(G_{LR}\) is read at boundary time \(T\).
+      </figcaption>
+    </figure>
+    <div style="max-width:68ch;margin-top:1.5rem">
+      <p style="font-size:0.9375rem">
+        <b>The absolute observable.</b> \(\delta G_{LR}(T)=G^{\rm pulse}_{LR}(T,T)-G^{\rm ref}_{LR}(T,T)\).
+        A difference of two allowed expectations. This is the object D32 asks
+        about: fixed in advance, bounded, and evaluated at late \(T\).
+      </p>
+      <p style="font-size:0.9375rem">
+        <b>The calibrated ratio.</b>
+      </p>
+    </div>
+    <div class="eq">
+      \[ \Delta u_{\rm rel}(T)=-\,\frac{\delta G_{LR}(T)}{\partial_T G^{\rm eq}_{LR}(T)} \]
+      <span class="eq-tag">Both lines are definitions, quoted from the record: \(\delta G_{LR}\) as displayed in theory/lanes/syk-jt/t1-analytic.md (3.2), \(\Delta u_{\rm rel}\) from theory/verdicts/syk-jt-joint-critic-r1.md &sect;4 (&ldquo;Operational razor and detector cost&rdquo;). Neither is evaluated by this page; the computed values for both come from the results file.</span>
+    </div>
+    <div class="turn" data-voice="critic" style="margin-bottom:0">
+      <div class="turn-rail"><span class="voice">Critic</span><span class="stamp">r1 &sect;4</span></div>
+      <div class="turn-body quoted">
+        <p>&ldquo;At every finite \(T\), the quantity &hellip; is an allowed <em>detector
+        functional</em>: its numerator is a difference of two Layer&#8209;1 two&#8209;sided
+        expectations and its denominator can be calibrated by a finite difference
+        of equilibrium expectations. It is not itself a new operator&hellip;&rdquo;</p>
+      </div>
+    </div>
+    <p class="instrument-note">
+      So \(\Delta u_{\rm rel}\) is legitimate to <em>compute</em>. Whether its
+      limit is a <em>record</em> is a different question, and note the shape:
+      it is a ratio, and as \(T\) grows both the numerator and the denominator
+      go to zero.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>The shock, as a transfer matrix</h3>
+      <span class="tag proved">Proved formula</span>
+    </div>
+    <div style="max-width:68ch">
+      <p style="font-size:0.9375rem">
+        In this language the celebrated Shenker&ndash;Stanford shock is one
+        specific element of the post&#8209;pulse M&ouml;bius transfer matrix &mdash; a
+        pure horizon translation \(\tilde v=v+\alpha\):
+      </p>
+    </div>
+    <div class="eq">
+      \[ g_{\rm shock}=\begin{pmatrix}1&amp;\alpha\\0&amp;1\end{pmatrix},\qquad
+         \alpha\equiv\frac{E}{4M}e^{R t_w/\ell^{2}}. \]
+      <span class="eq-tag">theory/lanes/syk-jt/t1-analytic.md (3.14); the shift and \(\alpha\) from refs/arxiv-1306.0622/shock.tex:196. Displayed, not evaluated here.</span>
+    </div>
+    <p class="instrument-note">
+      In the Shenker&ndash;Stanford double&#8209;scaling regime
+      \(\alpha=(E/4M)e^{Rt_w/\ell^{2}}\); at fixed small \(E/M\), inserting the
+      perturbation earlier produces exponential boost sensitivity. The late
+      detector question is separate from that growth. It is not whether \(\alpha\)
+      is large &mdash; it is &mdash; but whether the shift it produces in the
+      boundary clocks is a <em>record</em> in the sense of D32.
+    </p>
+  </div>
+
+  <div class="prose">
+    <h3>The charge</h3>
+    <p>
+      <b>&ldquo;The black&#8209;hole butterfly effect is a memory effect.&rdquo;</b>
+      Three things had to be settled before that sentence could be ruled on, and
+      the campaign&rsquo;s adversarial record settled each of them the hard way.
+      They are the three cross&#8209;examinations that follow. In each, one vote is
+      yours, and each vote is decided by something displayed on this page &mdash;
+      a conservation law, a fit, or a line of code.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== CROSS-EXAMINATION I ===================== -->
+
+<section id="cx1">
+  <div class="act-head">
+    <div class="act-no">Cross&#8209;examination I</div>
+    <h2>Can the two runs be compared at all?</h2>
+    <p class="sub">
+      D32 does not begin with a limit. It begins with a precondition: the pulsed
+      run and the reference run must agree on every exactly conserved allowed
+      charge. Otherwise the difference between them is not a response &mdash; it
+      is a change of sector.
+    </p>
+  </div>
+
+  <div class="prose">
+    <p>
+      Here the exactly conserved allowed charges include the two boundary
+      energies. For a thermal clock of exponent \(\kappa\), the measured energy
+      is \(E=C\kappa^{2}/2\). A right&#8209;only pulse changes the right clock from
+      \(\kappa_i\) to \(\kappa_f\) and <em>leaves the left clock alone</em>.
+    </p>
+    <p>
+      The first submission compared that pulsed run against a reference in which
+      <em>both</em> clocks had been reset to \(\kappa_f\). The two runs then
+      carry different left energies. Before reading the objection, look at the
+      ledger the specification actually demands.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>Build the reference run yourself</h3>
+      <span class="tag evald">Page-evaluated</span>
+    </div>
+    <p style="font-size:0.9375rem;color:var(--ink-2);max-width:68ch;margin-bottom:1.1rem">
+      The pulsed run is fixed: a right&#8209;only pulse leaves the left clock at
+      \(\kappa_i\) and takes the right clock to \(\kappa_f\). Choose the two clock
+      exponents of the <em>reference</em> run. The page evaluates \(E=C\kappa^{2}/2\)
+      on each side and compares the pair against the pulsed one.
+    </p>
+    <div class="comparator">
+      <div>
+        <div class="controls">
+          <div class="ctl-group">
+            <span class="ctl-label">Reference left \(\kappa_L\)</span>
+            <div class="seg" id="cmp-l" role="group" aria-label="Reference left clock exponent">
+              <button type="button" data-kl="i" aria-pressed="true">&kappa;<sub>i</sub></button>
+              <button type="button" data-kl="f" aria-pressed="false">&kappa;<sub>f</sub></button>
+            </div>
+          </div>
+          <div class="ctl-group">
+            <span class="ctl-label">Reference right \(\kappa_R\)</span>
+            <div class="seg" id="cmp-r" role="group" aria-label="Reference right clock exponent">
+              <button type="button" data-kr="i" aria-pressed="true">&kappa;<sub>i</sub></button>
+              <button type="button" data-kr="f" aria-pressed="false">&kappa;<sub>f</sub></button>
+            </div>
+          </div>
+        </div>
+        <div class="tbl-wrap"><table class="data" id="cmp-table"></table></div>
+      </div>
+      <div class="cmp-out" id="cmp-out" aria-live="polite"></div>
+    </div>
+    <p class="instrument-note">
+      \(E=C\kappa^{2}/2\) is equation (0.1) of the analytic shard. The numbers
+      are one concrete computed run: \(C=10\), \(\kappa_i=2\pi/\beta=1\) with
+      \(\beta\) as recorded in the results file, and \(\kappa_f\) the value that
+      file stores for its top&#8209;hat run at \(\varepsilon=0.1\). The comparison
+      itself is done in your browser from those inputs.
+      <span class="derived">Derived here from the embedded ledger row 1
+      (<code>k_final</code>, <code>C</code>) and <code>beta</code>, using
+      \(E=C\kappa^{2}/2\).</span>
+    </p>
+    <p class="instrument-note">
+      A balanced pulse is the way out: it returns the right clock to \(\kappa_i\),
+      so the plain equilibrium reference matches on both sides &mdash; at the
+      order to which the pulse is balanced. That is why every surviving result
+      below is stated for energy&#8209;balanced pulses, and why the balance itself
+      is a leading&#8209;order statement with a measured residual, which the next
+      panel shows.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>Which of the eight computed runs clears the balance gate</h3>
+      <span class="tag sample">Computed sample</span>
+    </div>
+    <p style="font-size:0.9375rem;color:var(--ink-2);max-width:66ch;margin-bottom:1rem">
+      Eight parameter points were integrated. Select a row to see its measured
+      right&#8209;energy change, and the scope in which the record classifies it.
+      The <em>sector</em> column is not computed from a tolerance invented here:
+      it is the adjudicated classification recorded in critic&nbsp;r2,
+      Objection&nbsp;9, carried in the embedded data as a
+      <code>_balance_scope</code> field and displayed beside the full&#8209;run
+      residual it refers to.
+    </p>
+    <div class="tbl-wrap">
+      <table class="data" id="ledger-tbl">
+        <thead>
+          <tr><th>#</th><th>PULSE PROFILE</th><th>\(C\)</th><th>\(\varepsilon\)</th><th>MEASURED \(\Delta E_R\)</th><th>\(\kappa_f\)</th><th>SECTOR &mdash; AS CLASSIFIED IN r2 O9</th></tr>
+        </thead>
+        <tbody id="ledger-body"></tbody>
+      </table>
+    </div>
+    <div id="ledger-detail" class="instrument-note" aria-live="polite"></div>
+    <details class="drawer">
+      <summary>The same defect, found a second time &mdash; critic r2, Objection 9 (FATAL)</summary>
+      <div class="drawer-body">
+        <p>The numerics report initially called all eight ratios &ldquo;detectors&rdquo;.
+        The second&#8209;round critic recomputed the energies and refused it:</p>
+        <div class="verbatim">Six of the eight JSON rows are unbalanced: their measured right-energy changes
+are 8.59125e-3, 8.58979e-2, 8.59139e-3, 8.59125e-2, 1.03836e-2, and 1.03836e-2.
+Only the two redshift-balanced derivative-Gaussian rows have zero energy change
+at leading order (their full-run residuals are 2.83e-8 and 2.83e-9).
+
+The T2 report supplies no implementable preparation of the unequal-energy
+(M_L,M_R)=(I,I) two-sided reference; its own caveat says that it does not
+pretend this is a new TFD.  Consequently the six corresponding differences
+are differences of formal EFT kernels, not demonstrated expectation
+differences between two states omega_N^protocol in the binding finite-N
+operational algebra.
+This is exactly the charge-sector defect for which T1 retracted protocol (b).
+Renaming all eight ratios "detectors" in changed text does not repair the
+missing reference protocol.</div>
+        <span class="src">theory/verdicts/syk-jt-joint-critic-r2.md &sect;7, Objection 9. Scientific notation compressed to plain exponent form; wording unchanged. Disposition at r2a: FIX VERIFIED, by restricting the operational verdict to the two balanced rows.</span>
+      </div>
+    </details>
+  </div>
+
+  <div class="decision" id="d1">
+    <div class="decision-kicker">Decision 1 of 3 &middot; consequential</div>
+    <div class="decision-q">
+      May the pulsed run be compared with the reference as submitted &mdash; the one
+      with both clocks reset to \(\kappa_f\)?
+    </div>
+    <div class="opts" role="group" aria-label="Decision 1">
+      <button class="opt" type="button" data-d="1" data-k="a"><span class="opt-k">A</span>Yes. Both are equilibrium states of the same theory; their difference is the response.</button>
+      <button class="opt" type="button" data-d="1" data-k="b"><span class="opt-k">B</span>No. That reference sits in a different exactly&#8209;conserved charge sector, so the difference is not a response.</button>
+    </div>
+    <div class="settle" id="d1-settle" hidden></div>
+  </div>
+</section>
+
+<!-- ===================== CROSS-EXAMINATION II ===================== -->
+
+<section id="cx2">
+  <div class="act-head">
+    <div class="act-no">Cross&#8209;examination II</div>
+    <h2>Does the fixed observable approach a constant, or decay?</h2>
+    <p class="sub">
+      Comparability granted, D32 asks one question of the absolute observable
+      \(\delta G_{LR}\): does its late&#8209;time limit exist and is it nonzero?
+      Two theorems answer it. Then the computed points are shown, as a check on
+      the theorems rather than a substitute for them.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>The butterfly law</h3>
+      <span class="tag proved">Proved formula</span>
+    </div>
+    <div class="eq">
+      \[ \Delta u_{\rm rel}^{\rm NL}(T)=-\frac{\alpha}{\kappa}e^{-\kappa\bar T}+O(e^{-2\kappa\bar T}),
+         \qquad \delta G_{LR}=O\!\left(e^{-(2\Delta+1)\kappa\bar T}\right),
+         \qquad \bar T=T-u_*. \]
+      <span class="eq-tag">theory/lanes/syk-jt/t1-analytic.md &#10216;1&#10217;3 (3.15). PROVED; claim row JT&#8209;bfly&#8209;decay.</span>
+    </div>
+    <p class="instrument-note" style="max-width:70ch">
+      <b>Scope, in full.</b> For the pure Shenker&ndash;Stanford horizon
+      translation \(g_{\rm shock}=\left(\begin{smallmatrix}1&amp;\alpha\\0&amp;1\end{smallmatrix}\right)\),
+      in the energy&#8209;balanced, \(u_*\)&#8209;synchronized Schwarzian future chart,
+      in the large&#8209;\(C\)&#8209;first late window. For that translation the M&ouml;bius
+      coefficient is exactly \(a=1\), so the constant term vanishes exactly and
+      the leading detector response is \(-\alpha\kappa^{-1}e^{-\kappa(T-u_*)}\).
+    </p>
+    <p class="instrument-note" style="max-width:70ch">
+      <b>Cross&#8209;check against the original paper.</b>
+      <q>It is clear from Eq.&nbsp;[&hellip;] that the impact of the shock wave on
+      the geodesic distance is insignificant if \(t_L+t_R\) is sufficiently
+      large.</q>
+      <span class="src">refs/arxiv-1306.0622/shock.tex:234 (Shenker &amp; Stanford, <em>Black holes and the butterfly effect</em>). The bracketed ellipsis stands for their internal equation cross-reference; the decay factor \(\alpha e^{-R(t_L+t_R)/2\ell^2}\) is at shock.tex:223&ndash;234.</span>
+    </p>
+    <details class="drawer">
+      <summary>How the two computations are reconciled &mdash; analytic lane, verbatim</summary>
+      <div class="drawer-body">
+        <p>&ldquo;This is exactly the decay mechanism in the shock geodesic: its
+        correction is \(\alpha e^{-R(t_L+t_R)/(2\ell^{2})}\), and the source
+        explicitly says that it becomes insignificant at sufficiently large
+        \(t_L+t_R\). The often&#8209;quoted permanent \(\tilde v=v+\alpha\) is a null
+        coordinate matching step, whereas (3.2) is a late two&#8209;boundary
+        detector. The two computations therefore agree: the butterfly translation
+        is a transient relational time delay.&rdquo;</p>
+        <span class="src">theory/lanes/syk-jt/t1-analytic.md &#10216;1&#10217;3.&#10216;2&#10217;8. TeX macros rendered; wording unchanged.</span>
+      </div>
+    </details>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>The general balanced law</h3>
+      <span class="tag proved">Proved formula</span>
+    </div>
+    <div class="eq">
+      \[ \delta G_{LR}(T)={\cal N}_\Delta\,\kappa^{2\Delta}e^{-2\Delta\kappa\bar T}
+         \left[a^{-2\Delta}-1+O(e^{-\kappa\bar T})\right]. \]
+      <span class="eq-tag">theory/lanes/syk-jt/t1-analytic.md &#10216;1&#10217;3 (3.2)&ndash;(3.9). PROVED; claim row JT&#8209;noplat&#8209;abs, balanced scope.</span>
+    </div>
+    <p class="instrument-note" style="max-width:70ch">
+      <b>Scope, in full.</b> For every \(\Delta>0\) and every compact
+      energy&#8209;balanced pulse whose post&#8209;pulse relative M&ouml;bius matrix lies
+      in a nonsingular future chart with \(a>0\), in the large&#8209;\(C\)&#8209;first
+      window. The bracket is a constant; the prefactor decays. So this fixed
+      observable has no nonzero late plateau &mdash; even when its calibrated
+      ratio approaches a nonzero susceptibility. The generalization beyond the
+      balanced sector is <b>HELD</b>, for the reason cross&#8209;examination&nbsp;I
+      gave.
+    </p>
+  </div>
+
+  <div class="prose">
+    <p>
+      Those two statements are what carries the conclusion. What follows is the
+      numerical check that was actually run against them: the two
+      energy&#8209;balanced runs licensed by cross&#8209;examination&nbsp;I, their
+      computed \(\delta G_{LR}(T)\), and the two candidate models the campaign
+      code fits &mdash; a constant, and an exponential anchored at the first fit
+      time. Switch between them and watch the residuals.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>Exhibit B &nbsp; the absolute observable, two models</h3>
+      <span class="tag sample">Computed sample</span>
+    </div>
+    <div class="controls">
+      <div class="ctl-group">
+        <span class="ctl-label">Run</span>
+        <div class="seg" id="row-seg" role="group" aria-label="Parameter point">
+          <button type="button" data-row="5" aria-pressed="true">C = 10</button>
+          <button type="button" data-row="7" aria-pressed="false">C = 100</button>
+        </div>
+      </div>
+      <div class="ctl-group">
+        <span class="ctl-label">Model</span>
+        <div class="seg" id="fit-seg" role="group" aria-label="Fitted model">
+          <button type="button" data-fit="both" aria-pressed="true">Both</button>
+          <button type="button" data-fit="exp" aria-pressed="false">Exponential</button>
+          <button type="button" data-fit="const" aria-pressed="false">Constant</button>
+        </div>
+      </div>
+    </div>
+    <figure>
+      <div class="chart-legend" id="legend-b"></div>
+      <div class="chart-host">
+        <div class="chart-wrap" id="chart-dg"></div>
+      </div>
+      <figcaption id="cap-dg"></figcaption>
+    </figure>
+
+    <div class="eq">
+      \[ \text{constant: } \delta G=c \qquad
+         \text{exponential: } \delta G(T)=A\,e^{-r\,(T-T_0)},\quad T_0=5 \]
+      <span class="eq-tag">The two model forms fitted in numerics/src/schwarzian_memory.jl. This page re&#8209;evaluates both from the embedded arrays; the residual sums it obtains reproduce the stored <code>rss_constant</code> and <code>rss_exponential</code> to the last stored digit.</span>
+    </div>
+
+    <div id="fit-readout"></div>
+
+    <details class="drawer">
+      <summary>The numbers, as a table</summary>
+      <div class="drawer-body">
+        <div class="tbl-wrap"><table class="data" id="dg-table"></table></div>
+        <span class="src">numerics/results/schwarzian_memory.json &rarr; parameter_points[5] and [7], keys <code>late_time_grid</code>, <code>delta_G_LR</code>, <code>delta_u_rel</code>, <code>delta_G_model</code>, <code>delta_u_model</code>.</span>
+      </div>
+    </details>
+  </div>
+
+  <div class="decision" id="d2">
+    <div class="decision-kicker">Decision 2 of 3 &middot; consequential</div>
+    <div class="decision-q">
+      On the computed points, does the fixed observable \(\delta G_{LR}\) approach
+      a nonzero constant, or decay?
+    </div>
+    <div class="opts" role="group" aria-label="Decision 2">
+      <button class="opt" type="button" data-d="2" data-k="a"><span class="opt-k">A</span>It approaches a nonzero constant &mdash; a plateau, which is what D32 needs.</button>
+      <button class="opt" type="button" data-d="2" data-k="b"><span class="opt-k">B</span>It decays: the computed window selects decay, and the theorem above then fixes the asymptote.</button>
+    </div>
+    <div class="settle" id="d2-settle" hidden></div>
+  </div>
+
+  <div class="prose">
+    <h3>Then what does plateau?</h3>
+    <p>
+      The calibrated ratio does. The same four points, the same two models, and
+      the model selection goes the other way &mdash; because the denominator is
+      decaying at very nearly the same rate as the numerator.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>Exhibit B&#8242; &nbsp; the calibrated ratio, same points</h3>
+      <span class="tag sample">Computed sample</span>
+    </div>
+    <figure>
+      <div class="chart-legend" id="legend-u"></div>
+      <div class="chart-host">
+        <div class="chart-wrap" id="chart-du"></div>
+      </div>
+      <figcaption id="cap-du"></figcaption>
+    </figure>
+  </div>
+
+  <div class="turn" data-voice="critic">
+    <div class="turn-rail"><span class="voice">Critic</span><span class="stamp">r1, Objection 6</span></div>
+    <div class="turn-body quoted">
+      <p>&ldquo;The ratio plateau is a well&#8209;defined large&#8209;\(C\)&#8209;first
+      susceptibility; the absolute allowed observable always decays, and
+      practical permanence is not established.&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      That objection was upheld as a downgrade, and the downgrade is not a
+      formality. The readout cost is in the results file, and it is the reason
+      nobody in this record uses the word <em>permanent</em>.
+    </p>
+    <details class="drawer">
+      <summary>The disposition, verbatim &mdash; critic r2 &sect;5</summary>
+      <div class="drawer-body">
+        <div class="verbatim">## 5. O6 — iterated limit, detector window, and cost
+
+**Disposition: DOWNGRADE/FIX VERIFIED.**
+   [...]
+It does not invent a
+finite-C endpoint; correspondingly its claim is only a large-C-first
+susceptibility, not permanence.</div>
+        <span class="src">theory/verdicts/syk-jt-joint-critic-r2.md &sect;5, section heading and lines 185&ndash;187. The bracketed ellipsis marks omitted intervening text; TeX inline math unwrapped (\(C\)&nbsp;&rarr;&nbsp;C); no words changed.</span>
+      </div>
+    </details>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>What the plateau would cost to see</h3>
+      <span class="tag sample">Computed sample</span>
+    </div>
+    <div class="eq">
+      \[ M_{\rm shots}=O\!\left(\frac{e^{4\Delta\kappa (T-u_*)}}{\eta^{2}}\right) \]
+      <span class="eq-tag">theory/verdicts/syk-jt-joint-critic-r2.md &sect;5, recording the repaired shard&rsquo;s statement (the same scaling first appears, without the synchronization offset, in critic r1 &sect;4). The results file records it as <code>sample_cost_model</code>. Displayed, not evaluated here; the table below is copied from that file.</span>
+    </div>
+    <div class="tbl-wrap">
+      <table class="data" id="cost-table"></table>
+    </div>
+    <p class="instrument-note">
+      These are estimates of a scaling, not lower bounds and not impossibility
+      theorems. The adjudicator was explicit about that: <q>bounded outcomes plus
+      independent estimation supply the displayed scaling only up to
+      protocol&#8209;dependent variance and finite&#8209;difference factors. The repaired
+      text does not use them to claim impossibility; it calls them estimates and
+      concludes only that practical permanence has not been established.</q>
+      <span class="src">theory/verdicts/syk-jt-joint-critic-r2.md &sect;5.</span>
+    </p>
+  </div>
+
+</section>
+
+<!-- ===================== CROSS-EXAMINATION III ===================== -->
+
+<section id="cx3">
+  <div class="act-head">
+    <div class="act-no">Cross&#8209;examination III</div>
+    <h2>Was the zero&#8209;frequency datum obtained independently?</h2>
+    <p class="sub">
+      One statement survives all of the above: the balanced calibrated
+      susceptibility equals the \(\omega\to0\) residue of the same soft
+      attachment. That is a leading&#8209;order identity between the calibrated D33
+      susceptibility and the zero&#8209;frequency soft residue &mdash; but only if the
+      residue was computed without being told the answer.
+    </p>
+  </div>
+
+  <div class="prose">
+    <p>
+      This is the objection a careful reader should raise about any numerical
+      &ldquo;confirmation&rdquo; of a final&#8209;value identity, and in this campaign it
+      was raised, and it was correct. Here is the transform as it stood in the
+      first submission. The routine is handed the late detector value
+      <code>late_delta</code>, and appends an analytic tail:
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>The transform as first submitted</h3>
+      <span class="tag quoted">Recorded quote</span>
+    </div>
+    <div class="eq">
+      \[ \text{tail}(\omega)\;=\;-\,\ell\,\frac{e^{s(T_h-T_0)}}{s},\qquad s=i\omega-\omega^{2}. \]
+      <span class="eq-tag">Here \(\ell\) is <code>late_delta</code>, the late detector value the routine is handed &mdash; and the residue that comes out is then divided by that same \(\ell\). Quoted from numerics/src/schwarzian_memory.jl:306&ndash;320 <em>as it stood before repair</em>, via critic r1, Objection 4. This form is not evaluated anywhere on this page; only its \(\omega\to0\) skirt, in the table below, is.</span>
+    </div>
+    <p style="font-size:0.9375rem;color:var(--ink-2);max-width:66ch">
+      The critic&rsquo;s test of it is one line long and you can check it here:
+      whatever the computed transient is, that tail dominates as
+      \(\omega\to0\). For a constant response alone, the reported real ratio is
+      exactly \(1/(1+\omega^{2})\) &mdash; a number that goes to one no matter what
+      the physics did.
+    </p>
+    <div class="tbl-wrap" style="margin-top:1rem">
+      <table class="data" id="circ-table"></table>
+    </div>
+    <p class="instrument-note">
+      Those are \(1/(1+\omega^2)\) evaluated in this page, at the four
+      frequencies the transform actually uses. They are what the routine returns
+      when the response is a pure constant &mdash; before any physics enters. A
+      reported ratio that approaches one is therefore consistent with a plateau,
+      with no plateau, and with anything in between. The test cannot fail, so
+      passing it is not evidence.
+      <span class="src" style="font-family:var(--mono);font-size:0.6875rem;color:var(--ink-3);display:block;margin-top:0.5rem">The
+      exact value \(1/(1+\omega^2)\) is the critic&rsquo;s, stated in
+      theory/verdicts/syk-jt-joint-critic-r1.md, Objection 4. The results file
+      embedded in this page was written <em>after</em> the repair, so it contains
+      no output of the circular transform; the only numbers from that version of
+      the code that appear on this page are quoted from the verdicts.</span>
+      <span class="derived">Derived here: \(1/(1+\omega^2)\) evaluated at the four
+      frequencies in sample <code>rows.5.dc.omega</code>, using the exact value
+      stated by critic r1, Objection 4.</span>
+    </p>
+  </div>
+
+  <div class="decision" id="d3">
+    <div class="decision-kicker">Decision 3 of 3 &middot; consequential</div>
+    <div class="decision-q">
+      Does that reported DC&#8202;/&#8202;late ratio <em>test</em> the zero&#8209;frequency
+      identity, or <em>enforce</em> it?
+    </div>
+    <div class="opts" role="group" aria-label="Decision 3">
+      <button class="opt" type="button" data-d="3" data-k="a"><span class="opt-k">A</span>Tests it. The ratio came out near one, and it did not have to.</button>
+      <button class="opt" type="button" data-d="3" data-k="b"><span class="opt-k">B</span>Enforces it. The target value was inserted as the tail and then divided out.</button>
+    </div>
+    <div class="settle" id="d3-settle" hidden></div>
+  </div>
+
+  <div class="prose">
+    <h3>The repair, and how it was checked</h3>
+    <p>
+      The fix demand was specific, and it was met in three parts: take the tail
+      coefficient from the fitted post&#8209;pulse M&ouml;bius matrix instead of from
+      the answer; vary the numerical horizon; and extrapolate \(\omega\to0\)
+      <em>before</em> comparing with the separately computed late detector. The
+      extrapolation is a straight line in \(\omega^{2}\) through the three lowest
+      frequencies. This page performs it on the embedded arrays.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>Exhibit C &nbsp; the extrapolation to zero frequency</h3>
+      <span class="tag sample">Computed sample</span>
+    </div>
+
+    <p style="font-size:0.9375rem;color:var(--ink-2);max-width:70ch;margin-bottom:1rem">
+      Three numbers are computed by three different routes, and the identity
+      under test is that they agree. What each route uses matters more than the
+      agreement itself, so it is written out first.
+    </p>
+    <div class="routes">
+      <div class="route r1">
+        <span class="rk">Late detector</span>
+        <p>Integrate the sourced trajectory, read the two&#8209;sided bilocal at
+        \(T=40\), form \(\Delta u_{\rm rel}\).</p>
+        <span class="rv" id="route-late">&mdash;</span>
+      </div>
+      <div class="route r2">
+        <span class="rk">DC route</span>
+        <p>Tail coefficient from the <em>fitted</em> post&#8209;pulse M&ouml;bius
+        matrix, Abel transform at \(\eta=\omega^{2}\), then the \(\omega^{2}\)
+        intercept.</p>
+        <span class="rv" id="route-dc">&mdash;</span>
+      </div>
+      <div class="route r3">
+        <span class="rk">Soft route</span>
+        <p>Linearized Schwarzian source, invariant bilocal vertex, normalized by
+        the measured injected charge.</p>
+        <span class="rv" id="route-vertex">&mdash;</span>
+      </div>
+    </div>
+    <p class="instrument-note" style="max-width:70ch;margin-top:0">
+      <b>Which comparison is independent, and which is not.</b> The DC route and
+      the late detector both start from the same integrated trajectory: the
+      fitted M&ouml;bius matrix is fitted to it. Their agreement shows the
+      transform is no longer circular &mdash; the answer is not fed in &mdash; but
+      it is an internal consistency check. The soft route does not use that
+      trajectory: it integrates the linearized source and contracts it with the
+      invariant bilocal vertex, with the normalization fixed by the measured
+      injected charge. That is the independent, soft&#8209;theorem side of the
+      identity, and it is the comparison worth watching.
+    </p>
+    <div class="eq">
+      \[ \lim_{T-u_*\to\infty}\Delta u_{\rm rel}^{(1)}(T)
+         =\lim_{\omega\to0}\left[-i\omega\,\widetilde{\delta u}_{\rm rel}^{(1)}(\omega)\right]
+         =\lim_{\omega\to0}{\cal S}_{\rm Sch}(\omega;P_{\rm sub})
+         =-\frac{{\cal A}_*}{2\kappa}. \]
+      <span class="eq-tag">theory/lanes/syk-jt/t1-analytic.md &#10216;1&#10217;4 (4.13) &mdash; the statement the three routes are testing. It holds at leading one&#8209;soft/tree response \(O(C^{-1})\); it is <em>not</em> an exact finite&#8209;amplitude identity (&#10216;1&#10217;4.&#10216;2&#10217;7). Displayed, not evaluated here.</span>
+    </div>
+
+    <div class="controls">
+      <div class="ctl-group">
+        <span class="ctl-label">Run</span>
+        <div class="seg" id="row-seg-2" role="group" aria-label="Parameter point">
+          <button type="button" data-row="5" aria-pressed="true">C = 10</button>
+          <button type="button" data-row="7" aria-pressed="false">C = 100</button>
+        </div>
+      </div>
+      <div class="ctl-group">
+        <span class="ctl-label">Horizon \(T_h\)</span>
+        <div class="seg" id="hor-seg" role="group" aria-label="Numerical horizon">
+          <button type="button" data-hor="0" aria-pressed="false">20</button>
+          <button type="button" data-hor="1" aria-pressed="false">40</button>
+          <button type="button" data-hor="2" aria-pressed="true">80</button>
+        </div>
+      </div>
+    </div>
+    <figure>
+      <div class="chart-legend" id="legend-c"></div>
+      <div class="chart-host">
+        <div class="chart-wrap" id="chart-dc"></div>
+      </div>
+      <figcaption id="cap-dc"></figcaption>
+    </figure>
+    <div class="ratios">
+      <div class="ratio">
+        <span class="rl">intercept &divide; late detector</span>
+        <span class="rn" id="ratio-late">&mdash;</span>
+        <span class="rs">Internal: both sides descend from the same integrated
+        trajectory. This says the transform no longer contains its own answer.</span>
+      </div>
+      <div class="ratio">
+        <span class="rl">intercept &divide; soft&#8209;vertex prediction</span>
+        <span class="rn" id="ratio-vertex">&mdash;</span>
+        <span class="rs">Independent: a zero&#8209;frequency datum and a soft&#8209;side
+        prediction, computed by routes that share no trajectory data.</span>
+      </div>
+    </div>
+    <div id="dc-readout"></div>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>The decoy test &mdash; a recorded run</h3>
+      <span class="tag quoted">Recorded run</span>
+    </div>
+    <p style="font-size:0.9375rem;color:var(--ink-2);max-width:68ch">
+      A repair is only worth as much as the test that would catch its
+      regression. The suite now contains an explicit circularity trap: feed the
+      transform a <em>decoy</em> late detector, twice the real one, and demand
+      that the extrapolated residue not move at all.
+    </p>
+    <div class="verbatim"># Circular-DC regression: the late detector is only a comparison
+# target.  A decoy value must not enter the transform or change its
+# absolute extrapolated residue.
+decoy_late = 2 * obs.delta_u[end]
+dc_decoy = dc_identity(run, decoy_late)
+residue = dc.residue_ratio[end] * obs.delta_u[end]
+decoy_residue = dc_decoy.residue_ratio[end] * decoy_late
+@test isapprox(decoy_residue, residue; rtol = 1.0e-2)
+@test dc_decoy.extrapolated_residue == dc.extrapolated_residue
+@test dc_decoy.fitted_mobius_tail == dc.fitted_mobius_tail</div>
+    <span class="src" style="font-family:var(--mono);font-size:0.6875rem;color:var(--ink-3);display:block;margin-top:0.5rem">numerics/test/test_schwarzian_memory.jl:113&ndash;122, testset &ldquo;bilocal model comparison and DC convergence&rdquo;. Bit&#8209;for&#8209;bit equality, not a tolerance.</span>
+
+    <div class="tbl-wrap" style="margin-top:1.4rem">
+      <table class="data">
+        <thead><tr><th>RECORDED RUN</th><th>RESULT</th><th>WHERE RECORDED</th></tr></thead>
+        <tbody>
+          <tr><td class="key">Suite before the repair</td><td>81&#8202;/&#8202;81 green</td><td>critic r1 &sect;0</td></tr>
+          <tr><td class="key">Suite after the repair</td><td>96&#8202;/&#8202;96 green, exit 0</td><td>critic r2 &sect;3</td></tr>
+          <tr><td class="key">Isolated copy, tail reverted to <code>late_detector</code></td><td class="bad">93 pass, 3 fail, nonzero exit</td><td>critic r2 &sect;3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="instrument-note">
+      This page executes nothing. The three lines above are runs recorded in the
+      verdict files, reproduced with their sources. The command they record is
+      <code>julia --project=numerics numerics/test/test_schwarzian_memory.jl</code>.
+    </p>
+    <details class="drawer">
+      <summary>What moved when the circularity was reinstated &mdash; critic r2, verbatim</summary>
+      <div class="drawer-body">
+        <div class="verbatim">For the required RED I copied numerics/ to /tmp/syk-jt-r2-o4.m6rgF5/numerics
+and changed only the copy's tail coefficient from the fitted-matrix expression
+back to the supplied late_detector.  The same suite then exited nonzero with 93
+pass and 3 fail.  Doubling the decoy detector changed the last-frequency
+absolute residue from 1.24367768269446e-4 to 7.90454841876999e-5, changed the
+extrapolated residue from 1.24780408799727e-4 to 5.83348047926424e-5, and
+doubled the purported fitted tail.  Thus the regression detects precisely the
+circular dependency removed by the repair.</div>
+        <span class="src">theory/verdicts/syk-jt-joint-critic-r2.md &sect;3. Those numbers are the critic&rsquo;s own rerun on a mutated copy of the top&#8209;hat run (parameter point 0), not values stored in the results file; they are quoted, not plotted here.</span>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== VERDICT ===================== -->
+
+<section id="verdict">
+  <div class="act-head">
+    <div class="act-no">Verdict</div>
+    <h2>Three statements, kept apart</h2>
+    <p class="sub">
+      The accusation was one sentence. What survives is three, and the value of
+      the exercise is that they are no longer confusable. Each card carries the
+      adjudicated scope; each drawer carries the claim row verbatim.
+    </p>
+  </div>
+
+  <div class="verdicts">
+
+    <article class="vcard">
+      <div class="cid">JT-bfly-decay</div>
+      <span class="status notmem">Not memory (D32)</span>
+      <h3>The butterfly shift has zero plateau.</h3>
+      <p>
+        For the pure Shenker&ndash;Stanford horizon translation, the M&ouml;bius
+        coefficient is exactly \(a=1\), so the calibrated two&#8209;sided delay decays
+        as \(-\alpha\kappa^{-1}e^{-\kappa(T-u_*)}\) and the absolute correlator
+        difference decays faster still. It is a transient relational time delay.
+      </p>
+      <div class="register">
+        PROVED &mdash; Schwarzian&#8209;EFT scope<br>
+        proof: t1-analytic.md &#10216;1&#10217;3 (3.15)<br>
+        ruling: r2 (ii), verbatim
+      </div>
+      <details class="drawer">
+        <summary>Claim row, verbatim</summary>
+        <div class="drawer-body">
+          <div class="verbatim">For the pure Shenker-Stanford horizon translation g_shock=(1 a; 0 1) in the
+energy-balanced, u_*-synchronized Schwarzian future chart, the calibrated
+two-sided delay has zero plateau and obeys
+  Du_rel^NL(T) = -a k^{-1} e^{-k(T-u_*)} + O(e^{-2k(T-u_*)}),
+while dG_LR(T) = O(e^{-(2D+1)k(T-u_*)}), in the large-C-first late window.
+(The celebrated butterfly frame shift is a transient relational time delay,
+not stationary-subtracted memory.)</div>
+          <span class="src">claims/CLAIMS.md, row JT-bfly-decay. Greek letters and the sub/superscript notation have been transliterated for plain text; no words changed. The rendered form of the same equation is (3.15) above.</span>
+        </div>
+      </details>
+    </article>
+
+    <article class="vcard">
+      <div class="cid">JT-noplat-abs</div>
+      <span class="status notmem">No D32 plateau in \(\delta G_{LR}\)</span>
+      <h3>The absolute correlator has no late plateau.</h3>
+      <p>
+        For every \(\Delta>0\) and every compact energy&#8209;balanced pulse in a
+        nonsingular future chart, \(\delta G_{LR}\) falls as
+        \(e^{-2\Delta\kappa(T-u_*)}\) &mdash; even when its calibrated ratio tends
+        to a nonzero susceptibility. So this fixed allowed observable,
+        \(G_{LR}\), carries no nonzero D32 plateau in that scope. Nothing is
+        claimed about other allowed observables.
+      </p>
+      <div class="register">
+        PROVED &mdash; balanced scope<br>
+        proof: t1-analytic.md &#10216;1&#10217;3 (3.2)&ndash;(3.9)<br>
+        all&#8209;profiles generalization: HOLD
+      </div>
+      <details class="drawer">
+        <summary>Claim row, verbatim</summary>
+        <div class="drawer-body">
+          <div class="verbatim">For every D>0, a compact energy-balanced pulse whose post-pulse relative
+Mobius matrix lies in a nonsingular future chart with a>0 has the
+u_*-synchronized same-energy absolute correlator difference
+  dG_LR(T) = N_D k^{2D} e^{-2Dk(T-u_*)} [ a^{-2D} - 1 + O(e^{-k(T-u_*)}) ],
+so this allowed absolute observable has no nonzero late plateau in the
+large-C-first window even when its calibrated ratio approaches a nonzero
+susceptibility.  The all-profiles generalization beyond the balanced sector
+is HELD (no implementable unequal-energy reference protocol; see critic r2
+Objection 9).</div>
+          <span class="src">claims/CLAIMS.md, row JT-noplat-abs. Transliterated as above; no words changed.</span>
+        </div>
+      </details>
+    </article>
+
+    <article class="vcard">
+      <div class="cid">JT-B-susc</div>
+      <span class="status proved">Susceptibility (D33)</span>
+      <h3>The balanced calibrated susceptibility equals the DC residue.</h3>
+      <p>
+        At leading \(O(C^{-1})\), for a compact energy&#8209;balanced pulse with finite
+        first moment,
+        \(\Delta u_{\rm rel}=[2C\kappa^{2}]^{-1}\!\int (u-u_*)P(u)\,du\), and this
+        equals the \(\omega\to0\) residue of the same invariant bilocal soft
+        attachment. Neither a uniform finite&#8209;\(C\) bound nor practical
+        permanence is claimed.
+      </p>
+      <div class="register">
+        PROVED &mdash; Schwarzian&#8209;EFT scope<br>
+        proof: t1-analytic.md &#10216;1&#10217;2&ndash;&#10216;1&#10217;5<br>
+        ruling: r2 (i), verbatim
+      </div>
+      <details class="drawer">
+        <summary>Claim row, verbatim</summary>
+        <div class="drawer-body">
+          <div class="verbatim">At leading one-soft/tree order O(C^{-1}), for a compact energy-balanced
+right-boundary power pulse P of fixed width and finite first moment, with a
+single synchronization event u_*, the large-C-first calibrated susceptibility
+is Du_rel = [2Ck^2]^{-1} INT (u - u_*) P(u) du + O(C^{-2}) and equals at that
+order the w->0 DC residue of the same invariant bilocal soft attachment,
+where the late limit means k(T-u_*)->infinity with (T-u_*)/C->0; the
+O(C^{-2}) remainder is controlled here only at fixed detector time, and
+neither a uniform finite-C late-time bound nor practical permanence is
+claimed.  Exact finite-amplitude equality to a single-soft vertex is
+excluded.</div>
+          <span class="src">claims/CLAIMS.md, row JT-B-susc. Transliterated as above; no words changed.</span>
+        </div>
+      </details>
+    </article>
+
+  </div>
+
+  <div class="prose" style="margin-top:2.4rem">
+    <h3>Why the two registers came apart here</h3>
+    <p>
+      Not because anything is wrong with the calculation, and not because the
+      butterfly effect is small. Both \(\delta G_{LR}\) and the equilibrium
+      calibration \(\partial_TG_{LR}^{\rm eq}\) decay as
+      \(e^{-2\Delta\kappa(T-u_*)}\); their ratio can tend to a constant while
+      neither absolute signal does. In the gravitational&#8209;wave case the
+      calibrating denominator &mdash; the separation of two freely falling masses
+      &mdash; does not decay, so the ratio register and the absolute register
+      agree, and the word <em>memory</em> is safe. Here the ratio is well defined
+      and equals the soft&#8209;theorem datum; what it is not is a record you could
+      come back and read.
+    </p>
+    <p>
+      That is a finding about thermal reference frames, and it is worth having
+      in its own right. It is also a smaller claim than the one on the docket,
+      which is the honest outcome.
+    </p>
+  </div>
+
+  <div class="instrument">
+    <div class="instrument-head">
+      <h3>Not claimed</h3>
+      <span class="tag quoted">Recorded quote</span>
+    </div>
+    <ul style="max-width:68ch;font-size:0.9375rem;color:var(--ink-2);padding-left:1.15rem;line-height:1.6">
+      <li>No uniform finite&#8209;\(C\) late&#8209;time error bound, and no maximum usable
+      detector time derived from physics: the recorded
+      \(\kappa T_{\max}=\sqrt{\kappa C}\) is, in the results file&rsquo;s own words,
+      a <q>conservative scaling convention, not a uniform finite&#8209;C error
+      bound</q>.</li>
+      <li>No exact finite&#8209;amplitude equality to a single&#8209;soft vertex &mdash;
+      explicitly excluded in JT&#8209;B&#8209;susc.</li>
+      <li>No operational conclusion from the six unbalanced runs; they are formal
+      Schwarzian trajectory and DC diagnostics.</li>
+      <li>No impossibility theorem from the shot&#8209;cost numbers.</li>
+      <li>No claim about SYK at finite \(N\). The microscopic rung reached a
+      conflict, and it is entered below as an open docket, not as support.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== CASE HISTORY ===================== -->
+
+<section id="history">
+  <div class="act-head">
+    <div class="act-no">Appendix &middot; the full adversarial record</div>
+    <h2>What the record actually looked like</h2>
+    <p class="sub">
+      The result is above; this appendix is optional evidence, not a continuation.
+      The three verdicts are narrower than what was first submitted, and this is
+      the trajectory that narrowed them, with the repository&rsquo;s own dates and
+      commits. It took one day and it was not smooth.
+    </p>
+  </div>
+
+  <ol class="timeline">
+    <li class="tl-item">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">94d5689</span>
+      <span class="tl-what">Decisive computation launched as two blind lanes: T1 analytic, T2 numeric.</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">0a00ba9</span>
+      <span class="tl-what">Allowed&#8209;observables specification written before either lane reported, as the audit standard both would be judged against.</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">211c123</span>
+      <span class="tl-what">T1 lands: plateau if and only if \(a\ne1\); the butterfly shift itself has none.</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">a4959da</span>
+      <span class="tl-what">T2 lands, 81&#8202;/&#8202;81 green. Joint adversarial critic launched against both.</span>
+    </li>
+    <li class="tl-item pivot">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">769bb8e</span>
+      <span class="tl-what"><b>Critic r1: eight objections, terminal line FAIL(1,2,4,6).</b> One fatal, three major. The exact impulse algebra was independently reproduced &mdash; all twelve cross&#8209;lane handshake rows agreed &mdash; but four claim&#8209;licensing failures stood.</span>
+    </li>
+    <li class="tl-item pivot">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">74b0802</span>
+      <span class="tl-what"><b>Retraction.</b> T1 downgrades to the balanced sector, retracts the protocol&#8209;(b) verdict and its detector handshakes, adopts a single synchronization event, and states the iterated limit and the shot cost.</span>
+    </li>
+    <li class="tl-item pivot">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">b766eab</span>
+      <span class="tl-what"><b>De&#8209;circularised.</b> T2 rebuilds the DC transform from the fitted M&ouml;bius matrix, adds the decoy regression, threads the operator dimension through the public interface, and records the detector window and shot cost in the results file. 96&#8202;/&#8202;96 green.</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">a94adef</span>
+      <span class="tl-what">Critic r2 recomputes every disposition from scratch rather than reading the repair tables. O1&ndash;O8 verified in their repaired scopes; three statements promoted with scope sentences to be copied verbatim &mdash; and one new fatal objection, O9, on changed text. FAIL(9).</span>
+    </li>
+    <li class="tl-item pass">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">edf84df</span>
+      <span class="tl-what"><b>r2a: PASS.</b> O9 closed by taking the critic&rsquo;s first fix&#8209;demand branch &mdash; restrict the operational verdict to the two balanced runs, relabel the other six as formal diagnostics. The three claim rows enter the ledger with the adjudicated scope sentences copied verbatim.</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026&#8209;08&#8209;31</span><span class="tl-ref">3efd9c5</span>
+      <span class="tl-what">The finite&#8209;\(N\) exact&#8209;diagonalization rung reports an honest negative: the microscopic and effective&#8209;theory windows do not overlap at the accessible sizes.</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026&#8209;09&#8209;01</span><span class="tl-ref">32ec0ea</span>
+      <span class="tl-what">The finite&#8209;coupling (Liouville) rung reports HOLD on the two questions that would extend the result beyond the Schwarzian window.</span>
+    </li>
+  </ol>
+
+  <div class="prose" style="margin-top:2rem">
+    <p>
+      Two features of that trajectory are worth naming. First, the fatal
+      objection in round one and the fatal objection in round two are the
+      <em>same physics error</em> appearing in two different places &mdash; an
+      unbalanced comparison sold as a detector reading. Second, the repair that
+      mattered most was not a new calculation; it was a test that fails when the
+      answer is fed back into the measurement.
+    </p>
+  </div>
+
+  <details class="drawer" style="max-width:74ch">
+    <summary>Objection 1, in full &mdash; critic r1, FATAL</summary>
+    <div class="drawer-body">
+      <div class="verbatim">### Objection 1 - FATAL: the unbalanced subtraction changes an allowed exact charge
+
+Location. theory/lanes/syk-jt/t1-analytic.md, &lt;1>1.&lt;2>2-4 (especially (1.2)),
+&lt;1>3.&lt;2>2 (3.2), and the protocol-(b) verdict &lt;1>5.&lt;2>2; compare
+theory/lanes/syk-jt/observables-spec.md, Layer 1 and "Consequences".
+
+Independent computation. A right-only source leaves the allowed measured left
+energy at E_L = C k_i^2 / 2 and changes the right energy to E_R = C k_f^2 / 2.
+T1 (1.2) instead changes *both* reference clocks to k_f, and (3.2) also inserts
+t_L = -e^{-k_f T} into the pulsed correlator.  Thus its protocol-(b)
+subtraction does not compare protocols with the same pair (E_L, E_R), even
+though those energies are allowed exact charges.  With the untouched left
+clock, direct Mobius substitution gives
+
+  K_LR(T) = k_i k_f e^{(k_f - k_i)T}
+            / [ a e^{k_f T} + b + c e^{(k_f - k_i)T} + d e^{-k_i T} ]^2,
+
+not T1 (3.2).  Its late ratio is still a^{-2D}, but the calibrated linear
+denominator is D(k_i + k_f), and the finite-time numbers and nonlinear
+calibration change.  More importantly, T1's stated comparison is in the wrong
+exact-charge sector and therefore fails the binding operational algebra.
+
+FIX DEMAND. Recompute protocol (b) with an explicitly implementable reference
+having the same measured (E_L, E_R), keeping k_L = k_i, and state how that
+reference state is prepared.
+
+SURVIVING WEAKER STATEMENT. The balanced sector k_f = k_i, the Mobius transfer
+algebra, and the pure-translation decay result are unaffected; no present T1
+detector claim for an unbalanced right-only pulse is licensed.</div>
+      <span class="src">theory/verdicts/syk-jt-joint-critic-r1.md, lines 61&ndash;95. Greek letters transliterated (\(\kappa\to\)k, \(\Delta\to\)D) and the Lamport step markers written with angle brackets; no words changed.</span>
+    </div>
+  </details>
+
+  <details class="drawer" style="max-width:74ch">
+    <summary>The retraction, and the two dispositions that closed the loop</summary>
+    <div class="drawer-body">
+      <p><b>The analytic lane retracts</b>, at t1-analytic.md &#10216;1&#10217;3.&#10216;2&#10217;7:</p>
+      <div class="verbatim">They are **not** an allowed detector claim:
+the comparator used to obtain (3.12) changed E_L, and no implementable
+equal-(E_L,E_R) reference has been supplied.  No unbalanced plateau verdict
+or finite-duration extension is retained.</div>
+      <span class="src">theory/lanes/syk-jt/t1-analytic.md &#10216;1&#10217;3.&#10216;2&#10217;7, lines 546&ndash;549. TeX inline math unwrapped (\(E_L\)&nbsp;&rarr;&nbsp;E_L); the sentence before it, which the quotation begins mid&#8209;line after, concerns equations (3.11)&ndash;(3.13); no words changed.</span>
+      <p style="margin-top:1rem"><b>The second round verifies the retraction rather than taking it on trust</b>, at critic r2 &sect;1:</p>
+      <div class="verbatim">### O1 disposition: RETRACTION VERIFIED for T1
+
+A fresh search of the repaired analytic shard finds protocol (b) only in
+explicit retractions or in algebra labelled non-operational.</div>
+      <span class="src">theory/verdicts/syk-jt-joint-critic-r2.md &sect;1, lines 22&ndash;25. Character for character; the paragraph continues in the file and the quotation stops at the sentence boundary.</span>
+      <p style="margin-top:1rem"><b>And on the de&#8209;circularised transform</b>, at critic r2 &sect;3:</p>
+      <div class="verbatim">## 3. O4 — non-circular DC transform
+
+**Disposition: FIX VERIFIED.**
+   [...]
+Re-evaluating this formula directly from every JSON matrix agrees with each
+stored `fitted_mobius_tail` to at worst 2.22e-16.  Its
+difference from the separately evaluated Du_rel(40) is at most
+3.47e-13, so the reported detector is already in the fitted
+asymptotic regime without being fed into the transform.</div>
+      <span class="src">theory/verdicts/syk-jt-joint-critic-r2.md &sect;3, section heading, its disposition line, and lines 128&ndash;132. The bracketed ellipsis marks omitted intervening text (a command block and the derivation of the fitted tail); \(\Delta u_{\rm rel}(40)\)&nbsp;&rarr;&nbsp;Du_rel(40) and TeX scientific notation compressed to plain exponent form; no words changed.</span>
+    </div>
+  </details>
+
+  <details class="drawer" style="max-width:74ch">
+    <summary>Objection 4, in full &mdash; critic r1, MAJOR</summary>
+    <div class="drawer-body">
+      <div class="verbatim">### Objection 4 - MAJOR: DC/late is forced to one by the supplied tail
+
+Location. numerics/src/schwarzian_memory.jl:294-325, especially the tail at
+lines 306-320; theory/lanes/syk-jt/t2-numeric.md:136-142 and 165-190.
+
+Independent computation. The routine is handed late_delta, then appends
+
+  - late_delta * e^{s(T_h - T_0)} / s,   s = i w - w^2,
+
+as the infinite tail and divides the resulting residue by the same late_delta.
+Irrespective of the computed transient, that tail dominates as w -> 0, so
+DC/late tends to one by construction.  For a constant response alone its
+reported real ratio is exactly 1/(1 + w^2).  This is a numerical
+implementation of the final-value identity being tested, not an independent
+test of it.
+
+The finite-w residuals themselves are benign.  In the first top-hat row,
+(1-r)/w^2 at w = (0.2, 0.1, 0.05) is (5.07, 5.45, 5.56); for a balanced row it
+is approximately (1.25, 1.30, 1.32).  Hence the value 0.985 at w = 0.05 is an
+expected O(w^2) Abel/transient correction, not an unexplained 1.5% tree error.
+After factoring out that common finite-frequency residue, the late/linear-soft
+mismatch ranges from 0.00075% to 0.215% and scales with source amplitude
+divided by C, as the expected nonlinear correction does.  This supports, but
+does not replace, the analytic leading-order identity.
+
+FIX DEMAND. Remove the target-valued tail from the test: obtain the tail
+coefficient independently from the fitted post-pulse matrix or transform the
+source/vertex response directly, vary the numerical horizon, and extrapolate
+w -> 0 before comparing with the separately computed late detector.
+
+SURVIVING WEAKER STATEMENT. The finite-frequency transform is internally
+consistent, and the independent linear-soft amplitude has the expected 1/C
+scaling; the numerical DC/late column is not evidence for the zero-frequency
+equality.</div>
+      <span class="src">theory/verdicts/syk-jt-joint-critic-r1.md, lines 188&ndash;226. \(\omega\to\)w, \(\Delta\to\)D; no words changed.</span>
+    </div>
+  </details>
+
+  <details class="drawer" style="max-width:74ch">
+    <summary>Objection 6, in full &mdash; critic r1, MAJOR</summary>
+    <div class="drawer-body">
+      <div class="verbatim">### Objection 6 - MAJOR: neither lane supplies the mandated quantitative
+late-time window
+
+Location. theory/lanes/syk-jt/t1-analytic.md &lt;1>0.&lt;2>1, &lt;1>3.&lt;2>5, and
+&lt;1>5.&lt;2>5; theory/lanes/syk-jt/t2-numeric.md:188-196;
+theory/lanes/syk-jt/observables-spec.md, final "permanent" bullet.
+
+Independent computation. The cited MSY source establishes the expansion
+parameter beta/C at
+refs/arxiv-1606.01857/GravityReparametrizationsRevised.tex:680-719, but
+neither lane proves an error bound uniform in T, accounts for the
+exponentially growing shot cost, or gives a finite-N maximum detector time.
+No quantitative upper endpoint can be certified from the cited sources.  This
+verdict therefore uses the conservative iterated scaling convention
+
+  C -> infinity first,    1 &lt;&lt; k T &lt;&lt; k C
+
+(more invariantly, take k T -> infinity while T/C -> 0), followed by any claim
+about the formal tree limit.  This convention is not a derived finite-C error
+bound; it only prevents the unsupported reverse order.  Taking T -> infinity
+first at fixed C or fixed N is not supported.
+
+FIX DEMAND. State the iterated limit in both verdicts and provide a
+finite-N/finite-C error or a maximum usable T, including the detector's
+exponential sample cost.
+
+SURVIVING WEAKER STATEMENT. The ratio plateau is a well-defined large-C-first
+susceptibility; the absolute allowed observable always decays, and practical
+permanence is not established.</div>
+      <span class="src">theory/verdicts/syk-jt-joint-critic-r1.md, lines 351&ndash;381. \(\kappa\to\)k; no words changed.</span>
+    </div>
+  </details>
+
+  <details class="drawer" style="max-width:74ch">
+    <summary>The other five first&#8209;round objections, in brief</summary>
+    <div class="drawer-body">
+      <p>Three of the eight changed claim content; the audition follows those
+      three. For completeness, the rest, with their round&#8209;two dispositions:</p>
+      <div class="verbatim">O2  MAJOR  Two incompatible synchronization conventions.  The comparator was
+           stated at one origin and implemented at another; the discrepancy was
+           observable and was the source of an apparent sign conflict.
+           r2: FIX VERIFIED (a single event u_* now used throughout).
+O3  MINOR  "Dwell-time moment iff" is only a leading-order statement; the exact
+           criterion is a != 1.  r2: FIX VERIFIED.
+O5  MINOR  The observable interface hard-coded the wrong handshake dimension
+           (Delta = 1/2 recorded where Delta = 1 was prescribed).
+           r2: FIX VERIFIED (Delta threaded through the public path).
+O7  MINOR  A Hamiltonian citation covered only half the asserted equality.
+           r2: FIX VERIFIED.
+O8  MINOR  Equation (3.10) was missing a plus sign before the remainder term.
+           r2: FIX VERIFIED.</div>
+      <span class="src">Summarised from theory/verdicts/syk-jt-joint-critic-r1.md (objection headers and fix demands) and -r2.md &sect;&sect;1&ndash;2, 4, 6. These five are paraphrased, not quoted; the two verdict files carry the full text.</span>
+    </div>
+  </details>
+</section>
+
+<!-- ===================== OPEN DOCKETS ===================== -->
+
+<section id="dockets">
+  <div class="act-head">
+    <div class="act-no">Open dockets</div>
+    <h2>What is not settled</h2>
+    <p class="sub">
+      Entered as open matters, with their recorded verdicts. None of them is a
+      sequel being advertised; each is a place where the record currently says
+      HOLD and means it.
+    </p>
+  </div>
+
+  <div class="dockets">
+    <div class="docket">
+      <h3>An unbalanced reference protocol</h3>
+      <p>
+        Nothing in the record supplies an implementable preparation of a
+        two&#8209;sided reference with the same unequal measured pair \((E_L,E_R)\).
+        Until one exists, the six unbalanced runs stay formal diagnostics and
+        the all&#8209;profiles generalization of JT&#8209;noplat&#8209;abs stays held. The repair
+        note names where such a protocol could be exhibited: a finite&#8209;\(N\)
+        two&#8209;dot preparation.
+      </p>
+      <span class="src" style="font-family:var(--mono);font-size:0.6875rem;color:var(--ink-3);display:block;margin-top:0.7rem">theory/lanes/syk-jt/repair-r2-response.md</span>
+    </div>
+
+    <div class="docket">
+      <h3>The microscopic rung, finite \(N\)</h3>
+      <p>
+        Exact diagonalization of the two&#8209;dot SYK model was run at
+        \(N_m=8,10,12\) and confirmed at \(14\), with the pulse passing the
+        measured right&#8209;energy gate at every point. At \(N_m=8\) the pattern
+        echoes the effective theory. It does not survive: every
+        \(N_m=10,12\) point and the \(N_m=14\) confirmation select a constant
+        rather than a decaying absolute difference on the accessible window.
+        The report calls this a <b>conflict</b> &mdash; not evidence for a
+        microscopic plateau theorem, and not a refutation of the differently
+        ordered large&#8209;\(C\)&#8209;first claims. The two windows simply do not overlap
+        at reachable sizes.
+      </p>
+      <span class="src" style="font-family:var(--mono);font-size:0.6875rem;color:var(--ink-3);display:block;margin-top:0.7rem">theory/lanes/syk-jt/ed-rung-report.md (suite 141/141 green; numerics/results/syk_ed.json)</span>
+    </div>
+
+    <div class="docket">
+      <h3>Finite coupling, beyond the Schwarzian window</h3>
+      <p>
+        The Liouville rung recovers the Schwarzian results in its matching
+        window, as \(\delta v=1-v\to0\) in the separated soft window, and
+        returns <b>HOLD</b> beyond it. On the
+        plateau and DC identity the verdict is <q>HOLD / underdetermined</q>:
+        the full finite&#8209;coupling response needs a source projection the shard
+        does not supply. On the butterfly register the verdict is <q>HOLD beyond
+        the matching window</q>: at finite coupling the pure horizon translation
+        does not determine a boundary&#8209;condition&#8209;preserving sourced saddle, so
+        there is no unique continuation whose late tail could be adjudicated.
+      </p>
+      <span class="src" style="font-family:var(--mono);font-size:0.6875rem;color:var(--ink-3);display:block;margin-top:0.7rem">theory/lanes/syk-jt/liouville-rung-report.md, Q1 and Q3 verdicts</span>
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top:2.4rem">
+    <p>
+      A last note on what kind of document this is. Within the declared
+      Schwarzian&#8209;EFT scope, the analytic formulas were independently
+      recomputed and the numerical implementation passed a regression that fails
+      when the circular tail is restored. That is a reasonable amount of evidence
+      for a narrow statement. It is not a statement about real black holes, and
+      the record does not pretend otherwise.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== COLOPHON ===================== -->
+
+<footer class="colophon">
+  <div class="act-no">Sources</div>
+  <p style="max-width:66ch;margin-top:0.8rem;font-size:0.9375rem;color:var(--ink-2)">
+    Campaign quotations and sample inputs come from the listed repository files.
+    Selected fields from schwarzian_memory.json are copied value&#8209;for&#8209;value;
+    derived statistics are recomputed in&#8209;browser. Exhibit A&#8202;&mdash;&#8202;1 is an
+    externally sourced textbook model.
+  </p>
+  <ul>
+    <li><b>numerics/results/schwarzian_memory.json</b> &mdash; the eight computed parameter points, late&#8209;time grids, DC transforms, detector windows. Written at commit b766eab. Selected fields are embedded in this page value&#8209;for&#8209;value inside a smaller wrapper; the two keys this page adds are prefixed with an underscore and name their own source.</li>
+    <li><b>numerics/test/test_schwarzian_memory.jl</b> &mdash; the regression suite, including the circular&#8209;DC decoy test quoted above.</li>
+    <li><b>theory/lanes/syk-jt/t1-analytic.md</b> &mdash; the analytic lane: the M&ouml;bius transfer algebra, the late expansion (3.2)&ndash;(3.9), the butterfly law (3.15), and the retraction at &#10216;1&#10217;3.&#10216;2&#10217;7.</li>
+    <li><b>theory/verdicts/syk-jt-joint-critic-r1.md</b> &mdash; eight objections; terminal line FAIL(1,2,4,6).</li>
+    <li><b>theory/verdicts/syk-jt-joint-critic-r2.md</b> &mdash; dispositions, Objection 9, the three verbatim scope sentences, and the r2a PASS.</li>
+    <li><b>theory/lanes/syk-jt/repair-r2-response.md</b> &mdash; the mechanical scope restriction that closed O9.</li>
+    <li><b>claims/CLAIMS.md</b> &mdash; rows JT&#8209;B&#8209;susc, JT&#8209;bfly&#8209;decay, JT&#8209;noplat&#8209;abs.</li>
+    <li><b>definitions.md</b> &mdash; D32 (memory, absolute register) and D33 (calibrated relational memory susceptibility).</li>
+    <li><b>refs/arxiv-1306.0622/shock.tex</b> &mdash; Shenker &amp; Stanford, <em>Black holes and the butterfly effect</em>: the shift \(\tilde v=v+\alpha\) at line 196, the decay of the geodesic effect at lines 223&ndash;234.</li>
+    <li><b>refs/arxiv-1703.05448/soft_Arxiv_update.tex</b> &mdash; Strominger, <em>Lectures on the Infrared Structure of Gravity and Gauge Theory</em>: displacement memory at line 2594, the &ldquo;permanent shift&rdquo; sentence at line 329.</li>
+    <li><b>theory/lanes/syk-jt/ed-rung-report.md</b>, <b>liouville-rung-report.md</b> &mdash; the two open microscopic and finite&#8209;coupling dockets.</li>
+  </ul>
+  <p style="margin-top:1.4rem;font-family:var(--mono);font-size:0.6875rem;color:var(--ink-3);max-width:70ch;line-height:1.7">
+    Audition slice for bd tns&#8209;274. Repository state 73b2753.
+    Exhibit A&#8202;&mdash;&#8202;1 is standard elastic&#8209;scattering theory, not a campaign
+    result, and the repository holds no TeX source for it. Rather than cite a
+    textbook this page cannot show you, the exhibit is stated in self&#8209;contained
+    form: the zero&#8209;background Breit&ndash;Wigner resonant phase is defined on the
+    page, the delay follows from the displayed stationary&#8209;phase condition, the
+    late&#8209;time bound is the displayed free&#8209;packet estimate, and its one
+    remaining assumption is written out beside it. It is the only displayed curve
+    here that is not either a campaign closed form or a campaign computed sample.
+  </p>
+</footer>
+
+</div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var D = JSON.parse(document.getElementById("schwarzian-data").textContent);
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  /* ---------------- small helpers ---------------- */
+
+  function sci(v, d) {
+    if (d === undefined) d = 4;
+    if (v === 0) return "0";
+    var s = v.toExponential(d);
+    return s.replace(/e([+-])(\d)$/, "e$10$2");
+  }
+  function fix(v, d) { return v.toFixed(d); }
+  function el(tag, attrs, text) {
+    var n = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) if (attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]);
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+  function typeset(node) {
+    if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
+      MathJax.startup.promise
+        .then(function () { return MathJax.typesetPromise([node]); })
+        .catch(function () {});
+    }
+  }
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function recall(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+  /* ---------------- fit models (exactly as in numerics/src/schwarzian_memory.jl) ----- */
+  /* constant:    c = mean(y)
+   * exponential: y = A exp(-r (T - T0)),  T0 = first fit time
+   * AIC:         n log(RSS / sum(y^2)) + 2k,  k = 1 (const), 2 (exp)          */
+
+  function fitStats(times, vals, model) {
+    var n = vals.length, i, scale = 0, rssC = 0, rssE = 0, c = 0;
+    for (i = 0; i < n; i++) { scale += vals[i] * vals[i]; c += vals[i]; }
+    c /= n;
+    for (i = 0; i < n; i++) {
+      var dC = vals[i] - c;
+      var dE = vals[i] - model.amplitude * Math.exp(-model.decay_rate * (times[i] - times[0]));
+      rssC += dC * dC; rssE += dE * dE;
+    }
+    return {
+      constant: c,
+      rss_constant: rssC,
+      rss_exponential: rssE,
+      aic_constant: n * Math.log(rssC / scale) + 2,
+      aic_exponential: n * Math.log(rssE / scale) + 4
+    };
+  }
+  function modelAt(model, T, T0) { return model.amplitude * Math.exp(-model.decay_rate * (T - T0)); }
+
+  /* ---------------- tooltip ---------------- */
+
+  function attachTip(host) {
+    var tip = null, ch = host.children, ci;
+    for (ci = 0; ci < ch.length; ci++) {
+      if (ch[ci].className === "tip") { tip = ch[ci]; break; }
+    }
+    if (!tip) {
+      tip = document.createElement("div");
+      tip.className = "tip";
+      host.appendChild(tip);
+    }
+    return {
+      show: function (evt, text) {
+        var r = host.getBoundingClientRect();
+        tip.textContent = text;
+        tip.setAttribute("data-on", "1");
+        var x = evt.clientX - r.left + 14, y = evt.clientY - r.top - 8;
+        if (x + tip.offsetWidth > r.width) x = r.width - tip.offsetWidth - 4;
+        if (x < 0) x = 0;
+        tip.style.left = x + "px";
+        tip.style.top = Math.max(0, y) + "px";
+      },
+      hide: function () { tip.removeAttribute("data-on"); }
+    };
+  }
+
+  /* ---------------- axis helpers ---------------- */
+
+  function logTicks(lo, hi, step) {
+    var t = [], k = Math.ceil(lo / step) * step;
+    for (; k <= hi; k += step) t.push(k);
+    return t;
+  }
+  function supMinus(n) { return String(n).replace("-", "\u2212"); }
+
+  /* =========================================================================
+     Exhibit A-1 : Wigner delay from the Breit-Wigner phase shift (exact form)
+     ======================================================================== */
+
+  function drawWigner() {
+    var host = document.getElementById("chart-wigner");
+    if (!host) return;
+    var W = 820, H = 250, L = 66, R = 26, T = 16, B = 44;
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img",
+      "aria-label": "Wigner time delay against energy across a resonance; a peak of four hbar over Gamma at the resonance energy." });
+    var x = function (v) { return L + (v + 3) / 6 * (W - L - R); };
+    var y = function (v) { return H - B - v / 4.4 * (H - B - T); };
+
+    [0, 1, 2, 3, 4].forEach(function (v) {
+      svg.appendChild(el("line", { class: "gridline", x1: L, x2: W - R, y1: y(v), y2: y(v) }));
+      svg.appendChild(el("text", { x: L - 10, y: y(v) + 4, "text-anchor": "end", "font-size": 11 }, String(v)));
+    });
+    svg.appendChild(el("line", { class: "ax-line", x1: L, x2: W - R, y1: y(0), y2: y(0) }));
+
+    [-3, -2, -1, 0, 1, 2, 3].forEach(function (v) {
+      svg.appendChild(el("text", { x: x(v), y: H - B + 20, "text-anchor": "middle", "font-size": 11 }, supMinus(v)));
+    });
+
+    var d = "", i, n = 480;
+    for (i = 0; i <= n; i++) {
+      var u = -3 + 6 * i / n;
+      var val = 1 / (u * u + 0.25);
+      d += (i ? "L" : "M") + x(u).toFixed(2) + " " + y(val).toFixed(2);
+    }
+    svg.appendChild(el("path", { d: d, class: "ser1", fill: "none", "stroke-width": 2, "stroke-linejoin": "round" }));
+
+    svg.appendChild(el("line", { x1: x(0), x2: x(0), y1: y(4), y2: y(0), stroke: "currentColor",
+      "stroke-width": 1, "stroke-dasharray": "3 3", opacity: 0.35 }));
+    svg.appendChild(el("text", { x: x(0) + 8, y: y(4) + 4, "font-size": 11, fill: "var(--ink-2)" }, "4\u0127/\u0393  on resonance"));
+    svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 6, "text-anchor": "middle", "font-size": 11 },
+      "(E \u2212 E_r) / \u0393"));
+    var yl = el("text", { x: 14, y: (T + H - B) / 2, "font-size": 11, "text-anchor": "middle" }, "\u0394t \u00b7 \u0393 / \u0127");
+    yl.setAttribute("transform", "rotate(-90 14 " + ((T + H - B) / 2) + ")");
+    svg.appendChild(yl);
+
+    var tip = attachTip(host.parentNode);
+    var hit = el("rect", { class: "hit", x: L, y: T, width: W - L - R, height: H - B - T });
+    hit.addEventListener("mousemove", function (ev) {
+      var r = svg.getBoundingClientRect();
+      var px = (ev.clientX - r.left) / r.width * W;
+      var u = (px - L) / (W - L - R) * 6 - 3;
+      if (u < -3 || u > 3) { tip.hide(); return; }
+      tip.show(ev, "(E \u2212 E_r)/\u0393 = " + fix(u, 2) + "\n\u0394t \u00b7 \u0393/\u0127 = " + fix(1 / (u * u + 0.25), 3));
+    });
+    hit.addEventListener("mouseleave", tip.hide);
+    svg.appendChild(hit);
+
+    clear(host);
+    host.appendChild(svg);
+  }
+
+  /* =========================================================================
+     Setup schematic (no numerical content)
+     ======================================================================== */
+
+  function drawSetup() {
+    var host = document.getElementById("fig-setup");
+    if (!host) return;
+    var W = 950, H = 262;
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img",
+      "aria-label": "Schematic of two thermofield-double boundary trajectories t_L(u) and t_R(u), a compact pulse applied to the right boundary at the synchronization event, and the cross-boundary correlator G_LR read at boundary time T. A simultaneous Mobius transformation of both trajectories is gauge." });
+
+    var yTop = 42, yBot = 190, xL = 150, xR = 640;
+
+    svg.appendChild(el("line", { x1: xL, x2: xL, y1: yTop, y2: yBot, stroke: "var(--ink-2)", "stroke-width": 2 }));
+    svg.appendChild(el("line", { x1: xR, x2: xR, y1: yTop, y2: yBot, stroke: "var(--ink-2)", "stroke-width": 2 }));
+    svg.appendChild(el("text", { x: xL, y: yTop - 22, "text-anchor": "middle", "font-size": 12, fill: "var(--ink-2)" }, "left boundary"));
+    svg.appendChild(el("text", { x: xR, y: yTop - 22, "text-anchor": "middle", "font-size": 12, fill: "var(--ink-2)" }, "right boundary"));
+    svg.appendChild(el("text", { x: xL, y: yTop - 7, "text-anchor": "middle", "font-size": 12, fill: "var(--ink)" }, "tₗ(u)"));
+    svg.appendChild(el("text", { x: xR, y: yTop - 7, "text-anchor": "middle", "font-size": 12, fill: "var(--ink)" }, "tᵣ(u)"));
+
+    /* the one common redundancy: a simultaneous Mobius map moves both and is gauge */
+    svg.appendChild(el("line", { x1: xL - 34, x2: xR + 34, y1: yBot + 26, y2: yBot + 26,
+      stroke: "var(--ink-3)", "stroke-width": 1, "stroke-dasharray": "4 3" }));
+    svg.appendChild(el("text", { x: (xL + xR) / 2, y: yBot + 42, "text-anchor": "middle", "font-size": 11, fill: "var(--ink-3)" },
+      "simultaneous SL(2,R) Mobius map on both: gauge — the relative configuration is what is observable"));
+
+    /* time arrow */
+    svg.appendChild(el("line", { x1: 70, x2: 70, y1: yBot, y2: yTop + 6, stroke: "var(--ink-3)", "stroke-width": 1 }));
+    svg.appendChild(el("path", { d: "M66 " + (yTop + 10) + " L70 " + (yTop + 1) + " L74 " + (yTop + 10),
+      fill: "none", stroke: "var(--ink-3)", "stroke-width": 1 }));
+    svg.appendChild(el("text", { x: 70, y: yBot + 18, "text-anchor": "middle", "font-size": 11 }, "boundary time u"));
+
+    /* pulse on the right boundary at u_* */
+    var yStar = 140;
+    var pd = "M" + xR + " " + yStar;
+    for (var i = 0; i <= 60; i++) {
+      var s = -3 + 6 * i / 60;
+      var amp = 46 * s * Math.exp(-s * s / 2) / 0.6065;
+      pd += "L" + (xR + Math.min(58, Math.abs(amp)) * (amp < 0 ? -1 : 1)).toFixed(1) + " " + (yStar - s * 11).toFixed(1);
+    }
+    svg.appendChild(el("path", { d: pd, class: "ser2", fill: "none", "stroke-width": 2 }));
+    svg.appendChild(el("circle", { cx: xR, cy: yStar, r: 3.5, fill: "var(--ink)" }));
+    svg.appendChild(el("text", { x: xR + 70, y: yStar + 4, "font-size": 12, fill: "var(--ink-2)" }, "compact right-boundary"));
+    svg.appendChild(el("text", { x: xR + 70, y: yStar + 19, "font-size": 12, fill: "var(--ink-2)" }, "source P(u) at u\u2093"));
+
+    /* readout at time T */
+    var yT = 62;
+    svg.appendChild(el("line", { x1: xL, x2: xR, y1: yT, y2: yT, class: "ser1", "stroke-width": 2, "stroke-dasharray": "6 4" }));
+    svg.appendChild(el("circle", { cx: xL, cy: yT, r: 4, fill: "var(--s1)" }));
+    svg.appendChild(el("circle", { cx: xR, cy: yT, r: 4, fill: "var(--s1)" }));
+    svg.appendChild(el("text", { x: (xL + xR) / 2, y: yT - 12, "text-anchor": "middle", "font-size": 12, fill: "var(--s1)" },
+      "allowed cross-boundary observable G_LR, read at time T"));
+
+    svg.appendChild(el("text", { x: xR + 70, y: yStar - 48, "font-size": 11, fill: "var(--ink-3)" }, "no inter-copy interaction"));
+    svg.appendChild(el("text", { x: xR + 70, y: yStar - 34, "font-size": 11, fill: "var(--ink-3)" }, "is assumed in this protocol"));
+
+    clear(host);
+    host.appendChild(svg);
+  }
+
+  /* =========================================================================
+     Exhibit B : delta G_LR, two models, with residual strip
+     ======================================================================== */
+
+  var stateRow = "5", stateFit = "both", stateHor = 2;
+
+  function drawDG() {
+    var host = document.getElementById("chart-dg");
+    if (!host) return;
+    var r = D.rows[stateRow], m = r.delta_G_model;
+    var T = D.late_time_grid, yv = r.delta_G_LR;
+    var fitT = r.fit_time_grid, T0 = fitT[0];
+    var fitY = yv.slice(1);
+    var stats = fitStats(fitT, fitY, m);
+
+    var W = 880, H = 440, L = 78, R = 104, TOP = 16;
+    var mainB = 286, resT = 328, resB = 404;
+    var xd0 = 0, xd1 = 43;
+    var X = function (v) { return L + (v - xd0) / (xd1 - xd0) * (W - L - R); };
+
+    var all = yv.concat([m.constant]);
+    var lo = Math.floor(Math.log10(Math.min.apply(null, all))) - 1;
+    var hi = Math.ceil(Math.log10(Math.max.apply(null, all)));
+    var Y = function (v) { return mainB - (Math.log10(v) - lo) / (hi - lo) * (mainB - TOP); };
+
+    var res = fitT.map(function (t, i) {
+      return {
+        t: t,
+        exp: Math.abs(fitY[i] - modelAt(m, t, T0)),
+        con: Math.abs(fitY[i] - m.constant)
+      };
+    });
+    var rall = [];
+    res.forEach(function (p) { if (p.exp > 0) rall.push(p.exp); rall.push(p.con); });
+    var rlo = Math.floor(Math.log10(Math.min.apply(null, rall))) - 1;
+    var rhi = Math.ceil(Math.log10(Math.max.apply(null, rall))) + 1;
+    var RY = function (v) { return resB - (Math.log10(v) - rlo) / (rhi - rlo) * (resB - resT); };
+
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img",
+      "aria-label": "The absolute two-sided correlator difference against detector time on a logarithmic axis, falling by fifteen decades, with a constant model that cannot follow it, and a residual panel." });
+
+    logTicks(lo, hi, 4).forEach(function (k) {
+      svg.appendChild(el("line", { class: "gridline", x1: L, x2: W - R, y1: Y(Math.pow(10, k)), y2: Y(Math.pow(10, k)) }));
+      svg.appendChild(el("text", { x: L - 10, y: Y(Math.pow(10, k)) + 4, "text-anchor": "end", "font-size": 11 }, "10" + supMinus(k).replace(/[0-9\u2212]/g, function (c) {
+        return { "0": "\u2070", "1": "\u00b9", "2": "\u00b2", "3": "\u00b3", "4": "\u2074", "5": "\u2075", "6": "\u2076", "7": "\u2077", "8": "\u2078", "9": "\u2079", "\u2212": "\u207b" }[c];
+      })));
+    });
+    svg.appendChild(el("line", { class: "ax-line", x1: L, x2: W - R, y1: mainB, y2: mainB }));
+
+    /* declared finite-C proxy: everything to its right is outside the results
+       file's own conservative scaling marker, and is hatched rather than
+       silently drawn as if certified. */
+    var Tmax = r.detector_window.maximum_usable_T;
+    var defs = el("defs", {});
+    var pat = el("pattern", { id: "hatch-dg", width: 7, height: 7, patternUnits: "userSpaceOnUse",
+      patternTransform: "rotate(45)" });
+    pat.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: 7, stroke: "var(--rule-2)", "stroke-width": 1, opacity: 0.5 }));
+    defs.appendChild(pat);
+    svg.appendChild(defs);
+    svg.appendChild(el("rect", { x: X(Tmax), y: TOP, width: (W - R) - X(Tmax), height: mainB - TOP,
+      fill: "url(#hatch-dg)" }));
+    svg.appendChild(el("rect", { x: X(Tmax), y: resT, width: (W - R) - X(Tmax), height: resB - resT,
+      fill: "url(#hatch-dg)" }));
+    svg.appendChild(el("line", { x1: X(Tmax), x2: X(Tmax), y1: TOP, y2: mainB,
+      stroke: "var(--ink-3)", "stroke-width": 1, "stroke-dasharray": "2 4" }));
+    svg.appendChild(el("text", { x: X(Tmax) + 6, y: TOP + 12, "font-size": 10, fill: "var(--ink-3)" },
+      "\u03baT\u2098\u2090\u2093 = \u221a(\u03baC) = " + fix(r.detector_window.kappa_T_at_max, 3) + "  \u2014 hatched: beyond the conservative marker"));
+
+    /* models */
+    if (stateFit === "both" || stateFit === "exp") {
+      svg.appendChild(el("line", { class: "ser1", x1: X(T0), y1: Y(modelAt(m, T0, T0)),
+        x2: X(40), y2: Y(modelAt(m, 40, T0)), "stroke-width": 2 }));
+      svg.appendChild(el("text", { x: X(40) + 8, y: Y(modelAt(m, 40, T0)) + 4, "font-size": 11, fill: "var(--s1)" }, "exponential"));
+    }
+    if (stateFit === "both" || stateFit === "const") {
+      svg.appendChild(el("line", { class: "ser2", x1: X(T0), y1: Y(m.constant), x2: X(40), y2: Y(m.constant), "stroke-width": 2 }));
+      svg.appendChild(el("text", { x: X(40) + 8, y: Y(m.constant) + 4, "font-size": 11, fill: "var(--s2)" }, "constant"));
+    }
+
+    /* data marks */
+    T.forEach(function (t, i) {
+      var inFit = fitT.indexOf(t) >= 0;
+      svg.appendChild(el("circle", { cx: X(t), cy: Y(yv[i]), r: 5, class: inFit ? "mark-data" : "mark-out" }));
+      svg.appendChild(el("text", { x: X(t), y: mainB + 18, "text-anchor": "middle", "font-size": 11 }, "T = " + t));
+    });
+
+    /* residual strip */
+    svg.appendChild(el("text", { x: W - R, y: resT - 10, "text-anchor": "end", "font-size": 10, fill: "var(--ink-3)" },
+      "RESIDUAL  | data \u2212 model |"));
+    logTicks(rlo, rhi, 6).forEach(function (k) {
+      svg.appendChild(el("line", { class: "gridline", x1: L, x2: W - R, y1: RY(Math.pow(10, k)), y2: RY(Math.pow(10, k)) }));
+      svg.appendChild(el("text", { x: L - 10, y: RY(Math.pow(10, k)) + 4, "text-anchor": "end", "font-size": 10 }, "1e" + k));
+    });
+    svg.appendChild(el("line", { class: "ax-line", x1: L, x2: W - R, y1: resB, y2: resB }));
+    res.forEach(function (p) {
+      if ((stateFit === "both" || stateFit === "const")) {
+        svg.appendChild(el("line", { x1: X(p.t) - 7, x2: X(p.t) + 7, y1: RY(p.con), y2: RY(p.con), class: "ser2", "stroke-width": 3 }));
+      }
+      if ((stateFit === "both" || stateFit === "exp") && p.exp > 0) {
+        svg.appendChild(el("line", { x1: X(p.t) - 7, x2: X(p.t) + 7, y1: RY(p.exp), y2: RY(p.exp), class: "ser1", "stroke-width": 3 }));
+      }
+    });
+    svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 6, "text-anchor": "middle", "font-size": 11 }, "detector time T"));
+
+    /* hover */
+    var tip = attachTip(host.parentNode);
+    T.forEach(function (t, i) {
+      var inFit = fitT.indexOf(t) >= 0;
+      var h = el("circle", { class: "hit", cx: X(t), cy: Y(yv[i]), r: 17 });
+      var txt = "T = " + t + "\n\u03b4G_LR = " + sci(yv[i], 6);
+      if (inFit) {
+        txt += "\nexponential model = " + sci(modelAt(m, t, T0), 6) +
+               "\nconstant model    = " + sci(m.constant, 6);
+      } else {
+        txt += "\n(outside the fit window)";
+      }
+      h.addEventListener("mousemove", function (ev) { tip.show(ev, txt); });
+      h.addEventListener("mouseleave", tip.hide);
+      svg.appendChild(h);
+    });
+
+    clear(host);
+    host.appendChild(svg);
+
+    /* Classify the fitted points against the recorded marker. The 1e-9 band is
+       a DISPLAY convention only — it says "these two numbers agree to the
+       precision the marker is recorded at" — and is not a physical tolerance. */
+    var nBeyond = 0, nAt = 0;
+    fitT.forEach(function (t) {
+      if (Math.abs(t / Tmax - 1) < 1e-9) nAt++;
+      else if (t > Tmax) nBeyond++;
+    });
+    var proxySentence;
+    if (nBeyond + nAt === fitT.length && nAt === 0) {
+      proxySentence = "At this \\(C\\), <b>every fitted point lies beyond that marker</b>, so the fit here is a diagnostic, not a finite-\\(C\\) validity certificate. ";
+    } else if (nBeyond === 0 && nAt === 0) {
+      proxySentence = "At this \\(C\\), every fitted point lies within the marker. ";
+    } else {
+      var nIn = fitT.length - nBeyond - nAt;
+      proxySentence = "At this \\(C\\), " + nIn + " of the " + fitT.length +
+        " fitted points " + (nIn === 1 ? "lies" : "lie") + " within the marker" +
+        (nAt ? " and " + (nAt === 1 ? "one sits" : nAt + " sit") + " on it, to the precision the marker is recorded at" : "") +
+        "; the remaining " + nBeyond + " " + (nBeyond === 1 ? "lies" : "lie") +
+        " beyond it, where the fit is a diagnostic rather than a finite-\\(C\\) validity certificate. ";
+    }
+
+    document.getElementById("legend-b").innerHTML =
+      '<span><i class="swatch dot"></i>computed \u03b4G_LR (in the fit window)</span>' +
+      '<span><i class="swatch dot" style="border-style:dashed;border-color:var(--ink-3)"></i>computed, outside the fit window</span>' +
+      '<span><i class="swatch hatch"></i>beyond the finite-\u2009C proxy \u03baT\u2098\u2090\u2093</span>' +
+      '<span><i class="swatch" style="background:var(--s1)"></i>exponential model</span>' +
+      '<span><i class="swatch" style="background:var(--s2)"></i>constant model</span>';
+
+    var cap = document.getElementById("cap-dg");
+    cap.innerHTML =
+      "Run " + stateRow + ": energy-balanced derivative-Gaussian pulse, \\(C=" + r.C + "\\), \\(\\varepsilon=" + r.epsilon + "\\), \\(\\Delta=" + D.operator_dimension + "\\). " +
+      "Two distinctions are drawn separately. <em>Marker style</em> says whether a computed point was fitted: the filled points are the four-point fit window, and \\(T=2\\) is computed but not fitted, so it is open. " +
+      "<em>Hatching</em> says whether a region lies beyond \\(\\kappa T_{\\max}=\\sqrt{\\kappa C}=" + fix(r.detector_window.kappa_T_at_max, 3) + "\\), the results file&rsquo;s own conservative marker, recorded there as a " +
+      "&ldquo;conservative scaling convention, not a uniform finite-C error bound&rdquo;. " +
+      proxySentence +
+      "The claim itself lives in the iterated limit \\(\\kappa(T-u_*)\\to\\infty\\) with \\((T-u_*)/C\\to0\\), not at a finite endpoint. " +
+      "The observable falls through " + Math.round(Math.log10(yv[0] / yv[yv.length - 1])) + " decades between \\(T=2\\) and \\(T=40\\).";
+    typeset(cap);
+
+    /* readout */
+    var ro = document.getElementById("fit-readout");
+    ro.innerHTML =
+      '<div class="tbl-wrap"><table class="data"><thead><tr>' +
+      "<th>FIT STATISTIC</th><th>RECOMPUTED HERE</th><th>STORED IN THE RESULTS FILE</th></tr></thead><tbody>" +
+      rowHTML("RSS, constant", sci(stats.rss_constant, 10), sci(m.rss_constant, 10)) +
+      rowHTML("RSS, exponential", sci(stats.rss_exponential, 10), sci(m.rss_exponential, 10)) +
+      rowHTML("AIC, constant", fix(stats.aic_constant, 10), fix(m.aic_constant, 10)) +
+      rowHTML("AIC, exponential", fix(stats.aic_exponential, 10), fix(m.aic_exponential, 10)) +
+      rowHTML("RSS ratio, constant / exponential", sci(stats.rss_constant / stats.rss_exponential, 6), sci(m.rss_constant / m.rss_exponential, 6)) +
+      rowHTML("AIC advantage of the exponential", fix(stats.aic_constant - stats.aic_exponential, 6), fix(m.aic_constant - m.aic_exponential, 6)) +
+      rowHTML("selected model", stats.aic_constant <= stats.aic_exponential ? "constant" : "exponential", m.winner) +
+      "</tbody></table></div>" +
+      '<p class="instrument-note">The middle column is computed in your browser from the embedded arrays, using the model forms and the ' +
+      "AIC convention in the campaign source: \\(\\mathrm{AIC}=n\\log(\\mathrm{RSS}/\\sum y^2)+2k\\), with \\(k=1\\) for the constant and " +
+      "\\(k=2\\) for the exponential. It agrees with the stored column to the last stored digit. " +
+      "The fitted decay rate is <span class='num'>" + fix(m.decay_rate, 10) + "</span>; the rate predicted by the late expansion is \\(2\\Delta\\kappa=" +
+      fix(2 * D.operator_dimension * r.detector_window.kappa_effective, 10) + "\\). They differ by <span class='num'>" +
+      fix(Math.abs(m.decay_rate / (2 * D.operator_dimension * r.detector_window.kappa_effective) - 1) * 100, 4) +
+      "%</span>, and the expansion carries a relative correction of order \\(e^{-\\kappa(T-u_*)}\\), which is <span class='num'>" +
+      sci(Math.exp(-r.detector_window.kappa_effective * T0), 3) + "</span> at the first fit time." +
+      "<span class='derived'>Derived here from sample <code>rows." + stateRow + ".delta_G_LR</code> on <code>fit_time_grid</code>, " +
+      "using the constant and exponential model forms above and AIC = n·log(RSS/Σy²) + 2k. Right-hand column: stored " +
+      "<code>delta_G_model</code> fields.</span></p>";
+    typeset(ro);
+
+    buildDGTable();
+  }
+  function rowHTML(a, b, c) {
+    return "<tr><td class='key'>" + a + "</td><td>" + b + "</td><td>" + c + "</td></tr>";
+  }
+
+  function buildDGTable() {
+    var t = document.getElementById("dg-table");
+    if (!t) return;
+    var r = D.rows[stateRow], m = r.delta_G_model, mu = r.delta_u_model;
+    var T0 = r.fit_time_grid[0];
+    var h = "<thead><tr><th>T</th><th>\u03b4G_LR (COMPUTED)</th><th>EXP. MODEL</th><th>CONST. MODEL</th><th>\u0394u_rel (COMPUTED)</th><th>IN FIT WINDOW</th></tr></thead><tbody>";
+    D.late_time_grid.forEach(function (T, i) {
+      var inFit = r.fit_time_grid.indexOf(T) >= 0;
+      h += "<tr><td class='key'>" + T + "</td><td>" + sci(r.delta_G_LR[i], 10) + "</td><td>" +
+        (inFit ? sci(modelAt(m, T, T0), 10) : "\u2014") + "</td><td>" + (inFit ? sci(m.constant, 10) : "\u2014") +
+        "</td><td>" + sci(r.delta_u_rel[i], 10) + "</td><td>" + (inFit ? "yes" : "no") + "</td></tr>";
+    });
+    h += "</tbody>";
+    t.innerHTML = h;
+  }
+
+  /* =========================================================================
+     Exhibit B' : the calibrated ratio
+     ======================================================================== */
+
+  function drawDU() {
+    var host = document.getElementById("chart-du");
+    if (!host) return;
+    var r = D.rows[stateRow], mu = r.delta_u_model;
+    var T = D.late_time_grid, yv = r.delta_u_rel;
+    var fitT = r.fit_time_grid, T0 = fitT[0];
+
+    var W = 880, H = 310, L = 92, R = 104, TOP = 34, B = 62;
+    var X = function (v) { return L + v / 43 * (W - L - R); };
+    var lo = Math.min.apply(null, yv), hi = Math.max.apply(null, yv);
+    var pad = (hi - lo) * 0.22;
+    var y0 = lo - pad, y1 = hi + pad;
+    var Y = function (v) { return (H - B) - (v - y0) / (y1 - y0) * (H - B - TOP); };
+    var mult = Math.pow(10, Math.floor(Math.log10(hi)));
+
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img",
+      "aria-label": "The calibrated relative delay against detector time, rising quickly and then flat within the plot resolution." });
+
+    var k;
+    for (k = 0; k <= 4; k++) {
+      var v = y0 + (y1 - y0) * k / 4;
+      svg.appendChild(el("line", { class: "gridline", x1: L, x2: W - R, y1: Y(v), y2: Y(v) }));
+      svg.appendChild(el("text", { x: L - 10, y: Y(v) + 4, "text-anchor": "end", "font-size": 11 }, fix(v / mult, 4)));
+    }
+    /* same finite-C proxy marker and hatching as Exhibit B, so the flatter
+       graphic cannot visually erase its own scope */
+    var Tmax = r.detector_window.maximum_usable_T;
+    var defsU = el("defs", {});
+    var patU = el("pattern", { id: "hatch-du", width: 7, height: 7, patternUnits: "userSpaceOnUse",
+      patternTransform: "rotate(45)" });
+    patU.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: 7, stroke: "var(--rule-2)", "stroke-width": 1, opacity: 0.5 }));
+    defsU.appendChild(patU);
+    svg.appendChild(defsU);
+    svg.appendChild(el("rect", { x: X(Tmax), y: TOP, width: (W - R) - X(Tmax), height: (H - B) - TOP,
+      fill: "url(#hatch-du)" }));
+    svg.appendChild(el("line", { x1: X(Tmax), x2: X(Tmax), y1: TOP, y2: H - B,
+      stroke: "var(--ink-3)", "stroke-width": 1, "stroke-dasharray": "2 4" }));
+    svg.appendChild(el("text", { x: X(Tmax) + 6, y: TOP - 4, "font-size": 10, fill: "var(--ink-3)" },
+      "κTₘₐₓ = " + fix(r.detector_window.kappa_T_at_max, 3) + " — hatched: beyond the conservative marker"));
+
+    svg.appendChild(el("line", { class: "ax-line", x1: L, x2: W - R, y1: H - B, y2: H - B }));
+    T.forEach(function (t) {
+      svg.appendChild(el("text", { x: X(t), y: H - B + 18, "text-anchor": "middle", "font-size": 11 }, "T = " + t));
+    });
+    svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 8, "text-anchor": "middle", "font-size": 11 }, "detector time T"));
+    svg.appendChild(el("text", { x: L - 10, y: TOP - 14, "text-anchor": "end", "font-size": 10, fill: "var(--ink-3)" },
+      "\u00d7 " + sci(mult, 0)));
+
+    svg.appendChild(el("line", { class: "ser2", x1: X(T0), y1: Y(mu.constant), x2: X(40), y2: Y(mu.constant), "stroke-width": 2 }));
+    svg.appendChild(el("text", { x: X(40) + 8, y: Y(mu.constant) + 4, "font-size": 11, fill: "var(--s2)" }, "constant"));
+    svg.appendChild(el("line", { class: "ser1", x1: X(T0), y1: Y(modelAt(mu, T0, T0)), x2: X(40), y2: Y(modelAt(mu, 40, T0)),
+      "stroke-width": 2, "stroke-dasharray": "5 4" }));
+    svg.appendChild(el("text", { x: X(40) + 8, y: Y(modelAt(mu, 40, T0)) + 18, "font-size": 11, fill: "var(--s1)" }, "exponential"));
+
+    /* No connector between the computed points: five samples are five samples,
+       and a line through them would be an interpolation this page does not own. */
+    T.forEach(function (t, i) {
+      var inFit = fitT.indexOf(t) >= 0;
+      svg.appendChild(el("circle", { cx: X(t), cy: Y(yv[i]), r: 5, class: inFit ? "mark-data" : "mark-out" }));
+    });
+
+    var tip = attachTip(host.parentNode);
+    T.forEach(function (t, i) {
+      var h = el("circle", { class: "hit", cx: X(t), cy: Y(yv[i]), r: 17 });
+      var txt = "T = " + t + "\n\u0394u_rel = " + sci(yv[i], 10);
+      h.addEventListener("mousemove", function (ev) { tip.show(ev, txt); });
+      h.addEventListener("mouseleave", tip.hide);
+      svg.appendChild(h);
+    });
+
+    clear(host);
+    host.appendChild(svg);
+
+    document.getElementById("legend-u").innerHTML =
+      '<span><i class="swatch dot"></i>computed \u0394u_rel (in the fit window)</span>' +
+      '<span><i class="swatch dot" style="border-style:dashed;border-color:var(--ink-3)"></i>computed, outside the fit window</span>' +
+      '<span><i class="swatch hatch"></i>beyond the finite-\u2009C proxy \u03baT\u2098\u2090\u2093</span>' +
+      '<span><i class="swatch" style="background:var(--s2)"></i>constant model (selected)</span>' +
+      '<span><i class="swatch" style="background:var(--s1)"></i>exponential model (rejected)</span>';
+
+    var cap = document.getElementById("cap-du");
+    cap.innerHTML =
+      "Same run, same four fitted points, opposite outcome: the constant model wins by \\(\\Delta\\mathrm{AIC}=" +
+      fix(mu.aic_exponential - mu.aic_constant, 4) + "\\) (RSS <span class='num'>" + sci(mu.rss_constant, 6) + "</span> against <span class='num'>" + sci(mu.rss_exponential, 6) + "</span>). " +
+      "The exponential model&rsquo;s fitted rate is <span class='num'>" + fix(mu.decay_rate, 6) + "</span> &mdash; the first point of the rate grid the campaign code searches, which runs from \\(10^{-4}\\) to \\(5\\). " +
+      "In other words the exponential can only match these points by being flat. " +
+      "The five computed values are drawn as marks and are not joined: only the two labelled fitted models are lines here. " +
+      "Four points are four points, and the theorem, not the model selection, is what carries the claim; " +
+      "the fit is here because it is the comparison the code actually performs.";
+    typeset(cap);
+  }
+
+  /* =========================================================================
+     Cost table
+     ======================================================================== */
+
+  function buildCostTable() {
+    var t = document.getElementById("cost-table");
+    if (!t) return;
+    var h = "<caption style='caption-side:bottom;text-align:left;font-family:var(--mono);font-size:0.6875rem;color:var(--ink-3);padding-top:0.55rem'>" +
+      "Copied value-for-value from the stored detector_window fields of rows 5 and 7; nothing on this line is derived here.</caption>" +
+      "<thead><tr><th>RUN</th><th>\u03baT\u2098\u2090\u2093</th><th>T\u2098\u2090\u2093</th><th>TARGET ERROR \u03b7</th><th>M_shots ESTIMATE</th></tr></thead><tbody>";
+    ["5", "7"].forEach(function (k) {
+      var r = D.rows[k], w = r.detector_window;
+      h += "<tr><td class='key'>balanced, C = " + r.C + "</td><td>" + fix(w.kappa_T_at_max, 5) + "</td><td>" +
+        fix(w.maximum_usable_T, 5) + "</td><td>" + sci(w.sample_cost_target_eta, 6) + "</td><td>" +
+        sci(w.sample_cost_for_10pct_late_delta, 6) + "</td></tr>";
+    });
+    h += "</tbody>";
+    t.innerHTML = h;
+  }
+
+  /* =========================================================================
+     Circularity table : 1/(1 + omega^2), exactly
+     ======================================================================== */
+
+  function buildCircTable() {
+    var t = document.getElementById("circ-table");
+    if (!t) return;
+    var om = D.rows["5"].dc.omega;
+    var h = "<thead><tr><th>\u03c9</th><th>1 / (1 + \u03c9\u00b2) &mdash; WHAT THE TRANSFORM RETURNS FOR A CONSTANT RESPONSE</th><th>DISTANCE FROM 1</th></tr></thead><tbody>";
+    om.forEach(function (w) {
+      var v = 1 / (1 + w * w);
+      h += "<tr><td class='key'>" + w + "</td><td>" + fix(v, 10) + "</td><td>" + sci(1 - v, 4) + "</td></tr>";
+    });
+    h += "<tr><td class='key'>\u2192 0</td><td class='bad'>1.0000000000</td><td>0</td></tr></tbody>";
+    t.innerHTML = h;
+  }
+
+  /* =========================================================================
+     Exhibit C : extrapolation to zero frequency
+     ======================================================================== */
+
+  function lsqIntercept(xs, ys) {
+    var n = xs.length, sx = 0, sy = 0, sxx = 0, sxy = 0, i;
+    for (i = 0; i < n; i++) { sx += xs[i]; sy += ys[i]; sxx += xs[i] * xs[i]; sxy += xs[i] * ys[i]; }
+    var den = n * sxx - sx * sx;
+    return { slope: (n * sxy - sx * sy) / den, intercept: (sy * sxx - sx * sxy) / den };
+  }
+
+  function drawDC() {
+    var host = document.getElementById("chart-dc");
+    if (!host) return;
+    var r = D.rows[stateRow], dc = r.dc;
+    var om = dc.omega, res = dc.residue_by_horizon[stateHor];
+    var xs = om.map(function (w) { return w * w; });
+    var fitX = xs.slice(1), fitY = res.slice(1);
+    var line = lsqIntercept(fitX, fitY);
+
+    var W = 880, H = 360, L = 108, R = 132, TOP = 34, B = 82;
+    /* The axis covers the extrapolated range only. omega = 0.2 (omega^2 = 0.04) is
+       computed, is excluded from the extrapolation, and lies off this axis; it is
+       reported in words beneath the plot rather than compressed into it. */
+    var xmax = fitX[0] * 1.16;
+    var X = function (v) { return L + v / xmax * (W - L - R); };
+    var pts = fitY.concat([line.intercept, dc.late_detector]);
+    var lo = Math.min.apply(null, pts), hi = Math.max.apply(null, pts);
+    var pad = (hi - lo) * 0.16;
+    var y0 = lo - pad, y1 = hi + pad;
+    var Y = function (v) { return (H - B) - (v - y0) / (y1 - y0) * (H - B - TOP); };
+    var mult = Math.pow(10, Math.floor(Math.log10(hi)));
+
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, width: W, height: H, role: "img",
+      "aria-label": "The transformed residue plotted against omega squared, lying on a straight line whose intercept at zero frequency coincides with the independently computed late detector value." });
+
+    var k;
+    for (k = 0; k <= 4; k++) {
+      var v = y0 + (y1 - y0) * k / 4;
+      svg.appendChild(el("line", { class: "gridline", x1: L, x2: W - R, y1: Y(v), y2: Y(v) }));
+      svg.appendChild(el("text", { x: L - 10, y: Y(v) + 4, "text-anchor": "end", "font-size": 11 }, fix(v / mult, 4)));
+    }
+    svg.appendChild(el("line", { class: "ax-line", x1: L, x2: W - R, y1: H - B, y2: H - B }));
+    svg.appendChild(el("line", { class: "ax-line", x1: L, x2: L, y1: TOP, y2: H - B }));
+    svg.appendChild(el("text", { x: L - 10, y: TOP - 14, "text-anchor": "end", "font-size": 10, fill: "var(--ink-3)" }, "\u00d7 " + sci(mult, 0)));
+
+    om.slice(1).forEach(function (w, j, arr) {
+      /* the lowest frequency sits almost on top of the origin in omega^2,
+         so its label drops to a second row to clear the "omega -> 0" mark */
+      svg.appendChild(el("text", { x: X(w * w), y: H - B + (j === arr.length - 1 ? 34 : 18), "text-anchor": "middle", "font-size": 11 },
+        "\u03c9 = " + w));
+    });
+    svg.appendChild(el("text", { x: L, y: H - B + 18, "text-anchor": "middle", "font-size": 11, fill: "var(--s3)" }, "\u03c9 \u2192 0"));
+    svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 26, "text-anchor": "middle", "font-size": 11 }, "\u03c9\u00b2  (the extrapolation variable)"));
+    svg.appendChild(el("text", { x: (L + W - R) / 2, y: H - 8, "text-anchor": "middle", "font-size": 10, fill: "var(--ink-3)" },
+      "\u03c9 = 0.2 (\u03c9\u00b2 = 0.04) is computed but excluded, and lies off this axis \u2014 residue " + sci(res[0], 6)));
+
+    /* independently computed late detector */
+    svg.appendChild(el("line", { x1: L, x2: W - R, y1: Y(dc.late_detector), y2: Y(dc.late_detector),
+      stroke: "var(--ink)", "stroke-width": 1.5, "stroke-dasharray": "6 4" }));
+    svg.appendChild(el("text", { x: W - R + 8, y: Y(dc.late_detector) + 4, "font-size": 11, fill: "var(--ink)" }, "\u0394u_rel(40)"));
+
+    /* fitted line, only across the fitted range */
+    svg.appendChild(el("line", { class: "ser1", x1: X(0), y1: Y(line.intercept),
+      x2: X(fitX[0]), y2: Y(line.intercept + line.slope * fitX[0]), "stroke-width": 2 }));
+
+    /* points */
+    fitX.forEach(function (xv, j) {
+      svg.appendChild(el("circle", { cx: X(xv), cy: Y(fitY[j]), r: 5, class: "mark-data" }));
+    });
+    svg.appendChild(el("circle", { cx: X(0), cy: Y(line.intercept), r: 6, fill: "var(--s3)", stroke: "var(--panel)", "stroke-width": 2 }));
+    svg.appendChild(el("text", { x: X(0) + 6, y: Y(line.intercept) + 44, "font-size": 11, fill: "var(--s3)" }, "intercept"));
+
+    var tip = attachTip(host.parentNode);
+    fitX.forEach(function (xv, j) {
+      var h = el("circle", { class: "hit", cx: X(xv), cy: Y(fitY[j]), r: 17 });
+      var txt = "\u03c9 = " + om[j + 1] + "\n\u03c9\u00b2 = " + xv + "\nresidue = " + sci(fitY[j], 12);
+      h.addEventListener("mousemove", function (ev) { tip.show(ev, txt); });
+      h.addEventListener("mouseleave", tip.hide);
+      svg.appendChild(h);
+    });
+
+    clear(host);
+    host.appendChild(svg);
+
+    document.getElementById("legend-c").innerHTML =
+      '<span><i class="swatch dot"></i>transformed residue (used in the extrapolation)</span>' +
+      '<span><i class="swatch" style="background:var(--s1)"></i>straight line in \u03c9\u00b2</span>' +
+      '<span><i class="swatch" style="background:var(--s3);border-radius:50%;width:9px;height:9px"></i>intercept at \u03c9 \u2192 0</span>' +
+      '<span><i class="swatch" style="background:var(--ink)"></i>independently computed \u0394u_rel(40)</span>';
+
+    var cap = document.getElementById("cap-dc");
+    cap.innerHTML =
+      "Run " + stateRow + ", numerical horizon \\(T_h=" + dc.horizon[stateHor] + "\\). The line is the least-squares fit in \\(\\omega^2\\) through " +
+      "\\(\\omega=0.1,\\,0.05,\\,0.025\\) &mdash; the extrapolation recorded in the results file as " +
+      "&ldquo;linear intercept in omega^2 on 0.1,0.05,0.025&rdquo;. The axis therefore covers the extrapolated range only; " +
+      "the computed \\(\\omega=0.2\\) point is excluded from the fit and lies off it, with its value stated beneath the plot rather than " +
+      "compressed into it. The chart cannot resolve the agreement between the intercept and the dashed reference &mdash; that gap is " +
+      fix(Math.abs(line.intercept / dc.late_detector - 1) * 1e5, 1) + " parts in a hundred thousand &mdash; so the digits are below.";
+    typeset(cap);
+
+    /* the three routes, and the two ratios that compare them */
+    function put(id, txt) { var n = document.getElementById(id); if (n) n.textContent = txt; }
+    put("route-late", sci(dc.late_detector, 9));
+    put("route-dc", sci(line.intercept, 9));
+    put("route-vertex", sci(dc.vertex_soft_prediction, 9));
+    put("ratio-late", fix(line.intercept / dc.late_detector, 7));
+    put("ratio-vertex", fix(line.intercept / dc.vertex_soft_prediction, 7));
+
+    var ro = document.getElementById("dc-readout");
+    var vertexPct = Math.abs(line.intercept / dc.vertex_soft_prediction - 1) * 100;
+    ro.innerHTML =
+      '<div class="tbl-wrap"><table class="data"><thead><tr><th>QUANTITY</th><th>RECOMPUTED HERE</th><th>STORED IN THE RESULTS FILE</th></tr></thead><tbody>' +
+      rowHTML("intercept at \u03c9 \u2192 0", sci(line.intercept, 12), sci(dc.extrapolated_by_horizon[stateHor], 12)) +
+      rowHTML("independently computed \u0394u_rel(40)", "\u2014", sci(dc.late_detector, 12)) +
+      rowHTML("intercept / \u0394u_rel(40)", fix(line.intercept / dc.late_detector, 10),
+        stateHor === 2 ? fix(dc.extrapolated_late_ratio, 10) : "(stored for T_h = 80)") +
+      rowHTML("linear one-soft vertex prediction", "\u2014", sci(dc.vertex_soft_prediction, 12)) +
+      rowHTML("intercept / vertex prediction", fix(line.intercept / dc.vertex_soft_prediction, 10),
+        stateHor === 2 ? fix(dc.extrapolated_vertex_ratio, 10) : "(stored for T_h = 80)") +
+      rowHTML("largest change from T_h = 20 to 80", sci(Math.abs(dc.extrapolated_by_horizon[2] / dc.extrapolated_by_horizon[0] - 1), 6), "\u2014") +
+      "</tbody></table></div>" +
+      '<p class="instrument-note">The middle column is the least-squares intercept computed in your browser from the embedded residues; ' +
+      "it reproduces the stored <code>extrapolated_by_horizon</code> value to within one unit in the last place, for every horizon. " +
+      "Two comparisons matter. The intercept agrees with the separately computed late detector to <span class='num'>" +
+      fix(Math.abs(line.intercept / dc.late_detector - 1) * 100, 5) + "%</span>. And it agrees with the <em>independently predicted</em> " +
+      "linear one-soft vertex amplitude to <span class='num'>" + fix(vertexPct, 6) + "%</span> at this \\(C\\) &mdash; " +
+      "0.011% at \\(C=10\\) and 0.0012% at \\(C=100\\). That second comparison is the soft-theorem side of the identity: " +
+      "a zero-frequency datum and a soft-vertex prediction, computed by routes that share no trajectory data, landing on the same number." +
+      "<span class='derived'>Derived here from sample <code>rows." + stateRow + ".dc.residue_by_horizon[" + stateHor + "]</code> at " +
+      "ω = 0.1, 0.05, 0.025, using a least-squares straight line in ω² and reading its intercept. Right-hand column and the two " +
+      "comparison targets: stored <code>extrapolated_by_horizon</code>, <code>late_detector</code>, <code>vertex_soft_prediction</code>.</span></p>";
+    typeset(ro);
+  }
+
+  /* =========================================================================
+     Comparator constructor : E = C kappa^2 / 2 for a reference the reader picks
+     ======================================================================== */
+
+  var cmpL = "i", cmpR = "i";
+
+  function drawComparator() {
+    var tbl = document.getElementById("cmp-table");
+    var out = document.getElementById("cmp-out");
+    if (!tbl || !out) return;
+
+    var base = D.ledger[1];                       /* top hat, C = 10, eps = 0.1 */
+    var C = base.C;
+    var ki = 2 * Math.PI / D.beta;                /* the prescribed initial exponent */
+    var kf = base.k_final;
+    var K = { i: ki, f: kf };
+    var E = function (k) { return C * k * k / 2; };
+
+    var pulsedL = E(ki), pulsedR = E(kf);
+    var refL = E(K[cmpL]), refR = E(K[cmpR]);
+    var okL = refL === pulsedL, okR = refR === pulsedR;
+
+    var kName = function (w) { return "κ<sub>" + w + "</sub>"; };
+    tbl.innerHTML =
+      "<thead><tr><th>RUN</th><th>LEFT κ</th><th>E_L = Cκ²/2</th><th>RIGHT κ</th><th>E_R = Cκ²/2</th></tr></thead><tbody>" +
+      "<tr><td class='key'>Pulsed (right-only)</td><td>" + kName("i") + "</td><td class='key'>" + fix(pulsedL, 10) +
+      "</td><td>" + kName("f") + "</td><td class='key'>" + fix(pulsedR, 10) + "</td></tr>" +
+      "<tr><td class='key'>Your reference</td><td>" + kName(cmpL) + "</td><td class='" + (okL ? "ok" : "bad") + "'>" + fix(refL, 10) +
+      "</td><td>" + kName(cmpR) + "</td><td class='" + (okR ? "ok" : "bad") + "'>" + fix(refR, 10) + "</td></tr>" +
+      "<tr><td class='key'>Difference</td><td>&mdash;</td><td class='" + (okL ? "ok" : "bad") + "'>" + (okL ? "0" : sci(refL - pulsedL, 6)) +
+      "</td><td>&mdash;</td><td class='" + (okR ? "ok" : "bad") + "'>" + (okR ? "0" : sci(refR - pulsedR, 6)) + "</td></tr></tbody>";
+
+    var cls, lead, body;
+    if (okL && okR) {
+      cls = "match";
+      lead = "Charges match — and the obstruction moves";
+      body = "<p>Both exactly conserved boundary energies agree, so D32&rsquo;s comparability precondition is met on paper. " +
+             "This pair is <b>algebraically matchable, but no implementable two-dot preparation is supplied</b> anywhere in the record. " +
+             "That is the actual obstruction, and it is why the unbalanced generalization of JT-noplat-abs is HELD rather than proved or refuted. " +
+             "The repair note names where such a preparation could be exhibited: a finite-\\(N\\) two-dot preparation.</p>";
+    } else if (!okL && okR) {
+      cls = "clash";
+      lead = "Left energy differs — this is the reference as submitted";
+      body = "<p>This is exactly the comparator the first submission used: both clocks reset to \\(\\kappa_f\\). The right-only pulse never touched " +
+             "the left boundary, so its left energy is unchanged; resetting it changes an exactly conserved allowed charge. The two runs sit in " +
+             "different charge sectors, and their difference is not a response to the pulse. The analytic lane retracted the conclusions drawn from it.</p>";
+    } else if (okL && !okR) {
+      cls = "clash";
+      lead = "Right energy differs — this is the untouched equilibrium";
+      body = "<p>Leaving both reference clocks at \\(\\kappa_i\\) is the plain equilibrium run. For an <em>unbalanced</em> pulse it is not comparable: " +
+             "the pulse changed the right energy and the reference did not. For an energy-balanced pulse \\(\\kappa_f=\\kappa_i\\) at leading order, " +
+             "and this row becomes the admissible comparator — which is why every surviving result is stated for balanced pulses.</p>";
+    } else {
+      cls = "clash";
+      lead = "Both energies differ";
+      body = "<p>Swapping the two exponents changes both sides at once. Neither exactly conserved boundary energy matches, so the comparability " +
+             "precondition fails twice over, and the difference of the two runs measures the change of preparation rather than the effect of the pulse.</p>";
+    }
+
+    out.className = "cmp-out " + cls;
+    out.innerHTML = "<span class='cmp-verdict'>" + lead + "</span>" + body +
+      "<p class='cmp-v'>" +
+      "<span>κ<sub>i</sub> = " + fix(ki, 10) + "</span>" +
+      "<span>κ<sub>f</sub> = " + fix(kf, 10) + "</span>" +
+      "<span>C = " + C + "</span></p>";
+    typeset(out);
+  }
+
+  /* =========================================================================
+     Charge ledger
+     ======================================================================== */
+
+  var ledgerPick = 0;
+
+  function buildLedger() {
+    var body = document.getElementById("ledger-body");
+    if (!body) return;
+    var h = "";
+    D.ledger.forEach(function (p) {
+      /* The sector is READ from the data, not inferred from the profile name or
+         from any tolerance invented in this page: _balance_scope carries the
+         adjudicated classification of critic r2, Objection 9. */
+      var bal = p._balance_scope === "leading-order balanced";
+      h += '<tr class="selectable' + (p.i === ledgerPick ? " pick" : "") + '" tabindex="0" data-i="' + p.i + '">' +
+        "<td class='key'>" + p.i + "</td><td class='key'>" + p.profile.replace(/_/g, " ") + "</td><td>" + p.C + "</td><td>" + p.epsilon +
+        "</td><td>" + sci(p.energy_change, 5) + "</td><td>" + fix(p.k_final, 10) + "</td><td class='" + (bal ? "ok" : "bad") + "'>" +
+        p._balance_scope + "</td></tr>";
+    });
+    body.innerHTML = h;
+    Array.prototype.forEach.call(body.querySelectorAll("tr"), function (tr) {
+      tr.addEventListener("click", function () { ledgerPick = +tr.getAttribute("data-i"); buildLedger(); });
+      tr.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ledgerPick = +tr.getAttribute("data-i"); buildLedger(); }
+      });
+    });
+    describeLedger();
+  }
+
+  function describeLedger() {
+    var p = D.ledger[ledgerPick];
+    var det = document.getElementById("ledger-detail");
+    var ER = p.C * p.k_final * p.k_final / 2;
+    var frac = Math.abs(p.energy_change) / ER;
+    var bal = p._balance_scope === "leading-order balanced";
+    det.innerHTML =
+      "<b>Run " + p.i + " &mdash; " + p.profile.replace(/_/g, " ") + ", \\(C=" + p.C + "\\), \\(\\varepsilon=" + p.epsilon + "\\).</b> " +
+      "Measured right-energy change \\(\\Delta E_R\\) = <span class='num'>" + sci(p.energy_change, 6) + "</span>. " +
+      "With \\(E_R=C\\kappa_f^{2}/2\\) = <span class='num'>" + sci(ER, 6) + "</span>, that is a fraction <span class='num'>" +
+      sci(frac, 4) + "</span> of the right energy. " +
+      (bal
+        ? "<span class='ok'>Balanced at leading order</span> &mdash; the pulse is constructed to cancel the energy flux on the unperturbed saddle, and " +
+          "the full run leaves a residual \\(\\Delta E_R\\) = <span class='num'>" + sci(p.energy_change, 3) + "</span>. That is the scope in which the " +
+          "record uses this row: a same-energy reference exists <em>to the retained leading Schwarzian order</em>, and the operational conclusions below " +
+          "are stated at that order and no further. No numerical tolerance is applied here; the classification is the adjudicated one from critic r2, " +
+          "Objection 9. Charge-jump residual <span class='num'>" + sci(p.charge_jump_error, 3) + "</span>, M&ouml;bius fit residual <span class='num'>" +
+          sci(p.mobius_fit_residual, 3) + "</span>."
+        : "<span class='bad'>Unbalanced.</span> No implementable preparation of a two-sided reference with this unequal measured pair \\((E_L,E_R)\\) " +
+          "is supplied anywhere in the record, so this run is a formal Schwarzian trajectory and DC diagnostic and licenses no detector conclusion. " +
+          "Its integration is sound &mdash; charge-jump residual <span class='num'>" + sci(p.charge_jump_error, 3) + "</span> &mdash; which is exactly " +
+          "the point: a correct computation of an inadmissible comparison.") +
+      "<span class='derived'>Sector read from the embedded <code>_balance_scope</code> field (source: critic r2, Objection 9). " +
+      "\\(E_R\\) and the fraction are derived here from <code>C</code> and <code>k_final</code> using \\(E=C\\kappa^{2}/2\\).</span>";
+    typeset(det);
+  }
+
+  /* =========================================================================
+     Decisions
+     ======================================================================== */
+
+  var SETTLE = {
+    "0": {
+      lead: { cls: "hit", text: "Noted \u2014 and this vote settles nothing. That is the point." },
+      shared:
+        "<p>Both are lasting consequences of what passed through, in ordinary speech. Neither answer follows from " +
+        "&ldquo;the effect is still there later&rdquo;, because that phrase never says <em>there in what</em>. An operational " +
+        "definition has to name three things: the observable, the comparison it is a difference of, and the order in which " +
+        "limits are taken. Until it does, the word carries no weight.</p>" +
+        "<p>The campaign wrote two definitions rather than argue about one word. They are below, and every ruling on this page " +
+        "turns on which of the two is in play.</p>",
+      byChoice: {
+        a: "<p><b>On the delay.</b> It is real and it is measurable &mdash; at the moment of arrival. But fix in advance any bounded " +
+           "observable near the detector. In the free run the displayed packet bound sends its expectation to zero like \\(1/t\\); " +
+           "under the restriction stated beside that bound &mdash; no bound-state component, asymptotically a free outgoing packet &mdash; " +
+           "the scattered run only shifts \\(t\\) by the delay, so it goes to zero too. The limit of the difference is zero.</p>",
+        b: "<p><b>On the displacement.</b> That is the answer the strict definition also gives, and the reason is worth stating " +
+           "explicitly: the calibrating object &mdash; the separation of two freely falling masses &mdash; does not decay. " +
+           "That is the property the black-hole case will turn out to lack.</p>",
+        c: "<p><b>On &lsquo;both&rsquo;.</b> Both are lasting in the loose sense, which is exactly why the loose sense is not " +
+           "usable. The strict definition separates them by asking which one leaves a nonzero limit in a <em>fixed, bounded</em> " +
+           "observable. Only the displacement does.</p>"
+      }
+    },
+    "1": {
+      correct: "b",
+      lead: {
+        hit: "That is the ruling the record reached \u2014 and it cost the campaign its strongest claim.",
+        miss: "The conservation law that was not checked."
+      },
+      shared:
+        "<p>Write out the two exactly conserved boundary energies. A right-only pulse changes the right clock and leaves the " +
+        "left one alone, so the pulsed run has \\((E_L,E_R)=(C\\kappa_i^2/2,\\;C\\kappa_f^2/2)\\). The reference as submitted " +
+        "reset <em>both</em> clocks to \\(\\kappa_f\\), giving \\((C\\kappa_f^2/2,\\;C\\kappa_f^2/2)\\). The two runs sit in " +
+        "different exactly-conserved charge sectors, and the comparability precondition fails before any limit is taken. " +
+        "Their difference is not a response to the pulse.</p>" +
+        "<div class='turn' data-voice='critic'><div class='turn-rail'><span class='voice'>Critic</span>" +
+        "<span class='stamp'>r1, Objection 1 &middot; FATAL</span></div><div class='turn-body quoted'>" +
+        "<p>&ldquo;Thus its protocol-(b) subtraction does not compare protocols with the same pair \\((E_L,E_R)\\), even though " +
+        "those energies are allowed exact charges. &hellip; T1&rsquo;s stated comparison is in the wrong exact-charge sector and " +
+        "therefore fails the binding operational algebra.&rdquo;</p></div></div>" +
+        "<p>The analytic lane retracted the affected verdict, and the second-round critic verified the retraction rather than " +
+        "taking it on trust. Both passages, and the critic&rsquo;s full fix demand and surviving weaker statement, are in the " +
+        "appendix.</p>" +
+        "<p><b>Consequence for the rest of the trial.</b> Everything below is stated for energy-balanced pulses only. Of the " +
+        "eight computed runs, two clear that gate at leading order. The other six remain in the record as formal diagnostics, " +
+        "and no detector conclusion is drawn from them.</p>",
+      byChoice: {
+        a: "<p>Nothing about the two states is <em>wrong</em>; both are perfectly good thermal states, and the difference " +
+           "between their correlators is a perfectly good number. It is simply not a measurement of the pulse&rsquo;s effect, " +
+           "because part of it is the effect of having also changed the far boundary.</p>"
+      }
+    },
+    "2": {
+      correct: "b",
+      lead: {
+        hit: "The fit selects decay on this window; the theorem fixes the asymptote.",
+        miss: "Two things have to be kept apart here: the window and the limit."
+      },
+      shared:
+        "<p><b>What the four points establish.</b> On the four-point fit window (<span id='runlabel'></span>), the exponential model " +
+        "is preferred by a factor of <b id='rssratio' class='num'></b> in residual sum of squares, with an AIC advantage of " +
+        "<b id='aicadv' class='num'></b>. That is a strong preference on this window. Select <em>Constant</em> in the exhibit above " +
+        "and look at the residual strip: the constant model&rsquo;s residuals sit about ten orders of magnitude above the " +
+        "exponential&rsquo;s, because the fitted points fall through fifteen decades and a constant cannot follow them. Four points " +
+        "are still four points, and most of them sit beyond the conservative marker drawn on the exhibit, so this settles the fit " +
+        "window and nothing beyond it.</p>" +
+        "<p><b>What fixes the asymptote.</b> Independently of any fit, claim JT-noplat-abs proves the late decay in its stated " +
+        "balanced, nonsingular, large-\\(C\\)-first scope &mdash; the second displayed law above this decision. For every " +
+        "\\(\\Delta>0\\) the prefactor \\(e^{-2\\Delta\\kappa\\bar T}\\) decays and the bracket is a constant, whatever the pulse " +
+        "did. The plateau lives in the ratio, not in the observable &mdash; which is precisely the D32 / D33 split.</p>" +
+        "<p>One check is worth recording: the comparison is not rigged in the winner&rsquo;s favour, because the constant model " +
+        "is capable of winning &mdash; and does win, on the calibrated ratio, in the next exhibit.</p>" +
+        "<div class='turn' data-voice='critic'><div class='turn-rail'><span class='voice'>Critic</span>" +
+        "<span class='stamp'>r1 &sect;2</span></div><div class='turn-body quoted'>" +
+        "<p>&ldquo;The plateau-versus-decay comparison is not rigged in favour of the constant: on the eight raw " +
+        "\\(\\delta G_{LR}\\) rows the exponential wins every time. The AIC advantage over the constant ranges from \\(75.6\\) " +
+        "to \\(107.0\\), and the ratio \\({\\rm RSS}_{\\rm const}/{\\rm RSS}_{\\rm exp}\\) ranges from \\(2.67\\times10^{8}\\) " +
+        "to \\(6.89\\times10^{11}\\). This directly establishes that the constant model can and does lose.&rdquo;</p></div></div>",
+      byChoice: {
+        a: "<p>The temptation is understandable: the calibrated ratio <em>does</em> plateau, and it is the quantity most often " +
+           "quoted. But D32 asks about a fixed allowed observable with a \\(T\\)-independent norm bound, and \\(\\delta G_{LR}\\) " +
+           "is that observable. Its computed values (<span id='runlabel2'></span>) span fifteen decades.</p>"
+      }
+    },
+    "3": {
+      correct: "b",
+      lead: {
+        hit: "That is the objection the critic raised, and it was upheld.",
+        miss: "The line of code that was not opened."
+      },
+      shared:
+        "<p>The tail inserted into the transform is proportional to the late detector value the test is supposed to be " +
+        "checking, and the resulting residue is then divided by that same value. Whatever the computed transient did, the tail " +
+        "dominates as \\(\\omega\\to0\\), so the reported ratio tends to one by construction &mdash; the table above shows the " +
+        "exact skirt it leaves, \\(1/(1+\\omega^2)\\). A test that cannot fail is not evidence.</p>" +
+        "<div class='turn' data-voice='critic'><div class='turn-rail'><span class='voice'>Critic</span>" +
+        "<span class='stamp'>r1, Objection 4 &middot; MAJOR</span></div><div class='turn-body quoted'>" +
+        "<p>&ldquo;Irrespective of the computed transient, that tail dominates as \\(\\omega\\to0\\), so DC/late tends to one by " +
+        "construction. For a constant response alone its reported real ratio is exactly \\(1/(1+\\omega^2)\\). This is a " +
+        "numerical implementation of the final-value identity being tested, not an independent test of it.&rdquo;</p></div></div>" +
+        "<p>The fix demand was specific &mdash; take the tail coefficient from the fitted post-pulse matrix, vary the numerical " +
+        "horizon, extrapolate \\(\\omega\\to0\\) before comparing &mdash; and the second round verified that it had been met, " +
+        "recomputing the repaired tail from every stored matrix rather than reading the repair tables. Objection 4 in full, and " +
+        "that disposition, are in the appendix.</p>" +
+        "<p><b>Consequence.</b> The identity that survives is the repaired one, and it is checked below in a form where the " +
+        "answer is not an input. Note what the objection did <em>not</em> do: it did not overturn the analytic result. It " +
+        "removed a piece of numerical evidence that had been counting for more than it was worth.</p>",
+      byChoice: {
+        a: "<p>It did come out near one &mdash; but so would any transient at all, including one with no plateau whatsoever. " +
+           "Evaluate \\(1/(1+\\omega^2)\\) at the four frequencies in the table above: those are the values the routine returns " +
+           "for a pure constant, before any physics enters. Agreement with them is agreement with the arithmetic of the tail.</p>"
+      }
+    }
+  };
+
+  var openVotes = {};                 /* decision -> the choice currently shown */
+
+  /* Values inside a ruling that depend on the selected run are filled here and
+     nowhere else, so refreshing a ruling and drawing the exhibit use one path. */
+  function fillRunDependent(box, dn) {
+    if (dn !== "2") return;
+    var r = D.rows[stateRow], m = r.delta_G_model;
+    var a = box.querySelector("#rssratio"), b = box.querySelector("#aicadv"),
+        c = box.querySelector("#runlabel"), d = box.querySelector("#runlabel2");
+    if (a) a.textContent = sci(m.rss_constant / m.rss_exponential, 3);
+    if (b) b.textContent = fix(m.aic_constant - m.aic_exponential, 2);
+    if (c) c.textContent = "run " + stateRow + ", C = " + r.C;
+    if (d) d.textContent = "run " + stateRow + ", C = " + r.C;
+  }
+
+  function settle(dn, choice, animate) {
+    var spec = SETTLE[dn];
+    var box = document.getElementById("d" + dn + "-settle");
+    var isHit = !spec.correct || choice === spec.correct;
+    var leadTxt = spec.correct ? (isHit ? spec.lead.hit : spec.lead.miss) : spec.lead.text;
+    var leadCls = spec.correct ? (isHit ? "hit" : "miss") : "hit";
+    var extra = (spec.byChoice && spec.byChoice[choice]) ? spec.byChoice[choice] : "";
+    box.innerHTML = '<div class="settle-lead ' + leadCls + '">' + leadTxt + "</div>" + extra + spec.shared;
+    box.hidden = false;
+    box.classList.remove("reveal");
+    if (animate) box.classList.add("reveal");
+    openVotes[dn] = choice;
+    fillRunDependent(box, dn);
+    typeset(box);
+  }
+
+  function refreshOpenSettlements() {
+    for (var dn in openVotes) {
+      if (!Object.prototype.hasOwnProperty.call(openVotes, dn)) continue;
+      var box = document.getElementById("d" + dn + "-settle");
+      if (box && !box.hidden) settle(dn, openVotes[dn], false);
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (btn) {
+    btn.addEventListener("click", function () {
+      var dn = btn.getAttribute("data-d"), k = btn.getAttribute("data-k");
+      Array.prototype.forEach.call(document.querySelectorAll('.opt[data-d="' + dn + '"]'), function (o) {
+        o.setAttribute("aria-pressed", o === btn ? "true" : "false");
+      });
+      settle(dn, k, true);
+    });
+    btn.setAttribute("aria-pressed", "false");
+  });
+
+  /* ---------------- segmented controls ---------------- */
+
+  function bindSeg(id, attr, fn) {
+    var seg = document.getElementById(id);
+    if (!seg) return;
+    Array.prototype.forEach.call(seg.querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(seg.querySelectorAll("button"), function (o) {
+          o.setAttribute("aria-pressed", o === b ? "true" : "false");
+        });
+        fn(b.getAttribute(attr));
+      });
+    });
+  }
+  function syncSeg(id, attr, val) {
+    var seg = document.getElementById(id);
+    if (!seg) return;
+    Array.prototype.forEach.call(seg.querySelectorAll("button"), function (o) {
+      o.setAttribute("aria-pressed", o.getAttribute(attr) === String(val) ? "true" : "false");
+    });
+  }
+
+  /* Every readout that depends on the selected run is redrawn together, and any
+     ruling already on screen is refreshed with it, so a settled decision can
+     never display statistics for a run the reader has since changed. */
+  function rowChanged(v) {
+    stateRow = v;
+    syncSeg("row-seg", "data-row", v);
+    syncSeg("row-seg-2", "data-row", v);
+    drawDG(); drawDU(); drawDC();
+    refreshOpenSettlements();
+  }
+  bindSeg("row-seg", "data-row", rowChanged);
+  bindSeg("row-seg-2", "data-row", rowChanged);
+  bindSeg("fit-seg", "data-fit", function (v) { stateFit = v; drawDG(); });
+  bindSeg("hor-seg", "data-hor", function (v) { stateHor = +v; drawDC(); });
+  bindSeg("cmp-l", "data-kl", function (v) { cmpL = v; drawComparator(); });
+  bindSeg("cmp-r", "data-kr", function (v) { cmpR = v; drawComparator(); });
+
+  /* ---------------- theme ---------------- */
+
+  var themes = ["auto", "light", "dark"];
+  var themeIdx = Math.max(0, themes.indexOf(recall("bt-theme") || "auto"));
+  function applyTheme() {
+    var t = themes[themeIdx];
+    if (t === "auto") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", t);
+    var btn = document.getElementById("theme-btn");
+    if (btn) btn.textContent = "Theme: " + t;
+    store("bt-theme", t);
+  }
+  var tb = document.getElementById("theme-btn");
+  if (tb) tb.addEventListener("click", function () { themeIdx = (themeIdx + 1) % themes.length; applyTheme(); });
+  applyTheme();
+
+  /* ---------------- boot ---------------- */
+
+  drawWigner();
+  drawSetup();
+  drawComparator();
+  buildLedger();
+  buildCircTable();
+  buildCostTable();
+  drawDG();
+  drawDU();
+  drawDC();
+
+  /* Votes are deliberately NOT persisted. Each visit is an unprejudiced trial:
+     a returning reader meets the decisions unsettled. Only the theme preference
+     is remembered. */
+
+  /* If the mathematics never renders, say so rather than leaving raw TeX to be
+     puzzled over. */
+  (function mathWatch() {
+    var notice = document.getElementById("mathfail");
+    if (!notice) return;
+    var t0 = Date.now();
+    var iv = setInterval(function () {
+      if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
+        clearInterval(iv);
+        return;
+      }
+      if (Date.now() - t0 > 8000) { clearInterval(iv); notice.hidden = false; }
+    }, 400);
+  })();
+
+  window.addEventListener("resize", function () {
+    clearTimeout(window.__btRz);
+    window.__btRz = setTimeout(function () { drawDG(); drawDU(); drawDC(); }, 160);
+  });
+})();
+</script>

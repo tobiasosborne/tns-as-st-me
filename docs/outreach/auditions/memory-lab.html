@@ -1,0 +1,4314 @@
+<title>The Memory Lab</title>
+<meta charset="utf-8">
+<style>
+/* ------------------------------------------------------------------ *
+ * THE MEMORY LAB — audition slice (bd tns-024)
+ * Every colour is declared as a token on bare :root (complete light
+ * palette) and redefined, token for token, in BOTH dark scopes.
+ * No colour is defined only inside a media or [data-theme] block.
+ * Chart hues validated with the dataviz palette validator:
+ *   light  #245FA8 / #C4571F / #1B8A6B on #F1F3F5  — all checks pass (all-pairs)
+ *   dark   #4E8FD6 / #D8703A / #2C9E76 on #10151A  — all checks pass (all-pairs)
+ * ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+
+  /* neutrals — cool greys, biased toward the blue chrome accent */
+  --paper:        #f1f3f5;
+  --panel:        #fbfcfd;
+  --panel-sunk:   #e6eaee;
+  --plate:        #e9ecef;   /* the un-glossy decisive surface */
+  --rule:         #d3d9df;
+  --rule-strong:  #b1bac3;
+  --ink:          #12181d;
+  --ink-2:        #47525b;
+  --ink-3:        #77828b;
+
+  /* chrome accent */
+  --accent:       #1f5c8b;
+  --accent-ink:   #ffffff;
+  --accent-soft:  #dfe9f1;
+
+  /* data series — fixed by entity, never by rank */
+  --s-cal:        #245fa8;   /* calibrated relational register */
+  --s-abs:        #c4571f;   /* absolute-response register     */
+  --s-dc:         #1b8a6b;   /* independent DC / soft-vertex target */
+  --s-cal-soft:   #dbe6f4;
+  --s-abs-soft:   #f6e3d6;
+  --s-dc-soft:    #d9ede5;
+
+  /* status — chips only, never a chart series */
+  --ok:           #2e6b4f;
+  --ok-bg:        #dfeee6;
+  --warn:         #8a5c0f;
+  --warn-bg:      #f6ead2;
+  --bad:          #9d3327;
+  --bad-bg:       #f7e0dc;
+  --void:         #6b747c;
+  --void-bg:      #e4e7ea;
+
+  --focus:        #1f5c8b;
+  --shadow:       0 1px 2px rgba(18, 24, 29, .06), 0 8px 24px rgba(18, 24, 29, .05);
+
+  /* No webfont is loaded: this file fetches nothing but the MathJax script,
+     so every face below is a stack of locally available fallbacks and the
+     page keeps its typographic hierarchy with networking switched off. */
+  --serif: "Spectral", "Iowan Old Style", "Source Serif 4", "Palatino Linotype",
+           Palatino, Georgia, "Times New Roman", serif;
+  --cond:  "IBM Plex Sans Condensed", "Roboto Condensed", "Liberation Sans Narrow",
+           "Helvetica Neue", Arial, sans-serif;
+  --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", "DejaVu Sans Mono", Menlo,
+           Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper:        #10151a;
+    --panel:        #161c22;
+    --panel-sunk:   #1c242b;
+    --plate:        #191f25;
+    --rule:         #2a343c;
+    --rule-strong:  #3e4a54;
+    --ink:          #e3e9ed;
+    --ink-2:        #a9b4bc;
+    --ink-3:        #7c8891;
+    --accent:       #6fa9d6;
+    --accent-ink:   #0b1116;
+    --accent-soft:  #1b2a36;
+    --s-cal:        #4e8fd6;
+    --s-abs:        #d8703a;
+    --s-dc:         #2c9e76;
+    --s-cal-soft:   #1a2734;
+    --s-abs-soft:   #2c2018;
+    --s-dc-soft:    #14261f;
+    --ok:           #6cc39b;
+    --ok-bg:        #14261f;
+    --warn:         #d9a94e;
+    --warn-bg:      #2a2213;
+    --bad:          #e08276;
+    --bad-bg:       #2d1a17;
+    --void:         #8b959d;
+    --void-bg:      #1b2127;
+    --focus:        #8ec2e8;
+    --shadow:       0 1px 2px rgba(0, 0, 0, .5), 0 10px 30px rgba(0, 0, 0, .35);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper:        #10151a;
+  --panel:        #161c22;
+  --panel-sunk:   #1c242b;
+  --plate:        #191f25;
+  --rule:         #2a343c;
+  --rule-strong:  #3e4a54;
+  --ink:          #e3e9ed;
+  --ink-2:        #a9b4bc;
+  --ink-3:        #7c8891;
+  --accent:       #6fa9d6;
+  --accent-ink:   #0b1116;
+  --accent-soft:  #1b2a36;
+  --s-cal:        #4e8fd6;
+  --s-abs:        #d8703a;
+  --s-dc:         #2c9e76;
+  --s-cal-soft:   #1a2734;
+  --s-abs-soft:   #2c2018;
+  --s-dc-soft:    #14261f;
+  --ok:           #6cc39b;
+  --ok-bg:        #14261f;
+  --warn:         #d9a94e;
+  --warn-bg:      #2a2213;
+  --bad:          #e08276;
+  --bad-bg:       #2d1a17;
+  --void:         #8b959d;
+  --void-bg:      #1b2127;
+  --focus:        #8ec2e8;
+  --shadow:       0 1px 2px rgba(0, 0, 0, .5), 0 10px 30px rgba(0, 0, 0, .35);
+}
+
+* { box-sizing: border-box; }
+
+.lab {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  margin: 0;
+  padding: 0 0 5rem;
+  overflow-x: clip;      /* clip, not hidden: does not create a scroll container,
+                            so the sticky bar below keeps working */
+}
+
+/* the UA rule for [hidden] loses to any author display rule, so restate it */
+.lab [hidden] { display: none !important; }
+
+.lab :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- layout ---------- */
+
+.wrap   { width: min(100% - 2.5rem, 74rem); margin-inline: auto; }
+.column { width: min(100%, 40rem); margin-inline: auto; }
+
+section { padding-block: 3.25rem; }
+section + section { border-top: 1px solid var(--rule); }
+
+.stack   { display: flex; flex-direction: column; gap: 1.15rem; }
+.stack-s { display: flex; flex-direction: column; gap: .6rem; }
+.row     { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+
+/* ---------- type ---------- */
+
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; font-weight: 400; letter-spacing: -0.012em; }
+h1 { font-size: clamp(2.3rem, 6vw, 3.9rem); line-height: 1.06; font-weight: 300; }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); line-height: 1.15; font-weight: 300; }
+h3 { font-size: 1.28rem; line-height: 1.25; }
+h4 { font-size: 1.02rem; font-weight: 600; }
+p  { margin: 0; }
+.lab a { color: var(--accent); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+
+.eyebrow {
+  font-family: var(--cond); font-weight: 600; font-size: .74rem;
+  letter-spacing: .17em; text-transform: uppercase; color: var(--ink-3);
+}
+.lede   { font-size: 1.14rem; color: var(--ink-2); }
+.small  { font-size: .93rem; color: var(--ink-2); }
+.tiny   { font-size: .82rem; color: var(--ink-3); line-height: 1.5; }
+.num    { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .93em; }
+.lab code { font-family: var(--mono); font-size: .88em; background: var(--panel-sunk);
+            padding: .06em .3em; border-radius: 2px; }
+.q { font-size: clamp(1.35rem, 3.2vw, 1.95rem); line-height: 1.28; font-weight: 300; text-wrap: balance; }
+
+/* ---------- masthead ---------- */
+
+.masthead { padding-top: 3rem; padding-bottom: 2rem; }
+.masthead h1 { margin-block: .5rem .9rem; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.topbar-in {
+  display: flex; align-items: center; gap: 1.1rem;
+  padding-block: .5rem; flex-wrap: wrap;
+}
+.topnav { display: flex; gap: 1.1rem; flex: 1 1 auto; flex-wrap: wrap; }
+.topnav a {
+  font-family: var(--cond); font-size: .77rem; letter-spacing: .13em;
+  text-transform: uppercase; text-decoration: none; color: var(--ink-3); font-weight: 600;
+}
+.topnav a:hover { color: var(--ink); }
+
+/* ---------- controls ---------- */
+
+button, .btn {
+  font-family: var(--cond); font-weight: 600; font-size: .82rem;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--ink); background: var(--panel);
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  padding: .46rem .85rem; cursor: pointer; line-height: 1.2;
+}
+button:hover { border-color: var(--accent); color: var(--accent); }
+button[aria-pressed="true"], button.on {
+  background: var(--accent); border-color: var(--accent); color: var(--accent-ink);
+}
+button:disabled { opacity: .45; cursor: default; }
+
+.ctrl { display: grid; grid-template-columns: auto 1fr auto; gap: .55rem 1rem; align-items: center; }
+.ctrl label { font-family: var(--cond); font-weight: 600; font-size: .84rem;
+              letter-spacing: .03em; color: var(--ink-2); }
+.ctrl output { font-family: var(--mono); font-variant-numeric: tabular-nums;
+               font-size: .88rem; color: var(--ink); text-align: right; min-width: 6.5ch; }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+/* ---------- panels ---------- */
+
+.panel {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 3px;
+  box-shadow: var(--shadow);
+}
+.panel-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  padding: .62rem 1.1rem; border-bottom: 1px solid var(--rule);
+  background: var(--panel-sunk);
+}
+.panel-head .t { font-family: var(--cond); font-weight: 600; font-size: .82rem;
+                 letter-spacing: .13em; text-transform: uppercase; color: var(--ink-2); }
+.panel-body { padding: 1.1rem; }
+
+/* the decisive surface: no shadow, no radius, no gloss */
+.plate {
+  background: var(--plate); border: 1px solid var(--rule-strong);
+  border-radius: 0; box-shadow: none;
+}
+.plate .panel-head { background: transparent; border-bottom: 1px solid var(--rule-strong); }
+
+/* ---------- provenance tags ---------- */
+
+.tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--cond); font-weight: 600; font-size: .68rem;
+  letter-spacing: .13em; text-transform: uppercase;
+  padding: .16rem .45rem; border-radius: 2px; white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tag::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: currentColor; flex: none; }
+.tag-exact    { color: var(--s-cal); background: var(--s-cal-soft); border-color: var(--s-cal); }
+.tag-sample   { color: var(--s-dc);  background: var(--s-dc-soft);  border-color: var(--s-dc); }
+.tag-none     { color: var(--void);  background: var(--void-bg);    border-color: var(--rule-strong); }
+.tag-schema   { color: var(--ink-2); background: var(--panel-sunk); border-color: var(--rule-strong); }
+.tag-recorded { color: var(--warn);  background: var(--warn-bg);    border-color: var(--warn); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--cond); font-weight: 600; font-size: .72rem;
+  letter-spacing: .11em; text-transform: uppercase;
+  padding: .18rem .5rem; border-radius: 2px; border: 1px solid transparent;
+}
+.chip-proved { color: var(--ok);   background: var(--ok-bg);   border-color: var(--ok); }
+.chip-hold   { color: var(--warn); background: var(--warn-bg); border-color: var(--warn); }
+.chip-retr   { color: var(--bad);  background: var(--bad-bg);  border-color: var(--bad); }
+
+/* ---------- fence ---------- */
+
+.fence {
+  border: 1px solid var(--rule-strong);
+  border-left: 4px solid var(--bad);
+  background: var(--panel-sunk);
+  padding: 1rem 1.15rem;
+}
+.fence .eyebrow { color: var(--bad); }
+
+/* ---------- verbatim quotes from the repository ---------- */
+
+.quote {
+  border-left: 3px solid var(--accent);
+  background: var(--panel);
+  padding: .85rem 1.05rem;
+  font-size: .96rem;
+}
+.quote .src {
+  display: block; margin-top: .6rem;
+  font-family: var(--mono); font-size: .76rem; color: var(--ink-3);
+  overflow-wrap: anywhere;
+}
+.verbatim { font-family: var(--mono); font-size: .84rem; line-height: 1.62; }
+
+/* ---------- readouts ---------- */
+
+.readouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: 1px;
+            background: var(--rule); border: 1px solid var(--rule); }
+.readout  { background: var(--panel); padding: .9rem 1rem; display: flex; flex-direction: column; gap: .3rem; }
+.readout .k { font-family: var(--cond); font-weight: 600; font-size: .8rem;
+              letter-spacing: .03em; color: var(--ink-3); }
+.readout .v { font-family: var(--mono); font-variant-numeric: tabular-nums;
+              font-size: 1.32rem; line-height: 1.15; word-break: break-all; }
+.readout .n { font-size: .82rem; color: var(--ink-3); line-height: 1.45; }
+.v-abs { color: var(--s-abs); }
+.v-cal { color: var(--s-cal); }
+.v-dc  { color: var(--s-dc); }
+
+/* ---------- ledger table ---------- */
+
+.scroll-x { overflow-x: auto; }
+table.ledger { border-collapse: collapse; width: 100%; font-size: .87rem; }
+table.ledger th, table.ledger td {
+  text-align: left; padding: .42rem .7rem; border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+}
+table.ledger th {
+  font-family: var(--cond); font-weight: 600; font-size: .72rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-3); white-space: nowrap;
+}
+table.ledger td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.ledger tr:last-child td { border-bottom: none; }
+
+/* ---------- parameter map ---------- */
+
+.pmap { display: grid; gap: 2px; }
+.pcell {
+  font-family: var(--mono); font-size: .72rem; letter-spacing: 0; text-transform: none;
+  padding: .5rem .3rem; border: 1px solid var(--rule); border-radius: 0;
+  background: var(--panel); color: var(--ink-2); text-align: center; cursor: pointer;
+}
+.pcell.computed { background: var(--s-dc-soft); border-color: var(--s-dc); color: var(--ink); }
+.pcell.computed:hover { border-color: var(--accent); }
+.pcell[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.pcell.void {
+  cursor: not-allowed; color: var(--void); border-style: dashed; border-color: var(--rule-strong);
+  background-color: var(--void-bg);
+  background-image: repeating-linear-gradient(45deg,
+      transparent 0 5px, var(--rule-strong) 5px 6px);
+}
+.pcell.void:hover { color: var(--ink-2); }
+.prow-label, .pcol-label {
+  font-family: var(--cond); font-weight: 600; font-size: .78rem; letter-spacing: .02em;
+  color: var(--ink-3); display: flex; align-items: center; padding: 0 .4rem;
+}
+.pcol-label { justify-content: center; }
+
+/* ---------- steps (HOW) ---------- */
+
+/* All five are shown from the start; "walk me through" only moves the emphasis. */
+.step { border: 1px solid var(--rule); background: var(--panel); padding: .85rem 1rem;
+        border-left: 3px solid var(--rule); }
+.step[data-state="focus"] { border-left-color: var(--accent); background: var(--panel-sunk); }
+.step-h { display: flex; gap: .8rem; align-items: baseline; }
+.step-n { font-family: var(--mono); font-size: .8rem; color: var(--ink-3); flex: none; }
+.step-t { font-family: var(--cond); font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+          font-size: .88rem; }
+.step-body { margin-top: .55rem; color: var(--ink-2); font-size: .96rem; }
+
+/* ---------- figures & svg ---------- */
+
+figure { margin: 0; }
+figcaption { font-size: .88rem; color: var(--ink-2); margin-top: .7rem; }
+.chart { width: 100%; display: block; touch-action: pan-y; fill: var(--ink-3); }
+/* `fill` is set on the svg root and inherited, so a presentation attribute on an
+   individual element still wins.  A `.chart text { fill: ... }` rule would not. */
+.chart text { font-family: var(--mono); }
+.axis-line { stroke: var(--rule-strong); stroke-width: 1; }
+.grid-line { stroke: var(--rule); stroke-width: 1; }
+.legend { display: flex; flex-wrap: wrap; gap: .3rem 1.15rem; }
+.legend .li { display: inline-flex; align-items: center; gap: .42rem;
+              font-family: var(--mono); font-size: .78rem; color: var(--ink-2); }
+.swatch { width: 1.1rem; height: 0; border-top-width: 2px; border-top-style: solid; flex: none; }
+
+.tip {
+  position: absolute; pointer-events: none; z-index: 20;
+  background: var(--panel); border: 1px solid var(--rule-strong);
+  padding: .45rem .6rem; font-family: var(--mono); font-size: .74rem;
+  line-height: 1.5; box-shadow: var(--shadow); white-space: nowrap;
+  color: var(--ink);
+}
+.tip-wrap { position: relative; }
+
+/* ---------- terminal transcript ---------- */
+
+.term {
+  font-family: var(--mono); font-size: .74rem; line-height: 1.6;
+  background: var(--panel-sunk); border: 1px solid var(--rule);
+  padding: .8rem .95rem; white-space: pre; overflow-x: auto; color: var(--ink-2);
+}
+
+/* scrollbars inside panels take the page's own neutrals in both themes */
+.term, .scroll-x, .eq {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+
+/* ---------- misc ---------- */
+
+.sym { text-transform: none; font-family: var(--mono); }
+
+.hr { height: 1px; background: var(--rule); border: 0; margin: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+         gap: 1.15rem; align-items: start; }
+.eq { overflow-x: auto; overflow-y: hidden; padding: .35rem 0; color: var(--ink);
+      scrollbar-width: thin; }
+.eq mjx-container { min-width: 0; }
+.eqtag { font-family: var(--mono); font-size: .74rem; color: var(--ink-3); }
+
+/* hand-set fallback for the load-bearing equations when MathJax is unavailable */
+.eqfb { font-family: var(--mono); font-size: .92rem; line-height: 1.9; color: var(--ink);
+        white-space: pre-wrap; overflow-x: auto; }
+.eqfb .frac { display: inline-flex; flex-direction: column; vertical-align: middle;
+              text-align: center; margin: 0 .25em; }
+.eqfb .frac > span:first-child { border-bottom: 1px solid currentColor; padding: 0 .3em; }
+.eqfb .frac > span:last-child { padding: 0 .3em; }
+
+/* ---------- the three-line result strip ---------- */
+
+.strip { border: 1px solid var(--rule-strong); background: var(--plate); padding: 1rem 1.15rem;
+         display: flex; flex-direction: column; gap: .55rem; }
+.strip .hd { font-family: var(--mono); font-size: .82rem; color: var(--ink-2); }
+.strip ol { margin: 0; padding-left: 1.35rem; display: flex; flex-direction: column; gap: .45rem; }
+.strip li { font-size: .95rem; }
+.strip .ft { font-size: .9rem; color: var(--ink-2); }
+.strip a { white-space: nowrap; }
+
+/* ---------- disclosure ---------- */
+
+details.disc { border: 1px solid var(--rule); background: var(--panel); }
+details.disc > summary {
+  cursor: pointer; list-style: none; padding: .6rem 1rem;
+  font-family: var(--cond); font-weight: 600; font-size: .82rem;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2);
+  background: var(--panel-sunk); border-bottom: 1px solid transparent;
+}
+details.disc[open] > summary { border-bottom-color: var(--rule); }
+details.disc > summary::-webkit-details-marker { display: none; }
+details.disc > summary::before { content: "▸ "; color: var(--ink-3); }
+details.disc[open] > summary::before { content: "▾ "; }
+details.disc > summary:hover { color: var(--accent); }
+.disc-body { padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+
+/* ---------- the D32 / D33 operational comparison ---------- */
+
+table.cmp { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: .9rem; }
+table.cmp th, table.cmp td {
+  text-align: left; padding: .55rem .8rem; border: 1px solid var(--rule); vertical-align: top;
+}
+table.cmp thead th { font-family: var(--cond); font-weight: 600; font-size: .78rem;
+                     letter-spacing: .06em; color: var(--ink-2); background: var(--panel-sunk); }
+table.cmp tbody th { font-family: var(--cond); font-weight: 600; font-size: .8rem;
+                     color: var(--ink-3); width: 9rem; }
+
+/* Narrow screens: tighten table gutters so the ledgers still fit their
+   containers before the overflow-x scroll has to take over.  Layout only —
+   no colour is declared inside a media block anywhere in this file. */
+@media (max-width: 560px) {
+  table.ledger th, table.ledger td { padding: .42rem .38rem; }
+  table.ledger { font-size: .84rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+</style>
+
+<div class="lab">
+
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <span class="eyebrow" style="color:var(--ink-2)">The Memory Lab</span>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#why">Why</a>
+      <a href="#bench">Bench</a>
+      <a href="#how">How</a>
+      <a href="#what">Schwarzian station</a>
+      <a href="#verify">Verify</a>
+      <a href="#epilogue">Epilogue</a>
+    </nav>
+    <button id="theme-toggle" type="button" aria-pressed="false">Dark</button>
+  </div>
+</div>
+
+<!-- ================= MASTHEAD ================= -->
+<header class="wrap masthead">
+  <div class="column stack">
+    <p class="eyebrow">Interactive bench &middot; SYK / JT lane &middot; audition slice</p>
+    <h1>The Memory Lab</h1>
+    <p class="lede">Three things that are often called the same thing &mdash; a permanent record, a
+      calibrated susceptibility, and a scattering time delay &mdash; come apart in a controlled
+      Schwarzian gravitational-clock calculation: a numerically integrated pulse fixes a fitted
+      post-pulse frame, and proved closed forms determine its late detector response. You can
+      operate the bench, and every curve on this page says where its numbers come from.</p>
+    <div class="row" style="margin-top:.4rem">
+      <span class="tag tag-exact">Exact formula</span>
+      <span class="tag tag-sample">Computed sample</span>
+      <span class="tag tag-none">Not computed</span>
+      <span class="tag tag-schema">Schematic</span>
+      <span class="tag tag-recorded">Recorded run</span>
+    </div>
+    <p class="tiny">Every curve and number carries one of these five tags.
+      <b>Exact formula</b> means the closed form displayed beside it is the one your
+      browser evaluates. <b>Computed sample</b> means the value is embedded verbatim
+      from <code>numerics/results/schwarzian_memory.json</code>. <b>Not computed</b>
+      means no computation exists there and nothing is drawn. <b>Schematic</b> means a
+      picture with no data behind it. <b>Recorded run</b> means a transcript of a real
+      run quoted from the repository &mdash; this page does not re-execute it.</p>
+  </div>
+</header>
+
+<!-- ================= WHY ================= -->
+<section id="why">
+  <div class="wrap stack">
+    <div class="column stack-s">
+      <p class="eyebrow">Why &mdash; the question</p>
+      <h2 class="q">After the wave has passed, what would have to remain different for you
+        to say that the apparatus remembers it?</h2>
+    </div>
+
+    <figure class="panel" style="max-width:56rem;width:100%;margin-inline:auto">
+      <div class="panel-head">
+        <span class="t">Ring of freely falling test masses</span>
+        <span class="tag tag-schema">Schematic</span>
+      </div>
+      <div class="panel-body stack-s">
+        <svg id="gw" class="chart" viewBox="0 0 720 250" role="img"
+             aria-label="A ring of freely falling test masses is deformed by a passing wave and either returns to a circle or settles into a permanently sheared ellipse."></svg>
+        <div class="row">
+          <button id="gw-send" type="button">Send the wave</button>
+          <button id="gw-mem" type="button" aria-pressed="true">Leave a permanent strain</button>
+          <span class="tiny" id="gw-state"></span>
+        </div>
+        <p class="tiny">Linearised geodesic deviation, <span class="num">&delta;x<sub>i</sub> = &frac12; h<sub>ij</sub> x<sub>j</sub></span>,
+          with an assumed burst profile and an assumed permanent offset. This is a
+          drawing of a familiar idea, not a computation and not data. It is here only to
+          fix the question.</p>
+      </div>
+    </figure>
+
+    <div class="column stack">
+      <p>The honest answer is that the question is not yet well posed. &ldquo;Something is
+        different afterwards&rdquo; is not a measurement until you say <i>which</i> quantity you
+        read, <i>against what</i> you read it, and <i>when</i>. Whether the ring above kept a
+        record depends on whether the rulers you compare it against also moved.</p>
+      <p>So before any gravity appears, it is worth spending five minutes on a bench where
+        every answer can be written down in closed form.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BENCH (TOY) ================= -->
+<section id="bench">
+  <div class="wrap stack">
+    <div class="column stack-s">
+      <p class="eyebrow">The bench &mdash; an exactly solvable toy</p>
+      <h2>A detector, a ruler, and one pulse</h2>
+      <p class="lede">One degree of freedom relaxing toward equilibrium at rate
+        <span class="num">&gamma;</span>. You run it twice: once undisturbed, once with a
+        compact pulse. Then you ask what is different afterwards.</p>
+    </div>
+
+    <div class="column stack-s">
+      <div class="eq" data-fallback="ẋ(t) = −γ [ x(t) − x_eq ] + f(t) ,    f(t) = F for 0 ≤ t ≤ w,  0 otherwise">\[ \dot x(t) \;=\; -\gamma\,\bigl[x(t)-x_{\rm eq}\bigr] \;+\; f(t),
+        \qquad f(t)=F \ \text{ for } 0\le t\le w, \ \ 0 \text{ otherwise.} \]</div>
+      <p class="small">Both runs start at <span class="num">x(0)=x<sub>eq</sub>+x<sub>0</sub></span>;
+        the reference run has <span class="num">f&equiv;0</span>. The bench below fixes the
+        numerical convention <span class="num">x<sub>eq</sub> = 0</span> and
+        <span class="num">x<sub>0</sub> = 1</span> and evaluates every formula at those values.
+        Integrating the linear equation once gives, for every <span class="num">t &ge; w</span>,</p>
+      <div class="eq" data-fallback="x_ref(t)   = x_eq + x₀ e^(−γt)&#10;x_pulse(t) = x_eq + (x₀ + K) e^(−γt)">\[ x_{\rm ref}(t)=x_{\rm eq}+x_0e^{-\gamma t},\qquad
+        x_{\rm pulse}(t)=x_{\rm eq}+(x_0+K)\,e^{-\gamma t}, \]</div>
+      <div class="eq" data-fallback="K = ∫₀^w e^(γs) f(s) ds = F ( e^(γw) − 1 ) / γ    ( → F w as γ → 0 )">\[ K=\int_0^{w}\! e^{\gamma s}f(s)\,ds=F\,\frac{e^{\gamma w}-1}{\gamma}
+        \qquad\bigl(\to Fw \text{ as } \gamma\to0\bigr). \]</div>
+      <p class="small">Two registers can be built from this, and they are not the same
+        quantity:</p>
+      <div class="eq" data-fallback="absolute:    A(t) = x_pulse(t) − x_ref(t) = K e^(−γt)&#10;calibrated:  R = [ x_pulse(t) − x_eq ] / [ x_ref(t) − x_eq ] − 1 = K / x₀">\[ \underbrace{A(t)=x_{\rm pulse}(t)-x_{\rm ref}(t)=K\,e^{-\gamma t}}_{\text{absolute}}
+        \qquad\qquad
+        \underbrace{R=\frac{x_{\rm pulse}(t)-x_{\rm eq}}{x_{\rm ref}(t)-x_{\rm eq}}-1=\frac{K}{x_0}}_{\text{calibrated against the same ruler}} \]</div>
+      <p class="small"><span class="num">A(t)</span> decays whenever the ruler decays.
+        <span class="num">R</span> is exactly independent of <span class="num">t</span>. At
+        <span class="num">&gamma;=0</span> the two read the same number only because
+        <span class="num">x<sub>0</sub>=1</span> has been declared: in general
+        <span class="num">A = K</span> and <span class="num">R = K/x<sub>0</sub></span>.
+        Move the ruler&rsquo;s decay rate below and watch which one survives.</p>
+    </div>
+
+    <div class="panel" style="max-width:60rem;width:100%;margin-inline:auto">
+      <div class="panel-head">
+        <span class="t">Bench &mdash; readout</span>
+        <span class="tag tag-exact">Exact formula &middot; toy</span>
+      </div>
+      <div class="panel-body stack">
+        <div class="grid2">
+          <div class="ctrl">
+            <label for="toy-gamma">Ruler decay &gamma;</label>
+            <input id="toy-gamma" type="range" min="0" max="0.6" step="0.005" value="0">
+            <output id="toy-gamma-o">0.000</output>
+
+            <label for="toy-F">Pulse height F</label>
+            <input id="toy-F" type="range" min="0.02" max="1" step="0.01" value="0.4">
+            <output id="toy-F-o">0.40</output>
+
+            <label for="toy-w">Pulse width w</label>
+            <input id="toy-w" type="range" min="0.2" max="3" step="0.05" value="1.2">
+            <output id="toy-w-o">1.20</output>
+
+            <label for="toy-t">Read at time t</label>
+            <input id="toy-t" type="range" min="3" max="40" step="0.1" value="20">
+            <output id="toy-t-o">20.0</output>
+          </div>
+          <div class="stack-s">
+            <div class="row">
+              <button id="toy-persist" type="button">Persistent ruler <span class="sym">(&gamma; = 0)</span></button>
+              <button id="toy-decay" type="button">Thermal ruler <span class="sym">(&gamma; = 0.2)</span></button>
+            </div>
+            <p class="tiny" id="toy-verdict"></p>
+          </div>
+        </div>
+
+        <div class="tip-wrap">
+          <svg id="toy-chart" class="chart" viewBox="0 0 720 300" role="img"
+               aria-label="Trajectories of the reference run and the pulsed run against time."></svg>
+        </div>
+        <div class="legend" id="toy-legend"></div>
+
+        <div class="readouts">
+          <div class="readout">
+            <span class="k">Absolute register A(t)</span>
+            <span class="v v-abs" id="toy-abs">&mdash;</span>
+            <span class="n">Difference of the two runs in the fixed observable
+              <span class="num">x</span>.</span>
+          </div>
+          <div class="readout">
+            <span class="k">Calibrated register R</span>
+            <span class="v v-cal" id="toy-cal">&mdash;</span>
+            <span class="n">Ratio of the same two runs to the same decaying ruler,
+              minus one. Independent of <span class="num">t</span>.</span>
+          </div>
+          <div class="readout">
+            <span class="k">Shots for 10&percnt; error on A(t)</span>
+            <span class="v" id="toy-cost">&mdash;</span>
+            <span class="n">Assume i.i.d. additive readout noise of fixed variance
+              <span class="num">&sigma;&sup2;</span> on <span class="num">x</span>, so the standard
+              error of a mean of <span class="num">N</span> samples is
+              <span class="num">&sigma;/&radic;N</span>. Then
+              <span class="num">N &ge; (&sigma;/&eta;K)&sup2; e<sup>2&gamma;t</sup></span> with
+              <span class="num">&sigma;=1</span>, <span class="num">&eta;=0.1</span>. That noise
+              model is assumed here, not derived, and this is the cost of
+              <span class="num">A(t)</span> alone: <span class="num">R</span> is a different
+              estimator whose variance is not modelled on this bench.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column stack-s">
+      <p><b>What the bench shows.</b> With a persistent ruler the two registers read the same
+        number: a pulse leaves an offset you can read directly, and calibrating changes nothing.
+        Turn on the ruler&rsquo;s own decay and they part company. The fixed difference decays
+        with the ruler, while the calibrated ratio remains nonzero. No memory label follows from
+        this toy: it has no soft-theorem or DC datum of any kind, so it establishes neither D33
+        nor any Schwarzian conclusion. What it does show is that the readout cost of
+        <span class="num">A(t)</span> grows exponentially in the read time, under the noise model
+        declared above.</p>
+      <p>Two registers, then, with different names and different accounting. Which name attaches
+        to which, and what has to be declared before either question means anything, is the
+        subject of the next section.</p>
+    </div>
+
+    <div class="column fence">
+      <p class="eyebrow">What this bench is not</p>
+      <p class="small" style="margin-top:.4rem">A classical, linear, one-degree-of-freedom
+        relaxation model, solved in closed form above. It is here to make one question
+        precise: which register you were reading. It is not quantum, it is not a black
+        hole, and it establishes nothing whatever about the system in the next two
+        sections. Nothing below is inferred from it. Every claim from here on stands on
+        its own proof or its own computation, cited to file and line.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW ================= -->
+<section id="how">
+  <div class="wrap stack">
+    <div class="column stack-s">
+      <p class="eyebrow">How &mdash; what has to be declared first</p>
+      <h2>Five things, then the two names</h2>
+      <p class="lede">These are the ingredients an operational memory question needs. They
+        are ordered: each one is meaningless until the one before it has been fixed.</p>
+      <div class="row">
+        <button id="how-next" type="button">Walk me through</button>
+        <span class="tiny" id="how-state"></span>
+      </div>
+    </div>
+
+    <div class="column stack-s" id="how-steps">
+      <div class="step" data-state="focus">
+        <div class="step-h"><span class="step-n">1</span><span class="step-t">A fixed observable</span></div>
+        <div class="step-body">Name the quantity you will read, in advance, with a bound on
+          its norm that does not grow with the detector time. Without this, &ldquo;something is
+          different&rdquo; can always be arranged after the fact by choosing a new observable.</div>
+      </div>
+      <div class="step">
+        <div class="step-h"><span class="step-n">2</span><span class="step-t">A reference run you are allowed to compare with</span></div>
+        <div class="step-body">The pulsed run and the reference run must agree on every
+          exactly conserved quantity the specification admits. If the pulse changed one of
+          them, you are comparing two different experiments, and their difference is not an
+          admissible D32/D33 memory comparison &mdash; it may still be reported as a formal
+          diagnostic. This is a real constraint, and one of this campaign&rsquo;s earlier claims
+          was retracted for violating it.</div>
+      </div>
+      <div class="step">
+        <div class="step-h"><span class="step-n">3</span><span class="step-t">A detector time</span></div>
+        <div class="step-body">The reading happens at a time <span class="num">T</span>, and
+          <span class="num">T</span> has to be stated. &ldquo;Late&rdquo; is not a time.</div>
+      </div>
+      <div class="step">
+        <div class="step-h"><span class="step-n">4</span><span class="step-t">An order of limits</span></div>
+        <div class="step-body">A system with two large parameters gives different answers
+          depending on which limit is taken first. The convention used throughout the
+          computation below is stiffness first: <span class="num">C &rarr; &infin;</span>,
+          then <span class="num">&kappa;T &rarr; &infin;</span> with
+          <span class="num">T/C &rarr; 0</span>; equivalently
+          <span class="num">1 &laquo; &kappa;T &laquo; &kappa;C</span>.</div>
+      </div>
+      <div class="step">
+        <div class="step-h"><span class="step-n">5</span><span class="step-t">A measurement cost</span></div>
+        <div class="step-body">How many repetitions does the reading at time
+          <span class="num">T</span> need, for a stated relative error? A quantity whose
+          readout cost grows exponentially in <span class="num">T</span> is not a practical
+          record even when its limit is nonzero. The bench above already showed this
+          happening.</div>
+      </div>
+    </div>
+
+    <div class="column stack" id="how-defs">
+      <hr class="hr">
+      <p class="eyebrow">Only now, the two names</p>
+      <p class="small">Two registers are built on exactly that operational data, and the campaign
+        keeps them apart by name. Compressed to what you actually have to check:</p>
+
+      <div class="scroll-x">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">D32 &mdash; memory, unqualified</th>
+              <th scope="col">D33 &mdash; calibrated relational susceptibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">what you read</th>
+              <td>one allowed observable, fixed in advance, with a norm bound that does not
+                grow with <span class="num">T</span></td>
+              <td>a ratio or finite algebraic combination of finitely many allowed
+                expectations, invariant under the specification&rsquo;s gauge redundancies</td>
+            </tr>
+            <tr>
+              <th scope="row">what makes it pass</th>
+              <td>the late limit of the pulsed&ndash;reference difference exists in the declared
+                window and is nonzero</td>
+              <td>that limit exists and is nonzero, <i>and</i> equals the declared zero-frequency
+                datum of the soft theorem with normalization fixed by measured injected charge,
+                nothing fitted, <i>and</i> its shot cost is declared with the claim</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny">Faithfully compressed from <code>definitions.md</code> &sect; D32 and
+        &sect; D33; both are quoted in full below. Satisfying D33 does not license the
+        unqualified word <i>memory</i>, and a system may satisfy D33 while failing D32.</p>
+
+      <div class="quote">
+        <h4>The limit order, stated as a constraint on claims</h4>
+        <p class="small" style="margin-top:.5rem">&ldquo;Permanent&rdquo; requires a declared
+          limit order. Convention (adopted from critic r1, Objection 6): C &rarr; &infin;
+          FIRST, then 1 &laquo; &kappa;T &laquo; &kappa;C (invariantly: &kappa;T &rarr;
+          &infin; with T/C &rarr; 0). Taking T &rarr; &infin; first at fixed C or fixed N is
+          NOT supported by the sources; any permanence claim must state this iterated limit,
+          a finite-C error or maximum usable detector time, and the detector&rsquo;s sample
+          cost at that time.</p>
+        <span class="src">theory/lanes/syk-jt/observables-spec.md &sect; Consequences the critic must enforce</span>
+      </div>
+
+      <details class="disc">
+        <summary>Read the exact campaign definitions</summary>
+        <div class="disc-body">
+      <p class="small">Both definitions are quoted in full from the repository. They share
+        the same operational data &mdash; the five ingredients above.</p>
+
+      <div class="quote">
+        <h4>D32 &mdash; memory, absolute-response register</h4>
+        <p class="small" style="margin-top:.5rem">Fix an operational specification: a C*-algebra <code>A</code> of allowed observables
+          (for two coupled systems: with its stated superselection rules and one-sided
+          subalgebras), a family of implementable protocols (preparation, evolution, at most
+          one compact perturbation), each protocol <code>P</code> defining states
+          <code>&omega;_T^P</code> at detector time <code>T</code>, and a declared asymptotic
+          window (the order in which large-parameter limits are taken BEFORE <code>T</code>,
+          and the admissible <code>T</code>-range within stated validity). Two protocols
+          <code>&omega;^pulse, &omega;^ref</code> are <b>comparable</b> when they agree on
+          every exactly conserved allowed charge of the specification. A comparable pair
+          exhibits <b>memory</b> (unqualified) iff there exists a single allowed observable
+          <code>O &isin; A</code>, fixed in advance with <code>T</code>-independent norm
+          bound, such that <code>lim_T [&omega;_T^pulse(O) &minus; &omega;_T^ref(O)]</code>
+          exists in the declared window and is nonzero. The word &ldquo;memory&rdquo; without
+          qualifier is reserved for this register throughout the campaign. (Relation to
+          D26/D27: those are charge-ledger/counting definitions; D32 is the detector register.
+          The reconstruction obligation connecting them is tracked, not assumed.)</p>
+        <span class="src">definitions.md &sect; D32 (memory, absolute-response register &mdash; TJO ruling 2026-08-31)</span>
+      </div>
+
+      <div class="quote">
+        <h4>D33 &mdash; calibrated relational memory susceptibility</h4>
+        <p class="small" style="margin-top:.5rem">Same operational data as D32. A
+          <b>calibrated relational memory susceptibility</b> is a detector functional
+          <code>F_T</code> &mdash; a ratio or finite algebraic combination of finitely many
+          allowed expectations in the two comparable protocols, with its measurement cost
+          (shot count for a stated relative error at time <code>T</code>) declared as part of
+          any claim &mdash; such that: (i) <code>lim_T F_T</code> exists in the declared
+          window and is nonzero; (ii) <code>F_T</code> is invariant under the
+          specification&rsquo;s gauge redundancies (simultaneous reframings acting trivially
+          on <code>A</code>); (iii) the limit equals the declared zero-frequency (DC) datum of
+          the corresponding soft-theorem statement, with normalization fixed by measured
+          injected charge, nothing fitted. Satisfying D33 does NOT license the unqualified
+          word &ldquo;memory&rdquo; (D32). A system may satisfy D33 while failing D32 &mdash;
+          the adjudicated instance is the two-boundary Schwarzian setting (claims JT-B-susc
+          and JT-noplat-abs), where the divergence has a structural cause worth reporting in
+          its own right: a thermal reference frame erodes its own record, and the readout
+          cost grows exponentially in detector time. Gravitational-wave strain is the
+          paradigm D33 functional that ALSO passes D32 because its calibrating denominator
+          does not decay; the two registers coincide exactly when the ruler is persistent.</p>
+        <span class="src">definitions.md &sect; D33 (calibrated relational memory susceptibility &mdash; TJO ruling 2026-08-31)</span>
+      </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHAT ================= -->
+<section id="what">
+  <div class="wrap stack">
+    <div class="column stack-s">
+      <p class="eyebrow">What &mdash; the Schwarzian station</p>
+      <h2>The same two registers, on a real computation</h2>
+      <p class="lede">Now the bench is replaced by an actual calculation, and the toy is left
+        behind.</p>
+      <p class="small"><b>The system, in one paragraph.</b> Jackiw&ndash;Teitelboim gravity
+        enters here in exactly one role: an effective description of two gravitational
+        boundary clocks. The Schwarzian action governs their soft time-reparametrisation
+        mode, with a stiffness <span class="num">C</span> &mdash; large <span class="num">C</span>
+        means a stiff clock. SYK is the microscopic many-body system whose low-energy clock
+        mode this effective theory describes; you do not need it to read the panels. The
+        detector is a two-sided correlator <span class="num">G<sub>LR</sub>(T,T)</span>: an
+        allowed expectation in the two-copy algebra, not a frame label. Nothing on this page
+        needs a wormhole picture, holographic duality, or celestial vocabulary.</p>
+    </div>
+
+    <div class="column strip">
+      <p class="hd">Balanced Schwarzian rows, leading <span class="num">O(C&#8315;&sup1;)</span>,
+        <span class="num">C&rarr;&infin;</span> first:</p>
+      <ol>
+        <li>the calibrated relative-delay detector approaches a nonzero susceptibility, and its
+          extrapolated DC residue agrees with the independently normalised soft vertex to
+          <span class="num">0.011&percnt;</span> or better &mdash;
+          <a href="#fig2-panel">Figure 2</a></li>
+        <li>the allowed absolute correlator has no nonzero late plateau &mdash;
+          <a href="#fig1-panel">Figure 1</a></li>
+        <li>the pure butterfly shift has zero plateau &mdash;
+          <a href="#fig3-panel">Figure 3</a></li>
+      </ol>
+      <p class="ft">No uniform finite-<span class="num">C</span> bound and no practical
+        permanence is claimed &mdash; <a href="#plate">the decisive numbers</a>.</p>
+    </div>
+
+    <div class="column stack-s">
+      <p class="small">The detector, written out. Both boundary clocks are dressed by their
+        own <span class="num">SL(2)</span> element; the reference run uses the identity, the
+        pulsed run uses the matrix fitted from the integrated trajectory:</p>
+      <div class="eq" data-fallback="G_LR(T) = 𝒩_Δ · [ |t_L&prime;(T) t_R&prime;(T)| / (t_L(T) − t_R(T))² ]^Δ ,&#10;    t_X = g_X · x_X ,   x_L = −e^(−κ_L T) ,   x_R = e^(κ_R T)">\[ G_{LR}(T)=\mathcal N_\Delta\left[\frac{\lvert t_L'(T)\,t_R'(T)\rvert}{\bigl(t_L(T)-t_R(T)\bigr)^{2}}\right]^{\Delta},
+        \qquad t_X = g_X\!\cdot\! x_X, \qquad x_L=-e^{-\kappa_L T},\quad x_R=e^{\kappa_R T}. \]</div>
+      <p class="small">The numerical convention used by the results file, and by every number this
+        page evaluates, is <span class="num">&#119977;<sub>&Delta;</sub> = 1</span>.
+        In the equal-<span class="num">&kappa;</span> chart of the proof shard this is
+        equation (3.2), with <span class="num">D<sub>g</sub>(T) = a x + (b+c) + d/x</span> and
+        <span class="num">x=e<sup>&kappa;T&#772;</sup></span>. The detector sees only three
+        combinations of the relative matrix: <span class="num">a</span>,
+        <span class="num">b+c</span>, and <span class="num">d</span>.</p>
+      <div class="eq" data-fallback="δG_LR(T) = 𝒩_Δ κ^(2Δ) [ D_g(T)^(−2Δ) − (x + x^(−1))^(−2Δ) ]&#10;Δu_rel^lin(T) = ( R_g(T) − 1 ) / ( 2Δκ tanh(κT̄) )">\[ \delta G_{LR}(T)=\mathcal N_\Delta\,\kappa^{2\Delta}
+        \Bigl[D_g(T)^{-2\Delta}-(x+x^{-1})^{-2\Delta}\Bigr]
+        \qquad\quad
+        \Delta u^{\rm lin}_{\rm rel}(T)=\frac{R_g(T)-1}{2\Delta\kappa\tanh(\kappa\bar T)} \]</div>
+      <p class="eqtag">t1-analytic.md &#10216;1&#10217;3.&#10216;2&#10217;2 (3.2) and &#10216;1&#10217;3.&#10216;2&#10217;3 (3.3)&ndash;(3.4).
+        <span class="num">&delta;G<sub>LR</sub></span> is the absolute register; the second is the
+        calibrated one, the shift in the equilibrium clock that would reproduce the same
+        correlator change.</p>
+    </div>
+
+    <!-- parameter map -->
+    <div class="panel" style="max-width:60rem;width:100%;margin-inline:auto">
+      <div class="panel-head">
+        <span class="t">Parameter map &mdash; what was actually run</span>
+        <span class="row" style="gap:.4rem">
+          <span class="tag tag-sample">Computed sample</span>
+          <span class="tag tag-none">Not computed</span>
+        </span>
+      </div>
+      <div class="panel-body stack-s">
+        <p class="small">Eight parameter points were integrated. Everything else is empty:
+          hatched cells are not estimates, and this page will not interpolate between the
+          filled ones. Pick a point.</p>
+        <div class="scroll-x">
+          <div class="pmap" id="pmap"></div>
+        </div>
+        <div class="row">
+          <button id="pmap-compare" type="button">Compare the finite-C proxy</button>
+          <span class="tiny" id="pmap-compare-note"></span>
+        </div>
+        <p class="tiny" id="pmap-note"></p>
+        <p class="tiny">The frame drawn here &mdash; three source profiles at
+          <span class="num">&epsilon; &isin; {0.01, 0.05, 0.1}</span> against six stiffnesses
+          &mdash; is an editorial inspection grid chosen for this page, not a parameter domain
+          defined by any theorem.</p>
+      </div>
+    </div>
+
+    <!-- status banner -->
+    <div class="column" id="scope-banner"></div>
+
+    <!-- figure 1 -->
+    <figure class="panel" id="fig1-panel" style="max-width:62rem;width:100%;margin-inline:auto">
+      <div class="panel-head">
+        <span class="t" id="fig1-title">Figure 1 &mdash; the two registers against detector time</span>
+        <span class="row" style="gap:.4rem">
+          <span class="tag tag-sample">Computed sample</span>
+          <span class="tag tag-exact">Exact formula</span>
+        </span>
+      </div>
+      <div class="panel-body stack-s">
+        <div class="legend" id="fig1-legend"></div>
+        <p class="tiny" id="fig1-prov"></p>
+        <div class="tip-wrap">
+          <svg id="fig1" class="chart" viewBox="0 0 720 470" role="img"
+               aria-label="Upper panel: the calibrated relational delay against detector time, flattening to a plateau. Lower panel: the absolute correlator difference on a logarithmic scale, falling exponentially toward zero."></svg>
+        </div>
+        <figcaption>
+          Markers are the five stored samples per point, embedded verbatim from the results
+          file. The continuous line is the closed form above, evaluated in your browser from
+          the stored M&ouml;bius matrix and <span class="num">&kappa;</span> &mdash; not an
+          interpolation of the markers. The fitted matrix is the input, so the line is not an
+          independent second trajectory computation either. The hatched band is detector time
+          beyond the declared finite-<span class="num">C</span> window,
+          <span class="num">&kappa;T<sub>max</sub> = &radic;(&kappa;C)</span>; the results file
+          calls that cutoff a <i>conservative scaling convention, not a uniform finite-C error
+          bound</i>, and this page repeats it rather than hiding it. Switch between the balanced
+          <span class="num">C = 100</span> row and its <span class="num">C = 10</span> partner and
+          watch the window grow to reach the plateau, then fall back behind it: that is what
+          &ldquo;<span class="num">C&rarr;&infin;</span> first&rdquo; means in a picture.
+        </figcaption>
+        <p class="tiny" id="fig1-kappa"></p>
+      </div>
+    </figure>
+
+    <!-- readouts -->
+    <div style="max-width:62rem;width:100%;margin-inline:auto" class="readouts" id="fig1-readouts"></div>
+
+    <!-- figure 2 : DC.  In diagnostic mode the whole figure is moved inside the
+         disclosure below and every claim-bearing label around it is rewritten. -->
+    <div id="fig2-panel" class="stack-s" style="max-width:62rem;width:100%;margin-inline:auto">
+
+      <div class="fence" id="fig2-fence" hidden>
+        <p class="eyebrow">Withheld on this row</p>
+        <p class="small" style="margin-top:.4rem">Figure 2, the DC-against-soft-vertex readout
+          and the &ldquo;numbers the verdict rests on&rdquo; language are operational statements
+          about the balanced sector. This selection is not in that sector, so they are withheld
+          rather than relabelled. Quoting the numerical report&rsquo;s own scope restriction:</p>
+        <p class="small verbatim" style="margin-top:.6rem">&hellip; the operational conclusions
+          below are supported ONLY by the two energy-balanced derivative-Gaussian rows; the six
+          unbalanced rows are formal trajectory/DC diagnostics of the Schwarzian kernels, because
+          no implementable two-dot reference protocol with the same measured unequal pair of
+          one-sided energies has been exhibited, and their comparator is a formal EFT kernel
+          rather than a demonstrated expectation difference between two preparable states.</p>
+        <p class="tiny" style="margin-top:.5rem">theory/lanes/syk-jt/t2-numeric.md &sect; Decisive
+          numerical verdict (scope restricted per critic r2, Objection 9).</p>
+      </div>
+
+      <details class="disc" id="fig2-disc" hidden>
+        <summary>Show the formal Schwarzian kernel diagnostic</summary>
+        <div class="disc-body" id="fig2-disc-body"></div>
+      </details>
+
+    <figure class="panel" id="fig2-fig">
+      <div class="panel-head">
+        <span class="t" id="fig2-title">Figure 2 &mdash; the independently extracted DC residue</span>
+        <span class="row" style="gap:.4rem" id="fig2-tags">
+          <span class="tag tag-sample">Computed sample</span>
+        </span>
+      </div>
+      <div class="panel-body stack-s">
+        <p class="small" id="fig2-intro">The plateau is one number. The soft-theorem side supplies another,
+          computed a different way: an Abel-regularised transform of the whole response,
+          <span class="num">&minus;i&omega;&#8239;&delta;u&#771;(&omega;)</span> as
+          <span class="num">&omega;&rarr;0</span>, taken at four frequencies with the intercept
+          fitted linearly in <span class="num">&omega;&sup2;</span> on the lowest three, and
+          then compared with a soft-vertex prediction normalised by the <i>measured</i> injected
+          charge. Nothing in that chain uses the plateau value; a regression test deliberately
+          doubles the plateau input and checks that the extracted residue does not move.</p>
+        <div class="tip-wrap">
+          <svg id="fig2" class="chart" viewBox="0 0 720 300" role="img"
+               aria-label="The extracted DC residue divided by the independently normalised soft-vertex prediction, against frequency squared, with the fitted intercept."></svg>
+        </div>
+        <figcaption id="fig2-cap"></figcaption>
+        <div id="fig2-scope" class="stack-s" style="margin-top:.8rem"></div>
+      </div>
+    </figure>
+    </div>
+
+    <!-- decisive plate -->
+    <div class="panel plate" style="max-width:62rem;width:100%;margin-inline:auto" id="plate">
+      <div class="panel-head">
+        <span class="t" id="plate-title">The decisive numbers</span>
+        <span class="tag tag-sample">Computed sample</span>
+      </div>
+      <div class="panel-body stack">
+        <p class="small" id="plate-intro"></p>
+        <div class="scroll-x"><table class="ledger" id="plate-table"></table></div>
+        <div id="plate-scope" class="stack-s"></div>
+      </div>
+    </div>
+
+    <!-- figure 3 : butterfly -->
+    <figure class="panel" id="fig3-panel" style="max-width:62rem;width:100%;margin-inline:auto">
+      <div class="panel-head">
+        <span class="t">Figure 3 &mdash; the butterfly shift, on the same detector</span>
+        <span class="row" style="gap:.4rem">
+          <span class="tag tag-exact">Exact formula</span>
+          <span class="tag tag-schema">Formal frame family</span>
+          <span class="tag tag-none">Reachability not computed</span>
+        </span>
+      </div>
+      <div class="panel-body stack">
+        <p class="small">The Shenker&ndash;Stanford shock acts on the relative frame as a pure
+          horizon translation. Put it into the same detector and it is an entirely different
+          object from a relative thermal dilation. Both live in the two-parameter family below,
+          in the equal-<span class="num">&kappa;</span> chart with
+          <span class="num">&kappa;=1</span>, <span class="num">&Delta;=&frac12;</span>,
+          <span class="num">&#119977;<sub>&Delta;</sub>=1</span>:</p>
+        <div class="eq" data-fallback="g = [ a  α ; 0  a^(−1) ] ,   D_g(T) = a x + α + 1/(a x)&#10;Δu_rel^NL(T) = T̄ − (1/κ) arcosh( D_g(T) / 2 )  ⟶  − log a / κ">\[ g=\begin{pmatrix} a & \alpha\\ 0 & a^{-1}\end{pmatrix},\qquad
+          D_g(T)=a\,x+\alpha+\frac{1}{a\,x},\qquad
+          \Delta u^{\rm NL}_{\rm rel}(T)=\bar T-\frac{1}{\kappa}\,\mathrm{arcosh}\frac{D_g(T)}{2}
+          \ \longrightarrow\ -\frac{\log a}{\kappa}. \]</div>
+        <p class="eqtag">t1-analytic.md &#10216;1&#10217;3.&#10216;2&#10217;1 (3.1), &#10216;1&#10217;3.&#10216;2&#10217;4 (3.6),
+          &#10216;1&#10217;3.&#10216;2&#10217;5 (3.7). The pure shock is
+          <span class="num">a = 1</span>, which is (3.14); then (3.15) gives
+          <span class="num">&Delta;u<sup>NL</sup> = &minus;(&alpha;/&kappa;)e<sup>&minus;&kappa;T&#772;</sup> + O(e<sup>&minus;2&kappa;T&#772;</sup>)</span>
+          and <span class="num">&delta;G<sub>LR</sub> = O(e<sup>&minus;(2&Delta;+1)&kappa;T&#772;</sup>)</span>.</p>
+
+        <div class="fence">
+          <p class="eyebrow">What the sliders below are, and are not</p>
+          <p class="small" style="margin-top:.4rem">The two sliders move
+            <span class="num">(a, &alpha;)</span> freely through the frame family written above.
+            Every curve is the displayed closed form evaluated directly &mdash; there are no
+            samples and no fits &mdash; but which of these frames an implementable,
+            energy-balanced pulse can actually produce is a separate question that this page
+            does not answer here. The eight computed points are the only evidence anywhere on
+            this page that a particular <span class="num">g</span> occurs, and none of them is
+            a general <span class="num">a &ne; 1</span> frame. Only the pure
+            <span class="num">a = 1</span> shock is a claim-bearing state; every
+            <span class="num">a &ne; 1</span> state is an algebraic comparison, not a realized
+            pulse in this page&rsquo;s dataset.</p>
+        </div>
+
+        <div class="grid2">
+          <div class="ctrl">
+            <label for="bf-alpha">Horizon translation &alpha;</label>
+            <input id="bf-alpha" type="range" min="0" max="6" step="0.05" value="2">
+            <output id="bf-alpha-o">2.00</output>
+
+            <label for="bf-a">Relative dilation a</label>
+            <input id="bf-a" type="range" min="0.90" max="1.10" step="0.001" value="1.000">
+            <output id="bf-a-o">1.000</output>
+          </div>
+          <div class="stack-s">
+            <div class="row">
+              <button id="bf-shock" type="button" aria-pressed="true">Pure Shenker&ndash;Stanford shock <span class="sym">(a = 1)</span></button>
+              <button id="bf-dilate" type="button">Explore a formal a &ne; 1 frame <span class="sym">(a = 0.98)</span></button>
+            </div>
+            <p class="tiny">Only the entry <span class="num">a</span> sets the late value. At
+              <span class="num">a = 1</span>, varying <span class="num">&alpha;</span> changes
+              only the transient and the late value remains zero. For
+              <span class="num">a &ne; 1</span>, <span class="num">&alpha;</span> still drops
+              out, but the late value is <span class="num">&minus;log a/&kappa;</span>.</p>
+            <p class="tiny" id="bf-state"></p>
+          </div>
+        </div>
+
+        <div class="legend" id="fig3-legend"></div>
+        <div class="tip-wrap">
+          <svg id="fig3" class="chart" viewBox="0 0 720 430" role="img"
+               aria-label="Upper panel: the exact nonlinear relative delay for the selected frame element. Lower panel: the absolute correlator difference on a logarithmic scale."></svg>
+        </div>
+
+        <div class="readouts" id="fig3-readouts"></div>
+
+        <figcaption>The <span class="num">a = 1</span> state is the one tied to claim
+          JT-bfly-decay: a pure Shenker&ndash;Stanford horizon translation in the energy-balanced,
+          <span class="num">u<sub>*</sub></span>-synchronized chart, whose calibrated delay has
+          zero plateau. Everything at <span class="num">a &ne; 1</span> is the algebraic
+          mechanism on its own, drawn to show why <span class="num">&alpha;</span> drops out of
+          the late limit and <span class="num">a</span> does not.</figcaption>
+      </div>
+    </figure>
+
+    <div class="column stack-s">
+      <p class="q">The celebrated butterfly frame shift is a transient relational time delay,
+        not stationary-subtracted memory.</p>
+      <p class="tiny">claims/CLAIMS.md, row JT-bfly-decay, parenthetical sentence, verbatim.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VERIFY ================= -->
+<section id="verify">
+  <div class="wrap stack">
+    <div class="column stack-s">
+      <p class="eyebrow">Verify</p>
+      <h2>Two kinds of check, kept apart</h2>
+      <p class="lede">One is a transcript of a run that happened on a machine, quoted from the
+        repository. The other is arithmetic your browser just did on the embedded data. They
+        are not the same thing and this page does not blur them.</p>
+    </div>
+
+    <div class="grid2" style="max-width:62rem;width:100%;margin-inline:auto">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="t">Recorded Julia run</span>
+          <span class="tag tag-recorded">Recorded run</span>
+        </div>
+        <div class="panel-body stack-s">
+          <p class="tiny">Quoted from <code>theory/lanes/syk-jt/t2-numeric.md</code>. This page
+            does not execute Julia and does not pretend to. Nothing here re-runs when you click.</p>
+          <div class="term">$ julia --project=numerics numerics/test/test_schwarzian_memory.jl
+Test Summary:                       | Pass  Total   Time
+sourced two-sided Schwarzian memory |   96     96  15.8s</div>
+          <p class="small">The eight inner test sets of
+            <code>numerics/test/test_schwarzian_memory.jl</code>, by their real names:</p>
+          <ol class="small" style="margin:0;padding-left:1.3rem;color:var(--ink-2)">
+            <li>unsourced thermal saddle over several periods</li>
+            <li>equation, SL(2) charge ledger, and RK4 order</li>
+            <li>all prescribed profiles obey the charge cross-check</li>
+            <li>relative frame and simultaneous-gauge invariance</li>
+            <li>bilocal model comparison and DC convergence</li>
+            <li>operator dimension API and Delta=1 handshake</li>
+            <li>finiteness and fail-closed output</li>
+            <li>complete prescribed campaign</li>
+          </ol>
+          <p class="small">The suite was red before it was green. The failure that mattered was
+            the circular-DC regression: the extraction was fed a deliberately doubled plateau,
+            and the old code&rsquo;s residue moved with it.</p>
+          <div class="term">isapprox(decoy_residue, residue; rtol = 0.01)
+Evaluated: isapprox(5.067586228816479e-5,
+                    0.00012306912331812398; rtol = 0.01)
+Test Summary: sourced two-sided Schwarzian memory | 81 pass, 1 fail, 82 total
+exit code: 1</div>
+          <p class="small">Three deliberate corruptions must also refuse to write a results
+            file at all:</p>
+          <div class="term">poison=nan    exit=1 json_created=no
+poison=empty  exit=1 json_created=no
+poison=charge exit=1 json_created=no</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="t">Recomputed in your browser, just now</span>
+          <span class="row" style="gap:.4rem">
+            <span class="tag tag-exact">Exact formula</span>
+            <span class="tag tag-sample">Computed sample</span>
+          </span>
+        </div>
+        <div class="panel-body stack-s">
+          <p class="tiny">These six checks run on the JSON embedded in this file. They are real,
+            they can fail, and if the embedded data were altered they would say so. They are not
+            all the same kind of check, so each row says which kind it is: a
+            <b>recomputation</b> derives its value here, in your browser, from the embedded
+            arrays &mdash; a closed form, a determinant, a convergence order, a cross-row
+            comparison; a <b>threshold</b> compares one stored diagnostic scalar against the
+            bound the Julia validator enforces.</p>
+          <div class="scroll-x"><table class="ledger" id="live-checks"></table></div>
+          <p class="tiny">Check 4 is the interesting one: it is the reason Figure 1 may draw a
+            continuous line at all. It validates serialization, matrix orientation, and the
+            rendering formulas; it does not rerun the sourced ODE. The residual it reports is
+            floating-point cancellation in the stored difference of two nearly equal correlators,
+            plus the <span class="num">h = 10<sup>&minus;5</sup></span> central difference the
+            Julia code used for <span class="num">&part;<sub>T</sub>G<sup>eq</sup></span>; this
+            page uses the analytic derivative instead.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EPILOGUE ================= -->
+<section id="epilogue">
+  <div class="wrap stack">
+    <div class="column stack-s">
+      <p class="eyebrow">Epilogue &mdash; where this sits</p>
+      <h2>One corner of an older triangle</h2>
+      <p class="small">In gauge theory and in gravity, three statements are known to be
+        different faces of one structure: a soft theorem constraining low-frequency emission,
+        an asymptotic symmetry, and a memory effect at late times. This page tested the
+        late-response corner of that triangle for a 0+1-dimensional thermal system and found a
+        calibrated D33 susceptibility, not D32 memory. It has touched one edge only &mdash; the
+        one joining the late detector reading to the zero-frequency datum, at leading order. The
+        map is an epilogue here, not an introduction.</p>
+    </div>
+
+    <div style="max-width:44rem;width:100%;margin-inline:auto">
+      <svg id="triangle" class="chart" viewBox="0 0 640 336" role="img"
+           aria-label="The infrared triangle: soft theorem, asymptotic symmetry, and late response at its corners. The late-response corner is labelled D33 passes, D32 fails, and the edge joining it to the soft theorem is marked as the one this page visited at leading order."></svg>
+      <p class="row" style="justify-content:center;margin-top:.4rem">
+        <span class="tag tag-schema">Schematic</span>
+        <span class="tiny">A map of where the result sits. No data, no computation.</span>
+      </p>
+    </div>
+
+    <div class="column stack">
+      <p class="eyebrow">The three adjudicated claim rows, verbatim</p>
+      <div id="claims"></div>
+    </div>
+
+    <div class="column stack-s">
+      <p class="eyebrow">What is open</p>
+      <p class="small">The unbalanced sector is held, not proved and not refuted: no
+        implementable reference protocol with the same measured unequal pair of one-sided
+        energies has been exhibited, so six of the eight computed points license no operational
+        detector conclusion. The finite-<span class="num">C</span> window is a scaling
+        convention rather than a uniform bound. The microscopic finite-<span class="num">N</span>
+        window and the effective-theory window do not yet overlap. And the leading-order
+        equality between the calibrated susceptibility and the DC residue is exactly that
+        &mdash; leading order; exact finite-amplitude equality to a single-soft vertex is
+        excluded, not merely unproven.</p>
+      <p class="small">The result that survives all of this is small and, we think, worth
+        stating plainly: in this system, at leading order and in the balanced sector, the
+        calibrated relational susceptibility exists and matches the soft datum, the absolute
+        record does not survive, and the butterfly shift is not a record at all. A thermal
+        reference frame erodes its own ruler.</p>
+    </div>
+
+    <div class="column stack-s">
+      <hr class="hr">
+      <p class="eyebrow">Provenance index</p>
+      <div class="scroll-x"><table class="ledger">
+        <thead><tr><th>What</th><th>Where it comes from</th></tr></thead>
+        <tbody>
+          <tr><td>Definitions D32, D33</td><td class="n">definitions.md</td></tr>
+          <tr><td>Claim rows JT-B-susc, JT-bfly-decay, JT-noplat-abs</td><td class="n">claims/CLAIMS.md</td></tr>
+          <tr><td>Allowed algebra, iterated-limit convention</td><td class="n">theory/lanes/syk-jt/observables-spec.md</td></tr>
+          <tr><td>Closed forms (3.1)&ndash;(3.15), (4.9), (4.14)</td><td class="n">theory/lanes/syk-jt/t1-analytic.md</td></tr>
+          <tr><td>Scope restriction to the balanced rows; recorded test transcripts</td><td class="n">theory/lanes/syk-jt/t2-numeric.md</td></tr>
+          <tr><td>&ldquo;0.011&percnt; or better&rdquo; adjudication</td><td class="n">theory/verdicts/syk-jt-joint-critic-r2.md &sect; r2a</td></tr>
+          <tr><td>All eight parameter points and their arrays</td><td class="n">numerics/results/schwarzian_memory.json</td></tr>
+          <tr><td>Test names and counts</td><td class="n">numerics/test/test_schwarzian_memory.jl</td></tr>
+        </tbody>
+      </table></div>
+      <p class="tiny">The complete results file is embedded in this page unmodified, byte for
+        byte, from commit <code>73b2753</code> of the campaign repository. Everything Figure 1,
+        Figure 2, the decisive plate and the live checks display is read out of that embedded
+        copy; you can diff it against the repository file.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- SOURCE OF RECORD.  The block below is numerics/results/schwarzian_memory.json
+     from the tns-as-st-me repository at commit 73b2753, embedded byte for byte with
+     no reformatting, no rounding and no selection.  Every "computed sample" on this
+     page is read out of it.  Diff it against the repository file. -->
+<script type="application/json" id="schwarzian-memory">
+{
+  "beta": 6.283185307179586,
+  "bilocal_rule": "GravityReparametrizationsRevised.tex:645-675",
+  "charge_equations": "GravityReparametrizationsRevised.tex:889-900",
+  "charge_jump_orientation": "Q_before-Q_after = integral t' T (1,t,t^2)",
+  "integration_method": "fixed-step classical RK4",
+  "integrator_diagnostics": {
+    "measured_orders": [
+      4.174954453879754,
+      4.080891706644726,
+      4.0388236497020396
+    ],
+    "step_sizes": [
+      0.08,
+      0.04,
+      0.02,
+      0.01
+    ],
+    "tan_three_period_chart_max_error": 4.0465408801537706e-12,
+    "terminal_errors": [
+      0.00031843394289188254,
+      1.7629209272840285e-5,
+      1.0417464291201384e-6,
+      6.33803969307678e-8
+    ]
+  },
+  "late_time_grid": [
+    2.0,
+    5.0,
+    10.0,
+    20.0,
+    40.0
+  ],
+  "limit_convention": {
+    "finite_C_cutoff": "kappa*T_max = sqrt(kappa*C)",
+    "order": "C -> infinity first; then kappa*T -> infinity with T/C -> 0",
+    "status": "conservative scaling convention, not a uniform finite-C error bound",
+    "window": "1 << kappa*T << kappa*C"
+  },
+  "operator_dimension": 0.5,
+  "parameter_points": [
+    {
+      "C": 10.0,
+      "G_equilibrium_final_energy": [
+        0.13284813773620888,
+        0.0067260791324119185,
+        4.5224816320427676e-5,
+        2.044406384863358e-9,
+        4.177803994372922e-18
+      ],
+      "G_pulse": [
+        0.13284818493947573,
+        0.006726877994827328,
+        4.523046110932644e-5,
+        2.044661643315584e-9,
+        4.1783256224625946e-18
+      ],
+      "charge_after": [
+        -0.006487159102942508,
+        -10.008591320764285,
+        -0.01160548452395549
+      ],
+      "charge_before": [
+        0.0,
+        -10.0,
+        0.0
+      ],
+      "charge_jump_error": 2.175804092452438e-9,
+      "dc": {
+        "extrapolated_by_horizon": [
+          0.00012478041834523414,
+          0.00012478041330870126,
+          0.00012478040875729928
+        ],
+        "extrapolated_late_ratio": 0.9998156518660521,
+        "extrapolated_residue": 0.00012478040875729928,
+        "extrapolated_vertex_ratio": 0.9995865701524473,
+        "fitted_mobius_tail": 0.00012480341607387134,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.551401979911371e-12,
+        "injected_charge_norm": 0.015829761883627447,
+        "late_detector": 0.0001248034160341555,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            9.947109482862493e-5,
+            0.00011799597814491554,
+            0.00012306913393740905,
+            0.00012436777160102332
+          ],
+          [
+            9.94711314037721e-5,
+            0.00011799597654484438,
+            0.00012306912456187236,
+            0.0001243677706778587
+          ],
+          [
+            9.947113329664736e-5,
+            0.00011799599022433239,
+            0.00012306912327288293,
+            0.00012436776823736983
+          ]
+        ],
+        "residue_ratio": [
+          0.7970225211577915,
+          0.9454548118461751,
+          0.9861038037548754,
+          0.9965093279444656
+        ],
+        "soft_ratio": [
+          0.7968399042077691,
+          0.9452381855030793,
+          0.9858778637541014,
+          0.9962810037888649
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 0.00012483201803948705
+      },
+      "delta_G_LR": [
+        4.7203266850814884e-8,
+        7.988624154096902e-7,
+        5.6447888987644725e-9,
+        2.552584522261003e-13,
+        5.216280896728765e-22
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.8303845151915334,
+        "aic_exponential": -93.75724718170203,
+        "amplitude": 7.988623875477434e-7,
+        "constant": 2.0112686489172686e-7,
+        "decay_rate": 0.9903516191192998,
+        "rss_constant": 4.764049592712813e-13,
+        "rss_exponential": 1.5527709849183198e-23,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -28.800323680779996,
+        "aic_exponential": -26.496007112806698,
+        "amplitude": 0.0001234422109260347,
+        "constant": 0.0001232750230590754,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 2.753621293302269e-11,
+        "rss_exponential": 2.9712894633415774e-11,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        3.683947063584453e-7,
+        0.00011873064991699488,
+        0.00012476261205907884,
+        0.0001248034142260724,
+        0.0001248034160341555
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.316159897251872,
+        "delta_u_at_max": 8.652260533990587e-5,
+        "kappa_T_at_max": 3.1629564935091685,
+        "kappa_effective": 1.0004293779831814,
+        "maximum_usable_T": 3.16159897251872,
+        "sample_cost_exponential_factor": 558.8678198795491,
+        "sample_cost_for_10pct_late_delta": 3.588030759750435e12,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.2480341607387135e-5
+      },
+      "energy_change": 0.00859124697267788,
+      "epsilon": 0.01,
+      "final_energy": 5.008591246972678,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        0.006487159238032568,
+        0.008591321480101683,
+        0.011605486699759582
+      ],
+      "k_final": 1.0008587559663629,
+      "mobius": [
+        [
+          0.9998751585834122,
+          0.00032403913036876535
+        ],
+        [
+          0.0005798487289286036,
+          1.0001250449210506
+        ]
+      ],
+      "mobius_fit_residual": 3.552713678800501e-15,
+      "post_charge_drift": 2.7977620220553945e-13,
+      "pre_charge_drift": 6.661338147750939e-15,
+      "profile": "top_hat"
+    },
+    {
+      "C": 10.0,
+      "G_equilibrium_final_energy": [
+        0.13237193771679517,
+        0.006623256561627877,
+        4.36849185569356e-5,
+        1.9002627476014106e-9,
+        3.595654060624297e-18
+      ],
+      "G_pulse": [
+        0.13237333977157564,
+        0.006631050792691052,
+        4.3738890627887826e-5,
+        1.9026112291961837e-9,
+        3.600097828996373e-18
+      ],
+      "charge_after": [
+        -0.06486676732662233,
+        -10.085905254843656,
+        -0.11604173352518288
+      ],
+      "charge_before": [
+        0.0,
+        -10.0,
+        0.0
+      ],
+      "charge_jump_error": 2.1725343940515174e-8,
+      "dc": {
+        "extrapolated_by_horizon": [
+          0.0012303853785120996,
+          0.0012303853288764947,
+          0.0012303852839971078
+        ],
+        "extrapolated_late_ratio": 0.999818023958091,
+        "extrapolated_residue": 0.0012303852839971078,
+        "extrapolated_vertex_ratio": 0.9976681039712758,
+        "fitted_mobius_tail": 0.0012306092257398221,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.4879386882148986e-11,
+        "injected_charge_norm": 0.1582817130187574,
+        "late_detector": 0.0012306092253930815,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            0.0009823954525375901,
+            0.0011639358440994746,
+            0.0012136252929705361,
+            0.0012263430590651154
+          ],
+          [
+            0.0009823958130673854,
+            0.0011639358284396,
+            0.0012136252005901468,
+            0.001226343049982032
+          ],
+          [
+            0.000982395831731696,
+            0.0011639359633252029,
+            0.0012136251878799333,
+            0.0012263430259170129
+          ]
+        ],
+        "residue_ratio": [
+          0.7983003958205326,
+          0.9458209310542249,
+          0.9861986752880686,
+          0.9965332622346416
+        ],
+        "soft_ratio": [
+          0.7965838014650292,
+          0.9437871216260135,
+          0.9840780411404877,
+          0.9943904055080517
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 0.001233261120706864
+      },
+      "delta_G_LR": [
+        1.4020547804693972e-6,
+        7.794231063174874e-6,
+        5.397207095222294e-8,
+        2.3484815947731485e-12,
+        4.443768372076262e-21
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.83076338537503,
+        "aic_exponential": -87.9722613597705,
+        "amplitude": 7.794231611008288e-6,
+        "constant": 1.962051370652174e-6,
+        "decay_rate": 0.9948283115526535,
+        "rss_constant": 4.535436852629622e-11,
+        "rss_exponential": 6.277778348435165e-21,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -28.95808155484225,
+        "aic_exponential": -26.647676160668762,
+        "amplitude": 0.001217481979345532,
+        "constant": 0.0012158326370255929,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 2.5749314348973843e-9,
+        "rss_exponential": 2.782707167376337e-9,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        1.0933427646266737e-5,
+        0.0011718880765628963,
+        0.0012302240370117134,
+        0.0012306092091346808,
+        0.0012306092253930815
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.31555373661482733,
+        "delta_u_at_max": 0.0008549223459689063,
+        "kappa_T_at_max": 3.169032351597929,
+        "kappa_effective": 1.0042766045474303,
+        "maximum_usable_T": 3.1555373661482733,
+        "sample_cost_exponential_factor": 565.7004530391869,
+        "sample_cost_for_10pct_late_delta": 3.7354780887152985e10,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 0.00012306092257398222
+      },
+      "energy_change": 0.08589787787770642,
+      "epsilon": 0.1,
+      "final_energy": 5.085897877877707,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        0.06486676866986271,
+        0.08590526198586222,
+        0.11604175525052682
+      ],
+      "k_final": 1.0085532090948603,
+      "mobius": [
+        [
+          0.9987656534396692,
+          0.0032118038067759044
+        ],
+        [
+          0.005759990906476301,
+          1.0012543948790555
+        ]
+      ],
+      "mobius_fit_residual": 3.9968028886505635e-15,
+      "post_charge_drift": 3.375077994860476e-13,
+      "pre_charge_drift": 6.661338147750939e-15,
+      "profile": "top_hat"
+    },
+    {
+      "C": 100.0,
+      "G_equilibrium_final_energy": [
+        0.13289581617704413,
+        0.006736483664294979,
+        4.538238154284609e-5,
+        2.0594721000131062e-9,
+        4.2412431515387385e-18
+      ],
+      "G_pulse": [
+        0.13289581994457061,
+        0.006736563748437012,
+        4.538294857136415e-5,
+        2.0594978404654298e-9,
+        4.2412961610059526e-18
+      ],
+      "charge_after": [
+        -0.006487207346594914,
+        -100.0085914003046,
+        -0.011605615663423663
+      ],
+      "charge_before": [
+        0.0,
+        -100.0,
+        0.0
+      ],
+      "charge_jump_error": 2.17579438667459e-9,
+      "dc": {
+        "extrapolated_by_horizon": [
+          1.2495725384207877e-5,
+          1.2495724879766122e-5,
+          1.249572442392246e-5
+        ],
+        "extrapolated_late_ratio": 0.9998154094185172,
+        "extrapolated_residue": 1.249572442392246e-5,
+        "extrapolated_vertex_ratio": 0.9997923622733356,
+        "fitted_mobius_tail": 1.249803144722128e-5,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.558436622419636e-13,
+        "injected_charge_norm": 0.015829920967333908,
+        "late_detector": 1.249803144281388e-5,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            9.959587929828364e-6,
+            1.1815858022504154e-5,
+            1.2324236960912857e-5,
+            1.245437486125321e-5
+          ],
+          [
+            9.959591592700206e-6,
+            1.1815857862106382e-5,
+            1.2324236021888429e-5,
+            1.2454374768759459e-5
+          ],
+          [
+            9.959591782245817e-6,
+            1.1815859232040789e-5,
+            1.2324235892780677e-5,
+            1.2454374524308383e-5
+          ]
+        ],
+        "residue_ratio": [
+          0.7968928409099487,
+          0.9454176272563848,
+          0.9860941660429946,
+          0.9965068964096263
+        ],
+        "soft_ratio": [
+          0.796874471414114,
+          0.9453958340562526,
+          0.9860714351916859,
+          0.9964839255303023
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 1.2498319546580238e-5
+      },
+      "delta_G_LR": [
+        3.767526485232153e-9,
+        8.008414203314329e-8,
+        5.670285180587741e-10,
+        2.5740452323550852e-14,
+        5.300946721402751e-23
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.8303459993366151,
+        "aic_exponential": -88.562320488767,
+        "amplitude": 8.00841473801364e-8,
+        "constant": 2.016279907291361e-8,
+        "decay_rate": 0.9903516191192998,
+        "rss_constant": 4.78763746070688e-15,
+        "rss_exponential": 5.718584869970107e-25,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -28.78436202457926,
+        "aic_exponential": -26.480654645550754,
+        "amplitude": 1.2361411761438494e-5,
+        "constant": 1.234467011486859e-5,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 2.772342006967467e-13,
+        "rss_exponential": 2.9910344504265866e-13,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        2.940587843443434e-8,
+        1.1888690698770173e-5,
+        1.249392705716591e-5,
+        1.2498031260724396e-5,
+        1.249803144281388e-5
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09999785231321616,
+        "delta_u_at_max": 1.2493926175692355e-5,
+        "kappa_T_at_max": 10.000214773291042,
+        "kappa_effective": 1.000042955119484,
+        "maximum_usable_T": 9.999785231321615,
+        "sample_cost_exponential_factor": 4.8537364122661334e8,
+        "sample_cost_for_10pct_late_delta": 3.107369950263588e20,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.249803144722128e-6
+      },
+      "energy_change": 0.008591392925239028,
+      "epsilon": 0.01,
+      "final_energy": 50.00859139292524,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        0.006487207481673624,
+        0.008591401020309737,
+        0.01160561783921805
+      ],
+      "k_final": 1.0000859102389679,
+      "mobius": [
+        [
+          0.9999875015879105,
+          3.2432844959382766e-5
+        ],
+        [
+          5.802381875093172e-5,
+          1.0000125004502025
+        ]
+      ],
+      "mobius_fit_residual": 2.220446049250313e-15,
+      "post_charge_drift": 4.618527782440651e-12,
+      "pre_charge_drift": 6.661338147750939e-14,
+      "profile": "top_hat"
+    },
+    {
+      "C": 100.0,
+      "G_equilibrium_final_energy": [
+        0.13284813773620888,
+        0.0067260791324119185,
+        4.5224816320427676e-5,
+        2.044406384863358e-9,
+        4.177803994372922e-18
+      ],
+      "G_pulse": [
+        0.13284818493947573,
+        0.006726877994827328,
+        4.523046110932644e-5,
+        2.044661643315584e-9,
+        4.1783256224625946e-18
+      ],
+      "charge_after": [
+        -0.06487159102942508,
+        -100.08591320764286,
+        -0.1160548452395549
+      ],
+      "charge_before": [
+        0.0,
+        -100.0,
+        0.0
+      ],
+      "charge_jump_error": 2.1758040952279956e-8,
+      "dc": {
+        "extrapolated_by_horizon": [
+          0.00012478041834523414,
+          0.00012478041330870126,
+          0.00012478040875729928
+        ],
+        "extrapolated_late_ratio": 0.9998156518660521,
+        "extrapolated_residue": 0.00012478040875729928,
+        "extrapolated_vertex_ratio": 0.9995865701524469,
+        "fitted_mobius_tail": 0.00012480341607387134,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.551401979911371e-12,
+        "injected_charge_norm": 0.15829761883627452,
+        "late_detector": 0.0001248034160341555,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            9.947109482862493e-5,
+            0.00011799597814491554,
+            0.00012306913393740905,
+            0.00012436777160102332
+          ],
+          [
+            9.94711314037721e-5,
+            0.00011799597654484438,
+            0.00012306912456187236,
+            0.0001243677706778587
+          ],
+          [
+            9.947113329664736e-5,
+            0.00011799599022433239,
+            0.00012306912327288293,
+            0.00012436776823736983
+          ]
+        ],
+        "residue_ratio": [
+          0.7970225211577915,
+          0.9454548118461751,
+          0.9861038037548754,
+          0.9965093279444656
+        ],
+        "soft_ratio": [
+          0.7968399042077687,
+          0.9452381855030788,
+          0.9858778637541009,
+          0.9962810037888644
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 0.0001248320180394871
+      },
+      "delta_G_LR": [
+        4.7203266850814884e-8,
+        7.988624154096902e-7,
+        5.6447888987644725e-9,
+        2.552584522261003e-13,
+        5.216280896728765e-22
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.8303845151915334,
+        "aic_exponential": -93.75724718170203,
+        "amplitude": 7.988623875477434e-7,
+        "constant": 2.0112686489172686e-7,
+        "decay_rate": 0.9903516191192998,
+        "rss_constant": 4.764049592712813e-13,
+        "rss_exponential": 1.5527709849183198e-23,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -28.800323680779996,
+        "aic_exponential": -26.496007112806698,
+        "amplitude": 0.0001234422109260347,
+        "constant": 0.0001232750230590754,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 2.753621293302269e-11,
+        "rss_exponential": 2.9712894633415774e-11,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        3.683947063584453e-7,
+        0.00011873064991699488,
+        0.00012476261205907884,
+        0.0001248034142260724,
+        0.0001248034160341555
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09997853801207249,
+        "delta_u_at_max": 0.00012476252434974225,
+        "kappa_T_at_max": 10.002146659508554,
+        "kappa_effective": 1.0004293779831814,
+        "maximum_usable_T": 9.997853801207249,
+        "sample_cost_exponential_factor": 4.872526422007651e8,
+        "sample_cost_for_10pct_late_delta": 3.1282485872291205e18,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.2480341607387135e-5
+      },
+      "energy_change": 0.0859124697267788,
+      "epsilon": 0.1,
+      "final_energy": 50.08591246972678,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        0.06487159238032578,
+        0.0859132148010168,
+        0.11605486699759585
+      ],
+      "k_final": 1.0008587559663629,
+      "mobius": [
+        [
+          0.9998751585834122,
+          0.00032403913036876535
+        ],
+        [
+          0.0005798487289286036,
+          1.0001250449210506
+        ]
+      ],
+      "mobius_fit_residual": 3.552713678800501e-15,
+      "post_charge_drift": 2.7977620220553945e-12,
+      "pre_charge_drift": 6.661338147750939e-14,
+      "profile": "top_hat"
+    },
+    {
+      "C": 10.0,
+      "G_equilibrium_final_energy": [
+        0.13283708691679874,
+        0.006723670471956416,
+        4.5188385609752207e-5,
+        2.040931417586759e-9,
+        4.1632412646560655e-18
+      ],
+      "G_pulse": [
+        0.13283510266133403,
+        0.006724510788266383,
+        4.5194357138089225e-5,
+        2.0412012201609172e-9,
+        4.1637916277005634e-18
+      ],
+      "charge_after": [
+        -0.008056485341624287,
+        -10.01038359564271,
+        -0.013416388557785375
+      ],
+      "charge_before": [
+        0.0,
+        -10.0,
+        0.0
+      ],
+      "charge_jump_error": 2.1181615489362926e-12,
+      "dc": {
+        "extrapolated_by_horizon": [
+          0.0001321001770003656,
+          0.0001321001716645141,
+          0.0001321001668460015
+        ],
+        "extrapolated_late_ratio": 0.9997950508875778,
+        "extrapolated_residue": 0.0001321001668460015,
+        "extrapolated_vertex_ratio": 0.9997225340527978,
+        "fitted_mobius_tail": 0.00013212724626019488,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.8185126136530976e-12,
+        "injected_charge_norm": 0.018780987630090604,
+        "late_detector": 0.00013212724620783857,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            0.00010268971467243221,
+            0.00012420977416342945,
+            0.00013010971573725361,
+            0.00013162042223846554
+          ],
+          [
+            0.00010268975341022038,
+            0.00012420977245277708,
+            0.00013010970580217067,
+            0.0001316204212583374
+          ],
+          [
+            0.00010268975541413927,
+            0.00012420978693510144,
+            0.00013010970443747447,
+            0.00013162041867467174
+          ]
+        ],
+        "residue_ratio": [
+          0.7772034789297464,
+          0.9400770128798202,
+          0.9847303124202674,
+          0.9961640952361213
+        ],
+        "soft_ratio": [
+          0.7771471070401056,
+          0.9400088274958628,
+          0.9846588882565798,
+          0.9960918417607275
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 0.00013213683031678563
+      },
+      "delta_G_LR": [
+        -1.9842554647153676e-6,
+        8.403163099671498e-7,
+        5.971528337017976e-9,
+        2.698025741583334e-13,
+        5.503630444978789e-22
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.8302766777998667,
+        "aic_exponential": -78.00893182091696,
+        "amplitude": 8.403165198215897e-7,
+        "constant": 2.1157202702668562e-7,
+        "decay_rate": 0.9903516191192998,
+        "rss_constant": 5.271162694668372e-13,
+        "rss_exponential": 8.808478078097758e-22,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -27.880728181588648,
+        "aic_exponential": -25.60980926878871,
+        "amplitude": 0.00013049112463177904,
+        "constant": 0.00013031465996102948,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 3.872890718471095e-11,
+        "rss_exponential": 4.144287633125303e-11,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        -1.5485687257309647e-5,
+        0.00012492527124682555,
+        0.00013207887830387835,
+        0.00013212724408557554,
+        0.00013212724620783857
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.3161457510844886,
+        "delta_u_at_max": 8.671394033061067e-5,
+        "kappa_T_at_max": 3.1630980222560523,
+        "kappa_effective": 1.000518909840015,
+        "maximum_usable_T": 3.161457510844886,
+        "sample_cost_exponential_factor": 559.0260339947806,
+        "sample_cost_for_10pct_late_delta": 3.2021912476825093e12,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.3212724626019488e-5
+      },
+      "energy_change": 0.01038358214874191,
+      "epsilon": 0.05,
+      "final_energy": 5.010383582148742,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        0.008056485340608864,
+        0.010383595641276317,
+        0.013416388555667213
+      ],
+      "k_final": 1.00103781968003,
+      "mobius": [
+        [
+          0.9998678216650333,
+          0.0004023533436051116
+        ],
+        [
+          0.0006702125476646968,
+          1.0001324655062964
+        ]
+      ],
+      "mobius_fit_residual": 4.884981308350689e-15,
+      "post_charge_drift": 3.064215547965432e-13,
+      "pre_charge_drift": 6.661338147750939e-15,
+      "profile": "gaussian"
+    },
+    {
+      "C": 10.0,
+      "G_equilibrium_final_energy": [
+        0.13290111424275639,
+        0.006737641072574434,
+        4.5399929091542284e-5,
+        2.061153567101288e-9,
+        4.2483540211712785e-18
+      ],
+      "G_pulse": [
+        0.13290419278376278,
+        0.0067378144987243595,
+        4.540110175813501e-5,
+        2.0612068073047484e-9,
+        4.248463757406514e-18
+      ],
+      "charge_after": [
+        0.0004028086251506302,
+        -10.000000014884334,
+        -0.000664157689986844
+      ],
+      "charge_before": [
+        0.0,
+        -10.0,
+        0.0
+      ],
+      "charge_jump_error": 1.7877422632539552e-12,
+      "dc": {
+        "extrapolated_by_horizon": [
+          2.582964712722553e-5,
+          2.5829646090634887e-5,
+          2.582964514864987e-5
+        ],
+        "extrapolated_late_ratio": 0.9999748651026156,
+        "extrapolated_residue": 2.582964514864987e-5,
+        "extrapolated_vertex_ratio": 1.0001099789167864,
+        "fitted_mobius_tail": 2.5830294399536394e-5,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 9.419850153808557e-13,
+        "injected_charge_norm": 0.0007767626552236475,
+        "late_detector": 2.5830294390448784e-5,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            2.4539419286627495e-5,
+            2.549383972590805e-5,
+            2.574526775946364e-5,
+            2.5808979802717575e-5
+          ],
+          [
+            2.4539426831578687e-5,
+            2.5493839420254617e-5,
+            2.5745265833422378e-5,
+            2.5808979615949195e-5
+          ],
+          [
+            2.4539427223323728e-5,
+            2.5493842251376073e-5,
+            2.574526556668883e-5,
+            2.580897911080221e-5
+          ]
+        ],
+        "residue_ratio": [
+          0.9500250694935023,
+          0.9869745139568707,
+          0.9967081744220695,
+          0.9991747953265891
+        ],
+        "soft_ratio": [
+          0.950153434230634,
+          0.9871078711998615,
+          0.9968428468501086,
+          0.999309801037564
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 2.582680474464e-5
+      },
+      "delta_G_LR": [
+        3.0785410063960406e-6,
+        1.7342614992525707e-7,
+        1.1726665927229906e-9,
+        5.3240203460554115e-14,
+        1.0973623523536027e-22
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.8311995775426957,
+        "aic_exponential": -106.16830205031383,
+        "amplitude": 1.7342615115106054e-7,
+        "constant": 4.3649717439545907e-8,
+        "decay_rate": 0.9993252400059783,
+        "rss_constant": 2.245681329462947e-14,
+        "rss_exponential": 3.2875896649023446e-26,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -50.156635284691156,
+        "aic_exponential": -43.88406122382806,
+        "amplitude": 2.584354016236878e-5,
+        "constant": 2.5808129630095836e-5,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 5.7908094368817796e-15,
+        "rss_exponential": 1.685109426353274e-14,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        2.402851110192189e-5,
+        2.574222871163894e-5,
+        2.582970104513806e-5,
+        2.5830294373157552e-5,
+        2.5830294390448784e-5
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.31622776579341705,
+        "delta_u_at_max": 2.5276077410118964e-5,
+        "kappa_T_at_max": 3.1622776624025883,
+        "kappa_effective": 1.0000000014130377,
+        "maximum_usable_T": 3.1622776579341707,
+        "sample_cost_exponential_factor": 558.1095809909594,
+        "sample_cost_for_10pct_late_delta": 8.364900240536361e13,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 2.5830294399536395e-6
+      },
+      "energy_change": 2.8260755957632e-8,
+      "epsilon": 0.05,
+      "final_energy": 5.0000000282607555,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        -0.00040280862395754454,
+        1.4884401143716289e-8,
+        0.0006641576881991017
+      ],
+      "k_final": 1.0000000028260756,
+      "mobius": [
+        [
+          0.9999741703727507,
+          -2.0139910994070715e-5
+        ],
+        [
+          3.320874217275979e-5,
+          1.0000258296255977
+        ]
+      ],
+      "mobius_fit_residual": 3.1086244689504383e-15,
+      "post_charge_drift": 4.04121180963557e-13,
+      "pre_charge_drift": 6.661338147750939e-15,
+      "profile": "derivative_gaussian_balanced"
+    },
+    {
+      "C": 100.0,
+      "G_equilibrium_final_energy": [
+        0.13289471094688549,
+        0.006736242248725993,
+        4.537872192590225e-5,
+        2.0591215148863128e-9,
+        4.239761310124401e-18
+      ],
+      "G_pulse": [
+        0.1328945109695845,
+        0.006736326538300877,
+        4.5379322389554614e-5,
+        2.0591487717743065e-9,
+        4.239817432456299e-18
+      ],
+      "charge_after": [
+        -0.008056494575492401,
+        -100.01038360870037,
+        -0.013416407045951928
+      ],
+      "charge_before": [
+        0.0,
+        -100.0,
+        0.0
+      ],
+      "charge_jump_error": 1.8921982036790297e-12,
+      "dc": {
+        "extrapolated_by_horizon": [
+          1.3233741188521054e-5,
+          1.323374065398084e-5,
+          1.3233740171329447e-5
+        ],
+        "extrapolated_late_ratio": 0.9997947438133555,
+        "extrapolated_residue": 1.3233740171329447e-5,
+        "extrapolated_vertex_ratio": 0.999787236494853,
+        "fitted_mobius_tail": 1.323645703956238e-5,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 4.826513927430219e-13,
+        "injected_charge_norm": 0.018781012018065216,
+        "late_detector": 1.3236457036025345e-5,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            1.028531402653705e-5,
+            1.2442682432671547e-5,
+            1.303418455983667e-5,
+            1.3185643971071968e-5
+          ],
+          [
+            1.0285317907411949e-5,
+            1.2442682261145834e-5,
+            1.3034183564508142e-5,
+            1.3185643872876607e-5
+          ],
+          [
+            1.0285318108170594e-5,
+            1.2442683711934498e-5,
+            1.3034183427818313e-5,
+            1.318564361411406e-5
+          ]
+        ],
+        "residue_ratio": [
+          0.7770446487437909,
+          0.9400312846609592,
+          0.9847184478704152,
+          0.9961611009824617
+        ],
+        "soft_ratio": [
+          0.7770388140245099,
+          0.9400242260978893,
+          0.9847110537577043,
+          0.9961536209484736
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 1.323655642747103e-5
+      },
+      "delta_G_LR": [
+        -1.999773009964123e-7,
+        8.42895748840583e-8,
+        6.004636523654306e-10,
+        2.7256887993759625e-14,
+        5.612233189807042e-23
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.8302297029204426,
+        "aic_exponential": -74.78449580546916,
+        "amplitude": 8.428960638283974e-8,
+        "constant": 2.1222516448327947e-8,
+        "decay_rate": 0.9903516191192998,
+        "rss_constant": 5.303512173135627e-15,
+        "rss_exponential": 1.984503272199125e-23,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -27.862460466789432,
+        "aic_exponential": -25.59216152839514,
+        "amplitude": 1.307213559011098e-5,
+        "constant": 1.305445856301502e-5,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 3.904369808826274e-13,
+        "rss_exponential": 4.177325145195229e-13,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        -1.5608375207617296e-6,
+        1.2513333923953566e-5,
+        1.3231586473166044e-5,
+        1.3236456818915122e-5,
+        1.3236457036025345e-5
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09999740433398811,
+        "delta_u_at_max": 1.3231585208248035e-5,
+        "kappa_T_at_max": 10.000259573338843,
+        "kappa_effective": 1.0000519153415521,
+        "maximum_usable_T": 9.999740433398811,
+        "sample_cost_exponential_factor": 4.8541713269966114e8,
+        "sample_cost_for_10pct_late_delta": 2.7705857216733482e20,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 1.3236457039562382e-6
+      },
+      "energy_change": 0.01038360735096111,
+      "epsilon": 0.05,
+      "final_energy": 50.01038360735096,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        0.008056494574713923,
+        0.010383608699215303,
+        0.01341640704405973
+      ],
+      "k_final": 1.0001038306831043,
+      "mobius": [
+        [
+          0.9999867630310048,
+          4.0277757479606804e-5
+        ],
+        [
+          6.707595869591721e-5,
+          1.0000132398459196
+        ]
+      ],
+      "mobius_fit_residual": 3.9968028886505635e-15,
+      "post_charge_drift": 6.0396132539608516e-12,
+      "pre_charge_drift": 6.661338147750939e-14,
+      "profile": "gaussian"
+    },
+    {
+      "C": 100.0,
+      "G_equilibrium_final_energy": [
+        0.13290111441529634,
+        0.006737641110271354,
+        4.539992966313274e-5,
+        2.0611536218849726e-9,
+        4.248354252949487e-18
+      ],
+      "G_pulse": [
+        0.1329014222624633,
+        0.006737658452220898,
+        4.54000469252084e-5,
+        2.0611589456972662e-9,
+        4.24836522614449e-18
+      ],
+      "charge_after": [
+        0.00040281772455408316,
+        -100.00000000148954,
+        -0.0006641380070782077
+      ],
+      "charge_before": [
+        0.0,
+        -100.0,
+        0.0
+      ],
+      "charge_jump_error": 3.2492509117326707e-12,
+      "dc": {
+        "extrapolated_by_horizon": [
+          2.5828637173105607e-6,
+          2.582863613620838e-6,
+          2.5828635193756737e-6
+        ],
+        "extrapolated_late_ratio": 0.9999748677080538,
+        "extrapolated_residue": 2.5828635193756737e-6,
+        "extrapolated_vertex_ratio": 0.9999883690609472,
+        "fitted_mobius_tail": 2.582928435320834e-6,
+        "fourier_convention": "sum exp(+i omega t), Abel eta=omega^2",
+        "horizon": [
+          20.0,
+          40.0,
+          80.0
+        ],
+        "horizon_error": 9.424516449844651e-14,
+        "injected_charge_norm": 0.0007767505435096067,
+        "late_detector": 2.5829284342871606e-6,
+        "omega": [
+          0.2,
+          0.1,
+          0.05,
+          0.025
+        ],
+        "omega_extrapolation": "linear intercept in omega^2 on 0.1,0.05,0.025",
+        "residue_by_horizon": [
+          [
+            2.453852498081938e-6,
+            2.549286052726311e-6,
+            2.574426555506547e-6,
+            2.5807971725175086e-6
+          ],
+          [
+            2.4538532525674055e-6,
+            2.5492860221486236e-6,
+            2.574426362860509e-6,
+            2.5807971538230315e-6
+          ],
+          [
+            2.4538532917392184e-6,
+            2.5492863052885685e-6,
+            2.574426336168459e-6,
+            2.580797103259309e-6
+          ]
+        ],
+        "residue_ratio": [
+          0.9500275962606899,
+          0.986975198943955,
+          0.9967083493271279,
+          0.9991748393027235
+        ],
+        "soft_ratio": [
+          0.950040423240897,
+          0.9869885247793219,
+          0.9967218065764957,
+          0.9991883298538798
+        ],
+        "uniform_dt": 0.02,
+        "vertex_soft_prediction": 2.5828935608532597e-6
+      },
+      "delta_G_LR": [
+        3.0784716695264613e-7,
+        1.7341949544794066e-8,
+        1.1726207565989234e-10,
+        5.323812293587742e-15,
+        1.0973195002582657e-23
+      ],
+      "delta_G_model": {
+        "aic_constant": 0.8311995905185496,
+        "aic_exponential": -106.20545625759897,
+        "amplitude": 1.734194966680175e-8,
+        "constant": 4.3648042360665654e-9,
+        "decay_rate": 0.9993252400059783,
+        "rss_constant": 2.2455090033186097e-16,
+        "rss_exponential": 3.256944145002391e-28,
+        "winner": "exponential"
+      },
+      "delta_u_model": {
+        "aic_constant": -50.15834023013773,
+        "aic_exponential": -43.88496464538708,
+        "amplitude": 2.584253432921652e-6,
+        "constant": 2.580712516864587e-6,
+        "decay_rate": 0.00010000000000000009,
+        "rss_constant": 5.787891144122726e-17,
+        "rss_exponential": 1.6845977387979638e-16,
+        "winner": "constant"
+      },
+      "delta_u_rel": [
+        2.4027969923973976e-6,
+        2.5741240857737575e-6,
+        2.5828691148938746e-6,
+        2.5829284325035557e-6,
+        2.5829284342871606e-6
+      ],
+      "detector_window": {
+        "T_over_C_at_max": 0.09999999999929321,
+        "delta_u_at_max": 2.5828691148696515e-6,
+        "kappa_T_at_max": 10.000000000070678,
+        "kappa_effective": 1.0000000000141358,
+        "maximum_usable_T": 9.99999999992932,
+        "sample_cost_exponential_factor": 4.8516519547837096e8,
+        "sample_cost_for_10pct_late_delta": 7.272184543237884e21,
+        "sample_cost_model": "M_shots ~ exp(4 Delta kappa T)/eta^2",
+        "sample_cost_target_eta": 2.582928435320834e-7
+      },
+      "energy_change": 2.8271607277474686e-9,
+      "epsilon": 0.05,
+      "final_energy": 50.000000002827164,
+      "fit_time_grid": [
+        5.0,
+        10.0,
+        20.0,
+        40.0
+      ],
+      "injected_charge": [
+        -0.0004028177239277618,
+        1.4884356635523428e-9,
+        0.0006641380038289568
+      ],
+      "k_final": 1.0000000000282716,
+      "mobius": [
+        [
+          0.9999974170782363,
+          -2.0140834181682717e-6
+        ],
+        [
+          3.3206985963677697e-6,
+          1.0000025829217472
+        ]
+      ],
+      "mobius_fit_residual": 3.1086244689504383e-15,
+      "post_charge_drift": 2.3092638912203256e-12,
+      "pre_charge_drift": 6.661338147750939e-14,
+      "profile": "derivative_gaussian_balanced"
+    }
+  ],
+  "schema_version": 2,
+  "source_equation": "GravityReparametrizationsRevised.tex:611-623"
+}
+</script>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+    ignoreHtmlClass: 'no-mathjax'
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =================================================================
+     0.  Data (verbatim from numerics/results/schwarzian_memory.json,
+         commit 73b2753) and small helpers.
+     ================================================================= */
+
+  var DATA = JSON.parse(document.getElementById('schwarzian-memory').textContent);
+  var PTS = DATA.parameter_points;
+  var TGRID = DATA.late_time_grid;
+  var DELTA = DATA.operator_dimension;
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var UID = 0;
+
+  function $(id) { return document.getElementById(id); }
+
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === 'class') n.className = attrs[k];
+      else if (k === 'html') n.innerHTML = attrs[k];
+      else if (k === 'text') n.textContent = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { n.appendChild(c); });
+    return n;
+  }
+
+  function s(tag, attrs, kids) {
+    var n = document.createElementNS(SVGNS, tag);
+    if (attrs) for (var k in attrs) {
+      if (k === 'text') n.textContent = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { n.appendChild(c); });
+    return n;
+  }
+
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+  /* Number formatting: mantissa and a real exponent, tabular. */
+  function supDigits(e) {
+    var map = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²',
+                '3': '³', '4': '⁴', '5': '⁵', '6': '⁶',
+                '7': '⁷', '8': '⁸', '9': '⁹' };
+    return String(e).split('').map(function (c) { return map[c] || c; }).join('');
+  }
+  function sci(x, sig) {
+    if (x === 0) return '0';
+    if (!isFinite(x)) return String(x);
+    var t = Number(x).toExponential(sig === undefined ? 6 : sig);
+    var p = t.split('e');
+    return p[0] + '×' + '10' + supDigits(parseInt(p[1], 10));
+  }
+  function pct(x, n) { return (x * 100).toFixed(n === undefined ? 4 : n) + '%'; }
+
+  /* Pick a tick formatter that suits the magnitudes on an axis. */
+  function tickFmt(vals) {
+    var m = 0;
+    vals.forEach(function (v) { m = Math.max(m, Math.abs(v)); });
+    if (m === 0) return function () { return '0'; };
+    if (m < 1e-3 || m >= 1e5) {
+      return function (v) { return v === 0 ? '0' : sci(v, 2); };
+    }
+    var dec = Math.min(6, Math.max(0, 3 - Math.floor(Math.log10(m))));
+    return function (v) { return v.toFixed(dec); };
+  }
+
+  /* =================================================================
+     1.  Theme toggle (per-viewer convenience only).
+     ================================================================= */
+
+  (function theme() {
+    var btn = $('theme-toggle');
+    var root = document.documentElement;
+    var stored = null;
+    try { stored = localStorage.getItem('memory-lab-theme'); } catch (e) { stored = null; }
+    function apply(t) {
+      if (t === 'dark' || t === 'light') root.setAttribute('data-theme', t);
+      else root.removeAttribute('data-theme');
+      var dark = t === 'dark' ||
+        (t !== 'light' && window.matchMedia &&
+         window.matchMedia('(prefers-color-scheme: dark)').matches);
+      btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      btn.textContent = dark ? 'Light' : 'Dark';
+    }
+    apply(stored);
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme');
+      var dark = cur === 'dark' ||
+        (!cur && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      var next = dark ? 'light' : 'dark';
+      try { localStorage.setItem('memory-lab-theme', next); } catch (e) { /* private mode */ }
+      apply(next);
+    });
+  })();
+
+  var reduced = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* =================================================================
+     2.  A small plotting kit.  Inline SVG, no library.
+         Thin marks, recessive grid, direct labels, hover crosshair.
+     ================================================================= */
+
+  function linScale(d0, d1, r0, r1) {
+    var f = function (v) { return r0 + (v - d0) / (d1 - d0) * (r1 - r0); };
+    f.invert = function (p) { return d0 + (p - r0) / (r1 - r0) * (d1 - d0); };
+    f.domain = [d0, d1];
+    return f;
+  }
+  function logScale(d0, d1, r0, r1) {
+    var l0 = Math.log10(d0), l1 = Math.log10(d1);
+    var f = function (v) {
+      var lv = Math.log10(Math.max(v, Number.MIN_VALUE));
+      return r0 + (lv - l0) / (l1 - l0) * (r1 - r0);
+    };
+    f.invert = function (p) { return Math.pow(10, l0 + (p - r0) / (r1 - r0) * (l1 - l0)); };
+    f.domain = [d0, d1];
+    return f;
+  }
+
+  function niceTicks(d0, d1, count) {
+    var span = d1 - d0;
+    if (!(span > 0)) return [d0];
+    var step = Math.pow(10, Math.floor(Math.log10(span / count)));
+    var err = span / count / step;
+    if (err >= 7.5) step *= 10; else if (err >= 3.5) step *= 5; else if (err >= 1.5) step *= 2;
+    var out = [], v = Math.ceil(d0 / step) * step, guard = 0;
+    for (; v <= d1 + step * 1e-9 && guard < 200; v += step, guard++) {
+      out.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+    }
+    return out;
+  }
+  function decadeTicks(d0, d1, maxN) {
+    var a = Math.floor(Math.log10(d0)), b = Math.ceil(Math.log10(d1));
+    var stride = Math.max(1, Math.ceil((b - a) / (maxN || 8)));
+    var out = [];
+    for (var e = Math.ceil(a / stride) * stride; e <= b; e += stride) out.push(Math.pow(10, e));
+    return out;
+  }
+  function logTickLabel(v) { return '10' + supDigits(Math.round(Math.log10(v))); }
+
+  /* One set of axes inside a shared svg.
+     Three layers: back (grid, unclipped), plot (series, CLIPPED to the box),
+     front (titles and direct labels, unclipped so they may sit in the margin). */
+  function Panel(svg, box, x, y) {
+    var uid = 'p' + (++UID);
+    this.uid = uid; this.svg = svg; this.box = box; this.x = x; this.y = y;
+
+    var defs = s('defs');
+    var cp = s('clipPath', { id: 'clip-' + uid });
+    cp.appendChild(s('rect', {
+      x: box.l, y: box.t - 1, width: box.r - box.l, height: box.b - box.t + 2
+    }));
+    var pat = s('pattern', {
+      id: 'hatch-' + uid, width: 7, height: 7,
+      patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'
+    });
+    pat.appendChild(s('rect', { width: 7, height: 7, fill: 'var(--panel-sunk)', opacity: '0.7' }));
+    pat.appendChild(s('line', {
+      x1: 0, y1: 0, x2: 0, y2: 7, stroke: 'var(--rule-strong)', 'stroke-width': 1.2
+    }));
+    defs.appendChild(cp); defs.appendChild(pat);
+
+    this.g = s('g');
+    this.back = s('g');
+    this.plot = s('g', { 'clip-path': 'url(#clip-' + uid + ')' });
+    this.front = s('g');
+    this.g.appendChild(defs);
+    this.g.appendChild(this.back);
+    this.g.appendChild(this.plot);
+    this.g.appendChild(this.front);
+    svg.appendChild(this.g);
+  }
+  Panel.prototype.grid = function (xt, yt, fmtX, fmtY) {
+    var b = this.box, self = this;
+    (yt || []).forEach(function (v) {
+      var py = self.y(v);
+      if (!isFinite(py) || py < b.t - 0.5 || py > b.b + 0.5) return;
+      self.back.appendChild(s('line', { x1: b.l, x2: b.r, y1: py, y2: py, class: 'grid-line' }));
+      self.back.appendChild(s('text', {
+        x: b.l - 8, y: py + 3.5, 'text-anchor': 'end', 'font-size': 10,
+        fill: 'var(--ink-3)', text: fmtY ? fmtY(v) : String(v)
+      }));
+    });
+    (xt || []).forEach(function (v) {
+      var px = self.x(v);
+      if (!isFinite(px) || px < b.l - 0.5 || px > b.r + 0.5) return;
+      self.back.appendChild(s('line', { x1: px, x2: px, y1: b.t, y2: b.b, class: 'grid-line' }));
+      self.back.appendChild(s('text', {
+        x: px, y: b.b + 16, 'text-anchor': 'middle', 'font-size': 10,
+        fill: 'var(--ink-3)', text: fmtX ? fmtX(v) : String(v)
+      }));
+    });
+    this.back.appendChild(s('line', { x1: b.l, x2: b.r, y1: b.b, y2: b.b, class: 'axis-line' }));
+    this.back.appendChild(s('line', { x1: b.l, x2: b.l, y1: b.t, y2: b.b, class: 'axis-line' }));
+    return this;
+  };
+  Panel.prototype.title = function (t, sub) {
+    var b = this.box;
+    this.front.appendChild(s('text', {
+      x: b.l, y: b.t - 14, 'font-size': 11.5, fill: 'var(--ink-2)', text: t
+    }));
+    if (sub) this.front.appendChild(s('text', {
+      x: b.r, y: b.t - 14, 'font-size': 10, 'text-anchor': 'end',
+      fill: 'var(--ink-3)', text: sub
+    }));
+    return this;
+  };
+  Panel.prototype.xlabel = function (t) {
+    var b = this.box;
+    this.front.appendChild(s('text', {
+      x: (b.l + b.r) / 2, y: b.b + 32, 'text-anchor': 'middle',
+      'font-size': 10.5, fill: 'var(--ink-3)', text: t
+    }));
+    return this;
+  };
+  Panel.prototype.path = function (pts, color, opt) {
+    opt = opt || {};
+    var b = this.box, self = this, d = '', pen = false, span = (b.b - b.t) * 4;
+    pts.forEach(function (p) {
+      var px = self.x(p[0]), py = self.y(p[1]);
+      if (!isFinite(px) || !isFinite(py) || py < b.t - span || py > b.b + span) {
+        pen = false; return;
+      }
+      d += (pen ? 'L' : 'M') + px.toFixed(2) + ' ' + py.toFixed(2) + ' ';
+      pen = true;
+    });
+    if (!d) return this;
+    this.plot.appendChild(s('path', {
+      d: d, fill: 'none', stroke: color, 'stroke-width': opt.w || 2,
+      'stroke-linejoin': 'round', 'stroke-linecap': 'round',
+      'stroke-dasharray': opt.dash || ''
+    }));
+    return this;
+  };
+  Panel.prototype.dots = function (pts, color, r) {
+    var self = this;
+    pts.forEach(function (p) {
+      var px = self.x(p[0]), py = self.y(p[1]);
+      if (!isFinite(px) || !isFinite(py)) return;
+      /* a 2px surface ring keeps overlapping marks readable */
+      self.plot.appendChild(s('circle', { cx: px, cy: py, r: (r || 4.5) + 1.6, fill: 'var(--panel)' }));
+      self.plot.appendChild(s('circle', { cx: px, cy: py, r: r || 4.5, fill: color }));
+    });
+    return this;
+  };
+  /* Same marks, but the sign of the underlying value picks the shape: filled for
+     positive, open for negative.  A log-magnitude panel must never be the only
+     visible encoding of a quantity that changes sign. */
+  Panel.prototype.dotsBySign = function (pts, color, r) {
+    var self = this;
+    pts.forEach(function (p) {
+      var px = self.x(p[0]), py = self.y(p[1]);
+      if (!isFinite(px) || !isFinite(py)) return;
+      self.plot.appendChild(s('circle', { cx: px, cy: py, r: (r || 4.5) + 1.6, fill: 'var(--panel)' }));
+      if (p[2] < 0) {
+        self.plot.appendChild(s('circle', {
+          cx: px, cy: py, r: r || 4.5, fill: 'var(--panel)',
+          stroke: color, 'stroke-width': 2
+        }));
+      } else {
+        self.plot.appendChild(s('circle', { cx: px, cy: py, r: r || 4.5, fill: color }));
+      }
+    });
+    return this;
+  };
+  Panel.prototype.ring = function (px, py, color) {
+    this.plot.appendChild(s('circle', {
+      cx: this.x(px), cy: this.y(py), r: 5,
+      fill: 'var(--panel)', stroke: color, 'stroke-width': 1.8
+    }));
+    return this;
+  };
+  Panel.prototype.hline = function (v, color, label, opt) {
+    opt = opt || {};
+    var b = this.box, py = this.y(v);
+    if (!isFinite(py) || py < b.t - 1 || py > b.b + 1) return this;
+    this.plot.appendChild(s('line', {
+      x1: b.l, x2: b.r, y1: py, y2: py, stroke: color, 'stroke-width': 1.5,
+      'stroke-dasharray': opt.dash || '5 4'
+    }));
+    if (label) this.plot.appendChild(s('text', {
+      x: opt.left ? b.l + 6 : b.r - 4, y: py + (opt.below ? 15 : -6),
+      'text-anchor': opt.left ? 'start' : 'end', 'font-size': 10,
+      fill: color, text: label
+    }));
+    return this;
+  };
+  Panel.prototype.vband = function (v0, v1, label) {
+    var b = this.box;
+    var p0 = Math.max(b.l, this.x(v0)), p1 = Math.min(b.r, this.x(v1));
+    if (!(p1 > p0)) return this;
+    this.plot.appendChild(s('rect', {
+      x: p0, y: b.t, width: p1 - p0, height: b.b - b.t,
+      fill: 'url(#hatch-' + this.uid + ')'
+    }));
+    this.plot.appendChild(s('line', {
+      x1: p0, x2: p0, y1: b.t, y2: b.b, stroke: 'var(--rule-strong)',
+      'stroke-width': 1, 'stroke-dasharray': '3 3'
+    }));
+    if (label) this.plot.appendChild(s('text', {
+      x: p0 + 5, y: b.t + 12, 'font-size': 9.5, fill: 'var(--ink-3)', text: label
+    }));
+    return this;
+  };
+  Panel.prototype.vrule = function (v, color, opt) {
+    opt = opt || {};
+    var b = this.box, px = this.x(v);
+    if (!isFinite(px) || px < b.l || px > b.r) return this;
+    this.plot.appendChild(s('line', {
+      x1: px, x2: px, y1: b.t, y2: b.b, stroke: color,
+      'stroke-width': opt.w || 1.4, 'stroke-dasharray': opt.dash || '4 3'
+    }));
+    return this;
+  };
+  Panel.prototype.seg = function (px, y0, y1, color, w) {
+    this.plot.appendChild(s('line', {
+      x1: this.x(px), x2: this.x(px), y1: this.y(y0), y2: this.y(y1),
+      stroke: color, 'stroke-width': w || 3
+    }));
+    return this;
+  };
+  /* direct label; coordinates are in svg units so it may sit in the margin */
+  Panel.prototype.tag = function (px, py, text, color, anchor) {
+    this.front.appendChild(s('text', {
+      x: px, y: py, 'font-size': 10.5, fill: color,
+      'text-anchor': anchor || 'start', text: text
+    }));
+    return this;
+  };
+
+  function legend(host, items) {
+    clear(host);
+    items.forEach(function (it) {
+      var sw = el('span', { class: 'swatch' });
+      sw.style.borderTopColor = it.color;
+      if (it.dash) sw.style.borderTopStyle = 'dashed';
+      host.appendChild(el('span', { class: 'li' }, [sw, el('span', { text: it.label })]));
+    });
+  }
+
+  /* Hover crosshair + tooltip.  Listeners are attached once per svg; later
+     calls only swap the resolver, so redraws cannot pile up handlers. */
+  var TIPS = [];
+  function tipState(svg) {
+    for (var i = 0; i < TIPS.length; i++) if (TIPS[i].svg === svg) return TIPS[i];
+    return null;
+  }
+  function attachTip(svg, resolve) {
+    var st = tipState(svg);
+    if (st) { st.resolve = resolve; hideTip(st); return; }
+    var tip = el('div', { class: 'tip' });
+    tip.hidden = true;
+    svg.parentNode.appendChild(tip);
+    st = { svg: svg, tip: tip, cross: null, resolve: resolve };
+    TIPS.push(st);
+    svg.addEventListener('pointermove', function (ev) { moveTip(st, ev); });
+    svg.addEventListener('pointerleave', function () { hideTip(st); });
+  }
+  function hideTip(st) {
+    st.tip.hidden = true;
+    if (st.cross && st.cross.parentNode) st.cross.parentNode.removeChild(st.cross);
+    st.cross = null;
+  }
+  function viewBoxOf(svg) {
+    if (svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width) return svg.viewBox.baseVal;
+    var a = (svg.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number);
+    return { x: a[0] || 0, y: a[1] || 0, width: a[2] || 0, height: a[3] || 0 };
+  }
+  function moveTip(st, ev) {
+    var svg = st.svg, r = svg.getBoundingClientRect(), vb = viewBoxOf(svg);
+    if (!r.width || !vb.width) return;
+    var ux = (ev.clientX - r.left) / r.width * vb.width;
+    var res = st.resolve(ux);
+    if (!res) { hideTip(st); return; }
+    if (!st.cross || !st.cross.parentNode) {
+      st.cross = s('line', {
+        stroke: 'var(--rule-strong)', 'stroke-width': 1,
+        'stroke-dasharray': '2 3', 'pointer-events': 'none'
+      });
+      svg.appendChild(st.cross);
+    }
+    st.cross.setAttribute('x1', res.px); st.cross.setAttribute('x2', res.px);
+    st.cross.setAttribute('y1', res.y0); st.cross.setAttribute('y2', res.y1);
+    st.tip.innerHTML = res.html;
+    st.tip.hidden = false;
+    var left = (res.px / vb.width) * r.width;
+    var top = (res.ty / vb.height) * r.height;
+    st.tip.style.left = Math.min(Math.max(left + 12, 4),
+      Math.max(4, r.width - st.tip.offsetWidth - 4)) + 'px';
+    st.tip.style.top = Math.max(top - st.tip.offsetHeight - 10, 4) + 'px';
+  }
+
+  /* =================================================================
+     3.  WHY - the ring of test masses.  Schematic only.
+     ================================================================= */
+
+  (function gw() {
+    var svg = $('gw');
+    var cx = 250, cy = 125, R = 78, N = 16;
+    var keepMemory = true, t = 8, running = false, raf = null;
+
+    var dots = [], ghost = [];
+    var wLayer = s('g'), gLayer = s('g'), dLayer = s('g'), tLayer = s('g');
+    svg.appendChild(wLayer); svg.appendChild(gLayer);
+    svg.appendChild(dLayer); svg.appendChild(tLayer);
+
+    for (var i = 0; i < N; i++) {
+      ghost.push(s('circle', { r: 2.2, fill: 'var(--ink-3)', opacity: '0.55' }));
+      dots.push(s('circle', { r: 4.5, fill: 'var(--s-cal)' }));
+      gLayer.appendChild(ghost[i]);
+      dLayer.appendChild(dots[i]);
+    }
+    var wave = s('path', { fill: 'none', stroke: 'var(--s-abs)', 'stroke-width': 2 });
+    var axisT = s('line', { x1: 430, x2: 690, y1: 200, y2: 200, class: 'axis-line' });
+    var marker = s('line', { y1: 55, y2: 214, stroke: 'var(--accent)', 'stroke-width': 1.5 });
+    wLayer.appendChild(axisT); wLayer.appendChild(wave); wLayer.appendChild(marker);
+
+    tLayer.appendChild(s('text', {
+      x: 430, y: 220, 'font-size': 10, fill: 'var(--ink-3)',
+      text: 'strain h(t) at the detector'
+    }));
+    tLayer.appendChild(s('text', {
+      x: cx, y: 234, 'font-size': 10, 'text-anchor': 'middle', fill: 'var(--ink-3)',
+      text: 'grey · original ring         blue · current positions'
+    }));
+
+    /* h(t): a Gaussian-enveloped burst plus, optionally, a permanent step. */
+    function strain(tt) {
+      var burst = 0.30 * Math.exp(-Math.pow((tt - 3.2) / 0.85, 2)) * Math.sin(4.6 * (tt - 3.2));
+      var step = keepMemory ? 0.12 / (1 + Math.exp(-(tt - 3.2) * 2.2)) : 0;
+      return burst + step;
+    }
+
+    function draw() {
+      var h = strain(t);
+      for (var i = 0; i < N; i++) {
+        var a = 2 * Math.PI * i / N;
+        var x0 = R * Math.cos(a), y0 = R * Math.sin(a);
+        ghost[i].setAttribute('cx', cx + x0); ghost[i].setAttribute('cy', cy + y0);
+        dots[i].setAttribute('cx', cx + x0 * (1 + h / 2));
+        dots[i].setAttribute('cy', cy + y0 * (1 - h / 2));
+      }
+      var d = '';
+      for (var k = 0; k <= 140; k++) {
+        var tt = k / 140 * 8;
+        d += (k ? 'L' : 'M') + (430 + tt / 8 * 260).toFixed(1) + ' ' +
+             (200 - strain(tt) * 190).toFixed(1) + ' ';
+      }
+      wave.setAttribute('d', d);
+      var cur = 430 + t / 8 * 260;
+      marker.setAttribute('x1', cur); marker.setAttribute('x2', cur);
+      $('gw-state').textContent = 'h = ' + h.toFixed(4) +
+        (t > 6 ? (keepMemory ? '  — the ring did not come back'
+                             : '  — the ring came back') : '');
+    }
+
+    function step() {
+      t += 0.045;
+      if (t >= 8) { t = 8; running = false; }
+      draw();
+      if (running) raf = requestAnimationFrame(step);
+    }
+    $('gw-send').addEventListener('click', function () {
+      if (raf) cancelAnimationFrame(raf);
+      if (reduced) { t = 8; draw(); return; }
+      t = 0; running = true; raf = requestAnimationFrame(step);
+    });
+    $('gw-mem').addEventListener('click', function () {
+      keepMemory = !keepMemory;
+      this.setAttribute('aria-pressed', keepMemory ? 'true' : 'false');
+      this.textContent = keepMemory ? 'Leave a permanent strain' : 'No permanent strain';
+      draw();
+    });
+    draw();
+  })();
+
+  /* =================================================================
+     4.  THE BENCH - exactly solvable toy.
+         xdot = -gamma (x - xeq) + f,  f = F on [0,w].
+     ================================================================= */
+
+  var toy = { gamma: 0, F: 0.4, w: 1.2, t: 20, x0: 1, xeq: 0 };
+
+  function toyK() {
+    return toy.gamma === 0 ? toy.F * toy.w
+      : toy.F * (Math.exp(toy.gamma * toy.w) - 1) / toy.gamma;
+  }
+  function toyRef(t) { return toy.xeq + toy.x0 * Math.exp(-toy.gamma * t); }
+  function toyPulse(t) {
+    if (t <= 0) return toy.xeq + toy.x0;
+    if (t <= toy.w) {
+      if (toy.gamma === 0) return toy.xeq + toy.x0 + toy.F * t;
+      return toy.xeq + toy.x0 * Math.exp(-toy.gamma * t) +
+        (toy.F / toy.gamma) * (1 - Math.exp(-toy.gamma * t));
+    }
+    return toy.xeq + (toy.x0 + toyK()) * Math.exp(-toy.gamma * t);
+  }
+
+  function drawToy() {
+    var svg = $('toy-chart');
+    clear(svg);
+    var W = 720, H = 300, TMAX = 40;
+    var box = { l: 60, r: W - 118, t: 30, b: H - 40 };
+    var K = toyK();
+    var ymax = (toy.x0 + Math.max(K, 0)) * 1.14;
+    var x = linScale(0, TMAX, box.l, box.r);
+    var y = linScale(-0.04 * ymax, ymax, box.b, box.t);
+    var yt = niceTicks(0, ymax, 5);
+    var p = new Panel(svg, box, x, y);
+    p.grid(niceTicks(0, TMAX, 8), yt, String, tickFmt(yt));
+    p.title('x(t)  —  the detector coordinate', 'both runs, same initial condition');
+    p.xlabel('time t');
+
+    /* pulse support */
+    p.plot.appendChild(s('rect', {
+      x: x(0), y: box.t, width: Math.max(x(toy.w) - x(0), 1), height: box.b - box.t,
+      fill: 'var(--accent-soft)'
+    }));
+    p.plot.appendChild(s('text', {
+      x: x(toy.w) + 4, y: box.t + 11, 'font-size': 9.5, fill: 'var(--ink-3)', text: 'pulse f = F'
+    }));
+
+    var ref = [], pul = [];
+    for (var i = 0; i <= 400; i++) {
+      var tt = i / 400 * TMAX;
+      ref.push([tt, toyRef(tt)]); pul.push([tt, toyPulse(tt)]);
+    }
+    p.path(ref, 'var(--ink-3)', { w: 1.8, dash: '5 4' });
+    p.path(pul, 'var(--ink)', { w: 2 });
+
+    p.vrule(toy.t, 'var(--accent)');
+    p.seg(toy.t, toyRef(toy.t), toyPulse(toy.t), 'var(--s-abs)', 3);
+    p.dots([[toy.t, toyRef(toy.t)]], 'var(--ink-3)', 4);
+    p.dots([[toy.t, toyPulse(toy.t)]], 'var(--ink)', 4);
+    p.tag(box.r + 8, y(toyPulse(TMAX)) + 4, 'pulsed', 'var(--ink)');
+    p.tag(box.r + 8, y(toyRef(TMAX)) + 16, 'reference', 'var(--ink-3)');
+    p.tag(x(toy.t) + 6, y(0.5 * (toyRef(toy.t) + toyPulse(toy.t))) + 4, 'A(t)', 'var(--s-abs)');
+
+    legend($('toy-legend'), [
+      { color: 'var(--ink)', label: 'pulsed run' },
+      { color: 'var(--ink-3)', label: 'reference run', dash: true },
+      { color: 'var(--s-abs)', label: 'absolute register A(t)' }
+    ]);
+
+    var A = K * Math.exp(-toy.gamma * toy.t);
+    var R = K / toy.x0;
+    var N = Math.pow(1 / (0.1 * K), 2) * Math.exp(2 * toy.gamma * toy.t);
+    $('toy-abs').textContent = Math.abs(A) < 1e-4 ? sci(A, 3) : A.toFixed(6);
+    $('toy-cal').textContent = R.toFixed(6);
+    $('toy-cost').textContent = N < 1e5 ? String(Math.round(N)) : sci(N, 2);
+
+    var v = $('toy-verdict');
+    if (toy.gamma === 0) {
+      v.innerHTML = '<b>Persistent ruler.</b> For the declared x₀ = 1, both readouts remain ' +
+        'nonzero at constant cost, and they read the same number. This is the ' +
+        'persistent-ruler case the next definition will classify. Now give the ruler a ' +
+        'decay rate.';
+    } else if (Math.abs(A) < 1e-3 * Math.abs(R)) {
+      v.innerHTML = '<b>Decaying ruler, late time.</b> The fixed difference has decayed with ' +
+        'the ruler, to ' + sci(A, 2) + ', while the calibrated ratio still reads ' +
+        R.toFixed(4) + '. No memory label follows from this; note what happened to the ' +
+        'shot count for the first of the two.';
+    } else {
+      v.innerHTML = '<b>Decaying ruler.</b> The absolute register is on its way to zero — ' +
+        'it is exactly K e<sup>−γt</sup> — while the calibrated one is already ' +
+        'constant. Push the read time out.';
+    }
+  }
+
+  function bindToy() {
+    [['toy-gamma', 'gamma', 3], ['toy-F', 'F', 2], ['toy-w', 'w', 2], ['toy-t', 't', 1]]
+      .forEach(function (spec) {
+        var input = $(spec[0]), out = $(spec[0] + '-o');
+        function upd() {
+          toy[spec[1]] = parseFloat(input.value);
+          out.textContent = toy[spec[1]].toFixed(spec[2]);
+          drawToy();
+        }
+        input.addEventListener('input', upd);
+        upd();
+      });
+    $('toy-persist').addEventListener('click', function () {
+      $('toy-gamma').value = '0';
+      $('toy-gamma').dispatchEvent(new Event('input'));
+    });
+    $('toy-decay').addEventListener('click', function () {
+      $('toy-gamma').value = '0.2';
+      $('toy-gamma').dispatchEvent(new Event('input'));
+    });
+  }
+
+  /* =================================================================
+     5.  HOW - staged reveal.
+     ================================================================= */
+
+  (function how() {
+    /* All five are on screen from the start.  The control only moves the
+       emphasis; nothing is withheld from a reader who wants to skim. */
+    var steps = Array.prototype.slice.call(document.querySelectorAll('#how-steps .step'));
+    var focus = 0;
+    var TITLES = ['a fixed observable', 'an admissible reference run', 'a detector time',
+                  'an order of limits', 'a measurement cost'];
+    function paint() {
+      steps.forEach(function (st, i) {
+        if (i === focus) st.setAttribute('data-state', 'focus');
+        else st.removeAttribute('data-state');
+      });
+      $('how-state').textContent = focus < 0 ? ''
+        : (focus + 1) + ' of ' + steps.length + ' — ' + TITLES[focus];
+      $('how-next').textContent = focus + 1 >= steps.length ? 'Start over' : 'Walk me through';
+    }
+    $('how-next').addEventListener('click', function () {
+      focus = focus + 1 >= steps.length ? 0 : focus + 1;
+      paint();
+    });
+    paint();
+  })();
+
+  /* =================================================================
+     6.  THE SCHWARZIAN STATION.  Closed forms on the stored data.
+
+         The results file serialises the Julia 2x2 matrix column-major,
+         so json.mobius[i][j] = g[j][i].  mobiusOf() undoes that.  With the
+         transpose in place the closed form reproduces every stored array to
+         5e-9 relative; without it, to only 1e-1.  Live check 4 reports it.
+     ================================================================= */
+
+  var I2 = [[1, 0], [0, 1]];
+
+  function mobiusOf(pt) {
+    var m = pt.mobius;
+    return [[m[0][0], m[1][0]], [m[0][1], m[1][1]]];
+  }
+  function mob(M, x) { return (M[0][0] * x + M[0][1]) / (M[1][0] * x + M[1][1]); }
+  function det2(M) { return M[0][0] * M[1][1] - M[0][1] * M[1][0]; }
+  function dmob(M, x, xp) { var q = M[1][0] * x + M[1][1]; return det2(M) * xp / (q * q); }
+
+  /* the dressed two-sided kernel; G_LR = kernel^Delta */
+  function kernel(ML, MR, kL, kR, T) {
+    var xL = -Math.exp(-kL * T), xR = Math.exp(kR * T);
+    var tL = mob(ML, xL), tR = mob(MR, xR);
+    var dtL = dmob(ML, xL, -kL * xL), dtR = dmob(MR, xR, kR * xR);
+    var d = tL - tR;
+    return Math.abs(dtL * dtR) / (d * d);
+  }
+  /* delta G, written so it does not cancel catastrophically at late T */
+  function deltaG(MR, kL, kR, T, D) {
+    var Ke = kernel(I2, I2, kL, kR, T);
+    var Kp = kernel(I2, MR, kL, kR, T);
+    return Math.pow(Ke, D) * Math.expm1(D * Math.log(Kp / Ke));
+  }
+  /* analytic d/dT of the equilibrium correlator (the stored arrays used a
+     central difference with h = 1e-5; the two agree to about 1e-10) */
+  function dGeqdT(kL, kR, T, D) {
+    var a = Math.exp(-kL * T), b = Math.exp(kR * T);
+    var Ge = Math.pow(kL * kR * a * b / ((a + b) * (a + b)), D);
+    return Ge * D * ((kR - kL) - 2 * (-kL * a + kR * b) / (a + b));
+  }
+  function deltaU(MR, kL, kR, T, D) {
+    return -deltaG(MR, kL, kR, T, D) / dGeqdT(kL, kR, T, D);
+  }
+
+  /* --- the parameter map ------------------------------------------- */
+
+  var PROFILE_LABEL = {
+    top_hat: 'top-hat',
+    gaussian: 'Gaussian',
+    derivative_gaussian_balanced: 'balanced dG'
+  };
+  var ROWS = [
+    ['top_hat', 0.01], ['top_hat', 0.05], ['top_hat', 0.1],
+    ['gaussian', 0.01], ['gaussian', 0.05], ['gaussian', 0.1],
+    ['derivative_gaussian_balanced', 0.01],
+    ['derivative_gaussian_balanced', 0.05],
+    ['derivative_gaussian_balanced', 0.1]
+  ];
+  var COLS = [1, 3, 10, 30, 100, 300];
+
+  /* Default to the balanced C = 100 row: it is the one whose declared window
+     kappa*T_max = 10 actually reaches a plateau-quality stored sample.  The
+     balanced C = 10 row is offered beside it as the finite-C proxy. */
+  var BAL_HI = 7, BAL_LO = 5;
+  var selected = BAL_HI;
+
+  function isBalanced(pt) { return pt.profile === 'derivative_gaussian_balanced'; }
+
+  function findPoint(profile, eps, C) {
+    for (var i = 0; i < PTS.length; i++) {
+      var p = PTS[i];
+      if (p.profile === profile && Math.abs(p.epsilon - eps) < 1e-12 &&
+          Math.abs(p.C - C) < 1e-12) return i;
+    }
+    return -1;
+  }
+
+  var mapCells = [];
+
+  function buildMap() {
+    var host = $('pmap');
+    clear(host); mapCells = [];
+    host.style.gridTemplateColumns = '11rem repeat(' + COLS.length + ', minmax(4.7rem, 1fr))';
+    host.appendChild(el('div', { class: 'prow-label', text: 'source × stiffness' }));
+    COLS.forEach(function (c) {
+      host.appendChild(el('div', { class: 'pcol-label', text: 'C = ' + c }));
+    });
+    ROWS.forEach(function (r) {
+      var lbl = PROFILE_LABEL[r[0]] + ' ε=' + r[1];
+      host.appendChild(el('div', { class: 'prow-label', text: lbl }));
+      COLS.forEach(function (c) {
+        var idx = findPoint(r[0], r[1], c);
+        if (idx < 0) {
+          host.appendChild(el('div', {
+            class: 'pcell void', title: 'NOT COMPUTED — no run exists at this point',
+            'aria-label': 'not computed: ' + lbl + ', C = ' + c, text: '—'
+          }));
+        } else {
+          var b = el('button', {
+            class: 'pcell computed', type: 'button',
+            text: isBalanced(PTS[idx]) ? 'balanced' : 'run',
+            'aria-label': 'computed point: ' + lbl + ', C = ' + c
+          });
+          b.setAttribute('aria-pressed', idx === selected ? 'true' : 'false');
+          (function (k) {
+            b.addEventListener('click', function () { selected = k; renderStation(); });
+          })(idx);
+          mapCells.push({ idx: idx, node: b });
+          host.appendChild(b);
+        }
+      });
+    });
+    $('pmap-note').innerHTML =
+      '8 of the ' + (ROWS.length * COLS.length) + ' cells in this frame were computed. ' +
+      'Two of them — the energy-balanced derivative-Gaussian rows — are the only ' +
+      'ones that carry an operational conclusion. Select an unbalanced one and the banner ' +
+      'below will say, in the report’s own words, why it does not.';
+  }
+
+  function syncMap() {
+    mapCells.forEach(function (c) {
+      c.node.setAttribute('aria-pressed', c.idx === selected ? 'true' : 'false');
+    });
+  }
+
+  /* --- the balanced C = 100 / C = 10 comparison ---------------------- */
+
+  /* Which stored samples actually sit inside a row's declared window, stated
+     exactly: T_max is a real number and a sample can miss it by 1e-10. */
+  function windowSentence(pt) {
+    var Tmax = pt.detector_window.maximum_usable_T;
+    var inw = TGRID.filter(function (T) { return T <= Tmax; });
+    var out = TGRID.filter(function (T) { return T > Tmax; });
+    var txt = 'Its declared window runs to T_max = ' + Tmax.toFixed(12) + ', so of the five ' +
+      'stored samples ' + (inw.length === 0
+        ? '<b>none lies inside it</b>'
+        : inw.length === 1
+          ? '<b>only T = ' + inw[0] + ' lies inside it</b>'
+          : '<b>T = ' + inw.slice(0, -1).join(', ') + ' and ' + inw[inw.length - 1] +
+            ' lie inside it</b>');
+    if (out.length && out[0] - Tmax < 1e-6) {
+      txt += '; T = ' + out[0] + ' misses the boundary by ' + sci(out[0] - Tmax, 1);
+    }
+    return txt + '. Everything in the hatching is outside the window: drawn, not relied on.';
+  }
+
+  function renderCompare() {
+    var btn = $('pmap-compare'), note = $('pmap-compare-note');
+    if (selected === BAL_HI) {
+      btn.textContent = 'Compare the finite-C proxy (C = 10)';
+      note.innerHTML = 'Showing the balanced C = 100 row. ' + windowSentence(PTS[BAL_HI]);
+    } else if (selected === BAL_LO) {
+      btn.textContent = 'Back to the balanced C = 100 row';
+      note.innerHTML = 'Showing the balanced C = 10 row. ' + windowSentence(PTS[BAL_LO]);
+    } else {
+      btn.textContent = 'Go to the balanced C = 100 row';
+      note.innerHTML = 'A row outside the balanced sector is selected. ' +
+        windowSentence(PTS[selected]);
+    }
+  }
+
+  function bindCompare() {
+    $('pmap-compare').addEventListener('click', function () {
+      selected = selected === BAL_HI ? BAL_LO : BAL_HI;
+      renderStation();
+    });
+  }
+
+  /* --- scope banner -------------------------------------------------- */
+
+  function renderBanner() {
+    var pt = PTS[selected], host = $('scope-banner');
+    clear(host);
+    var bal = isBalanced(pt);
+    var box = el('div', { class: bal ? 'quote' : 'fence' });
+    if (bal) {
+      box.appendChild(el('p', { class: 'row', html:
+        '<span class="chip chip-proved">Operational</span>' +
+        '<span class="eyebrow">energy-balanced row</span>' }));
+      box.appendChild(el('p', { class: 'small', style: 'margin-top:.5rem', html:
+        'The pulse changes the one-sided energy by <span class="num">' +
+        sci(pt.energy_change, 3) + '</span>. This row is <b>energy-balanced at leading order</b>; ' +
+        'the displayed nonzero energy change is the finite numerical/nonlinear residual. The ' +
+        'operational conclusion is restricted to the registered leading-order balanced scope ' +
+        'and is not an inference of exact finite-C D32 comparability from this residual. The ' +
+        'campaign’s operational conclusions rest on this row together with its C = ' +
+        (pt.C === 10 ? 100 : 10) + ' partner.' }));
+    } else {
+      box.appendChild(el('p', { class: 'row', html:
+        '<span class="chip chip-hold">Diagnostic only</span>' +
+        '<span class="eyebrow">not an operational detector</span>' }));
+      box.appendChild(el('p', { class: 'small', style: 'margin-top:.5rem', html:
+        'This row changes the one-sided energy by <span class="num">' +
+        sci(pt.energy_change, 3) + '</span>, and no implementable two-dot reference protocol ' +
+        'with the same measured unequal one-sided energies has been exhibited for it. That is ' +
+        'a statement about what has been shown, not about what exists: the all-profiles ' +
+        'generalization is <b>HELD</b>, not refuted. Quoting the numerical report: the six ' +
+        'unbalanced rows are ' }));
+      box.appendChild(el('p', { class: 'small verbatim', style: 'margin-top:.5rem', html:
+        '&ldquo;formal trajectory/DC diagnostics of the Schwarzian kernels, because no ' +
+        'implementable two-dot reference protocol with the same measured unequal pair of ' +
+        'one-sided energies has been exhibited, and their comparator is a formal EFT kernel ' +
+        'rather than a demonstrated expectation difference between two preparable ' +
+        'states&rdquo;. The plots below are still exactly what was computed. They simply ' +
+        'license no memory verdict. Select a <b>balanced</b> cell for a row that does.' }));
+      box.appendChild(el('span', { class: 'src', text:
+        'theory/lanes/syk-jt/t2-numeric.md § Decisive numerical verdict ' +
+        '(scope restricted per critic r2, Objection 9)' }));
+    }
+    host.appendChild(box);
+  }
+
+  /* --- figure 1 ------------------------------------------------------ */
+
+  function renderFig1() {
+    var pt = PTS[selected];
+    var MR = mobiusOf(pt), kL = 1.0, kR = pt.k_final;
+    var Tmax = pt.detector_window.maximum_usable_T;
+
+    var svg = $('fig1');
+    clear(svg);
+    var W = 720;
+    var box1 = { l: 80, r: W - 132, t: 40, b: 218 };
+    var box2 = { l: 80, r: W - 132, t: 272, b: 426 };
+    var T0 = 1, T1 = 46, XT = [1, 2, 3, 5, 10, 20, 40];
+    var x = logScale(T0, T1, box1.l, box1.r);
+
+    /* upper panel: the calibrated register, linear scale */
+    var us = TGRID.map(function (T, i) { return [T, pt.delta_u_rel[i]]; });
+    var umax = Math.max.apply(null, pt.delta_u_rel);
+    var umin = Math.min.apply(null, pt.delta_u_rel);
+    var lo = Math.min(0, umin * 1.18), hi = umax * 1.18;
+    var y1 = linScale(lo, hi, box1.b, box1.t);
+    var yt1 = niceTicks(lo, hi, 5);
+    var p1 = new Panel(svg, box1, x, y1);
+    p1.grid(XT, yt1, String, tickFmt(yt1));
+    p1.title('calibrated register  Δu_rel(T)', 'linear scale · readout (3.4)');
+
+    var curveU = [], lg0 = Math.log10(T0), lg1 = Math.log10(T1);
+    for (var i = 0; i <= 360; i++) {
+      var T = Math.pow(10, lg0 + i / 360 * (lg1 - lg0));
+      curveU.push([T, deltaU(MR, kL, kR, T, DELTA)]);
+    }
+    p1.vband(Tmax, T1, 'beyond the declared window');
+    p1.path(curveU, 'var(--s-cal)', { w: 2 });
+    /* short in-chart label; the legend carries the full "independently
+       extracted DC residue" wording, and this keeps clear of the band label */
+    p1.hline(pt.dc.extrapolated_residue, 'var(--s-dc)', 'DC residue', { left: true });
+    p1.dots(us, 'var(--s-cal)', 4.5);
+    p1.dots([[Tmax, pt.detector_window.delta_u_at_max]], 'var(--ink-2)', 3.2);
+    p1.tag(box1.r + 8, y1(pt.delta_u_rel[4]) + 4, 'Δu_rel', 'var(--s-cal)');
+
+    /* the cost that qualifies the plateau, annotated where the window ends */
+    p1.tag(Math.min(x(Tmax) + 6, box1.r - 4), box1.b - 20,
+      'cost proxy at T_max: ' +
+      sci(pt.detector_window.sample_cost_for_10pct_late_delta, 2) + ' shots', 'var(--ink-2)');
+    p1.tag(Math.min(x(Tmax) + 6, box1.r - 4), box1.b - 8,
+      'unknown multiplicative calibration constants', 'var(--ink-3)');
+
+    /* lower panel: the absolute register, log scale.  The third slot carries the
+       sign, so a sign change is drawn and not only mentioned. */
+    var gs = TGRID.map(function (T, i) {
+      return [T, Math.abs(pt.delta_G_LR[i]), pt.delta_G_LR[i]];
+    });
+    var gvals = gs.map(function (d) { return d[1]; });
+    var y2 = logScale(
+      Math.pow(10, Math.floor(Math.log10(Math.min.apply(null, gvals))) - 1),
+      Math.pow(10, Math.ceil(Math.log10(Math.max.apply(null, gvals))) + 1),
+      box2.b, box2.t);
+    var p2 = new Panel(svg, box2, x, y2);
+    p2.grid(XT, decadeTicks(y2.domain[0], y2.domain[1], 6), String, logTickLabel);
+
+    var flips = false;
+    for (var q = 1; q < pt.delta_G_LR.length; q++) {
+      if (pt.delta_G_LR[q] * pt.delta_G_LR[q - 1] < 0) flips = true;
+    }
+    p2.title('absolute register  |δG_LR(T)|',
+      flips ? 'log scale · sign change on this row'
+            : 'log scale · a straight fall is an exponential');
+
+    var curveG = [], cross = [], prevS = 0;
+    for (var j = 0; j <= 360; j++) {
+      var Tg = Math.pow(10, lg0 + j / 360 * (lg1 - lg0));
+      var gv = deltaG(MR, kL, kR, Tg, DELTA);
+      if (prevS !== 0 && gv !== 0 && (gv > 0) !== (prevS > 0)) cross.push(Tg);
+      if (gv !== 0) prevS = gv;
+      curveG.push([Tg, Math.abs(gv)]);
+    }
+    p2.vband(Tmax, T1, 'beyond the declared window');
+    p2.path(curveG, 'var(--s-abs)', { w: 2 });
+    cross.forEach(function (Tc) {
+      p2.vrule(Tc, 'var(--s-abs)', { w: 1.2, dash: '2 3' });
+      p2.tag(x(Tc) + 5, box2.b - 8,
+        'δG_LR changes sign at T = ' + Tc.toFixed(2), 'var(--s-abs)');
+    });
+    p2.dotsBySign(gs, 'var(--s-abs)', 4.5);
+    p2.tag(box2.r + 8, y2(Math.abs(pt.delta_G_LR[4])) + 4, 'δG_LR', 'var(--s-abs)');
+    p2.xlabel('detector time T   (logarithmic)');
+
+    var lgd = [
+      { color: 'var(--s-cal)', label: 'Δu_rel — calibrated register (D33 candidate)' },
+      { color: 'var(--s-abs)', label: '|δG_LR| — absolute register (D32 candidate)' },
+      { color: 'var(--s-dc)', label: 'independently extracted DC residue', dash: true }
+    ];
+    if (flips) lgd.push({ color: 'var(--s-abs)', label: 'open marker: δG_LR < 0 there' });
+    legend($('fig1-legend'), lgd);
+
+    attachTip(svg, function (ux) {
+      if (ux < box1.l || ux > box1.r) return null;
+      var T = x.invert(ux);
+      var near = false;
+      TGRID.forEach(function (Tg) { if (Math.abs(x(Tg) - ux) < 9) near = true; });
+      return {
+        px: ux, y0: box1.t, y1: box2.b, ty: box1.t,
+        html: 'T = ' + T.toFixed(2) + (near ? '   ← computed sample' : '') +
+          '<br>Δu_rel = ' + sci(deltaU(MR, kL, kR, T, DELTA), 5) +
+          '<br>δG_LR = ' + sci(deltaG(MR, kL, kR, T, DELTA), 5) +
+          (T > Tmax ? '<br>beyond κT_max' : '')
+      };
+    });
+
+    $('fig1-title').innerHTML =
+      'Figure 1 — the two registers, <span class="sym">C = ' + pt.C + '</span>, ' +
+      PROFILE_LABEL[pt.profile] + ' <span class="sym">ε = ' + pt.epsilon + '</span>';
+
+    /* The continuous line has hybrid provenance and says so, next to the legend. */
+    $('fig1-prov').innerHTML =
+      '<span class="tag tag-exact" style="margin-right:.5rem">Proved closed form · fitted ' +
+      'computed frame</span> The line is the proved closed form evaluated on the ' +
+      'least-squares Möbius matrix stored for this row (fit residual <span class="num">' +
+      sci(pt.mobius_fit_residual, 2) + '</span>). That fitted matrix is the input, so the line ' +
+      'is not an independent second trajectory computation — but it is not an interpolation of ' +
+      'the markers either.';
+
+    /* One honest caveat about the chart the equations are written in. */
+    var spread = Math.abs(kR - kL);
+    $('fig1-kappa').innerHTML =
+      'A note on charts. Equations (3.2)–(3.7) of the proof shard are written for a single ' +
+      'κ on both boundaries. The computation keeps them separate: κ_L = 1 on the untouched ' +
+      'side and κ_R = ' + kR.toFixed(10) + ' after the pulse — a relative difference of ' +
+      (spread < 1e-4 ? sci(spread, 2) : pct(spread, 4)) + ' on this row. ' +
+      (isBalanced(pt)
+        ? 'On the two balanced rows that difference is at the 10⁻⁹ level, so the equal-κ ' +
+          'expressions apply to them essentially exactly.'
+        : 'That difference is precisely the changed conserved charge which makes this row ' +
+          'inadmissible as a memory comparison.');
+  }
+
+  /* --- figure 1 readouts --------------------------------------------- */
+
+  function renderReadouts() {
+    var pt = PTS[selected], host = $('fig1-readouts');
+    clear(host);
+    function ro(k, v, cls, note) {
+      host.appendChild(el('div', { class: 'readout' }, [
+        el('span', { class: 'k', text: k }),
+        el('span', { class: 'v ' + (cls || ''), text: v }),
+        el('span', { class: 'n', html: note })
+      ]));
+    }
+    var dev = pt.dc.extrapolated_vertex_ratio - 1;
+    var bal = isBalanced(pt);
+    ro('signed δG_LR at T = 40   (absolute register)', sci(pt.delta_G_LR[4], 4), 'v-abs',
+      'Model selection over T ≥ 5 picks <b>' + pt.delta_G_model.winner + '</b>: residual ' +
+      'sum of squares ' + sci(pt.delta_G_model.rss_exponential, 2) +
+      ' for a decaying exponential against ' + sci(pt.delta_G_model.rss_constant, 2) +
+      ' for a constant.');
+    ro('Calibrated register at T = 40', sci(pt.delta_u_rel[4], 8), 'v-cal',
+      'Model selection over T ≥ 5 picks <b>' + pt.delta_u_model.winner + '</b>: residual ' +
+      'sum of squares ' + sci(pt.delta_u_model.rss_constant, 2) + ' for a constant against ' +
+      sci(pt.delta_u_model.rss_exponential, 2) + ' for a decaying exponential. Practical ' +
+      'permanence is not established: see the shot-cost scaling proxy on this panel.');
+    if (bal) {
+      ro('DC residue ÷ soft vertex', pt.dc.extrapolated_vertex_ratio.toFixed(9), 'v-dc',
+        'Deviation from unity <b>' + pct(Math.abs(dev), 6) + '</b>. This row is one of the two ' +
+        'behind the adjudicated figure &ldquo;0.011% or better&rdquo;.');
+    } else {
+      ro('DC residue ÷ soft vertex', '—', '',
+        'Withheld on this row. The ratio exists in the results file as a formal Schwarzian ' +
+        'kernel diagnostic, and it is shown inside the disclosure below Figure 1; it licenses ' +
+        'no detector or memory conclusion here.');
+    }
+    ro('shot-cost scaling proxy at T_max',
+      sci(pt.detector_window.sample_cost_for_10pct_late_delta, 3), '',
+      'The model is <span class="num">M_shots = O(e^{4ΔκT}/η²)</span> ' +
+      '(<span class="num">' + pt.detector_window.sample_cost_model + '</span>) evaluated at ' +
+      'T_max = ' + pt.detector_window.maximum_usable_T.toFixed(3) + ' with ' +
+      '<span class="num">η = 0.1|Δu_fit|</span>, <b>up to unknown protocol-dependent variance ' +
+      'and finite-difference calibration constants</b>. It supports the statement that ' +
+      'practical permanence is not established; it is not a calibrated experimental shot count.');
+  }
+
+  /* --- figure 2 : the DC extrapolation -------------------------------- */
+
+  var FIG2_INTRO = $('fig2-intro').innerHTML;
+
+  /* Scope has to follow state atomically: on an unbalanced selection the whole
+     of Figure 2 moves inside a disclosure headed by the verbatim O9 fence, and
+     every claim-bearing label around it is rewritten in the same call. */
+  var fig2Bal = null;
+  function renderFig2Mode(bal) {
+    var fig = $('fig2-fig'), changed = fig2Bal !== bal;
+    fig2Bal = bal;
+    $('fig2-fence').hidden = bal;
+    $('fig2-disc').hidden = bal;
+    if (changed && !bal) $('fig2-disc').open = false;
+    if (bal) {
+      if (fig.parentNode !== $('fig2-panel')) $('fig2-panel').appendChild(fig);
+      $('fig2-title').textContent = 'Figure 2 — the independently extracted DC residue';
+      $('fig2-tags').innerHTML = '<span class="tag tag-sample">Computed sample</span>';
+      $('fig2-intro').innerHTML = FIG2_INTRO;
+    } else {
+      if (fig.parentNode !== $('fig2-disc-body')) $('fig2-disc-body').appendChild(fig);
+      $('fig2-title').textContent = 'Formal Schwarzian kernel diagnostic — DC residue ÷ soft vertex';
+      $('fig2-tags').innerHTML =
+        '<span class="tag tag-sample">Computed sample</span>' +
+        '<span class="tag tag-none">Licenses no detector conclusion</span>';
+      $('fig2-intro').innerHTML =
+        'This is the same non-circular DC extraction run on an unbalanced row: an ' +
+        'Abel-regularised transform of the response at four frequencies, with the intercept ' +
+        'fitted linearly in <span class="num">ω²</span> on the lowest three. On this row it is ' +
+        'a <b>formal Schwarzian kernel diagnostic; it licenses no detector or memory ' +
+        'conclusion</b>, because its comparator is a formal EFT kernel rather than a ' +
+        'demonstrated expectation difference between two preparable states.';
+    }
+  }
+
+  function renderFig2() {
+    var pt = PTS[selected], dc = pt.dc, bal = isBalanced(pt);
+    renderFig2Mode(bal);
+    var svg = $('fig2');
+    clear(svg);
+    var W = 720, H = 300;
+    var box = { l: 96, r: W - 150, t: 42, b: H - 50 };
+
+    var last = dc.residue_by_horizon[dc.residue_by_horizon.length - 1];
+    var ratios = dc.omega.map(function (w, i) {
+      return [w * w, last[i] / dc.vertex_soft_prediction];
+    });
+    var ys = ratios.map(function (r) { return r[1]; })
+      .concat([1, dc.extrapolated_vertex_ratio]);
+    var lo = Math.min.apply(null, ys), hi = Math.max.apply(null, ys);
+    var pad = (hi - lo) * 0.2 || 0.01;
+    var x = linScale(-0.0018, 0.0432, box.l, box.r);
+    var yt = niceTicks(lo - pad, hi + pad, 5);
+    var y = linScale(lo - pad, hi + pad, box.b, box.t);
+    var p = new Panel(svg, box, x, y);
+    p.grid([0, 0.01, 0.02, 0.03, 0.04], yt,
+      function (v) { return v.toFixed(3); }, tickFmt(yt));
+    p.title('DC residue ÷ independent soft vertex',
+      'horizon ' + dc.horizon[dc.horizon.length - 1] + ',  dt = ' + dc.uniform_dt);
+    p.xlabel('ω²');
+
+    /* least-squares intercept in omega^2 on the lowest three frequencies */
+    var fit = ratios.slice(1), n = fit.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
+    fit.forEach(function (r) { sx += r[0]; sy += r[1]; sxx += r[0] * r[0]; sxy += r[0] * r[1]; });
+    var slope = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+    var intercept = (sy - slope * sx) / n;
+    p.path([[-0.0018, intercept + slope * -0.0018], [0.0432, intercept + slope * 0.0432]],
+      'var(--s-dc)', { w: 1.6, dash: '6 4' });
+    p.hline(1, 'var(--ink-3)', 'exact agreement', { dash: '3 5' });
+    p.dots(fit, 'var(--s-dc)', 5);
+    p.ring(ratios[0][0], ratios[0][1], 'var(--ink-3)');
+    p.tag(x(ratios[0][0]) - 11, y(ratios[0][1]) - 10,
+      'ω = 0.2', 'var(--ink-3)', 'end');
+    p.tag(x(ratios[0][0]) - 11, y(ratios[0][1]) + 3,
+      'excluded from the fit', 'var(--ink-3)', 'end');
+    p.dots([[0, dc.extrapolated_vertex_ratio]], 'var(--accent)', 5.5);
+    p.tag(x(0) + 12, y(dc.extrapolated_vertex_ratio) - 10,
+      'intercept  ' + dc.extrapolated_vertex_ratio.toFixed(9), 'var(--accent)');
+
+    attachTip(svg, function (ux) {
+      var best = 0, bd = 1e9;
+      dc.omega.forEach(function (w, i) {
+        var d = Math.abs(x(w * w) - ux);
+        if (d < bd) { bd = d; best = i; }
+      });
+      if (bd > 26) return null;
+      var w = dc.omega[best];
+      return {
+        px: x(w * w), y0: box.t, y1: box.b, ty: box.t,
+        html: 'ω = ' + w + '<br>residue = ' + sci(last[best], 6) +
+          '<br>÷ vertex = ' + (last[best] / dc.vertex_soft_prediction).toFixed(9) +
+          (best === 0 ? '<br>excluded from the intercept fit' : '')
+      };
+    });
+
+    $('fig2-cap').innerHTML =
+      'The four frequency points and the three-horizon stability check are computed samples. ' +
+      'The dashed line is the least-squares intercept in <span class="num">ω²</span> ' +
+      'on the lowest three, refitted here in your browser: it lands on ' +
+      '<span class="num">' + intercept.toFixed(9) + '</span> against the stored ' +
+      '<span class="num">' + dc.extrapolated_vertex_ratio.toFixed(9) + '</span>. Changing the ' +
+      'integration horizon from ' + dc.horizon.join(' to ') + ' moves the stored intercept by ' +
+      sci(dc.horizon_error, 2) + '.' +
+      (bal ? '' : ' On this row the whole construction is a formal kernel diagnostic.');
+
+    var scope = $('fig2-scope');
+    clear(scope);
+    if (bal) {
+      scope.appendChild(el('p', { class: 'small', html:
+        'On the two energy-balanced rows the extrapolated vertex ratios are ' +
+        '<span class="num">1.000110</span> (<span class="num">C = 10</span>) and ' +
+        '<span class="num">0.999988</span> (<span class="num">C = 100</span>). Their deviations ' +
+        'from unity are <span class="num">0.010997891679%</span> and ' +
+        '<span class="num">0.001163093905%</span>; the worst rounds to <b>0.011%</b>. That is ' +
+        'where the campaign’s phrase “0.011% or better” comes from, and it is the adjudicated ' +
+        'wording rather than a headline we chose.' }));
+      scope.appendChild(el('p', { class: 'tiny', html:
+        'Adjudication: theory/verdicts/syk-jt-joint-critic-r2.md § r2a, which re-evaluated the ' +
+        'two ratios from this file and ruled the phrase correct. Scope: this figure and this ' +
+        'paragraph describe the two balanced rows only, and they are shown only while a ' +
+        'balanced row is selected.' }));
+    } else {
+      scope.appendChild(el('p', { class: 'tiny', html:
+        'The adjudicated “0.011% or better” figure belongs to the two balanced rows and is not ' +
+        'restated here. This rendering is a formal Schwarzian kernel diagnostic; it licenses no ' +
+        'detector or memory conclusion.' }));
+    }
+  }
+
+  /* --- the decisive plate -------------------------------------------- */
+
+  function renderPlate() {
+    var pt = PTS[selected], dc = pt.dc, dw = pt.detector_window, g = mobiusOf(pt);
+    var bal = isBalanced(pt);
+    var t = $('plate-table');
+    clear(t);
+
+    $('plate-title').textContent = bal ? 'The decisive numbers'
+                                       : 'The row as computed — formal diagnostic';
+    $('plate-intro').innerHTML = bal
+      ? 'No decoration here on purpose. These are the numbers the verdict rests on, for the ' +
+        'balanced point selected above, straight out of the results file.'
+      : 'No decoration here on purpose. These are the numbers computed for the point selected ' +
+        'above, straight out of the results file. No verdict rests on them: this row is outside ' +
+        'the balanced sector, so the table is a record of what was computed, not of what was ' +
+        'concluded.';
+
+    var rows = [
+      ['stiffness C', String(pt.C), 'results file'],
+      ['source profile, amplitude',
+        PROFILE_LABEL[pt.profile] + ',  ε = ' + pt.epsilon, 'results file'],
+      ['operator dimension Δ', String(DELTA), 'results file'],
+      ['energy change of the pulsed run', sci(pt.energy_change, 4),
+        bal ? 'energy-balanced at leading order; this nonzero value is the finite ' +
+              'numerical/nonlinear residual, not a demonstration of exact finite-C D32 ' +
+              'comparability'
+            : 'unbalanced: no implementable two-dot reference protocol with the same measured ' +
+              'unequal one-sided energies has been exhibited (HELD, not refuted)'],
+      ['relative frame  a,  b+c,  d',
+        g[0][0].toFixed(12) + ',   ' + (g[0][1] + g[1][0]).toExponential(6) +
+        ',   ' + g[1][1].toFixed(12),
+        'least-squares Möbius fit, residual ' + sci(pt.mobius_fit_residual, 2) +
+        '; the detector sees only these three'],
+      ['δG_LR at T = 40  (absolute register)', sci(pt.delta_G_LR[4], 8), 'computed sample'],
+      ['δG_LR model selection',
+        pt.delta_G_model.winner + '   (AIC ' + pt.delta_G_model.aic_exponential.toFixed(2) +
+        ' exponential vs ' + pt.delta_G_model.aic_constant.toFixed(2) + ' constant)',
+        'fitted over T ≥ 5'],
+      ['Δu_rel at T = 40  (calibrated register)', sci(pt.delta_u_rel[4], 12), 'computed sample'],
+      ['Δu_rel model selection',
+        pt.delta_u_model.winner + '   (AIC ' + pt.delta_u_model.aic_constant.toFixed(2) +
+        ' constant vs ' + pt.delta_u_model.aic_exponential.toFixed(2) + ' exponential)',
+        'fitted over T ≥ 5'],
+      ['DC residue, ω → 0 intercept', sci(dc.extrapolated_residue, 12),
+        'independent of the plateau by construction; a regression test doubles the plateau ' +
+        'input and requires this number not to move'],
+      ['independently normalised soft vertex', sci(dc.vertex_soft_prediction, 12),
+        'normalised by the measured injected charge ' + sci(dc.injected_charge_norm, 4) +
+        ', nothing fitted'],
+      ['ratio of the two', dc.extrapolated_vertex_ratio.toFixed(12),
+        'deviation from unity ' + pct(Math.abs(dc.extrapolated_vertex_ratio - 1), 6) +
+        (bal ? '' : '; on this row a formal kernel diagnostic only, and no part of the ' +
+                    'adjudicated “0.011% or better” statement')],
+      ['maximum usable detector time', dw.maximum_usable_T.toFixed(9),
+        'κT_max = √(κC);  κT = ' + dw.kappa_T_at_max.toFixed(6) +
+        ',  T/C = ' + dw.T_over_C_at_max.toFixed(6)],
+      ['shot-cost scaling proxy at T_max', sci(dw.sample_cost_for_10pct_late_delta, 6),
+        'model <span class="num">' + dw.sample_cost_model + '</span> at η = 0.1|Δu_fit|, up to ' +
+        'unknown protocol-dependent variance and finite-difference calibration constants; it ' +
+        'supports “practical permanence is not established” and is not a calibrated ' +
+        'experimental shot count'],
+      ['SL(2) charge jump residual', sci(pt.charge_jump_error, 3),
+        'the validator refuses to write a results file above 10⁻⁶'],
+      ['charge drift outside the pulse support',
+        sci(Math.max(pt.pre_charge_drift, pt.post_charge_drift), 3),
+        'the validator refuses to write a results file above 10⁻⁸']
+    ];
+    var thead = el('thead');
+    thead.appendChild(el('tr', {}, [
+      el('th', { text: 'quantity' }), el('th', { text: 'value' }),
+      el('th', { text: 'what it is' })
+    ]));
+    t.appendChild(thead);
+    var tb = el('tbody');
+    rows.forEach(function (r) {
+      tb.appendChild(el('tr', {}, [
+        el('td', { text: r[0] }),
+        el('td', { class: 'n', text: r[1] }),
+        el('td', { class: 'small', html: r[2] })
+      ]));
+    });
+    t.appendChild(tb);
+
+    var host = $('plate-scope');
+    clear(host);
+    host.appendChild(el('p', { class: 'eyebrow', text: bal
+      ? 'the scope this rests on, verbatim'
+      : 'the registered scope these rows sit outside, verbatim' }));
+    host.appendChild(el('p', { class: 'small verbatim', html:
+      '&hellip; the <code>O(C^{-2})</code> remainder is controlled here only at fixed detector ' +
+      'time, and neither a uniform finite-<code>C</code> late-time bound nor practical ' +
+      'permanence is claimed.&nbsp; Exact finite-amplitude equality to a single-soft vertex ' +
+      'is excluded.' }));
+    host.appendChild(el('p', { class: 'tiny', text:
+      'claims/CLAIMS.md, row JT-B-susc, closing sentences.' }));
+    host.appendChild(el('p', { class: 'small verbatim', html:
+      'The all-profiles generalization beyond the balanced sector is HELD (no implementable ' +
+      'unequal-energy reference protocol; see critic r2 Objection 9).' }));
+    host.appendChild(el('p', { class: 'tiny', text:
+      'claims/CLAIMS.md, row JT-noplat-abs, closing sentence.' }));
+    host.appendChild(el('p', { class: 'small verbatim', html:
+      'The results file states its own limit convention: order &mdash; &ldquo;' +
+      DATA.limit_convention.order + '&rdquo;; window &mdash; &ldquo;' +
+      DATA.limit_convention.window + '&rdquo;; cutoff &mdash; &ldquo;' +
+      DATA.limit_convention.finite_C_cutoff + '&rdquo;; status &mdash; &ldquo;' +
+      DATA.limit_convention.status + '&rdquo;.' }));
+  }
+
+  function renderStation() {
+    syncMap();
+    renderCompare();
+    renderBanner();
+    renderFig1();
+    renderReadouts();
+    renderFig2();
+    renderPlate();
+  }
+
+  /* =================================================================
+     7.  Figure 3 - the butterfly instrument.  Pure closed form,
+         equal-kappa chart, kappa = 1, Delta = 1/2, N_Delta = 1.
+     ================================================================= */
+
+  var bf = { alpha: 2, a: 1 };
+  var KAPPA = 1, BF_DELTA = 0.5;
+
+  function bfD(T) {
+    var ax = bf.a * Math.exp(KAPPA * T);
+    return ax + bf.alpha + 1 / ax;
+  }
+  /* Delta u = T - arcosh(D/2)/kappa.  Written directly, that is a difference of
+     two numbers near T, and at T = 30 it keeps only three honest digits.  The
+     algebraically identical rewrite below keeps all of them:
+        kappa*Delta u = -log a - log1p(u1) - log1p(u2),
+        u1 = (alpha + 1/(a x)) / (a x),   u2 = -2 / (D^2 (1 + q)),
+        q  = sqrt(1 - 4/D^2),
+     using  arcosh(D/2) = log D + log((1+q)/2)  and  log D = log a + kT + log1p(u1). */
+  function bfDeltaU(T) {
+    var ax = bf.a * Math.exp(KAPPA * T);
+    var D = ax + bf.alpha + 1 / ax;
+    if (D < 2) return NaN;
+    var q = Math.sqrt(Math.max(0, 1 - 4 / (D * D)));
+    var u1 = (bf.alpha + 1 / ax) / ax;
+    var u2 = -2 / (D * D * (1 + q));
+    return (-Math.log(bf.a) - Math.log1p(u1) - Math.log1p(u2)) / KAPPA;
+  }
+  /* likewise for delta G: D and E agree to 13 digits at late T, so subtract in
+     the exponent instead of subtracting the two powers */
+  function bfDeltaG(T) {
+    var x = Math.exp(KAPPA * T), ax = bf.a * x;
+    var E = x + 1 / x;
+    var dif = (bf.a - 1) * x + bf.alpha + (1 / bf.a - 1) / x;   /* = D - E, exactly */
+    return Math.pow(E, -2 * BF_DELTA) *
+      Math.expm1(-2 * BF_DELTA * Math.log1p(dif / E));
+  }
+
+  function renderFig3() {
+    var svg = $('fig3');
+    clear(svg);
+    var W = 720;
+    var box1 = { l: 86, r: W - 136, t: 40, b: 202 };
+    var box2 = { l: 86, r: W - 136, t: 256, b: 392 };
+    var T0 = 0.15, T1 = 12;
+    var x = linScale(T0, T1, box1.l, box1.r);
+    var shock = Math.abs(bf.a - 1) < 1e-9;
+    var plateau = -Math.log(bf.a) / KAPPA;
+
+    var uu = [], gg = [];
+    for (var i = 0; i <= 400; i++) {
+      var T = T0 + i / 400 * (T1 - T0);
+      uu.push([T, bfDeltaU(T)]);
+      gg.push([T, Math.abs(bfDeltaG(T))]);
+    }
+    var uvals = [0, plateau];
+    uu.forEach(function (d) { if (isFinite(d[1])) uvals.push(d[1]); });
+    var lo = Math.min.apply(null, uvals), hi = Math.max.apply(null, uvals);
+    var pad = Math.max((hi - lo) * 0.18, 0.004);
+    var y1 = linScale(lo - pad, hi + pad, box1.b, box1.t);
+    var yt1 = niceTicks(lo - pad, hi + pad, 5);
+
+    var p1 = new Panel(svg, box1, x, y1);
+    p1.grid(niceTicks(T0, T1, 7), yt1, String, tickFmt(yt1));
+    p1.title('relative delay  Δu_rel^NL(T),  exact (3.6)', 'late value = −log a / κ');
+    p1.hline(0, 'var(--ink-3)', 'zero', { dash: '2 4' });
+    if (!shock) {
+      p1.hline(plateau, 'var(--s-dc)', 'plateau −log a/κ = ' + plateau.toFixed(6));
+    } else {
+      var asym = [];
+      for (var k = 0; k <= 240; k++) {
+        var Ta = T0 + k / 240 * (T1 - T0);
+        asym.push([Ta, -bf.alpha / KAPPA * Math.exp(-KAPPA * Ta)]);
+      }
+      p1.path(asym, 'var(--ink-3)', { w: 1.4, dash: '4 4' });
+      p1.tag(box1.l + 12, box1.t + 15,
+        'dashed:  −(α/κ)e^(−κT),  the (3.15) asymptote', 'var(--ink-3)');
+    }
+    p1.path(uu, 'var(--s-cal)', { w: 2 });
+    p1.tag(box1.r + 8, y1(bfDeltaU(T1)) + 4, 'Δu_rel^NL', 'var(--s-cal)');
+
+    var gvals = [];
+    gg.forEach(function (d) { if (d[1] > 0 && isFinite(d[1])) gvals.push(d[1]); });
+    var gmin = Math.min.apply(null, gvals), gmax = Math.max.apply(null, gvals);
+    var y2 = logScale(Math.max(gmin * 0.4, gmax * 1e-12), gmax * 3, box2.b, box2.t);
+    var p2 = new Panel(svg, box2, x, y2);
+    p2.grid(niceTicks(T0, T1, 7), decadeTicks(y2.domain[0], y2.domain[1], 6),
+      String, logTickLabel);
+    p2.title('absolute register  |δG_LR(T)|',
+      'log scale · ' + (bfDeltaG(T1) < 0 ? 'δG_LR < 0 here · ' : '') + 'Δ = 1/2, κ = 1');
+    p2.path(gg, 'var(--s-abs)', { w: 2 });
+    p2.tag(box2.r + 8, y2(Math.abs(bfDeltaG(T1))) + 4, 'δG_LR', 'var(--s-abs)');
+    p2.xlabel('detector time T');
+
+    legend($('fig3-legend'), [
+      { color: 'var(--s-cal)', label: 'Δu_rel^NL exact (3.6)' },
+      { color: 'var(--s-abs)', label: 'δG_LR exact (3.2)' },
+      { color: 'var(--ink-3)', label: '(3.15) asymptote, drawn when a = 1', dash: true }
+    ]);
+
+    attachTip(svg, function (ux) {
+      if (ux < box1.l || ux > box1.r) return null;
+      var T = x.invert(ux);
+      return {
+        px: ux, y0: box1.t, y1: box2.b, ty: box1.t,
+        html: 'T = ' + T.toFixed(3) +
+          '<br>Δu^NL = ' + sci(bfDeltaU(T), 5) +
+          '<br>δG_LR = ' + sci(bfDeltaG(T), 5)
+      };
+    });
+
+    var host = $('fig3-readouts');
+    clear(host);
+    function ro(k, v, cls, note) {
+      host.appendChild(el('div', { class: 'readout' }, [
+        el('span', { class: 'k', text: k }),
+        el('span', { class: 'v ' + (cls || ''), text: v }),
+        el('span', { class: 'n', html: note })
+      ]));
+    }
+    var late = bfDeltaU(30);
+    var pred315 = -bf.alpha / KAPPA * Math.exp(-KAPPA * 30);
+    ro('Δu_rel^NL at T = 30',
+      Math.abs(late) < 1e-6 ? sci(late, 3) : late.toFixed(8), 'v-cal',
+      shock ? 'For <span class="num">a = 1</span>, <span class="num">lim Δu_rel^NL = 0</span>. ' +
+              'At T = 30 what remains is the displayed <span class="num">O(e<sup>−κT</sup>)' +
+              '</span> transient, which (3.15) predicts to be ' +
+              '<span class="num">−(α/κ)e<sup>−30κ</sup> = ' + sci(pred315, 3) + '</span>. The ' +
+              'two agree to ' +
+              (bf.alpha === 0 ? 'machine precision'
+                              : sci(Math.abs(late / pred315 - 1), 1) + ' relative') +
+              ', within the stated <span class="num">O(e<sup>−2κT</sup>)</span> correction: ' +
+              '<span class="num">e<sup>−60</sup>/e<sup>−30</sup> = ' +
+              sci(Math.exp(-30), 1) + '</span>. This is the state claim JT-bfly-decay speaks ' +
+              'about.'
+            : 'A relative thermal dilation is present, so the late value is the nonzero ' +
+              'constant −log a/κ = ' + plateau.toFixed(8) + '. No computed run on this page ' +
+              'realises this frame.');
+    ro('δG_LR at T = 30', sci(bfDeltaG(30), 3), 'v-abs',
+      'The absolute register decays for every Δ &gt; 0, whether or not the calibrated one ' +
+      'plateaus. This is the algebraic decay mechanism used by JT-noplat-abs; that claim ' +
+      'additionally assumes a compact implementable energy-balanced pulse and the registered ' +
+      'large-C-first scope, neither of which the sliders supply. ' +
+      (shock ? 'Here (3.15) gives the rate <span class="num">e<sup>−(2Δ+1)κT</sup></span>, ' +
+               'so this number is of order <span class="num">' +
+               sci(-2 * Math.exp(-2 * 30), 2) + '</span>.' : ''));
+    ro('entry controlling the late limit', 'a = ' + bf.a.toFixed(3), '',
+      'The late value is −log a/κ. The horizon translation α sits in the ' +
+      '<span class="num">b+c</span> slot, and drops out of the late limit entirely.');
+  }
+
+  function bindBf() {
+    [['bf-alpha', 'alpha', 2], ['bf-a', 'a', 3]].forEach(function (spec) {
+      var input = $(spec[0]), out = $(spec[0] + '-o');
+      function upd() {
+        bf[spec[1]] = parseFloat(input.value);
+        out.textContent = bf[spec[1]].toFixed(spec[2]);
+        var shock = Math.abs(bf.a - 1) < 1e-9;
+        $('bf-shock').setAttribute('aria-pressed', shock ? 'true' : 'false');
+        $('bf-dilate').setAttribute('aria-pressed', shock ? 'false' : 'true');
+        $('bf-state').innerHTML = shock
+          ? '<b>a = 1.</b> Pure Shenker–Stanford horizon translation — the claim-bearing state ' +
+            'of this panel, tied to JT-bfly-decay.'
+          : '<b>a ≠ 1.</b> Algebraic comparison — not a realized pulse in this page’s dataset. ' +
+            'Nothing here shows that an implementable energy-balanced pulse produces this frame.';
+        renderFig3();
+      }
+      input.addEventListener('input', upd);
+      upd();
+    });
+    $('bf-shock').addEventListener('click', function () {
+      $('bf-a').value = '1'; $('bf-a').dispatchEvent(new Event('input'));
+    });
+    $('bf-dilate').addEventListener('click', function () {
+      $('bf-a').value = '0.98'; $('bf-a').dispatchEvent(new Event('input'));
+    });
+  }
+
+  /* =================================================================
+     8.  Live checks - real arithmetic on the embedded data.
+     ================================================================= */
+
+  function runChecks() {
+    var out = [];
+
+    var RECOMP = 'recomputation', THRESH = 'threshold';
+
+    var maxDet = 0;
+    PTS.forEach(function (p) { maxDet = Math.max(maxDet, Math.abs(det2(mobiusOf(p)) - 1)); });
+    out.push(['det g_rel = 1 on all 8 stored frames', sci(maxDet, 2), maxDet < 1e-12, RECOMP]);
+
+    var maxJump = 0;
+    PTS.forEach(function (p) { maxJump = Math.max(maxJump, p.charge_jump_error); });
+    out.push(['SL(2) charge jump residual ≤ 10⁻⁶', sci(maxJump, 2), maxJump <= 1e-6, THRESH]);
+
+    var maxDrift = 0;
+    PTS.forEach(function (p) {
+      maxDrift = Math.max(maxDrift, p.pre_charge_drift, p.post_charge_drift);
+    });
+    out.push(['charge drift off the pulse support ≤ 10⁻⁸',
+      sci(maxDrift, 2), maxDrift <= 1e-8, THRESH]);
+
+    var worst = 0;
+    PTS.forEach(function (p) {
+      var MR = mobiusOf(p), kR = p.k_final;
+      TGRID.forEach(function (T, i) {
+        worst = Math.max(worst,
+          Math.abs(deltaG(MR, 1, kR, T, DELTA) - p.delta_G_LR[i]) / Math.abs(p.delta_G_LR[i]),
+          Math.abs(deltaU(MR, 1, kR, T, DELTA) - p.delta_u_rel[i]) / Math.abs(p.delta_u_rel[i]));
+      });
+    });
+    out.push(['closed form reproduces all 80 stored samples', sci(worst, 2), worst < 1e-6,
+      RECOMP]);
+
+    var te = DATA.integrator_diagnostics.terminal_errors, minOrder = Infinity;
+    for (var i = 0; i + 1 < te.length; i++) {
+      minOrder = Math.min(minOrder, Math.log2(te[i] / te[i + 1]));
+    }
+    out.push(['integrator convergence order ≥ 3.8 (the test floor)',
+      minOrder.toFixed(3), minOrder >= 3.8, RECOMP]);
+
+    var a = PTS[0], b = PTS[3], same = 0;
+    TGRID.forEach(function (T, i) {
+      same = Math.max(same,
+        Math.abs(a.delta_u_rel[i] - b.delta_u_rel[i]) / Math.abs(b.delta_u_rel[i]));
+    });
+    out.push(['rows with equal ε/C coincide  (0.01/10 = 0.1/100)', sci(same, 2), same === 0,
+      RECOMP]);
+
+    var t = $('live-checks');
+    clear(t);
+    var thead = el('thead');
+    thead.appendChild(el('tr', {}, [
+      el('th', { text: 'check' }), el('th', { text: 'check type' }),
+      el('th', { text: 'value' }), el('th', { text: '' })
+    ]));
+    t.appendChild(thead);
+    var tb = el('tbody');
+    out.forEach(function (r, i) {
+      tb.appendChild(el('tr', {}, [
+        el('td', { class: 'small', text: (i + 1) + '. ' + r[0] }),
+        el('td', { class: 'small', text: r[3] }),
+        el('td', { class: 'n', text: r[1] }),
+        el('td', {}, [el('span', {
+          class: 'chip ' + (r[2] ? 'chip-proved' : 'chip-retr'),
+          text: r[2] ? 'pass' : 'fail'
+        })])
+      ]));
+    });
+    t.appendChild(tb);
+  }
+
+  /* =================================================================
+     9.  Epilogue - triangle and claim rows.
+     ================================================================= */
+
+  function drawTriangle() {
+    var svg = $('triangle');
+    clear(svg);
+    var P = { soft: [115, 212], sym: [320, 58], mem: [525, 212] };
+    function edge(a, b, on) {
+      svg.appendChild(s('line', {
+        x1: a[0], y1: a[1], x2: b[0], y2: b[1],
+        stroke: on ? 'var(--accent)' : 'var(--rule-strong)',
+        'stroke-width': on ? 2.5 : 1.4, 'stroke-dasharray': on ? '' : '5 5'
+      }));
+    }
+    edge(P.soft, P.sym, false);
+    edge(P.sym, P.mem, false);
+    edge(P.soft, P.mem, true);
+    function corner(p, title, sub, filled) {
+      svg.appendChild(s('circle', {
+        cx: p[0], cy: p[1], r: 9,
+        fill: filled ? 'var(--accent)' : 'var(--panel)',
+        stroke: 'var(--accent)', 'stroke-width': 2
+      }));
+      var dy = p[1] < 120 ? -26 : 34;
+      svg.appendChild(s('text', {
+        x: p[0], y: p[1] + dy, 'text-anchor': 'middle', 'font-size': 13,
+        fill: 'var(--ink)', text: title
+      }));
+      svg.appendChild(s('text', {
+        x: p[0], y: p[1] + dy + 16, 'text-anchor': 'middle', 'font-size': 10.5,
+        fill: 'var(--ink-3)', text: sub
+      }));
+    }
+    corner(P.soft, 'soft theorem', 'the ω → 0 datum', true);
+    corner(P.sym, 'asymptotic symmetry', 'not visited on this page', false);
+    corner(P.mem, 'late response', 'D33 passes · D32 fails', true);
+    svg.appendChild(s('text', {
+      x: 320, y: 302, 'text-anchor': 'middle', 'font-size': 11.5,
+      fill: 'var(--accent)',
+      text: 'soft datum ↔ calibrated susceptibility at leading order'
+    }));
+    svg.appendChild(s('text', {
+      x: 320, y: 322, 'text-anchor': 'middle', 'font-size': 10.5, fill: 'var(--ink-3)',
+      text: 'at leading order in 1/C, in the balanced sector, in a 0+1-dimensional thermal system'
+    }));
+  }
+
+  var CLAIMS = [
+    {
+      id: 'JT-B-susc',
+      status: 'PROVED',
+      chip: 'chip-proved',
+      scope: 'Schwarzian-EFT scope; per theory/verdicts/syk-jt-joint-critic-r2.md ruling (i), scope sentence copied verbatim; L6 loop r1→r2→r2a PASS',
+      text: 'At leading one-soft/tree order <code>O(C^{-1})</code>, for a compact energy-balanced right-boundary power pulse <code>P</code> of fixed width and finite first moment, with a single synchronization event <code>u_*</code>, the large-<code>C</code>-first calibrated susceptibility is <code>Δu_rel=[2Cκ²]^{-1}∫(u−u_*)P(u)du+O(C^{-2})</code> and equals at that order the <code>ω→0</code> DC residue of the same invariant bilocal soft attachment, where the late limit means <code>κ(T−u_*)→∞</code> with <code>(T−u_*)/C→0</code>; the <code>O(C^{-2})</code> remainder is controlled here only at fixed detector time, and neither a uniform finite-<code>C</code> late-time bound nor practical permanence is claimed.&nbsp; Exact finite-amplitude equality to a single-soft vertex is excluded.'
+    },
+    {
+      id: 'JT-bfly-decay',
+      status: 'PROVED',
+      chip: 'chip-proved',
+      scope: 'Schwarzian-EFT scope; per syk-jt-joint-critic-r2.md ruling (ii), verbatim; matches printed geodesic factor refs/arxiv-1306.0622 shock.tex:223-234',
+      text: 'For the pure Shenker–Stanford horizon translation <code>g_shock=(1 α; 0 1)</code> in the energy-balanced, <code>u_*</code>-synchronized Schwarzian future chart, the calibrated two-sided delay has zero plateau and obeys <code>Δu_rel^NL(T)=−ακ^{-1}e^{−κ(T−u_*)}+O(e^{−2κ(T−u_*)})</code>, while <code>δG_LR(T)=O(e^{−(2Δ+1)κ(T−u_*)})</code>, in the large-<code>C</code>-first late window.&nbsp; (The celebrated butterfly frame shift is a transient relational time delay, not stationary-subtracted memory.)'
+    },
+    {
+      id: 'JT-noplat-abs',
+      status: 'PROVED (balanced) · HOLD (unbalanced)',
+      chip: 'chip-hold',
+      scope: 'balanced scope; per syk-jt-joint-critic-r2.md ruling (iii), verbatim; unbalanced generalization HOLD',
+      text: 'For every <code>Δ&gt;0</code>, a compact energy-balanced pulse whose post-pulse relative Möbius matrix lies in a nonsingular future chart with <code>a&gt;0</code> has the <code>u_*</code>-synchronized same-energy absolute correlator difference <code>δG_LR(T)=𝒩_Δ κ^{2Δ}e^{−2Δκ(T−u_*)}[a^{−2Δ}−1+O(e^{−κ(T−u_*)})]</code>, so this allowed absolute observable has no nonzero late plateau in the large-<code>C</code>-first window even when its calibrated ratio approaches a nonzero susceptibility.&nbsp; The all-profiles generalization beyond the balanced sector is HELD (no implementable unequal-energy reference protocol; see critic r2 Objection 9).'
+    }
+  ];
+
+  function renderClaims() {
+    var host = $('claims');
+    clear(host);
+    CLAIMS.forEach(function (c) {
+      var box = el('div', { class: 'quote', style: 'margin-bottom:1rem' });
+      box.appendChild(el('p', { class: 'row', html:
+        '<span class="chip ' + c.chip + '">' + c.status + '</span>' +
+        '<span class="num" style="color:var(--ink-2)">' + c.id + '</span>' }));
+      box.appendChild(el('p', {
+        class: 'small verbatim', style: 'margin-top:.6rem', html: c.text
+      }));
+      box.appendChild(el('span', { class: 'src', text: 'claims/CLAIMS.md — ' + c.scope }));
+      host.appendChild(box);
+    });
+  }
+
+  /* =================================================================
+     10.  Boot.
+     ================================================================= */
+
+  buildMap();
+  bindCompare();
+  bindToy();
+  bindBf();
+  renderStation();
+  runChecks();
+  drawTriangle();
+  renderClaims();
+
+  /* =================================================================
+     11.  Offline legibility.  MathJax is the one thing this file fetches.
+          If it does not arrive, the display equations are replaced by a
+          hand-set plain-text form so the page stays readable from file://
+          with networking off.  Nothing load-bearing depends on the CDN.
+     ================================================================= */
+
+  (function mathFallback() {
+    var spent = false;
+    function loaded() { return !!(window.MathJax && window.MathJax.startup); }
+    function fallback() {
+      if (spent || document.querySelector('mjx-container')) { spent = true; return; }
+      spent = true;
+      Array.prototype.forEach.call(document.querySelectorAll('.eq'), function (node) {
+        var fb = node.getAttribute('data-fallback');
+        var txt = fb !== null ? fb
+          : node.textContent.replace(/^\s*\\\[/, '').replace(/\\\]\s*$/, '').trim();
+        node.textContent = txt;
+        node.className = 'eqfb';
+      });
+      var note = el('p', { class: 'tiny', text:
+        'The MathJax script did not load, so the display equations on this page are shown in ' +
+        'plain text instead. Every number here is computed locally and is unaffected.' });
+      var host = document.querySelector('#bench .column.stack-s');
+      if (host) host.appendChild(note);
+    }
+    var tag = document.getElementById('MathJax-script');
+    if (tag) tag.addEventListener('error', fallback);
+    function onLoad() {
+      if (!loaded()) { fallback(); return; }
+      setTimeout(fallback, 2000);        /* loaded but never typeset */
+    }
+    if (document.readyState === 'complete') onLoad();
+    else window.addEventListener('load', onLoad);
+  })();
+})();
+</script>
