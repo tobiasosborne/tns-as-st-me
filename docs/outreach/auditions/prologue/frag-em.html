@@ -1,0 +1,3539 @@
+<!--
+  frag-em.html — Builder A lane (electromagnetism) for the IR-triangle WHY prologue.
+  Stations W2, W3, W4, W6, W7.
+  Design document: docs/outreach/BRIEF-why-prologue.md
+  Lane brief:      docs/outreach/BRIEF-builder-em.md
+  Binding contract: docs/outreach/AUDITION-SPEC.md
+  Builder report:  docs/outreach/auditions/NOTES-frag-em.md
+
+  FRAGMENT CONTRACT OBSERVED
+    - Output is a sequence of <section class="stop" id="wN">, each followed by ONE
+      <style data-station="wN"> (every selector scoped under the section id) and ONE
+      <script data-station="wN"> (an IIFE touching only that section).
+    - No <title>, no global styles, no library loading. MathJax and (if wanted)
+      three.js are the integrator's to load once.
+    - The ONE permitted global is window.PROLOGUE: the reference physics core is
+      inlined verbatim below in <script data-station="em-core"> and publishes
+      window.PROLOGUE.em. Each station reads it through a two-line adapter
+      (var P = window.PROLOGUE.em) and creates no global of its own.
+    - Colours come only from the proof-atlas custom properties, read at run time with
+      getComputedStyle where canvas needs literal values. No palette value is defined
+      here. Token names used:
+        --paper --surface --surface-2 --surface-sunk --ink --ink-2 --ink-3
+        --rule --rule-2 --accent --accent-text --accent-tint
+        --keep --die  --st-proved --st-sketch --st-conjecture --st-hold --st-refuted
+        --serif --sans --mono
+      Categorical data slots, in fixed order and used the same way in all five
+      stations: --keep (slot 1) = the Coulombic / hard / "before" class,
+      --die (slot 2) = the radiative / soft / "after" class. Both were validated
+      with the dataviz skill validator on both surfaces by the GW lane:
+        light  #146C9B,#B0592E on #FAFBFC -> ALL CHECKS PASS
+        dark   #4695C6,#CE7444 on #141D23 -> ALL CHECKS PASS
+      Station 4 needs a SEQUENTIAL ramp for a magnitude painted on a sphere. It is
+      built at run time by piecewise-linear interpolation through four existing
+      tokens in lightness order — light: --surface-2, --accent-tint, --accent,
+      --accent-text; dark: --surface-2, --accent-tint, --keep, --accent-text —
+      so it is one hue, monotone in lightness, and correct in both themes without
+      any literal being written here.
+
+  PHYSICS GROUND TRUTH
+    The reference core docs/outreach/auditions/prologue/em-core.js (codex lane
+    tns-lqj) is inlined VERBATIM, byte for byte, in the first script block.
+    Gaussian natural units, c = hbar = 1, fields per unit source charge, e^2 = alpha.
+    Every number this page prints comes from that core, with ONE stated exception:
+      * Station 2 does not call core purcellLines(), because it draws a RESOLVED
+        shell (a smooth kick of finite duration tau) rather than the zero-thickness
+        instantaneous one, and em-core-NOTES.md section 3 says explicitly that a
+        resolved shell should be streamlined with fieldLine rather than joined by
+        purcellLines' great-circle representative. Station 2 therefore builds its
+        straight regions from the closed-form boosted-Coulomb rays, labels them by
+        the LENGTH-CONTRACTION map (tan theta_lab = gamma tan theta_rest, the angle
+        measured from the charge's PRESENT POSITION), and connects them by an RK4
+        streamline of the core's own exact fieldAt().
+        The core labels the same lines by ABERRATION, which is the angle of the same
+        line measured from the ORIGIN where it crosses the shell. These are two
+        parameterisations of one construction, not two claims: composing the
+        contraction map with the intersection of the ray and the sphere |x| = t
+        reproduces the core's aberrateDirection to nine digits for every angle
+        tested (check recorded in NOTES-frag-em.md). Station 2 prints, live, the
+        residual between where its streamline actually exits the shell and where
+        the flux label says it should, which is a check on both.
+      Everything else — fieldAt, radiationSpectrum, softAmplitude,
+      softFactorWeinberg, photonNumber, spherePattern, chargeConservation,
+      memoryKickQuadrature, memoryKickClosedForm, coulombDrift, coulombProfile,
+      angularLedger, sphereDivergence, dcRadiationField, penroseCoords,
+      freeParticleEndpoints — is called directly.
+
+  GROUND TRUTH QUOTED IN THIS FRAGMENT (L3: local TeX, quoted by line)
+    refs/arxiv-1703.05448/soft_Arxiv_update.tex
+      :1075-1082 the soft photon theorem, eq. (mft)  (station 3)
+      :541-550   the boosted-Coulomb angular coefficient (station 7)
+      :568-573   the antipodal matching condition (station 7)
+      :598-623   the conformal coordinates and the antipodal convention (station 7)
+      :699-704   the leading abelian constraint at null infinity (station 7)
+      :712-721   the integrated transverse soft mode N_z (station 7)
+  LECTURE REMARKS (secondary source, auto-captions, never load-bearing)
+    docs/strominger-wisdom/lectures/01-lvyyxkjwSCg-digest.md
+      insight 9  [lvyyxkjwSCg @ 00:35:17]  "the Bedrock of everything"   (station 2)
+      insight 12 [lvyyxkjwSCg @ 01:26:02]  no first-principles derivation (station 7)
+      insight 1  [lvyyxkjwSCg @ 00:01:06]  "I kind of dislike this word"  (station 7)
+    docs/strominger-wisdom/lectures/02-yeMZKViadhw-digest.md
+      insight 6  [yeMZKViadhw @ 01:12:34]  the student's antipodal picture (station 7)
+
+  ERROR CONTROL, STATION BY STATION (full record in NOTES-frag-em.md)
+    W2  Straight-ray regions are closed form (Heaviside's boosted Coulomb, exact).
+        The shell connector is an RK4 streamline of the core's exact
+        Lienard-Wiechert field, arclength step h = tau/48, and its exit angle is
+        compared live against the closed-form flux match; the worst residual over
+        the drawn lines is printed on the figure.
+    W3  radiationSpectrum() — 8-node Gauss-Legendre in retarded time, panel count
+        rising with omega*tau; the omega -> 0 plateau is the closed form, and the
+        page prints the relative gap between the quadrature at the smallest
+        plotted omega and that closed form.
+    W4  spherePattern() evaluated per pixel (fallback renderer) or per texel
+        (three.js renderer); closed form, no quadrature. The polarization-sum
+        identity is checked live at the cursor direction against two explicit
+        orthonormal polarizations built on the page.
+    W6  memoryKickQuadrature() vs memoryKickClosedForm(), printed to 12 digits with
+        a panel-doubling convergence table; the Coulomb drift is shown SEPARATELY
+        from coulombDrift() so that the identity is true as stated.
+    W7  angularLedger() closed form against sphereDivergence() five-point stencil
+        on the exact dcRadiationField, residual printed; Penrose interlude from
+        penroseCoords() and freeParticleEndpoints(), pure geometry.
+-->
+
+<!-- ==== EM REFERENCE CORE ===================================================
+     em-core.js, inlined VERBATIM (byte for byte) from
+       docs/outreach/auditions/prologue/em-core.js
+     Codex lane tns-lqj. This is the one place window.PROLOGUE is written.
+     Integrator: to refresh, replace everything strictly between the two
+     BEGIN/END marker lines below with the current file, unchanged.
+     ======================================================================== -->
+<script data-station="em-core">
+/* BEGIN VERBATIM em-core.js */
+/*
+ * EMCore -- reference electrodynamics for the infrared-triangle prologue.
+ * Gaussian natural units, c = hbar = 1.  Fields are per unit source charge;
+ * an elementary charge has e^2 = alpha.  ES2017, no DOM and no dependencies.
+ */
+(function (root, factory) {
+  'use strict';
+  var EMCore = factory();
+  if (typeof module === 'object' && module.exports) module.exports = EMCore;
+  if (root) {
+    root.PROLOGUE = root.PROLOGUE || {};
+    root.PROLOGUE.em = EMCore;
+  }
+}(typeof window !== 'undefined' ? window : null, function () {
+  'use strict';
+
+  var RETARDED_TOLERANCE = 1e-13;
+  var ALPHA = 1 / 137.035999084;
+  var PI = Math.PI;
+
+  function assertVector3(v, name) {
+    if (!Array.isArray(v) || v.length !== 3 || !v.every(Number.isFinite)) {
+      throw new TypeError(name + ' must be a finite three-vector');
+    }
+  }
+
+  function add(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
+  function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function scale(a, s) { return [a[0] * s, a[1] * s, a[2] * s]; }
+  function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function cross(a, b) {
+    return [a[1] * b[2] - a[2] * b[1],
+      a[2] * b[0] - a[0] * b[2],
+      a[0] * b[1] - a[1] * b[0]];
+  }
+  function norm2(a) { return dot(a, a); }
+  function norm(a) { return Math.sqrt(norm2(a)); }
+  function unit(a, name) {
+    var m = norm(a);
+    if (!(m > 0)) throw new RangeError((name || 'vector') + ' must be nonzero');
+    return scale(a, 1 / m);
+  }
+  function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
+  function transverseDoubleCross(n, a) { return cross(n, cross(n, a)); }
+
+  /* 1. Trajectory model -------------------------------------------------- */
+  function makeKick(options) {
+    options = options || {};
+    var betaI = (options.betaI || [0, 0, 0]).slice();
+    var betaF = (options.betaF || [0, 0, 0]).slice();
+    var profile = options.profile || 'raised-cosine';
+    var tau = options.tau == null ? 1 : Number(options.tau);
+    assertVector3(betaI, 'betaI');
+    assertVector3(betaF, 'betaF');
+    if (norm2(betaI) >= 1 || norm2(betaF) >= 1) {
+      throw new RangeError('endpoint speeds must be strictly smaller than c');
+    }
+    if (['raised-cosine', 'tanh', 'instant'].indexOf(profile) < 0) {
+      throw new RangeError("profile must be 'raised-cosine', 'tanh', or 'instant'");
+    }
+    if (profile === 'instant') tau = 0;
+    if (profile !== 'instant' && !(tau > 0)) {
+      throw new RangeError('a smooth kick requires tau > 0');
+    }
+    var delta = sub(betaF, betaI);
+
+    function blend(t) {
+      if (profile === 'instant') return t < 0 ? 0 : 1;
+      if (profile === 'raised-cosine') {
+        var s = t / tau + 0.5;
+        if (s <= 0) return 0;
+        if (s >= 1) return 1;
+        return 0.5 * (1 - Math.cos(PI * s));
+      }
+      var a = tau / 2;
+      return 0.5 * (1 + Math.tanh(t / a));
+    }
+
+    function blendDerivative(t) {
+      if (profile === 'instant') return 0;
+      if (profile === 'raised-cosine') {
+        var s = t / tau + 0.5;
+        return s <= 0 || s >= 1 ? 0 : PI * Math.sin(PI * s) / (2 * tau);
+      }
+      var a = tau / 2;
+      var c = Math.cosh(t / a);
+      if (!Number.isFinite(c)) return 0;
+      return 0.5 / (a * c * c);
+    }
+
+    // J(t) is an antiderivative of blend(t), normalized by J(0)=0.
+    function blendIntegral(t) {
+      if (profile === 'instant') return t < 0 ? 0 : t;
+      if (profile === 'raised-cosine') {
+        var s = t / tau + 0.5;
+        function primitive(y) {
+          return tau * (0.5 * y - Math.sin(PI * y) / (2 * PI));
+        }
+        var pHalf = primitive(0.5);
+        if (s <= 0) return -pHalf;
+        if (s >= 1) return primitive(1) - pHalf + (s - 1) * tau;
+        return primitive(s) - pHalf;
+      }
+      var a = tau / 2;
+      var z = t / a;
+      // Stable log(cosh(z)); the subtraction at z=0 vanishes.
+      var az = Math.abs(z);
+      var logCosh = az + Math.log1p(Math.exp(-2 * az)) - Math.log(2);
+      return 0.5 * (t + a * logCosh);
+    }
+
+    function position(t) {
+      if (!Number.isFinite(t)) throw new TypeError('t must be finite');
+      return add(scale(betaI, t), scale(delta, blendIntegral(t)));
+    }
+    function velocity(t) {
+      if (!Number.isFinite(t)) throw new TypeError('t must be finite');
+      return add(betaI, scale(delta, blend(t)));
+    }
+    function acceleration(t) {
+      if (!Number.isFinite(t)) throw new TypeError('t must be finite');
+      return scale(delta, blendDerivative(t));
+    }
+
+    var bounds = profile === 'raised-cosine' ? [-tau / 2, tau / 2]
+      : profile === 'tanh' ? [-10 * tau, 10 * tau] : [0, 0];
+    return Object.freeze({
+      betaI: Object.freeze(betaI), betaF: Object.freeze(betaF),
+      tau: tau, profile: profile, bounds: Object.freeze(bounds),
+      position: position, velocity: velocity, acceleration: acceleration
+    });
+  }
+
+  /* 2. Exact Lienard-Wiechert field ------------------------------------- */
+  function retardedTime(kick, x, t) {
+    assertVector3(x, 'x');
+    if (!Number.isFinite(t)) throw new TypeError('t must be finite');
+    function residual(s) {
+      return t - s - norm(sub(x, kick.position(s)));
+    }
+    var hi = t;
+    var fHi = residual(hi);
+    if (Math.abs(fHi) <= RETARDED_TOLERANCE) return hi;
+    var span = Math.max(1, norm(sub(x, kick.position(t))));
+    var lo = t - span;
+    var fLo = residual(lo);
+    for (var grow = 0; fLo < 0 && grow < 200; grow += 1) {
+      span *= 2;
+      lo = t - span;
+      fLo = residual(lo);
+    }
+    if (!(fLo >= 0 && fHi <= 0)) throw new Error('failed to bracket retarded time');
+
+    var s = hi;
+    for (var iter = 0; iter < 100; iter += 1) {
+      var rVec = sub(x, kick.position(s));
+      var distance = norm(rVec);
+      var f = t - s - distance;
+      if (Math.abs(f) <= RETARDED_TOLERANCE) return s;
+      if (f > 0) { lo = s; fLo = f; } else { hi = s; fHi = f; }
+      var direction = distance > 0 ? scale(rVec, 1 / distance) : [0, 0, 0];
+      var derivative = -1 + dot(direction, kick.velocity(s));
+      var candidate = s - f / derivative;
+      if (!(candidate > lo && candidate < hi) || !Number.isFinite(candidate)) {
+        candidate = (lo * (-fHi) + hi * fLo) / (fLo - fHi);
+      }
+      if (!(candidate > lo && candidate < hi) || !Number.isFinite(candidate)) {
+        candidate = 0.5 * (lo + hi);
+      }
+      s = candidate;
+    }
+    s = 0.5 * (lo + hi);
+    if (Math.abs(residual(s)) > 5 * RETARDED_TOLERANCE) {
+      throw new Error('retarded-time solve did not reach tolerance');
+    }
+    return s;
+  }
+
+  function lwPieces(kick, x, t, tRet) {
+    var rVec = sub(x, kick.position(tRet));
+    var R = norm(rVec);
+    if (!(R > 0)) throw new RangeError('field is singular on the charge');
+    var n = scale(rVec, 1 / R);
+    var beta = kick.velocity(tRet);
+    var accel = kick.acceleration(tRet);
+    var kappa = 1 - dot(n, beta);
+    var velocityPart = scale(sub(n, beta),
+      (1 - norm2(beta)) / (kappa * kappa * kappa * R * R));
+    var radiationPart = scale(cross(n, cross(sub(n, beta), accel)),
+      1 / (kappa * kappa * kappa * R));
+    var E = add(velocityPart, radiationPart);
+    return {E: E, B: cross(n, E), tRet: tRet, n: n, R: R,
+      velocityPart: velocityPart, radiationPart: radiationPart};
+  }
+
+  function uniformRetardedTime(beta, x, t) {
+    var a = 1 - norm2(beta);
+    var b = 2 * (dot(x, beta) - t);
+    var c = t * t - norm2(x);
+    var disc = Math.max(0, b * b - 4 * a * c);
+    return (-b - Math.sqrt(disc)) / (2 * a);
+  }
+
+  function uniformField(beta, x, t) {
+    var tRet = uniformRetardedTime(beta, x, t);
+    var fake = {
+      position: function (s) { return scale(beta, s); },
+      velocity: function () { return beta; },
+      acceleration: function () { return [0, 0, 0]; }
+    };
+    return lwPieces(fake, x, t, tRet);
+  }
+
+  function shellMemoryCoefficient(betaI, betaF, nhat) {
+    var n = unit(nhat, 'nhat');
+    var hi = scale(betaI, 1 / (1 - dot(n, betaI)));
+    var hf = scale(betaF, 1 / (1 - dot(n, betaF)));
+    return transverseDoubleCross(n, sub(hf, hi));
+  }
+
+  function instantField(kick, x, t) {
+    var radius = norm(x);
+    var onShell = t >= 0 && Math.abs(radius - t) <= RETARDED_TOLERANCE;
+    var useNew = t > radius;
+    var result = uniformField(useNew ? kick.betaF : kick.betaI, x, t);
+    if (onShell && radius > 0) {
+      var radialDirection = scale(x, 1 / radius);
+      var coefficient = scale(shellMemoryCoefficient(
+        kick.betaI, kick.betaF, radialDirection), 1 / radius);
+      result.shell = Object.freeze({
+        distribution: 'delta(t-|x|)',
+        transverseCoefficient: Object.freeze(coefficient),
+        note: 'radiationPart contains only the regular part; multiply this coefficient by delta(t-|x|)'
+      });
+    } else {
+      result.shell = null;
+    }
+    return result;
+  }
+
+  function fieldAt(kick, x, t) {
+    if (!kick || typeof kick.position !== 'function') throw new TypeError('invalid kick');
+    assertVector3(x, 'x');
+    if (kick.profile === 'instant') return instantField(kick, x, t);
+    var tRet = retardedTime(kick, x, t);
+    return lwPieces(kick, x, t, tRet);
+  }
+
+  /* 3. Field lines ------------------------------------------------------ */
+  function fieldDirection(kick, t, point, sign) {
+    var E = fieldAt(kick, point, t).E;
+    var magnitude = norm(E);
+    if (!(magnitude > 0) || !Number.isFinite(magnitude)) return null;
+    return scale(E, sign / magnitude);
+  }
+
+  function rk4FieldStep(kick, t, point, h, sign) {
+    var k1 = fieldDirection(kick, t, point, sign);
+    if (!k1) return null;
+    var k2 = fieldDirection(kick, t, add(point, scale(k1, h / 2)), sign);
+    if (!k2) return null;
+    var k3 = fieldDirection(kick, t, add(point, scale(k2, h / 2)), sign);
+    if (!k3) return null;
+    var k4 = fieldDirection(kick, t, add(point, scale(k3, h)), sign);
+    if (!k4) return null;
+    return add(point, scale(add(add(k1, scale(k2, 2)), add(scale(k3, 2), k4)), h / 6));
+  }
+
+  function fieldLine(kick, t, seedPoint, options) {
+    options = options || {};
+    assertVector3(seedPoint, 'seedPoint');
+    if (kick.profile === 'instant') {
+      throw new RangeError('fieldLine requires a smooth kick; use purcellLines for instant');
+    }
+    var step = options.step == null ? 0.05 : Number(options.step);
+    var maxSteps = options.maxSteps == null ? 800 : Math.floor(options.maxSteps);
+    if (!(step > 0) || !(maxSteps > 0)) throw new RangeError('step and maxSteps must be positive');
+
+    function trace(sign) {
+      var points = [seedPoint.slice()];
+      for (var i = 0; i < maxSteps; i += 1) {
+        var next;
+        try { next = rk4FieldStep(kick, t, points[points.length - 1], step, sign); }
+        catch (error) { break; }
+        if (!next || !next.every(Number.isFinite)) break;
+        points.push(next);
+        if (norm(sub(next, kick.position(t))) < step * 0.6) break;
+      }
+      return points;
+    }
+    var backward = trace(-1).reverse();
+    var forward = trace(1);
+    return backward.slice(0, -1).concat(forward);
+  }
+
+  function aberrateDirection(restDirection, beta) {
+    var ell = unit(restDirection, 'restDirection');
+    var b2 = norm2(beta);
+    if (b2 === 0) return ell;
+    var gamma = 1 / Math.sqrt(1 - b2);
+    var betaDotEll = dot(beta, ell);
+    var spatial = add(ell, scale(beta,
+      gamma + (gamma - 1) * betaDotEll / b2));
+    return scale(spatial, 1 / (gamma * (1 + betaDotEll)));
+  }
+
+  function slerpUnit(a, b, fraction) {
+    var cosine = clamp(dot(a, b), -1, 1);
+    var angle = Math.acos(cosine);
+    if (angle < 1e-12) return unit(add(scale(a, 1 - fraction), scale(b, fraction)));
+    var sine = Math.sin(angle);
+    return add(scale(a, Math.sin((1 - fraction) * angle) / sine),
+      scale(b, Math.sin(fraction * angle) / sine));
+  }
+
+  function fibonacciDirections(count) {
+    var directions = [];
+    var goldenAngle = PI * (3 - Math.sqrt(5));
+    for (var i = 0; i < count; i += 1) {
+      var z = 1 - 2 * (i + 0.5) / count;
+      var radial = Math.sqrt(Math.max(0, 1 - z * z));
+      var phi = i * goldenAngle;
+      directions.push([radial * Math.cos(phi), radial * Math.sin(phi), z]);
+    }
+    return directions;
+  }
+
+  function purcellLines(betaI, betaF, t, options) {
+    options = options || {};
+    assertVector3(betaI, 'betaI');
+    assertVector3(betaF, 'betaF');
+    if (norm2(betaI) >= 1 || norm2(betaF) >= 1) throw new RangeError('speeds must be subluminal');
+    if (!(t > 0)) throw new RangeError('Purcell construction requires t > 0');
+    var nLines = options.nLines == null ? 24 : Math.floor(options.nLines);
+    if (!(nLines >= 2)) throw new RangeError('nLines must be at least 2');
+    var labels = fibonacciDirections(nLines);
+    return labels.map(function (label, index) {
+      var outerDirection = aberrateDirection(label, betaI);
+      var innerDirection = aberrateDirection(label, betaF);
+      var oldPosition = scale(betaI, t);
+      var newPosition = scale(betaF, t);
+      var outerShell = scale(outerDirection, t);
+      var innerShell = scale(innerDirection, t);
+      var outerRay = unit(sub(outerShell, oldPosition));
+      var connector = [];
+      var connectorSteps = 12;
+      for (var j = 0; j <= connectorSteps; j += 1) {
+        connector.push(scale(slerpUnit(innerDirection, outerDirection,
+          j / connectorSteps), t));
+      }
+      return Object.freeze({
+        index: index, label: Object.freeze(label), flux: 4 * PI / nLines,
+        innerDirection: Object.freeze(innerDirection),
+        outerDirection: Object.freeze(outerDirection),
+        inner: Object.freeze([Object.freeze(newPosition), Object.freeze(innerShell)]),
+        shell: Object.freeze(connector.map(Object.freeze)),
+        outer: Object.freeze([Object.freeze(outerShell),
+          Object.freeze(add(outerShell, scale(outerRay, t)))])
+      });
+    });
+  }
+
+  /* 4. Frequency domain ------------------------------------------------- */
+  var GL8_X = [
+    -0.9602898564975363, -0.7966664774136267,
+    -0.5255324099163290, -0.1834346424956498,
+    0.1834346424956498, 0.5255324099163290,
+    0.7966664774136267, 0.9602898564975363
+  ];
+  var GL8_W = [
+    0.1012285362903763, 0.2223810344533745,
+    0.3137066458778873, 0.3626837833783620,
+    0.3626837833783620, 0.3137066458778873,
+    0.2223810344533745, 0.1012285362903763
+  ];
+
+  function gaussLegendre8Vector(fn, a, b, panels, dimension) {
+    var result = new Array(dimension).fill(0);
+    var width = (b - a) / panels;
+    for (var panel = 0; panel < panels; panel += 1) {
+      var left = a + panel * width;
+      var mid = left + width / 2;
+      var half = width / 2;
+      for (var j = 0; j < 8; j += 1) {
+        var value = fn(mid + half * GL8_X[j]);
+        var weight = half * GL8_W[j];
+        for (var k = 0; k < dimension; k += 1) result[k] += weight * value[k];
+      }
+    }
+    return result;
+  }
+
+  function radiationAmplitudeVector(kick, nhat, omega, options) {
+    var n = unit(nhat, 'nhat');
+    if (!(omega >= 0) || !Number.isFinite(omega)) throw new RangeError('omega must be finite and nonnegative');
+    var dc = shellMemoryCoefficient(kick.betaI, kick.betaF, n);
+    if (kick.profile === 'instant' || omega === 0) {
+      return dc.map(function (x) { return Object.freeze({re: x, im: 0}); });
+    }
+    options = options || {};
+    var oscillations = omega * Math.max(kick.tau, 1e-15);
+    var panels = options.n == null ? Math.max(24, Math.ceil(24 + 2 * oscillations))
+      : Math.max(1, Math.floor(options.n));
+    var bounds = kick.bounds;
+    var raw = gaussLegendre8Vector(function (s) {
+      var beta = kick.velocity(s);
+      var accel = kick.acceleration(s);
+      var kappa = 1 - dot(n, beta);
+      var g = scale(cross(n, cross(sub(n, beta), accel)), 1 / (kappa * kappa));
+      var phase = omega * (s - dot(n, kick.position(s)));
+      var c = Math.cos(phase);
+      var si = Math.sin(phase);
+      return [g[0] * c, g[1] * c, g[2] * c,
+        g[0] * si, g[1] * si, g[2] * si];
+    }, bounds[0], bounds[1], panels, 6);
+    return [0, 1, 2].map(function (j) {
+      return Object.freeze({re: raw[j], im: raw[j + 3]});
+    });
+  }
+
+  function radiationSpectrum(kick, nhat, omegas, options) {
+    if (!Array.isArray(omegas)) throw new TypeError('omegas must be an array');
+    return omegas.map(function (omega) {
+      var amplitude = radiationAmplitudeVector(kick, nhat, Number(omega), options);
+      var absoluteSquared = amplitude.reduce(function (sum, z) {
+        return sum + z.re * z.re + z.im * z.im;
+      }, 0);
+      // Gaussian units: q=e, e^2=alpha, positive-frequency convention.
+      return ALPHA * absoluteSquared / (4 * PI * PI);
+    });
+  }
+
+  function checkedPolarization(nhat, eps) {
+    assertVector3(eps, 'eps');
+    var n = unit(nhat, 'nhat');
+    var eNorm = norm(eps);
+    if (!(eNorm > 0)) throw new RangeError('eps must be nonzero');
+    var e = eps.slice();
+    if (Math.abs(dot(n, e)) > 1e-10 * eNorm) throw new RangeError('eps must be transverse to nhat');
+    return {n: n, eps: e};
+  }
+
+  function softAmplitude(kick, nhat, eps) {
+    var basis = checkedPolarization(nhat, eps);
+    var n = basis.n;
+    var hi = scale(kick.betaI, 1 / (1 - dot(n, kick.betaI)));
+    var hf = scale(kick.betaF, 1 / (1 - dot(n, kick.betaF)));
+    // Coefficient of 1/omega in the current/potential amplitude.  The
+    // electric radiation convention carries the opposite transverse sign.
+    return dot(sub(hf, hi), basis.eps);
+  }
+
+  function softFactorWeinberg(particles, nhat, eps) {
+    if (!Array.isArray(particles)) throw new TypeError('particles must be an array');
+    var basis = checkedPolarization(nhat, eps);
+    return particles.reduce(function (sum, particle) {
+      validateParticle(particle);
+      var denominator = 1 - dot(basis.n, particle.beta);
+      if (denominator <= 1e-15) throw new RangeError('soft factor is singular at a null collinear pole');
+      return sum + particle.eta * particle.Q * dot(particle.beta, basis.eps) / denominator;
+    }, 0);
+  }
+
+  function photonNumber(kick, nhat, omegaMin, omegaMax, options) {
+    if (!(omegaMin > 0) || !(omegaMax > omegaMin)) {
+      throw new RangeError('require 0 < omegaMin < omegaMax');
+    }
+    var n = unit(nhat, 'nhat');
+    if (kick.profile === 'instant') {
+      var g = shellMemoryCoefficient(kick.betaI, kick.betaF, n);
+      return ALPHA * norm2(g) * Math.log(omegaMax / omegaMin) / (4 * PI * PI);
+    }
+    options = options || {};
+    var panels = options.n == null ? 48 : Math.max(1, Math.floor(options.n));
+    var lo = Math.log(omegaMin);
+    var hi = Math.log(omegaMax);
+    // d omega / omega = d(log omega), so this directly integrates dI/domega.
+    return gaussLegendre8Vector(function (logOmega) {
+      var omega = Math.exp(logOmega);
+      return [radiationSpectrum(kick, n, [omega], options)[0]];
+    }, lo, hi, panels, 1)[0];
+  }
+
+  /* 5. Celestial sphere ------------------------------------------------- */
+  function validateParticle(particle) {
+    assertVector3(particle.beta, 'particle.beta');
+    if (norm2(particle.beta) > 1 + 1e-14) throw new RangeError('particle speed cannot exceed c');
+    if (particle.eta !== 1 && particle.eta !== -1) throw new RangeError('particle.eta must be +1 or -1');
+    if (!Number.isFinite(particle.Q)) throw new TypeError('particle.Q must be finite');
+  }
+
+  function chargeConservation(particles, tolerance) {
+    if (!Array.isArray(particles)) throw new TypeError('particles must be an array');
+    tolerance = tolerance == null ? 1e-12 : Math.abs(tolerance);
+    var sum = particles.reduce(function (total, particle) {
+      validateParticle(particle);
+      return total + particle.eta * particle.Q;
+    }, 0);
+    return Object.freeze({sum: sum, conserved: Math.abs(sum) <= tolerance,
+      tolerance: tolerance});
+  }
+
+  function spherePattern(particles, nhat) {
+    if (!Array.isArray(particles)) throw new TypeError('particles must be an array');
+    var n = unit(nhat, 'nhat');
+    var current = particles.reduce(function (sum, particle) {
+      validateParticle(particle);
+      var denominator = 1 - dot(n, particle.beta);
+      if (denominator <= 1e-15) throw new RangeError('sphere pattern is singular at a null collinear pole');
+      return add(sum, scale(particle.beta, particle.eta * particle.Q / denominator));
+    }, [0, 0, 0]);
+    return norm2(transverseDoubleCross(n, current));
+  }
+
+  /* 6. Memory: radiation-order identity and separate Coulomb drift ------ */
+  function memoryKickClosedForm(kick, x) {
+    assertVector3(x, 'x');
+    var radius = norm(x);
+    if (!(radius > 0)) throw new RangeError('x must be away from the source');
+    return scale(shellMemoryCoefficient(kick.betaI, kick.betaF,
+      scale(x, 1 / radius)), 1 / radius);
+  }
+
+  function memoryKickQuadrature(kick, x, options) {
+    options = options || {};
+    assertVector3(x, 'x');
+    var radius = norm(x);
+    if (!(radius > 0)) throw new RangeError('x must be away from the source');
+    var n = scale(x, 1 / radius);
+    if (kick.profile === 'instant') return memoryKickClosedForm(kick, x);
+    var rule = options.rule || 'gauss-legendre';
+    if (rule !== 'gauss-legendre') throw new RangeError("rule must be 'gauss-legendre'");
+    var panels = options.n == null ? 16 : Math.max(1, Math.floor(options.n));
+    var integral;
+    if (kick.profile === 'tanh') {
+      // y=blend(s) maps the infinite tanh tail exactly to [0,1], and
+      // acceleration(s) ds = (betaF-betaI) dy.
+      var deltaBeta = sub(kick.betaF, kick.betaI);
+      integral = gaussLegendre8Vector(function (y) {
+        var beta = add(kick.betaI, scale(deltaBeta, y));
+        var kappa = 1 - dot(n, beta);
+        return scale(cross(n, cross(sub(n, beta), deltaBeta)), 1 / (kappa * kappa));
+      }, 0, 1, panels, 3);
+    } else {
+      integral = gaussLegendre8Vector(function (s) {
+      var beta = kick.velocity(s);
+      var accel = kick.acceleration(s);
+      var kappa = 1 - dot(n, beta);
+      return scale(cross(n, cross(sub(n, beta), accel)), 1 / (kappa * kappa));
+      }, kick.bounds[0], kick.bounds[1], panels, 3);
+    }
+    return scale(integral, 1 / radius);
+  }
+
+  function uniformCoulombAntiderivative(beta, x, t) {
+    var speed = norm(beta);
+    if (speed < 1e-14) return scale(x, t / Math.pow(norm(x), 3));
+    var bhat = scale(beta, 1 / speed);
+    var xParallel = dot(x, bhat);
+    var xPerp = sub(x, scale(bhat, xParallel));
+    var xPerp2 = norm2(xPerp);
+    var y = xParallel - speed * t;
+    var d = Math.sqrt(y * y + (1 - speed * speed) * xPerp2);
+    if (!(d > 0)) throw new RangeError('Coulomb drift is singular where the charge meets x');
+    var primitive = scale(bhat, (1 - speed * speed) / (speed * d));
+    if (xPerp2 > 1e-28) {
+      primitive = add(primitive, scale(xPerp, -y / (speed * xPerp2 * d)));
+    }
+    return primitive;
+  }
+
+  function uniformCoulombIntegral(beta, x, t0, t1) {
+    return sub(uniformCoulombAntiderivative(beta, x, t1),
+      uniformCoulombAntiderivative(beta, x, t0));
+  }
+
+  function coulombDrift(kick, x, t0, t1) {
+    assertVector3(x, 'x');
+    if (!Number.isFinite(t0) || !Number.isFinite(t1) || t1 < t0) {
+      throw new RangeError('require finite t0 <= t1');
+    }
+    if (norm2(sub(kick.betaI, kick.betaF)) < 1e-30) {
+      return uniformCoulombIntegral(kick.betaI, x, t0, t1);
+    }
+    if (kick.profile !== 'instant') {
+      throw new RangeError('closed-form Coulomb drift is defined for the instantaneous Purcell kick');
+    }
+    var arrival = norm(x);
+    var result = [0, 0, 0];
+    if (t0 < Math.min(t1, arrival)) {
+      result = add(result, uniformCoulombIntegral(kick.betaI, x,
+        t0, Math.min(t1, arrival)));
+    }
+    if (t1 > Math.max(t0, arrival)) {
+      result = add(result, uniformCoulombIntegral(kick.betaF, x,
+        Math.max(t0, arrival), t1));
+    }
+    return result;
+  }
+
+  /* 7. Conservation per angle ------------------------------------------ */
+  function coulombProfile(beta, nhat, radius) {
+    assertVector3(beta, 'beta');
+    if (norm2(beta) >= 1) throw new RangeError('speed must be subluminal');
+    var n = unit(nhat, 'nhat');
+    radius = radius == null ? 1 : Number(radius);
+    if (!(radius > 0)) throw new RangeError('r must be positive');
+    var kappa = 1 - dot(n, beta);
+    return (1 - norm2(beta)) / (kappa * kappa * radius * radius);
+  }
+
+  function sphericalFrame(direction) {
+    var n = unit(direction, 'nhat');
+    var zAxis = Math.abs(n[2]) < 0.8 ? [0, 0, 1] : [1, 0, 0];
+    var trial = Math.abs(zAxis[1]) < 0.8 ? [0, 1, 0] : [0, 0, 1];
+    var xAxis = unit(cross(trial, zAxis));
+    var yAxis = cross(zAxis, xAxis);
+    var theta = Math.acos(clamp(dot(n, zAxis), -1, 1));
+    var phi = Math.atan2(dot(n, yAxis), dot(n, xAxis));
+    function at(th, ph) {
+      var st = Math.sin(th), ct = Math.cos(th);
+      var cp = Math.cos(ph), sp = Math.sin(ph);
+      return {
+        n: add(add(scale(xAxis, st * cp), scale(yAxis, st * sp)), scale(zAxis, ct)),
+        eTheta: add(add(scale(xAxis, ct * cp), scale(yAxis, ct * sp)), scale(zAxis, -st)),
+        ePhi: add(scale(xAxis, -sp), scale(yAxis, cp))
+      };
+    }
+    return {theta: theta, phi: phi, at: at};
+  }
+
+  function derivative5(fn, x, h) {
+    return (fn(x - 2 * h) - 8 * fn(x - h) + 8 * fn(x + h) - fn(x + 2 * h)) /
+      (12 * h);
+  }
+
+  function sphereDivergence(vectorField, nhat, h) {
+    if (typeof vectorField !== 'function') throw new TypeError('vectorField must be a function');
+    h = h == null ? 1e-4 : Number(h);
+    if (!(h > 0 && h < 0.05)) throw new RangeError('h must lie between 0 and 0.05');
+    var frame = sphericalFrame(nhat);
+    var theta = frame.theta;
+    var phi = frame.phi;
+    function sinATheta(th) {
+      var basis = frame.at(th, phi);
+      return Math.sin(th) * dot(vectorField(basis.n), basis.eTheta);
+    }
+    function aPhi(ph) {
+      var basis = frame.at(theta, ph);
+      return dot(vectorField(basis.n), basis.ePhi);
+    }
+    return (derivative5(sinATheta, theta, h) + derivative5(aPhi, phi, h)) /
+      Math.sin(theta);
+  }
+
+  function dcRadiationField(kick, nhat) {
+    return shellMemoryCoefficient(kick.betaI, kick.betaF, nhat);
+  }
+
+  function angularLedger(kick, nhat) {
+    var n = unit(nhat, 'nhat');
+    var before = coulombProfile(kick.betaI, n, 1);
+    var after = coulombProfile(kick.betaF, n, 1);
+    // In spherical coordinates div_S grad_S log(1-n.beta)
+    // = (1-beta^2)/(1-n.beta)^2 - 1.  The constants cancel in the kick.
+    var divergenceBefore = before - 1;
+    var divergenceAfter = after - 1;
+    return Object.freeze({before: before, after: after,
+      difference: after - before,
+      dcRadiationTerm: divergenceAfter - divergenceBefore});
+  }
+
+  /* 8. Antipodal geometry ---------------------------------------------- */
+  function penroseCoords(t, radius) {
+    if (!Number.isFinite(t) || !Number.isFinite(radius) || radius < 0) {
+      throw new RangeError('penroseCoords requires finite t and r >= 0');
+    }
+    var u = t - radius;
+    var v = t + radius;
+    var U = Math.atan(u);
+    var V = Math.atan(v);
+    return Object.freeze({u: u, v: v, U: U, V: V,
+      T: U + V, R: V - U});
+  }
+
+  function freeParticleEndpoints(x0, velocity) {
+    assertVector3(x0, 'x0');
+    assertVector3(velocity, 'v');
+    if (norm2(velocity) >= 1) throw new RangeError('speed must be subluminal');
+    var future = unit(velocity, 'v');
+    var past = scale(future, -1);
+    return Object.freeze({past: Object.freeze(past), future: Object.freeze(future),
+      antipodalResidual: norm(add(past, future))});
+  }
+
+  return {
+    constants: Object.freeze({alpha: ALPHA, c: 1, hbar: 1,
+      retardedTolerance: RETARDED_TOLERANCE, units: 'Gaussian'}),
+    makeKick: makeKick,
+    fieldAt: fieldAt,
+    fieldLine: fieldLine,
+    purcellLines: purcellLines,
+    radiationSpectrum: radiationSpectrum,
+    softAmplitude: softAmplitude,
+    softFactorWeinberg: softFactorWeinberg,
+    photonNumber: photonNumber,
+    spherePattern: spherePattern,
+    chargeConservation: chargeConservation,
+    memoryKickQuadrature: memoryKickQuadrature,
+    memoryKickClosedForm: memoryKickClosedForm,
+    coulombDrift: coulombDrift,
+    coulombProfile: coulombProfile,
+    angularLedger: angularLedger,
+    sphereDivergence: sphereDivergence,
+    dcRadiationField: dcRadiationField,
+    penroseCoords: penroseCoords,
+    freeParticleEndpoints: freeParticleEndpoints
+  };
+}));
+/* END VERBATIM em-core.js */
+</script>
+
+<section class="stop" id="w2">
+  <div class="stop-head">
+    <div class="plate">Station 2 &middot; the bedrock</div>
+    <h2>A charge is kicked, and the news travels outward in a shell</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">Start with something you already own. A charge sitting still has a
+      field that points straight out from it and falls off as one over distance squared;
+      its field lines are radial spokes that go on forever. A charge moving at a constant
+      velocity has the same spokes, drawn from wherever the charge is <i>now</i>, but
+      squashed towards the plane at right angles to the motion.</p>
+
+    <p>That second fact is worth writing down, because everything on this page is built
+      out of it. Heaviside&rsquo;s form of the field of a uniformly moving charge is exact
+      and elementary &mdash; it is a boosted Coulomb field, nothing more:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The field of a charge in uniform motion &mdash; exact, and radial from its present position</div>
+    \[ \vec E(\vec x,t)\;=\;\frac{q\,(1-\beta^{2})\,\vec R}{\bigl(R_{\parallel}^{2}+(1-\beta^{2})\,R_{\perp}^{2}\bigr)^{3/2}}\,,
+       \qquad \vec R=\vec x-\vec x_{\text{now}}(t) \]
+    <div class="eq-note">Here \(R_\parallel\) and \(R_\perp\) are the parts of \(\vec R\) along
+      and across the velocity. The field points exactly along \(\vec R\), so the field lines
+      are straight rays from the charge&rsquo;s present position &mdash; not from where it was
+      when the field left it. At \(\beta=0\) this is Coulomb&rsquo;s law. As \(\beta\to1\) the
+      denominator collapses except near \(R_\parallel=0\), which is the squashing.</div>
+  </div>
+
+  <div class="body">
+    <p>Now the only new thing in this station. Take a charge that has been drifting at one
+      velocity forever, give it a sharp kick lasting a time \(\tau\), and let it drift at a new
+      velocity forever after. Both halves of the answer are the formula above. The question is
+      what happens in between.</p>
+
+    <p>Causality answers it. At time \(t\) after the kick, no point further away than
+      \(ct\) has heard anything, so out there the field is still the old one &mdash; drawn from
+      where the charge <i>would</i> have been had it never been kicked. Inside, the field is the
+      new one, drawn from where the charge actually is. Between them sits a shell of thickness
+      \(c\tau\), and the field lines have to get across it, because field lines do not begin or
+      end in empty space.</p>
+
+    <p>They cross it almost sideways. That sideways piece is the radiation, and this figure is
+      the whole of it.</p>
+  </div>
+
+  <figure class="w2-fig">
+    <div class="w2-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">The kicked charge, one slice through the axis</div>
+          <div class="chart-sub">Drag the arrow to set the kick&rsquo;s size and direction. Drag anywhere else
+            to move the probe around the shell. The straight parts are closed form; the part inside the
+            shell is streamlined through the exact field.</div>
+        </div>
+        <span class="w2-ptag" data-kind="exact">Exact formula</span>
+        <span class="w2-ptag" data-kind="numeric">Controlled numerical solve</span>
+      </div>
+      <div class="w2-stage">
+        <canvas class="w2-canvas" aria-label="A charge at the centre of an expanding spherical shell. Outside the shell the field lines are radial spokes from the charge's old extrapolated position; inside they are spokes from its actual position; inside the shell they run almost sideways, connecting the two. The numbers below the figure carry the same information as text."></canvas>
+        <div class="w2-nocanvas" hidden></div>
+      </div>
+      <div class="w2-ctl">
+        <label class="w2-knob"><span>speed before the kick, \(\beta_i\)<b data-w2-o="bi">0.00</b></span>
+          <input type="range" data-w2-i="bi" min="-0.9" max="0.9" value="0" step="0.01"></label>
+        <label class="w2-knob"><span>speed after the kick, \(\beta_f\)<b data-w2-o="bf">0.55</b></span>
+          <input type="range" data-w2-i="bf" min="-0.9" max="0.9" value="0.55" step="0.01"></label>
+        <label class="w2-knob"><span>kick duration, \(c\tau\)<b data-w2-o="tau">0.090</b></span>
+          <input type="range" data-w2-i="tau" min="0.03" max="0.20" value="0.09" step="0.005"></label>
+        <label class="w2-knob"><span>time since the kick, \(ct\)<b data-w2-o="t">0.70</b></span>
+          <input type="range" data-w2-i="t" min="0.2" max="1.05" value="0.7" step="0.005"></label>
+        <div class="w2-btns">
+          <button class="btn" data-w2-play aria-pressed="false">Play</button>
+          <button class="btn" data-w2-reset>Reset</button>
+        </div>
+      </div>
+      <div class="w2-read">
+        <div class="w2-read-h">At the probe, on the middle of the shell, from the exact Li&eacute;nard&ndash;Wiechert field</div>
+    <p class="w2-cav">The ratio below is a property of <i>this</i> kick, not of an idealised one. Let
+      \(\tau\to0\) and the sideways field becomes a delta function on the shell, at which point the ratio
+      is not a number at all &mdash; it depends on how you resolve the delta. What survives that limit is
+      the delta&rsquo;s coefficient, which is the memory vector, and that is what station&nbsp;6 measures.</p>
+        <div class="w2-nums">
+          <div class="w2-num"><span>angle of the probe from the kick axis</span><b data-w2-r="ang">&mdash;</b></div>
+          <div class="w2-num"><span>sideways field there, \(|E_\perp|\)</span><b data-w2-r="ep">&mdash;</b></div>
+          <div class="w2-num"><span>outward field there, \(|E_r|\)</span><b data-w2-r="er">&mdash;</b></div>
+          <div class="w2-num is-lead"><span>their ratio \(|E_\perp|/|E_r|\) inside the shell, at the kick duration set above</span><b data-w2-r="ratio">&mdash;</b></div>
+          <div class="w2-num"><span>the same ratio just outside the shell, where nothing has happened yet</span><b data-w2-r="ratio0">&mdash;</b></div>
+          <div class="w2-num"><span>worst disagreement, streamlined exit angle against the closed-form flux match</span><b data-w2-r="res">&mdash;</b></div>
+        </div>
+      </div>
+    </div>
+    <figcaption><b>How each piece is drawn.</b> Outside the shell: straight rays from the old
+      extrapolated position, closed form. Inside: straight rays from the true present position,
+      closed form. Across the shell: a Runge&ndash;Kutta streamline of the exact
+      Li&eacute;nard&ndash;Wiechert field, arclength step \(\tau/40\), walked back to the exact crossing of
+      the outer face, which is why that piece bends. The last row of the readout is how far that streamline
+      lands from where the flux label says it should, and that gap is discretisation and nothing else:
+      halving the step divides it by about four, monotonically, from \(2.9\times10^{-3}\) at \(\tau/10\)
+      down to \(2.0\times10^{-6}\) at \(\tau/320\).
+      The two shell boundaries are spheres about where the charge sat when the kick began and ended,
+      so they are not concentric with each other once \(\beta_i\neq0\); that is drawn, not faked.
+      <b>Scope.</b> The construction shown is exact for a kick along a line. A kick that changes
+      direction leaves the outer field symmetric about one axis and the inner field about another,
+      and matching the lines across the shell is then a Poisson problem on the sphere that this page
+      does not solve &mdash; so the controls keep the kick collinear.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The construction that decides which outer line joins which inner line is a counting
+      argument, and it is worth a line of algebra because it is the only thing in the figure
+      that is not just Heaviside&rsquo;s formula. A tube of field lines carries a fixed amount of
+      flux, and there is no charge in the shell for it to gain or lose any. So label each line by
+      the flux it carries. In the charge&rsquo;s own rest frame the lines are evenly spread, so the
+      label is simply \(s=\cos\theta_{\text{rest}}\); in the lab, the fixed-time slice through that
+      line is length&#8209;contracted along the motion:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The lab direction of the field line labelled \(s\), for a charge of speed \(\beta\)</div>
+    \[ \tan\theta_{\text{lab}}=\gamma\,\tan\theta_{\text{rest}}
+       \qquad\Longleftrightarrow\qquad
+       \cos\theta_{\text{lab}}=\frac{s}{\gamma\sqrt{1-s^{2}\beta^{2}}}\,,\qquad \gamma=(1-\beta^{2})^{-1/2} \]
+    <div class="eq-note">The matching rule is then as short as it could be: <b>the same \(s\) on both
+      sides of the shell.</b> The check that this is the right map: integrating Heaviside&rsquo;s field over
+      a cone of half&#8209;angle \(\theta\) about the velocity gives the enclosed flux
+      \(2\pi q\bigl[1-\cos\theta/\sqrt{1-\beta^{2}\sin^{2}\theta}\bigr]\), and setting that equal on the two
+      sides returns exactly the line above.
+      <b>An aside that is worth the thirty seconds,</b> because the literature labels these lines the other
+      way. The angle above is measured from the charge&rsquo;s <i>present position</i>, and the map is
+      length contraction. If you instead label a line by the direction from which it leaves the origin
+      &mdash; where the kick happened &mdash; you get the relativistic <i>aberration</i> formula, which looks
+      like a completely different answer and beams things forward rather than sideways. It is not a
+      different answer. Follow the ray from the present position out until it crosses the sphere
+      \(r=ct\) and read off its direction from the centre, and you land on the aberrated direction exactly;
+      the reference core labels the lines that way and the two agree to nine digits at every angle we
+      checked. Two names for one construction. The figure does not take even that on trust: it streamlines
+      the exact field across the shell and prints how far the streamline lands from the prediction.</div>
+  </div>
+
+  <div class="body">
+    <p>Push \(\tau\) down and watch the ratio in the readout climb. Nothing about the two straight
+      regions changed; the shell just got thinner, so the same sideways offset had to be taken up over a
+      shorter distance. In the limit the sideways field goes as \(1/r\) rather than \(1/r^{2}\), which is
+      what makes it radiation: it survives to infinity, and the energy it carries does not fall off with
+      distance. And the offset it has to take up is set by the change in velocity &mdash; by the kick, and
+      by nothing else about how the kick was administered.</p>
+
+    <p>That last sentence is the reason this station exists. The information that the charge was kicked is
+      carried outward in a shell, and what is written in the shell is a permanent fact about the difference
+      between the old velocity and the new one. The rest of this page is mostly about learning to read it.</p>
+  </div>
+
+  <blockquote class="quote">
+    <p>&ldquo;we&rsquo;ve all seen this formula before we&rsquo;ve probably also all suppressed it or at
+      least I have and I did not realize until a few a few years ago really only a year ago that this formula
+      has a very peculiar property [&hellip;] this is going to be crucial this fact is going to sort of be the
+      Bedrock of everything we do from here on so I&rsquo;m going to go through it in pedantic detail&rdquo;</p>
+    <footer><span class="w2-ptag" data-kind="lecture">Lecture remark</span>
+      Andrew Strominger, <i>Infrared Structure of Gravity and Gauge Theory</i>, lecture&nbsp;1,
+      <span class="mono">[lvyyxkjwSCg @ 00:35:17]</span>. Transcribed from auto&#8209;captions; a secondary
+      source, quoted because it is a nice statement of how ordinary the starting point is. The formula he
+      means is the same Li&eacute;nard&ndash;Wiechert solution used above, and the peculiar property is the
+      one station&nbsp;7 comes back to.</footer>
+  </blockquote>
+</section>
+
+<style data-station="w2">
+#w2 .w2-fig { margin: 1.7rem 0 1.5rem; }
+#w2 .w2-card { border: 1px solid var(--rule); background: var(--surface); }
+#w2 .w2-card .chart-head { display: flex; align-items: flex-start; gap: .5rem; flex-wrap: wrap; padding: .85rem 1rem .6rem; border-bottom: 1px solid var(--rule); }
+#w2 .w2-card .chart-head > div:first-child { flex: 1 1 14rem; min-width: 0; }
+#w2 .w2-ptag { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--rule-2); color: var(--ink-3); white-space: nowrap; align-self: flex-start; }
+#w2 .w2-ptag[data-kind="exact"]   { border-color: var(--accent);    color: var(--accent-text); }
+#w2 .w2-ptag[data-kind="numeric"] { border-color: var(--st-proved); color: var(--st-proved); }
+#w2 .w2-ptag[data-kind="lecture"] { border-color: var(--st-hold);   color: var(--st-hold); margin-right: .4rem; }
+#w2 .w2-stage { position: relative; background: var(--surface-sunk); border-bottom: 1px solid var(--rule); }
+#w2 .w2-canvas { display: block; width: 100%; aspect-ratio: 16 / 10; touch-action: none; cursor: crosshair; }
+@media (max-width: 560px) { #w2 .w2-canvas { aspect-ratio: 4 / 3.6; } }
+#w2 .w2-nocanvas { padding: 1rem; font-family: var(--sans); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+#w2 .w2-ctl { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .8rem 1.2rem; align-items: end; padding: .9rem 1rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); }
+#w2 .w2-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+#w2 .w2-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w2 .w2-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w2 .w2-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w2 .w2-btns { display: flex; gap: .5rem; align-items: end; }
+#w2 .w2-read { padding: .85rem 1rem 1rem; }
+#w2 .w2-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .35rem; }
+#w2 .w2-cav { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); margin: 0 0 .5rem; max-width: 42rem; }
+#w2 .w2-nums { display: grid; gap: 0; }
+#w2 .w2-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); padding: .28rem 0; border-bottom: 1px dotted var(--rule); }
+#w2 .w2-num:last-child { border-bottom: 0; }
+@media (max-width: 560px) { #w2 .w2-num { flex-direction: column; align-items: flex-start; gap: .1rem; } }
+#w2 .w2-num b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w2 .w2-num.is-lead { color: var(--ink); }
+#w2 .w2-num.is-lead b { color: var(--die); font-size: 1.02rem; }
+</style>
+
+<script data-station="w2">
+(function () {
+  var root = document.getElementById('w2');
+  if (!root) return;
+  var P = (window.PROLOGUE && window.PROLOGUE.em) || null;
+  var cv = root.querySelector('.w2-canvas');
+  var ctx = (cv && cv.getContext) ? cv.getContext('2d') : null;
+  var noC = root.querySelector('.w2-nocanvas');
+  if (!ctx || !P) {
+    if (cv) cv.hidden = true;
+    if (noC) {
+      noC.hidden = false;
+      noC.textContent = !P
+        ? 'The reference physics core did not load, so this figure is not drawn. Nothing in the argument depends on the picture: the field outside the shell is the old boosted Coulomb field, the field inside is the new one, and the shell carries the sideways piece that connects them.'
+        : 'This browser did not give us a 2-D canvas, so the figure is not drawn. The text above states everything it shows.';
+    }
+    return;
+  }
+
+  /* ---- palette, re-read whenever the theme changes ---- */
+  var CACHE = {};
+  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
+  function themeChanged() { CACHE = {}; draw(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  }
+  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  /* ---- small vector helpers (this station only) ---- */
+  function v3(a, b, c) { return [a, b, c]; }
+  function vsub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function vadd(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
+  function vscl(a, s) { return [a[0] * s, a[1] * s, a[2] * s]; }
+  function vdot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function vlen(a) { return Math.sqrt(vdot(a, a)); }
+  function vunit(a) { var m = vlen(a); return m > 0 ? vscl(a, 1 / m) : [0, 0, 0]; }
+
+  /* Field-line label map. A line is labelled by its direction in the charge's own
+     rest frame; the lab picture at fixed t is that frame length-contracted along
+     the motion, so the parallel part shrinks by gamma and the transverse part does
+     not. This is the map that preserves flux; see the equation block above. */
+  function contract(ell, beta) {
+    var b2 = vdot(beta, beta);
+    if (b2 < 1e-18) return vunit(ell);
+    var bh = vscl(beta, 1 / Math.sqrt(b2));
+    var gam = 1 / Math.sqrt(1 - b2);
+    var par = vdot(ell, bh);
+    var perp = vsub(ell, vscl(bh, par));
+    return vunit(vadd(vscl(bh, par / gam), perp));
+  }
+  function uncontract(dir, beta) {          /* lab direction -> rest-frame label */
+    var b2 = vdot(beta, beta);
+    if (b2 < 1e-18) return vunit(dir);
+    var bh = vscl(beta, 1 / Math.sqrt(b2));
+    var gam = 1 / Math.sqrt(1 - b2);
+    var par = vdot(dir, bh);
+    var perp = vsub(dir, vscl(bh, par));
+    return vunit(vadd(vscl(bh, par * gam), perp));
+  }
+  /* radius at which the ray x = c + u d meets the sphere |x - centre| = rad */
+  function raySphere(c, d, centre, rad) {
+    var m = vsub(c, centre);
+    var b = vdot(m, d), cc = vdot(m, m) - rad * rad;
+    var disc = b * b - cc;
+    if (disc < 0) return -1;
+    var sq = Math.sqrt(disc);
+    var u1 = -b - sq, u2 = -b + sq;
+    if (u2 < 0) return -1;
+    return u1 > 1e-12 ? u1 : u2;
+  }
+
+  /* ---- state ---- */
+  var S = { bi: 0, bf: 0.55, tau: 0.09, t: 0.70, probe: 0.62, axis: 0 };
+  var NL = 11, HSTEP = 40, MAXSTEP = 900;
+  var VIEW = 1.18;                      /* world half-height shown */
+  var DPR = 1, W = 1, H = 1, CXp = 0, CYp = 0, SC = 1;
+  var worstRes = 0;
+
+  function axisVec() { return v3(Math.cos(S.axis), Math.sin(S.axis), 0); }
+  function kickNow() {
+    var e = axisVec();
+    return P.makeKick({ betaI: vscl(e, S.bi), betaF: vscl(e, S.bf), tau: S.tau, profile: 'raised-cosine' });
+  }
+
+  /* world (x right, y up) -> device pixels */
+  function sx(x) { return CXp + x * SC; }
+  function sy(y) { return CYp - y * SC; }
+
+  function resize() {
+    var r = cv.getBoundingClientRect();
+    if (!r.width) return false;
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = Math.max(1, Math.round(r.width * DPR));
+    H = Math.max(1, Math.round(r.height * DPR));
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    SC = Math.min(W / (2 * VIEW * 1.55), H / (2 * VIEW));
+    CXp = W / 2; CYp = H / 2;
+    return true;
+  }
+
+  /* ---- one field line, for the rest-frame label s ---- */
+  function buildLine(kick, s, sideSign) {
+    var e = axisVec();
+    var perp = v3(-e[1] * sideSign, e[0] * sideSign, 0);
+    var st = Math.sqrt(Math.max(0, 1 - s * s));
+    var ell = vadd(vscl(e, s), vscl(perp, st));
+    var t = S.t, tau = S.tau;
+    var bI = vscl(e, S.bi), bF = vscl(e, S.bf);
+    var xa = kick.position(-tau / 2), xb = kick.position(tau / 2);
+    /* the uniform-motion extrapolations: each side of the kick carried to time t */
+    var pOld = vadd(xa, vscl(bI, t + tau / 2));
+    var pNew = vadd(xb, vscl(bF, t - tau / 2));
+    var dOut = contract(ell, bI), dIn = contract(ell, bF);
+
+    var uOut = raySphere(pOld, dOut, xa, t + tau / 2);
+    var uIn = raySphere(pNew, dIn, xb, Math.max(1e-6, t - tau / 2));
+    if (uOut < 0 || uIn < 0) return null;
+    var pShellIn = vadd(pNew, vscl(dIn, uIn));
+
+    /* inner straight ray, from just off the charge out to the inner shell face */
+    var inner = [vadd(pNew, vscl(dIn, Math.min(0.035, uIn * 0.25))), pShellIn];
+
+    /* the connector: RK4 streamline of the exact field, from the inner face outward */
+    var h = tau / HSTEP, x = pShellIn.slice(), shell = [x.slice()], ok = true, steps = 0;
+    function dirAt(pt) {
+      var f;
+      try { f = P.fieldAt(kick, pt, t); } catch (err) { return null; }
+      var E = f.E, m = vlen(E);
+      if (!(m > 0) || !isFinite(m)) return null;
+      return vscl(E, 1 / m);
+    }
+    while (steps < MAXSTEP) {
+      var k1 = dirAt(x); if (!k1) { ok = false; break; }
+      var k2 = dirAt(vadd(x, vscl(k1, h / 2))); if (!k2) { ok = false; break; }
+      var k3 = dirAt(vadd(x, vscl(k2, h / 2))); if (!k3) { ok = false; break; }
+      var k4 = dirAt(vadd(x, vscl(k3, h))); if (!k4) { ok = false; break; }
+      var inc = vscl(vadd(vadd(k1, vscl(k2, 2)), vadd(vscl(k3, 2), k4)), h / 6);
+      x = vadd(x, inc);
+      shell.push(x.slice());
+      steps += 1;
+      if (vlen(vsub(x, xa)) >= t + tau / 2) break;
+    }
+    if (steps >= MAXSTEP) ok = false;
+
+    /* The last RK4 step overshoots the outer face of the shell. Walk back along
+       that step to the exact crossing, so the exit angle is not contaminated by
+       one step length of overshoot. */
+    if (ok && shell.length > 1) {
+      var prev = shell[shell.length - 2];
+      var seg = vsub(x, prev), rel = vsub(prev, xa), Rout = t + tau / 2;
+      var qa = vdot(seg, seg), qb = 2 * vdot(rel, seg), qc = vdot(rel, rel) - Rout * Rout;
+      var disc = qb * qb - 4 * qa * qc;
+      if (qa > 0 && disc >= 0) {
+        var fr = (-qb + Math.sqrt(disc)) / (2 * qa);
+        if (fr >= 0 && fr <= 1) { x = vadd(prev, vscl(seg, fr)); shell[shell.length - 1] = x.slice(); }
+      }
+    }
+
+    /* how far did the streamline land from the closed-form flux match? */
+    var res = null;
+    if (ok && shell.length > 1) {
+      var exitDir = vunit(vsub(x, pOld));
+      var lab = uncontract(exitDir, bI);
+      res = Math.abs(vdot(lab, e) - s);
+    }
+
+    var outStart = vadd(pOld, vscl(dOut, uOut));
+    var outer = [outStart, vadd(pOld, vscl(dOut, uOut + 3 * VIEW))];
+    return { inner: inner, shell: shell, outer: outer, ok: ok, res: res };
+  }
+
+  /* ---- probe readout: the exact field on the middle of the shell ---- */
+  function probeRead(kick) {
+    var e = axisVec();
+    var perp = v3(-e[1], e[0], 0);
+    var n = vadd(vscl(e, Math.cos(S.probe)), vscl(perp, Math.sin(S.probe)));
+    var xa = kick.position(-S.tau / 2), xb = kick.position(S.tau / 2);
+    var rOut = raySphere([0, 0, 0], n, xa, S.t + S.tau / 2);
+    var rIn = raySphere([0, 0, 0], n, xb, Math.max(1e-6, S.t - S.tau / 2));
+    if (rOut < 0 || rIn < 0) return null;
+    var rMid = 0.5 * (rIn + rOut);
+    function at(r) {
+      var f = P.fieldAt(kick, vscl(n, r), S.t);
+      var er = vdot(f.E, n);
+      var eperp = vlen(vsub(f.E, vscl(n, er)));
+      return { er: er, ep: eperp, r: r };
+    }
+    var mid, out;
+    try { mid = at(rMid); out = at(rOut + 0.10 * S.t + 0.02); } catch (err) { return null; }
+    return { n: n, rIn: rIn, rOut: rOut, mid: mid, out: out };
+  }
+
+  /* ---- drawing ---- */
+  function fmt(x, d) {
+    if (x === null || x === undefined || !isFinite(x)) return '—';
+    var a = Math.abs(x);
+    if (a !== 0 && (a < 1e-3 || a >= 1e5)) return x.toExponential(d === undefined ? 3 : d);
+    return x.toFixed(d === undefined ? 4 : d);
+  }
+  function line(pts, closePath) {
+    ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) {
+      var X = sx(pts[i][0]), Y = sy(pts[i][1]);
+      if (i === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+    }
+    if (closePath) ctx.closePath();
+    ctx.stroke();
+  }
+  function circleAt(c, r, dash) {
+    ctx.save(); ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.arc(sx(c[0]), sy(c[1]), r * SC, 0, 2 * Math.PI); ctx.stroke(); ctx.restore();
+  }
+
+  function draw() {
+    if (!resize()) return;
+    var kick = kickNow();
+    var e = axisVec();
+    var tau = S.tau, t = S.t;
+    var xa = kick.position(-tau / 2), xb = kick.position(tau / 2);
+    var bI = vscl(e, S.bi), bF = vscl(e, S.bf);
+    /* the uniform-motion extrapolations: each side of the kick carried to time t */
+    var pOld = vadd(xa, vscl(bI, t + tau / 2));
+    var pNew = vadd(xb, vscl(bF, t - tau / 2));
+
+    var cInk = tok('--ink-3'), cKeep = tok('--keep'), cDie = tok('--die');
+    var cRule = tok('--rule-2'), cAcc = tok('--accent'), cSunk = tok('--surface-sunk');
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = cSunk; ctx.fillRect(0, 0, W, H);
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+
+    /* the shell, as a band between the two exact boundary spheres */
+    ctx.save();
+    ctx.beginPath(); ctx.arc(sx(xa[0]), sy(xa[1]), (t + tau / 2) * SC, 0, 2 * Math.PI);
+    ctx.arc(sx(xb[0]), sy(xb[1]), Math.max(0, t - tau / 2) * SC, 0, 2 * Math.PI, true);
+    ctx.fillStyle = cDie; ctx.globalAlpha = 0.10; ctx.fill('evenodd');
+    ctx.restore();
+
+    /* field lines */
+    var lines = [], i, sVal;
+    worstRes = 0;
+    for (i = 0; i < NL; i++) {
+      sVal = -1 + 2 * (i + 0.5) / NL;
+      for (var sg = 1; sg >= -1; sg -= 2) {
+        var L = buildLine(kick, sVal, sg);
+        if (L) { lines.push(L); if (L.res !== null && L.res > worstRes) worstRes = L.res; }
+      }
+    }
+    ctx.lineWidth = Math.max(1, 1.05 * DPR);
+    ctx.strokeStyle = cInk; ctx.globalAlpha = 0.55;
+    for (i = 0; i < lines.length; i++) { line(lines[i].outer); line(lines[i].inner); }
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = cDie; ctx.lineWidth = Math.max(1.6, 2.0 * DPR);
+    for (i = 0; i < lines.length; i++) if (lines[i].shell.length > 1) line(lines[i].shell);
+
+    /* shell boundaries */
+    ctx.lineWidth = Math.max(1, 1 * DPR); ctx.strokeStyle = cDie; ctx.globalAlpha = 0.75;
+    circleAt(xa, t + tau / 2, [5 * DPR, 4 * DPR]);
+    if (t - tau / 2 > 0) circleAt(xb, t - tau / 2, [5 * DPR, 4 * DPR]);
+    ctx.globalAlpha = 1;
+
+    /* the two positions */
+    ctx.strokeStyle = cInk; ctx.lineWidth = Math.max(1, 1.1 * DPR);
+    ctx.save(); ctx.setLineDash([3 * DPR, 3 * DPR]);
+    ctx.beginPath(); ctx.arc(sx(pOld[0]), sy(pOld[1]), 5.5 * DPR, 0, 2 * Math.PI); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = cKeep;
+    ctx.beginPath(); ctx.arc(sx(pNew[0]), sy(pNew[1]), 5.5 * DPR, 0, 2 * Math.PI); ctx.fill();
+
+    /* the draggable velocity arrow */
+    var tip = vadd(pNew, vscl(e, S.bf * 0.62));
+    ctx.strokeStyle = cAcc; ctx.lineWidth = Math.max(1.6, 2.1 * DPR);
+    ctx.beginPath(); ctx.moveTo(sx(pNew[0]), sy(pNew[1])); ctx.lineTo(sx(tip[0]), sy(tip[1])); ctx.stroke();
+    var ah = 8 * DPR, dirS = S.bf >= 0 ? 1 : -1;
+    var ex = e[0] * dirS, ey = e[1] * dirS;
+    ctx.fillStyle = cAcc;
+    ctx.beginPath();
+    ctx.moveTo(sx(tip[0]), sy(tip[1]));
+    ctx.lineTo(sx(tip[0]) - ah * ex + ah * 0.5 * -ey, sy(tip[1]) + ah * ey + ah * 0.5 * ex);
+    ctx.lineTo(sx(tip[0]) - ah * ex - ah * 0.5 * -ey, sy(tip[1]) + ah * ey - ah * 0.5 * ex);
+    ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.arc(sx(tip[0]), sy(tip[1]), 4.5 * DPR, 0, 2 * Math.PI); ctx.fill();
+
+    /* probe marker + readout */
+    var pr = probeRead(kick);
+    if (pr) {
+      var pm = vscl(pr.n, 0.5 * (pr.rIn + pr.rOut));
+      ctx.strokeStyle = cKeep; ctx.lineWidth = Math.max(1.4, 1.8 * DPR);
+      ctx.beginPath(); ctx.arc(sx(pm[0]), sy(pm[1]), 7 * DPR, 0, 2 * Math.PI); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(sx(pm[0]) - 11 * DPR, sy(pm[1])); ctx.lineTo(sx(pm[0]) - 8 * DPR, sy(pm[1]));
+      ctx.moveTo(sx(pm[0]) + 8 * DPR, sy(pm[1])); ctx.lineTo(sx(pm[0]) + 11 * DPR, sy(pm[1])); ctx.stroke();
+      set('ang', (S.probe * 180 / Math.PI).toFixed(1) + '°');
+      set('ep', fmt(pr.mid.ep, 3));
+      set('er', fmt(pr.mid.er, 3));
+      set('ratio', fmt(Math.abs(pr.mid.ep / pr.mid.er), 2));
+      set('ratio0', fmt(Math.abs(pr.out.ep / pr.out.er), 2));
+    }
+    set('res', worstRes > 0 ? worstRes.toExponential(1) : '—');
+
+    /* legend */
+    var rows = [
+      [cInk, 0.55, 'outside: old field, spokes from where it would have been'],
+      [cDie, 1.00, 'the shell, thickness cτ: the sideways field'],
+      [cInk, 0.55, 'inside: new field, spokes from where it is'],
+      [cKeep, 1.00, 'the charge now (hollow: its old extrapolated place)']
+    ];
+    var fs = 11.5 * DPR, pad = 7 * DPR, lh = 15 * DPR;
+    ctx.font = fs + 'px ' + tok('--sans');
+    var wmax = 0, ri;
+    for (ri = 0; ri < rows.length; ri++) wmax = Math.max(wmax, ctx.measureText(rows[ri][2]).width);
+    var bw = wmax + 26 * DPR + 2 * pad, bh = rows.length * lh + 2 * pad - 3 * DPR;
+    var bx = 9 * DPR, by = H - bh - 9 * DPR;
+    ctx.save(); ctx.globalAlpha = 0.90; ctx.fillStyle = tok('--surface');
+    ctx.fillRect(bx, by, bw, bh); ctx.restore();
+    ctx.strokeStyle = tok('--rule'); ctx.lineWidth = DPR; ctx.strokeRect(bx + 0.5, by + 0.5, bw, bh);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    for (ri = 0; ri < rows.length; ri++) {
+      var yy = by + pad + lh * ri + lh / 2 - 2 * DPR;
+      ctx.save(); ctx.globalAlpha = rows[ri][1]; ctx.strokeStyle = rows[ri][0];
+      ctx.lineWidth = ri === 1 ? 2.2 * DPR : 1.6 * DPR;
+      ctx.beginPath(); ctx.moveTo(bx + pad, yy); ctx.lineTo(bx + pad + 16 * DPR, yy); ctx.stroke(); ctx.restore();
+      ctx.fillStyle = tok('--ink-2');
+      ctx.fillText(rows[ri][2], bx + pad + 22 * DPR, yy);
+    }
+    ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'right';
+    ctx.fillStyle = tok('--ink-3'); ctx.font = (11.5 * DPR) + 'px ' + tok('--mono');
+    ctx.fillText('shell radius  c t = ' + t.toFixed(2), W - 10 * DPR, H - 12 * DPR);
+    ctx.textAlign = 'left';
+  }
+
+  function set(k, v) { var el = root.querySelector('[data-w2-r="' + k + '"]'); if (el) el.textContent = v; }
+  function out(k, v) { var el = root.querySelector('[data-w2-o="' + k + '"]'); if (el) el.textContent = v; }
+
+  function syncLabels() {
+    out('bi', S.bi.toFixed(2)); out('bf', S.bf.toFixed(2));
+    out('tau', S.tau.toFixed(3)); out('t', S.t.toFixed(2));
+  }
+
+  /* ---- controls ---- */
+  root.addEventListener('input', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-w2-i]') : null;
+    if (!el) return;
+    var k = el.getAttribute('data-w2-i');
+    S[k] = parseFloat(el.value);
+    if (S.t - S.tau / 2 <= 0.02) S.t = S.tau / 2 + 0.02;
+    syncLabels(); draw();
+  });
+
+  var dragging = null;
+  function toWorld(ev) {
+    var r = cv.getBoundingClientRect();
+    var px = (ev.clientX - r.left) * (W / r.width), py = (ev.clientY - r.top) * (H / r.height);
+    return [(px - CXp) / SC, (CYp - py) / SC, 0];
+  }
+  cv.addEventListener('pointerdown', function (ev) {
+    var w = toWorld(ev), e = axisVec();
+    var kick = kickNow();
+    var pNew = vadd(kick.position(S.tau / 2), vscl(vscl(e, S.bf), S.t - S.tau / 2));
+    var tip = vadd(pNew, vscl(e, S.bf * 0.62));
+    dragging = (vlen(vsub(w, tip)) * SC < 22 * DPR) ? 'arrow' : 'probe';
+    cv.setPointerCapture(ev.pointerId);
+    onDrag(ev);
+  });
+  function onDrag(ev) {
+    if (!dragging) return;
+    var w = toWorld(ev);
+    if (dragging === 'arrow') {
+      var kick = kickNow();
+      var pNew = vadd(kick.position(S.tau / 2), vscl(vscl(axisVec(), S.bf), S.t - S.tau / 2));
+      var d = vsub(w, pNew), m = vlen(d);
+      if (m > 1e-4) {
+        S.axis = Math.atan2(d[1], d[0]);
+        S.bf = Math.max(0.02, Math.min(0.9, m / 0.62));
+      }
+    } else {
+      var e2 = axisVec(), pp = v3(-e2[1], e2[0], 0);
+      var wn = vunit(w);
+      if (vlen(w) > 1e-6) S.probe = Math.atan2(vdot(wn, pp), vdot(wn, e2));
+    }
+    syncLabels(); draw();
+  }
+  cv.addEventListener('pointermove', onDrag);
+  cv.addEventListener('pointerup', function (ev) { dragging = null; try { cv.releasePointerCapture(ev.pointerId); } catch (e) {} });
+  cv.addEventListener('pointercancel', function () { dragging = null; });
+
+  /* ---- animation, paused offscreen and under reduced motion ---- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var playing = false, visible = true, raf = null, last = null;
+  var bPlay = root.querySelector('[data-w2-play]');
+  var bReset = root.querySelector('[data-w2-reset]');
+  function frame(ts) {
+    raf = null;
+    if (!playing || !visible) return;
+    if (last === null) last = ts;
+    var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+    S.t += dt * 0.30;
+    if (S.t > 1.05) S.t = 0.2 + S.tau / 2;
+    var sl = root.querySelector('[data-w2-i="t"]'); if (sl) sl.value = String(S.t);
+    syncLabels(); draw();
+    raf = window.requestAnimationFrame(frame);
+  }
+  function setPlay(v) {
+    playing = v && !reduce;
+    if (bPlay) { bPlay.textContent = playing ? 'Pause' : 'Play'; bPlay.setAttribute('aria-pressed', playing ? 'true' : 'false'); }
+    last = null;
+    if (playing && visible && raf === null) raf = window.requestAnimationFrame(frame);
+  }
+  if (bPlay) bPlay.addEventListener('click', function () { setPlay(!playing); });
+  if (bReset) bReset.addEventListener('click', function () {
+    setPlay(false);
+    S = { bi: 0, bf: 0.55, tau: 0.09, t: 0.70, probe: 0.62, axis: 0 };
+    ['bi', 'bf', 'tau', 't'].forEach(function (k) {
+      var el = root.querySelector('[data-w2-i="' + k + '"]'); if (el) el.value = String(S[k]);
+    });
+    syncLabels(); draw();
+  });
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      if (visible && playing && raf === null) { last = null; raf = window.requestAnimationFrame(frame); }
+    }, { rootMargin: '120px' }).observe(cv);
+  }
+  if (window.ResizeObserver) new ResizeObserver(function () { draw(); }).observe(cv);
+  else window.addEventListener('resize', draw);
+
+  syncLabels();
+  draw();
+})();
+</script>
+
+<section class="stop" id="w3">
+  <div class="stop-head">
+    <div class="plate">Station 3 &middot; the same event, in frequency</div>
+    <h2>A sharp kick has a flat spectrum, and that is a pole</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">Nothing new happens in this station. It is the same charge and the same
+      kick as station&nbsp;2, looked at through a Fourier transform instead of a clock.</p>
+
+    <p>The familiar anchor is any short pulse. Take a wave packet and squeeze it in time: its
+      spectrum spreads out. In the limit of a very short pulse the spectrum is flat &mdash; the
+      pulse contains every frequency in equal measure, up to a ceiling set by how short it
+      actually was. That is what a sharp kick does to the radiation field, and everything below
+      is that statement made exact.</p>
+
+    <p>The exact energy radiated per unit frequency per unit solid angle, for any trajectory,
+      is a single integral over the charge&rsquo;s own time. We use it as written:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">Energy per unit frequency per unit solid angle, exact for any trajectory</div>
+    \[ \frac{d^{2}I}{d\omega\,d\Omega}
+       \;=\;\frac{q^{2}}{4\pi^{2}}\left|\;\int dt\;
+       \frac{\hat n\times\bigl[(\hat n-\vec\beta)\times\dot{\vec\beta}\bigr]}{(1-\hat n\cdot\vec\beta)^{2}}\;
+       e^{\,i\omega\,(t-\hat n\cdot\vec r(t))}\right|^{2} \]
+    <div class="eq-note">The integrand is nonzero only while the charge is being kicked, so the
+      integral runs over one window of width \(\tau\). The page evaluates it by composite
+      eight&#8209;node Gauss&ndash;Legendre quadrature with the panel count rising in proportion
+      to \(\omega\tau\), so the oscillating phase is always resolved. Units are Gaussian with
+      \(c=\hbar=1\), and the charge is one elementary charge, \(q^{2}=\alpha\).</div>
+  </div>
+
+  <div class="body">
+    <p>As \(\omega\to0\) the exponential goes to one and the integral can be done in closed form,
+      because it is then a total derivative:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The \(\omega\to0\) limit &mdash; closed form, no quadrature</div>
+    \[ \int dt\;\frac{\hat n\times\bigl[(\hat n-\vec\beta)\times\dot{\vec\beta}\bigr]}{(1-\hat n\cdot\vec\beta)^{2}}
+       \;=\;\hat n\times\Bigl(\hat n\times\Bigl[\tfrac{\vec\beta_{f}}{1-\hat n\cdot\vec\beta_{f}}-\tfrac{\vec\beta_{i}}{1-\hat n\cdot\vec\beta_{i}}\Bigr]\Bigr)
+       \;\equiv\;\vec S(\hat n) \]
+    <div class="eq-note">One line of algebra: the integrand is exactly \(\dfrac{d}{dt}\Bigl[\dfrac{\hat n\times(\hat n\times\vec\beta)}{1-\hat n\cdot\vec\beta}\Bigr]\),
+      so the integral only sees the endpoints. Nothing about the shape or the duration of the kick
+      survives &mdash; only the two velocities. That independence is the whole reason the low&#8209;frequency
+      end of the spectrum is universal, and it is the same fact that made the sideways offset in
+      station&nbsp;2 depend only on the change in velocity.</div>
+  </div>
+
+  <figure class="w3-fig">
+    <div class="w3-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">The spectrum of one kick, and the amplitude behind it</div>
+          <div class="chart-sub">Left: energy per unit frequency, which flattens at low frequency onto the
+            closed form above. Right: the emission amplitude, which is that plateau divided by \(\omega\)
+            &mdash; a pole at zero frequency.</div>
+        </div>
+        <span class="w3-ptag" data-kind="numeric">Controlled numerical solve</span>
+        <span class="w3-ptag" data-kind="exact">Exact formula</span>
+      </div>
+      <div class="w3-ctl">
+        <label class="w3-knob"><span>speed after the kick, \(\beta_f\)<b data-w3-o="bf">0.60</b></span>
+          <input type="range" data-w3-i="bf" min="0.05" max="0.92" value="0.6" step="0.01"></label>
+        <label class="w3-knob"><span>speed before the kick, \(\beta_i\)<b data-w3-o="bi">0.00</b></span>
+          <input type="range" data-w3-i="bi" min="-0.9" max="0.9" value="0" step="0.01"></label>
+        <label class="w3-knob"><span>kick duration, \(c\tau\)<b data-w3-o="tau">0.090</b></span>
+          <input type="range" data-w3-i="tau" min="0.03" max="0.30" value="0.09" step="0.005"></label>
+        <label class="w3-knob"><span>direction of \(\hat n\) from the axis<b data-w3-o="th">55&deg;</b></span>
+          <input type="range" data-w3-i="th" min="8" max="172" value="55" step="1"></label>
+        <label class="w3-knob w3-knob-wide"><span>marker frequency \(\omega\)<b data-w3-o="om">1.00</b></span>
+          <input type="range" data-w3-i="om" min="-2" max="2.4" value="0" step="0.02"></label>
+      </div>
+      <div class="w3-charts">
+        <div class="w3-chart">
+          <div class="w3-chart-t">energy spectrum \(d^{2}I/d\omega\,d\Omega\)</div>
+          <div class="w3-wrap"><svg class="w3-spec" viewBox="0 0 620 330" role="img"
+            aria-label="Log-log plot of the radiated energy per unit frequency against frequency. The curve is flat at low frequency at the value of the closed-form soft plateau, and falls steeply above one over the kick duration."></svg></div>
+        </div>
+        <div class="w3-chart">
+          <div class="w3-chart-t">amplitude \(|\tilde A(\omega)|\)</div>
+          <div class="w3-wrap"><svg class="w3-amp" viewBox="0 0 620 330" role="img"
+            aria-label="Log-log plot of the emission amplitude against frequency. At low frequency it is a straight line of slope minus one, the pole, lying on the reference line given by the closed-form soft coefficient divided by frequency."></svg></div>
+        </div>
+      </div>
+      <div class="w3-read">
+        <div class="w3-nums">
+          <div class="w3-num"><span>at the marker, \(\omega\)</span><b data-w3-r="om">&mdash;</b></div>
+          <div class="w3-num"><span>quadrature, \(d^{2}I/d\omega\,d\Omega\)</span><b data-w3-r="spec">&mdash;</b></div>
+          <div class="w3-num"><span>closed-form plateau, \(\alpha|\vec S|^{2}/4\pi^{2}\)</span><b data-w3-r="plat">&mdash;</b></div>
+          <div class="w3-num"><span>\(\omega\,|\tilde A(\omega)|\), which should approach \(|\vec S(\hat n)|\)</span><b data-w3-r="wa">&mdash;</b></div>
+          <div class="w3-num is-lead"><span>relative gap between quadrature and closed form at the lowest plotted \(\omega\)</span><b data-w3-r="gap">&mdash;</b></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>Both axes are logarithmic. The dashed line on the left is the closed form, not a fit to
+      the curve; the dashed line on the right is that same number divided by \(\omega\). Where the two
+      disagree, at the right-hand end, the disagreement is real physics: a kick of finite duration cannot
+      radiate at frequencies much above \(1/\tau\). Shorten \(\tau\) and the plateau extends.
+      At the left-hand end the gap between the two is not a numerical error &mdash; hold the panel count
+      fixed or raise it eightfold and the number does not move &mdash; it is the first correction in
+      \(\omega\tau\), and it falls in exact proportion to \(\omega\): the printed gap runs
+      \(2.5\times10^{-8}\), \(2.5\times10^{-10}\), \(2.5\times10^{-12}\) at
+      \(\omega=10^{-2},10^{-3},10^{-4}\) for the settings this figure opens with.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>So the classical calculation hands us a number, \(\vec S(\hat n)\), that controls the whole
+      low&#8209;frequency end of the radiation and depends on nothing but the momenta going in and out.
+      A number of that description already exists in quantum field theory, and it is older. Weinberg&rsquo;s
+      soft photon theorem, quoted as it stands in the lecture notes:</p>
+  </div>
+
+  <div class="eq w3-quoted">
+    <div class="eq-label">The soft photon theorem <span class="w3-ptag" data-kind="quoted">Quoted</span></div>
+    \[ \langle\text{out}|\,a_+^{\text{out}}(\vec q\,)\,\mathcal{S}\,|\text{in}\rangle \;=\;
+       e\left[\sum_{k=1}^{m}\frac{Q_k^{\text{out}}\,p_k^{\text{out}}\cdot\varepsilon^{+}}{p_k^{\text{out}}\cdot q}
+       -\sum_{k=1}^{n}\frac{Q_k^{\text{in}}\,p_k^{\text{in}}\cdot\varepsilon^{+}}{p_k^{\text{in}}\cdot q}\right]
+       \langle\text{out}|\,\mathcal{S}\,|\text{in}\rangle+\mathcal{O}(q^{0}) \]
+    <div class="eq-note"><span class="mono">refs/arxiv-1703.05448/soft_Arxiv_update.tex:1075-1082</span>, equation
+      <span class="mono">(mft)</span>, with the paper&rsquo;s abbreviations written out
+      (<span class="mono">\outst</span>, <span class="mono">\inst</span>, <span class="mono">\cs</span>,
+      <span class="mono">\ve</span>, <span class="mono">\co</span> for the bra, the ket, \(\mathcal{S}\),
+      \(\varepsilon\) and \(\mathcal{O}\)). Its sentence in the notes: &ldquo;any \(\mathcal{S}\)-matrix
+      element with an additional soft (\(q^\mu\to0\)) photon is equal to the original matrix element
+      multiplied by the soft factor plus corrections of order \(q^{0}\)&rdquo;, and, two lines later,
+      &ldquo;the leading order term in the soft expansion is a pole.&rdquo;</div>
+  </div>
+
+  <div class="body">
+    <p>The relation to what we just computed is algebra, not analogy. Write the hard particle&rsquo;s
+      momentum as \(p^{\mu}=E(1,\vec\beta)\) and the soft photon&rsquo;s as \(q^{\mu}=\omega(1,\hat n)\), and
+      take the polarization purely spatial:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">One term of Weinberg&rsquo;s bracket, on this kinematics</div>
+    \[ \frac{p\cdot\varepsilon}{p\cdot q}\;=\;\frac{1}{\omega}\,\frac{\vec\beta\cdot\vec\varepsilon}{1-\hat n\cdot\vec\beta} \]
+    <div class="eq-note">The energy \(E\) cancels between numerator and denominator, which is why the soft
+      factor knows about directions and charges and nothing else. In the reference core&rsquo;s own words,
+      which are the sentence this page is licensed to print: &ldquo;for
+      \(q^{\mu}=\omega(1,\hat{\mathbf n})\), \(p^{\mu}=m\gamma(1,\boldsymbol\beta)\), and transverse
+      polarization, \(p\cdot\epsilon/(p\cdot q)=\boldsymbol\beta\cdot\boldsymbol\epsilon/
+      [\omega(1-\hat{\mathbf n}\cdot\boldsymbol\beta)]\); therefore the kicked charge&rsquo;s classical
+      \(1/\omega\) coefficient is exactly the single&#8209;emitter kinematic factor in Weinberg&rsquo;s
+      leading soft theorem (out minus in), with the displayed charge and coupling.&rdquo; An overall sign
+      lives in the convention chosen for \(\varepsilon\) and for the metric; whichever you take has to be
+      carried through both sides, and it cancels out of the spectrum either way.
+      Our process has one incoming line and one outgoing line, both of charge \(Q\), so Weinberg&rsquo;s
+      bracket is \(\frac{Q}{\omega}\,\vec S(\hat n)\cdot\vec\varepsilon\) &mdash; the classical
+      coefficient, over \(\omega\).
+      <b>What this is not.</b> It is not a derivation of the soft theorem, and it is not a claim that
+      the classical calculation implies the quantum one. It is the observation that the two expressions
+      are the same function of the same data, checked numerically below.</div>
+  </div>
+
+  <div class="w3-ledger">
+    <div class="w3-read-h">The two brackets, evaluated at the current controls</div>
+    <p class="w3-cav">These are the same expression reached from two directions, and the reference core
+      implements them as two separate functions &mdash; one written down from the classical integral, one
+      from Weinberg&rsquo;s bracket with \(\eta=+1\) for the outgoing line and \(-1\) for the incoming one.
+      They agree to the last bit because the algebra above says they must. That is a check that the page
+      has not mistyped either of them, not independent evidence for the soft theorem.</p>
+    <div class="w3-nums">
+      <div class="w3-num"><span>classical, \(\vec S(\hat n)\cdot\vec\varepsilon\) from the closed form above</span><b data-w3-r="scl">&mdash;</b></div>
+      <div class="w3-num"><span>Weinberg&rsquo;s bracket \(\sum_k\eta_kQ_k\,\vec\beta_k\cdot\vec\varepsilon/(1-\hat n\cdot\vec\beta_k)\)</span><b data-w3-r="swein">&mdash;</b></div>
+      <div class="w3-num"><span>difference</span><b data-w3-r="sdiff">&mdash;</b></div>
+      <div class="w3-num"><span>total charge in minus out, which has to vanish for the factor to be gauge invariant</span><b data-w3-r="qsum">&mdash;</b></div>
+    </div>
+  </div>
+
+  <div class="body">
+    <p>One consequence is worth stating plainly, because it is the thing that makes the deep infrared
+      awkward rather than merely universal. The energy in the plateau is finite: \(\int d\omega\) of a
+      constant, up to the cutoff, converges. The <i>number</i> of photons is \(\int d\omega/\omega\) of
+      a constant, and that does not.</p>
+  </div>
+
+  <div class="w3-ledger">
+    <div class="w3-read-h">Photons per unit solid angle in this direction, above a lowest detected frequency</div>
+    <label class="w3-knob w3-knob-wide"><span>lowest frequency counted, \(\log_{10}\omega_{\min}\)<b data-w3-o="wmin">&minus;3.0</b></span>
+      <input type="range" data-w3-i="wmin" min="-9" max="-0.5" value="-3" step="0.1"></label>
+    <div class="w3-nums">
+      <div class="w3-num is-lead"><span>\(dN/d\Omega\) between \(\omega_{\min}\) and \(\omega_{\max}=1/\tau\)</span><b data-w3-r="nph">&mdash;</b></div>
+    </div>
+    <div class="w3-tabwrap"><table class="w3-tab">
+      <caption>Each further decade of unheard frequency adds the same amount. That is what a logarithm is.</caption>
+      <thead><tr><th scope="col">\(\omega_{\min}\)</th><th scope="col">\(dN/d\Omega\)</th><th scope="col">gain over the row above</th></tr></thead>
+      <tbody data-w3-tab></tbody>
+    </table></div>
+  </div>
+
+  <div class="body">
+    <p>Read that table honestly. It does not say that infinitely many photons are produced by an
+      experiment; it says that the question &ldquo;how many photons&rdquo; has no answer until you say how
+      soft a photon you are prepared to count, and that the answer then grows without bound as you lower
+      the threshold, logarithmically and therefore slowly. Every real detector has such a threshold, and
+      every measured cross&#8209;section is a statement about photons above it. The energy in those photons
+      stays finite throughout, which is why the physics is not in trouble even though the counting is.</p>
+
+    <p>What the next stations do with \(\vec S(\hat n)\) is take it seriously as a function on the sphere
+      of directions, and then ask what conserved quantity it is the flux of.</p>
+  </div>
+</section>
+
+<style data-station="w3">
+#w3 .w3-fig { margin: 1.7rem 0 1.5rem; }
+#w3 .w3-card { border: 1px solid var(--rule); background: var(--surface); }
+#w3 .w3-card .chart-head { display: flex; align-items: flex-start; gap: .5rem; flex-wrap: wrap; padding: .85rem 1rem .6rem; border-bottom: 1px solid var(--rule); }
+#w3 .w3-card .chart-head > div:first-child { flex: 1 1 14rem; min-width: 0; }
+#w3 .w3-ptag { display: inline-block; font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--rule-2); color: var(--ink-3); white-space: nowrap; align-self: flex-start; }
+#w3 .w3-ptag[data-kind="exact"]   { border-color: var(--accent);    color: var(--accent-text); }
+#w3 .w3-ptag[data-kind="numeric"] { border-color: var(--st-proved); color: var(--st-proved); }
+#w3 .w3-ptag[data-kind="quoted"]  { border-color: var(--ink-3);     color: var(--ink-2); margin-left: .5rem; }
+#w3 .w3-ctl { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .8rem 1.2rem; align-items: end; padding: .9rem 1rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); }
+#w3 .w3-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+#w3 .w3-knob-wide { grid-column: 1 / -1; }
+#w3 .w3-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w3 .w3-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w3 .w3-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w3 .w3-charts { display: grid; grid-template-columns: minmax(0, 1fr); }
+#w3 .w3-chart { min-width: 0; border-bottom: 1px solid var(--rule); }
+#w3 .w3-chart-t { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding: .6rem 1rem .1rem; }
+#w3 .w3-wrap { overflow-x: auto; padding: 0 .4rem .4rem; }
+#w3 .w3-spec, #w3 .w3-amp { display: block; width: 100%; min-width: 17rem; height: auto; }
+#w3 svg .ax { stroke: var(--rule-2); stroke-width: 1; fill: none; }
+#w3 svg .grid { stroke: var(--rule); stroke-width: 1; }
+#w3 svg .tick { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-3); }
+#w3 svg .axlab { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+#w3 svg .curve { fill: none; stroke: var(--die); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+#w3 svg .ref { fill: none; stroke: var(--keep); stroke-width: 1.6; stroke-dasharray: 6 4; }
+#w3 svg .mk { fill: var(--ink); }
+#w3 svg .mkring { fill: none; stroke: var(--surface); stroke-width: 2; }
+#w3 svg .note { font-family: var(--sans); font-size: 10.5px; fill: var(--ink-3); }
+#w3 svg .notek { font-family: var(--sans); font-size: 10.5px; fill: var(--accent-text); }
+#w3 .w3-read, #w3 .w3-ledger { padding: .85rem 1rem 1rem; }
+#w3 .w3-ledger { border: 1px solid var(--rule-2); background: var(--surface-2); margin: 1.4rem 0; display: grid; gap: .55rem; }
+#w3 .w3-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+#w3 .w3-cav { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); margin: 0; max-width: 42rem; }
+#w3 .w3-nums { display: grid; gap: 0; }
+#w3 .w3-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); padding: .28rem 0; border-bottom: 1px dotted var(--rule); }
+#w3 .w3-num:last-child { border-bottom: 0; }
+@media (max-width: 560px) { #w3 .w3-num { flex-direction: column; align-items: flex-start; gap: .1rem; } }
+#w3 .w3-num b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w3 .w3-num.is-lead { color: var(--ink); }
+#w3 .w3-num.is-lead b { color: var(--die); font-size: 1.02rem; }
+#w3 .w3-tabwrap { overflow-x: auto; }
+#w3 .w3-tab { border-collapse: collapse; font-family: var(--sans); font-size: 12.5px; width: 100%; min-width: 22rem; }
+#w3 .w3-tab caption { caption-side: bottom; text-align: left; font-size: 11.5px; color: var(--ink-3); padding-top: .5rem; }
+#w3 .w3-tab th, #w3 .w3-tab td { text-align: right; padding: .3rem .6rem; border-bottom: 1px dotted var(--rule); }
+#w3 .w3-tab th:first-child, #w3 .w3-tab td:first-child { text-align: left; }
+#w3 .w3-tab thead th { font-weight: 600; color: var(--ink-3); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--rule-2); }
+#w3 .w3-tab td { font-family: var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+#w3 .w3-tab td:first-child { color: var(--ink-2); }
+</style>
+
+<script data-station="w3">
+(function () {
+  var root = document.getElementById('w3');
+  if (!root) return;
+  var P = (window.PROLOGUE && window.PROLOGUE.em) || null;
+  var svgS = root.querySelector('.w3-spec'), svgA = root.querySelector('.w3-amp');
+  if (!P || !svgS || !svgA) return;
+  var ALPHA = P.constants.alpha, FOURPI2 = 4 * Math.PI * Math.PI;
+  var NS = 'http://www.w3.org/2000/svg';
+  function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+
+  var CACHE = {};
+  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
+  function themeChanged() { CACHE = {}; render(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  }
+  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  var S = { bf: 0.60, bi: 0.00, tau: 0.09, th: 55, om: 0, wmin: -3 };
+  var OM_LO = -2, OM_HI = 2.4, NPT = 110;
+
+  function geom() {
+    var th = S.th * Math.PI / 180;
+    var n = [Math.cos(th), Math.sin(th), 0];
+    /* the polarization in the plane of n and the kick axis: the unit vector
+       perpendicular to n, pointing away from the axis */
+    var eps = [-Math.sin(th), Math.cos(th), 0];
+    var kick = P.makeKick({ betaI: [S.bi, 0, 0], betaF: [S.bf, 0, 0], tau: S.tau, profile: 'raised-cosine' });
+    return { n: n, eps: eps, kick: kick };
+  }
+
+  var data = null;
+  function compute() {
+    var g = geom();
+    var omegas = [], i;
+    for (i = 0; i < NPT; i++) omegas.push(Math.pow(10, OM_LO + (OM_HI - OM_LO) * i / (NPT - 1)));
+    var spec = P.radiationSpectrum(g.kick, g.n, omegas);
+    var dc = P.dcRadiationField(g.kick, g.n);
+    var Smag = Math.sqrt(dc[0] * dc[0] + dc[1] * dc[1] + dc[2] * dc[2]);
+    var plateau = ALPHA * Smag * Smag / FOURPI2;
+    var amp = omegas.map(function (w, k) { return Math.sqrt(Math.max(0, spec[k]) * FOURPI2 / ALPHA) / w; });
+    data = { g: g, omegas: omegas, spec: spec, amp: amp, Smag: Smag, plateau: plateau, dc: dc };
+    return data;
+  }
+
+  /* ---------- a small log-log chart ---------- */
+  function drawLogLog(svg, xs, ys, refFn, opts) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var VW = 620, VH = 330, L = 62, R = 14, T = 14, B = 44;
+    var x0 = Math.log10(xs[0]), x1 = Math.log10(xs[xs.length - 1]);
+    var lo = Infinity, hi = -Infinity, i, v;
+    for (i = 0; i < ys.length; i++) { v = ys[i]; if (v > 0 && isFinite(v)) { if (v < lo) lo = v; if (v > hi) hi = v; } }
+    if (!isFinite(lo) || !isFinite(hi) || hi <= 0) return;
+    var y1 = Math.log10(hi) + 0.35;
+    var y0 = Math.max(Math.log10(lo), y1 - (opts.decades || 9));
+    function px(w) { return L + (Math.log10(w) - x0) / (x1 - x0) * (VW - L - R); }
+    function py(y) { return VH - B - (Math.log10(y) - y0) / (y1 - y0) * (VH - T - B); }
+
+    var g = mk('g', {});
+    var d, k;
+    for (k = Math.ceil(x0); k <= Math.floor(x1); k++) {
+      g.appendChild(mk('line', { x1: px(Math.pow(10, k)), y1: T, x2: px(Math.pow(10, k)), y2: VH - B, class: 'grid' }));
+      var tx = mk('text', { x: px(Math.pow(10, k)), y: VH - B + 16, class: 'tick', 'text-anchor': 'middle' });
+      tx.textContent = '10' + sup(k); g.appendChild(tx);
+    }
+    for (k = Math.ceil(y0); k <= Math.floor(y1); k++) {
+      g.appendChild(mk('line', { x1: L, y1: py(Math.pow(10, k)), x2: VW - R, y2: py(Math.pow(10, k)), class: 'grid' }));
+      var ty = mk('text', { x: L - 7, y: py(Math.pow(10, k)) + 3.5, class: 'tick', 'text-anchor': 'end' });
+      ty.textContent = '10' + sup(k); g.appendChild(ty);
+    }
+    g.appendChild(mk('path', { class: 'ax', d: 'M' + L + ' ' + T + 'V' + (VH - B) + 'H' + (VW - R) }));
+
+    if (refFn) {
+      d = '';
+      for (i = 0; i < xs.length; i++) {
+        var rv = refFn(xs[i]);
+        if (!(rv > 0)) continue;
+        d += (d ? 'L' : 'M') + px(xs[i]).toFixed(2) + ' ' + Math.max(T - 30, Math.min(VH - B + 30, py(rv))).toFixed(2);
+      }
+      if (d) g.appendChild(mk('path', { class: 'ref', d: d }));
+    }
+    d = '';
+    for (i = 0; i < xs.length; i++) {
+      if (!(ys[i] > 0) || !isFinite(ys[i])) { d = d ? d : ''; continue; }
+      var Y = py(ys[i]);
+      if (Y > VH - B + 40) { continue; }
+      d += (d ? 'L' : 'M') + px(xs[i]).toFixed(2) + ' ' + Y.toFixed(2);
+    }
+    g.appendChild(mk('path', { class: 'curve', d: d }));
+
+    if (opts.marker && opts.marker.y > 0) {
+      var MX = px(opts.marker.x), MY = py(opts.marker.y);
+      if (MY > T - 5 && MY < VH - B + 5) {
+        g.appendChild(mk('circle', { cx: MX, cy: MY, r: 5.5, class: 'mkring' }));
+        g.appendChild(mk('circle', { cx: MX, cy: MY, r: 4, class: 'mk' }));
+      }
+      g.appendChild(mk('line', { x1: MX, y1: T, x2: MX, y2: VH - B, class: 'grid' }));
+    }
+    if (opts.vline && opts.vline > 0) {
+      var VX = px(opts.vline);
+      if (VX > L && VX < VW - R) {
+        g.appendChild(mk('line', { x1: VX, y1: T, x2: VX, y2: VH - B, class: 'ax', 'stroke-dasharray': '3 3' }));
+        var vl = mk('text', { x: VX - 5, y: T + 12, class: 'note', 'text-anchor': 'end' });
+        vl.textContent = '1/τ'; g.appendChild(vl);
+      }
+    }
+    var xl = mk('text', { x: (L + VW - R) / 2, y: VH - 8, class: 'axlab', 'text-anchor': 'middle' });
+    xl.textContent = opts.xlab; g.appendChild(xl);
+    if (opts.reflab) {
+      var rl = mk('text', { x: L + 8, y: T + 14, class: 'notek' });
+      rl.textContent = opts.reflab; g.appendChild(rl);
+    }
+    svg.appendChild(g);
+  }
+  function sup(k) {
+    var s = String(k), o = '', m = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+    for (var i = 0; i < s.length; i++) o += m[s[i]] || s[i];
+    return o;
+  }
+
+  function fmt(x, d) {
+    if (x === null || x === undefined || !isFinite(x)) return '—';
+    var a = Math.abs(x);
+    if (a !== 0 && (a < 1e-3 || a >= 1e5)) return x.toExponential(d === undefined ? 4 : d);
+    return x.toFixed(d === undefined ? 6 : d);
+  }
+  function set(k, v) { var el = root.querySelector('[data-w3-r="' + k + '"]'); if (el) el.textContent = v; }
+  function out(k, v) { var el = root.querySelector('[data-w3-o="' + k + '"]'); if (el) el.textContent = v; }
+
+  function render() {
+    var D = data || compute();
+    var om = Math.pow(10, S.om);
+    var mSpec = P.radiationSpectrum(D.g.kick, D.g.n, [om])[0];
+    var mAmp = Math.sqrt(Math.max(0, mSpec) * FOURPI2 / ALPHA) / om;
+    var plateau = D.plateau, Smag = D.Smag;
+
+    drawLogLog(svgS, D.omegas, D.spec, function () { return plateau; }, {
+      xlab: 'frequency ω   (units of c / length, with the kick lasting cτ)',
+      marker: { x: om, y: mSpec }, vline: 1 / S.tau, decades: 10,
+      reflab: 'closed form  α|S|²/4π²'
+    });
+    drawLogLog(svgA, D.omegas, D.amp, function (w) { return Smag / w; }, {
+      xlab: 'frequency ω', marker: { x: om, y: mAmp }, vline: 1 / S.tau, decades: 10,
+      reflab: 'the pole  |S|/ω'
+    });
+
+    set('om', om.toExponential(3));
+    set('spec', fmt(mSpec));
+    set('plat', fmt(plateau));
+    set('wa', fmt(om * mAmp) + '   (|S| = ' + fmt(Smag) + ')');
+    var gap = Math.abs(D.spec[0] - plateau) / plateau;
+    set('gap', gap.toExponential(2));
+
+    var scl = P.softAmplitude(D.g.kick, D.g.n, D.g.eps);
+    var parts = [{ Q: 1, beta: [S.bf, 0, 0], eta: 1 }, { Q: 1, beta: [S.bi, 0, 0], eta: -1 }];
+    var swein = P.softFactorWeinberg(parts, D.g.n, D.g.eps);
+    var cons = P.chargeConservation(parts);
+    set('scl', fmt(scl));
+    set('swein', fmt(swein));
+    set('sdiff', Math.abs(scl - swein).toExponential(2));
+    set('qsum', cons.sum.toFixed(1) + (cons.conserved ? '   (conserved)' : '   (NOT conserved)'));
+
+    var wmax = 1 / S.tau;
+    var nph = P.photonNumber(D.g.kick, D.g.n, Math.pow(10, S.wmin), wmax);
+    set('nph', fmt(nph, 5));
+    var tb = root.querySelector('[data-w3-tab]');
+    if (tb) {
+      tb.innerHTML = '';
+      var prev = null;
+      for (var e = -2; e >= -10; e -= 2) {
+        var v = P.photonNumber(D.g.kick, D.g.n, Math.pow(10, e), wmax);
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>10' + sup(e) + '</td><td>' + v.toFixed(5) + '</td><td>' +
+          (prev === null ? '—' : (v - prev).toFixed(5)) + '</td>';
+        tb.appendChild(tr); prev = v;
+      }
+    }
+  }
+
+  function syncLabels() {
+    out('bf', S.bf.toFixed(2)); out('bi', S.bi.toFixed(2));
+    out('tau', S.tau.toFixed(3)); out('th', S.th.toFixed(0) + '°');
+    out('om', Math.pow(10, S.om).toExponential(2));
+    out('wmin', S.wmin.toFixed(1));
+  }
+
+  var pending = null;
+  root.addEventListener('input', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-w3-i]') : null;
+    if (!el) return;
+    var k = el.getAttribute('data-w3-i');
+    S[k] = parseFloat(el.value);
+    syncLabels();
+    if (k !== 'om' && k !== 'wmin') data = null;
+    if (pending) window.cancelAnimationFrame(pending);
+    pending = window.requestAnimationFrame(function () { pending = null; if (!data) compute(); render(); });
+  });
+
+  syncLabels();
+  compute();
+  render();
+})();
+</script>
+
+<section class="stop" id="w4">
+  <div class="stop-head">
+    <div class="plate">Station 4 &middot; the soft factor on the celestial sphere</div>
+    <h2>Every hard particle drags a bright spot across the sky</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">The familiar anchor is a radiation pattern. A single charge shaken along an axis
+      radiates as \(\sin^{2}\theta\): a doughnut, with nothing along the axis. You have drawn that
+      picture. What follows is the same kind of picture for the softest photons of a scattering event,
+      and it is one of the few things in field theory that can be drawn exactly.</p>
+
+    <p>Station&nbsp;3 produced a vector \(\vec S(\hat n)\) for one charge changing velocity once. Nothing
+      in that calculation cared that there was only one charge, or that it was a single kick. For any
+      collection of charges that come in on straight lines and leave on straight lines, the same
+      argument gives one term per line:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The soft factor for a scattering event, and the pattern it paints on the sphere</div>
+    \[ \vec S(\hat n)=\hat n\times\Bigl(\hat n\times\sum_{k}\eta_k Q_k\frac{\vec\beta_k}{1-\hat n\cdot\vec\beta_k}\Bigr),
+       \qquad \mathcal{P}(\hat n)\;\equiv\;\bigl|\vec S(\hat n)\bigr|^{2} \]
+    <div class="eq-note">\(\eta_k=+1\) for an outgoing line and \(-1\) for an incoming one; \(Q_k\) is its
+      charge and \(\vec\beta_k\) its velocity. \(\mathcal{P}\) is what the sphere below is painted with. It
+      is the polarization sum, in the sense that for any two orthonormal polarizations
+      \(\vec\varepsilon_1,\vec\varepsilon_2\) perpendicular to \(\hat n\),
+      \(|\vec S\cdot\vec\varepsilon_1|^{2}+|\vec S\cdot\vec\varepsilon_2|^{2}=\mathcal{P}(\hat n)\);
+      the figure builds two such polarizations at the probe direction and prints the difference.</div>
+  </div>
+
+  <div class="body">
+    <p>Two features are worth watching for before you touch anything. Each line contributes a factor
+      \(1/(1-\hat n\cdot\vec\beta_k)\), which is large when you look along that line&rsquo;s direction and
+      largest when the particle is fast: <b>every hard particle drags a bright spot behind it</b>, and the
+      spot sharpens as the particle approaches the speed of light. It sharpens but it never becomes a
+      pole: a massive line has \(1-\hat n\cdot\vec\beta_k\ge1-\beta_k>0\), so its peak is finite, at
+      \((1-\beta_k)^{-2}\) times its charge squared. A genuine collinear pole needs a massless charged
+      line, which the sliders below cannot reach and which this page does not draw.
+      And the whole expression is only
+      well defined when the total charge balances, \(\sum_k\eta_kQ_k=0\); otherwise it is not invariant
+      under the change of polarization \(\vec\varepsilon\to\vec\varepsilon+\lambda\,\hat n\) that gauge
+      invariance permits, and the pattern below is a picture of a quantity that no experiment measures.
+      The panel says so when you unbalance it, and the page then withdraws the claim that what you are
+      looking at is a scattering event rather than a plot of a formula.</p>
+  </div>
+
+  <figure class="w4-fig">
+    <div class="w4-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">Build a scattering event and look at its soft radiation</div>
+          <div class="chart-sub">Drag the sphere to turn it; drag a particle marker to aim that particle;
+            scroll to zoom. Hover anywhere on the sphere to read the pattern there.</div>
+        </div>
+        <span class="w4-ptag" data-kind="exact">Exact formula</span>
+      </div>
+
+      <div class="w4-warn" data-w4-warn hidden>The charges do not balance, so
+        \(\sum_k\eta_kQ_k\ne0\). The expression below is still being evaluated and drawn exactly, but it
+        is not the soft factor of any scattering event: it changes if you shift \(\vec\varepsilon\) by a
+        multiple of \(\hat n\), which is a change no measurement can see. Read it as a plot of a formula
+        until the charges balance again.</div>
+
+      <div class="w4-editor">
+        <div class="w4-ed-head">
+          <span class="w4-ed-t">Hard lines</span>
+          <span class="w4-chip" data-w4-chip>&Sigma; &eta;Q = 0</span>
+          <span class="w4-ed-btns">
+            <button class="btn" data-w4-add>Add a line</button>
+            <button class="btn" data-w4-balance>Balance the charge</button>
+            <button class="btn" data-w4-reset>Reset</button>
+          </span>
+        </div>
+        <div class="w4-rows" data-w4-rows></div>
+      </div>
+
+      <div class="w4-stage">
+        <canvas class="w4-canvas" aria-label="A sphere of directions painted with the polarization-summed soft factor. Each hard particle produces a bright pole in its own direction of travel. The readouts below the figure carry the numbers."></canvas>
+        <div class="w4-nogl" hidden></div>
+        <div class="w4-bar">
+          <div class="w4-bar-t">\(\mathcal{P}(\hat n)\), logarithmic; the span is set by the pattern itself <span class="mono" data-w4-dec></span></div>
+          <canvas class="w4-bar-c" aria-hidden="true"></canvas>
+          <div class="w4-bar-ticks" data-w4-ticks></div>
+        </div>
+        <div class="w4-viewbtns">
+          <button class="btn" data-w4-spin aria-pressed="false">Spin</button>
+          <button class="btn" data-w4-view>Reset the view</button>
+          <span class="w4-renderer" data-w4-renderer></span>
+        </div>
+      </div>
+
+      <div class="w4-read">
+        <div class="w4-read-h">At the probe direction</div>
+        <div class="w4-nums">
+          <div class="w4-num"><span>direction \(\hat n\)</span><b data-w4-r="n">&mdash;</b></div>
+          <div class="w4-num is-lead"><span>\(\mathcal{P}(\hat n)\), from the closed form</span><b data-w4-r="p">&mdash;</b></div>
+          <div class="w4-num"><span>the same, summed over two explicit orthonormal polarizations</span><b data-w4-r="psum">&mdash;</b></div>
+          <div class="w4-num"><span>difference between those two</span><b data-w4-r="pdiff">&mdash;</b></div>
+          <div class="w4-num"><span>largest value anywhere on the sphere, and where</span><b data-w4-r="pmax">&mdash;</b></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>Nothing here is interpolated: the colour of a point on the sphere is
+      \(\mathcal{P}\) evaluated at that direction, from the formula printed above, one sample per pixel, on
+      a grid 440 across the disc when the figure is at rest and 210 while you are dragging it. The colour
+      scale is logarithmic because the poles are genuinely sharp &mdash; the peak value for a line of
+      speed \(\beta\) goes as \((1-\beta)^{-2}\), so a particle at \(\beta=0.99\) outshines one at
+      \(\beta=0.5\) by four orders of magnitude, and a linear scale would show one bright dot and nothing
+      else. The span of the scale is not fixed either: it runs from the largest value found on the sphere
+      down to the fifth percentile of a 96 by 192 sample of it, and how many decades that turns out to be
+      is printed beside the bar &mdash; so a bland configuration is not dressed up as a dramatic one.
+      The pale ribbons are not artefacts. They are the directions in which \(\vec S\) happens to point
+      radially, so its transverse part &mdash; the only part a photon can carry &mdash; vanishes
+      there.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Try two things. Put two fast particles almost on top of each other and watch their poles merge into
+      one bright region; the soft radiation cannot tell two collinear charges from one charge of their sum,
+      which is the statement that the soft factor only knows about \(Q_k\) and \(\hat\beta_k\). Then take a
+      configuration you like and slide every speed down towards zero: the pattern keeps its shape and loses
+      its contrast, because at small \(\beta\) each term becomes \(\eta_kQ_k\vec\beta_k\) and the sum
+      degenerates to a single dipole. The rich structure is relativistic.</p>
+
+    <p>This is a picture of a function on the sphere of directions at infinity. The next two stations ask
+      what that function is <i>conserved</i> against &mdash; what quantity it is the flux of, angle by
+      angle.</p>
+  </div>
+</section>
+
+<style data-station="w4">
+#w4 .w4-fig { margin: 1.7rem 0 1.5rem; }
+#w4 .w4-card { border: 1px solid var(--rule); background: var(--surface); }
+#w4 .w4-card .chart-head { display: flex; align-items: flex-start; gap: .5rem; flex-wrap: wrap; padding: .85rem 1rem .6rem; border-bottom: 1px solid var(--rule); }
+#w4 .w4-card .chart-head > div:first-child { flex: 1 1 14rem; min-width: 0; }
+#w4 .w4-ptag { display: inline-block; font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--accent); color: var(--accent-text); white-space: nowrap; align-self: flex-start; }
+#w4 .w4-warn { padding: .7rem 1rem .75rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); border-left: 3px solid var(--st-refuted); font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); }
+#w4 .w4-editor { padding: .8rem 1rem .9rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); }
+#w4 .w4-ed-head { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .6rem; }
+#w4 .w4-ed-t { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+#w4 .w4-ed-btns { margin-left: auto; display: flex; gap: .4rem; flex-wrap: wrap; }
+#w4 .w4-chip { font-family: var(--mono); font-size: 11.5px; padding: .16rem .45rem; border: 1px solid var(--st-proved); color: var(--st-proved); white-space: nowrap; }
+#w4 .w4-chip[data-bad="1"] { border-color: var(--st-refuted); color: var(--st-refuted); }
+#w4 .w4-rows { display: grid; gap: .35rem; }
+#w4 .w4-row { display: grid; grid-template-columns: 1.1rem 5.9rem 3.4rem minmax(5rem, 1fr) 3.6rem 1.8rem; gap: .5rem; align-items: center; }
+@media (max-width: 620px) { #w4 .w4-row { grid-template-columns: 1.1rem 5.9rem 3.2rem minmax(3rem, 1fr) 3.4rem 1.8rem; gap: .3rem; } }
+#w4 .w4-dot { width: 13px; height: 13px; border-radius: 50%; justify-self: center; }
+#w4 .w4-row select, #w4 .w4-row input[type="number"] { font-family: var(--sans); font-size: 12.5px; padding: .18rem .25rem; border: 1px solid var(--rule-2); background: var(--surface); color: var(--ink); width: 100%; min-width: 0; border-radius: 2px; }
+#w4 .w4-row input[type="range"] { width: 100%; accent-color: var(--accent); min-width: 0; }
+#w4 .w4-row .w4-bl { font-family: var(--mono); font-size: 11px; color: var(--ink-3); text-align: right; font-variant-numeric: tabular-nums; }
+#w4 .w4-del { font-family: var(--sans); font-size: 15px; line-height: 1; padding: .1rem .35rem; border: 1px solid var(--rule-2); background: var(--surface); color: var(--ink-3); cursor: pointer; border-radius: 2px; }
+#w4 .w4-del:hover { border-color: var(--st-refuted); color: var(--st-refuted); }
+#w4 .w4-stage { background: var(--surface-sunk); border-bottom: 1px solid var(--rule); padding-bottom: .3rem; }
+#w4 .w4-canvas { display: block; width: 100%; aspect-ratio: 4 / 3; touch-action: none; cursor: grab; }
+#w4 .w4-canvas:active { cursor: grabbing; }
+@media (max-width: 560px) { #w4 .w4-canvas { aspect-ratio: 1 / 1; } }
+#w4 .w4-nogl { padding: 1rem; font-family: var(--sans); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+#w4 .w4-bar { padding: .2rem 1rem .35rem; }
+#w4 .w4-bar-t { font-family: var(--sans); font-size: 11px; color: var(--ink-3); margin-bottom: .25rem; }
+#w4 .w4-bar-c { display: block; width: 100%; height: 12px; border: 1px solid var(--rule-2); }
+#w4 .w4-bar-ticks { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); margin-top: .15rem; }
+#w4 .w4-viewbtns { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; padding: .5rem 1rem .5rem; }
+#w4 .w4-renderer { font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); margin-left: auto; }
+#w4 .w4-read { padding: .85rem 1rem 1rem; }
+#w4 .w4-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .35rem; }
+#w4 .w4-nums { display: grid; gap: 0; }
+#w4 .w4-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); padding: .28rem 0; border-bottom: 1px dotted var(--rule); }
+#w4 .w4-num:last-child { border-bottom: 0; }
+@media (max-width: 560px) { #w4 .w4-num { flex-direction: column; align-items: flex-start; gap: .1rem; } }
+#w4 .w4-num b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w4 .w4-num.is-lead { color: var(--ink); }
+#w4 .w4-num.is-lead b { color: var(--die); font-size: 1.02rem; }
+</style>
+
+<script data-station="w4">
+(function () {
+  var root = document.getElementById('w4');
+  if (!root) return;
+  var P = (window.PROLOGUE && window.PROLOGUE.em) || null;
+  var cv = root.querySelector('.w4-canvas');
+  var ctx = (cv && cv.getContext) ? cv.getContext('2d') : null;
+  var noGL = root.querySelector('.w4-nogl');
+  if (!P || !ctx) {
+    if (cv) cv.hidden = true;
+    if (noGL) { noGL.hidden = false; noGL.textContent = 'This figure needs a 2-D canvas, which this browser did not provide. The formula above is the whole content of the picture: a bright pole in the direction of each hard line, sharpening as that line approaches the speed of light.'; }
+    return;
+  }
+
+  /* ---------- palette and the sequential ramp ---------- */
+  var CACHE = {}, LUT = null;
+  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
+  function hex(c) {
+    c = c.trim();
+    if (c.charAt(0) === '#') {
+      if (c.length === 4) return [parseInt(c[1] + c[1], 16), parseInt(c[2] + c[2], 16), parseInt(c[3] + c[3], 16)];
+      return [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)];
+    }
+    var m = c.match(/rgba?\(([^)]+)\)/);
+    if (m) { var p = m[1].split(','); return [parseFloat(p[0]), parseFloat(p[1]), parseFloat(p[2])]; }
+    return [136, 136, 136];
+  }
+  function s2l(u) { u /= 255; return u <= 0.04045 ? u / 12.92 : Math.pow((u + 0.055) / 1.055, 2.4); }
+  function l2s(u) { u = u <= 0.0031308 ? u * 12.92 : 1.055 * Math.pow(u, 1 / 2.4) - 0.055; return Math.max(0, Math.min(255, Math.round(u * 255))); }
+  /* Four existing tokens in lightness order become the sequential ramp; the
+     interpolation is done in linear light so the middle of the ramp does not go
+     muddy. No colour literal is written in this fragment. */
+  function buildLUT() {
+    var anchors = [hex(tok('--surface-2')), hex(tok('--accent-tint')), hex(tok('--accent')), hex(tok('--accent-text'))];
+    var stops = [0, 0.18, 0.70, 1.0];
+    var lin = anchors.map(function (c) { return [s2l(c[0]), s2l(c[1]), s2l(c[2])]; });
+    var out = new Uint8ClampedArray(256 * 3);
+    for (var i = 0; i < 256; i++) {
+      var u = i / 255, j = 0;
+      while (j < stops.length - 2 && u > stops[j + 1]) j++;
+      var f = (u - stops[j]) / (stops[j + 1] - stops[j]);
+      f = Math.max(0, Math.min(1, f));
+      for (var k = 0; k < 3; k++) out[i * 3 + k] = l2s(lin[j][k] + (lin[j + 1][k] - lin[j][k]) * f);
+    }
+    LUT = out;
+  }
+  function themeChanged() { CACHE = {}; LUT = null; drawAll(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  }
+  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  /* ---------- vectors ---------- */
+  function vadd(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
+  function vsub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function vscl(a, s) { return [a[0] * s, a[1] * s, a[2] * s]; }
+  function vdot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function vcrs(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function vlen(a) { return Math.sqrt(vdot(a, a)); }
+  function vunit(a) { var m = vlen(a); return m > 0 ? vscl(a, 1 / m) : [0, 0, 1]; }
+  function rot(v, axis, ang) {                 /* Rodrigues */
+    var c = Math.cos(ang), s = Math.sin(ang);
+    return vadd(vadd(vscl(v, c), vscl(vcrs(axis, v), s)), vscl(axis, vdot(axis, v) * (1 - c)));
+  }
+  function dirOf(th, ph) { var st = Math.sin(th); return [st * Math.cos(ph), st * Math.sin(ph), Math.cos(th)]; }
+
+  /* ---------- the event ---------- */
+  function mkP(th, ph, beta, Q, eta) { return { th: th, ph: ph, beta: beta, Q: Q, eta: eta }; }
+  function fromVec(v, beta, Q, eta) {
+    var u = vunit(v);
+    return mkP(Math.acos(Math.max(-1, Math.min(1, u[2]))), Math.atan2(u[1], u[0]), beta, Q, eta);
+  }
+  function defaults() {
+    return [
+      fromVec([0.95, -0.20, 0.24], 0.80, 1, -1),
+      fromVec([-0.80, -0.45, 0.40], 0.80, -1, -1),
+      fromVec([0.10, -0.75, -0.65], 0.88, 1, 1),
+      fromVec([-0.32, -0.56, 0.76], 0.88, -1, 1)
+    ];
+  }
+  var parts = defaults();
+  function coreParts() {
+    return parts.map(function (p) { return { Q: p.Q, beta: vscl(dirOf(p.th, p.ph), p.beta), eta: p.eta }; });
+  }
+  function patternAt(n) { try { return P.spherePattern(coreParts(), n); } catch (e) { return 0; } }
+
+  /* ---------- view ---------- */
+  var V = { right: [1, 0, 0], up: [0, 0, 1], fwd: [0, -1, 0], zoom: 1 };
+  function resetView() { V.right = [1, 0, 0]; V.up = [0, 0, 1]; V.fwd = [0, -1, 0]; V.zoom = 1; }
+  function orthonormalise() {
+    V.fwd = vunit(V.fwd);
+    V.right = vunit(vsub(V.right, vscl(V.fwd, vdot(V.right, V.fwd))));
+    V.up = vcrs(V.fwd, V.right);
+  }
+  function screenDir(sxn, syn) {                /* unit disc -> world direction, or null */
+    var q = sxn * sxn + syn * syn;
+    if (q > 1) return null;
+    var sz = Math.sqrt(1 - q);
+    return vadd(vadd(vscl(V.right, sxn), vscl(V.up, syn)), vscl(V.fwd, sz));
+  }
+
+  /* ---------- rendering ---------- */
+  var DPR = 1, W = 1, H = 1, CX = 0, CY = 0, RDISP = 1;
+  var off = document.createElement('canvas'), octx = off.getContext('2d');
+  var RES_IDLE = 440, RES_DRAG = 210;
+  var stats = { max: 1, lo: 1e-3, argmax: [0, 0, 1], decades: 2 };
+
+  /* The colour range is set from the pattern itself: the top of the ramp is the
+     largest value found (the grid is refined at each hard direction, where the
+     poles sit), and the bottom is the 5th percentile of the sampled values, so
+     that a configuration whose pattern only varies by a factor of ten is not
+     drawn as one flat colour. The number of decades in play is printed. */
+  function recomputeStats() {
+    var best = 0, arg = [0, 0, 1], i, j, n, v;
+    var samples = [];
+    for (i = 0; i < parts.length; i++) {
+      n = dirOf(parts[i].th, parts[i].ph);
+      v = patternAt(n);
+      if (v > best) { best = v; arg = n; }
+    }
+    for (i = 0; i < 96; i++) {
+      var ct = -1 + 2 * (i + 0.5) / 96, st = Math.sqrt(Math.max(0, 1 - ct * ct));
+      for (j = 0; j < 192; j++) {
+        var ph = 2 * Math.PI * j / 192;
+        n = [st * Math.cos(ph), st * Math.sin(ph), ct];
+        v = patternAt(n);
+        if (v > best) { best = v; arg = n; }
+        if (v > 0) samples.push(v);
+      }
+    }
+    samples.sort(function (a, b) { return a - b; });
+    stats.max = best > 0 ? best : 1;
+    var p5 = samples.length ? samples[Math.floor(0.05 * samples.length)] : stats.max * 1e-2;
+    var dec = Math.log(stats.max / Math.max(p5, stats.max * 1e-6)) / Math.LN10;
+    stats.decades = Math.max(0.8, Math.min(5, dec));
+    stats.lo = stats.max * Math.pow(10, -stats.decades);
+    stats.argmax = arg;
+    updateBar();
+  }
+
+  function paintSphere(res) {
+    if (!LUT) buildLUT();
+    if (off.width !== res) { off.width = res; off.height = res; }
+    var img = octx.createImageData(res, res), d = img.data;
+    var cp = coreParts(), np = cp.length;
+    var bx = new Float64Array(np), by = new Float64Array(np), bz = new Float64Array(np), qq = new Float64Array(np);
+    for (var i = 0; i < np; i++) { bx[i] = cp[i].beta[0]; by[i] = cp[i].beta[1]; bz[i] = cp[i].beta[2]; qq[i] = cp[i].eta * cp[i].Q; }
+    var Rx = V.right, Uy = V.up, Fz = V.fwd;
+    var logMax = Math.log(stats.max), inv = 255 / (stats.decades * Math.LN10);
+    var half = res / 2, k = 1 / (half * 0.985);
+    for (var py = 0; py < res; py++) {
+      var syn = (half - py - 0.5) * k;
+      for (var px = 0; px < res; px++) {
+        var sxn = (px + 0.5 - half) * k;
+        var q = sxn * sxn + syn * syn, o = (py * res + px) * 4;
+        if (q > 1) { d[o + 3] = 0; continue; }
+        var sz = Math.sqrt(1 - q);
+        var nx = Rx[0] * sxn + Uy[0] * syn + Fz[0] * sz;
+        var ny = Rx[1] * sxn + Uy[1] * syn + Fz[1] * sz;
+        var nz = Rx[2] * sxn + Uy[2] * syn + Fz[2] * sz;
+        var vx = 0, vy = 0, vz = 0;
+        for (var m = 0; m < np; m++) {
+          var w = qq[m] / (1 - (nx * bx[m] + ny * by[m] + nz * bz[m]));
+          vx += w * bx[m]; vy += w * by[m]; vz += w * bz[m];
+        }
+        var dotv = nx * vx + ny * vy + nz * vz;
+        var tx = vx - dotv * nx, ty = vy - dotv * ny, tz = vz - dotv * nz;
+        var val = tx * tx + ty * ty + tz * tz;
+        var u = val > 0 ? 255 + (Math.log(val) - logMax) * inv : 0;
+        u = u < 0 ? 0 : (u > 255 ? 255 : u | 0);
+        var b3 = u * 3;
+        d[o] = LUT[b3]; d[o + 1] = LUT[b3 + 1]; d[o + 2] = LUT[b3 + 2]; d[o + 3] = 255;
+      }
+    }
+    octx.putImageData(img, 0, 0);
+  }
+
+  function resize() {
+    var r = cv.getBoundingClientRect();
+    if (!r.width) return false;
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = Math.max(1, Math.round(r.width * DPR)); H = Math.max(1, Math.round(r.height * DPR));
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    CX = W / 2; CY = H / 2;
+    RDISP = Math.min(W, H) * 0.46 * V.zoom;
+    return true;
+  }
+
+  var probe = null;
+  function proj(n) { return { x: CX + vdot(n, V.right) * RDISP, y: CY - vdot(n, V.up) * RDISP, front: vdot(n, V.fwd) > 0 }; }
+
+  var lastRes = 0;
+  function drawAll(dragging, skipPaint) {
+    if (!resize()) return;
+    if (!LUT) buildLUT();
+    var want = dragging ? RES_DRAG : RES_IDLE;
+    if (!skipPaint || lastRes !== want) { paintSphere(want); lastRes = want; }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = tok('--surface-sunk'); ctx.fillRect(0, 0, W, H);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, CX - RDISP, CY - RDISP, 2 * RDISP, 2 * RDISP);
+
+    /* graticule, front hemisphere only */
+    ctx.strokeStyle = tok('--surface'); ctx.globalAlpha = 0.22; ctx.lineWidth = Math.max(0.8, 0.9 * DPR);
+    var i, j, n, p, started;
+    for (i = 1; i < 6; i++) {                      /* parallels every 30 degrees */
+      var th = Math.PI * i / 6; started = false; ctx.beginPath();
+      for (j = 0; j <= 180; j++) {
+        n = dirOf(th, 2 * Math.PI * j / 180); p = proj(n);
+        if (!p.front) { started = false; continue; }
+        if (!started) { ctx.moveTo(p.x, p.y); started = true; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.stroke();
+    }
+    for (i = 0; i < 6; i++) {                      /* meridians every 30 degrees */
+      var ph = Math.PI * i / 6; started = false; ctx.beginPath();
+      for (j = 0; j <= 180; j++) {
+        n = dirOf(Math.PI * j / 180, ph); p = proj(n);
+        if (!p.front) { started = false; continue; }
+        if (!started) { ctx.moveTo(p.x, p.y); started = true; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = tok('--rule-2'); ctx.lineWidth = Math.max(1, DPR);
+    ctx.beginPath(); ctx.arc(CX, CY, RDISP, 0, 2 * Math.PI); ctx.stroke();
+
+    /* particle markers */
+    ctx.font = '600 ' + (11.5 * DPR) + 'px ' + tok('--sans');
+    ctx.textBaseline = 'middle';
+    for (i = 0; i < parts.length; i++) {
+      var pt = parts[i]; n = dirOf(pt.th, pt.ph); p = proj(n);
+      var col = pt.eta > 0 ? tok('--die') : tok('--keep');
+      ctx.globalAlpha = p.front ? 1 : 0.28;
+      ctx.fillStyle = tok('--surface');
+      ctx.beginPath(); ctx.arc(p.x, p.y, 8 * DPR, 0, 2 * Math.PI); ctx.fill();
+      ctx.strokeStyle = col; ctx.lineWidth = Math.max(1.6, 2.2 * DPR);
+      ctx.beginPath(); ctx.arc(p.x, p.y, 8 * DPR, 0, 2 * Math.PI); ctx.stroke();
+      ctx.fillStyle = col; ctx.textAlign = 'center';
+      ctx.fillText(pt.Q > 0 ? '+' : (pt.Q < 0 ? '−' : '0'), p.x, p.y + 0.5 * DPR);
+      var mlbl = (pt.eta > 0 ? 'out ' : 'in ') + (i + 1);
+      var mlw = ctx.measureText(mlbl).width;
+      var flip = (p.x + 18 * DPR + mlw) > W;
+      var bx0 = flip ? p.x - 11 * DPR - mlw - 7 * DPR : p.x + 11 * DPR;
+      ctx.textAlign = 'left';
+      ctx.fillStyle = tok('--surface');
+      ctx.fillRect(bx0, p.y - 8 * DPR, mlw + 7 * DPR, 16 * DPR);
+      ctx.fillStyle = tok('--ink-2');
+      ctx.fillText(mlbl, bx0 + 3.5 * DPR, p.y);
+      ctx.globalAlpha = 1;
+    }
+
+    /* probe */
+    if (probe) {
+      p = proj(probe);
+      if (p.front) {
+        ctx.strokeStyle = tok('--ink'); ctx.lineWidth = Math.max(1.2, 1.6 * DPR);
+        ctx.beginPath(); ctx.arc(p.x, p.y, 6 * DPR, 0, 2 * Math.PI); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(p.x - 11 * DPR, p.y); ctx.lineTo(p.x - 8 * DPR, p.y);
+        ctx.moveTo(p.x + 8 * DPR, p.y); ctx.lineTo(p.x + 11 * DPR, p.y);
+        ctx.moveTo(p.x, p.y - 11 * DPR); ctx.lineTo(p.x, p.y - 8 * DPR);
+        ctx.moveTo(p.x, p.y + 8 * DPR); ctx.lineTo(p.x, p.y + 11 * DPR);
+        ctx.stroke();
+      }
+    }
+    ctx.textBaseline = 'alphabetic';
+    readOut();
+  }
+
+  function updateBar() {
+    var bar = root.querySelector('.w4-bar-c');
+    if (!bar || !bar.getContext) return;
+    if (!LUT) buildLUT();
+    var r = bar.getBoundingClientRect(); if (!r.width) return;
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    bar.width = Math.round(r.width * dpr); bar.height = Math.round(12 * dpr);
+    var bc = bar.getContext('2d'), im = bc.createImageData(bar.width, bar.height), dd = im.data;
+    for (var x = 0; x < bar.width; x++) {
+      var u = Math.round(255 * x / (bar.width - 1)) * 3;
+      for (var y = 0; y < bar.height; y++) {
+        var o = (y * bar.width + x) * 4;
+        dd[o] = LUT[u]; dd[o + 1] = LUT[u + 1]; dd[o + 2] = LUT[u + 2]; dd[o + 3] = 255;
+      }
+    }
+    bc.putImageData(im, 0, 0);
+    var dc = root.querySelector('[data-w4-dec]');
+    if (dc) dc.textContent = '(' + stats.decades.toFixed(1) + ' decades)';
+    var tk = root.querySelector('[data-w4-ticks]');
+    if (tk) {
+      tk.innerHTML = '';
+      for (var i = 0; i <= 4; i++) {
+        var v = stats.max * Math.pow(10, -stats.decades * (1 - i / 4));
+        var sp = document.createElement('span');
+        sp.textContent = v.toExponential(1);
+        tk.appendChild(sp);
+      }
+    }
+  }
+
+  function fmt(x, d) {
+    if (x === null || x === undefined || !isFinite(x)) return '—';
+    var a = Math.abs(x);
+    if (a !== 0 && (a < 1e-3 || a >= 1e5)) return x.toExponential(d === undefined ? 5 : d);
+    return x.toFixed(d === undefined ? 6 : d);
+  }
+  function set(k, v) { var el = root.querySelector('[data-w4-r="' + k + '"]'); if (el) el.textContent = v; }
+
+  function readOut() {
+    var n = probe || vunit(V.fwd);
+    set('n', '(' + n[0].toFixed(3) + ', ' + n[1].toFixed(3) + ', ' + n[2].toFixed(3) + ')');
+    var pv = patternAt(n);
+    set('p', fmt(pv));
+    /* two explicit orthonormal polarizations transverse to n */
+    var seed = Math.abs(n[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+    var e1 = vunit(vcrs(seed, n)), e2 = vcrs(n, e1);
+    var s1 = 0, s2 = 0;
+    try {
+      s1 = P.softFactorWeinberg(coreParts(), n, e1);
+      s2 = P.softFactorWeinberg(coreParts(), n, e2);
+    } catch (e) { }
+    var psum = s1 * s1 + s2 * s2;
+    set('psum', fmt(psum));
+    set('pdiff', Math.abs(psum - pv).toExponential(2));
+    var am = stats.argmax;
+    set('pmax', fmt(stats.max) + '  at (' + am[0].toFixed(2) + ', ' + am[1].toFixed(2) + ', ' + am[2].toFixed(2) + ')');
+  }
+
+  /* ---------- the editor ---------- */
+  function renderRows() {
+    var box = root.querySelector('[data-w4-rows]');
+    if (!box) return;
+    box.innerHTML = '';
+    parts.forEach(function (pt, i) {
+      var row = document.createElement('div'); row.className = 'w4-row';
+      var dot = document.createElement('span'); dot.className = 'w4-dot';
+      dot.style.background = pt.eta > 0 ? 'var(--die)' : 'var(--keep)';
+      var sel = document.createElement('select');
+      sel.innerHTML = '<option value="-1">incoming</option><option value="1">outgoing</option>';
+      sel.value = String(pt.eta); sel.setAttribute('aria-label', 'line ' + (i + 1) + ' direction of travel');
+      sel.addEventListener('change', function () { pt.eta = parseInt(sel.value, 10); refresh(true); });
+      var qin = document.createElement('input');
+      qin.type = 'number'; qin.value = String(pt.Q); qin.step = '1'; qin.min = '-3'; qin.max = '3';
+      qin.setAttribute('aria-label', 'line ' + (i + 1) + ' charge');
+      qin.addEventListener('input', function () {
+        var v = parseInt(qin.value, 10); if (isFinite(v)) { pt.Q = Math.max(-3, Math.min(3, v)); refresh(true); }
+      });
+      var rng = document.createElement('input');
+      rng.type = 'range'; rng.min = '0.05'; rng.max = '0.985'; rng.step = '0.005'; rng.value = String(pt.beta);
+      rng.setAttribute('aria-label', 'line ' + (i + 1) + ' speed');
+      rng.addEventListener('input', function () { pt.beta = parseFloat(rng.value); lbl.textContent = 'β ' + pt.beta.toFixed(3); refresh(true); });
+      var lbl = document.createElement('span'); lbl.className = 'w4-bl'; lbl.textContent = 'β ' + pt.beta.toFixed(3);
+      var del = document.createElement('button');
+      del.className = 'w4-del'; del.type = 'button'; del.innerHTML = '&times;';
+      del.setAttribute('aria-label', 'remove line ' + (i + 1));
+      del.addEventListener('click', function () { if (parts.length > 2) { parts.splice(i, 1); refresh(false); } });
+      row.appendChild(dot); row.appendChild(sel); row.appendChild(qin); row.appendChild(rng); row.appendChild(lbl); row.appendChild(del);
+      box.appendChild(row);
+    });
+  }
+  function updateChip() {
+    var chip = root.querySelector('[data-w4-chip]');
+    if (!chip) return;
+    var c = P.chargeConservation(coreParts());
+    chip.textContent = 'Σ ηQ = ' + c.sum.toFixed(0) + (c.conserved ? '' : '  — not gauge invariant');
+    chip.setAttribute('data-bad', c.conserved ? '0' : '1');
+    var warn = root.querySelector('[data-w4-warn]');
+    if (warn) warn.hidden = !!c.conserved;
+    var tg = root.querySelector('.w4-ptag');
+    if (tg) tg.textContent = c.conserved ? 'Exact formula' : 'Exact formula — not an observable';
+  }
+  function refresh(keepRows) {
+    if (!keepRows) renderRows();
+    updateChip(); recomputeStats(); drawAll();
+  }
+
+  root.querySelector('[data-w4-add]').addEventListener('click', function () {
+    if (parts.length >= 5) return;
+    parts.push(mkP(1.0 + 0.4 * parts.length, 0.9 * parts.length, 0.7, 1, 1));
+    refresh(false);
+  });
+  root.querySelector('[data-w4-balance]').addEventListener('click', function () {
+    var c = P.chargeConservation(coreParts());
+    if (c.sum === 0) return;
+    var last = parts[parts.length - 1];
+    last.Q = last.Q - c.sum * last.eta;
+    refresh(false);
+  });
+  root.querySelector('[data-w4-reset]').addEventListener('click', function () {
+    parts = defaults(); resetView(); refresh(false);
+  });
+  root.querySelector('[data-w4-view]').addEventListener('click', function () { resetView(); drawAll(); });
+
+  /* ---------- pointer ---------- */
+  var mode = null, grabbed = -1, lastPt = null;
+  function normPt(ev) {
+    var r = cv.getBoundingClientRect();
+    var px = (ev.clientX - r.left) * (W / r.width), py = (ev.clientY - r.top) * (H / r.height);
+    return { px: px, py: py, sx: (px - CX) / RDISP, sy: (CY - py) / RDISP };
+  }
+  cv.addEventListener('pointerdown', function (ev) {
+    var q = normPt(ev);
+    grabbed = -1;
+    for (var i = 0; i < parts.length; i++) {
+      var p = proj(dirOf(parts[i].th, parts[i].ph));
+      if (p.front && Math.hypot(q.px - p.x, q.py - p.y) < 15 * DPR) { grabbed = i; break; }
+    }
+    mode = grabbed >= 0 ? 'aim' : 'spin';
+    lastPt = q;
+    cv.setPointerCapture(ev.pointerId);
+    if (mode === 'aim') aim(q);
+  });
+  function aim(q) {
+    var r2 = q.sx * q.sx + q.sy * q.sy, sx = q.sx, sy = q.sy;
+    if (r2 > 0.998) { var s = 0.999 / Math.sqrt(r2); sx *= s; sy *= s; }
+    var n = screenDir(sx, sy);
+    if (!n) return;
+    n = vunit(n);
+    parts[grabbed].th = Math.acos(Math.max(-1, Math.min(1, n[2])));
+    parts[grabbed].ph = Math.atan2(n[1], n[0]);
+  }
+  cv.addEventListener('pointermove', function (ev) {
+    var q = normPt(ev);
+    if (!mode) {
+      var n = screenDir(q.sx, q.sy);
+      probe = n ? vunit(n) : null;
+      drawAll(false, true);
+      return;
+    }
+    if (mode === 'aim') { aim(q); recomputeStats(); drawAll(true); }
+    else {
+      var dx = (q.px - lastPt.px) / RDISP, dy = (q.py - lastPt.py) / RDISP;
+      V.right = rot(V.right, V.up, -dx); V.fwd = rot(V.fwd, V.up, -dx);
+      orthonormalise();
+      V.up = rot(V.up, V.right, -dy); V.fwd = rot(V.fwd, V.right, -dy);
+      orthonormalise();
+      lastPt = q;
+      drawAll(true);
+    }
+  });
+  function endDrag(ev) {
+    if (mode) { mode = null; grabbed = -1; drawAll(false); }
+    try { cv.releasePointerCapture(ev.pointerId); } catch (e) { }
+  }
+  cv.addEventListener('pointerup', endDrag);
+  cv.addEventListener('pointercancel', endDrag);
+  cv.addEventListener('pointerleave', function () { if (!mode) { probe = null; drawAll(false, true); } });
+  cv.addEventListener('wheel', function (ev) {
+    ev.preventDefault();
+    V.zoom = Math.max(0.6, Math.min(2.2, V.zoom * (ev.deltaY > 0 ? 0.92 : 1.087)));
+    drawAll(true);
+  }, { passive: false });
+
+  /* ---------- idle spin ---------- */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var spinning = false, visible = true, raf = null, last = null;
+  var bSpin = root.querySelector('[data-w4-spin]');
+  function tick(ts) {
+    raf = null;
+    if (!spinning || !visible) return;
+    if (last === null) last = ts;
+    var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+    var ax = vunit([0, 0, 1]);
+    V.right = rot(V.right, ax, dt * 0.22); V.up = rot(V.up, ax, dt * 0.22); V.fwd = rot(V.fwd, ax, dt * 0.22);
+    orthonormalise();
+    drawAll(true);
+    raf = window.requestAnimationFrame(tick);
+  }
+  function setSpin(v) {
+    spinning = v && !reduce;
+    if (bSpin) { bSpin.textContent = spinning ? 'Stop' : 'Spin'; bSpin.setAttribute('aria-pressed', spinning ? 'true' : 'false'); }
+    last = null;
+    if (spinning && visible && raf === null) raf = window.requestAnimationFrame(tick);
+    if (!spinning) drawAll(false);
+  }
+  if (bSpin) bSpin.addEventListener('click', function () { setSpin(!spinning); });
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      if (visible && spinning && raf === null) { last = null; raf = window.requestAnimationFrame(tick); }
+    }, { rootMargin: '120px' }).observe(cv);
+  }
+  if (window.ResizeObserver) new ResizeObserver(function () { updateBar(); drawAll(); }).observe(cv);
+  else window.addEventListener('resize', function () { updateBar(); drawAll(); });
+
+  var rl = root.querySelector('[data-w4-renderer]');
+  if (rl) rl.textContent = 'drawn by orthographic ray casting on a 2-D canvas, one sample per pixel';
+  refresh(false);
+})();
+</script>
+
+<section class="stop" id="w6">
+  <div class="stop-head">
+    <div class="plate">Station 6 &middot; memory, and why the soft theorem was inevitable</div>
+    <h2>The same number, from a clock and from a spectrum</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">Put a second charge, light and free, a long way from the first one, and let it
+      sit there. The shell from station&nbsp;2 sweeps past it. While the shell is passing, the test
+      charge feels a sideways force and starts to move. Then the shell is gone. The question that
+      matters is not what happened during; it is what is left after.</p>
+
+    <p>The familiar anchor is an impulse. A force acting briefly on a free mass leaves it with a
+      velocity equal to the time integral of the force divided by the mass, and nothing else about the
+      force survives. So the thing to compute is \(\int\vec E\,dt\), and the interesting claim is that
+      this integral is <b>the same number</b> as the coefficient of the pole that station&nbsp;3 found
+      in the frequency domain. There is a reason it has to be, and it is one line:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">Why the time integral and the zero-frequency component are the same object</div>
+    \[ \tilde{\vec E}(\omega)=\int dt\;e^{\,i\omega t}\vec E(t)
+       \quad\Longrightarrow\quad
+       \tilde{\vec E}(0)=\int dt\;\vec E(t) \]
+    <div class="eq-note">A permanent, direction-dependent value of \(\int\vec E\,dt\) is a nonzero
+      zero-frequency component of the radiation field, and therefore a simple pole in the vector
+      potential \(\tilde{\vec A}(\omega)=\tilde{\vec E}(\omega)/(-i\omega)\), whose residue is the memory.
+      A pole in the amplitude for emitting a photon is exactly what a soft theorem asserts. Reading this
+      the other way round: a scattering theory whose late&#8209;time fields carry memory <i>cannot</i>
+      have a soft limit without a pole. This is the step that requires hypotheses &mdash; the field has to
+      settle down for the integral to converge at all &mdash; and the sister lane&rsquo;s station&nbsp;9
+      breaks them on purpose to show what they were doing.</div>
+  </div>
+
+  <div class="body">
+    <p>The rest of this station is the arithmetic, done three ways, with everything printed. The
+      quantity is the coefficient of the \(1/r\) part of \(\int\vec E\,dt\) &mdash; the radiation order,
+      the piece that survives to infinity. Call it \(\vec{\mathcal N}(\hat n)/r\).</p>
+  </div>
+
+  <figure class="w6-fig">
+    <div class="w6-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">Three routes to the same coefficient</div>
+          <div class="chart-sub">Change anything you like; the first two rows must stay equal to the last digit
+            the machine has, and the third must approach them as the observer is moved further away.</div>
+        </div>
+        <span class="w6-ptag" data-kind="exact">Exact formula</span>
+        <span class="w6-ptag" data-kind="numeric">Controlled numerical solve</span>
+      </div>
+      <div class="w6-ctl">
+        <label class="w6-knob"><span>speed before, \(\beta_i\)<b data-w6-o="bi">0.00</b></span>
+          <input type="range" data-w6-i="bi" min="-0.9" max="0.9" value="0" step="0.01"></label>
+        <label class="w6-knob"><span>speed after, \(\beta_f\)<b data-w6-o="bf">0.70</b></span>
+          <input type="range" data-w6-i="bf" min="-0.9" max="0.9" value="0.7" step="0.01"></label>
+        <label class="w6-knob"><span>kick duration, \(c\tau\)<b data-w6-o="tau">0.100</b></span>
+          <input type="range" data-w6-i="tau" min="0.02" max="0.4" value="0.1" step="0.005"></label>
+        <label class="w6-knob"><span>direction of the detector<b data-w6-o="th">62&deg;</b></span>
+          <input type="range" data-w6-i="th" min="8" max="172" value="62" step="1"></label>
+        <label class="w6-knob"><span>quadrature panels, \(n\)<b data-w6-o="np">16</b></span>
+          <input type="range" data-w6-i="np" min="1" max="6" value="4" step="1"></label>
+        <label class="w6-knob"><span>distance of the detector, \(\log_{10}r\)<b data-w6-o="lr">3.0</b></span>
+          <input type="range" data-w6-i="lr" min="1.5" max="6" value="3" step="0.1"></label>
+      </div>
+
+      <div class="w6-panel">
+        <div class="w6-read-h">The coefficient \(\vec{\mathcal N}(\hat n)\), in the plane of the kick</div>
+        <div class="w6-tabwrap"><table class="w6-tab">
+          <thead><tr><th scope="col">route</th><th scope="col">along the axis</th><th scope="col">across it</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">closed form &mdash; the antiderivative at the two ends</th><td data-w6-r="cf0">&mdash;</td><td data-w6-r="cf1">&mdash;</td></tr>
+            <tr><th scope="row">quadrature of the exact integrand through the kick</th><td data-w6-r="qd0">&mdash;</td><td data-w6-r="qd1">&mdash;</td></tr>
+            <tr class="is-res"><th scope="row">difference</th><td data-w6-r="df0">&mdash;</td><td data-w6-r="df1">&mdash;</td></tr>
+            <tr class="is-res"><th scope="row">relative residual, \(|\Delta\vec{\mathcal N}|/|\vec{\mathcal N}|\)</th><td data-w6-r="rel" colspan="2">&mdash;</td></tr>
+          </tbody>
+        </table></div>
+        <div class="w6-note">In the reference core&rsquo;s own words, which are the sentence this page is
+          licensed to print: &ldquo;these two numbers are the same \(1/r\) radiation memory: GL8 quadrature
+          of the retarded radiation field and the \(\omega\to0\) endpoint formula agree to the displayed
+          residual; the finite&#8209;window integral of the full electric field also contains a separate
+          Coulomb drift and is not being equated here.&rdquo;
+          Both rows are computed by the reference core, from
+          <span class="mono">memoryKickClosedForm</span> and <span class="mono">memoryKickQuadrature</span>,
+          multiplied by \(r\) so that the numbers do not depend on how far away the detector is. They agree
+          because the integrand is a total derivative &mdash; the same identity that made the
+          \(\omega\to0\) limit in station&nbsp;3 closed form. Agreement here is a check on the algebra and
+          on the quadrature, and it is worth having: it is the only step in the soft&#8211;memory edge that
+          could be a typing mistake.</div>
+      </div>
+
+      <div class="w6-panel">
+        <div class="w6-read-h">Convergence of the quadrature</div>
+        <div class="w6-tabwrap"><table class="w6-tab">
+          <thead><tr><th scope="col">panels</th><th scope="col">relative difference from the closed form</th></tr></thead>
+          <tbody data-w6-conv></tbody>
+        </table></div>
+        <div class="w6-note">Eight&#8209;node Gauss&ndash;Legendre on each panel. The integrand is smooth
+          inside the kick window, so a handful of panels is already at the floor set by double precision.</div>
+      </div>
+
+      <div class="w6-panel">
+        <div class="w6-read-h">The third route: integrate the real field at a real detector</div>
+        <div class="w6-tabwrap"><table class="w6-tab">
+          <thead><tr><th scope="col">\(r\)</th><th scope="col">\(r\!\int\!\vec E_{\text{rad}}dt\), across the axis</th><th scope="col">relative difference</th><th scope="col">times \(r\)</th></tr></thead>
+          <tbody data-w6-far></tbody>
+        </table></div>
+        <div class="w6-note">This row does not use the \(r\to\infty\) formula at all. It puts a detector at
+          radius \(r\), integrates the acceleration part of the exact Li&eacute;nard&ndash;Wiechert field over
+          the observer time during which the shell passes &mdash; retarded times solved to
+          \(10^{-13}\), thirty&#8209;two Gauss&ndash;Legendre panels &mdash; and multiplies by \(r\). It is not
+          equal to the closed form, and it should not be: it differs by terms of relative order \(1/r\).
+          The last column multiplies the difference by \(r\) and is therefore roughly constant, which is what
+          &ldquo;of order \(1/r\)&rdquo; means.</div>
+      </div>
+    </div>
+    <figcaption>All three routes are the reference core&rsquo;s, and all three are printed rather than
+      described. The point of doing it three ways is that the closed form is the one every textbook writes
+      down, and it is the one it is easiest to be wrong about.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Now the part that is easy to overstate, and which this page will not. The quantity above is the
+      radiation&#8209;order term. It is <b>not</b> the whole of \(\int\vec E\,dt\) at a real detector over a
+      real finite window, because the Coulomb part of the field also contributes to that integral, and for a
+      charge that was sitting still before the kick, its contribution grows without bound as the window is
+      opened backwards in time &mdash; a static field integrated forever.</p>
+  </div>
+
+  <figure class="w6-fig">
+    <div class="w6-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">What the Coulomb part does over a finite window</div>
+          <div class="chart-sub">Both curves are closed form. The horizontal line is the memory; the rising
+            curve is the drift the \(1/r^{2}\) field contributes over a window of the given length.</div>
+        </div>
+        <span class="w6-ptag" data-kind="exact">Exact formula</span>
+      </div>
+      <div class="w6-wrap"><svg class="w6-drift" viewBox="0 0 660 320" role="img"
+        aria-label="The Coulomb drift over a window, rising with the window length, crossing the constant memory value at a window length comparable to the detector distance."></svg></div>
+      <div class="w6-panel">
+        <div class="w6-nums">
+          <div class="w6-num"><span>memory, \(|\vec{\mathcal N}|/r\)</span><b data-w6-r="mem">&mdash;</b></div>
+          <div class="w6-num"><span>Coulomb drift over a window of \(\pm r\) about the shell</span><b data-w6-r="cd">&mdash;</b></div>
+          <div class="w6-num is-lead"><span>window at which the drift equals the memory</span><b data-w6-r="cross">&mdash;</b></div>
+        </div>
+        <div class="w6-note"><b>So this page does not say</b> that the zero&#8209;frequency component is the whole
+          time integral of the electric field. It says that the \(1/r\) part of the time integral of the
+          radiation field is the zero&#8209;frequency component, that this is the quantity the soft factor
+          controls, and that the \(1/r^{2}\) Coulomb part is a separate term which any experiment has to
+          subtract or arrange to be small. The reference core gives it as its own closed form,
+          <span class="mono">coulombDrift</span>, evaluated for the instantaneous limit of the same kick.</div>
+      </div>
+    </div>
+    <figcaption>The crossing is not a subtlety of the formalism, it is the reason gravitational&#8209;wave
+      memory is hard to see: the permanent piece is small, it is not the largest thing in the data, and it
+      only separates cleanly when the observation is short compared with the light travel time to the
+      source and long compared with the burst.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Stand back from the numbers. A charge changed velocity, and a long way away a free test charge was
+      left permanently moving, by an amount that depends only on the change and on the angle. Fourier
+      transform that and you have a pole at zero frequency, with the pole&rsquo;s residue fixed by the same
+      data. Two subjects that grew up separately &mdash; the memory effect, from general relativity in the
+      1970s and 80s, and soft theorems, from quantum field theory in the 1960s &mdash; are here two ways of
+      writing the same coefficient down. That is one edge of the triangle, and it is now earned rather than
+      asserted.</p>
+
+    <p>What is missing is the third corner. A conserved quantity is lurking: \(\vec{\mathcal N}(\hat n)\) is
+      a vector field on the sphere of directions, and vector fields on spheres that come out of conservation
+      laws are usually the divergence of something. Station&nbsp;7 finds out what.</p>
+  </div>
+</section>
+
+<style data-station="w6">
+#w6 .w6-fig { margin: 1.7rem 0 1.5rem; }
+#w6 .w6-card { border: 1px solid var(--rule); background: var(--surface); }
+#w6 .w6-card .chart-head { display: flex; align-items: flex-start; gap: .5rem; flex-wrap: wrap; padding: .85rem 1rem .6rem; border-bottom: 1px solid var(--rule); }
+#w6 .w6-card .chart-head > div:first-child { flex: 1 1 14rem; min-width: 0; }
+#w6 .w6-ptag { display: inline-block; font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--rule-2); color: var(--ink-3); white-space: nowrap; align-self: flex-start; }
+#w6 .w6-ptag[data-kind="exact"]   { border-color: var(--accent);    color: var(--accent-text); }
+#w6 .w6-ptag[data-kind="numeric"] { border-color: var(--st-proved); color: var(--st-proved); }
+#w6 .w6-ctl { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: .8rem 1.2rem; align-items: end; padding: .9rem 1rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); }
+#w6 .w6-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+#w6 .w6-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w6 .w6-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w6 .w6-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w6 .w6-panel { padding: .85rem 1rem 1rem; border-top: 1px solid var(--rule); display: grid; gap: .5rem; }
+#w6 .w6-card > .w6-panel:first-of-type { border-top: 0; }
+#w6 .w6-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+#w6 .w6-note { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); max-width: 44rem; }
+#w6 .w6-note b { color: var(--ink-2); }
+#w6 .w6-tabwrap { overflow-x: auto; }
+#w6 .w6-tab { border-collapse: collapse; font-family: var(--sans); font-size: 12.5px; width: 100%; min-width: 26rem; }
+#w6 .w6-tab th, #w6 .w6-tab td { text-align: right; padding: .32rem .55rem; border-bottom: 1px dotted var(--rule); }
+#w6 .w6-tab th[scope="row"] { text-align: left; font-weight: 400; color: var(--ink-2); }
+#w6 .w6-tab thead th { font-weight: 600; color: var(--ink-3); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--rule-2); text-align: right; }
+#w6 .w6-tab thead th:first-child { text-align: left; }
+#w6 .w6-tab td { font-family: var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w6 .w6-tab tr.is-res th[scope="row"] { color: var(--ink); font-weight: 600; }
+#w6 .w6-tab tr.is-res td { color: var(--die); }
+#w6 .w6-wrap { overflow-x: auto; padding: .4rem .4rem 0; }
+#w6 .w6-drift { display: block; width: 100%; min-width: 19rem; height: auto; }
+#w6 svg .ax { stroke: var(--rule-2); stroke-width: 1; fill: none; }
+#w6 svg .grid { stroke: var(--rule); stroke-width: 1; }
+#w6 svg .tick { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-3); }
+#w6 svg .axlab { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+#w6 svg .curve { fill: none; stroke: var(--die); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+#w6 svg .lvl { fill: none; stroke: var(--keep); stroke-width: 1.8; stroke-dasharray: 6 4; }
+#w6 svg .note { font-family: var(--sans); font-size: 10.5px; fill: var(--ink-3); }
+#w6 svg .notek { font-family: var(--sans); font-size: 10.5px; fill: var(--accent-text); }
+#w6 svg .noted { font-family: var(--sans); font-size: 10.5px; fill: var(--die); }
+#w6 .w6-nums { display: grid; gap: 0; }
+#w6 .w6-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); padding: .28rem 0; border-bottom: 1px dotted var(--rule); }
+@media (max-width: 560px) { #w6 .w6-num { flex-direction: column; align-items: flex-start; gap: .1rem; } }
+#w6 .w6-num b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w6 .w6-num.is-lead { color: var(--ink); }
+#w6 .w6-num.is-lead b { color: var(--die); font-size: 1.02rem; }
+</style>
+
+<script data-station="w6">
+(function () {
+  var root = document.getElementById('w6');
+  if (!root) return;
+  var P = (window.PROLOGUE && window.PROLOGUE.em) || null;
+  if (!P) return;
+  var svg = root.querySelector('.w6-drift');
+  var NS = 'http://www.w3.org/2000/svg';
+  function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  var CACHE = {};
+  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
+  function themeChanged() { CACHE = {}; render(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  }
+  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  var S = { bi: 0, bf: 0.70, tau: 0.10, th: 62, np: 4, lr: 3 };
+  var PANELS = [1, 2, 4, 8, 16, 32];
+
+  function vsub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function vdot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function vlen(a) { return Math.sqrt(vdot(a, a)); }
+
+  function build() {
+    var th = S.th * Math.PI / 180;
+    var n = [Math.cos(th), Math.sin(th), 0];
+    var e1 = [1, 0, 0];                       /* along the kick axis */
+    var e2 = [0, 1, 0];                       /* across it, in the plane */
+    var kick = P.makeKick({ betaI: [S.bi, 0, 0], betaF: [S.bf, 0, 0], tau: S.tau, profile: 'raised-cosine' });
+    var inst = P.makeKick({ betaI: [S.bi, 0, 0], betaF: [S.bf, 0, 0], tau: 0, profile: 'instant' });
+    var r = Math.pow(10, S.lr);
+    var x = [n[0] * r, n[1] * r, n[2] * r];
+    return { n: n, e1: e1, e2: e2, kick: kick, inst: inst, r: r, x: x, th: th };
+  }
+
+  /* 8-node Gauss-Legendre, the same rule the reference core uses */
+  var GX = [-0.9602898564975363, -0.7966664774136267, -0.5255324099163290, -0.1834346424956498,
+    0.1834346424956498, 0.5255324099163290, 0.7966664774136267, 0.9602898564975363];
+  var GW = [0.1012285362903763, 0.2223810344533745, 0.3137066458778873, 0.3626837833783620,
+    0.3626837833783620, 0.3137066458778873, 0.2223810344533745, 0.1012285362903763];
+  function glVec3(fn, a, b, panels) {
+    var out = [0, 0, 0], w = (b - a) / panels;
+    for (var p = 0; p < panels; p++) {
+      var mid = a + (p + 0.5) * w, half = w / 2;
+      for (var j = 0; j < 8; j++) {
+        var v = fn(mid + half * GX[j]), wt = half * GW[j];
+        out[0] += wt * v[0]; out[1] += wt * v[1]; out[2] += wt * v[2];
+      }
+    }
+    return out;
+  }
+  /* route three: the acceleration part of the exact field, integrated in observer
+     time over the passage of the shell at a detector actually placed at radius r */
+  function farField(kick, x, tau) {
+    var ta = -tau / 2 + vlen(vsub(x, kick.position(-tau / 2)));
+    var tb = tau / 2 + vlen(vsub(x, kick.position(tau / 2)));
+    return glVec3(function (t) { return P.fieldAt(kick, x, t).radiationPart; }, ta, tb, 32);
+  }
+
+  function fmt12(v) {
+    if (!isFinite(v)) return '—';
+    var a = Math.abs(v);
+    if (a !== 0 && (a < 1e-4 || a >= 1e6)) return v.toExponential(11);
+    return v.toPrecision(13);
+  }
+  function set(k, v) { var el = root.querySelector('[data-w6-r="' + k + '"]'); if (el) el.textContent = v; }
+  function out(k, v) { var el = root.querySelector('[data-w6-o="' + k + '"]'); if (el) el.textContent = v; }
+
+  function render() {
+    var B = build();
+    var np = PANELS[S.np];
+    var cf = P.memoryKickClosedForm(B.kick, B.x);
+    var qd = P.memoryKickQuadrature(B.kick, B.x, { n: np });
+    var cf0 = cf[0] * B.r, cf1 = cf[1] * B.r, qd0 = qd[0] * B.r, qd1 = qd[1] * B.r;
+    set('cf0', fmt12(cf0)); set('cf1', fmt12(cf1));
+    set('qd0', fmt12(qd0)); set('qd1', fmt12(qd1));
+    set('df0', (qd0 - cf0).toExponential(2)); set('df1', (qd1 - cf1).toExponential(2));
+
+    var mag = Math.hypot(cf0, cf1);
+    var relNow = Math.hypot(qd0 - cf0, qd1 - cf1) / mag;
+    set('rel', relNow === 0 ? '0 at binary64 precision' : relNow.toExponential(2));
+    var tb = root.querySelector('[data-w6-conv]');
+    if (tb) {
+      tb.innerHTML = '';
+      PANELS.forEach(function (p) {
+        var q = P.memoryKickQuadrature(B.kick, B.x, { n: p });
+        var rel = Math.hypot(q[0] * B.r - cf0, q[1] * B.r - cf1) / mag;
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<th scope="row">' + p + '</th><td>' + (rel === 0 ? '0' : rel.toExponential(2)) + '</td>';
+        tb.appendChild(tr);
+      });
+    }
+    var tf = root.querySelector('[data-w6-far]');
+    if (tf) {
+      tf.innerHTML = '';
+      [2, 3, 4, 5].forEach(function (e) {
+        var r = Math.pow(10, e);
+        var x = [B.n[0] * r, B.n[1] * r, B.n[2] * r];
+        var ff = farField(B.kick, x, S.tau);
+        var got = ff[1] * r, want = cf1;
+        var rel = Math.abs(got - want) / Math.abs(mag);
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<th scope="row">10' + (e === 2 ? '²' : e === 3 ? '³' : e === 4 ? '⁴' : '⁵') + '</th><td>' +
+          got.toPrecision(10) + '</td><td>' + rel.toExponential(2) + '</td><td>' + (rel * r).toPrecision(4) + '</td>';
+        tf.appendChild(tr);
+      });
+    }
+
+    /* the Coulomb drift over a window of half-length T about the shell arrival */
+    var tArr = vlen(B.x);
+    var memMag = mag / B.r;
+    function drift(T) {
+      try {
+        var d = P.coulombDrift(B.inst, B.x, tArr - T, tArr + T);
+        return vlen(d);
+      } catch (e) { return NaN; }
+    }
+    var cdAtR = drift(B.r);
+    set('mem', memMag.toExponential(5));
+    set('cd', isFinite(cdAtR) ? cdAtR.toExponential(5) : '—');
+    /* bisect for the window where the drift first equals the memory */
+    var lo = 1e-6 * B.r, hi = 1e4 * B.r, cross = NaN;
+    if (drift(hi) > memMag && drift(lo) < memMag) {
+      for (var it = 0; it < 60; it++) { var midT = Math.sqrt(lo * hi); if (drift(midT) < memMag) lo = midT; else hi = midT; }
+      cross = Math.sqrt(lo * hi);
+    }
+    set('cross', isFinite(cross) ? (cross / B.r).toPrecision(4) + '  ×  r' : 'never within 10⁴ r');
+
+    drawDrift(B, drift, memMag, cross);
+
+    out('bi', S.bi.toFixed(2)); out('bf', S.bf.toFixed(2)); out('tau', S.tau.toFixed(3));
+    out('th', S.th.toFixed(0) + '°'); out('np', String(np)); out('lr', S.lr.toFixed(1));
+  }
+
+  function drawDrift(B, drift, memMag, cross) {
+    if (!svg) return;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var VW = 660, VH = 320, L = 74, R = 16, T = 16, Bm = 46;
+    var e0 = -3, e1 = 3, N = 90, i;
+    var xs = [], ys = [];
+    for (i = 0; i < N; i++) { var Tw = B.r * Math.pow(10, e0 + (e1 - e0) * i / (N - 1)); xs.push(Tw); ys.push(drift(Tw)); }
+    var lo = Infinity, hi = -Infinity;
+    for (i = 0; i < ys.length; i++) if (ys[i] > 0 && isFinite(ys[i])) { if (ys[i] < lo) lo = ys[i]; if (ys[i] > hi) hi = ys[i]; }
+    lo = Math.min(lo, memMag); hi = Math.max(hi, memMag);
+    if (!isFinite(lo) || !isFinite(hi)) return;
+    var Y1 = Math.log10(hi) + 0.4, Y0 = Math.log10(lo) - 0.4;
+    function px(t) { return L + (Math.log10(t / B.r) - e0) / (e1 - e0) * (VW - L - R); }
+    function py(v) { return VH - Bm - (Math.log10(v) - Y0) / (Y1 - Y0) * (VH - T - Bm); }
+    var g = mk('g', {}), k, tx;
+    for (k = e0; k <= e1; k++) {
+      g.appendChild(mk('line', { x1: px(B.r * Math.pow(10, k)), y1: T, x2: px(B.r * Math.pow(10, k)), y2: VH - Bm, class: 'grid' }));
+      tx = mk('text', { x: px(B.r * Math.pow(10, k)), y: VH - Bm + 16, class: 'tick', 'text-anchor': 'middle' });
+      tx.textContent = (k === 0 ? 'r' : '10' + sup(k) + 'r'); g.appendChild(tx);
+    }
+    for (k = Math.ceil(Y0); k <= Math.floor(Y1); k++) {
+      g.appendChild(mk('line', { x1: L, y1: py(Math.pow(10, k)), x2: VW - R, y2: py(Math.pow(10, k)), class: 'grid' }));
+      tx = mk('text', { x: L - 7, y: py(Math.pow(10, k)) + 3.5, class: 'tick', 'text-anchor': 'end' });
+      tx.textContent = '10' + sup(k); g.appendChild(tx);
+    }
+    g.appendChild(mk('path', { class: 'ax', d: 'M' + L + ' ' + T + 'V' + (VH - Bm) + 'H' + (VW - R) }));
+    g.appendChild(mk('line', { x1: L, y1: py(memMag), x2: VW - R, y2: py(memMag), class: 'lvl' }));
+    var d = '';
+    for (i = 0; i < xs.length; i++) if (ys[i] > 0 && isFinite(ys[i])) d += (d ? 'L' : 'M') + px(xs[i]).toFixed(2) + ' ' + py(ys[i]).toFixed(2);
+    g.appendChild(mk('path', { class: 'curve', d: d }));
+    if (isFinite(cross)) {
+      var CXp = px(cross);
+      if (CXp > L && CXp < VW - R) {
+        g.appendChild(mk('line', { x1: CXp, y1: T, x2: CXp, y2: VH - Bm, class: 'ax', 'stroke-dasharray': '3 3' }));
+        var cl = mk('text', { x: CXp + 5, y: T + 12, class: 'note' });
+        cl.textContent = 'they are equal here'; g.appendChild(cl);
+      }
+    }
+    var a = mk('text', { x: L + 8, y: py(memMag) - 9, class: 'notek' });
+    a.textContent = 'the memory  |N|/r — flat, it does not care about the window'; g.appendChild(a);
+    var b = mk('text', { x: VW - R - 6, y: py(ys[ys.length - 1]) - 8, class: 'noted', 'text-anchor': 'end' });
+    b.textContent = 'the Coulomb drift'; g.appendChild(b);
+    var xl = mk('text', { x: (L + VW - R) / 2, y: VH - 9, class: 'axlab', 'text-anchor': 'middle' });
+    xl.textContent = 'half-length of the observing window, in units of the detector distance r'; g.appendChild(xl);
+    svg.appendChild(g);
+  }
+  function sup(k) {
+    var s = String(k), o = '', m = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+    for (var i = 0; i < s.length; i++) o += m[s[i]] || s[i];
+    return o;
+  }
+
+  var pending = null;
+  root.addEventListener('input', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-w6-i]') : null;
+    if (!el) return;
+    S[el.getAttribute('data-w6-i')] = parseFloat(el.value);
+    if (pending) window.cancelAnimationFrame(pending);
+    pending = window.requestAnimationFrame(function () { pending = null; render(); });
+  });
+  render();
+})();
+</script>
+
+<section class="stop" id="w7">
+  <div class="stop-head">
+    <div class="plate">Station 7 &middot; one conservation law per angle</div>
+    <h2>Gauss&rsquo;s law, refined until there is one of it for every direction</h2>
+  </div>
+
+  <div class="body">
+    <p class="lede">The familiar anchor is Gauss&rsquo;s law: the total charge inside a region is the flux
+      of the electric field through a surface around it, and if charge is conserved that flux does not
+      change. One number, conserved. This station is about the fact that there is a much finer statement
+      hiding inside it &mdash; not one conserved number but one for every function on the sphere of
+      directions &mdash; and that the soft factor is what makes the finer statement work.</p>
+
+    <p>Two ingredients. The first is the Coulombic field at large distance. For a charge in uniform motion,
+      the leading \(1/r^{2}\) part of the radial electric field, held at fixed retarded time and taken out
+      to infinity, is not constant over the sphere: it depends on the angle, and the dependence is the same
+      one that has been in every formula on this page.</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The Coulombic profile at large distance <span class="w7-ptag" data-kind="quoted">Quoted</span></div>
+    \[ \lim_{r\to\infty}r^{2}E_{r}\;=\;C_{\beta}(\hat n)\;=\;\frac{1-\beta^{2}}{(1-\hat n\cdot\vec\beta)^{2}} \]
+    <div class="eq-note">This is the angular part of \(F_{rt}\big|_{\mathcal I^{+}}\) at
+      <span class="mono">soft_Arxiv_update.tex:541-550</span>, where it appears with the notes&rsquo; charge
+      normalisation \(e^{2}Q_k/4\pi\) out front; here everything is per unit charge, Gaussian, \(c=1\). At
+      \(\beta=0\) it is the constant Coulomb field. At \(\beta\ne0\) it is not constant, and the notes make a
+      point of it: this is a \(\ell=1\) structure in the \(1/r^{2}\) term, which is <i>not</i> the electric
+      dipole moment of the usual multipole expansion, since a single moving charge has no dipole moment.
+      Its total over the sphere is the charge, as it must be: \(\int C_{\beta}\,d\Omega=4\pi\).</div>
+  </div>
+
+  <div class="body">
+    <p>The second ingredient is the constraint. Maxwell&rsquo;s equations at future null infinity have a
+      leading term in their \(1/r\) expansion, and it is a relation between how the Coulombic profile changes
+      with retarded time and what the radiation is doing:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The leading constraint at future null infinity <span class="w7-ptag" data-kind="quoted">Quoted</span></div>
+    \[ \partial_u F_{ru}^{(2)}+D^{z}F^{(0)}_{uz}+D^{\bar z}F^{(0)}_{u\bar z}+e^{2}j_u^{(2)}=0 \]
+    <div class="eq-note"><span class="mono">soft_Arxiv_update.tex:699-704</span>, equation
+      <span class="mono">(abelianconstrainteq)</span>; \(D_z\) is the covariant derivative of the unit round
+      sphere. The last term is the charge current piercing null infinity. <b>For the kicked charge on this
+      page it is zero</b>, because the charge is massive: it ends up at timelike infinity, never crossing
+      \(\mathcal I^{+}\), and its own field is what appears in the first term. If a massless charged particle
+      crossed \(\mathcal I^{+}\), that term would have to come back.</div>
+  </div>
+
+  <div class="body">
+    <p>Integrate the constraint over all retarded time. The first term telescopes to the difference between
+      the profile long after the news arrives and long before it. The middle terms are the sphere divergence
+      of the transverse radiation field integrated over all time &mdash; and that integral is the memory
+      vector from station&nbsp;6. So, per angle:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">One conservation law per direction</div>
+    \[ C_{\beta_f}(\hat n)-C_{\beta_i}(\hat n)\;=\;D_A\,\mathcal{M}^{A}(\hat n),
+       \qquad \vec{\mathcal M}(\hat n)=\hat n\times\Bigl(\hat n\times\Bigl[\tfrac{\vec\beta_f}{1-\hat n\cdot\vec\beta_f}-\tfrac{\vec\beta_i}{1-\hat n\cdot\vec\beta_i}\Bigr]\Bigr) \]
+    <div class="eq-note">In the reference core&rsquo;s own words, which are the sentence this page is licensed
+      to print: &ldquo;at every angle on future null infinity, \(C_f-C_i=D_AM^A\): the change in the
+      \(1/r^{2}\) Coulomb profile is the sphere divergence of the DC transverse radiation field,
+      <b>not that field itself</b>; no null charge&#8209;flux term appears here because the kicked source is
+      massive.&rdquo; The distinction matters and this page will not blur it: the difference of the Coulomb
+      profiles is not the memory, it is the divergence of the memory. There is a one&#8209;line reason the
+      identity holds at all &mdash; \(\vec{\mathcal M}\) is the sphere gradient of
+      \(\log(1-\hat n\cdot\vec\beta)\) differenced between the two velocities, and
+      \(D_AD^{A}\log(1-\hat n\cdot\vec\beta)=C_{\beta}-1\), with the constant cancelling in the
+      difference.</div>
+  </div>
+
+  <figure class="w7-fig">
+    <div class="w7-card">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">The ledger, angle by angle</div>
+          <div class="chart-sub">Top: the Coulombic profile before and after the kick, along the great circle
+            through the kick axis. Bottom: their difference, and the sphere divergence of the memory
+            differentiated numerically on top of it.</div>
+        </div>
+        <span class="w7-ptag" data-kind="exact">Exact formula</span>
+        <span class="w7-ptag" data-kind="numeric">Controlled numerical solve</span>
+      </div>
+      <div class="w7-ctl">
+        <label class="w7-knob"><span>speed before, \(\beta_i\)<b data-w7-o="bi">0.00</b></span>
+          <input type="range" data-w7-i="bi" min="-0.9" max="0.9" value="0" step="0.01"></label>
+        <label class="w7-knob"><span>speed after, \(\beta_f\)<b data-w7-o="bf">0.72</b></span>
+          <input type="range" data-w7-i="bf" min="-0.9" max="0.9" value="0.72" step="0.01"></label>
+        <label class="w7-knob"><span>the angle you are auditing<b data-w7-o="th">64&deg;</b></span>
+          <input type="range" data-w7-i="th" min="4" max="176" value="64" step="1"></label>
+      </div>
+      <div class="w7-wrap"><svg class="w7-prof" viewBox="0 0 660 300" role="img"
+        aria-label="The Coulombic angular profile before and after the kick, plotted against the angle from the kick axis."></svg></div>
+      <div class="w7-wrap"><svg class="w7-bal" viewBox="0 0 660 300" role="img"
+        aria-label="The difference of the two Coulombic profiles, with the numerically computed sphere divergence of the memory vector drawn as markers on top of it."></svg></div>
+      <div class="w7-read">
+        <div class="w7-read-h">At the angle you selected</div>
+        <div class="w7-nums">
+          <div class="w7-num"><span>Coulombic profile before, \(C_{\beta_i}\)</span><b data-w7-r="ci">&mdash;</b></div>
+          <div class="w7-num"><span>Coulombic profile after, \(C_{\beta_f}\)</span><b data-w7-r="cf">&mdash;</b></div>
+          <div class="w7-num is-lead"><span>their difference</span><b data-w7-r="dif">&mdash;</b></div>
+          <div class="w7-num"><span>\(D_A\mathcal{M}^{A}\), five-point stencil on the sphere, \(h=10^{-4}\)</span><b data-w7-r="div">&mdash;</b></div>
+          <div class="w7-num"><span>residual between them</span><b data-w7-r="res">&mdash;</b></div>
+          <div class="w7-num"><span>the memory vector itself there, \(|\vec{\mathcal M}|\) &mdash; a different number</span><b data-w7-r="mem">&mdash;</b></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>The upper curves are closed form. The lower dark curve is their difference, also closed form;
+      the markers on it are the reference core&rsquo;s <span class="mono">sphereDivergence</span>, a centred
+      five&#8209;point stencil applied to the exact memory field with no knowledge of the closed form at all.
+      The residual printed above is what that comparison achieves, and it is the size a fourth&#8209;order
+      finite difference at \(h=10^{-4}\) should give, not zero. The last row is there to keep an easy mistake
+      visible: the memory and the profile difference are different numbers at the same angle, related by a
+      derivative on the sphere.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>What has been shown is a conservation law with an angle attached. Weight the identity by any function
+      \(\varepsilon(\hat n)\) and integrate over the sphere and you get one conserved quantity per
+      \(\varepsilon\): a hard piece, which is the charge weighted by where it went, and a soft piece, which is
+      the memory weighted by the derivative of \(\varepsilon\). Constant \(\varepsilon\) gives back ordinary
+      charge conservation and the soft piece integrates away. Every other \(\varepsilon\) gives something new.
+      That infinity of conservation laws is the third corner of the triangle, and the soft factor is not an
+      accessory to it &mdash; it is the term that makes it balance.</p>
+
+    <p>This page stops one step short of the corner itself. Turning these classical conservation laws into
+      symmetry generators, and their Ward identities into the soft theorem, is the content of the lecture
+      notes at <span class="mono">soft_Arxiv_update.tex:1064</span> and is reported here rather than derived.</p>
+  </div>
+
+  <div class="w7-interlude">
+    <div class="w7-read-h">An interlude, because the angles do not match up the way you expect</div>
+    <div class="body">
+      <p>There is a wrinkle in all of this that took a long time to be noticed. A conservation law relates
+        something at \(\mathcal I^{-}\) to something at \(\mathcal I^{+}\), and to write it down you have to
+        say which direction on the incoming sphere corresponds to which direction on the outgoing one. The
+        answer is not the obvious one. The Li&eacute;nard&ndash;Wiechert field of a charge in uniform motion
+        does not have the same value at the two ends; it satisfies
+        \(\lim r^{2}F_{ru}(\hat x)\big|_{\mathcal I^{+}_{-}}=\lim r^{2}F_{rv}(-\hat x)\big|_{\mathcal I^{-}_{+}}\)
+        &mdash; <span class="mono">soft_Arxiv_update.tex:568-573</span> &mdash; matching at
+        <i>antipodal</i> points.</p>
+
+      <p>Here is the picture a student in the audience offered, which is as good a way in as any.</p>
+    </div>
+
+    <figure class="w7-fig">
+      <div class="w7-card">
+        <div class="chart-head">
+          <div>
+            <div class="chart-title">A free particle, drawn on a compactified Minkowski space</div>
+            <div class="chart-sub">Left: the conformal diagram, with the worldline drawn from the exact
+              \(\arctan\) map. Right: the direction of the particle as seen from the origin, sweeping from
+              where it came from to where it goes.</div>
+          </div>
+          <span class="w7-ptag" data-kind="exact">Exact formula</span>
+        </div>
+        <div class="w7-ctl">
+          <label class="w7-knob"><span>direction of travel<b data-w7-o="al">35&deg;</b></span>
+            <input type="range" data-w7-i="al" min="0" max="180" value="35" step="1"></label>
+          <label class="w7-knob"><span>speed, \(\beta\)<b data-w7-o="pb">0.60</b></span>
+            <input type="range" data-w7-i="pb" min="0.05" max="0.995" value="0.6" step="0.005"></label>
+          <label class="w7-knob"><span>closest approach to the origin<b data-w7-o="pd">0.25</b></span>
+            <input type="range" data-w7-i="pd" min="0.02" max="3" value="0.25" step="0.01"></label>
+        </div>
+        <div class="w7-two">
+          <div class="w7-wrap"><svg class="w7-pen" viewBox="0 0 340 340" role="img"
+            aria-label="Conformal diagram of Minkowski space with a free particle worldline running from past timelike infinity to future timelike infinity, bulging first into one half of the diagram and then into the other."></svg></div>
+          <div class="w7-wrap"><svg class="w7-cel" viewBox="0 0 340 340" role="img"
+            aria-label="A circle of directions with the particle's incoming and outgoing directions marked at antipodal points."></svg></div>
+        </div>
+        <div class="w7-read">
+          <div class="w7-nums">
+            <div class="w7-num"><span>direction it came from, \(t\to-\infty\)</span><b data-w7-r="past">&mdash;</b></div>
+            <div class="w7-num"><span>direction it goes to, \(t\to+\infty\)</span><b data-w7-r="fut">&mdash;</b></div>
+            <div class="w7-num is-lead"><span>\(|\hat n_{\text{past}}+\hat n_{\text{future}}|\), zero if they are antipodal</span><b data-w7-r="anti">&mdash;</b></div>
+          </div>
+        </div>
+      </div>
+      <figcaption>The conformal map is \(u=t-r\), \(v=t+r\), \(U=\arctan u\), \(V=\arctan v\),
+        \(T=U+V\), \(R=V-U\), taken from the reference core. A conformal diagram suppresses the two angular
+        directions, so it has only a radial axis; the axis here has been given a sign, with the right half
+        the chosen direction of travel and the left half the direction opposite to it, which is what makes
+        the antipodal ends visible at all. The price is the dotted segment: at its closest approach the
+        particle is off to one side of both those directions, and there is nowhere on this diagram to draw
+        that. Set the closest approach small and the dotted segment shrinks to nothing, because a particle
+        that passes through the origin really does swap hemispheres in an instant. Push the speed towards
+        one and watch the worldline flatten onto the null boundary.</figcaption>
+    </figure>
+
+    <blockquote class="quote">
+      <p><b>Student:</b> &ldquo;if you like consider one particle without [interaction] just fly through the
+        center right just the in the past you count the charges from that angle in the fut[ure] goes to [the
+        opposite] point&rdquo;<br>
+        <b>Strominger:</b> &ldquo;yeah yeah it&rsquo;s not surprising when you think about it the right
+        way&rdquo;</p>
+      <footer><span class="w7-ptag" data-kind="lecture">Lecture remark</span>
+        lecture&nbsp;2, <span class="mono">[yeMZKViadhw @ 01:12:34]</span>. Auto&#8209;captions, so the
+        transcription is rough; a secondary source, quoted for the picture and not for anything the argument
+        rests on.</footer>
+    </blockquote>
+
+    <div class="body">
+      <p>The picture is right about the geometry, and the reference core states exactly how far it goes:
+        &ldquo;a nonzero straight velocity has limiting directions \(-\hat{\vec v}\) as \(t\to-\infty\) and
+        \(+\hat{\vec v}\) as \(t\to+\infty\), an antipodal pair; this geometry motivates the angular
+        identification, but does not by itself derive the antipodal matching condition on fields across
+        spatial infinity.&rdquo; The figure above checks the first half of that sentence to machine precision
+        and does not attempt the second.</p>
+
+      <p>How much more than a motivation is available is worth being blunt about, and the lecturer is blunter
+        than we would have been:</p>
+    </div>
+
+    <blockquote class="quote">
+      <p>&ldquo;I&rsquo;ve never seen this matching condition discussed it&rsquo;s a property of the Leonard
+        Victor [Li&eacute;nard&ndash;Wiechert] potential and that&rsquo;s been sitting there for 130 years
+        [&hellip;] you can derive it Quantum mechanically from the soft Photon theorem the soft Photon theorem
+        implies it but it seems like uh pretty weird to be using Quantum field Theory to preserve proof of
+        [i.e. to prove] results relevant to 19th century electromagnetism [&hellip;] I would think that there
+        would be some set of assumptions and some some way to uh prove it make it into a mathematical theorem
+        but I I haven&rsquo;t I haven&rsquo;t seen that&rdquo;</p>
+      <footer><span class="w7-ptag" data-kind="lecture">Lecture remark</span>
+        lecture&nbsp;1, answering a question, <span class="mono">[lvyyxkjwSCg @ 01:26:02]</span>. So: the
+        matching condition is checked in every example anyone has looked at, it is forced if you want the
+        scattering problem to be defined at all, and as far as the person who built this subject knows there
+        is no first&#8209;principles derivation of it. That is the honest state of the third corner, and it is
+        not a footnote &mdash; everything in this station rests on it.</footer>
+    </blockquote>
+  </div>
+
+  <div class="body">
+    <p>One last remark, on the name. &ldquo;Asymptotic symmetry&rdquo; sounds like an approximation, and the
+      conservation laws in this station are not approximate: each of them is an exact statement about exact
+      solutions, checked here to the precision of the arithmetic. The word records where the symmetry becomes
+      easy to recognise, not how true it is.</p>
+  </div>
+
+  <blockquote class="quote">
+    <p>&ldquo;I kind of dislike this word asymptotic symmetries because it suggests that they&rsquo;re somehow
+      not exact that they&rsquo;re only true in some asymptotic sense but asymptotic symmetries are symmetries
+      just like any other Symmetry and the reason they&rsquo;re called asymptotic symmetries is that they
+      typically take a simple and recognizable form when you look at how they act on the asymptotic regions of
+      space-time&rdquo;</p>
+    <footer><span class="w7-ptag" data-kind="lecture">Lecture remark</span>
+      lecture&nbsp;1, opening minutes, <span class="mono">[lvyyxkjwSCg @ 00:01:06]</span>.</footer>
+  </blockquote>
+</section>
+
+<style data-station="w7">
+#w7 .w7-fig { margin: 1.6rem 0 1.4rem; }
+#w7 .w7-card { border: 1px solid var(--rule); background: var(--surface); }
+#w7 .w7-card .chart-head { display: flex; align-items: flex-start; gap: .5rem; flex-wrap: wrap; padding: .85rem 1rem .6rem; border-bottom: 1px solid var(--rule); }
+#w7 .w7-card .chart-head > div:first-child { flex: 1 1 14rem; min-width: 0; }
+#w7 .w7-ptag { display: inline-block; font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--rule-2); color: var(--ink-3); white-space: nowrap; align-self: flex-start; }
+#w7 .w7-ptag[data-kind="exact"]   { border-color: var(--accent);    color: var(--accent-text); }
+#w7 .w7-ptag[data-kind="numeric"] { border-color: var(--st-proved); color: var(--st-proved); }
+#w7 .w7-ptag[data-kind="quoted"]  { border-color: var(--ink-3);     color: var(--ink-2); margin-left: .5rem; }
+#w7 .w7-ptag[data-kind="lecture"] { border-color: var(--st-hold);   color: var(--st-hold); margin-right: .4rem; }
+#w7 .w7-ctl { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .8rem 1.2rem; align-items: end; padding: .9rem 1rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); }
+#w7 .w7-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+#w7 .w7-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w7 .w7-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w7 .w7-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w7 .w7-wrap { overflow-x: auto; padding: .3rem .4rem 0; min-width: 0; }
+#w7 .w7-prof, #w7 .w7-bal { display: block; width: 100%; min-width: 19rem; height: auto; border-bottom: 1px solid var(--rule); }
+#w7 .w7-two { display: grid; grid-template-columns: minmax(0, 1fr); border-bottom: 1px solid var(--rule); }
+@media (min-width: 640px) { #w7 .w7-two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+#w7 .w7-pen, #w7 .w7-cel { display: block; width: 100%; min-width: 14rem; height: auto; }
+#w7 svg .ax { stroke: var(--rule-2); stroke-width: 1; fill: none; }
+#w7 svg .grid { stroke: var(--rule); stroke-width: 1; }
+#w7 svg .tick { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-3); }
+#w7 svg .axlab { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+#w7 svg .before { fill: none; stroke: var(--keep); stroke-width: 2; }
+#w7 svg .after  { fill: none; stroke: var(--die);  stroke-width: 2; }
+#w7 svg .diffc  { fill: none; stroke: var(--ink);  stroke-width: 2.4; }
+#w7 svg .dmark  { fill: none; stroke: var(--st-proved); stroke-width: 1.6; }
+#w7 svg .sel    { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 3; }
+#w7 svg .note   { font-family: var(--sans); font-size: 10.5px; fill: var(--ink-3); }
+#w7 svg .notek  { font-family: var(--sans); font-size: 10.5px; fill: var(--accent-text); }
+#w7 svg .noted  { font-family: var(--sans); font-size: 10.5px; fill: var(--die); }
+#w7 svg .notep  { font-family: var(--sans); font-size: 10.5px; fill: var(--st-proved); }
+#w7 svg .pen-edge { fill: none; stroke: var(--ink-3); stroke-width: 1.4; }
+#w7 svg .pen-fill { fill: var(--surface-sunk); stroke: none; }
+#w7 svg .pen-wl { fill: none; stroke: var(--die); stroke-width: 2.2; stroke-linecap: round; }
+#w7 svg .pen-cross { stroke: var(--die); stroke-width: 1.4; stroke-dasharray: 2 3; }
+#w7 svg .pen-lbl { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+#w7 svg .cel-c { fill: none; stroke: var(--rule-2); stroke-width: 1.2; }
+#w7 svg .cel-tr { fill: none; stroke: var(--die); stroke-width: 1.8; }
+#w7 .w7-read { padding: .85rem 1rem 1rem; }
+#w7 .w7-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .35rem; }
+#w7 .w7-nums { display: grid; gap: 0; }
+#w7 .w7-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); padding: .28rem 0; border-bottom: 1px dotted var(--rule); }
+#w7 .w7-num:last-child { border-bottom: 0; }
+@media (max-width: 560px) { #w7 .w7-num { flex-direction: column; align-items: flex-start; gap: .1rem; } }
+#w7 .w7-num b { font-family: var(--mono); font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w7 .w7-num.is-lead { color: var(--ink); }
+#w7 .w7-num.is-lead b { color: var(--die); font-size: 1.02rem; }
+#w7 .w7-interlude { border-left: 3px solid var(--rule-2); padding-left: 1.1rem; margin: 2rem 0 1.4rem; }
+#w7 .w7-interlude .w7-read-h { margin-bottom: .7rem; }
+</style>
+
+<script data-station="w7">
+(function () {
+  var root = document.getElementById('w7');
+  if (!root) return;
+  var P = (window.PROLOGUE && window.PROLOGUE.em) || null;
+  if (!P) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  var svgProf = root.querySelector('.w7-prof'), svgBal = root.querySelector('.w7-bal');
+  var svgPen = root.querySelector('.w7-pen'), svgCel = root.querySelector('.w7-cel');
+  var CACHE = {};
+  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
+  function themeChanged() { CACHE = {}; render(); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  }
+  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  var S = { bi: 0, bf: 0.72, th: 64, al: 35, pb: 0.60, pd: 0.25 };
+  function dirAt(deg) { var t = deg * Math.PI / 180; return [Math.cos(t), Math.sin(t), 0]; }
+  function kickNow() {
+    return P.makeKick({ betaI: [S.bi, 0, 0], betaF: [S.bf, 0, 0], tau: 0.1, profile: 'raised-cosine' });
+  }
+  function memAt(kick) { return function (n) { return P.dcRadiationField(kick, n); }; }
+
+  function set(k, v) { var el = root.querySelector('[data-w7-r="' + k + '"]'); if (el) el.textContent = v; }
+  function out(k, v) { var el = root.querySelector('[data-w7-o="' + k + '"]'); if (el) el.textContent = v; }
+  function fmt(x, d) {
+    if (!isFinite(x)) return '—';
+    var a = Math.abs(x);
+    if (a !== 0 && (a < 1e-4 || a >= 1e5)) return x.toExponential(d === undefined ? 5 : d);
+    return x.toFixed(d === undefined ? 8 : d);
+  }
+
+  /* ---------- the two ledger charts ---------- */
+  function axes(svg, x0, x1, y0, y1, xlab, ylab) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var VW = 660, VH = 300, L = 70, R = 16, T = 16, B = 44;
+    var g = mk('g', {});
+    function px(x) { return L + (x - x0) / (x1 - x0) * (VW - L - R); }
+    function py(y) { return VH - B - (y - y0) / (y1 - y0) * (VH - T - B); }
+    var k, tx;
+    for (k = 0; k <= 180; k += 30) {
+      g.appendChild(mk('line', { x1: px(k), y1: T, x2: px(k), y2: VH - B, class: 'grid' }));
+      tx = mk('text', { x: px(k), y: VH - B + 16, class: 'tick', 'text-anchor': 'middle' });
+      tx.textContent = k + '°'; g.appendChild(tx);
+    }
+    var span = y1 - y0, stepGuess = Math.pow(10, Math.floor(Math.log10(span / 4)));
+    var step = stepGuess;
+    while (span / step > 8) step *= 2;
+    while (span / step < 3) step /= 2;
+    for (k = Math.ceil(y0 / step) * step; k <= y1 + 1e-12; k += step) {
+      g.appendChild(mk('line', { x1: L, y1: py(k), x2: VW - R, y2: py(k), class: 'grid' }));
+      tx = mk('text', { x: L - 7, y: py(k) + 3.5, class: 'tick', 'text-anchor': 'end' });
+      tx.textContent = (Math.abs(k) < 1e-9 ? '0' : (Math.abs(step) < 0.1 ? k.toFixed(2) : k.toFixed(1)));
+      g.appendChild(tx);
+    }
+    g.appendChild(mk('path', { class: 'ax', d: 'M' + L + ' ' + T + 'V' + (VH - B) + 'H' + (VW - R) }));
+    var xl = mk('text', { x: (L + VW - R) / 2, y: VH - 8, class: 'axlab', 'text-anchor': 'middle' });
+    xl.textContent = xlab; g.appendChild(xl);
+    if (ylab) {
+      var yl = mk('text', { x: 14, y: (T + VH - B) / 2, class: 'axlab', 'text-anchor': 'middle',
+        transform: 'rotate(-90 14 ' + ((T + VH - B) / 2) + ')' });
+      yl.textContent = ylab; g.appendChild(yl);
+    }
+    svg.appendChild(g);
+    return { g: g, px: px, py: py, VW: VW, VH: VH, L: L, R: R, T: T, B: B };
+  }
+  function path(A, xs, ys, cls) {
+    var d = '';
+    for (var i = 0; i < xs.length; i++) if (isFinite(ys[i])) d += (d ? 'L' : 'M') + A.px(xs[i]).toFixed(2) + ' ' + A.py(ys[i]).toFixed(2);
+    A.g.appendChild(mk('path', { class: cls, d: d }));
+  }
+
+  function render() {
+    var kick = kickNow(), N = 121, i;
+    var xs = [], ci = [], cf = [], df = [], dv = [];
+    for (i = 0; i < N; i++) {
+      var deg = 180 * i / (N - 1);
+      var n = dirAt(deg);
+      xs.push(deg);
+      var a = P.coulombProfile([S.bi, 0, 0], n, 1), b = P.coulombProfile([S.bf, 0, 0], n, 1);
+      ci.push(a); cf.push(b); df.push(b - a);
+    }
+    for (i = 0; i < N; i += 4) {
+      dv.push([xs[i], P.sphereDivergence(memAt(kick), dirAt(xs[i]), 1e-4)]);
+    }
+    var lo = Math.min.apply(null, ci.concat(cf)), hi = Math.max.apply(null, ci.concat(cf));
+    var pad = 0.08 * (hi - lo || 1);
+    var A = axes(svgProf, 0, 180, Math.max(0, lo - pad), hi + pad, 'angle from the kick axis', 'r²E_r  (per unit charge)');
+    path(A, xs, ci, 'before'); path(A, xs, cf, 'after');
+    var l1 = mk('text', { x: A.VW - A.R - 6, y: A.T + 14, class: 'notek', 'text-anchor': 'end' }); l1.textContent = 'before the kick,  C(β_i)'; A.g.appendChild(l1);
+    var l2 = mk('text', { x: A.VW - A.R - 6, y: A.T + 30, class: 'noted', 'text-anchor': 'end' }); l2.textContent = 'after the kick,  C(β_f)'; A.g.appendChild(l2);
+    A.g.appendChild(mk('line', { x1: A.px(S.th), y1: A.T, x2: A.px(S.th), y2: A.VH - A.B, class: 'sel' }));
+
+    var dlo = Math.min.apply(null, df), dhi = Math.max.apply(null, df);
+    var dpad = 0.12 * (dhi - dlo || 1);
+    var B2 = axes(svgBal, 0, 180, dlo - dpad, dhi + dpad, 'angle from the kick axis', 'change in r²E_r');
+    path(B2, xs, df, 'diffc');
+    for (i = 0; i < dv.length; i++) {
+      if (!isFinite(dv[i][1])) continue;
+      B2.g.appendChild(mk('circle', { cx: B2.px(dv[i][0]), cy: B2.py(dv[i][1]), r: 3.6, class: 'dmark' }));
+    }
+    var m1 = mk('text', { x: B2.VW - B2.R - 6, y: B2.T + 14, class: 'note', 'text-anchor': 'end' }); m1.textContent = 'closed form:  C(β_f) − C(β_i)'; B2.g.appendChild(m1);
+    var m2 = mk('text', { x: B2.VW - B2.R - 6, y: B2.T + 30, class: 'notep', 'text-anchor': 'end' }); m2.textContent = 'five-point sphere divergence of the memory,  D·M'; B2.g.appendChild(m2);
+    B2.g.appendChild(mk('line', { x1: B2.px(S.th), y1: B2.T, x2: B2.px(S.th), y2: B2.VH - B2.B, class: 'sel' }));
+
+    var nSel = dirAt(S.th);
+    var led = P.angularLedger(kick, nSel);
+    var dnum = P.sphereDivergence(memAt(kick), nSel, 1e-4);
+    var M = P.dcRadiationField(kick, nSel);
+    set('ci', fmt(led.before)); set('cf', fmt(led.after));
+    set('dif', fmt(led.difference)); set('div', fmt(dnum));
+    set('res', Math.abs(dnum - led.difference).toExponential(2));
+    set('mem', fmt(Math.hypot(M[0], M[1], M[2])));
+
+    drawPenrose(); drawCelestial();
+    out('bi', S.bi.toFixed(2)); out('bf', S.bf.toFixed(2)); out('th', S.th.toFixed(0) + '°');
+    out('al', S.al.toFixed(0) + '°'); out('pb', S.pb.toFixed(3)); out('pd', S.pd.toFixed(2));
+  }
+
+  /* ---------- the conformal diagram ---------- */
+  /* Two branches: the half of the worldline spent on the minus-n side of the
+     plane through the origin perpendicular to the motion, and the half spent on
+     the plus-n side. The conformal diagram suppresses the angles, so a trajectory
+     that misses the origin cannot be drawn as one continuous curve across the
+     axis; the crossing is drawn dotted and named. */
+  function worldline() {
+    var v = S.pb, b = S.pd, past = [], future = [], i, NS2 = 181;
+    for (i = 0; i < NS2; i++) {
+      var q = i / (NS2 - 1);
+      var t = Math.tan(q * (Math.PI / 2) * 0.9995);
+      var r = Math.sqrt(b * b + v * v * t * t);
+      var c = P.penroseCoords(t, r);
+      future.push([c.R, c.T]);
+      var cp = P.penroseCoords(-t, r);
+      past.push([-cp.R, cp.T]);
+    }
+    past.reverse();
+    return { past: past, future: future };
+  }
+  function drawPenrose() {
+    if (!svgPen) return;
+    while (svgPen.firstChild) svgPen.removeChild(svgPen.firstChild);
+    var VW = 340, VH = 340, cx = VW / 2, cy = VH / 2, sc = (Math.min(VW, VH) / 2 - 34) / Math.PI;
+    function X(R) { return cx + R * sc; }
+    function Y(T) { return cy - T * sc; }
+    var g = mk('g', {});
+    g.appendChild(mk('polygon', { class: 'pen-fill', points: [X(0) + ',' + Y(Math.PI), X(Math.PI) + ',' + Y(0), X(0) + ',' + Y(-Math.PI), X(-Math.PI) + ',' + Y(0)].join(' ') }));
+    g.appendChild(mk('polygon', { class: 'pen-edge', points: [X(0) + ',' + Y(Math.PI), X(Math.PI) + ',' + Y(0), X(0) + ',' + Y(-Math.PI), X(-Math.PI) + ',' + Y(0)].join(' ') }));
+    g.appendChild(mk('line', { x1: X(0), y1: Y(-Math.PI), x2: X(0), y2: Y(Math.PI), class: 'grid' }));
+    var wl = worldline(), i, d;
+    ['past', 'future'].forEach(function (key) {
+      var pts = wl[key]; d = '';
+      for (i = 0; i < pts.length; i++) d += (i ? 'L' : 'M') + X(pts[i][0]).toFixed(2) + ' ' + Y(pts[i][1]).toFixed(2);
+      g.appendChild(mk('path', { class: 'pen-wl', d: d }));
+    });
+    var a0 = wl.past[wl.past.length - 1], a1 = wl.future[0];
+    g.appendChild(mk('line', {
+      x1: X(a0[0]), y1: Y(a0[1]), x2: X(a1[0]), y2: Y(a1[1]),
+      class: 'pen-cross'
+    }));
+    function lab(x, y, t, anchor) { var e = mk('text', { x: x, y: y, class: 'pen-lbl', 'text-anchor': anchor || 'middle' }); e.textContent = t; g.appendChild(e); }
+    lab(X(0), Y(Math.PI) - 8, 'i⁺');
+    lab(X(0), Y(-Math.PI) + 18, 'i⁻');
+    lab(X(Math.PI) + 4, Y(0) + 4, 'i⁰', 'start');
+    lab(X(-Math.PI) - 4, Y(0) + 4, 'i⁰', 'end');
+    lab(X(Math.PI / 2) + 20, Y(Math.PI / 2) - 4, 'ℐ⁺');
+    lab(X(Math.PI / 2) + 20, Y(-Math.PI / 2) + 12, 'ℐ⁻');
+    lab(X(Math.PI / 2), VH - 8, 'towards  n̂');
+    lab(X(-Math.PI / 2), VH - 8, 'towards  −n̂');
+    svgPen.appendChild(g);
+  }
+  function drawCelestial() {
+    if (!svgCel) return;
+    while (svgCel.firstChild) svgCel.removeChild(svgCel.firstChild);
+    var VW = 340, VH = 340, cx = VW / 2, cy = VH / 2, Rr = Math.min(VW, VH) / 2 - 40;
+    var g = mk('g', {});
+    g.appendChild(mk('circle', { cx: cx, cy: cy, r: Rr, class: 'cel-c' }));
+    var al = S.al * Math.PI / 180, v = S.pb, b = S.pd;
+    var vx = Math.cos(al), vy = Math.sin(al);
+    var x0x = -Math.sin(al) * b, x0y = Math.cos(al) * b;
+    var d = '', i, NS2 = 201;
+    for (i = 0; i < NS2; i++) {
+      var s = -1 + 2 * i / (NS2 - 1);
+      var t = Math.tan(s * (Math.PI / 2) * 0.999);
+      var px = x0x + vx * v * t, py = x0y + vy * v * t;
+      var m = Math.hypot(px, py) || 1;
+      d += (i ? 'L' : 'M') + (cx + Rr * px / m).toFixed(2) + ' ' + (cy - Rr * py / m).toFixed(2);
+    }
+    g.appendChild(mk('path', { class: 'cel-tr', d: d }));
+    function mark(ux, uy, txt, col) {
+      var X = cx + Rr * ux, Y = cy - Rr * uy;
+      g.appendChild(mk('circle', { cx: X, cy: Y, r: 6, fill: col }));
+      var e = mk('text', { x: cx + (Rr + 20) * ux, y: cy - (Rr + 20) * uy + 4, class: 'pen-lbl', 'text-anchor': 'middle' });
+      e.textContent = txt; g.appendChild(e);
+    }
+    mark(-vx, -vy, 'came from', tok('--keep'));
+    mark(vx, vy, 'goes to', tok('--die'));
+    g.appendChild(mk('line', { x1: cx - Rr * vx, y1: cy + Rr * vy, x2: cx + Rr * vx, y2: cy - Rr * vy, class: 'sel' }));
+    svgCel.appendChild(g);
+  }
+
+  function updateAnti() {
+    var al = S.al * Math.PI / 180, v = S.pb;
+    var e = P.freeParticleEndpoints([-Math.sin(al) * S.pd, Math.cos(al) * S.pd, 0], [Math.cos(al) * v, Math.sin(al) * v, 0]);
+    function d3(u) { return '(' + u[0].toFixed(6) + ', ' + u[1].toFixed(6) + ', ' + u[2].toFixed(6) + ')'; }
+    set('past', d3(e.past)); set('fut', d3(e.future));
+    set('anti', e.antipodalResidual === 0 ? '0 at binary64 precision' : e.antipodalResidual.toExponential(2));
+  }
+
+  var pending = null;
+  root.addEventListener('input', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-w7-i]') : null;
+    if (!el) return;
+    S[el.getAttribute('data-w7-i')] = parseFloat(el.value);
+    if (pending) window.cancelAnimationFrame(pending);
+    pending = window.requestAnimationFrame(function () { pending = null; render(); updateAnti(); });
+  });
+  render();
+  updateAnti();
+})();
+</script>
