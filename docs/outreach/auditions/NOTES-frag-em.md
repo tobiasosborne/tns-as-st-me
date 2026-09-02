@@ -7,6 +7,10 @@ Deliverable: `docs/outreach/auditions/prologue/frag-em.html` (196 KB).
 
 Stations built: **W2, W3, W4, W6, W7.** Nothing else was created or edited.
 
+> **A repair round has since been applied.** See **§10, Repair round r1**, at the end of
+> this file. Where §3.2, §4, §5, §7 or §8 below conflict with §10, §10 is the current
+> state of the fragment.
+
 ---
 
 ## 1. Physics source
@@ -322,3 +326,480 @@ The three places most worth attacking, in order:
    The evidence is that it is panel-count-independent and exactly linear in ω over
    three decades. Linear in ωτ, not quadratic, is worth someone checking against
    the raised-cosine's own expansion.
+
+---
+
+## 10. Repair round r1
+
+Lane: bd `tns-as`. Input: `docs/outreach/critic-frag-em-r1.md` (codex, 14 FATAL + 14 BUGS +
+5 ranked improvements + keep list + a "could not verify" section). Three files were touched:
+`docs/outreach/auditions/prologue/frag-em.html`, `docs/outreach/auditions/prologue/qa-run.mjs`
+(two runner bugs plus two hard-coded rows, see §10.5) and this note. Scratch work lives
+outside the repo.
+
+Every item was checked against the code, the reference core and the mathematics before
+anything was changed; short node scripts against `em-core.js` are quoted as evidence below.
+**The critic was right on all 14 FATAL items and all 14 BUGS.** Two items were applied in a
+different form from the one prescribed, and those are marked PARTIAL with the reason. Nothing
+was rejected — the one place worth flagging is that a *prescription* was declined, not a
+finding (FATAL 4).
+
+The inlined core is untouched and still byte-for-byte identical:
+`sha256(inlined) = sha256(em-core.js) = bc71fb940a41bea7e2aad7c500a10a775402ebadda307df240cb1d9911b12413`.
+`node docs/outreach/auditions/prologue/em-core.test.mjs` still exits 0.
+
+### 10.1 FATAL items
+
+**1 — W4's bright-spot/pole account was false for the pattern it plots. APPLIED.**
+Verified from the core, not from the report. For one leg
+`P_one(θ) = Q²β² sin²θ/(1−β cos θ)²`; `dP/d(cos θ) ∝ β − cos θ`, so the maximum is the ring
+`cos θ = β` with value `Q²β²/(1−β²) = Q²β²γ²`. A 200 001-point scan of `P.spherePattern`
+against that closed form: argmax `cos θ = 0.500000 / 0.900000 / 0.990000` for
+`β = 0.5 / 0.9 / 0.99`, maxima `0.33333333 / 4.26315789 / 49.25125628`, matching
+`β²/(1−β²)` to every printed digit; `P.spherePattern([leg], β̂)` returns **exactly 0**, while
+`(1−β)⁻²` would be `4 / 100 / 10000`. The ratio of the two maxima the page compared is
+`147.75`, not four orders of magnitude.
+What changed: the station heading is now "Every hard particle paints a ring on the sky, with
+an exact zero at its centre"; a new displayed equation gives `P_one`, its derivative, its ring
+and its maximum with the numbers above; the canvas `aria-label` and the no-canvas fallback text
+both describe the ring and the central zero; the caption's `(1−β)⁻²` scaling claim is replaced
+by `β²γ²` with the factor `148`. The `:2038-2040` sentence about `S` "pointing radially" is
+replaced: it is the **unprojected** `H = Σ η Q β/(1−n̂·β)` that is radial on those ribbons, and
+`S` is what survives after that radial part is removed. The `:2043-2049` merging claim now says
+two lines combine into one only when their **full velocities** are equal, and states explicitly
+that matching directions at different speeds gives rings of different radii that do not merge.
+
+**2 — W4 reimplemented the physics locally; "nothing here is interpolated" was false. APPLIED.**
+Verified by reading `paintSphere`: it rebuilt `H`, projected and squared it per texel, and the
+440/210 texture was drawn with `imageSmoothingEnabled = true`.
+What changed: `P.spherePattern(soloParts(), n)` is now the **sole** texel evaluator — the local
+loop is gone — and the texture size is `min(cap, round(2·R_disp))`, so it never over-samples the
+display. The label under the sphere is generated at run time and states the size in use and
+whether the display is one texel per device pixel or an explicit upscale factor. The caption's
+"nothing here is interpolated" is replaced by an honest pipeline description naming the
+bilinear resample as the one interpolation in the figure. Cost measured before committing to
+this: `P.spherePattern` over the disc takes 42 ms at 440² and 25 ms at 210² in the same V8 that
+runs the page.
+
+**3 — W3 called an even-in-ω correction linear. APPLIED.**
+Verified at the page defaults: relative gap `2.515836e-8 / 2.515839e-10 / 2.515427e-12` at
+`ω = 10⁻², 10⁻³, 10⁻⁴` — a factor of a hundred per decade, i.e. quadratic. Divided by `(ωτ)²`
+the coefficient is `3.10597e-2` at `τ = 0.09`, `0.18` **and** `0.36`, so the correction really
+is `(ωτ)²` and not merely `ω²`. The caption now says "of order `(ωτ)²`", explains why the linear
+term is absent (`|J(ω)|²` is even because the time-domain pulse is real), states that the gap
+falls by a hundred per decade, and quotes the measured coefficient.
+
+**4 — W3 equated two coefficients of opposite sign. APPLIED as to substance; PARTIAL as to the
+prescribed renaming.**
+Verified directly: at the defaults `M·ε = +0.7493910580945078` from `dcRadiationField` while
+`softAmplitude = −0.7493910580945075` and `softFactorWeinberg = −0.7493910580945075`; their sum
+is `3.33e-16`. The identity is elementary — `n̂×(n̂×A)·ε = −A·ε` for transverse `ε` — and the
+core notes record it (`em-core-NOTES.md` §4).
+What changed: the eq-note no longer says "an overall sign lives in the convention"; it names the
+scalar `S_cl = [β_f/κ_f − β_i/κ_i]·ε`, derives `S⃗·ε = −S_cl` in one line, and writes Weinberg's
+bracket as `Q S_cl/ω = −Q S⃗·ε/ω`. The ledger row that was mislabelled now says what it is
+("classical current coefficient `S_cl`, from `softAmplitude`"), and two rows were added: the
+projection `S⃗·ε` (which prints `−S_cl`) and their sum, which prints `~1e-16`.
+**PARTIAL:** the critic also asked that the vector be *renamed* `M`/`J(0)`. That was declined.
+`S⃗(n̂)` is the name the displayed closed form gives it, it carries through the whole of W4, and
+the page already calls the same object `N⃗` in W6 and `M⃗` in W7 where the sources use those
+letters; a fourth renaming would have made the cross-station story worse, not better. The
+substantive requirement — that the displayed relation be the true one and that no row be
+labelled as something it is not — is met.
+
+**5 — the W3 source was not verbatim. APPLIED (the critic's route A).**
+Verified line by line against `refs/arxiv-1703.05448/soft_Arxiv_update.tex`: the old display
+expanded five macros, reordered `p^{out}_k` to `p_k^{out}`, normalised spacing and dropped the
+closing `~.`; the prose excerpt began mid-sentence; and "the leading order term … is a pole" is
+line **1083**, outside the cited `:1075-1082`.
+What changed: a marked source block reproduces lines **1075–1083** character for character —
+diffed programmatically against the TeX, including the trailing spaces on 1077, 1078, 1079 and
+1083 — inside a `<pre>` so MathJax leaves it alone (`<pre>` is in MathJax 3's default
+`skipHtmlTags`; the belt-and-braces classes `mathjax_ignore tex2jax_ignore` are also on it).
+This mattered: before the `<pre>`, MathJax typeset the `\begin{equation}` inside the block and
+mangled it, which the first screenshot pass caught. Below it, the same equation is typeset with
+only the five abbreviations replaced by their definitions — same sub/superscript order, same
+`O(q⁰)`, same closing `~.` — and the note names each macro with its defining line
+(`\ve` line 60, `\cs` 228, `\co` 229, `\outst` 230, `\inst` 231). The pole sentence is now cited
+as `:1083`.
+
+**6 — W2's prose and canvas contradicted its own retardation geometry. APPLIED.**
+Verified at the page defaults (`β_i = 0`, `β_f = 0.55`, `τ = 0.09`, `t = 0.70`):
+`r(−τ/2) = −0.00449683`, `r(+τ/2) = +0.02025317`, separation `0.02475 = β_f τ/2` exactly, and
+the radial width from the origin runs `0.06525` at `0°` to `0.11475` at `180°` while `cτ` is
+`0.090` — the critic's numbers, reproduced.
+What changed: the "no point further away than `ct`" paragraph is replaced by an exact statement
+of the two faces, and a new displayed equation gives them:
+`|x − r(−τ/2)| = c(t + τ/2)` and `|x − r(+τ/2)| = c(t − τ/2)`, with an eq-note saying the
+spheres have different centres, that the radial gap is angle-dependent and **not** `cτ`, that
+`cτ` is the source-time duration, and quoting the `0.0653 … 0.1148` range. The canvas corner
+label is now "page time `c t`" instead of "shell radius `c t`"; the legend row is "between the
+two faces: the sideways field"; the two circles carry drawn labels "outer face" / "inner face";
+and the readout prints `r_out`, `r_in` and their difference beside `cτ` at the probe's own angle.
+
+**7 — W6 asserted the unqualified `∫E dt` equality and only retracted it later. APPLIED.**
+What changed, in this order on the page: the impulse anchor now carries the test-body coupling
+`Δv = (q_test/m_test)∫E_source dt`; the very next paragraph says that at a real detector that
+integral is not one thing, because the field has a `1/r²` Coulomb part whose drift grows with
+the window, and points at the second figure; only then does a displayed equation introduce the
+quantity that is actually equated, `∫ E_rad^{(1/r)} dt = N⃗(n̂)/r`, with the integral written
+out. Its eq-note states that everything printed is `N⃗` per unit source charge with the source
+charge and `q_test/m_test` stripped out, and how to put them back. The Fourier equation now
+carries `E_rad^{(1/r)}` in both places rather than a bare `E`. No later correction is relied on
+to cure an earlier statement.
+
+**8 — W6's vector-potential Fourier sign was wrong. APPLIED.**
+Verified: with `Ẽ(ω) = ∫dt e^{iωt}E(t)` and `E = −∂_t A`, integrating by parts gives
+`Ẽ = +iω Ã`, hence `Ã = Ẽ/(iω)`, not `Ẽ/(−iω)`. The eq-note now shows the integration by parts,
+gives `Ã(ω) = Ẽ(ω)/(iω)` and states the residue as `N⃗/(i r)` rather than silently calling it
+"the memory".
+
+**9 — "all three routes are the reference core's" was false. APPLIED.**
+Verified by reading the station script: route three's GL8 nodes, weights, panel loop and
+observer-time window are all local; only `fieldAt(...).radiationPart` comes from the core.
+What changed: the fragment header now says **TWO** stated exceptions and describes route three
+as page-owned quadrature of core field samples; the figcaption says two of three routes are the
+core's and names them; and the note above the table opens with "Whose arithmetic this is".
+
+**10 — W7 called the moving Coulomb profile an `ℓ=1` structure. APPLIED.**
+Verified by numerical Legendre projection of `C_β(cos θ) = (1−β²)/(1−β cos θ)²`. At `β = 0.72`
+the coefficients for `ℓ = 0…4` are `1.0000, 1.6370, 1.3682, 0.9216, 0.5561` — an infinite tower,
+with `ℓ=2` nearly as large as `ℓ=1`. At `β = 0.9`, `ℓ=3` is *larger* than `ℓ=1`.
+The source (`:553`) says only that "the `ℓ = 1` mode of the distribution over the sphere is
+nonzero" and that this is "not to be confused" with the usual electric dipole moment. The
+eq-note now says the profile has a nonzero `ℓ=1` moment and generally nonzero moments at every
+`ℓ`, quotes the five coefficients above, and keeps the source's actual point — the `ℓ=1`
+moment is not the classical dipole moment — with the line citation.
+
+**11 — W6's third route was neither controlled nor total over its advertised range. APPLIED.**
+Verified: at the legal setting `β_i = −0.9, β_f = 0.9, τ = 0.4, θ = 8°`, the fixed 32-panel rule
+differs from 64 panels by `2.859e−6` relative at `r = 10²` and `10³`, and the core's
+`retardedTime` **throws** `retarded-time solve did not reach tolerance` at `r = 10⁴` and `10⁵`;
+`render()` did not catch it, so the whole station stopped drawing.
+What changed: `farField` now doubles panels from 32 up to 512 until the vector moves by less
+than `10⁻¹⁰` relative, reports the count it settled on as a new table column, and wraps every
+core call so that a non-convergent radius produces a `NOT COMPUTED` row naming the reason
+instead of an exception. Live at that hostile setting the table now reads
+`10²: 256 panels, 1.04e−3`; `10³: 256 panels, 1.04e−4`; `10⁴, 10⁵: NOT COMPUTED — the
+retarded-time solve did not converge at this radius`, with `×r` constant at `0.1044 / 0.1043`.
+At the default settings all four radii compute, at 64 panels, with `×r` constant at
+`0.005001 / 0.005000 / 0.005000 / 0.004999`.
+*Diagnosis for the core lane, not a page defect:* `retardedTime` uses a fixed **absolute**
+tolerance of `1e−13` on `t − s − |x − r(s)|`, while `ulp(t)` is `1.8e−12` at `t ≈ 10⁴` and
+`1.5e−11` at `t ≈ 10⁵`. The residual is simply not representable below the tolerance there.
+Sampling 41 observer times across the window: 0 failures at `r = 10³` and `10⁴`, 4 of 41 at
+`r = 10⁵`; the quadrature nodes hit the failures earlier because there are more of them. A
+relative tolerance in the core would fix this upstream.
+
+**12 — W6 promised last-bit agreement while exposing unconverged panel counts. APPLIED.**
+Verified at the page defaults: relative residual `2.724e−9 / 2.882e−12 / 0 / 2.355e−16 /
+1.178e−16 / 3.771e−16` at `1 / 2 / 4 / 8 / 16 / 32` panels. The default slider position is 16
+panels and does reach `1.18e−16`; the promise was false only for the low-panel settings the
+slider can reach.
+What changed: the chart sub-heading says agreement to twelve figures holds "at the converged
+default" and invites the reader to turn the panels down and watch it break; the residual row is
+gated on the number it just measured and prints one of "0 at binary64 precision", "…—twelve
+significant figures or better", or "…— short of twelve figures at *n* panels; the converged
+default is 16". Live: `1.52e−3 — short of twelve figures at 1 panel` and
+`1.84e−16 — twelve significant figures or better` at 32.
+
+**13 — W2 drew a radiation shell when the controls specified no kick. APPLIED.**
+Verified: `makeKick` with `betaI = betaF` gives `Δβ = 0`, so acceleration and the core's
+radiation part are identically zero, yet the canvas painted the band in `--die` and the legend
+called it "the shell … the sideways field".
+What changed: `noKick()` (endpoint speeds equal to `1e−9`) now suppresses the band fill, draws
+the connector segment as an ordinary field line rather than in the radiation colour, draws the
+two circles in `--rule-2` as plain timing surfaces, changes the legend row to "no kick: no
+radiation, no shell", and raises a readout banner saying that the sideways field printed below
+is the ordinary boosted Coulomb field seen from the origin and not radiation. Live at
+`β_i = β_f = 0` the banner is shown and the ratio row reads `1.57e−16`.
+
+**14 — W4 printed a fabricated maximum for an exactly zero pattern. APPLIED.**
+Verified: `stats.max = best > 0 ? best : 1` replaced a true maximum of 0 with 1, and the readout
+then reported `1` at the north pole.
+What changed: `stats.zero` is carried explicitly; the true maximum `0` is kept; the readout
+prints "0 exactly — the pattern vanishes in every direction"; the colour bar reads "(the pattern
+is identically zero here)" and its ticks collapse to a single `0`; and the painter fills the
+disc with the bottom of the ramp instead of taking a logarithm of zero. Live with every charge
+set to 0, all three of those strings appear and `P(n̂)` prints `0.000000`.
+
+### 10.2 BUGS
+
+**1 — the header's error-control record disagreed with the shipped integrator. APPLIED.**
+`HSTEP = 40` and the visible caption both say `τ/40`; the header said `τ/48`. Header corrected.
+
+**2 — the token-only palette rule was violated in every station helper. APPLIED.**
+Five `tok` functions fell back to `'#888'` and W4's parser to `[136,136,136]`. A missing token
+is now an **integration error**: `console.warn` naming the token and the station, a
+`data-token-error` attribute stamped on the station root, and — for drawing only — the host
+page's own computed text colour, which is a value belonging to the host rather than one this
+fragment invented. W4's colour parser was split into `parseColour` (returns `null` on failure)
+and `hex` (reports, then falls back to the host colour); `buildLUT` refuses to build a ramp from
+an unreadable anchor and sets `lutFailed`, and `paintSphere` returns rather than painting in an
+invented hue. **No colour literal remains in the fragment** (the hex codes in the header comment
+are a record of what the GW lane validated and are excluded from every scan, as they were
+before; a note in the header now says so). Browser check at all six configurations:
+`palette token errors: none`.
+
+**3 — W3 and W6 did not handle the allowed zero-kick state. APPLIED.**
+Verified: with `β_f = β_i`, W3's `gap = |spec[0] − plateau|/plateau` was `0/0` and both charts
+had no positive data; W6's relative residuals were `0/0` and `drawDrift` took `log10(0)`,
+producing an SVG path of `NaN`s.
+Both stations now branch on `|β_f − β_i| < 1e−9`. W3 prints "not defined: plateau and spectrum
+are both exactly zero", the `ω|A|` row prints "zero — there is no pole", and a banner explains
+that the charts are blank because the amplitude is identically zero rather than being drawn with
+an invented floor. W6 prints absolute differences in place of relative ones (labelled "(abs)"),
+its convergence and finite-`r` tables switch to absolute columns, the crossing row says "the
+memory is exactly zero, so the drift is larger at every window", and `drawDrift` skips the level
+line and its decade rather than reaching `log10(0)`. Live: no `NaN`, no `Infinity`, no blank
+readout anywhere in the interaction sweep.
+
+**4 — W6's panel slider had an out-of-range index. APPLIED.**
+`PANELS` has indices 0–5 and the input allowed `1…6`; at 6 the core silently used its 16-panel
+default while the label printed `undefined`. The input is now `min="0" max="5" value="4"` (which
+is still 16 panels at load), and `render` clamps the index as well. Both ends verified live:
+index 0 → label `1`, index 5 → label `32`.
+
+**5 — a coarse sampled maximum was labelled the largest value anywhere. APPLIED, and improved.**
+Verified: the 96×192 scan gave `12.339404380` for the default event while a 720×1440 scan gave
+`12.341393472` (`+1.61e−4` relative, the critic's number) and a 2000×4000 scan `12.341408538`.
+The hard-line seeds were useless because each leg's own term vanishes along its velocity.
+What changed: the row is relabelled "largest value **found** on the sphere"; the search is
+seeded at each leg's beaming ring `cos θ = β` (64 points per leg) as well as its direction, and
+the best sample is then refined by six shrinking 5×5 tangent-plane searches, ending at a step of
+about `4.5e−5` rad. The caption states all of this and says it is a search, not a proved global
+maximum. Live the page now reports `12.341422`, above the 2000×4000 grid scan.
+
+**6 — the colour-span prose omitted the hard clamp. APPLIED.**
+The `[0.8, 5]`-decade clamp is now disclosed twice: the bar label prints
+"(1.4 decades, span clamped to 0.8–5)" and appends "at the lower stop" / "at the upper stop"
+when the clamp is what is deciding, and the caption explains why the clamp exists.
+
+**7 — the photon table turned an asymptotic logarithm into an exact claim. APPLIED.**
+Verified: consecutive decade gains are `2.39022229e−4` at `ω_min = 10⁻³` and `2.39022231e−4`
+below that — equal to eight figures but not exactly equal, so "adds the same amount" was wrong
+in principle even though the table's five printed decimals cannot show it. The caption now says
+"asymptotically", explains that the spectrum is only flat below `1/τ`, and reserves the exact
+statement for the instantaneous kick.
+
+**8 — the finite-radius "relative difference" was one component over the full norm. APPLIED.**
+Now the full vector norm `|r∫E_rad dt − N⃗|/|N⃗|`, with the column head written that way. The
+`×r` column consequently reads `0.005001 / 0.005000 / 0.005000 / 0.004999` at the defaults where
+it previously read `0.004854 / …`; still constant to four figures over three decades.
+
+**9 — the EM background lesson was exported to gravitational-wave detectability. APPLIED.**
+The caption now makes the concrete statement about this electromagnetic detector — the window
+must be long compared with the burst and short compared with the light travel time — and says
+explicitly that GW memory has its own separation problem and that this figure is not evidence
+about it.
+
+**10 — W7 said the whole station rests on antipodal matching. APPLIED.**
+The footer now separates the two: `C_f − C_i = D_A M^A` is a **local** statement at `I⁺` that
+follows from the constraint and this solution and needs no matching condition, while what needs
+the antipodal identification is the conservation law *across* null infinity, because without an
+identification of the two spheres there is nothing to equate.
+
+**11 — the `sin²θ` anchor lacked its nonrelativistic qualification. APPLIED.**
+The lede now says "a charge shaken *gently* … nonrelativistically, so that the usual dipole
+formula applies", and adds that relativistic motion tilts the doughnut forward through the
+beaming denominator but does not fill in the hole.
+
+**12 — "Balance the charge" could push a row outside its own input range. APPLIED.**
+Verified: with `n` same-sign, same-`η` rows at `Q = 3` the old code wrote `Q = 3 − nΣ` into an
+input declaring `min="-3" max="3"`.
+The correction is now spread over the existing rows from the last backwards, never leaving
+`[−3, 3]` on any row; if a remainder survives and there is room, a new line is added carrying
+exactly it; if neither is possible the chip says so ("… left over; every charge is at ±3 and
+there is no room for another line") and the unbalanced warning stays up. Live with four
+outgoing rows at `Q = 3` (`Σ ηQ = 12`), the button produces `3, 3, −3, −3` — `Σ ηQ = 0`, every
+value inside its declared range, no new row needed.
+
+**13 — a numerically bisected crossing sat in an exact-formula-only panel. APPLIED.**
+The panel now carries the "Controlled numerical solve" tag as well, the readout row says "by
+bisection in `log T`", and the note describes the method: sixty bisection steps in `log T`,
+legitimate because the drift increases with the window — checked over six decades of window at
+five settings spanning the sliders — while the memory does not depend on it at all.
+
+**14 — station-global observers and listeners had no teardown. APPLIED.**
+All five stations now keep handles for the `prefers-color-scheme` media listener and the
+`data-theme` `MutationObserver`, and unhook both the first time they fire after
+`root.isConnected` goes false; W2 and W4 do the same for their `IntersectionObserver`,
+`ResizeObserver` and window-resize fallbacks, and their animation frames bail out on the same
+test. Reduced motion is no longer sampled once: both stations listen for changes and stop a
+running loop when the preference turns on. The critic offered a `window.PROLOGUE` cleanup
+registry *or* a local hook; the local hook was taken, because the harness's globals check reads
+`Object.getOwnPropertyNames(window)` before and after and the fragment's one authorised global
+is already the core's.
+
+### 10.3 Improvements
+
+**#2 (S) — W2 labels the causal fronts where the probe crosses them. APPLIED.**
+The probe now carries a radius as well as an angle (dragging sets both), so it can be parked
+outside the shell and watched. The readout prints, at the probe's own direction: where it is
+("outside the outer face, nothing has arrived yet" / "inside the shell" / "inside the inner
+face, the news has passed"), the two face equations with the radius each has there, the radial
+width in that direction beside `cτ`, and the two page times at which the faces reach it,
+attributed to the source times `∓cτ/2`. On the canvas the two circles are labelled and the probe
+marker grows and turns to the radiation colour while a face is within `0.018` of it, with a tag
+saying which one. Live at the defaults: `r_out = 0.7413`, `r_in = 0.6714`, width `0.0700`
+against `cτ = 0.090`, arrivals at `ct = 0.667` and `ct = 0.737` for `ct = 0.700` now — the
+time separation equalling the radial width, as it must.
+
+**#3 (S) — W4's gauge failure is visible, not merely red. APPLIED.**
+The unbalanced banner now carries the argument rather than a warning: because `q² = 0`, the
+condition `ε·q = 0` fixes `ε` only up to `ε^μ → ε^μ + λq^μ`; each term of the soft factor moves
+by exactly `λ` since `(p·ε + λ p·q)/(p·q) = p·ε/(p·q) + λ`; therefore `ΔS = λ e Σ_k η_k Q_k`. A
+`λ` slider is beside it and `ΔS/e` is printed live, together with `Σ ηQ`. The source is cited
+where it makes the same computation, `soft_Arxiv_update.tex:1138-1142`, including its
+conclusion that "global charge conservation guarantees that this soft factor is gauge
+invariant". Live with `Σ ηQ = 12` and `λ = 1`, `ΔS/e = 12.00`; balanced, the row says
+"(zero for every λ)".
+
+**#1 (M, highest wow) — W4's forward zero and peak ring are the interaction. APPLIED.**
+A "paint" control under the sphere switches between the whole event and any one line alone.
+In the single-line view the sphere is painted from `spherePattern` of that one leg, its peak
+ring `n̂·β̂ = β` is drawn as a dashed great circle labelled "peak ring, cos θ = β", a dotted
+marker at its velocity is labelled "exact zero along β", and three readout rows appear: the
+exact maximum `Q²β²/(1−β²)`, the ring half-angle `arccos β`, and `P` along the velocity. The
+provenance tag becomes "Exact formula — one term of the sum", because one term is not an
+observable either. A tangent arrow showing `S` projected on the screen is drawn at the probe in
+every mode, so transversality is visible rather than asserted. Live for the `β = 0.88` leg: the
+searched maximum `3.432624` equals the exact `Q²β²γ² = 3.432624` to seven figures, the ring
+reads `28.36°` (`arccos 0.88 = 28.357°`), and `P` along the velocity prints `8.04e−31` labelled
+as exactly zero at the rounding floor of rebuilding `n̂` from its angles.
+
+**#4 and #5 — NOT DONE.** Both are M-effort and neither is a correctness item: #4 (a cumulative
+integral trace in W6) and #5 (an angular patch ledger in W7). They were left for a later round
+in favour of finishing every FATAL and BUG item and the three cheap-or-decisive improvements.
+Neither is blocked by anything in this repair.
+
+### 10.4 Harness
+
+The shipped `qa-run.mjs` cannot QA this fragment end to end: its static, Node-physics and
+`physicsRun` lanes read `frag-gw.html` unconditionally, and `interactionRun` waits on
+`[data-w5-mode="em"]`, a GW station, so `node qa-run.mjs --frag=frag-em.html` runs the browser
+*matrix* over the EM fragment and then aborts everything after it. Generalising the runner is
+outside this lane's edit scope. An EM driver was therefore written in the lane scratch directory
+(`qa-em.mjs`), reusing the same harness page, the same viewport/theme matrix and the same
+console/error instrumentation.
+
+`node qa-em.mjs`, Playwright chromium, `qa-harness.html?frag=frag-em.html`:
+**PASS = 52, FAIL = 0, WARN = 0, NOT RUN = 0.** Rows, for each of light and dark at 390, 768
+and 1300 px: horizontal scroll (`html = body = viewport` at all six), escaping elements (none —
+the wide MathJax displays, the verbatim source block and the wide tables all scroll inside their
+own `overflow-x:auto` containers), runtime errors (none), `console.error` (none), duplicate ids
+(none), globals added (`PROLOGUE` only, the contract's one permitted global), palette token
+errors (none), MathJax (loaded). Plus:
+
+* `interaction · every control exercised` — 27 ranges swept to both ends, the midpoint and back;
+  4 number inputs through `3, 0, −3` and back; 5 selects through every option; all 11 buttons
+  clicked and any left running stopped; then a rotate-drag and two wheel-zooms on the W4 sphere
+  and a drag inside the W2 canvas. Zero `pageerror`, zero console errors.
+* `interaction · degraded readouts` — after that sweep, **no** readout and no table cell is
+  empty, an em dash, `NaN`, `Infinity` or `undefined`.
+* `fallback · THREE / WebGL absent` — with `three.js` blocked and `getContext('webgl*')` forced
+  to `null`: zero errors, the W4 canvas still painted, `pmax = 12.341422`. The fragment contains
+  zero references to `THREE` and loads no library, so it is unaffected either way.
+
+Separately, the states the critic said were reachable and broken were driven directly and
+checked (`qa-states.mjs`, same scratch directory): W4 solo, W4 all-charges-zero, W4 unbalanced
+and then balanced, W2/W3/W6 with `β_f = β_i`, W6 at `β_i = −0.9, β_f = 0.9, τ = 0.4, θ = 8°`,
+and W6 at both ends of the panel slider. Zero errors in all of them; the numbers are quoted in
+the ledger above.
+
+`node docs/outreach/auditions/prologue/em-core.test.mjs` → exit 0, all tests pass.
+
+**Screenshots** (33), in `docs/outreach/auditions/prologue/qa/`, all prefixed `em-`:
+`em-{light,dark}-{390,768,1300}-w{2,3,4,6,7}.png` (30) plus `em-stress-w2.png`,
+`em-stress-w4.png`, `em-stress-w6.png` taken after the interaction sweep. They were looked at,
+not merely produced. Two layout defects were found in them and fixed: the three-part
+single-line equation in W4 overflowed at 390 px and is now stacked in an `aligned` environment,
+and the verbatim source block in W3 was being typeset by MathJax (see FATAL 5). One cosmetic
+consequence was also caught by eye: the sequential ramp puts high values in *deep* ink on the
+light surface, so the heading's original word "bright" was replaced by "paints a ring".
+
+### 10.5 `qa-run.mjs`
+
+Four changes, all inside this lane's remit; nothing else in the runner was touched.
+
+1. **`ERR_HTTP_HEADERS_SENT` crash** (the reason the critic's browser lane was NOT RUN, together
+   with item 2). The static-file `catch` called `response.writeHead` on a response whose headers
+   were already on the wire when Chromium aborted a request, throwing out of the handler and
+   taking the run down before it printed anything. Now guarded with `!response.headersSent` and
+   `!response.writableEnded`.
+2. **`instrumentFragment`'s W5 anchor.** It pinned
+   `'  window.requestAnimationFrame(tick);\n})();\n</script>\n\n  <section class="stop" id="w8">'`
+   — with two leading spaces before `<section>` that `frag-gw.html` has never had, and with a
+   call the GW lane's rAF-lifecycle repair replaced by `schedule();`. The needle is now
+   `'  schedule();\n})();\n</script>\n\n<section class="stop" id="w8">'` and the replacement text
+   matches; verified against the current `frag-gw.html` (both the W5 and the untouched W9 anchor
+   match). The comment above them says why.
+3. **`physics/Node · W9 upper-pole late-limit verdict`** was `record(..., 'FAIL', ...)`
+   unconditionally, with the critic's finding as the detail string. It is now **NOT RUN**, with
+   a detail saying why it cannot be a Node test — the verdict wording is DOM state and
+   `loadW9Core` extracts only `S` and `f` — and pointing at the browser row that does check it
+   and the Node row that checks the underlying closed form.
+4. **`physics/Node · W9 A=0 pole label`** was likewise unconditional. It is replaced by a **real
+   test**, `physics/Node · W9 A=0 residue and late-time limit`: with `A = 0` and the damped pair
+   in the lower half plane it asserts `|f(400)| < 1e−15` (the late-time limit equals the residue,
+   which is zero) and `|f(0.4)| > 1e−3` (the pair still rings). It passes.
+
+`node qa-run.mjs` (the GW lane, unchanged fragment) now runs to completion and prints:
+**PASS = 69, WARN = 2, FAIL = 4, NOT RUN = 1** — against the GW lane's recorded post-repair
+`PASS = 68, FAIL = 6, WARN = 2`, i.e. items 3 and 4 turned one hard-coded FAIL into a PASS and
+the other into an honest NOT RUN. The four remaining failures are the GW lane's two recorded
+harness disagreements and their Node twins, unchanged by this lane.
+`node qa-run.mjs --frag=frag-em.html` gives `PASS = 54, WARN = 1, FAIL = 9, NOT RUN = 1`, and
+none of the nine is an EM defect: six are `browser · … globals: PROLOGUE` (the contract's one
+permitted global, which the GW fragment does not create), two are the GW lane's own recorded
+physics disagreements, and the ninth is `Playwright browser matrix` timing out on
+`[data-w5-mode="em"]` — the GW hard-wiring described above. Any screenshots that run leaves
+behind under the GW naming scheme were removed and the committed GW screenshots restored;
+the only new files this lane adds to `qa/` are the 33 `em-` ones.
+
+### 10.6 Remaining gaps
+
+1. **`qa-run.mjs` is still a GW runner.** Its static audit, its Node physics audit and its
+   interaction and physics browser lanes all target `frag-gw.html`; `--frag` reaches only the
+   browser matrix. Until it is generalised — a `--frag`-aware `FRAGMENT` path and a station
+   list per fragment — the EM lane needs its own driver. The one written for this repair is in
+   the lane scratch directory and is not committed; it is about 200 lines and reuses
+   `qa-harness.html` unchanged.
+2. **`retardedTime`'s absolute tolerance.** As diagnosed under FATAL 11, the core's fixed
+   `1e−13` absolute residual is below `ulp(t)` for `t ≳ 10⁴`, so a legal W6 setting loses its
+   two largest radii. The page now reports those rows as `NOT COMPUTED`. A relative tolerance in
+   the core would recover them; that is a core-lane change, not a page change.
+3. **File size is now 242 KB**, up from 196 KB — the repair added the verbatim source block, the
+   single-line equation, the gauge panel, the solo view and a good deal of prose. 28 KB of the
+   total is still the inlined core, which the integrator may hoist out and load once for the
+   whole page; that would bring the fragment to about 214 KB.
+4. **Improvements #4 and #5 are not done** (see §10.3), and neither is blocked.
+5. **W4's sampled maximum is a search, not a bound.** It is now seeded well and refined, and the
+   page says "largest value found" rather than "anywhere", but no rigorous angular bound is
+   computed. That is the honest state, and it is stated on the page.
+6. **The lecture wording was checked against the repository digests**, as in the original build,
+   not against the video audio; the digests identify the quoted material as auto-captions and
+   the page says so.
+
+### 10.7 Design decisions the integrator must preserve
+
+The builder's three decisions in §8 all survive the repair and still hold. Four more were made
+here and matter to anyone editing the fragment next:
+
+1. **`spherePattern` is the sole texel evaluator in W4, and must stay so.** The station-local
+   copy of the formula is what made the provenance claim false. If the figure is ever ported to
+   a `THREE` texture painter, the seam is still `paintSphere()`, but the loop body must keep
+   calling the core once per texel and the label under the sphere must keep saying the texture
+   size and the scale factor.
+2. **A missing palette token is an integration error, never a colour.** Five `tok` functions and
+   W4's colour parser now report and fall back to the host's computed text colour. No colour
+   literal may be reintroduced; the static scan for `#rrggbb` outside comments is the gate.
+3. **Two names for one vector, deliberately.** W3/W4 call the transverse coefficient `S⃗`, W6
+   calls it `N⃗` and W7 calls it `M⃗`, each following the source that station quotes. What is
+   *not* negotiable is the sign relation now printed in W3: `S⃗·ε = −S_cl`, with `softAmplitude`
+   returning `S_cl` and `dcRadiationField` returning the vector. If the integrator unifies the
+   notation, that relation must survive the unification.
+4. **Zero states are states, not failures.** Four of them are now reachable and labelled — no
+   kick in W2, W3 and W6, and an identically zero pattern in W4. Each prints the exact answer
+   (zero) with an explanation, and each suppresses the relative quantity that would otherwise be
+   `0/0`. Please do not "fix" them by clamping a floor back in.

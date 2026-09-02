@@ -18,7 +18,13 @@
       (var P = window.PROLOGUE.em) and creates no global of its own.
     - Colours come only from the proof-atlas custom properties, read at run time with
       getComputedStyle where canvas needs literal values. No palette value is defined
-      here. Token names used:
+      here, and no colour literal appears anywhere in this fragment: a token the host
+      page has not defined is treated as an INTEGRATION ERROR - reported with
+      console.warn, stamped on the station root as data-token-error, and replaced
+      for drawing purposes by the host's own computed text colour, never by a value
+      invented here. (The hex codes in the note below are a record of what the GW
+      lane validated, inside this comment; they are not used by any code path.)
+      Token names used:
         --paper --surface --surface-2 --surface-sunk --ink --ink-2 --ink-3
         --rule --rule-2 --accent --accent-text --accent-tint
         --keep --die  --st-proved --st-sketch --st-conjecture --st-hold --st-refuted
@@ -40,7 +46,8 @@
     The reference core docs/outreach/auditions/prologue/em-core.js (codex lane
     tns-lqj) is inlined VERBATIM, byte for byte, in the first script block.
     Gaussian natural units, c = hbar = 1, fields per unit source charge, e^2 = alpha.
-    Every number this page prints comes from that core, with ONE stated exception:
+    Every number this page prints comes from that core, with TWO stated exceptions,
+    both of them page-owned numerics whose integrand is a core function:
       * Station 2 does not call core purcellLines(), because it draws a RESOLVED
         shell (a smooth kick of finite duration tau) rather than the zero-thickness
         instantaneous one, and em-core-NOTES.md section 3 says explicitly that a
@@ -58,6 +65,13 @@
         tested (check recorded in NOTES-frag-em.md). Station 2 prints, live, the
         residual between where its streamline actually exits the shell and where
         the flux label says it should, which is a check on both.
+      * Station 6's THIRD route is a page-owned composite 8-node Gauss-Legendre
+        quadrature (the same nodes and weights the core uses, written out in the
+        station script) applied to core fieldAt(...).radiationPart samples at a
+        detector placed at finite radius r. The field samples are the core's; the
+        quadrature, its adaptive panel doubling and its observer-time window are
+        the page's. Routes one and two on that same table are core calls
+        (memoryKickClosedForm, memoryKickQuadrature).
       Everything else — fieldAt, radiationSpectrum, softAmplitude,
       softFactorWeinberg, photonNumber, spherePattern, chargeConservation,
       memoryKickQuadrature, memoryKickClosedForm, coulombDrift, coulombProfile,
@@ -83,17 +97,22 @@
   ERROR CONTROL, STATION BY STATION (full record in NOTES-frag-em.md)
     W2  Straight-ray regions are closed form (Heaviside's boosted Coulomb, exact).
         The shell connector is an RK4 streamline of the core's exact
-        Lienard-Wiechert field, arclength step h = tau/48, and its exit angle is
+        Lienard-Wiechert field, arclength step h = tau/40, and its exit angle is
         compared live against the closed-form flux match; the worst residual over
         the drawn lines is printed on the figure.
     W3  radiationSpectrum() — 8-node Gauss-Legendre in retarded time, panel count
         rising with omega*tau; the omega -> 0 plateau is the closed form, and the
         page prints the relative gap between the quadrature at the smallest
         plotted omega and that closed form.
-    W4  spherePattern() evaluated per pixel (fallback renderer) or per texel
-        (three.js renderer); closed form, no quadrature. The polarization-sum
-        identity is checked live at the cursor direction against two explicit
-        orthonormal polarizations built on the page.
+    W4  core spherePattern() is the SOLE evaluator, called once per texel of a
+        square offscreen texture (440 across at rest, 210 while dragging) whose
+        texel centres are the exact orthographic directions; closed form, no
+        quadrature, no station-local copy of the formula. The texture is then
+        drawn to the display canvas, which resamples it bilinearly when the two
+        sizes differ - that resampling is the one interpolation in the figure and
+        the caption says so. The polarization-sum identity is checked live at the
+        cursor direction against two explicit orthonormal polarizations built on
+        the page.
     W6  memoryKickQuadrature() vs memoryKickClosedForm(), printed to 12 digits with
         a panel-doubling convergence table; the Coulomb drift is shown SEPARATELY
         from coulombDrift() so that the identity is true as stated.
@@ -868,15 +887,32 @@
       velocity forever after. Both halves of the answer are the formula above. The question is
       what happens in between.</p>
 
-    <p>Causality answers it. At time \(t\) after the kick, no point further away than
-      \(ct\) has heard anything, so out there the field is still the old one &mdash; drawn from
-      where the charge <i>would</i> have been had it never been kicked. Inside, the field is the
-      new one, drawn from where the charge actually is. Between them sits a shell of thickness
-      \(c\tau\), and the field lines have to get across it, because field lines do not begin or
-      end in empty space.</p>
+    <p>Causality answers it, and it is worth being exact about where the boundaries are.
+      The kick occupies the source times \(-\tau/2\) to \(+\tau/2\), and the charge is moving
+      throughout, so the news of its beginning and the news of its end leave from two
+      <i>different</i> places. At page time \(t\) the two faces of the shell are therefore</p>
 
-    <p>They cross it almost sideways. That sideways piece is the radiation, and this figure is
-      the whole of it.</p>
+    <p>Outside the outer face nothing has happened yet, so the field there is still the old
+      one &mdash; drawn from where the charge <i>would</i> have been had it never been kicked.
+      Inside the inner face the field is the new one, drawn from where the charge actually is.
+      In between, the field lines have to get across, because field lines do not begin or end in
+      empty space. They cross almost sideways. That sideways piece is the radiation, and this
+      figure is the whole of it.</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The two faces of the shell at page time \(t\) &mdash; exact, and not concentric</div>
+    \[ \bigl|\vec x-\vec r(-\tau/2)\bigr|=c\left(t+\tfrac{\tau}{2}\right),
+       \qquad
+       \bigl|\vec x-\vec r(+\tau/2)\bigr|=c\left(t-\tfrac{\tau}{2}\right) \]
+    <div class="eq-note">\(\vec r(\mp\tau/2)\) are the places the charge occupied when the kick
+      began and when it ended, and it moved between them, so the two spheres have different
+      centres. The radial distance between them, measured out from the origin, is therefore
+      <b>not</b> \(c\tau\) and depends on the direction you look: the figure prints it live at the
+      probe. \(c\tau\) is the duration of the kick in source time, which sets the scale of that
+      width but equals it only in the one case where the charge did not move while it was being
+      kicked. At the settings this figure opens with, the width runs from \(0.0653\) at
+      \(0^{\circ}\) to \(0.1148\) at \(180^{\circ}\) while \(c\tau=0.090\).</div>
   </div>
 
   <figure class="w2-fig">
@@ -884,9 +920,10 @@
       <div class="chart-head">
         <div>
           <div class="chart-title">The kicked charge, one slice through the axis</div>
-          <div class="chart-sub">Drag the arrow to set the kick&rsquo;s size and direction. Drag anywhere else
-            to move the probe around the shell. The straight parts are closed form; the part inside the
-            shell is streamlined through the exact field.</div>
+          <div class="chart-sub">Drag the arrow to set the kick&rsquo;s size and direction. Drag anywhere
+            else to move the probe: its angle and its distance both follow the pointer, so you can park it
+            outside the shell and watch the two faces arrive. The straight parts are closed form; the part
+            inside the shell is streamlined through the exact field.</div>
         </div>
         <span class="w2-ptag" data-kind="exact">Exact formula</span>
         <span class="w2-ptag" data-kind="numeric">Controlled numerical solve</span>
@@ -910,17 +947,22 @@
         </div>
       </div>
       <div class="w2-read">
-        <div class="w2-read-h">At the probe, on the middle of the shell, from the exact Li&eacute;nard&ndash;Wiechert field</div>
+        <div class="w2-read-h">At the probe, from the exact Li&eacute;nard&ndash;Wiechert field</div>
+        <div class="w2-state" data-w2-state hidden></div>
     <p class="w2-cav">The ratio below is a property of <i>this</i> kick, not of an idealised one. Let
       \(\tau\to0\) and the sideways field becomes a delta function on the shell, at which point the ratio
       is not a number at all &mdash; it depends on how you resolve the delta. What survives that limit is
       the delta&rsquo;s coefficient, which is the memory vector, and that is what station&nbsp;6 measures.</p>
         <div class="w2-nums">
-          <div class="w2-num"><span>angle of the probe from the kick axis</span><b data-w2-r="ang">&mdash;</b></div>
+          <div class="w2-num"><span>where the probe is, and its angle from the kick axis</span><b data-w2-r="ang">&mdash;</b></div>
+          <div class="w2-num"><span>outer face here, \(|\vec x-\vec r(-\tau/2)|=c(t+\tau/2)\), at radius</span><b data-w2-r="rout">&mdash;</b></div>
+          <div class="w2-num"><span>inner face here, \(|\vec x-\vec r(+\tau/2)|=c(t-\tau/2)\), at radius</span><b data-w2-r="rin">&mdash;</b></div>
+          <div class="w2-num"><span>radial width of the shell in this direction &mdash; compare \(c\tau\) above</span><b data-w2-r="wid">&mdash;</b></div>
+          <div class="w2-num"><span>page times at which the two faces reach the probe, emitted at source times \(\mp c\tau/2\)</span><b data-w2-r="arr">&mdash;</b></div>
           <div class="w2-num"><span>sideways field there, \(|E_\perp|\)</span><b data-w2-r="ep">&mdash;</b></div>
           <div class="w2-num"><span>outward field there, \(|E_r|\)</span><b data-w2-r="er">&mdash;</b></div>
-          <div class="w2-num is-lead"><span>their ratio \(|E_\perp|/|E_r|\) inside the shell, at the kick duration set above</span><b data-w2-r="ratio">&mdash;</b></div>
-          <div class="w2-num"><span>the same ratio just outside the shell, where nothing has happened yet</span><b data-w2-r="ratio0">&mdash;</b></div>
+          <div class="w2-num is-lead"><span>their ratio \(|E_\perp|/|E_r|\) at the probe, at the kick duration set above</span><b data-w2-r="ratio">&mdash;</b></div>
+          <div class="w2-num"><span>the same ratio just outside the outer face, where nothing has happened yet</span><b data-w2-r="ratio0">&mdash;</b></div>
           <div class="w2-num"><span>worst disagreement, streamlined exit angle against the closed-form flux match</span><b data-w2-r="res">&mdash;</b></div>
         </div>
       </div>
@@ -933,8 +975,12 @@
       lands from where the flux label says it should, and that gap is discretisation and nothing else:
       halving the step divides it by about four, monotonically, from \(2.9\times10^{-3}\) at \(\tau/10\)
       down to \(2.0\times10^{-6}\) at \(\tau/320\).
-      The two shell boundaries are spheres about where the charge sat when the kick began and ended,
-      so they are not concentric with each other once \(\beta_i\neq0\); that is drawn, not faked.
+      The two shell boundaries are the exact spheres written above &mdash; about where the charge sat when
+      the kick began and where it sat when the kick ended &mdash; so they are not concentric, and the radial
+      width between them is angle&#8209;dependent rather than \(c\tau\); that is drawn and printed, not
+      faked. Set \(\beta_f=\beta_i\) and the figure says so: with no change in velocity there is no
+      acceleration, no radiation and no shell, and the two circles are drawn as plain timing surfaces with
+      the radiation colour withdrawn.
       <b>Scope.</b> The construction shown is exact for a kick along a line. A kick that changes
       direction leaves the outer field symmetric about one axis and the inner field about another,
       and matching the lines across the shell is then a Poisson problem on the sphere that this page
@@ -1022,6 +1068,7 @@
 #w2 .w2-read { padding: .85rem 1rem 1rem; }
 #w2 .w2-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .35rem; }
 #w2 .w2-cav { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); margin: 0 0 .5rem; max-width: 42rem; }
+#w2 .w2-state { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); border-left: 3px solid var(--st-hold); background: var(--surface-2); padding: .5rem .7rem; margin: 0 0 .55rem; max-width: 42rem; }
 #w2 .w2-nums { display: grid; gap: 0; }
 #w2 .w2-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); padding: .28rem 0; border-bottom: 1px dotted var(--rule); }
 #w2 .w2-num:last-child { border-bottom: 0; }
@@ -1052,13 +1099,50 @@
 
   /* ---- palette, re-read whenever the theme changes ---- */
   var CACHE = {};
-  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
-  function themeChanged() { CACHE = {}; draw(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  /* Palette: token names only. A token the host page has not defined is an
+     INTEGRATION ERROR, not an opportunity to invent a colour: it is reported on
+     the console, stamped on the station root as data-token-error, and the drawing
+     falls back to the host page's own computed text colour - a value that belongs
+     to the host, not one this fragment made up. No colour literal appears in this
+     fragment. */
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    if (!v) {
+      if (window.console && window.console.warn) {
+        window.console.warn('frag-em ' + root.id + ': palette token ' + n + ' is not defined by the host page; falling back to the host text colour.');
+      }
+      root.setAttribute('data-token-error', n);
+      v = getComputedStyle(root).color;
+    }
+    return (CACHE[n] = v);
   }
-  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  /* Lifecycle. These hook document-level state, so they must not outlive the
+     station: each unhooks itself the first time it fires after this section has
+     left the document, which is what happens if the integrator replaces or
+     reloads a fragment. No global is created to hold a cleanup handle. */
+  var themeMQ = null, themeMO = null;
+  function detachTheme() {
+    if (themeMQ) {
+      if (themeMQ.removeEventListener) themeMQ.removeEventListener('change', themeChanged);
+      else if (themeMQ.removeListener) themeMQ.removeListener(themeChanged);
+      themeMQ = null;
+    }
+    if (themeMO) { themeMO.disconnect(); themeMO = null; }
+  }
+  function themeChanged() {
+    if (!root.isConnected) { detachTheme(); return; }
+    CACHE = {}; draw();
+  }
+  if (window.matchMedia) {
+    themeMQ = window.matchMedia('(prefers-color-scheme: dark)');
+    if (themeMQ.addEventListener) themeMQ.addEventListener('change', themeChanged);
+    else if (themeMQ.addListener) themeMQ.addListener(themeChanged);
+  }
+  if (window.MutationObserver) {
+    themeMO = new MutationObserver(themeChanged);
+    themeMO.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   /* ---- small vector helpers (this station only) ---- */
   function v3(a, b, c) { return [a, b, c]; }
@@ -1104,8 +1188,10 @@
   }
 
   /* ---- state ---- */
-  var S = { bi: 0, bf: 0.55, tau: 0.09, t: 0.70, probe: 0.62, axis: 0 };
+  var S = { bi: 0, bf: 0.55, tau: 0.09, t: 0.70, probe: 0.62, probeR: 0.7079, axis: 0 };
   var NL = 11, HSTEP = 40, MAXSTEP = 900;
+  var NOKICK = 1e-9;                    /* below this the endpoint speeds are equal */
+  function noKick() { return Math.abs(S.bf - S.bi) < NOKICK; }
   var VIEW = 1.18;                      /* world half-height shown */
   var DPR = 1, W = 1, H = 1, CXp = 0, CYp = 0, SC = 1;
   var worstRes = 0;
@@ -1203,7 +1289,15 @@
     return { inner: inner, shell: shell, outer: outer, ok: ok, res: res };
   }
 
-  /* ---- probe readout: the exact field on the middle of the shell ---- */
+  /* ---- probe readout ------------------------------------------------------
+     The probe sits where the pointer put it, at its own angle AND its own
+     distance, so it can be parked outside the shell and watched as the two faces
+     sweep over it. The faces are the exact spheres
+       |x - r(-tau/2)| = t + tau/2   and   |x - r(+tau/2)| = t - tau/2,
+     which have different centres; rOut and rIn below are where those spheres cut
+     the probe's own ray out of the origin, so their difference is the angle-
+     dependent radial width, not c*tau. The two page times at which the faces
+     reach the probe follow from the same equations with x held fixed. */
   function probeRead(kick) {
     var e = axisVec();
     var perp = v3(-e[1], e[0], 0);
@@ -1211,17 +1305,26 @@
     var xa = kick.position(-S.tau / 2), xb = kick.position(S.tau / 2);
     var rOut = raySphere([0, 0, 0], n, xa, S.t + S.tau / 2);
     var rIn = raySphere([0, 0, 0], n, xb, Math.max(1e-6, S.t - S.tau / 2));
-    if (rOut < 0 || rIn < 0) return null;
-    var rMid = 0.5 * (rIn + rOut);
+    var xp = vscl(n, S.probeR);
+    /* page times of the two arrivals at this fixed point */
+    var tOut = vlen(vsub(xp, xa)) - S.tau / 2;
+    var tIn = vlen(vsub(xp, xb)) + S.tau / 2;
     function at(r) {
       var f = P.fieldAt(kick, vscl(n, r), S.t);
       var er = vdot(f.E, n);
       var eperp = vlen(vsub(f.E, vscl(n, er)));
       return { er: er, ep: eperp, r: r };
     }
-    var mid, out;
-    try { mid = at(rMid); out = at(rOut + 0.10 * S.t + 0.02); } catch (err) { return null; }
-    return { n: n, rIn: rIn, rOut: rOut, mid: mid, out: out };
+    var here, out;
+    try {
+      here = at(S.probeR);
+      out = at(Math.max(rOut, S.probeR) + 0.10 * S.t + 0.02);
+    } catch (err) { return null; }
+    var where = S.t < tOut ? 'outside the outer face, nothing has arrived yet'
+      : (S.t > tIn ? 'inside the inner face, the news has passed' : 'inside the shell');
+    return { n: n, xp: xp, rIn: rIn, rOut: rOut, here: here, out: out,
+      tOut: tOut, tIn: tIn, where: where,
+      inShell: S.t >= tOut && S.t <= tIn };
   }
 
   /* ---- drawing ---- */
@@ -1244,6 +1347,22 @@
     ctx.save(); ctx.setLineDash(dash || []);
     ctx.beginPath(); ctx.arc(sx(c[0]), sy(c[1]), r * SC, 0, 2 * Math.PI); ctx.stroke(); ctx.restore();
   }
+  /* a small backed label pinned to a world point, clipped into the canvas */
+  function faceTag(pt, text, col) {
+    var fs = 10.5 * DPR;
+    ctx.save();
+    ctx.font = fs + 'px ' + tok('--sans');
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    var w = ctx.measureText(text).width, pad = 4 * DPR;
+    var X = Math.min(Math.max(sx(pt[0]) + 6 * DPR, 2 * DPR), W - w - 2 * pad - 2 * DPR);
+    var Y = Math.min(Math.max(sy(pt[1]), fs), H - fs);
+    ctx.globalAlpha = 0.9; ctx.fillStyle = tok('--surface');
+    ctx.fillRect(X - pad, Y - fs * 0.8, w + 2 * pad, fs * 1.6);
+    ctx.globalAlpha = 1; ctx.fillStyle = col;
+    ctx.fillText(text, X, Y);
+    ctx.restore();
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  }
 
   function draw() {
     if (!resize()) return;
@@ -1262,12 +1381,19 @@
     ctx.fillStyle = cSunk; ctx.fillRect(0, 0, W, H);
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
 
-    /* the shell, as a band between the two exact boundary spheres */
-    ctx.save();
-    ctx.beginPath(); ctx.arc(sx(xa[0]), sy(xa[1]), (t + tau / 2) * SC, 0, 2 * Math.PI);
-    ctx.arc(sx(xb[0]), sy(xb[1]), Math.max(0, t - tau / 2) * SC, 0, 2 * Math.PI, true);
-    ctx.fillStyle = cDie; ctx.globalAlpha = 0.10; ctx.fill('evenodd');
-    ctx.restore();
+    /* The band between the two exact boundary spheres. With betaF = betaI there
+       is no acceleration anywhere on the trajectory, so the core's radiation part
+       vanishes identically: the two spheres are still the surfaces where the
+       news WOULD have been, but nothing is emitted, so the radiation colour is
+       withdrawn and the band is not painted. */
+    var dead = noKick();
+    if (!dead) {
+      ctx.save();
+      ctx.beginPath(); ctx.arc(sx(xa[0]), sy(xa[1]), (t + tau / 2) * SC, 0, 2 * Math.PI);
+      ctx.arc(sx(xb[0]), sy(xb[1]), Math.max(0, t - tau / 2) * SC, 0, 2 * Math.PI, true);
+      ctx.fillStyle = cDie; ctx.globalAlpha = 0.10; ctx.fill('evenodd');
+      ctx.restore();
+    }
 
     /* field lines */
     var lines = [], i, sVal;
@@ -1283,14 +1409,24 @@
     ctx.strokeStyle = cInk; ctx.globalAlpha = 0.55;
     for (i = 0; i < lines.length; i++) { line(lines[i].outer); line(lines[i].inner); }
     ctx.globalAlpha = 1;
-    ctx.strokeStyle = cDie; ctx.lineWidth = Math.max(1.6, 2.0 * DPR);
+    /* the connector segment: radiative, unless there is no kick, in which case it
+       is just more of the same ordinary Coulomb line and is drawn as such */
+    ctx.strokeStyle = dead ? cInk : cDie;
+    ctx.globalAlpha = dead ? 0.55 : 1;
+    ctx.lineWidth = dead ? Math.max(1, 1.05 * DPR) : Math.max(1.6, 2.0 * DPR);
     for (i = 0; i < lines.length; i++) if (lines[i].shell.length > 1) line(lines[i].shell);
+    ctx.globalAlpha = 1;
 
-    /* shell boundaries */
-    ctx.lineWidth = Math.max(1, 1 * DPR); ctx.strokeStyle = cDie; ctx.globalAlpha = 0.75;
+    /* the two faces */
+    ctx.lineWidth = Math.max(1, 1 * DPR);
+    ctx.strokeStyle = dead ? cRule : cDie; ctx.globalAlpha = dead ? 0.9 : 0.75;
     circleAt(xa, t + tau / 2, [5 * DPR, 4 * DPR]);
     if (t - tau / 2 > 0) circleAt(xb, t - tau / 2, [5 * DPR, 4 * DPR]);
     ctx.globalAlpha = 1;
+    /* name them, on the far side of the axis so they do not collide with the probe */
+    var upv = v3(-Math.sin(S.axis), Math.cos(S.axis), 0);
+    faceTag(vadd(xa, vscl(upv, t + tau / 2)), 'outer face', dead ? cRule : cDie);
+    if (t - tau / 2 > 0.06) faceTag(vadd(xb, vscl(upv, t - tau / 2)), 'inner face', dead ? cRule : cDie);
 
     /* the two positions */
     ctx.strokeStyle = cInk; ctx.lineWidth = Math.max(1, 1.1 * DPR);
@@ -1314,33 +1450,68 @@
     ctx.closePath(); ctx.fill();
     ctx.beginPath(); ctx.arc(sx(tip[0]), sy(tip[1]), 4.5 * DPR, 0, 2 * Math.PI); ctx.fill();
 
-    /* probe marker + readout */
+    /* probe marker + readout. The marker is flagged while a face is crossing it,
+       which is the moment the reader is being asked to notice. */
     var pr = probeRead(kick);
     if (pr) {
-      var pm = vscl(pr.n, 0.5 * (pr.rIn + pr.rOut));
-      ctx.strokeStyle = cKeep; ctx.lineWidth = Math.max(1.4, 1.8 * DPR);
-      ctx.beginPath(); ctx.arc(sx(pm[0]), sy(pm[1]), 7 * DPR, 0, 2 * Math.PI); ctx.stroke();
+      var pm = pr.xp;
+      var near = Math.min(Math.abs(t - pr.tOut), Math.abs(t - pr.tIn));
+      var hot = near < 0.018;
+      ctx.strokeStyle = (!dead && pr.inShell) ? cDie : cKeep;
+      ctx.lineWidth = hot ? Math.max(2.2, 3.0 * DPR) : Math.max(1.4, 1.8 * DPR);
+      ctx.beginPath(); ctx.arc(sx(pm[0]), sy(pm[1]), (hot ? 10 : 7) * DPR, 0, 2 * Math.PI); ctx.stroke();
+      ctx.lineWidth = Math.max(1.4, 1.8 * DPR);
       ctx.beginPath(); ctx.moveTo(sx(pm[0]) - 11 * DPR, sy(pm[1])); ctx.lineTo(sx(pm[0]) - 8 * DPR, sy(pm[1]));
       ctx.moveTo(sx(pm[0]) + 8 * DPR, sy(pm[1])); ctx.lineTo(sx(pm[0]) + 11 * DPR, sy(pm[1])); ctx.stroke();
-      set('ang', (S.probe * 180 / Math.PI).toFixed(1) + '°');
-      set('ep', fmt(pr.mid.ep, 3));
-      set('er', fmt(pr.mid.er, 3));
-      set('ratio', fmt(Math.abs(pr.mid.ep / pr.mid.er), 2));
+      if (hot && !dead) {
+        faceTag(vadd(pm, vscl(vunit(pm), 0.06)),
+          Math.abs(t - pr.tOut) <= Math.abs(t - pr.tIn) ? 'the outer face is arriving' : 'the inner face is leaving', cDie);
+      }
+      set('ang', pr.where + ',  ' + (S.probe * 180 / Math.PI).toFixed(1) + '°');
+      set('rout', fmt(pr.rOut, 4) + (S.probeR > pr.rOut ? '   (the probe is beyond it)' : ''));
+      set('rin', pr.rIn > 0 ? fmt(pr.rIn, 4) : 'the inner face has not formed yet');
+      set('wid', pr.rIn > 0 ? fmt(pr.rOut - pr.rIn, 4) + '   (cτ = ' + S.tau.toFixed(3) + ')' : '—');
+      set('arr', 'ct = ' + fmt(pr.tOut, 3) + '  and  ct = ' + fmt(pr.tIn, 3) + '   (now: ct = ' + t.toFixed(3) + ')');
+      set('ep', fmt(pr.here.ep, 3));
+      set('er', fmt(pr.here.er, 3));
+      set('ratio', fmt(Math.abs(pr.here.ep / pr.here.er), 2));
       set('ratio0', fmt(Math.abs(pr.out.ep / pr.out.er), 2));
     }
     set('res', worstRes > 0 ? worstRes.toExponential(1) : '—');
+    var banner = root.querySelector('[data-w2-state]');
+    if (banner) {
+      banner.hidden = !dead;
+      if (dead) {
+        banner.innerHTML = 'The two endpoint speeds are equal, so the charge is never accelerated: ' +
+          'the exact radiation part of the field is zero everywhere and there is no shell. ' +
+          'The two dashed circles are still where the news would have been, and they are drawn as plain ' +
+          'timing surfaces. The sideways field printed below is not radiation — it is the ordinary ' +
+          'boosted Coulomb field, which is radial from the charge\u2019s present position, so it has a ' +
+          'component across the direction measured from the origin whenever the charge is not sitting ' +
+          'at it. Move either speed slider to make a kick.';
+      }
+    }
 
     /* legend */
     var rows = [
       [cInk, 0.55, 'outside: old field, spokes from where it would have been'],
-      [cDie, 1.00, 'the shell, thickness cτ: the sideways field'],
+      [dead ? cRule : cDie, 1.00, dead ? 'no kick: no radiation, no shell' : 'between the two faces: the sideways field'],
       [cInk, 0.55, 'inside: new field, spokes from where it is'],
       [cKeep, 1.00, 'the charge now (hollow: its old extrapolated place)']
     ];
-    var fs = 11.5 * DPR, pad = 7 * DPR, lh = 15 * DPR;
+    var fs = 11.5 * DPR, pad = 7 * DPR, lh = 15 * DPR, ri;
     ctx.font = fs + 'px ' + tok('--sans');
-    var wmax = 0, ri;
+    /* keep the box inside a narrow canvas rather than letting it run off the edge */
+    var wmax = 0;
     for (ri = 0; ri < rows.length; ri++) wmax = Math.max(wmax, ctx.measureText(rows[ri][2]).width);
+    var budget = W - 18 * DPR - 26 * DPR - 2 * pad;
+    if (wmax > budget && wmax > 0) {
+      fs = Math.max(8 * DPR, fs * budget / wmax);
+      lh = fs * 1.3;
+      ctx.font = fs + 'px ' + tok('--sans');
+      wmax = 0;
+      for (ri = 0; ri < rows.length; ri++) wmax = Math.max(wmax, ctx.measureText(rows[ri][2]).width);
+    }
     var bw = wmax + 26 * DPR + 2 * pad, bh = rows.length * lh + 2 * pad - 3 * DPR;
     var bx = 9 * DPR, by = H - bh - 9 * DPR;
     ctx.save(); ctx.globalAlpha = 0.90; ctx.fillStyle = tok('--surface');
@@ -1357,7 +1528,7 @@
     }
     ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'right';
     ctx.fillStyle = tok('--ink-3'); ctx.font = (11.5 * DPR) + 'px ' + tok('--mono');
-    ctx.fillText('shell radius  c t = ' + t.toFixed(2), W - 10 * DPR, H - 12 * DPR);
+    ctx.fillText('page time  c t = ' + t.toFixed(2), W - 10 * DPR, H - 12 * DPR);
     ctx.textAlign = 'left';
   }
 
@@ -1407,8 +1578,11 @@
       }
     } else {
       var e2 = axisVec(), pp = v3(-e2[1], e2[0], 0);
-      var wn = vunit(w);
-      if (vlen(w) > 1e-6) S.probe = Math.atan2(vdot(wn, pp), vdot(wn, e2));
+      var wn = vunit(w), wm = vlen(w);
+      if (wm > 1e-6) {
+        S.probe = Math.atan2(vdot(wn, pp), vdot(wn, e2));
+        S.probeR = Math.max(0.10, Math.min(1.55, wm));
+      }
     }
     syncLabels(); draw();
   }
@@ -1417,12 +1591,27 @@
   cv.addEventListener('pointercancel', function () { dragging = null; });
 
   /* ---- animation, paused offscreen and under reduced motion ---- */
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduceMQ = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reduce = !!(reduceMQ && reduceMQ.matches);
+  function reduceChanged() {
+    if (!root.isConnected) {
+      if (reduceMQ.removeEventListener) reduceMQ.removeEventListener('change', reduceChanged);
+      else if (reduceMQ.removeListener) reduceMQ.removeListener(reduceChanged);
+      return;
+    }
+    reduce = reduceMQ.matches;
+    if (reduce && playing) setPlay(false);
+  }
+  if (reduceMQ) {
+    if (reduceMQ.addEventListener) reduceMQ.addEventListener('change', reduceChanged);
+    else if (reduceMQ.addListener) reduceMQ.addListener(reduceChanged);
+  }
   var playing = false, visible = true, raf = null, last = null;
   var bPlay = root.querySelector('[data-w2-play]');
   var bReset = root.querySelector('[data-w2-reset]');
   function frame(ts) {
     raf = null;
+    if (!root.isConnected) { playing = false; return; }
     if (!playing || !visible) return;
     if (last === null) last = ts;
     var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
@@ -1441,20 +1630,32 @@
   if (bPlay) bPlay.addEventListener('click', function () { setPlay(!playing); });
   if (bReset) bReset.addEventListener('click', function () {
     setPlay(false);
-    S = { bi: 0, bf: 0.55, tau: 0.09, t: 0.70, probe: 0.62, axis: 0 };
+    S = { bi: 0, bf: 0.55, tau: 0.09, t: 0.70, probe: 0.62, probeR: 0.7079, axis: 0 };
     ['bi', 'bf', 'tau', 't'].forEach(function (k) {
       var el = root.querySelector('[data-w2-i="' + k + '"]'); if (el) el.value = String(S[k]);
     });
     syncLabels(); draw();
   });
   if (window.IntersectionObserver) {
-    new IntersectionObserver(function (es) {
+    var io2 = new IntersectionObserver(function (es) {
+      if (!root.isConnected) { io2.disconnect(); return; }
       visible = es[0].isIntersecting;
       if (visible && playing && raf === null) { last = null; raf = window.requestAnimationFrame(frame); }
-    }, { rootMargin: '120px' }).observe(cv);
+    }, { rootMargin: '120px' });
+    io2.observe(cv);
   }
-  if (window.ResizeObserver) new ResizeObserver(function () { draw(); }).observe(cv);
-  else window.addEventListener('resize', draw);
+  if (window.ResizeObserver) {
+    var ro2 = new ResizeObserver(function () {
+      if (!root.isConnected) { ro2.disconnect(); return; }
+      draw();
+    });
+    ro2.observe(cv);
+  } else {
+    window.addEventListener('resize', function onResize2() {
+      if (!root.isConnected) { window.removeEventListener('resize', onResize2); return; }
+      draw();
+    });
+  }
 
   syncLabels();
   draw();
@@ -1562,33 +1763,58 @@
       disagree, at the right-hand end, the disagreement is real physics: a kick of finite duration cannot
       radiate at frequencies much above \(1/\tau\). Shorten \(\tau\) and the plateau extends.
       At the left-hand end the gap between the two is not a numerical error &mdash; hold the panel count
-      fixed or raise it eightfold and the number does not move &mdash; it is the first correction in
-      \(\omega\tau\), and it falls in exact proportion to \(\omega\): the printed gap runs
-      \(2.5\times10^{-8}\), \(2.5\times10^{-10}\), \(2.5\times10^{-12}\) at
-      \(\omega=10^{-2},10^{-3},10^{-4}\) for the settings this figure opens with.</figcaption>
+      fixed or raise it eightfold and the number does not move &mdash; it is the leading correction to the
+      plateau, and it is of order \((\omega\tau)^{2}\). It has to be even in \(\omega\): the pulse is
+      real in the time domain, so \(|\vec J(\omega)|^{2}\) is an even function and the linear term is
+      absent. The printed gap therefore falls by a hundred, not by ten, for every decade in \(\omega\):
+      \(2.52\times10^{-8}\), \(2.52\times10^{-10}\), \(2.52\times10^{-12}\) at
+      \(\omega=10^{-2},10^{-3},10^{-4}\) for the settings this figure opens with. Measured against
+      \((\omega\tau)^{2}\) the coefficient is \(3.106\times10^{-2}\) at all three, and unchanged when
+      \(\tau\) is doubled and doubled again.</figcaption>
   </figure>
 
   <div class="body">
     <p>So the classical calculation hands us a number, \(\vec S(\hat n)\), that controls the whole
       low&#8209;frequency end of the radiation and depends on nothing but the momenta going in and out.
-      A number of that description already exists in quantum field theory, and it is older. Weinberg&rsquo;s
-      soft photon theorem, quoted as it stands in the lecture notes:</p>
+      A number of that description already exists in quantum field theory, and it is older. Here is
+      Weinberg&rsquo;s soft photon theorem as the lecture notes write it. The source lines are reproduced
+      first, exactly as they stand in the TeX, and the same equation is set below them with the
+      paper&rsquo;s five abbreviations written out; nothing else is changed.</p>
   </div>
 
   <div class="eq w3-quoted">
-    <div class="eq-label">The soft photon theorem <span class="w3-ptag" data-kind="quoted">Quoted</span></div>
-    \[ \langle\text{out}|\,a_+^{\text{out}}(\vec q\,)\,\mathcal{S}\,|\text{in}\rangle \;=\;
-       e\left[\sum_{k=1}^{m}\frac{Q_k^{\text{out}}\,p_k^{\text{out}}\cdot\varepsilon^{+}}{p_k^{\text{out}}\cdot q}
-       -\sum_{k=1}^{n}\frac{Q_k^{\text{in}}\,p_k^{\text{in}}\cdot\varepsilon^{+}}{p_k^{\text{in}}\cdot q}\right]
-       \langle\text{out}|\,\mathcal{S}\,|\text{in}\rangle+\mathcal{O}(q^{0}) \]
-    <div class="eq-note"><span class="mono">refs/arxiv-1703.05448/soft_Arxiv_update.tex:1075-1082</span>, equation
-      <span class="mono">(mft)</span>, with the paper&rsquo;s abbreviations written out
-      (<span class="mono">\outst</span>, <span class="mono">\inst</span>, <span class="mono">\cs</span>,
-      <span class="mono">\ve</span>, <span class="mono">\co</span> for the bra, the ket, \(\mathcal{S}\),
-      \(\varepsilon\) and \(\mathcal{O}\)). Its sentence in the notes: &ldquo;any \(\mathcal{S}\)-matrix
-      element with an additional soft (\(q^\mu\to0\)) photon is equal to the original matrix element
-      multiplied by the soft factor plus corrections of order \(q^{0}\)&rdquo;, and, two lines later,
-      &ldquo;the leading order term in the soft expansion is a pole.&rdquo;</div>
+    <div class="eq-label">The source, verbatim <span class="w3-ptag" data-kind="quoted">Quoted</span></div>
+    <div class="w3-srcwrap"><pre class="w3-src mathjax_ignore tex2jax_ignore">1075  The soft photon theorem states that any $\cs$-matrix element with an additional soft ($q^\mu\to0$) photon is equal to the original matrix element multiplied by the soft factor plus corrections of order $q^0$:
+1076  \begin{equation}\label{mft}
+1077  \begin{split} 
+1078  \outst a_+^{\text{out}} ( \vec{q}\hspace{2pt})     \cs  \inst  \  = 
+1079     e\left [\sum_{k=1}^m \frac{  Q_k^{\text{out}} p^{\text{out}}_k  \cdot \ve^+  }{ p^{\text{out}}_k  \cdot q   } 
+1080   - \sum_{k=1}^n \frac{  Q_k^{\text{in}}   p^{\text{in}}_k  \cdot \ve^+  }{ p^{\text{in}}_k  \cdot q }  \right]   \outst \cs \inst    + \co (q^0) ~.
+1081  \end{split}
+1082  \end{equation}
+1083  The leading order term in the soft expansion is a pole. </pre></div>
+    <div class="eq-note">Lines 1075&ndash;1083 of
+      <span class="mono">refs/arxiv-1703.05448/soft_Arxiv_update.tex</span>, character for character,
+      including the trailing spaces the file carries. Line 1083 is the sentence about the pole, which sits
+      just outside the equation environment. The five abbreviations are defined in the same file:
+      <span class="mono">\outst</span> is <span class="mono">\langle \text{out} |</span> (line 230),
+      <span class="mono">\inst</span> is <span class="mono">|\text{in}\rangle</span> (line 231),
+      <span class="mono">\cs</span> is <span class="mono">\mathcal{S}</span> (line 228),
+      <span class="mono">\co</span> is <span class="mono">\mathcal{O}</span> (line 229) and
+      <span class="mono">\ve</span> is <span class="mono">\varepsilon</span> (line 60).</div>
+  </div>
+
+  <div class="eq w3-quoted">
+    <div class="eq-label">The same equation, typeset <span class="w3-ptag" data-kind="quoted">Quoted</span></div>
+    \[ \langle \text{out} | a_+^{\text{out}} ( \vec{q}\hspace{2pt})     \mathcal {S}  |\text{in}\rangle  \  =
+       e\left [\sum_{k=1}^m \frac{  Q_k^{\text{out}} p^{\text{out}}_k  \cdot {\varepsilon}^+  }{ p^{\text{out}}_k  \cdot q   }
+       - \sum_{k=1}^n \frac{  Q_k^{\text{in}}   p^{\text{in}}_k  \cdot {\varepsilon}^+  }{ p^{\text{in}}_k  \cdot q }  \right]   \langle \text{out} | \mathcal {S} |\text{in}\rangle    + \mathcal {O} (q^0) ~. \]
+    <div class="eq-note">Equation <span class="mono">(mft)</span>,
+      <span class="mono">soft_Arxiv_update.tex:1076-1082</span>. This is the body of lines 1078&ndash;1080
+      above with the five abbreviations replaced by their definitions and nothing else touched: the same
+      sub/superscript order, the same \(\mathcal{O}(q^{0})\) remainder, the same closing
+      <span class="mono">~.</span> The sentence introducing it is line 1075, quoted above; the sentence
+      &ldquo;The leading order term in the soft expansion is a pole&rdquo; is line 1083.</div>
   </div>
 
   <div class="body">
@@ -1607,12 +1833,22 @@
       polarization, \(p\cdot\epsilon/(p\cdot q)=\boldsymbol\beta\cdot\boldsymbol\epsilon/
       [\omega(1-\hat{\mathbf n}\cdot\boldsymbol\beta)]\); therefore the kicked charge&rsquo;s classical
       \(1/\omega\) coefficient is exactly the single&#8209;emitter kinematic factor in Weinberg&rsquo;s
-      leading soft theorem (out minus in), with the displayed charge and coupling.&rdquo; An overall sign
-      lives in the convention chosen for \(\varepsilon\) and for the metric; whichever you take has to be
-      carried through both sides, and it cancels out of the spectrum either way.
-      Our process has one incoming line and one outgoing line, both of charge \(Q\), so Weinberg&rsquo;s
-      bracket is \(\frac{Q}{\omega}\,\vec S(\hat n)\cdot\vec\varepsilon\) &mdash; the classical
-      coefficient, over \(\omega\).
+      leading soft theorem (out minus in), with the displayed charge and coupling.&rdquo;
+      <b>One sign, and it is not free.</b> Two different objects are in play and this page has already
+      fixed both, so the relation between them is a fact rather than a convention. Call the current
+      coefficient
+      \(S_{\text{cl}}=\bigl[\tfrac{\vec\beta_f}{1-\hat n\cdot\vec\beta_f}-\tfrac{\vec\beta_i}{1-\hat n\cdot\vec\beta_i}\bigr]\cdot\vec\varepsilon\).
+      The vector \(\vec S\) defined above is that same bracket with the double cross product in front of
+      it, and for a transverse polarization \(\hat n\cdot\vec\varepsilon=0\), so
+      \(\hat n\times(\hat n\times\vec A)\cdot\vec\varepsilon=-\vec A\cdot\vec\varepsilon\). Hence
+      \(\vec S(\hat n)\cdot\vec\varepsilon=-S_{\text{cl}}\), and Weinberg&rsquo;s bracket for our one
+      incoming and one outgoing line, both of charge \(Q\), is
+      \(\frac{Q}{\omega}S_{\text{cl}}=-\frac{Q}{\omega}\,\vec S(\hat n)\cdot\vec\varepsilon\).
+      The magnitudes are the same, and \(|\vec S|^{2}\) &mdash; which is what the spectrum above and the
+      sphere in station&nbsp;4 are built from &mdash; does not see the sign at all. The reference core
+      keeps the two apart in exactly this way: its <span class="mono">softAmplitude</span> returns
+      \(S_{\text{cl}}\), its <span class="mono">dcRadiationField</span> returns the vector \(\vec S\),
+      and its notes record \(\vec S\cdot\vec\varepsilon=-S_{\text{cl}}\).
       <b>What this is not.</b> It is not a derivation of the soft theorem, and it is not a claim that
       the classical calculation implies the quantum one. It is the observation that the two expressions
       are the same function of the same data, checked numerically below.</div>
@@ -1620,15 +1856,18 @@
 
   <div class="w3-ledger">
     <div class="w3-read-h">The two brackets, evaluated at the current controls</div>
+    <div class="w3-state" data-w3-state hidden></div>
     <p class="w3-cav">These are the same expression reached from two directions, and the reference core
       implements them as two separate functions &mdash; one written down from the classical integral, one
       from Weinberg&rsquo;s bracket with \(\eta=+1\) for the outgoing line and \(-1\) for the incoming one.
       They agree to the last bit because the algebra above says they must. That is a check that the page
       has not mistyped either of them, not independent evidence for the soft theorem.</p>
     <div class="w3-nums">
-      <div class="w3-num"><span>classical, \(\vec S(\hat n)\cdot\vec\varepsilon\) from the closed form above</span><b data-w3-r="scl">&mdash;</b></div>
+      <div class="w3-num"><span>classical current coefficient \(S_{\text{cl}}\), from <span class="mono">softAmplitude</span></span><b data-w3-r="scl">&mdash;</b></div>
       <div class="w3-num"><span>Weinberg&rsquo;s bracket \(\sum_k\eta_kQ_k\,\vec\beta_k\cdot\vec\varepsilon/(1-\hat n\cdot\vec\beta_k)\)</span><b data-w3-r="swein">&mdash;</b></div>
       <div class="w3-num"><span>difference</span><b data-w3-r="sdiff">&mdash;</b></div>
+      <div class="w3-num"><span>the transverse vector&rsquo;s projection \(\vec S(\hat n)\cdot\vec\varepsilon\), which is \(-S_{\text{cl}}\)</span><b data-w3-r="sveps">&mdash;</b></div>
+      <div class="w3-num"><span>and the sum of those two, which is zero by the identity above</span><b data-w3-r="ssum">&mdash;</b></div>
       <div class="w3-num"><span>total charge in minus out, which has to vanish for the factor to be gauge invariant</span><b data-w3-r="qsum">&mdash;</b></div>
     </div>
   </div>
@@ -1648,7 +1887,11 @@
       <div class="w3-num is-lead"><span>\(dN/d\Omega\) between \(\omega_{\min}\) and \(\omega_{\max}=1/\tau\)</span><b data-w3-r="nph">&mdash;</b></div>
     </div>
     <div class="w3-tabwrap"><table class="w3-tab">
-      <caption>Each further decade of unheard frequency adds the same amount. That is what a logarithm is.</caption>
+      <caption>Asymptotically, each further decade of unheard frequency adds the same amount &mdash; that is
+        what a logarithm is. For a kick of finite duration the equality is a limit rather than an identity:
+        the spectrum is only flat below \(1/\tau\), so consecutive decades agree to the digits shown here
+        but not exactly. It <i>is</i> exact for the instantaneous kick, whose amplitude is
+        \(\omega\)&#8209;independent all the way down.</caption>
       <thead><tr><th scope="col">\(\omega_{\min}\)</th><th scope="col">\(dN/d\Omega\)</th><th scope="col">gain over the row above</th></tr></thead>
       <tbody data-w3-tab></tbody>
     </table></div>
@@ -1701,6 +1944,9 @@
 #w3 .w3-ledger { border: 1px solid var(--rule-2); background: var(--surface-2); margin: 1.4rem 0; display: grid; gap: .55rem; }
 #w3 .w3-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
 #w3 .w3-cav { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); margin: 0; max-width: 42rem; }
+#w3 .w3-state { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); border-left: 3px solid var(--st-hold); background: var(--surface); padding: .5rem .7rem; max-width: 42rem; }
+#w3 .w3-srcwrap { overflow-x: auto; border: 1px solid var(--rule-2); background: var(--surface-2); }
+#w3 .w3-src { font-family: var(--mono); font-size: 11.5px; line-height: 1.55; color: var(--ink-2); white-space: pre; padding: .6rem .75rem; display: block; margin: 0; }
 #w3 .w3-nums { display: grid; gap: 0; }
 #w3 .w3-num { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; font-family: var(--sans); font-size: 12.5px; color: var(--ink-2); padding: .28rem 0; border-bottom: 1px dotted var(--rule); }
 #w3 .w3-num:last-child { border-bottom: 0; }
@@ -1730,13 +1976,50 @@
   function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
 
   var CACHE = {};
-  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
-  function themeChanged() { CACHE = {}; render(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  /* Palette: token names only. A token the host page has not defined is an
+     INTEGRATION ERROR, not an opportunity to invent a colour: it is reported on
+     the console, stamped on the station root as data-token-error, and the drawing
+     falls back to the host page's own computed text colour - a value that belongs
+     to the host, not one this fragment made up. No colour literal appears in this
+     fragment. */
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    if (!v) {
+      if (window.console && window.console.warn) {
+        window.console.warn('frag-em ' + root.id + ': palette token ' + n + ' is not defined by the host page; falling back to the host text colour.');
+      }
+      root.setAttribute('data-token-error', n);
+      v = getComputedStyle(root).color;
+    }
+    return (CACHE[n] = v);
   }
-  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  /* Lifecycle. These hook document-level state, so they must not outlive the
+     station: each unhooks itself the first time it fires after this section has
+     left the document, which is what happens if the integrator replaces or
+     reloads a fragment. No global is created to hold a cleanup handle. */
+  var themeMQ = null, themeMO = null;
+  function detachTheme() {
+    if (themeMQ) {
+      if (themeMQ.removeEventListener) themeMQ.removeEventListener('change', themeChanged);
+      else if (themeMQ.removeListener) themeMQ.removeListener(themeChanged);
+      themeMQ = null;
+    }
+    if (themeMO) { themeMO.disconnect(); themeMO = null; }
+  }
+  function themeChanged() {
+    if (!root.isConnected) { detachTheme(); return; }
+    CACHE = {}; render();
+  }
+  if (window.matchMedia) {
+    themeMQ = window.matchMedia('(prefers-color-scheme: dark)');
+    if (themeMQ.addEventListener) themeMQ.addEventListener('change', themeChanged);
+    else if (themeMQ.addListener) themeMQ.addListener(themeChanged);
+  }
+  if (window.MutationObserver) {
+    themeMO = new MutationObserver(themeChanged);
+    themeMO.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   var S = { bf: 0.60, bi: 0.00, tau: 0.09, th: 55, om: 0, wmin: -3 };
   var OM_LO = -2, OM_HI = 2.4, NPT = 110;
@@ -1851,6 +2134,7 @@
 
   function render() {
     var D = data || compute();
+    var dead = Math.abs(S.bf - S.bi) < 1e-9;
     var om = Math.pow(10, S.om);
     var mSpec = P.radiationSpectrum(D.g.kick, D.g.n, [om])[0];
     var mAmp = Math.sqrt(Math.max(0, mSpec) * FOURPI2 / ALPHA) / om;
@@ -1869,18 +2153,37 @@
     set('om', om.toExponential(3));
     set('spec', fmt(mSpec));
     set('plat', fmt(plateau));
-    set('wa', fmt(om * mAmp) + '   (|S| = ' + fmt(Smag) + ')');
-    var gap = Math.abs(D.spec[0] - plateau) / plateau;
-    set('gap', gap.toExponential(2));
+    set('wa', dead ? 'zero — there is no pole' : fmt(om * mAmp) + '   (|S| = ' + fmt(Smag) + ')');
+    /* With betaF = betaI the plateau is exactly zero and so is the spectrum, so a
+       RELATIVE gap is 0/0 and means nothing. Print the exact statement instead. */
+    if (dead) {
+      set('gap', 'not defined: plateau and spectrum are both exactly zero');
+    } else {
+      set('gap', (Math.abs(D.spec[0] - plateau) / plateau).toExponential(2));
+    }
 
     var scl = P.softAmplitude(D.g.kick, D.g.n, D.g.eps);
     var parts = [{ Q: 1, beta: [S.bf, 0, 0], eta: 1 }, { Q: 1, beta: [S.bi, 0, 0], eta: -1 }];
     var swein = P.softFactorWeinberg(parts, D.g.n, D.g.eps);
     var cons = P.chargeConservation(parts);
+    var sveps = D.dc[0] * D.g.eps[0] + D.dc[1] * D.g.eps[1] + D.dc[2] * D.g.eps[2];
     set('scl', fmt(scl));
     set('swein', fmt(swein));
     set('sdiff', Math.abs(scl - swein).toExponential(2));
+    set('sveps', fmt(sveps));
+    set('ssum', Math.abs(sveps + scl).toExponential(2));
     set('qsum', cons.sum.toFixed(1) + (cons.conserved ? '   (conserved)' : '   (NOT conserved)'));
+
+    var banner = root.querySelector('[data-w3-state]');
+    if (banner) {
+      banner.hidden = !dead;
+      if (dead) {
+        banner.textContent = 'The two speeds are equal, so nothing is radiated: the acceleration is zero, '
+          + 'the amplitude is identically zero at every frequency, and both charts are blank rather than '
+          + 'being drawn with an invented floor. The soft coefficient below is exactly zero, which is the '
+          + 'correct answer and not a failure. Move either speed slider to make a kick.';
+      }
+    }
 
     var wmax = 1 / S.tau;
     var nph = P.photonNumber(D.g.kick, D.g.n, Math.pow(10, S.wmin), wmax);
@@ -1927,14 +2230,16 @@
 <section class="stop" id="w4">
   <div class="stop-head">
     <div class="plate">Station 4 &middot; the soft factor on the celestial sphere</div>
-    <h2>Every hard particle drags a bright spot across the sky</h2>
+    <h2>Every hard particle paints a ring on the sky, with an exact zero at its centre</h2>
   </div>
 
   <div class="body">
-    <p class="lede">The familiar anchor is a radiation pattern. A single charge shaken along an axis
-      radiates as \(\sin^{2}\theta\): a doughnut, with nothing along the axis. You have drawn that
-      picture. What follows is the same kind of picture for the softest photons of a scattering event,
-      and it is one of the few things in field theory that can be drawn exactly.</p>
+    <p class="lede">The familiar anchor is a radiation pattern. A charge shaken <i>gently</i> along an
+      axis &mdash; nonrelativistically, so that the usual dipole formula applies &mdash; radiates as
+      \(\sin^{2}\theta\): a doughnut, with nothing along the axis. You have drawn that picture. Relativistic
+      motion tilts the doughnut forward, because of the beaming denominator that appears below, but it does
+      not fill in the hole. What follows is the same kind of picture for the softest photons of a scattering
+      event, and it is one of the few things in field theory that can be drawn exactly.</p>
 
     <p>Station&nbsp;3 produced a vector \(\vec S(\hat n)\) for one charge changing velocity once. Nothing
       in that calculation cared that there was only one charge, or that it was a single kick. For any
@@ -1955,19 +2260,44 @@
   </div>
 
   <div class="body">
-    <p>Two features are worth watching for before you touch anything. Each line contributes a factor
-      \(1/(1-\hat n\cdot\vec\beta_k)\), which is large when you look along that line&rsquo;s direction and
-      largest when the particle is fast: <b>every hard particle drags a bright spot behind it</b>, and the
-      spot sharpens as the particle approaches the speed of light. It sharpens but it never becomes a
-      pole: a massive line has \(1-\hat n\cdot\vec\beta_k\ge1-\beta_k>0\), so its peak is finite, at
-      \((1-\beta_k)^{-2}\) times its charge squared. A genuine collinear pole needs a massless charged
-      line, which the sliders below cannot reach and which this page does not draw.
-      And the whole expression is only
-      well defined when the total charge balances, \(\sum_k\eta_kQ_k=0\); otherwise it is not invariant
-      under the change of polarization \(\vec\varepsilon\to\vec\varepsilon+\lambda\,\hat n\) that gauge
-      invariance permits, and the pattern below is a picture of a quantity that no experiment measures.
-      The panel says so when you unbalance it, and the page then withdraws the claim that what you are
-      looking at is a scattering event rather than a plot of a formula.</p>
+    <p>Two features are worth watching for before you touch anything, and the first one is a small
+      surprise. Each line contributes a beaming denominator \(1/(1-\hat n\cdot\vec\beta_k)\), which is
+      largest when you look along that line&rsquo;s own direction &mdash; but the double cross product in
+      front of it removes exactly the piece that points along \(\hat n\). Look straight down the
+      particle&rsquo;s velocity and the vector it contributes is radial, so its transverse part, which is
+      the only part a photon can carry, is <b>exactly zero</b>. Work the algebra out for one line on its
+      own and the whole angular shape is elementary:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">One line, alone: an exact zero along its velocity and a ring of maxima around it</div>
+    \[ \begin{aligned}
+       \mathcal{P}_{\text{one}}(\theta)&=\frac{Q^{2}\beta^{2}\sin^{2}\theta}{(1-\beta\cos\theta)^{2}}\,,\\[2pt]
+       \frac{d\mathcal{P}_{\text{one}}}{d\cos\theta}&\propto\ \beta-\cos\theta\,,\\[2pt]
+       \max\mathcal{P}_{\text{one}}&=\frac{Q^{2}\beta^{2}}{1-\beta^{2}}=Q^{2}\beta^{2}\gamma^{2}
+       \quad\text{at }\ \cos\theta=\beta
+       \end{aligned} \]
+    <div class="eq-note">\(\theta\) is measured from \(\hat\beta\). The numerator vanishes at
+      \(\theta=0\) and \(\theta=\pi\); the denominator makes the forward half far brighter than the
+      backward half. The maximum therefore sits on a <b>ring</b> at \(\cos\theta=\beta\), that is at
+      \(\theta=\arccos\beta\), which closes in on the velocity as \(\beta\to1\) &mdash; the beaming
+      everyone expects &mdash; while the value on the ring grows only as \(\gamma^{2}\), not as
+      \((1-\beta)^{-2}\). Numbers, for one unit charge: a line at \(\beta=0.5\) peaks at
+      \(0.3333\) on a ring \(60^{\circ}\) wide; one at \(\beta=0.99\) peaks at \(49.25\) on a ring
+      \(8.1^{\circ}\) wide. That is a factor of \(148\), not four orders of magnitude. And it stays finite:
+      a massive line has \(1-\hat n\cdot\vec\beta_k\ge1-\beta_k>0\). A genuine collinear pole needs a
+      massless charged line, which the sliders below cannot reach and which this page does not draw. Use
+      the &ldquo;paint one line alone&rdquo; control under the sphere to see the zero and the ring by
+      themselves; with several lines the terms interfere and the zeros move.</div>
+  </div>
+
+  <div class="body">
+    <p>The second feature is a condition, not a picture. The whole expression is only well defined when
+      the total charge balances, \(\sum_k\eta_kQ_k=0\). Otherwise it is not invariant under the change of
+      polarization that gauge invariance permits, and the pattern below is a picture of a quantity that no
+      experiment measures. The panel says so when you unbalance it, prints the exact amount by which the
+      soft factor moves, and withdraws the claim that what you are looking at is a scattering event rather
+      than a plot of a formula.</p>
   </div>
 
   <figure class="w4-fig">
@@ -1981,11 +2311,29 @@
         <span class="w4-ptag" data-kind="exact">Exact formula</span>
       </div>
 
-      <div class="w4-warn" data-w4-warn hidden>The charges do not balance, so
-        \(\sum_k\eta_kQ_k\ne0\). The expression below is still being evaluated and drawn exactly, but it
-        is not the soft factor of any scattering event: it changes if you shift \(\vec\varepsilon\) by a
-        multiple of \(\hat n\), which is a change no measurement can see. Read it as a plot of a formula
-        until the charges balance again.</div>
+      <div class="w4-warn" data-w4-warn hidden>
+        <p class="w4-warn-p">The charges do not balance, so \(\sum_k\eta_kQ_k\ne0\). The expression below
+          is still being evaluated and drawn exactly, but it is not the soft factor of any scattering event.
+          Here is the reason, as an equality rather than a warning. Because \(q^{2}=0\), the condition
+          \(\varepsilon^{\mu}q_{\mu}=0\) fixes the polarization only up to
+          \(\varepsilon^{\mu}\to\varepsilon^{\mu}+\lambda q^{\mu}\), a change no measurement can see.
+          Every term of the soft factor then moves by exactly \(\lambda\), since
+          \((p\cdot\varepsilon+\lambda\,p\cdot q)/(p\cdot q)=p\cdot\varepsilon/(p\cdot q)+\lambda\), so
+          the whole factor moves by</p>
+        <div class="w4-warn-eq">\[ \Delta S=\lambda\,e\sum_k\eta_kQ_k \]</div>
+        <label class="w4-knob"><span>gauge shift \(\lambda\)<b data-w4-o="lam">1.0</b></span>
+          <input type="range" data-w4-i="lam" min="-2" max="2" value="1" step="0.1"></label>
+        <div class="w4-nums">
+          <div class="w4-num"><span>\(\sum_k\eta_kQ_k\) at these controls</span><b data-w4-r="gsum">&mdash;</b></div>
+          <div class="w4-num is-lead"><span>\(\Delta S/e=\lambda\sum_k\eta_kQ_k\), the amount an unobservable change moves the answer</span><b data-w4-r="dS">&mdash;</b></div>
+        </div>
+        <p class="w4-warn-p">The lecture notes make the same point at
+          <span class="mono">soft_Arxiv_update.tex:1138-1142</span>, where the shift by \(q^{\mu}\) is
+          computed to be \(\sum_{k=1}^{m}eQ_k^{\text{out}}-\sum_{k=1}^{n}eQ_k^{\text{in}}=0\) and the
+          conclusion drawn is that &ldquo;global charge conservation guarantees that this soft factor is
+          gauge invariant.&rdquo; Balance the charges and the number above becomes exactly zero. Until then,
+          read the sphere as a plot of a formula.</p>
+      </div>
 
       <div class="w4-editor">
         <div class="w4-ed-head">
@@ -2001,7 +2349,7 @@
       </div>
 
       <div class="w4-stage">
-        <canvas class="w4-canvas" aria-label="A sphere of directions painted with the polarization-summed soft factor. Each hard particle produces a bright pole in its own direction of travel. The readouts below the figure carry the numbers."></canvas>
+        <canvas class="w4-canvas" aria-label="A sphere of directions painted with the polarization-summed soft factor. Each hard particle produces a ring of maximum emission around its own direction of travel, at the angle whose cosine is its speed, with an exact zero at the centre of that ring. The readouts below the figure carry the numbers."></canvas>
         <div class="w4-nogl" hidden></div>
         <div class="w4-bar">
           <div class="w4-bar-t">\(\mathcal{P}(\hat n)\), logarithmic; the span is set by the pattern itself <span class="mono" data-w4-dec></span></div>
@@ -2011,6 +2359,8 @@
         <div class="w4-viewbtns">
           <button class="btn" data-w4-spin aria-pressed="false">Spin</button>
           <button class="btn" data-w4-view>Reset the view</button>
+          <label class="w4-solo"><span>paint</span>
+            <select data-w4-solo aria-label="which lines to paint on the sphere"></select></label>
           <span class="w4-renderer" data-w4-renderer></span>
         </div>
       </div>
@@ -2022,28 +2372,46 @@
           <div class="w4-num is-lead"><span>\(\mathcal{P}(\hat n)\), from the closed form</span><b data-w4-r="p">&mdash;</b></div>
           <div class="w4-num"><span>the same, summed over two explicit orthonormal polarizations</span><b data-w4-r="psum">&mdash;</b></div>
           <div class="w4-num"><span>difference between those two</span><b data-w4-r="pdiff">&mdash;</b></div>
-          <div class="w4-num"><span>largest value anywhere on the sphere, and where</span><b data-w4-r="pmax">&mdash;</b></div>
+          <div class="w4-num"><span>largest value found on the sphere, and where</span><b data-w4-r="pmax">&mdash;</b></div>
+          <div class="w4-solo-only" hidden data-w4-soloblock>
+            <div class="w4-num"><span>this line alone: exact maximum \(Q^{2}\beta^{2}/(1-\beta^{2})\)</span><b data-w4-r="solomax">&mdash;</b></div>
+            <div class="w4-num"><span>this line alone: peak ring at \(\theta=\arccos\beta\)</span><b data-w4-r="soloring">&mdash;</b></div>
+            <div class="w4-num"><span>this line alone: \(\mathcal{P}\) exactly along its velocity</span><b data-w4-r="solozero">&mdash;</b></div>
+          </div>
         </div>
       </div>
     </div>
-    <figcaption>Nothing here is interpolated: the colour of a point on the sphere is
-      \(\mathcal{P}\) evaluated at that direction, from the formula printed above, one sample per pixel, on
-      a grid 440 across the disc when the figure is at rest and 210 while you are dragging it. The colour
-      scale is logarithmic because the poles are genuinely sharp &mdash; the peak value for a line of
-      speed \(\beta\) goes as \((1-\beta)^{-2}\), so a particle at \(\beta=0.99\) outshines one at
-      \(\beta=0.5\) by four orders of magnitude, and a linear scale would show one bright dot and nothing
-      else. The span of the scale is not fixed either: it runs from the largest value found on the sphere
-      down to the fifth percentile of a 96 by 192 sample of it, and how many decades that turns out to be
-      is printed beside the bar &mdash; so a bland configuration is not dressed up as a dramatic one.
-      The pale ribbons are not artefacts. They are the directions in which \(\vec S\) happens to point
-      radially, so its transverse part &mdash; the only part a photon can carry &mdash; vanishes
-      there.</figcaption>
+    <figcaption><b>What is computed, and what is only drawn.</b> Every value is the reference core&rsquo;s
+      <span class="mono">spherePattern</span> called once at the exact direction a texel represents &mdash;
+      no station-local copy of the formula, no quadrature, no fit. The texels live on a square offscreen
+      texture, at most 440 across at rest and 210 while you drag; the label under the sphere says the size
+      actually in use and whether the display is showing it one texel to one device pixel or scaling it up.
+      When it scales up, the browser interpolates <i>between</i> exact samples for display, and that is the
+      only interpolation in the figure.
+      <b>The colour scale.</b> It is logarithmic because a fast line is genuinely much brighter than a slow
+      one: the peak of a single line goes as \(\beta^{2}\gamma^{2}\), so \(\beta=0.99\) outshines
+      \(\beta=0.5\) by a factor of \(148\), and more once several lines interfere. The span runs from the
+      largest value found down to the fifth percentile of a 96 by 192 sample, then is held between
+      \(0.8\) and \(5\) decades so that a nearly flat pattern is not stretched into drama and a very
+      peaked one does not go black; the number of decades is printed beside the bar, and it says
+      &ldquo;at the stop&rdquo; when the clamp is doing the work. The maximum quoted in the readout is the
+      largest value <i>found</i> &mdash; the 96 by 192 scan and each line&rsquo;s own peak ring, refined by
+      local search to about \(5\times10^{-5}\) radians &mdash; not a proved global maximum.
+      <b>The ribbons at the bottom of the scale.</b> They are not artefacts. They are the directions in
+      which the unprojected sum
+      \(\vec H=\sum_k\eta_kQ_k\vec\beta_k/(1-\hat n\cdot\vec\beta_k)\) happens to point along
+      \(\hat n\) itself; \(\vec S\) is what is left after that radial part is removed, so it vanishes
+      there. For a single line the ribbon degenerates to the two points \(\theta=0\) and \(\theta=\pi\)
+      on its own axis.</figcaption>
   </figure>
 
   <div class="body">
-    <p>Try two things. Put two fast particles almost on top of each other and watch their poles merge into
-      one bright region; the soft radiation cannot tell two collinear charges from one charge of their sum,
-      which is the statement that the soft factor only knows about \(Q_k\) and \(\hat\beta_k\). Then take a
+    <p>Try two things. Put two particles on the same direction <i>and</i> give them the same speed, and
+      their two rings merge into one: the soft factor depends on a line only through
+      \(\eta_kQ_k\vec\beta_k/(1-\hat n\cdot\vec\beta_k)\), so two lines with the same full velocity
+      \(\vec\beta\) contribute exactly as one line of charge \(\eta_1Q_1+\eta_2Q_2\) does. Matching the
+      directions alone is not enough &mdash; the speed enters the denominator too, and two lines that point
+      the same way at different speeds have rings of different radii and do not merge. Then take a
       configuration you like and slide every speed down towards zero: the pattern keeps its shape and loses
       its contrast, because at small \(\beta\) each term becomes \(\eta_kQ_k\vec\beta_k\) and the sum
       degenerates to a single dipole. The rich structure is relativistic.</p>
@@ -2060,7 +2428,17 @@
 #w4 .w4-card .chart-head { display: flex; align-items: flex-start; gap: .5rem; flex-wrap: wrap; padding: .85rem 1rem .6rem; border-bottom: 1px solid var(--rule); }
 #w4 .w4-card .chart-head > div:first-child { flex: 1 1 14rem; min-width: 0; }
 #w4 .w4-ptag { display: inline-block; font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--accent); color: var(--accent-text); white-space: nowrap; align-self: flex-start; }
-#w4 .w4-warn { padding: .7rem 1rem .75rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); border-left: 3px solid var(--st-refuted); font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); }
+#w4 .w4-warn { padding: .7rem 1rem .8rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); border-left: 3px solid var(--st-refuted); font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); display: grid; gap: .5rem; }
+#w4 .w4-warn-p { margin: 0; max-width: 44rem; }
+#w4 .w4-warn-eq { overflow-x: auto; }
+#w4 .w4-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; max-width: 20rem; }
+#w4 .w4-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w4 .w4-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+#w4 .w4-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w4 .w4-solo { display: flex; align-items: center; gap: .35rem; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); min-width: 0; }
+#w4 .w4-solo select { font-family: var(--sans); font-size: 12px; padding: .16rem .25rem; border: 1px solid var(--rule-2); background: var(--surface); color: var(--ink); border-radius: 2px; max-width: 13rem; }
+#w4 .w4-solo-only { display: contents; }
+#w4 .w4-solo-only[hidden] { display: none; }
 #w4 .w4-editor { padding: .8rem 1rem .9rem; border-bottom: 1px solid var(--rule); background: var(--surface-2); }
 #w4 .w4-ed-head { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .6rem; }
 #w4 .w4-ed-t { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
@@ -2108,30 +2486,71 @@
   var noGL = root.querySelector('.w4-nogl');
   if (!P || !ctx) {
     if (cv) cv.hidden = true;
-    if (noGL) { noGL.hidden = false; noGL.textContent = 'This figure needs a 2-D canvas, which this browser did not provide. The formula above is the whole content of the picture: a bright pole in the direction of each hard line, sharpening as that line approaches the speed of light.'; }
+    if (noGL) { noGL.hidden = false; noGL.textContent = 'This figure needs a 2-D canvas, which this browser did not provide. The formula above is the whole content of the picture: around the direction of each hard line, a ring of maxima at the angle whose cosine is that line\u2019s speed, with an exact zero at the centre of the ring, the ring tightening onto the velocity and its height growing as gamma squared as the line approaches the speed of light.'; }
     return;
   }
 
   /* ---------- palette and the sequential ramp ---------- */
   var CACHE = {}, LUT = null;
-  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
-  function hex(c) {
-    c = c.trim();
+  /* Palette: token names only. A token the host page has not defined is an
+     INTEGRATION ERROR, not an opportunity to invent a colour: it is reported on
+     the console, stamped on the station root as data-token-error, and the drawing
+     falls back to the host page's own computed text colour - a value that belongs
+     to the host, not one this fragment made up. No colour literal appears in this
+     fragment. */
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    if (!v) {
+      if (window.console && window.console.warn) {
+        window.console.warn('frag-em ' + root.id + ': palette token ' + n + ' is not defined by the host page; falling back to the host text colour.');
+      }
+      root.setAttribute('data-token-error', n);
+      v = getComputedStyle(root).color;
+    }
+    return (CACHE[n] = v);
+  }
+  function parseColour(c) {
+    if (!c) return null;
+    c = String(c).trim();
     if (c.charAt(0) === '#') {
       if (c.length === 4) return [parseInt(c[1] + c[1], 16), parseInt(c[2] + c[2], 16), parseInt(c[3] + c[3], 16)];
-      return [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)];
+      if (c.length >= 7) return [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)];
+      return null;
     }
     var m = c.match(/rgba?\(([^)]+)\)/);
-    if (m) { var p = m[1].split(','); return [parseFloat(p[0]), parseFloat(p[1]), parseFloat(p[2])]; }
-    return [136, 136, 136];
+    if (m) {
+      var p = m[1].split(/[,\s\/]+/).filter(function (q) { return q !== ''; });
+      var r = parseFloat(p[0]), g = parseFloat(p[1]), b = parseFloat(p[2]);
+      if (isFinite(r) && isFinite(g) && isFinite(b)) return [r, g, b];
+    }
+    return null;
+  }
+  /* Same rule as tok(): a token this fragment cannot read is a reported
+     integration error. The last resort is the HOST's computed text colour, never
+     a colour literal written here. If even that cannot be read the ramp is not
+     built and the sphere says so rather than being painted in an invented hue. */
+  function hex(name) {
+    var v = parseColour(tok(name));
+    if (v) return v;
+    if (window.console && window.console.warn) {
+      window.console.warn('frag-em w4: palette token ' + name + ' did not parse as a colour; falling back to the host text colour.');
+    }
+    root.setAttribute('data-token-error', name);
+    return parseColour(getComputedStyle(root).color)
+        || parseColour(getComputedStyle(document.documentElement).color);
   }
   function s2l(u) { u /= 255; return u <= 0.04045 ? u / 12.92 : Math.pow((u + 0.055) / 1.055, 2.4); }
   function l2s(u) { u = u <= 0.0031308 ? u * 12.92 : 1.055 * Math.pow(u, 1 / 2.4) - 0.055; return Math.max(0, Math.min(255, Math.round(u * 255))); }
   /* Four existing tokens in lightness order become the sequential ramp; the
      interpolation is done in linear light so the middle of the ramp does not go
      muddy. No colour literal is written in this fragment. */
+  var lutFailed = false;
   function buildLUT() {
-    var anchors = [hex(tok('--surface-2')), hex(tok('--accent-tint')), hex(tok('--accent')), hex(tok('--accent-text'))];
+    var names = ['--surface-2', '--accent-tint', '--accent', '--accent-text'];
+    var anchors = names.map(hex);
+    if (anchors.some(function (c) { return !c; })) { lutFailed = true; LUT = null; return; }
+    lutFailed = false;
     var stops = [0, 0.18, 0.70, 1.0];
     var lin = anchors.map(function (c) { return [s2l(c[0]), s2l(c[1]), s2l(c[2])]; });
     var out = new Uint8ClampedArray(256 * 3);
@@ -2144,12 +2563,32 @@
     }
     LUT = out;
   }
-  function themeChanged() { CACHE = {}; LUT = null; drawAll(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  /* Lifecycle. These hook document-level state, so they must not outlive the
+     station: each unhooks itself the first time it fires after this section has
+     left the document, which is what happens if the integrator replaces or
+     reloads a fragment. No global is created to hold a cleanup handle. */
+  var themeMQ = null, themeMO = null;
+  function detachTheme() {
+    if (themeMQ) {
+      if (themeMQ.removeEventListener) themeMQ.removeEventListener('change', themeChanged);
+      else if (themeMQ.removeListener) themeMQ.removeListener(themeChanged);
+      themeMQ = null;
+    }
+    if (themeMO) { themeMO.disconnect(); themeMO = null; }
   }
-  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  function themeChanged() {
+    if (!root.isConnected) { detachTheme(); return; }
+    CACHE = {}; LUT = null; drawAll();
+  }
+  if (window.matchMedia) {
+    themeMQ = window.matchMedia('(prefers-color-scheme: dark)');
+    if (themeMQ.addEventListener) themeMQ.addEventListener('change', themeChanged);
+    else if (themeMQ.addListener) themeMQ.addListener(themeChanged);
+  }
+  if (window.MutationObserver) {
+    themeMO = new MutationObserver(themeChanged);
+    themeMO.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   /* ---------- vectors ---------- */
   function vadd(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
@@ -2180,10 +2619,29 @@
     ];
   }
   var parts = defaults();
+  var solo = -1;        /* -1 = the whole event; otherwise the index of one line */
+  var lam = 1;          /* the gauge shift lambda in the unbalanced-charge panel */
   function coreParts() {
     return parts.map(function (p) { return { Q: p.Q, beta: vscl(dirOf(p.th, p.ph), p.beta), eta: p.eta }; });
   }
-  function patternAt(n) { try { return P.spherePattern(coreParts(), n); } catch (e) { return 0; } }
+  /* What the sphere is painted with: either the whole sum or one term of it. The
+     single-term view is not a scattering event and the panel says so; it is there
+     because one term has an elementary shape - an exact zero along the velocity
+     and a ring of maxima at cos(theta) = beta - which the sum hides. */
+  function soloParts() {
+    var cp = coreParts();
+    return (solo >= 0 && solo < cp.length) ? [cp[solo]] : cp;
+  }
+  function patternAt(n) { try { return P.spherePattern(soloParts(), n); } catch (e) { return 0; } }
+  function currentVec(n) {                 /* the unprojected H, for the tangent arrow */
+    var cp = soloParts(), out = [0, 0, 0];
+    for (var i = 0; i < cp.length; i++) {
+      var den = 1 - vdot(n, cp[i].beta);
+      if (!(Math.abs(den) > 1e-12)) return null;
+      out = vadd(out, vscl(cp[i].beta, cp[i].eta * cp[i].Q / den));
+    }
+    return out;
+  }
 
   /* ---------- view ---------- */
   var V = { right: [1, 0, 0], up: [0, 0, 1], fwd: [0, -1, 0], zoom: 1 };
@@ -2204,51 +2662,91 @@
   var DPR = 1, W = 1, H = 1, CX = 0, CY = 0, RDISP = 1;
   var off = document.createElement('canvas'), octx = off.getContext('2d');
   var RES_IDLE = 440, RES_DRAG = 210;
-  var stats = { max: 1, lo: 1e-3, argmax: [0, 0, 1], decades: 2 };
+  var stats = { max: 0, lo: 0, argmax: [0, 0, 1], decades: 2, zero: false, clamped: '', refine: 0 };
 
-  /* The colour range is set from the pattern itself: the top of the ramp is the
-     largest value found (the grid is refined at each hard direction, where the
-     poles sit), and the bottom is the 5th percentile of the sampled values, so
-     that a configuration whose pattern only varies by a factor of ten is not
-     drawn as one flat colour. The number of decades in play is printed. */
+  /* The colour range is set from the pattern itself. The top of the ramp is the
+     largest value FOUND - a 96x192 scan, seeded at each line's own direction and
+     at its beaming ring cos(theta)=beta (which is where a single line actually
+     peaks; along the velocity its own term is exactly zero), then refined by six
+     shrinking local searches. That is a search, not a proof, and the readout says
+     "found" rather than "anywhere". The bottom is the 5th percentile of the scan,
+     so that a pattern varying by a factor of ten is not drawn as one flat colour;
+     the span is then held between 0.8 and 5 decades, and the bar says so when the
+     clamp is what is deciding. A pattern that is identically zero - Q = 0 on every
+     line, or an exact cancellation - keeps its true maximum of 0 and is drawn as a
+     labelled zero state rather than being renormalised into a picture. */
   function recomputeStats() {
-    var best = 0, arg = [0, 0, 1], i, j, n, v;
+    var cp = soloParts();
+    function at(n) { try { return P.spherePattern(cp, n); } catch (e) { return 0; } }
+    var best = 0, arg = [0, 0, 1], i, j, n, v, ph;
     var samples = [];
     for (i = 0; i < parts.length; i++) {
-      n = dirOf(parts[i].th, parts[i].ph);
-      v = patternAt(n);
-      if (v > best) { best = v; arg = n; }
+      if (solo >= 0 && i !== solo) continue;
+      var b = dirOf(parts[i].th, parts[i].ph);
+      v = at(b); if (v > best) { best = v; arg = b; }
+      var s1 = vunit(vcrs(Math.abs(b[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0], b)), s2 = vcrs(b, s1);
+      var ct0 = parts[i].beta, st0 = Math.sqrt(Math.max(0, 1 - ct0 * ct0));
+      for (j = 0; j < 64; j++) {
+        ph = 2 * Math.PI * j / 64;
+        n = vadd(vscl(b, ct0), vadd(vscl(s1, st0 * Math.cos(ph)), vscl(s2, st0 * Math.sin(ph))));
+        v = at(n); if (v > best) { best = v; arg = n; }
+      }
     }
     for (i = 0; i < 96; i++) {
       var ct = -1 + 2 * (i + 0.5) / 96, st = Math.sqrt(Math.max(0, 1 - ct * ct));
       for (j = 0; j < 192; j++) {
-        var ph = 2 * Math.PI * j / 192;
+        ph = 2 * Math.PI * j / 192;
         n = [st * Math.cos(ph), st * Math.sin(ph), ct];
-        v = patternAt(n);
+        v = at(n);
         if (v > best) { best = v; arg = n; }
         if (v > 0) samples.push(v);
       }
     }
+    var h = Math.PI / 96;
+    for (var round = 0; round < 6 && best > 0; round++) {
+      var t1 = vunit(vcrs(Math.abs(arg[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0], arg)), t2 = vcrs(arg, t1);
+      var bestArg = arg, bestVal = best;
+      for (var a = -2; a <= 2; a++) {
+        for (var c = -2; c <= 2; c++) {
+          if (!a && !c) continue;
+          n = vunit(vadd(arg, vadd(vscl(t1, a * h), vscl(t2, c * h))));
+          v = at(n); if (v > bestVal) { bestVal = v; bestArg = n; }
+        }
+      }
+      best = bestVal; arg = bestArg; h /= 3;
+    }
+    stats.refine = h * 3;
     samples.sort(function (a, b) { return a - b; });
-    stats.max = best > 0 ? best : 1;
-    var p5 = samples.length ? samples[Math.floor(0.05 * samples.length)] : stats.max * 1e-2;
-    var dec = Math.log(stats.max / Math.max(p5, stats.max * 1e-6)) / Math.LN10;
-    stats.decades = Math.max(0.8, Math.min(5, dec));
-    stats.lo = stats.max * Math.pow(10, -stats.decades);
+    stats.zero = !(best > 0);
+    stats.max = best > 0 ? best : 0;
     stats.argmax = arg;
+    if (stats.zero) {
+      stats.decades = 2; stats.lo = 0; stats.clamped = '';
+    } else {
+      var p5 = samples.length ? samples[Math.floor(0.05 * samples.length)] : stats.max * 1e-2;
+      var dec = Math.log(stats.max / Math.max(p5, stats.max * 1e-6)) / Math.LN10;
+      stats.clamped = dec < 0.8 ? ' at the lower stop' : (dec > 5 ? ' at the upper stop' : '');
+      stats.decades = Math.max(0.8, Math.min(5, dec));
+      stats.lo = stats.max * Math.pow(10, -stats.decades);
+    }
     updateBar();
   }
 
+  /* The reference core is the SOLE evaluator: P.spherePattern is called once at
+     the exact direction each texel centre represents. No copy of the formula
+     lives here. The texture is square and its size is reported below the sphere,
+     together with whether the display is showing it one texel per device pixel or
+     scaling it up - the scaling is the only interpolation in the figure. */
   function paintSphere(res) {
     if (!LUT) buildLUT();
+    if (lutFailed || !LUT) return;
     if (off.width !== res) { off.width = res; off.height = res; }
     var img = octx.createImageData(res, res), d = img.data;
-    var cp = coreParts(), np = cp.length;
-    var bx = new Float64Array(np), by = new Float64Array(np), bz = new Float64Array(np), qq = new Float64Array(np);
-    for (var i = 0; i < np; i++) { bx[i] = cp[i].beta[0]; by[i] = cp[i].beta[1]; bz[i] = cp[i].beta[2]; qq[i] = cp[i].eta * cp[i].Q; }
+    var cp = soloParts();
     var Rx = V.right, Uy = V.up, Fz = V.fwd;
     var logMax = Math.log(stats.max), inv = 255 / (stats.decades * Math.LN10);
     var half = res / 2, k = 1 / (half * 0.985);
+    var nv = [0, 0, 0];
     for (var py = 0; py < res; py++) {
       var syn = (half - py - 0.5) * k;
       for (var px = 0; px < res; px++) {
@@ -2256,18 +2754,12 @@
         var q = sxn * sxn + syn * syn, o = (py * res + px) * 4;
         if (q > 1) { d[o + 3] = 0; continue; }
         var sz = Math.sqrt(1 - q);
-        var nx = Rx[0] * sxn + Uy[0] * syn + Fz[0] * sz;
-        var ny = Rx[1] * sxn + Uy[1] * syn + Fz[1] * sz;
-        var nz = Rx[2] * sxn + Uy[2] * syn + Fz[2] * sz;
-        var vx = 0, vy = 0, vz = 0;
-        for (var m = 0; m < np; m++) {
-          var w = qq[m] / (1 - (nx * bx[m] + ny * by[m] + nz * bz[m]));
-          vx += w * bx[m]; vy += w * by[m]; vz += w * bz[m];
-        }
-        var dotv = nx * vx + ny * vy + nz * vz;
-        var tx = vx - dotv * nx, ty = vy - dotv * ny, tz = vz - dotv * nz;
-        var val = tx * tx + ty * ty + tz * tz;
-        var u = val > 0 ? 255 + (Math.log(val) - logMax) * inv : 0;
+        nv[0] = Rx[0] * sxn + Uy[0] * syn + Fz[0] * sz;
+        nv[1] = Rx[1] * sxn + Uy[1] * syn + Fz[1] * sz;
+        nv[2] = Rx[2] * sxn + Uy[2] * syn + Fz[2] * sz;
+        var val;
+        try { val = P.spherePattern(cp, nv); } catch (e) { val = 0; }
+        var u = (stats.zero || !(val > 0)) ? 0 : 255 + (Math.log(val) - logMax) * inv;
         u = u < 0 ? 0 : (u > 255 ? 255 : u | 0);
         var b3 = u * 3;
         d[o] = LUT[b3]; d[o + 1] = LUT[b3 + 1]; d[o + 2] = LUT[b3 + 2]; d[o + 3] = 255;
@@ -2291,11 +2783,20 @@
   function proj(n) { return { x: CX + vdot(n, V.right) * RDISP, y: CY - vdot(n, V.up) * RDISP, front: vdot(n, V.fwd) > 0 }; }
 
   var lastRes = 0;
+  /* Never sample more finely than the display can show, and never claim a
+     one-to-one mapping we are not delivering: when the texture is smaller than the
+     disc on screen the browser interpolates between exact samples, and the label
+     under the sphere says so. */
+  function wantRes(dragging) {
+    var cap = dragging ? RES_DRAG : RES_IDLE;
+    return Math.max(64, Math.min(cap, Math.round(2 * RDISP)));
+  }
   function drawAll(dragging, skipPaint) {
     if (!resize()) return;
     if (!LUT) buildLUT();
-    var want = dragging ? RES_DRAG : RES_IDLE;
+    var want = wantRes(dragging);
     if (!skipPaint || lastRes !== want) { paintSphere(want); lastRes = want; }
+    updateRendererLabel();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.fillStyle = tok('--surface-sunk'); ctx.fillRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = true;
@@ -2325,6 +2826,35 @@
     ctx.globalAlpha = 1;
     ctx.strokeStyle = tok('--rule-2'); ctx.lineWidth = Math.max(1, DPR);
     ctx.beginPath(); ctx.arc(CX, CY, RDISP, 0, 2 * Math.PI); ctx.stroke();
+
+    /* one line alone: its exact geometry, drawn rather than described */
+    if (solo >= 0 && parts[solo]) {
+      var sp = parts[solo], sb = dirOf(sp.th, sp.ph);
+      var u1 = vunit(vcrs(Math.abs(sb[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0], sb)), u2 = vcrs(sb, u1);
+      var ctS = sp.beta, stS = Math.sqrt(Math.max(0, 1 - ctS * ctS));
+      ctx.strokeStyle = tok('--keep'); ctx.lineWidth = Math.max(1.4, 1.8 * DPR);
+      ctx.save(); ctx.setLineDash([5 * DPR, 4 * DPR]);
+      var startedR = false;
+      ctx.beginPath();
+      for (i = 0; i <= 240; i++) {
+        var phR = 2 * Math.PI * i / 240;
+        n = vadd(vscl(sb, ctS), vadd(vscl(u1, stS * Math.cos(phR)), vscl(u2, stS * Math.sin(phR))));
+        p = proj(n);
+        if (!p.front) { startedR = false; continue; }
+        if (!startedR) { ctx.moveTo(p.x, p.y); startedR = true; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.stroke(); ctx.restore();
+      var pr0 = proj(sb);
+      if (pr0.front) {
+        ctx.strokeStyle = tok('--ink-3'); ctx.lineWidth = Math.max(1, 1.3 * DPR);
+        ctx.save(); ctx.setLineDash([2 * DPR, 3 * DPR]);
+        ctx.beginPath(); ctx.arc(pr0.x, pr0.y, 15 * DPR, 0, 2 * Math.PI); ctx.stroke();
+        ctx.restore();
+      }
+      var ringTag = proj(vadd(vscl(sb, ctS), vscl(u2, stS)));
+      if (ringTag.front) tag(ringTag.x + 10 * DPR, ringTag.y, 'peak ring, cos θ = β', tok('--keep'));
+      if (pr0.front) tag(pr0.x + 18 * DPR, pr0.y + 17 * DPR, 'exact zero along β', tok('--ink-3'));
+    }
 
     /* particle markers */
     ctx.font = '600 ' + (11.5 * DPR) + 'px ' + tok('--sans');
@@ -2363,10 +2893,56 @@
         ctx.moveTo(p.x, p.y - 11 * DPR); ctx.lineTo(p.x, p.y - 8 * DPR);
         ctx.moveTo(p.x, p.y + 8 * DPR); ctx.lineTo(p.x, p.y + 11 * DPR);
         ctx.stroke();
+        /* S is a TANGENT vector by construction: the radial part of H has been
+           removed, which is why S vanishes wherever H happens to be radial. Show
+           it, projected onto the screen, so transversality is visible and not just
+           asserted. */
+        var Hv = currentVec(probe);
+        if (Hv) {
+          var rad = vdot(probe, Hv);
+          var Sv = vsub(Hv, vscl(probe, rad));
+          var ax = vdot(Sv, V.right), ay = vdot(Sv, V.up), am2 = Math.hypot(ax, ay);
+          if (am2 > 1e-12) {
+            var L = 26 * DPR, ux = ax / am2 * L, uy = -ay / am2 * L;
+            ctx.strokeStyle = tok('--die'); ctx.lineWidth = Math.max(1.6, 2.2 * DPR);
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + ux, p.y + uy); ctx.stroke();
+            ctx.fillStyle = tok('--die');
+            ctx.beginPath();
+            ctx.moveTo(p.x + ux, p.y + uy);
+            ctx.lineTo(p.x + ux - 0.30 * ux + 0.18 * uy, p.y + uy - 0.30 * uy - 0.18 * ux);
+            ctx.lineTo(p.x + ux - 0.30 * ux - 0.18 * uy, p.y + uy - 0.30 * uy + 0.18 * ux);
+            ctx.closePath(); ctx.fill();
+          }
+        }
       }
     }
     ctx.textBaseline = 'alphabetic';
     readOut();
+  }
+
+  function tag(x, y, text, col) {
+    var fs = 10.5 * DPR;
+    ctx.save();
+    ctx.font = fs + 'px ' + tok('--sans');
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    var w = ctx.measureText(text).width, pad = 4 * DPR;
+    var X = Math.min(Math.max(x, 2 * DPR), W - w - 2 * pad - 2 * DPR);
+    var Y = Math.min(Math.max(y, fs), H - fs);
+    ctx.globalAlpha = 0.9; ctx.fillStyle = tok('--surface');
+    ctx.fillRect(X - pad, Y - fs * 0.8, w + 2 * pad, fs * 1.6);
+    ctx.globalAlpha = 1; ctx.fillStyle = col;
+    ctx.fillText(text, X, Y);
+    ctx.restore();
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  }
+
+  function updateRendererLabel() {
+    var el = root.querySelector('[data-w4-renderer]');
+    if (!el) return;
+    var disc = Math.round(2 * RDISP);
+    var scaleTxt = lastRes >= disc ? 'one texel per device pixel'
+      : 'scaled up ×' + (disc / Math.max(1, lastRes)).toFixed(2) + ' for display';
+    el.textContent = 'core spherePattern at each of ' + lastRes + '×' + lastRes + ' texel centres, ' + scaleTxt;
   }
 
   function updateBar() {
@@ -2386,14 +2962,17 @@
     }
     bc.putImageData(im, 0, 0);
     var dc = root.querySelector('[data-w4-dec]');
-    if (dc) dc.textContent = '(' + stats.decades.toFixed(1) + ' decades)';
+    if (dc) {
+      dc.textContent = stats.zero
+        ? '(the pattern is identically zero here)'
+        : '(' + stats.decades.toFixed(1) + ' decades' + stats.clamped + ', span clamped to 0.8–5)';
+    }
     var tk = root.querySelector('[data-w4-ticks]');
     if (tk) {
       tk.innerHTML = '';
       for (var i = 0; i <= 4; i++) {
-        var v = stats.max * Math.pow(10, -stats.decades * (1 - i / 4));
         var sp = document.createElement('span');
-        sp.textContent = v.toExponential(1);
+        sp.textContent = stats.zero ? (i === 4 ? '0' : '') : (stats.max * Math.pow(10, -stats.decades * (1 - i / 4))).toExponential(1);
         tk.appendChild(sp);
       }
     }
@@ -2417,17 +2996,32 @@
     var e1 = vunit(vcrs(seed, n)), e2 = vcrs(n, e1);
     var s1 = 0, s2 = 0;
     try {
-      s1 = P.softFactorWeinberg(coreParts(), n, e1);
-      s2 = P.softFactorWeinberg(coreParts(), n, e2);
+      s1 = P.softFactorWeinberg(soloParts(), n, e1);
+      s2 = P.softFactorWeinberg(soloParts(), n, e2);
     } catch (e) { }
     var psum = s1 * s1 + s2 * s2;
     set('psum', fmt(psum));
     set('pdiff', Math.abs(psum - pv).toExponential(2));
     var am = stats.argmax;
-    set('pmax', fmt(stats.max) + '  at (' + am[0].toFixed(2) + ', ' + am[1].toFixed(2) + ', ' + am[2].toFixed(2) + ')');
+    set('pmax', stats.zero
+      ? '0 exactly — the pattern vanishes in every direction'
+      : fmt(stats.max) + '  at (' + am[0].toFixed(3) + ', ' + am[1].toFixed(3) + ', ' + am[2].toFixed(3) + ')');
+    var blk = root.querySelector('[data-w4-soloblock]');
+    if (blk) blk.hidden = solo < 0;
+    if (solo >= 0 && parts[solo]) {
+      var pt = parts[solo], b = pt.beta, Q = pt.Q;
+      set('solomax', fmt(Q * Q * b * b / (1 - b * b)));
+      set('soloring', (Math.acos(Math.max(-1, Math.min(1, b))) * 180 / Math.PI).toFixed(2) + '°  from its velocity');
+      var along = 0;
+      try { along = P.spherePattern(soloParts(), dirOf(pt.th, pt.ph)); } catch (e) { along = NaN; }
+      set('solozero', along === 0 ? '0 exactly'
+        : along < 1e-20 ? along.toExponential(2) + '   (exactly 0; this is the rounding floor of rebuilding n̂ from its angles)'
+        : fmt(along));
+    }
   }
 
   /* ---------- the editor ---------- */
+  var unbalancedNote = '';
   function renderRows() {
     var box = root.querySelector('[data-w4-rows]');
     if (!box) return;
@@ -2454,7 +3048,7 @@
       var del = document.createElement('button');
       del.className = 'w4-del'; del.type = 'button'; del.innerHTML = '&times;';
       del.setAttribute('aria-label', 'remove line ' + (i + 1));
-      del.addEventListener('click', function () { if (parts.length > 2) { parts.splice(i, 1); refresh(false); } });
+      del.addEventListener('click', function () { if (parts.length > 2) { parts.splice(i, 1); solo = -1; refresh(false); } });
       row.appendChild(dot); row.appendChild(sel); row.appendChild(qin); row.appendChild(rng); row.appendChild(lbl); row.appendChild(del);
       box.appendChild(row);
     });
@@ -2463,34 +3057,92 @@
     var chip = root.querySelector('[data-w4-chip]');
     if (!chip) return;
     var c = P.chargeConservation(coreParts());
-    chip.textContent = 'Σ ηQ = ' + c.sum.toFixed(0) + (c.conserved ? '' : '  — not gauge invariant');
+    chip.textContent = 'Σ ηQ = ' + c.sum.toFixed(0) + (c.conserved ? '' : '  — not gauge invariant')
+      + (unbalancedNote ? '  — ' + unbalancedNote : '');
     chip.setAttribute('data-bad', c.conserved ? '0' : '1');
     var warn = root.querySelector('[data-w4-warn]');
     if (warn) warn.hidden = !!c.conserved;
+    set('gsum', c.sum.toFixed(0));
+    set('dS', (lam * c.sum).toFixed(2) + (c.sum === 0 ? '   (zero for every λ)' : ''));
+    var lo = root.querySelector('[data-w4-o="lam"]');
+    if (lo) lo.textContent = lam.toFixed(1);
     var tg = root.querySelector('.w4-ptag');
-    if (tg) tg.textContent = c.conserved ? 'Exact formula' : 'Exact formula — not an observable';
+    if (tg) {
+      tg.textContent = !c.conserved ? 'Exact formula — not an observable'
+        : (solo >= 0 ? 'Exact formula — one term of the sum' : 'Exact formula');
+    }
+  }
+  function renderSolo() {
+    var sel = root.querySelector('[data-w4-solo]');
+    if (!sel) return;
+    if (solo >= parts.length) solo = -1;
+    sel.innerHTML = '';
+    var o = document.createElement('option'); o.value = '-1'; o.textContent = 'the whole event';
+    sel.appendChild(o);
+    parts.forEach(function (pt, i) {
+      var oo = document.createElement('option'); oo.value = String(i);
+      oo.textContent = (pt.eta > 0 ? 'out ' : 'in ') + (i + 1) + ' alone';
+      sel.appendChild(oo);
+    });
+    sel.value = String(solo);
   }
   function refresh(keepRows) {
     if (!keepRows) renderRows();
-    updateChip(); recomputeStats(); drawAll();
+    renderSolo(); updateChip(); recomputeStats(); drawAll();
   }
 
   root.querySelector('[data-w4-add]').addEventListener('click', function () {
     if (parts.length >= 5) return;
     parts.push(mkP(1.0 + 0.4 * parts.length, 0.9 * parts.length, 0.7, 1, 1));
+    solo = -1; unbalancedNote = '';
     refresh(false);
   });
+  /* Every charge control declares min = -3, max = 3, so the correction is spread
+     over the existing rows without pushing any of them outside its own range; if
+     what is left over still will not fit, a new line is added to carry it, and if
+     even that is impossible the button says so instead of writing an out-of-range
+     number into an input. */
   root.querySelector('[data-w4-balance]').addEventListener('click', function () {
-    var c = P.chargeConservation(coreParts());
-    if (c.sum === 0) return;
-    var last = parts[parts.length - 1];
-    last.Q = last.Q - c.sum * last.eta;
+    var need = P.chargeConservation(coreParts()).sum;
+    unbalancedNote = '';
+    if (need === 0) { refresh(false); return; }
+    for (var i = parts.length - 1; i >= 0 && need !== 0; i--) {
+      var pt = parts[i];
+      var want = Math.max(-3, Math.min(3, pt.Q - need * pt.eta));
+      var delta = want - pt.Q;
+      if (delta === 0) continue;
+      pt.Q = want;
+      need += delta * pt.eta;
+    }
+    if (need !== 0 && parts.length < 5 && Math.abs(need) <= 3) {
+      parts.push(mkP(1.0 + 0.4 * parts.length, 0.9 * parts.length, 0.7, -need, 1));
+      need = 0;
+    }
+    if (need !== 0) {
+      unbalancedNote = 'Σ ηQ = ' + need + ' left over; every charge is at ±3 and there is no room for another line';
+    }
     refresh(false);
   });
   root.querySelector('[data-w4-reset]').addEventListener('click', function () {
-    parts = defaults(); resetView(); refresh(false);
+    parts = defaults(); solo = -1; lam = 1; unbalancedNote = '';
+    var lamInput = root.querySelector('[data-w4-i="lam"]');
+    if (lamInput) lamInput.value = '1';
+    resetView(); refresh(false);
   });
   root.querySelector('[data-w4-view]').addEventListener('click', function () { resetView(); drawAll(); });
+  var soloSel = root.querySelector('[data-w4-solo]');
+  if (soloSel) soloSel.addEventListener('change', function () {
+    solo = parseInt(soloSel.value, 10);
+    if (!isFinite(solo)) solo = -1;
+    updateChip(); recomputeStats(); drawAll();
+  });
+  root.addEventListener('input', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-w4-i="lam"]') : null;
+    if (!el) return;
+    lam = parseFloat(el.value);
+    if (!isFinite(lam)) lam = 0;
+    updateChip();
+  });
 
   /* ---------- pointer ---------- */
   var mode = null, grabbed = -1, lastPt = null;
@@ -2553,11 +3205,26 @@
   }, { passive: false });
 
   /* ---------- idle spin ---------- */
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduceMQ = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reduce = !!(reduceMQ && reduceMQ.matches);
+  function reduceChanged() {
+    if (!root.isConnected) {
+      if (reduceMQ.removeEventListener) reduceMQ.removeEventListener('change', reduceChanged);
+      else if (reduceMQ.removeListener) reduceMQ.removeListener(reduceChanged);
+      return;
+    }
+    reduce = reduceMQ.matches;
+    if (reduce && spinning) setSpin(false);
+  }
+  if (reduceMQ) {
+    if (reduceMQ.addEventListener) reduceMQ.addEventListener('change', reduceChanged);
+    else if (reduceMQ.addListener) reduceMQ.addListener(reduceChanged);
+  }
   var spinning = false, visible = true, raf = null, last = null;
   var bSpin = root.querySelector('[data-w4-spin]');
   function tick(ts) {
     raf = null;
+    if (!root.isConnected) { spinning = false; return; }
     if (!spinning || !visible) return;
     if (last === null) last = ts;
     var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
@@ -2576,16 +3243,26 @@
   }
   if (bSpin) bSpin.addEventListener('click', function () { setSpin(!spinning); });
   if (window.IntersectionObserver) {
-    new IntersectionObserver(function (es) {
+    var io4 = new IntersectionObserver(function (es) {
+      if (!root.isConnected) { io4.disconnect(); return; }
       visible = es[0].isIntersecting;
       if (visible && spinning && raf === null) { last = null; raf = window.requestAnimationFrame(tick); }
-    }, { rootMargin: '120px' }).observe(cv);
+    }, { rootMargin: '120px' });
+    io4.observe(cv);
   }
-  if (window.ResizeObserver) new ResizeObserver(function () { updateBar(); drawAll(); }).observe(cv);
-  else window.addEventListener('resize', function () { updateBar(); drawAll(); });
+  if (window.ResizeObserver) {
+    var ro4 = new ResizeObserver(function () {
+      if (!root.isConnected) { ro4.disconnect(); return; }
+      updateBar(); drawAll();
+    });
+    ro4.observe(cv);
+  } else {
+    window.addEventListener('resize', function onResize4() {
+      if (!root.isConnected) { window.removeEventListener('resize', onResize4); return; }
+      updateBar(); drawAll();
+    });
+  }
 
-  var rl = root.querySelector('[data-w4-renderer]');
-  if (rl) rl.textContent = 'drawn by orthographic ray casting on a 2-D canvas, one sample per pixel';
   refresh(false);
 })();
 </script>
@@ -2604,19 +3281,47 @@
 
     <p>The familiar anchor is an impulse. A force acting briefly on a free mass leaves it with a
       velocity equal to the time integral of the force divided by the mass, and nothing else about the
-      force survives. So the thing to compute is \(\int\vec E\,dt\), and the interesting claim is that
-      this integral is <b>the same number</b> as the coefficient of the pole that station&nbsp;3 found
-      in the frequency domain. There is a reason it has to be, and it is one line:</p>
+      force survives:
+      \(\Delta\vec v=\frac{q_{\text{test}}}{m_{\text{test}}}\int\vec E_{\text{source}}\,dt\).</p>
+
+    <p>But that integral, taken over a real window at a real detector, is not one thing. The field there
+      has a \(1/r^{2}\) Coulomb part as well as a \(1/r\) radiation part, and the Coulomb part
+      contributes a drift that keeps growing as the window is opened. This station keeps the two apart
+      throughout and never adds them up under one name: the second figure below is the Coulomb drift, on
+      its own, in closed form. What the soft theorem controls &mdash; and the only quantity anything is
+      equated to here &mdash; is the coefficient of the radiation part:</p>
+  </div>
+
+  <div class="eq">
+    <div class="eq-label">The quantity this station computes: the \(1/r\) radiation memory</div>
+    \[ \int dt\;\vec E^{(1/r)}_{\text{rad}}
+       \;=\;\frac{\vec{\mathcal N}(\hat n)}{r},
+       \qquad
+       \vec{\mathcal N}(\hat n)=\int ds\;
+       \frac{\hat n\times\bigl[(\hat n-\vec\beta)\times\dot{\vec\beta}\bigr]}{(1-\hat n\cdot\vec\beta)^{2}} \]
+    <div class="eq-note">Everything printed below is \(\vec{\mathcal N}\) itself, per unit source charge:
+      the source charge and the test particle&rsquo;s \(q_{\text{test}}/m_{\text{test}}\) are stripped out,
+      so to get a velocity kick in ordinary units you multiply back by \(q\,q_{\text{test}}/m_{\text{test}}\)
+      and divide by \(r\). This is the leading transverse radiation-order integral and nothing else; it is
+      <b>not</b> the finite&#8209;window integral of the full electric field, which also contains the drift.</div>
+  </div>
+
+  <div class="body">
+    <p>The interesting claim is that this number is <b>the same</b> as the coefficient of the pole that
+      station&nbsp;3 found in the frequency domain. There is a reason it has to be, and it is one line:</p>
   </div>
 
   <div class="eq">
     <div class="eq-label">Why the time integral and the zero-frequency component are the same object</div>
-    \[ \tilde{\vec E}(\omega)=\int dt\;e^{\,i\omega t}\vec E(t)
+    \[ \tilde{\vec E}(\omega)=\int dt\;e^{\,i\omega t}\vec E^{(1/r)}_{\text{rad}}(t)
        \quad\Longrightarrow\quad
-       \tilde{\vec E}(0)=\int dt\;\vec E(t) \]
-    <div class="eq-note">A permanent, direction-dependent value of \(\int\vec E\,dt\) is a nonzero
-      zero-frequency component of the radiation field, and therefore a simple pole in the vector
-      potential \(\tilde{\vec A}(\omega)=\tilde{\vec E}(\omega)/(-i\omega)\), whose residue is the memory.
+       \tilde{\vec E}(0)=\int dt\;\vec E^{(1/r)}_{\text{rad}}(t)=\frac{\vec{\mathcal N}(\hat n)}{r} \]
+    <div class="eq-note">A permanent, direction-dependent value of that integral is a nonzero
+      zero&#8209;frequency component of the radiation field, and therefore a simple pole in the vector
+      potential. In radiation gauge \(\vec E=-\partial_t\vec A\), so with the convention above an
+      integration by parts gives \(\tilde{\vec E}=i\omega\tilde{\vec A}\), that is
+      \(\tilde{\vec A}(\omega)=\tilde{\vec E}(\omega)/(i\omega)\), a simple pole at \(\omega=0\) with
+      residue \(\vec{\mathcal N}/(i\,r)\) &mdash; the memory, carrying the \(i\) the convention puts there.
       A pole in the amplitude for emitting a photon is exactly what a soft theorem asserts. Reading this
       the other way round: a scattering theory whose late&#8209;time fields carry memory <i>cannot</i>
       have a soft limit without a pole. This is the step that requires hypotheses &mdash; the field has to
@@ -2625,9 +3330,7 @@
   </div>
 
   <div class="body">
-    <p>The rest of this station is the arithmetic, done three ways, with everything printed. The
-      quantity is the coefficient of the \(1/r\) part of \(\int\vec E\,dt\) &mdash; the radiation order,
-      the piece that survives to infinity. Call it \(\vec{\mathcal N}(\hat n)/r\).</p>
+    <p>The rest of this station is the arithmetic, done three ways, with everything printed.</p>
   </div>
 
   <figure class="w6-fig">
@@ -2635,8 +3338,10 @@
       <div class="chart-head">
         <div>
           <div class="chart-title">Three routes to the same coefficient</div>
-          <div class="chart-sub">Change anything you like; the first two rows must stay equal to the last digit
-            the machine has, and the third must approach them as the observer is moved further away.</div>
+          <div class="chart-sub">At the converged default the first two rows agree to twelve significant
+            figures, and the ledger says so only when the residual it measures actually gets there. Turn the
+            panel count down and watch the agreement break in a controlled way; the third route must
+            approach the other two as the observer is moved further away.</div>
         </div>
         <span class="w6-ptag" data-kind="exact">Exact formula</span>
         <span class="w6-ptag" data-kind="numeric">Controlled numerical solve</span>
@@ -2651,13 +3356,14 @@
         <label class="w6-knob"><span>direction of the detector<b data-w6-o="th">62&deg;</b></span>
           <input type="range" data-w6-i="th" min="8" max="172" value="62" step="1"></label>
         <label class="w6-knob"><span>quadrature panels, \(n\)<b data-w6-o="np">16</b></span>
-          <input type="range" data-w6-i="np" min="1" max="6" value="4" step="1"></label>
+          <input type="range" data-w6-i="np" min="0" max="5" value="4" step="1"></label>
         <label class="w6-knob"><span>distance of the detector, \(\log_{10}r\)<b data-w6-o="lr">3.0</b></span>
           <input type="range" data-w6-i="lr" min="1.5" max="6" value="3" step="0.1"></label>
       </div>
 
       <div class="w6-panel">
         <div class="w6-read-h">The coefficient \(\vec{\mathcal N}(\hat n)\), in the plane of the kick</div>
+        <div class="w6-state" data-w6-state hidden></div>
         <div class="w6-tabwrap"><table class="w6-tab">
           <thead><tr><th scope="col">route</th><th scope="col">along the axis</th><th scope="col">across it</th></tr></thead>
           <tbody>
@@ -2694,21 +3400,35 @@
       <div class="w6-panel">
         <div class="w6-read-h">The third route: integrate the real field at a real detector</div>
         <div class="w6-tabwrap"><table class="w6-tab">
-          <thead><tr><th scope="col">\(r\)</th><th scope="col">\(r\!\int\!\vec E_{\text{rad}}dt\), across the axis</th><th scope="col">relative difference</th><th scope="col">times \(r\)</th></tr></thead>
+          <thead><tr><th scope="col">\(r\)</th><th scope="col">\(r\!\int\!\vec E_{\text{rad}}dt\), across the axis</th><th scope="col">panels</th><th scope="col">\(|\Delta\vec{\mathcal N}|/|\vec{\mathcal N}|\)</th><th scope="col">times \(r\)</th></tr></thead>
           <tbody data-w6-far></tbody>
         </table></div>
-        <div class="w6-note">This row does not use the \(r\to\infty\) formula at all. It puts a detector at
-          radius \(r\), integrates the acceleration part of the exact Li&eacute;nard&ndash;Wiechert field over
-          the observer time during which the shell passes &mdash; retarded times solved to
-          \(10^{-13}\), thirty&#8209;two Gauss&ndash;Legendre panels &mdash; and multiplies by \(r\). It is not
-          equal to the closed form, and it should not be: it differs by terms of relative order \(1/r\).
-          The last column multiplies the difference by \(r\) and is therefore roughly constant, which is what
-          &ldquo;of order \(1/r\)&rdquo; means.</div>
+        <div class="w6-note"><b>Whose arithmetic this is.</b> The first two rows above are reference-core
+          calls. This third one is <b>page-owned quadrature of core field samples</b>: the integrand is the
+          core&rsquo;s <span class="mono">fieldAt(...).radiationPart</span>, evaluated at a detector actually
+          placed at radius \(r\), and the composite eight&#8209;node Gauss&ndash;Legendre rule around it, its
+          observer&#8209;time window and its panel doubling are written in this station&rsquo;s script.
+          <b>What it does.</b> It does not use the \(r\to\infty\) formula at all. The window is the exact
+          shell passage at that detector, \(t_{\text{obs}}(s)=s+|\vec x-\vec r(s)|\) evaluated at the two
+          source times \(\mp\tau/2\), which is the whole support of the integrand because
+          \(t_{\text{obs}}\) is increasing for a subluminal source. Retarded times inside are solved by the
+          core to \(10^{-13}\). The panel count starts at 32 and is doubled, up to 512, until the vector
+          result stops moving by more than \(10^{-10}\) relative, and the count actually used is a column of
+          the table. If the core&rsquo;s retarded-time solve does not converge at a given radius, that row
+          is reported <span class="mono">NOT COMPUTED</span> rather than being filled with a number.
+          <b>What the columns mean.</b> The result is not equal to the closed form and should not be: it
+          differs by terms of relative order \(1/r\). The difference column is the full vector norm
+          \(|r\!\int\!\vec E_{\text{rad}}dt-\vec{\mathcal N}|/|\vec{\mathcal N}|\); the last column
+          multiplies it by \(r\) and is therefore roughly constant, which is what &ldquo;of order
+          \(1/r\)&rdquo; means.</div>
       </div>
     </div>
-    <figcaption>All three routes are the reference core&rsquo;s, and all three are printed rather than
-      described. The point of doing it three ways is that the closed form is the one every textbook writes
-      down, and it is the one it is easiest to be wrong about.</figcaption>
+    <figcaption>Two of the three routes are the reference core&rsquo;s &mdash;
+      <span class="mono">memoryKickClosedForm</span> and <span class="mono">memoryKickQuadrature</span> &mdash;
+      and the third is this page&rsquo;s own Gauss&ndash;Legendre quadrature of core field samples at a
+      detector of finite radius, as the note above it says. All three are printed rather than described.
+      The point of doing it three ways is that the closed form is the one every textbook writes down, and it
+      is the one it is easiest to be wrong about.</figcaption>
   </figure>
 
   <div class="body">
@@ -2728,6 +3448,7 @@
             curve is the drift the \(1/r^{2}\) field contributes over a window of the given length.</div>
         </div>
         <span class="w6-ptag" data-kind="exact">Exact formula</span>
+        <span class="w6-ptag" data-kind="numeric">Controlled numerical solve</span>
       </div>
       <div class="w6-wrap"><svg class="w6-drift" viewBox="0 0 660 320" role="img"
         aria-label="The Coulomb drift over a window, rising with the window length, crossing the constant memory value at a window length comparable to the detector distance."></svg></div>
@@ -2735,20 +3456,30 @@
         <div class="w6-nums">
           <div class="w6-num"><span>memory, \(|\vec{\mathcal N}|/r\)</span><b data-w6-r="mem">&mdash;</b></div>
           <div class="w6-num"><span>Coulomb drift over a window of \(\pm r\) about the shell</span><b data-w6-r="cd">&mdash;</b></div>
-          <div class="w6-num is-lead"><span>window at which the drift equals the memory</span><b data-w6-r="cross">&mdash;</b></div>
+          <div class="w6-num is-lead"><span>window at which the drift equals the memory, by bisection in \(\log T\)</span><b data-w6-r="cross">&mdash;</b></div>
         </div>
         <div class="w6-note"><b>So this page does not say</b> that the zero&#8209;frequency component is the whole
           time integral of the electric field. It says that the \(1/r\) part of the time integral of the
           radiation field is the zero&#8209;frequency component, that this is the quantity the soft factor
           controls, and that the \(1/r^{2}\) Coulomb part is a separate term which any experiment has to
           subtract or arrange to be small. The reference core gives it as its own closed form,
-          <span class="mono">coulombDrift</span>, evaluated for the instantaneous limit of the same kick.</div>
+          <span class="mono">coulombDrift</span>, evaluated for the instantaneous limit of the same kick.
+          Both curves are that closed form. The one number here that is not a closed form is the crossing:
+          the window at which the two are equal is found by sixty steps of bisection in \(\log T\), which
+          is legitimate because the drift increases with the window &mdash; checked here over six decades
+          of window at five settings spanning the sliders &mdash; while the memory does not depend on it at
+          all. Sixty halvings take the initial ten-decade bracket below double precision, so the number is
+          resolved as far as the arithmetic allows; when no crossing exists between \(10^{-6}r\) and
+          \(10^{4}r\) the readout says &ldquo;never within \(10^{4}r\)&rdquo; instead of extrapolating.</div>
       </div>
     </div>
-    <figcaption>The crossing is not a subtlety of the formalism, it is the reason gravitational&#8209;wave
-      memory is hard to see: the permanent piece is small, it is not the largest thing in the data, and it
-      only separates cleanly when the observation is short compared with the light travel time to the
-      source and long compared with the burst.</figcaption>
+    <figcaption>The crossing is not a subtlety of the formalism; it is a concrete statement about this
+      electromagnetic detector. The permanent piece is not the largest thing in the record, and it separates
+      cleanly only when the observation is long compared with the burst and short compared with the light
+      travel time to the source &mdash; which is a real constraint on where you put the window, not a
+      difficulty of principle. Gravitational&#8209;wave memory has its own separation problem, with its own
+      foregrounds and its own noise; this figure is not evidence about that case and does not claim to
+      be.</figcaption>
   </figure>
 
   <div class="body">
@@ -2784,6 +3515,7 @@
 #w6 .w6-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
 #w6 .w6-note { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); max-width: 44rem; }
 #w6 .w6-note b { color: var(--ink-2); }
+#w6 .w6-state { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); border-left: 3px solid var(--st-hold); background: var(--surface-2); padding: .5rem .7rem; max-width: 44rem; }
 #w6 .w6-tabwrap { overflow-x: auto; }
 #w6 .w6-tab { border-collapse: collapse; font-family: var(--sans); font-size: 12.5px; width: 100%; min-width: 26rem; }
 #w6 .w6-tab th, #w6 .w6-tab td { text-align: right; padding: .32rem .55rem; border-bottom: 1px dotted var(--rule); }
@@ -2822,13 +3554,50 @@
   var NS = 'http://www.w3.org/2000/svg';
   function mk(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
   var CACHE = {};
-  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
-  function themeChanged() { CACHE = {}; render(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  /* Palette: token names only. A token the host page has not defined is an
+     INTEGRATION ERROR, not an opportunity to invent a colour: it is reported on
+     the console, stamped on the station root as data-token-error, and the drawing
+     falls back to the host page's own computed text colour - a value that belongs
+     to the host, not one this fragment made up. No colour literal appears in this
+     fragment. */
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    if (!v) {
+      if (window.console && window.console.warn) {
+        window.console.warn('frag-em ' + root.id + ': palette token ' + n + ' is not defined by the host page; falling back to the host text colour.');
+      }
+      root.setAttribute('data-token-error', n);
+      v = getComputedStyle(root).color;
+    }
+    return (CACHE[n] = v);
   }
-  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  /* Lifecycle. These hook document-level state, so they must not outlive the
+     station: each unhooks itself the first time it fires after this section has
+     left the document, which is what happens if the integrator replaces or
+     reloads a fragment. No global is created to hold a cleanup handle. */
+  var themeMQ = null, themeMO = null;
+  function detachTheme() {
+    if (themeMQ) {
+      if (themeMQ.removeEventListener) themeMQ.removeEventListener('change', themeChanged);
+      else if (themeMQ.removeListener) themeMQ.removeListener(themeChanged);
+      themeMQ = null;
+    }
+    if (themeMO) { themeMO.disconnect(); themeMO = null; }
+  }
+  function themeChanged() {
+    if (!root.isConnected) { detachTheme(); return; }
+    CACHE = {}; render();
+  }
+  if (window.matchMedia) {
+    themeMQ = window.matchMedia('(prefers-color-scheme: dark)');
+    if (themeMQ.addEventListener) themeMQ.addEventListener('change', themeChanged);
+    else if (themeMQ.addListener) themeMQ.addListener(themeChanged);
+  }
+  if (window.MutationObserver) {
+    themeMO = new MutationObserver(themeChanged);
+    themeMO.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   var S = { bi: 0, bf: 0.70, tau: 0.10, th: 62, np: 4, lr: 3 };
   var PANELS = [1, 2, 4, 8, 16, 32];
@@ -2865,12 +3634,33 @@
     }
     return out;
   }
-  /* route three: the acceleration part of the exact field, integrated in observer
-     time over the passage of the shell at a detector actually placed at radius r */
+  /* Route three. PAGE-OWNED quadrature of CORE field samples: the integrand is
+     P.fieldAt(...).radiationPart, the rule and the panel control are here. The
+     observer-time window is the exact shell passage, t_obs(s) = s + |x - r(s)| at
+     the two source times -/+ tau/2, which is the entire support because t_obs is
+     increasing for a subluminal source. Panels are doubled from 32 up to 512 until
+     the vector stops moving by more than 1e-10 relative; a retarded-time solve the
+     core cannot converge is reported, not smoothed over. */
   function farField(kick, x, tau) {
-    var ta = -tau / 2 + vlen(vsub(x, kick.position(-tau / 2)));
-    var tb = tau / 2 + vlen(vsub(x, kick.position(tau / 2)));
-    return glVec3(function (t) { return P.fieldAt(kick, x, t).radiationPart; }, ta, tb, 32);
+    var ta, tb;
+    try {
+      ta = -tau / 2 + vlen(vsub(x, kick.position(-tau / 2)));
+      tb = tau / 2 + vlen(vsub(x, kick.position(tau / 2)));
+    } catch (err) { return { ok: false, why: 'the emission window could not be formed' }; }
+    function run(panels) {
+      return glVec3(function (t) { return P.fieldAt(kick, x, t).radiationPart; }, ta, tb, panels);
+    }
+    var panels = 32, prev, next, rel = Infinity;
+    try { prev = run(panels); } catch (err) { return { ok: false, why: 'the retarded-time solve did not converge at this radius' }; }
+    while (panels < 512) {
+      try { next = run(panels * 2); } catch (err) { return { ok: false, why: 'the retarded-time solve did not converge at this radius' }; }
+      var mg = Math.hypot(next[0], next[1], next[2]);
+      var dd = Math.hypot(next[0] - prev[0], next[1] - prev[1], next[2] - prev[2]);
+      rel = mg > 0 ? dd / mg : dd;
+      prev = next; panels *= 2;
+      if (rel < 1e-10) break;
+    }
+    return { ok: true, v: prev, panels: panels, tol: rel };
   }
 
   function fmt12(v) {
@@ -2884,7 +3674,8 @@
 
   function render() {
     var B = build();
-    var np = PANELS[S.np];
+    var dead = Math.abs(S.bf - S.bi) < 1e-9;
+    var np = PANELS[Math.max(0, Math.min(PANELS.length - 1, S.np))];
     var cf = P.memoryKickClosedForm(B.kick, B.x);
     var qd = P.memoryKickQuadrature(B.kick, B.x, { n: np });
     var cf0 = cf[0] * B.r, cf1 = cf[1] * B.r, qd0 = qd[0] * B.r, qd1 = qd[1] * B.r;
@@ -2892,17 +3683,42 @@
     set('qd0', fmt12(qd0)); set('qd1', fmt12(qd1));
     set('df0', (qd0 - cf0).toExponential(2)); set('df1', (qd1 - cf1).toExponential(2));
 
-    var mag = Math.hypot(cf0, cf1);
-    var relNow = Math.hypot(qd0 - cf0, qd1 - cf1) / mag;
-    set('rel', relNow === 0 ? '0 at binary64 precision' : relNow.toExponential(2));
+    var cf2 = cf[2] * B.r, qd2 = qd[2] * B.r;
+    var mag = Math.hypot(cf0, cf1, cf2);
+    var absNow = Math.hypot(qd0 - cf0, qd1 - cf1, qd2 - cf2);
+    var relNow = dead ? NaN : absNow / mag;
+    /* The claim about twelve figures is gated on the residual actually measured at
+       the panel count in force, not asserted for every setting of the slider. */
+    if (dead) {
+      set('rel', 'both routes are exactly zero; a relative residual is not defined (absolute difference ' + absNow.toExponential(2) + ')');
+    } else if (relNow === 0) {
+      set('rel', '0 at binary64 precision — every displayed digit agrees');
+    } else {
+      set('rel', relNow.toExponential(2) + (relNow < 1e-12
+        ? '  — twelve significant figures or better'
+        : '  — short of twelve figures at ' + np + ' panel' + (np === 1 ? '' : 's') + '; the converged default is 16'));
+    }
+    var banner = root.querySelector('[data-w6-state]');
+    if (banner) {
+      banner.hidden = !dead;
+      if (dead) {
+        banner.textContent = 'The two speeds are equal, so the charge is never accelerated and the memory '
+          + 'coefficient is exactly the zero vector. Both routes return zero, which is why the residual row '
+          + 'above prints an absolute difference: a relative one would be zero divided by zero. The Coulomb '
+          + 'drift below is still a real number — a static field integrated over a window always is — and '
+          + 'that is exactly the point this station makes about keeping the two apart. Move either speed '
+          + 'slider to make a kick.';
+      }
+    }
     var tb = root.querySelector('[data-w6-conv]');
     if (tb) {
       tb.innerHTML = '';
-      PANELS.forEach(function (p) {
-        var q = P.memoryKickQuadrature(B.kick, B.x, { n: p });
-        var rel = Math.hypot(q[0] * B.r - cf0, q[1] * B.r - cf1) / mag;
+      PANELS.forEach(function (pp) {
+        var q = P.memoryKickQuadrature(B.kick, B.x, { n: pp });
+        var ab = Math.hypot(q[0] * B.r - cf0, q[1] * B.r - cf1, q[2] * B.r - cf2);
         var tr = document.createElement('tr');
-        tr.innerHTML = '<th scope="row">' + p + '</th><td>' + (rel === 0 ? '0' : rel.toExponential(2)) + '</td>';
+        tr.innerHTML = '<th scope="row">' + pp + '</th><td>' +
+          (dead ? ab.toExponential(2) + ' (absolute)' : (ab === 0 ? '0' : (ab / mag).toExponential(2))) + '</td>';
         tb.appendChild(tr);
       });
     }
@@ -2913,11 +3729,19 @@
         var r = Math.pow(10, e);
         var x = [B.n[0] * r, B.n[1] * r, B.n[2] * r];
         var ff = farField(B.kick, x, S.tau);
-        var got = ff[1] * r, want = cf1;
-        var rel = Math.abs(got - want) / Math.abs(mag);
+        var lbl = '10' + (e === 2 ? '²' : e === 3 ? '³' : e === 4 ? '⁴' : '⁵');
         var tr = document.createElement('tr');
-        tr.innerHTML = '<th scope="row">10' + (e === 2 ? '²' : e === 3 ? '³' : e === 4 ? '⁴' : '⁵') + '</th><td>' +
-          got.toPrecision(10) + '</td><td>' + rel.toExponential(2) + '</td><td>' + (rel * r).toPrecision(4) + '</td>';
+        if (!ff.ok) {
+          tr.innerHTML = '<th scope="row">' + lbl + '</th><td colspan="4">NOT COMPUTED — ' + ff.why + '</td>';
+        } else {
+          var got = ff.v[1] * r;
+          var gotTxt = (got !== 0 && Math.abs(got) < 1e-4) ? got.toExponential(9) : got.toPrecision(10);
+          var ad = Math.hypot(ff.v[0] * r - cf0, ff.v[1] * r - cf1, ff.v[2] * r - cf2);
+          tr.innerHTML = '<th scope="row">' + lbl + '</th><td>' + gotTxt + '</td><td>' +
+            ff.panels + '</td><td>' +
+            (dead ? ad.toExponential(2) + ' (abs)' : (ad / mag).toExponential(2)) + '</td><td>' +
+            (dead ? '—' : ((ad / mag) * r).toPrecision(4)) + '</td>';
+        }
         tf.appendChild(tr);
       });
     }
@@ -2932,17 +3756,20 @@
       } catch (e) { return NaN; }
     }
     var cdAtR = drift(B.r);
-    set('mem', memMag.toExponential(5));
+    set('mem', dead ? '0 exactly — there is no memory to compare with' : memMag.toExponential(5));
     set('cd', isFinite(cdAtR) ? cdAtR.toExponential(5) : '—');
-    /* bisect for the window where the drift first equals the memory */
+    /* Sixty steps of bisection in log T on the monotone difference. This is the one
+       number in this figure that is not a closed form, and the note says so. */
     var lo = 1e-6 * B.r, hi = 1e4 * B.r, cross = NaN;
-    if (drift(hi) > memMag && drift(lo) < memMag) {
+    if (!dead && drift(hi) > memMag && drift(lo) < memMag) {
       for (var it = 0; it < 60; it++) { var midT = Math.sqrt(lo * hi); if (drift(midT) < memMag) lo = midT; else hi = midT; }
       cross = Math.sqrt(lo * hi);
     }
-    set('cross', isFinite(cross) ? (cross / B.r).toPrecision(4) + '  ×  r' : 'never within 10⁴ r');
+    set('cross', dead
+      ? 'the memory is exactly zero, so the drift is larger at every window'
+      : (isFinite(cross) ? (cross / B.r).toPrecision(4) + '  ×  r' : 'never within 10⁴ r'));
 
-    drawDrift(B, drift, memMag, cross);
+    drawDrift(B, drift, dead ? null : memMag, cross);
 
     out('bi', S.bi.toFixed(2)); out('bf', S.bf.toFixed(2)); out('tau', S.tau.toFixed(3));
     out('th', S.th.toFixed(0) + '°'); out('np', String(np)); out('lr', S.lr.toFixed(1));
@@ -2957,8 +3784,10 @@
     for (i = 0; i < N; i++) { var Tw = B.r * Math.pow(10, e0 + (e1 - e0) * i / (N - 1)); xs.push(Tw); ys.push(drift(Tw)); }
     var lo = Infinity, hi = -Infinity;
     for (i = 0; i < ys.length; i++) if (ys[i] > 0 && isFinite(ys[i])) { if (ys[i] < lo) lo = ys[i]; if (ys[i] > hi) hi = ys[i]; }
-    lo = Math.min(lo, memMag); hi = Math.max(hi, memMag);
-    if (!isFinite(lo) || !isFinite(hi)) return;
+    /* memMag is null when there is no kick: there is then no level to draw and no
+       decade to reserve for it, and log10(0) must never reach the axis code. */
+    if (memMag > 0) { lo = Math.min(lo, memMag); hi = Math.max(hi, memMag); }
+    if (!isFinite(lo) || !isFinite(hi) || !(lo > 0) || !(hi > 0)) return;
     var Y1 = Math.log10(hi) + 0.4, Y0 = Math.log10(lo) - 0.4;
     function px(t) { return L + (Math.log10(t / B.r) - e0) / (e1 - e0) * (VW - L - R); }
     function py(v) { return VH - Bm - (Math.log10(v) - Y0) / (Y1 - Y0) * (VH - T - Bm); }
@@ -2974,7 +3803,7 @@
       tx.textContent = '10' + sup(k); g.appendChild(tx);
     }
     g.appendChild(mk('path', { class: 'ax', d: 'M' + L + ' ' + T + 'V' + (VH - Bm) + 'H' + (VW - R) }));
-    g.appendChild(mk('line', { x1: L, y1: py(memMag), x2: VW - R, y2: py(memMag), class: 'lvl' }));
+    if (memMag > 0) g.appendChild(mk('line', { x1: L, y1: py(memMag), x2: VW - R, y2: py(memMag), class: 'lvl' }));
     var d = '';
     for (i = 0; i < xs.length; i++) if (ys[i] > 0 && isFinite(ys[i])) d += (d ? 'L' : 'M') + px(xs[i]).toFixed(2) + ' ' + py(ys[i]).toFixed(2);
     g.appendChild(mk('path', { class: 'curve', d: d }));
@@ -2986,8 +3815,11 @@
         cl.textContent = 'they are equal here'; g.appendChild(cl);
       }
     }
-    var a = mk('text', { x: L + 8, y: py(memMag) - 9, class: 'notek' });
-    a.textContent = 'the memory  |N|/r — flat, it does not care about the window'; g.appendChild(a);
+    var a = mk('text', { x: L + 8, y: memMag > 0 ? py(memMag) - 9 : T + 14, class: 'notek' });
+    a.textContent = memMag > 0
+      ? 'the memory  |N|/r — flat, it does not care about the window'
+      : 'no kick: the memory is exactly zero, and there is no level to draw';
+    g.appendChild(a);
     var b = mk('text', { x: VW - R - 6, y: py(ys[ys.length - 1]) - 8, class: 'noted', 'text-anchor': 'end' });
     b.textContent = 'the Coulomb drift'; g.appendChild(b);
     var xl = mk('text', { x: (L + VW - R) / 2, y: VH - 9, class: 'axlab', 'text-anchor': 'middle' });
@@ -3037,10 +3869,16 @@
     <div class="eq-note">This is the angular part of \(F_{rt}\big|_{\mathcal I^{+}}\) at
       <span class="mono">soft_Arxiv_update.tex:541-550</span>, where it appears with the notes&rsquo; charge
       normalisation \(e^{2}Q_k/4\pi\) out front; here everything is per unit charge, Gaussian, \(c=1\). At
-      \(\beta=0\) it is the constant Coulomb field. At \(\beta\ne0\) it is not constant, and the notes make a
-      point of it: this is a \(\ell=1\) structure in the \(1/r^{2}\) term, which is <i>not</i> the electric
-      dipole moment of the usual multipole expansion, since a single moving charge has no dipole moment.
-      Its total over the sphere is the charge, as it must be: \(\int C_{\beta}\,d\Omega=4\pi\).</div>
+      \(\beta=0\) it is the constant Coulomb field. At \(\beta\ne0\) it is not constant, and the notes make
+      a point of what that means. Expanded in Legendre polynomials the profile has a nonzero \(\ell=1\)
+      moment &mdash; and, generally, nonzero moments at every \(\ell\): at \(\beta=0.72\), for instance,
+      the coefficients run \(1.00,\,1.64,\,1.37,\,0.92,\,0.56,\dots\) for
+      \(\ell=0,1,2,3,4\), so the \(\ell=2\) piece is nearly as large as the \(\ell=1\) piece. The
+      point the notes make is about the \(\ell=1\) moment in particular: it is <i>not</i> the electric
+      dipole moment of the usual multipole expansion, since a single moving charge has no dipole moment,
+      and the source is explicit that the two &ldquo;are not to be confused&rdquo;
+      (<span class="mono">soft_Arxiv_update.tex:553</span>). Its total over the sphere is the charge, as it
+      must be: \(\int C_{\beta}\,d\Omega=4\pi\).</div>
   </div>
 
   <div class="body">
@@ -3238,7 +4076,12 @@
         matching condition is checked in every example anyone has looked at, it is forced if you want the
         scattering problem to be defined at all, and as far as the person who built this subject knows there
         is no first&#8209;principles derivation of it. That is the honest state of the third corner, and it is
-        not a footnote &mdash; everything in this station rests on it.</footer>
+        not a footnote. Be exact about what depends on it: the ledger above, \(C_f-C_i=D_A\mathcal{M}^A\),
+        is a <i>local</i> statement at \(\mathcal I^{+}\) &mdash; it follows from the constraint equation
+        and this solution, and it needs no matching condition at all. What needs the antipodal
+        identification is the step after it, the conservation law <i>across</i> null infinity that ties a
+        charge defined at \(\mathcal I^{-}\) to one defined at \(\mathcal I^{+}\), because without an
+        identification of the two spheres there is nothing to equate.</footer>
     </blockquote>
   </div>
 
@@ -3324,13 +4167,50 @@
   var svgProf = root.querySelector('.w7-prof'), svgBal = root.querySelector('.w7-bal');
   var svgPen = root.querySelector('.w7-pen'), svgCel = root.querySelector('.w7-cel');
   var CACHE = {};
-  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888'); }
-  function themeChanged() { CACHE = {}; render(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', themeChanged); else if (mq.addListener) mq.addListener(themeChanged);
+  /* Palette: token names only. A token the host page has not defined is an
+     INTEGRATION ERROR, not an opportunity to invent a colour: it is reported on
+     the console, stamped on the station root as data-token-error, and the drawing
+     falls back to the host page's own computed text colour - a value that belongs
+     to the host, not one this fragment made up. No colour literal appears in this
+     fragment. */
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    if (!v) {
+      if (window.console && window.console.warn) {
+        window.console.warn('frag-em ' + root.id + ': palette token ' + n + ' is not defined by the host page; falling back to the host text colour.');
+      }
+      root.setAttribute('data-token-error', n);
+      v = getComputedStyle(root).color;
+    }
+    return (CACHE[n] = v);
   }
-  if (window.MutationObserver) new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  /* Lifecycle. These hook document-level state, so they must not outlive the
+     station: each unhooks itself the first time it fires after this section has
+     left the document, which is what happens if the integrator replaces or
+     reloads a fragment. No global is created to hold a cleanup handle. */
+  var themeMQ = null, themeMO = null;
+  function detachTheme() {
+    if (themeMQ) {
+      if (themeMQ.removeEventListener) themeMQ.removeEventListener('change', themeChanged);
+      else if (themeMQ.removeListener) themeMQ.removeListener(themeChanged);
+      themeMQ = null;
+    }
+    if (themeMO) { themeMO.disconnect(); themeMO = null; }
+  }
+  function themeChanged() {
+    if (!root.isConnected) { detachTheme(); return; }
+    CACHE = {}; render();
+  }
+  if (window.matchMedia) {
+    themeMQ = window.matchMedia('(prefers-color-scheme: dark)');
+    if (themeMQ.addEventListener) themeMQ.addEventListener('change', themeChanged);
+    else if (themeMQ.addListener) themeMQ.addListener(themeChanged);
+  }
+  if (window.MutationObserver) {
+    themeMO = new MutationObserver(themeChanged);
+    themeMO.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   var S = { bi: 0, bf: 0.72, th: 64, al: 35, pb: 0.60, pd: 0.25 };
   function dirAt(deg) { var t = deg * Math.PI / 180; return [Math.cos(t), Math.sin(t), 0]; }
