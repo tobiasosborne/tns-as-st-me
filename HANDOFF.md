@@ -2,10 +2,55 @@
 
 # HANDOFF — live state
 
-Updated: 2026-09-01, session 11 (Strominger wisdom + batch-13 + Liouville).
+Updated: 2026-09-03, session 12 (WHY prologue build in flight).
 Read order gate: CLAUDE.md → **PRD.md (the process constitution — where it
 conflicts with older habits recorded here or anywhere, PRD WINS)** →
 HANDOFF_MPS_SOFT_THEOREM.md → this file → paper/skeleton.md.
+
+## Session 12 (2026-09-02/03) — the WHY prologue build (codex-heavy, Opus final say on design)
+
+**Orchestration pattern (TJO: "use codex a lot, with opus taking final say
+on design. no fable subagents"):** codex = physics ground truth + critique;
+Opus = design/build/repair with verify-before-apply. Sub-issues under
+tns-ka2: tns-lqj (codex EM core) ✓, tns-fse (Opus builder A) ✓, tns-az6
+(codex GW QA + Opus repair) ✓, tns-as (codex EM critique + Opus repair),
+tns-ur8 (Opus integrator), tns-170 (codex critic on assembled page → Opus
+repair → publish).
+
+**Done and committed:**
+- `prologue/em-core.js` + `em-core.test.mjs` (all pass) + `em-core-NOTES.md`
+  (codex): exact kicked-charge engine; two-route memory identity 1.2e-15;
+  NOTES carry the binding "may print" / "must not say" lists and explicit
+  corrections to imprecise physics in BRIEF-why-prologue.md.
+- `prologue/frag-em.html` (Opus builder A, 196 KB, core inlined verbatim;
+  W4 is a hand-rolled ray-cast sphere, zero THREE refs) + NOTES-frag-em.md.
+- `docs/outreach/critic-frag-gw-r1.md` (codex, 11 FATAL) → Opus repair r1
+  of `frag-gw.html`: 11/11 applied with verification; W5 is now declared a
+  leading-1/R null-infinity engine (exact finite-distance retardation
+  rejected on purpose); unit burst energy fixed; W9 causal/late-limit
+  split; W10 ladder rungs one honest sentence each from CLAIMS rows.
+  Ledger in NOTES-frag-gw.md; 42 harness screenshots in prologue/qa/.
+- `prologue/qa-harness.html` + `qa-run.mjs` (codex): reusable playwright
+  harness. Chromium does NOT launch inside the codex sandbox (browser rows
+  NOT RUN there); it works from Opus agents. Two runner bugs (headers-sent
+  crash; W5 anchor string) are being fixed by the EM repair lane.
+- `docs/outreach/critic-frag-em-r1.md` (codex, 14 FATAL + 14 BUGS) →
+  Opus repair r1 IN PROGRESS (tns-as).
+- Lane briefs: BRIEF-em-core.md, BRIEF-frag-gw-qa.md, BRIEF-builder-em.md,
+  BRIEF-frag-em-qa.md, BRIEF-integrator.md (ready to launch).
+
+**Resume order if interrupted:** (1) if NOTES-frag-em.md lacks a "Repair
+round r1" section, relaunch the EM repair (prompt = BRIEF-frag-em-qa.md
+report + the rules in this section); (2) Opus integrator per
+BRIEF-integrator.md → `auditions/ir-triangle-prologue.html`; (3) codex
+critic on the assembled page (BRIEF-audition-critic.md pattern, physics
+first); (4) Opus repair; (5) publish as a NEW artifact; commit + push.
+
+**Ops:** detached codex lanes via scratchpad `codex/launch.sh <name>`
+(setsid nohup; prompt file on stdin); liveness by `pgrep -f "launch.sh
+<name>"`; never pgrep a pattern present in your own command line (the
+wrapper shell kills itself). Opus repair agents: ~35 min, ~330k tokens;
+Opus builders ~55 min, ~400k tokens; codex critique ~25 min.
 
 ## Session 11 (continued) — THE OUTREACH PIVOT (interrupted by network outage)
 
