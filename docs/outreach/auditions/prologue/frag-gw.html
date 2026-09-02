@@ -41,31 +41,54 @@
       :2633  the constraint that sources the memory:  D_z^2 dC^zz = 2 dm_B + 2 int du T_uu
       :2635  the Green's-function solution
       :2638  G(z,z';) = (1/pi) sin^2(dTheta/2) log sin^2(dTheta/2)
-      :2640  nonlocality: a burst at the north pole moves neither pole, but the equator
+      :2641  nonlocality: a burst at the north pole moves neither pole, but the equator
   LECTURE REMARK (secondary source, auto-captions, never load-bearing)
     docs/strominger-wisdom/lectures/extra-01-CdFyoaNv8GI-digest.md, insight 1
       [CdFyoaNv8GI @ 00:34:36]
 
-  PHYSICS ROUTES AND THEIR ERROR CONTROL (full record in the builder report)
-    W1  schematic only, no numbers.
-    W5  EM: radiation-zone Lienard-Wiechert field of a smoothly kicked charge;
-           impulse by composite Simpson in retarded time with the exact Jacobian
-           dt/dt' = 1 - n.beta, panel doubling to |I_2n - I_n| < 1e-12 |I|.
-           Verified offline against the closed-form soft factor for six trajectories
-           (tanh, erf and a deliberately non-monotone profile): worst relative
-           difference 1.0e-11, and 2.8e-15 for the profile family the page ships.
+  PHYSICS ROUTES AND THEIR ERROR CONTROL (full record in the builder report;
+  repair round r1 recorded in docs/outreach/auditions/NOTES-frag-gw.md)
+    W1  schematic only, no numbers. The masthead and the W10 3+1 rung both name this
+           exception explicitly rather than claiming the page is solved throughout.
+    W5  EM: the LEADING 1/R (null-infinity) Lienard-Wiechert field of a smoothly kicked
+           charge. n and R are held fixed per detector and the retarded map
+           t = t' + (R - n.r_s(t'))/c is the leading term of the exact
+           t = t' + |x_d - r_s(t')|/c; it is evaluated parametrically along t', never
+           root-solved, and the page says so. Impulse by composite Simpson in retarded
+           time with the exact Jacobian dt/dt' = 1 - n.beta, panel doubling to
+           |I_2n - I_n| < 1e-12 |I|; worst |integrated - closed| over the shipped
+           parameter range 5.3e-16. The ANIMATION's cumulative tables use the same
+           displayed field, cumulative composite Simpson in t' with panel doubling
+           (was a fixed 1024-panel trapezoid, endpoint error up to 4.7e-4 relative;
+           now <= 1e-15 relative, and the residual is printed under the table).
+           Wavefront brightness is the INSTANTANEOUS angular power
+           dP(t')/dOmega ~ betadot^2 sin^2 th / (1 - beta cos th)^5 at each shell's own
+           emission time, on one common scale (was the time-integrated fluence painted
+           on every shell); the whole-pulse fluence survives as a separately labelled
+           summary row.
         GW: exact l-space inversion of the displayed constraint, l <= 8; beam
-           coefficients from the closed form F_lm = 2 pi c_l(kappa) Y_lm(n_0) with
+           coefficients from the closed form F_lm = w 2 pi c_l(kappa) Y_lm(n_0) with
            c_l by 64-node Gauss-Legendre (agrees with 2 e^-k i_l(k) to 1e-14 for
-           kappa >= 4); trace-free covariant Hessian by the m=2 Fourier coefficient
-           on a small geodesic circle, Richardson-extrapolated (worst absolute error
-           2.7e-7 against the analytic Y_20 result).
-    W8  same GW core; plus the Legendre coefficients of the quoted Green's function,
-           which satisfy g_l (l-1)l(l+1)(l+2) = 2/pi for every l >= 2 to 12 digits --
-           an independent check that this page inverts the same operator the
-           lectures do.
-    W9  closed forms only; every inverse transform written out on the page.
-    W10 no computation.
+           kappa >= 4). The weight w carries the ENERGY FRACTION divided by the
+           pattern's own sphere integral 2 pi (1 - e^{-2k}) / k, so int F dOmega = 1
+           for every kappa and every lobe split; the page prints that integral live.
+           Trace-free covariant Hessian by the m=2 Fourier coefficient on a small
+           geodesic circle, Richardson-extrapolated (worst absolute error 2.7e-7
+           against the analytic Y_20 result).
+    W8  same GW core, same unit-energy normalisation; plus the Legendre coefficients of
+           the quoted Green's function, which satisfy g_l (l-1)l(l+1)(l+2) = 2/pi for
+           every l >= 2 to 12 digits -- an independent check that this page inverts the
+           same operator the lectures do. The quantity called "memory strain power" is
+           int (dC_+^2 + dC_x^2) = (1/2) int dC_AB dC^AB = 16 sum_m F_lm^2 / D_l; the
+           full contraction is exactly twice it and every ratio is unchanged.
+    W9  closed forms only; every inverse transform written out on the page, and the
+           printed branch of the damped pair switches with the half-plane control.
+           Two predicates are tracked separately: a late-time limit exists unless an
+           undamped pole sits ON the real axis, and the response is retarded unless a
+           pole sits ABOVE it. The upper-half-plane pair is advanced, not
+           non-settling: -2C e^{Gt} cos(w1 t) theta(-t) is identically zero for t > 0.
+    W10 no computation; each ladder rung is one sentence with the recorded CLAIMS.md
+           scope behind a disclosure.
 -->
 
 <section class="stop" id="w0-masthead">
@@ -112,10 +135,12 @@
   <details class="mh-legend">
     <summary>How to read the labels on every figure</summary>
     <div class="mh-legend-body">
-      <p class="mh-legend-lede">Nothing on this page is animated for effect. Every moving
-        quantity is either a closed form written out beside it, or a numerical solution of
-        an equation written out beside it, with the method and the error stated. Each
-        figure carries one of these labels.</p>
+      <p class="mh-legend-lede">Nothing on this page is animated for effect. With one
+        deliberate exception &mdash; the number&#8209;free schematic that opens
+        station&nbsp;1, which is tagged as such &mdash; every moving quantity is either a
+        closed form written out beside it, or a numerical solution of an equation written
+        out beside it, with the method and the error stated. Each figure carries one of
+        these labels.</p>
       <dl class="mh-tags">
         <div><dt><span class="ptag" data-kind="exact">Exact formula</span></dt>
           <dd>The closed form is displayed, and it is the expression the page actually
@@ -144,7 +169,7 @@
     </div>
   </details>
 
-  <p class="mh-start"><button class="btn btn-primary" data-mh-go>Start with the question</button>
+  <p class="mh-start"><a class="btn btn-primary mh-go" href="#w1">Start with the question</a>
     <span class="mh-start-hint">Ten stations. The firing range is station&nbsp;5.</span></p>
 </section>
 
@@ -185,21 +210,19 @@
 #w0-masthead .ptag[data-kind="lecture"]    { border-color: var(--st-hold);      color: var(--st-hold); }
 
 #w0-masthead .mh-start { margin-top: 2rem; display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; }
+#w0-masthead .mh-go { display: inline-block; text-decoration: none; }
 #w0-masthead .mh-start-hint { font-family: var(--sans); font-size: 12.5px; color: var(--ink-3); }
 </style>
 
 <script data-station="w0-masthead">
 (function () {
+  /* No behaviour. "Start with the question" is an ordinary in-page link, so the browser
+     owns the cross-section navigation (and honours the reader's reduced-motion setting
+     through the host page's scroll-behavior). This block exists only so that every
+     section in the fragment keeps the one-style-one-script shape the integrator expects,
+     and so that no station script ever touches another station's DOM. */
   var root = document.getElementById('w0-masthead');
   if (!root) return;
-  var btn = root.querySelector('[data-mh-go]');
-  if (!btn) return;
-  btn.addEventListener('click', function () {
-    var t = document.getElementById('w1');
-    if (!t) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-  });
 })();
 </script>
 
@@ -361,13 +384,20 @@
   }
 
   // ---- animation ----
-  var t = 0, playing = !reduce, last = null;
+  // Frames are requested only while something is actually changing: while playing, not yet
+  // at the end of the shot, and with this station on screen. Everything else redraws once
+  // and stops, so an assembled ten-station page carries no idle loop.
+  var t = 0, playing = !reduce, last = null, raf = 0, onScreen = true;
+  function busy() { return playing && onScreen && t < TEND - 1e-9; }
+  function schedule() { if (raf || !busy()) return; last = null; raf = window.requestAnimationFrame(frame); }
+  function halt() { if (raf) { window.cancelAnimationFrame(raf); raf = 0; } }
   function frame(ts) {
+    raf = 0;
     if (last === null) last = ts;
     var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
     if (playing) { t += dt * 1.15; if (t > TEND) t = TEND; }
     draw();
-    raf = window.requestAnimationFrame(frame);
+    schedule();
   }
   function draw() {
     var withMem = !!(cMem && cMem.checked);
@@ -401,14 +431,29 @@
     bPlay.textContent = playing ? 'Pause' : 'Play';
     bPlay.setAttribute('aria-pressed', playing ? 'true' : 'false');
     if (playing && t >= TEND - 1e-9) t = 0;
+    if (playing) schedule(); else halt();
+    draw();
   });
-  bRep.addEventListener('click', function () { t = 0; playing = true; bPlay.textContent = 'Pause'; bPlay.setAttribute('aria-pressed', 'true'); });
+  bRep.addEventListener('click', function () {
+    t = 0; playing = true; bPlay.textContent = 'Pause'; bPlay.setAttribute('aria-pressed', 'true');
+    schedule(); draw();
+  });
   cMem.addEventListener('change', function () { retrace(); draw(); });
+
+  // pause the loop while the station is off screen; resume only if it was playing
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      if (!root.isConnected) { io.disconnect(); halt(); return; }
+      onScreen = entries[entries.length - 1].isIntersecting;
+      if (onScreen) schedule(); else halt();
+    }, { rootMargin: '120px' });
+    io.observe(root);
+  }
 
   retrace();
   if (reduce) { t = TEND; bPlay.textContent = 'Play'; bPlay.setAttribute('aria-pressed', 'false'); }
   draw();
-  var raf = window.requestAnimationFrame(frame);
+  schedule();
 })();
 </script>
 
@@ -454,7 +499,17 @@
         field &mdash; the piece that survives as <span class="mono">1/R</span> and carries the
         radiation. The Coulomb term falls as <span class="mono">1/R&sup2;</span> and is not
         part of the radiative data; it is not included in the ledger, and the ledger says
-        so. The retarded-time relation above is inverted exactly, by bisection.</div>
+        so. <b>What kind of calculation this is, exactly.</b> Both lines above are the leading
+        <span class="mono">1/R</span> limit &mdash; the field at null infinity in a fixed
+        direction <span class="mono">n&#770;</span>. The direction and the distance
+        <span class="mono">R</span> to a given detector are held fixed while the source moves,
+        and the retarded-time relation printed above is the leading term of the exact
+        <span class="mono">t = t&prime; + |x<sub>d</sub> &minus; r<sub>s</sub>(t&prime;)|/c</span>
+        in that limit. Nothing is root-solved: the page walks along the source&rsquo;s own clock
+        <span class="mono">t&prime;</span> and reads the arrival time off, which is exactly what
+        makes the change of variables below available. The detectors are drawn at finite
+        distance so that the geometry is visible; the numbers are the null&#8209;infinity
+        numbers.</div>
     </div>
     <div class="eq">
       <div class="eq-label">What the whole pulse adds up to &mdash; closed form</div>
@@ -523,9 +578,16 @@
         shape of the passing wave is ours to pick and the page picks one:
         a smooth ramp <span class="mono">(1+tanh(u/&sigma;))/2</span> carrying the permanent
         part, plus a ringing term <span class="mono">sin(2&pi;u/&lambda;)e<sup>&minus;u&sup2;/2&sigma;<sub>w</sub>&sup2;</sup></span>
-        that is exactly odd in <span class="mono">u</span> and therefore integrates to exactly
-        zero. Turn the ringing up or down with the slider &mdash; <b>the offset it settles to
-        does not move</b>. That is the whole content of the constraint, and you can watch it.</p>
+        whose Gaussian envelope takes it to zero at <em>both</em> ends of the record. What the
+        constraint fixes is the endpoint difference
+        <span class="mono">&Delta;C = C(+&infin;) &minus; C(&minus;&infin;) = &int;N du</span>,
+        where the news <span class="mono">N = &part;<sub>u</sub>C</span> is the derivative of
+        the very profile drawn here; anything that starts and ends at zero contributes nothing
+        to that difference, however large it is in between. (This particular term is also odd
+        in <span class="mono">u</span>, so its own time integral vanishes as well &mdash; but
+        that is an accident of the choice, not the reason.) Turn the ringing up or down with
+        the slider &mdash; <b>the offset it settles to does not move</b>. That is the whole
+        content of the constraint, and you can watch it.</p>
     </div>
   </div>
 
@@ -586,6 +648,7 @@
             <button class="btn w5-sp is-on" data-w5-lobe="off" aria-pressed="true">off</button>
             <button class="btn w5-sp" data-w5-lobe="on" aria-pressed="false">on, opposite side</button>
           </span></label>
+        <div class="w5-budget w5-knob-wide" data-w5-budget aria-live="polite"></div>
       </div>
     </div>
 
@@ -673,6 +736,12 @@
 #w5 .w5-knob-wide { grid-column: 1 / -1; }
 #w5 .w5-knob-wide > span { display: block; margin-bottom: .15rem; }
 
+#w5 .w5-budget { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: .28rem .9rem; border-top: 1px dotted var(--rule); padding-top: .55rem; margin-top: .15rem; min-width: 0; }
+#w5 .w5-budget-h { grid-column: 1 / -1; font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+#w5 .w5-budget-i { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); min-width: 0; }
+#w5 .w5-budget-i b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w5 .w5-budget-i.is-fixed b { color: var(--accent-text); }
+
 #w5 .w5-ledger .chart-head { display: flex; align-items: flex-start; gap: .75rem; flex-wrap: wrap; padding: .85rem 1rem .55rem; }
 #w5 .w5-ledger .chart-head > div:first-child { flex: 1 1 12rem; min-width: 0; }
 #w5 .w5-ptag { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .42rem; border: 1px solid var(--st-proved); color: var(--st-proved); white-space: nowrap; margin-left: auto; }
@@ -701,12 +770,23 @@
   var root = document.getElementById('w5');
   if (!root) return;
 
-  /* ---------------- palette: read the page's tokens, never define any ---------------- */
-  var CACHE = {};
+  /* ---------------- palette: read the page's tokens, never define any ----------------
+     No colour value is written down in this fragment. If the host page has not defined a
+     token the fragment names, that is an integration error: it is reported on the console
+     and stamped on the station root, and the drawing falls back to the page's own inherited
+     text colour rather than to an invented one. */
+  var CACHE = {}, INHERIT = null;
+  function inherited() { if (INHERIT === null) INHERIT = getComputedStyle(root).color; return INHERIT; }
+  function missingToken(n) {
+    if (!root.hasAttribute('data-token-error')) root.setAttribute('data-token-error', n);
+    if (window.console && console.warn) console.warn('frag-gw / w5: palette token ' + n
+      + ' is not defined by the host page; falling back to the inherited text colour.');
+  }
   function tok(n) {
     if (CACHE[n]) return CACHE[n];
     var v = getComputedStyle(root).getPropertyValue(n).trim();
-    return (CACHE[n] = v || '#888888');
+    if (!v) { missingToken(n); v = inherited(); }
+    return (CACHE[n] = v);
   }
   function rgbOf(n) {
     var h = tok(n);
@@ -715,17 +795,36 @@
       return [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)];
     }
     var m = h.match(/-?\d+(\.\d+)?/g);
-    return m ? [+m[0], +m[1], +m[2]] : [136, 136, 136];
+    if (m && m.length >= 3) return [+m[0], +m[1], +m[2]];
+    missingToken(n);
+    var c = inherited().match(/-?\d+(\.\d+)?/g);
+    return c && c.length >= 3 ? [+c[0], +c[1], +c[2]] : [0, 0, 0];
   }
   function rgba(n, a) { var c = rgbOf(n); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
-  function dropPalette() { CACHE = {}; draw(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', dropPalette);
-    else if (mq.addListener) mq.addListener(dropPalette);
+  function dropPalette() { CACHE = {}; INHERIT = null; draw(); }
+  var mqTheme = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var moTheme = null;
+  function onTheme() {
+    // self-unhook if this station has been detached, so a replaced fragment leaks nothing
+    if (!root.isConnected) { detachTheme(); return; }
+    dropPalette();
   }
-  if (window.MutationObserver) new MutationObserver(dropPalette)
-    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  function detachTheme() {
+    if (moTheme) { moTheme.disconnect(); moTheme = null; }
+    if (mqTheme) {
+      if (mqTheme.removeEventListener) mqTheme.removeEventListener('change', onTheme);
+      else if (mqTheme.removeListener) mqTheme.removeListener(onTheme);
+      mqTheme = null;
+    }
+  }
+  if (mqTheme) {
+    if (mqTheme.addEventListener) mqTheme.addEventListener('change', onTheme);
+    else if (mqTheme.addListener) mqTheme.addListener(onTheme);
+  }
+  if (window.MutationObserver) {
+    moTheme = new MutationObserver(onTheme);
+    moTheme.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   /* ---------------- vectors ---------------- */
   var dot = function (a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; };
@@ -799,25 +898,42 @@
       }
       return sum * h / 3;
     }
-    // cumulative impulse and drift in the DETECTOR's own time, for the animation only
-    function tables(cth, R) {
-      var Sp = spanQ(), N = 1024, h = 2 * Sp / N, f = integrand(cth, R);
+    // Cumulative impulse J(t) = int E_perp dt and drift X(t) = int J dt, for the animated
+    // arrow and the animated detector position. Both are taken along the source's own clock
+    // t' with the exact Jacobian dt/dt' = 1 - n.beta, by CUMULATIVE COMPOSITE SIMPSON
+    // (O(h^4); odd nodes closed by the h/12 (5,8,-1) half-panel rule, same order), with the
+    // panel count doubled until the endpoint stops moving in the twelfth digit. The endpoint
+    // of the animated arrow is therefore the same number the ledger prints; the residual
+    // against the closed form is measured and printed under the table.
+    function cumSimp(f, cth, R, a, b, N) {
+      if (N % 2) N++;
+      var h = (b - a) / N, i, k;
       var T = new Float64Array(N + 1), J = new Float64Array(N + 1), X = new Float64Array(N + 1);
-      var pT = 0, pE = 0;
-      for (var i = 0; i <= N; i++) {
-        var tp = -Sp + i * h, b = betaS(tp), den = 1 - cth * b;
-        var Ep = f(tp) / den;                       // undo the Jacobian: field in detector time
-        var to = tp + R - posS(tp) * cth;           // exact retarded map (radiation zone)
-        if (i === 0) { T[0] = to; J[0] = 0; X[0] = 0; }
-        else {
-          var dtv = to - pT;
-          J[i] = J[i - 1] + 0.5 * (Ep + pE) * dtv;
-          X[i] = X[i - 1] + 0.5 * (J[i] + J[i - 1]) * dtv;
-          T[i] = to;
-        }
-        pT = to; pE = Ep;
+      var fv = new Float64Array(N + 1), gv = new Float64Array(N + 1), jc = new Float64Array(N + 1);
+      for (i = 0; i <= N; i++) {
+        var tp = a + i * h;
+        jc[i] = 1 - cth * betaS(tp);
+        fv[i] = f(tp);                              // E_perp(t) times dt/dt'
+        T[i] = tp + R - posS(tp) * cth;             // leading-1/R retarded map, monotone in t'
       }
+      for (k = 2; k <= N; k += 2) J[k] = J[k - 2] + h * (fv[k - 2] + 4 * fv[k - 1] + fv[k]) / 3;
+      for (k = 1; k <= N; k += 2) J[k] = J[k - 1] + h * (5 * fv[k - 1] + 8 * fv[k] - fv[k + 1]) / 12;
+      for (i = 0; i <= N; i++) gv[i] = J[i] * jc[i];   // integrand of int J dt, in t'
+      for (k = 2; k <= N; k += 2) X[k] = X[k - 2] + h * (gv[k - 2] + 4 * gv[k - 1] + gv[k]) / 3;
+      for (k = 1; k <= N; k += 2) X[k] = X[k - 1] + h * (5 * gv[k - 1] + 8 * gv[k] - gv[k + 1]) / 12;
       return { t: T, J: J, X: X, N: N };
+    }
+    function tables(cth, R) {
+      var Sp = spanQ(), f = integrand(cth, R), N = 512;
+      var prev = cumSimp(f, cth, R, -Sp, Sp, N), cur = prev;
+      for (var pass = 0; pass < 4; pass++) {
+        N *= 2; cur = cumSimp(f, cth, R, -Sp, Sp, N);
+        if (Math.abs(cur.J[cur.N] - prev.J[prev.N]) < 1e-18 + 1e-12 * Math.abs(cur.J[cur.N])) break;
+        prev = cur;
+      }
+      cur.gap = Math.abs(cur.J[cur.N] - prev.J[prev.N]);
+      cur.res = Math.abs(cur.J[cur.N] - dvClosed(cth, R));
+      return cur;
     }
     function lookup(tb, t) {
       var N = tb.N;
@@ -939,20 +1055,35 @@
       if (s > 1e-7) { var c = n[0] / s, d = n[1] / s; return [[n[2] * c, n[2] * d, -s], [-d, c, 0]]; }
       return [[1, 0, 0], [0, n[2] > 0 ? 1 : -1, 0]];
     }
-    // fraction of power kept by the l <= 8 truncation, for a single beam.
-    // flux power per l = sum_m F_lm^2 ; strain power per l = int dC_AB dC^AB per l
-    //   = 16 sum_m F_lm^2 / [(l-1)l(l+1)(l+2)]   (the strain, not the potential:
-    //   the strain is what a detector reads)
-    function kept(kappa) {
-      var LB = 44, c = cl(kappa, LB, true), fA = 0, fK = 0, mA = 0, mK = 0;
+    // Beam normalisation. The raw pattern exp(k (n.n0 - 1)) integrates over the sphere to
+    // 2 pi (1 - e^{-2k}) / k, NOT to one, so multiplying a beam's weight by this factor is
+    // what turns that weight into an ENERGY FRACTION. It is applied where the page builds
+    // its beams, not inside fluxCoef, so that fluxCoef stays the plain expansion of
+    // sum_j w_j exp(k_j (n.n_j - 1)) and can still be checked against an independent
+    // Legendre implementation.
+    function beamNorm(k) { return k / (2 * Math.PI * (1 - Math.exp(-2 * k))); }
+    // Fraction of power kept by the l <= 8 truncation.
+    //   flux power per l   = sum_m F_lm^2
+    //   memory power per l = int (dC_+^2 + dC_x^2) = (1/2) int dC_AB dC^AB per l
+    //                      = 16 sum_m F_lm^2 / [(l-1)l(l+1)(l+2)]
+    // (the two polarization components of the strain, which is what a detector reads; the
+    //  full contraction int dC_AB dC^AB is twice this, and the ratios below are the same
+    //  either way).  The optional second lobe is exactly antipodal, so Y_lm(-n) =
+    //  (-1)^l Y_lm(n) and the two beams' coefficients add in closed form.
+    function kept(beams) {
+      var LB = 44, fA = 0, fK = 0, mA = 0, mK = 0, cs = [], j;
+      for (j = 0; j < beams.length; j++) cs.push(cl(beams[j].k, LB, true));
       for (var l = 0; l <= LB; l++) {
-        var pw = Math.pow(2 * Math.PI * c[l], 2) * (2 * l + 1) / (4 * Math.PI);
+        var a = 0;
+        for (j = 0; j < beams.length; j++) a += beams[j].w * 2 * Math.PI * cs[j][l] * (j === 0 ? 1 : (l % 2 ? -1 : 1));
+        var pw = a * a * (2 * l + 1) / (4 * Math.PI);
         fA += pw; if (l <= LMAX) fK += pw;
         if (l >= 2) { var d = (l - 1) * l * (l + 1) * (l + 2), mp = pw * 16 / d; mA += mp; if (l <= LMAX) mK += mp; }
       }
-      return { flux: fK / fA, mem: mK / mA };
+      return { flux: fA > 0 ? fK / fA : 0, mem: mA > 0 ? mK / mA : 0 };
     }
-    return { LMAX: LMAX, fluxCoef: fluxCoef, solve: solve, evalC: evalC, hess: hess, frameAt: frameAt, kept: kept };
+    return { LMAX: LMAX, fluxCoef: fluxCoef, solve: solve, evalC: evalC, hess: hess, frameAt: frameAt,
+             kept: kept, beamNorm: beamNorm };
   })();
 
   /* ---------------- the range ---------------- */
@@ -1001,39 +1132,74 @@
   function solveEM() {
     EM.st.bf = S.emB; EM.st.tau = S.emT; EM.st.prof = S.prof;
     var d = dirAzEl(S.emAz, S.emEl), rows = [], worst = 0, maxAbs = 0, panels = 0, gap = 0;
+    var animRes = 0, animGap = 0, animPanels = 0;
     for (var i = 0; i < NDET; i++) {
       var det = DET[i], cth = dot(det.n, d), R = det.R;
-      var closed = EM.dvClosed(cth, R), num = EM.dvNumeric(cth, R);
+      var closed = EM.dvClosed(cth, R), num = EM.dvNumeric(cth, R), tab = EM.tables(cth, R);
       worst = Math.max(worst, Math.abs(num.v - closed));
       panels = Math.max(panels, num.panels); gap = Math.max(gap, num.gap);
+      animRes = Math.max(animRes, tab.res); animGap = Math.max(animGap, tab.gap);
+      animPanels = Math.max(animPanels, tab.N);
       maxAbs = Math.max(maxAbs, Math.abs(closed));
       var p = sub(d, mul(det.n, cth)), pl = len(p);
       rows.push({ i: i, n: det.n, R: R, cth: cth, closed: closed, num: num.v,
                   diff: Math.abs(num.v - closed), pHat: pl > 1e-9 ? mul(p, 1 / pl) : [0, 0, 0],
-                  tab: EM.tables(cth, R) });
+                  tab: tab });
     }
     var NF = 129, flu = new Float64Array(NF), fmax = 0, peak = 0;
     for (var k = 0; k < NF; k++) { flu[k] = EM.fluence(-1 + 2 * k / (NF - 1)); if (flu[k] > fmax) { fmax = flu[k]; peak = -1 + 2 * k / (NF - 1); } }
-    // wavefronts: one sphere per emission time, radius t - s, centred on the source then
-    var sMax = (S.prof === 'one' ? 3.2 : 3.2 + 2.2) * S.emT, shells = [], wmax = 0, NS = 13;
+    // Wavefronts: one sphere per emission time s, of radius t - s, centred on the source
+    // position at that emission time. Each sphere is painted with the INSTANTANEOUS angular
+    // power of the same Lienard-Wiechert field, at its own emission time,
+    //     dP(t')/dOmega  ~  |n x [(n - beta) x betadot]|^2 / (1 - n.beta)^5
+    //                    =  betadot(t')^2 sin^2(theta) / (1 - beta(t') cos theta)^5,
+    // the second form because beta and betadot are parallel here. All shells share ONE
+    // normalisation (the largest value over emission times and angles), so their relative
+    // brightness is the relative angular power and the beaming really does tighten as the
+    // charge speeds up.
+    var sMax = (S.prof === 'one' ? 3.2 : 3.2 + 2.2) * S.emT, shells = [], NS = 13, dPmax = 0;
     for (var j = 0; j < NS; j++) {
-      var s2 = -sMax + 2 * sMax * j / (NS - 1), w = Math.abs(EM.bdotS(s2));
-      shells.push({ s: s2, w: w, c: mul(d, EM.posS(s2)) }); if (w > wmax) wmax = w;
+      var s2 = -sMax + 2 * sMax * j / (NS - 1);
+      var bb = EM.betaS(s2), bdd = EM.bdotS(s2), pk = 0;
+      for (var q = 0; q <= 200; q++) {
+        var cq = -1 + 2 * q / 200, den = 1 - bb * cq;
+        var vq = bdd * bdd * (1 - cq * cq) / (den * den * den * den * den);
+        if (vq > pk) pk = vq;
+      }
+      if (pk > dPmax) dPmax = pk;
+      shells.push({ s: s2, b: bb, bd: bdd, peak: pk, c: mul(d, EM.posS(s2)) });
     }
-    for (var j2 = 0; j2 < NS; j2++) shells[j2].w /= (wmax || 1);
+    dPmax = dPmax || 1;
+    for (var j2 = 0; j2 < NS; j2++) shells[j2].peak /= dPmax;
     SOL = { kind: 'em', rows: rows, worst: worst, maxAbs: maxAbs, panels: panels, gap: gap,
-            flu: flu, NF: NF, fmax: fmax || 1, peakCos: peak, dir: d, shells: shells };
+            animRes: animRes, animGap: animGap, animPanels: animPanels,
+            flu: flu, NF: NF, fmax: fmax || 1, peakCos: peak, dir: d, shells: shells, dPmax: dPmax };
     S.t0 = -EM.spanV(); S.tmax = RMAX + EM.spanV() + 7;
   }
-  function fluAt(cth) {
-    var x = (cth + 1) / 2 * (SOL.NF - 1), i = Math.max(0, Math.min(SOL.NF - 2, Math.floor(x))), f = x - i;
-    return (SOL.flu[i] + f * (SOL.flu[i + 1] - SOL.flu[i])) / SOL.fmax;
+  // the instantaneous angular power of one wavefront, on the common scale set above
+  function emPattern(sh) {
+    var b = sh.b, bd2 = sh.bd * sh.bd, gm = SOL.dPmax;
+    return function (n) {
+      var c = dot(n, SOL.dir), den = 1 - b * c;
+      return bd2 * (1 - c * c) / (den * den * den * den * den) / gm;
+    };
   }
 
   function solveGW() {
+    // The burst carries unit energy, always. Each lobe's SHARE is an energy fraction and the
+    // shares sum to one; the pattern that goes into the solve is that share divided by the
+    // pattern's own integral over the sphere, 2 pi (1 - e^{-2k}) / k. Without that division
+    // the width slider would quietly change how much energy was fired, and every absolute
+    // strain in the ledger with it.
     var d = dirAzEl(S.gwAz, S.gwEl);
-    var beams = [{ n: d, k: S.gwK, w: 1 }];
-    if (S.lobe === 'on') beams.push({ n: mul(d, -1), k: Math.max(3, Math.round(S.gwK * 0.6)), w: 0.55 });
+    var spec = S.lobe === 'on'
+      ? [{ n: d, k: S.gwK, share: 1 / 1.55 },
+         { n: mul(d, -1), k: Math.max(3, Math.round(S.gwK * 0.6)), share: 0.55 / 1.55 }]
+      : [{ n: d, k: S.gwK, share: 1 }];
+    var beams = [];
+    for (var bi = 0; bi < spec.length; bi++)
+      beams.push({ n: spec[bi].n, k: spec[bi].k, w: spec[bi].share * GW.beamNorm(spec[bi].k),
+                   share: spec[bi].share });
     var Phi = GW.solve(GW.fluxCoef(beams));
     var rows = [], maxH = 0, rich = 0;
     for (var i = 0; i < NDET; i++) {
@@ -1042,28 +1208,38 @@
       rich = Math.max(rich, h[2]); maxH = Math.max(maxH, amp);
       rows.push({ i: i, n: det.n, R: det.R, e1: fr[0], e2: fr[1], hp: hp, hx: hx, amp: amp, C11: h[0], C12: h[1] });
     }
-    var axisNull = null, kp = null;
+    var axisNull = null;
     if (beams.length === 1) {
       var fa = GW.frameAt(d), fb = GW.frameAt(mul(d, -1));
       var ha = GW.hess(Phi, d, fa[0], fa[1]), hb = GW.hess(Phi, mul(d, -1), fb[0], fb[1]);
       axisNull = { axis: Math.hypot(ha[0], ha[1]), anti: Math.hypot(hb[0], hb[1]) };
-      kp = GW.kept(S.gwK);
     }
-    var fsum = 0; for (var b = 0; b < beams.length; b++) fsum += beams[b].w;
+    var kp = GW.kept(beams);
+    // total energy actually fired, recomputed from the solve rather than asserted:
+    // int F dOmega = sqrt(4 pi) F_00
+    var F00 = GW.fluxCoef(beams)[0], energy = F00 * Math.sqrt(4 * Math.PI);
+    // brightest point of the drawn pattern, so the wavefront painting is normalised to it
+    var patPeak = 0;
+    for (var pa = 0; pa < beams.length; pa++) {
+      var v = 0;
+      for (var pb = 0; pb < beams.length; pb++)
+        v += beams[pb].w * Math.exp(beams[pb].k * (dot(beams[pa].n, beams[pb].n) - 1));
+      if (v > patPeak) patPeak = v;
+    }
     var shells = [], NS = 13, wmax = 0;
     for (var j = 0; j < NS; j++) {
       var u = -5 + 10 * j / (NS - 1), w = Math.abs(gwNews(u));
       shells.push({ s: u, w: w, c: [0, 0, 0] }); if (w > wmax) wmax = w;
     }
     for (var j2 = 0; j2 < NS; j2++) shells[j2].w /= (wmax || 1);
-    SOL = { kind: 'gw', rows: rows, Phi: Phi, beams: beams, maxH: maxH || 1, fmax: fsum || 1,
-            axisNull: axisNull, kept: kp, rich: rich, dir: d, shells: shells };
+    SOL = { kind: 'gw', rows: rows, Phi: Phi, beams: beams, maxH: maxH || 1, patPeak: patPeak || 1,
+            axisNull: axisNull, kept: kp, rich: rich, dir: d, shells: shells, energy: energy };
     S.t0 = -6; S.tmax = RMAX + 9;
   }
   function fluxAt(n) {
     var s = 0;
     for (var j = 0; j < SOL.beams.length; j++) { var b = SOL.beams[j]; s += b.w * Math.exp(b.k * (dot(n, b.n) - 1)); }
-    return s / SOL.fmax;
+    return s / SOL.patPeak;
   }
   function resolve() { if (S.mode === 'em') solveEM(); else solveGW(); renderLedger(); }
 
@@ -1211,7 +1387,7 @@
       ctx.fillStyle = rgba('--ink-3', 0.9);
       ctx.fillText(String(r2.i + 1), it.p.x + 8, it.p.y - 7);
     }
-    var sp = proj(C, mul(SOL.dir, EM.posS(Math.min(S.t, EM.spanQ()))));
+    var sp = proj(C, mul(SOL.dir, EM.posS(S.t)));   // the closed-form trajectory, unclamped
     if (sp) {
       ctx.fillStyle = rgba('--die', 1);
       ctx.beginPath(); ctx.arc(sp.x, sp.y, 5.2, 0, 6.2832); ctx.fill();
@@ -1268,13 +1444,15 @@
     ctx.clearRect(0, 0, W, H);
     var C = cam();
     drawFrame(C);
-    var pat = S.mode === 'em' ? function (n) { return fluAt(dot(n, SOL.dir)); } : fluxAt;
-    var drawn = 0;
+    var isEM = S.mode === 'em', drawn = 0;
     for (var i = SOL.shells.length - 1; i >= 0 && drawn < 7; i--) {
       var sh = SOL.shells[i], rr = S.t - sh.s;
-      if (rr <= 0 || sh.w < 0.07) continue;
+      var strength = isEM ? sh.peak : sh.w;
+      if (rr <= 0 || strength < 0.05) continue;
       var fade = Math.max(0, 1 - rr / (SCENE * 1.45));
-      drawShell(C, sh.c, rr, pat, 0.62 * sh.w * fade);
+      // EM: each wavefront carries its own instantaneous angular power, on the common scale.
+      // GW: the angular flux pattern of the burst, with the news setting the shell's weight.
+      drawShell(C, sh.c, rr, isEM ? emPattern(sh) : fluxAt, 0.62 * fade * (isEM ? 1 : sh.w));
       drawn++;
     }
     if (S.mode === 'em') drawEM(C); else drawGW(C);
@@ -1318,7 +1496,9 @@
         + frow('the same, relative to the largest kick', ex(SOL.maxAbs > 0 ? SOL.worst / SOL.maxAbs : 0, 3))
         + frow('Simpson panels at convergence', String(SOL.panels))
         + frow('quadrature self-check |I<sub>n</sub> &minus; I<sub>2n</sub>|', ex(SOL.gap, 2))
-        + frow('brightest direction, cos&thinsp;&theta; from the kick axis', SOL.peakCos.toFixed(3))
+        + frow('animated arrow: panels, and its own endpoint residual',
+               String(SOL.animPanels) + ' &nbsp;/&nbsp; ' + ex(SOL.animRes, 2))
+        + frow('brightest direction, cos&thinsp;&theta; from the kick axis (whole pulse)', SOL.peakCos.toFixed(3))
         + '<p class="w5-foot-note"><b>Two genuinely different routes.</b> The closed-form column evaluates the '
         + 'bracket printed above &mdash; it knows the velocity before and after and nothing else. The integrated '
         + 'column is composite Simpson over the detector&rsquo;s own clock, obtained by the exact change of '
@@ -1327,15 +1507,25 @@
         + '&mdash; it integrates the entire history and never uses the endpoint formula. Checked offline over 720 '
         + 'parameter combinations against the closed form: worst relative difference '
         + '<span class="mono">1.7&times;10<sup>&minus;14</sup></span>. '
-        + '<b>Scope.</b> These are the radiative fields. The Coulomb part of the exact field falls as '
-        + '<span class="mono">1/R&sup2;</span>, is not radiative data, and is not in these numbers. '
+        + '<b>The animated arrow.</b> The moving detector is not an eased graphic either: its velocity and '
+        + 'position come from the same displayed field, integrated cumulatively in the source&rsquo;s clock by '
+        + 'composite Simpson with the panel count doubled until the endpoint stops moving in the twelfth digit. '
+        + 'The residual printed above is that table&rsquo;s own endpoint against the closed form. '
+        + '<b>Scope.</b> These are the radiative fields at leading order in '
+        + '<span class="mono">1/R</span> &mdash; the null-infinity limit, with '
+        + '<span class="mono">n&#770;</span> and <span class="mono">R</span> held fixed for each detector. The '
+        + 'Coulomb part of the exact field falls as <span class="mono">1/R&sup2;</span>, is not radiative data, '
+        + 'and is not in these numbers. '
         + '<b>Drawing.</b> Positions and velocity arrows in the picture are magnified to be visible; the ledger '
-        + 'is unscaled. The shell brightness follows the exact angular fluence '
-        + '<span class="mono">dW/d&Omega;</span>, normalised at each instant &mdash; the pattern is physics, the '
-        + 'overall opacity is a drawing choice.</p>';
+        + 'is unscaled. Each wavefront is painted with the <em>instantaneous</em> angular power '
+        + '<span class="mono">dP(t&prime;)/d&Omega;</span> of the same field at that shell&rsquo;s own emission '
+        + 'time, all shells on one common scale &mdash; watch the pattern tighten forward as the charge speeds '
+        + 'up. The &ldquo;brightest direction&rdquo; row above is a different quantity: the whole-pulse fluence '
+        + '<span class="mono">dW/d&Omega;</span>, integrated over the entire kick.</p>';
     } else {
       elLtitle.textContent = 'What each ring kept — the permanent strain, angle by angle';
-      elLsub.innerHTML = 'Burst energy set to 1, constants in front of the flux absorbed; '
+      elLsub.innerHTML = 'Burst energy normalised to 1 &mdash; recomputed from the solve and printed '
+        + 'in the budget above, not merely asserted &mdash; constants in front of the flux absorbed; '
         + '<span class="mono">&#8467; &le; 8</span>. Sorted by the size of the permanent strain.';
       rows.sort(function (a, b) { return b.amp - a.amp; });
       elThead.innerHTML = '<tr><th>detector (&theta;, &phi;)</th><th>r</th><th>angle off beam</th>'
@@ -1362,6 +1552,7 @@
         f += frow('flux power retained at &#8467; &le; 8', (100 * SOL.kept.flux).toFixed(4) + ' %');
         f += frow('memory <em>strain</em> power retained at &#8467; &le; 8', (100 * SOL.kept.mem).toFixed(4) + ' %');
       }
+      f += frow('energy actually fired, &int;F d&Omega; from the solve', SOL.energy.toFixed(12));
       f += frow('Richardson step check |C(&epsilon;) &minus; C(&epsilon;/2)|', ex(SOL.rich, 2));
       f += '<p class="w5-foot-note">'
         + (SOL.axisNull
@@ -1373,20 +1564,44 @@
             : '<b>Two lobes.</b> The axis nulls above are a single-beam statement and no longer apply, so they are '
               + 'not shown. Switch the second lobe off to get them back. ')
         + '<b>Method.</b> Beam coefficients from the closed form '
-        + '<span class="mono">F<sub>&#8467;m</sub> = 2&pi;c<sub>&#8467;</sub>(&kappa;)Y<sub>&#8467;m</sub>(n&#770;<sub>0</sub>)</span>, '
+        + '<span class="mono">F<sub>&#8467;m</sub> = w&thinsp;2&pi;c<sub>&#8467;</sub>(&kappa;)Y<sub>&#8467;m</sub>(n&#770;<sub>0</sub>)</span>, '
         + 'with <span class="mono">c<sub>&#8467;</sub></span> by 64-node Gauss&ndash;Legendre (agrees with the '
-        + 'modified-Bessel closed form to <span class="mono">10<sup>&minus;14</sup></span>). The trace-free second '
+        + 'modified-Bessel closed form to <span class="mono">10<sup>&minus;14</sup></span>), and the weight '
+        + '<span class="mono">w</span> carrying the energy fraction divided by the pattern&rsquo;s own integral '
+        + '<span class="mono">2&pi;(1&minus;e<sup>&minus;2&kappa;</sup>)/&kappa;</span>, which is what keeps the '
+        + 'burst at unit energy while the width slider moves. The trace-free second '
         + 'derivative on the sphere comes from the <span class="mono">m = 2</span> Fourier coefficient of '
         + '<span class="mono">&Phi;</span> on a small geodesic circle, Richardson-extrapolated to fourth order; '
         + 'checked against the analytic <span class="mono">Y<sub>20</sub></span> result, worst absolute error '
         + '<span class="mono">2.7&times;10<sup>&minus;7</sup></span>. '
         + '<b>Drawing.</b> Ring deformations are magnified to be visible; the ledger is unscaled. Shell brightness '
-        + 'follows the exact angular flux pattern and the shell thickness follows the news '
-        + '<span class="mono">&part;<sub>u</sub>C</span> &mdash; the shells you see are the wavefronts that are '
-        + 'actually radiating.</p>';
+        + 'follows the exact angular flux pattern, and the weight of each shell follows the news '
+        + '<span class="mono">&part;<sub>u</sub>C</span>, taken as a central difference of the displayed profile '
+        + 'with step <span class="mono">10<sup>&minus;3</sup></span> &mdash; a drawing weight only, and the '
+        + 'shells you see are the wavefronts that are actually radiating.</p>';
       elFoot.innerHTML = f;
     }
+    renderBudget();
     hookRows();
+  }
+  // the energy budget beside the aim controls: what was fired, how it was split, and how
+  // much of it the l <= 8 truncation keeps. Narrowing the beam moves power between
+  // multipoles; it does not change the size of the shot.
+  function bItem(k, v, fixed) {
+    return '<div class="w5-budget-i' + (fixed ? ' is-fixed' : '') + '"><span>' + k + '</span><b>' + v + '</b></div>';
+  }
+  function renderBudget() {
+    var el = root.querySelector('[data-w5-budget]');
+    if (!el) return;
+    if (!SOL || SOL.kind !== 'gw') { el.innerHTML = ''; return; }
+    var h = '<div class="w5-budget-h">Energy budget of this shot</div>'
+          + bItem('&int;F d&Omega;', SOL.energy.toFixed(9), true);
+    for (var i = 0; i < SOL.beams.length; i++)
+      h += bItem(SOL.beams.length > 1 ? (i ? 'lobe 2 share' : 'lobe 1 share') : 'single lobe share',
+                 (100 * SOL.beams[i].share).toFixed(1) + ' %');
+    h += bItem('flux power at &#8467; &le; 8', (100 * SOL.kept.flux).toFixed(3) + ' %')
+       + bItem('memory power at &#8467; &le; 8', (100 * SOL.kept.mem).toFixed(3) + ' %');
+    el.innerHTML = h;
   }
   function hookRows() {
     var trs = elTbody.querySelectorAll('tr');
@@ -1458,16 +1673,16 @@
         S.running = false; resolve();
         S.t = reduce ? S.tmax : S.t0; if (!reduce) S.running = true;
         if (elScrub) elScrub.value = reduce ? 1000 : 0;
-        draw();
+        draw(); if (S.running) schedule(); else halt();
       });
     })(mbs[mi]);
   }
   var bFire = root.querySelector('[data-w5-fire]');
-  if (bFire) bFire.addEventListener('click', function () { S.t = S.t0; S.running = true; });
+  if (bFire) bFire.addEventListener('click', function () { S.t = S.t0; S.running = true; schedule(); });
   var bReset = root.querySelector('[data-w5-reset]');
-  if (bReset) bReset.addEventListener('click', function () { S.t = S.t0; S.running = false; if (elScrub) elScrub.value = 0; draw(); });
+  if (bReset) bReset.addEventListener('click', function () { S.t = S.t0; S.running = false; halt(); if (elScrub) elScrub.value = 0; draw(); });
   if (elScrub) elScrub.addEventListener('input', function () {
-    S.running = false;
+    S.running = false; halt();
     S.t = S.t0 + (S.tmax - S.t0) * (+elScrub.value) / 1000;
     draw();
   });
@@ -1513,9 +1728,16 @@
     if (elHint) elHint.textContent = 'aimed at azimuth ' + az + '°, elevation ' + el + '° · press Fire';
   }
 
-  /* ---------------- loop ---------------- */
-  var last = null;
+  /* ---------------- loop ----------------
+     A frame is requested only while a shot is actually running and this station is on
+     screen. When the shot ends, or the reader scrolls away, the loop is cancelled rather
+     than left spinning: on an assembled ten-station page there is no idle animation cost. */
+  var last = null, raf = 0, onScreen = true;
+  function busy() { return S.running && !!SOL && onScreen; }
+  function schedule() { if (raf || !busy()) return; last = null; raf = window.requestAnimationFrame(tick); }
+  function halt() { if (raf) { window.cancelAnimationFrame(raf); raf = 0; } }
   function tick(ts) {
+    raf = 0;
     if (last === null) last = ts;
     var dt = Math.min(0.06, (ts - last) / 1000); last = ts;
     if (S.running && SOL) {
@@ -1524,18 +1746,37 @@
       if (elScrub) elScrub.value = Math.round(1000 * (S.t - S.t0) / (S.tmax - S.t0));
       draw();
     }
-    window.requestAnimationFrame(tick);
+    schedule();
   }
-
-  if (cv && window.ResizeObserver) new ResizeObserver(function () { resize(); draw(); }).observe(cv);
-  else window.addEventListener('resize', function () { resize(); draw(); });
+  var roCanvas = null, onWinResize = null;
+  if (cv && window.ResizeObserver) {
+    roCanvas = new ResizeObserver(function () {
+      if (!root.isConnected) { roCanvas.disconnect(); halt(); detachTheme(); return; }
+      resize(); draw();
+    });
+    roCanvas.observe(cv);
+  } else {
+    onWinResize = function () {
+      if (!root.isConnected) { window.removeEventListener('resize', onWinResize); halt(); detachTheme(); return; }
+      resize(); draw();
+    };
+    window.addEventListener('resize', onWinResize);
+  }
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      if (!root.isConnected) { io.disconnect(); halt(); detachTheme(); return; }
+      onScreen = entries[entries.length - 1].isIntersecting;
+      if (onScreen) schedule(); else halt();
+    }, { rootMargin: '160px' });
+    io.observe(root);
+  }
 
   syncOuts(); resize(); resolve();
   S.t = reduce ? S.tmax : S.t0;
   if (elScrub) elScrub.value = reduce ? 1000 : 0;
   S.running = !reduce;
   draw();
-  window.requestAnimationFrame(tick);
+  schedule();
 })();
 </script>
 
@@ -1567,8 +1808,13 @@
   <div class="w8-ctl">
     <label class="w8-knob"><span>beam width &kappa;<b data-w8-o="k">12</b></span>
       <input type="range" data-w8-i="k" min="3" max="45" value="12" step="1"></label>
-    <label class="w8-knob"><span>keep multipoles up to &#8467;<b data-w8-o="L">8</b></span>
+    <label class="w8-knob"><span>multipole &#8467;<b data-w8-o="L">8</b></span>
       <input type="range" data-w8-i="L" min="2" max="8" value="8" step="1"></label>
+    <div class="w8-knob"><span>what the map below is built from</span>
+      <span class="w8-seg" role="group" aria-label="Which multipoles the sky map uses">
+        <button class="btn w8-sp is-on" data-w8-mode="cum" aria-pressed="true">everything up to &#8467;</button>
+        <button class="btn w8-sp" data-w8-mode="one" aria-pressed="false">that &#8467; alone</button>
+      </span></div>
     <div class="w8-readout" data-w8-read></div>
   </div>
 
@@ -1711,6 +1957,10 @@
 #w8 .w8-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
 #w8 .w8-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
 #w8 .w8-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+#w8 .w8-seg { display: inline-flex; }
+#w8 .w8-sp { padding: .3rem .55rem; font-size: 11.5px; white-space: nowrap; }
+#w8 .w8-seg .w8-sp + .w8-sp { border-left: 0; }
+#w8 .w8-sp.is-on { background: var(--accent-tint); color: var(--accent-text); border-color: var(--accent); position: relative; z-index: 1; }
 #w8 .w8-readout { font-family: var(--sans); font-size: 12px; line-height: 1.5; color: var(--ink-2); }
 #w8 .w8-readout b { font-family: var(--mono); color: var(--ink); font-weight: 400; font-variant-numeric: tabular-nums; }
 
@@ -1769,23 +2019,56 @@
   var root = document.getElementById('w8');
   if (!root) return;
 
-  var CACHE = {};
-  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888888'); }
+  /* palette: token names only. A token the host page has not defined is an integration
+     error, reported rather than silently replaced by an invented colour. */
+  var CACHE = {}, INHERIT = null;
+  function inherited() { if (INHERIT === null) INHERIT = getComputedStyle(root).color; return INHERIT; }
+  function missingToken(n) {
+    if (!root.hasAttribute('data-token-error')) root.setAttribute('data-token-error', n);
+    if (window.console && console.warn) console.warn('frag-gw / w8: palette token ' + n
+      + ' is not defined by the host page; falling back to the inherited text colour.');
+  }
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    if (!v) { missingToken(n); v = inherited(); }
+    return (CACHE[n] = v);
+  }
   function rgbOf(n) {
     var h = tok(n);
     if (h.charAt(0) === '#') {
       if (h.length === 4) h = '#' + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
       return [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)];
     }
-    var m = h.match(/-?\d+(\.\d+)?/g); return m ? [+m[0], +m[1], +m[2]] : [136, 136, 136];
+    var m = h.match(/-?\d+(\.\d+)?/g);
+    if (m && m.length >= 3) return [+m[0], +m[1], +m[2]];
+    missingToken(n);
+    var c = inherited().match(/-?\d+(\.\d+)?/g);
+    return c && c.length >= 3 ? [+c[0], +c[1], +c[2]] : [0, 0, 0];
   }
   function rgba(n, a) { var c = rgbOf(n); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
-  function reload() { CACHE = {}; render(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', reload); else if (mq.addListener) mq.addListener(reload);
+  var mqTheme = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var moTheme = null;
+  function detachTheme() {
+    if (moTheme) { moTheme.disconnect(); moTheme = null; }
+    if (mqTheme) {
+      if (mqTheme.removeEventListener) mqTheme.removeEventListener('change', reload);
+      else if (mqTheme.removeListener) mqTheme.removeListener(reload);
+      mqTheme = null;
+    }
   }
-  if (window.MutationObserver) new MutationObserver(reload).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  function reload() {
+    if (!root.isConnected) { detachTheme(); return; }   // a replaced fragment leaks nothing
+    CACHE = {}; INHERIT = null; render();
+  }
+  if (mqTheme) {
+    if (mqTheme.addEventListener) mqTheme.addEventListener('change', reload);
+    else if (mqTheme.addListener) mqTheme.addListener(reload);
+  }
+  if (window.MutationObserver) {
+    moTheme = new MutationObserver(reload);
+    moTheme.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   /* ---------- sphere core (duplicated deliberately: this station stands alone) ---------- */
   var LMAX = 8, K = (LMAX + 1) * (LMAX + 1);
@@ -1869,37 +2152,51 @@
   var dirOf = function (th, ph) { return [Math.sin(th) * Math.cos(ph), Math.sin(th) * Math.sin(ph), Math.cos(th)]; };
 
   /* ---------- state ---------- */
-  var S = { k: 12, L: 8 };
+  var S = { k: 12, L: 8, mode: 'cum' };
   var AXIS = dirOf(0.62, 0.0);       // the beam, fixed here: this station is about l, not aiming
   var MOD = null;
+  // The raw pattern exp(k(n.n0 - 1)) integrates to 2 pi (1 - e^{-2k}) / k over the sphere,
+  // not to one. Dividing by that keeps the burst at unit energy as the width slider moves,
+  // so the absolute strains printed below always refer to the same size of shot.
+  function beamNorm(k) { return k / (2 * Math.PI * (1 - Math.exp(-2 * k))); }
 
   function build() {
-    var c = cl(S.k, LMAX, G64), Y0 = Yat(AXIS);
+    var c = cl(S.k, LMAX, G64), Y0 = Yat(AXIS), NK = beamNorm(S.k);
     var F = new Float64Array(K);
     for (var l = 0; l <= LMAX; l++) {
-      var f = 2 * Math.PI * c[l];
+      var f = NK * 2 * Math.PI * c[l];
       for (var m = -l; m <= l; m++) F[l * l + l + m] = f * Y0[l * l + l + m];
     }
     var Phi = new Float64Array(K), PhiT = new Float64Array(K);
     for (var l2 = 2; l2 <= LMAX; l2++) {
       var d = (l2 - 1) * l2 * (l2 + 1) * (l2 + 2);
+      var use = S.mode === 'one' ? (l2 === S.L) : (l2 <= S.L);
       for (var m2 = -l2; m2 <= l2; m2++) {
         var v = 4 * F[l2 * l2 + l2 + m2] / d;
         Phi[l2 * l2 + l2 + m2] = v;
-        if (l2 <= S.L) PhiT[l2 * l2 + l2 + m2] = v;
+        if (use) PhiT[l2 * l2 + l2 + m2] = v;
       }
     }
-    // gauge: add the l <= 1 translation that makes Phi vanish at the beam and its antipode,
-    // which is the convention the quoted Green's function is written in
+    // Gauge for the colour map only: add the l <= 1 translation that makes the truncated Phi
+    // vanish at the beam and at its antipode. This is a convenient SOURCE-DEPENDENT choice,
+    // not a property of the quoted kernel: the kernel itself vanishes at angular separation
+    // 0 and pi, which forces Phi to vanish at those two points only for a point beam. A beam
+    // of finite width samples nonzero kernel values, so the two conventions agree only in the
+    // point-beam limit. Nothing measurable depends on it: the rings below are the trace-free
+    // second derivative, which annihilates the whole l <= 1 freedom.
     var pA = evalC(PhiT, AXIS), pB = evalC(PhiT, [-AXIS[0], -AXIS[1], -AXIS[2]]);
     var g0 = -(pA + pB) / 2, g1 = -(pA - pB) / 2;
     function PhiG(n) { return evalC(PhiT, n) + g0 + g1 * (n[0] * AXIS[0] + n[1] * AXIS[1] + n[2] * AXIS[2]); }
 
-    // power spectra (exact, single beam): flux ~ (2 pi c_l)^2 (2l+1)/4pi ;
-    // strain norm per l = 2 (l-1)l(l+1)(l+2) Phi_l^2 = 16 F_l^2 / [(l-1)l(l+1)(l+2)]
-    var LB = 44, cB = cl(S.k, LB, G160), spec = [], fT = 0, sT = 0;
+    // power spectra (exact, single beam):
+    //   flux power per l    = sum_m F_lm^2 = (N_k 2 pi c_l)^2 (2l+1)/(4 pi)
+    //   memory power per l  = int (dC_+^2 + dC_x^2) = (1/2) int dC_AB dC^AB
+    //                       = (l-1)l(l+1)(l+2) sum_m Phi_lm^2 = 16 sum_m F_lm^2 / [ same ]
+    // The full contraction int dC_AB dC^AB is exactly twice this; the two polarization
+    // components are what a detector reads, and every ratio below is the same either way.
+    var LB = 44, cB = cl(S.k, LB, G160), spec = [], fT = 0, sT = 0, NK2 = beamNorm(S.k);
     for (var l3 = 0; l3 <= LB; l3++) {
-      var pw = Math.pow(2 * Math.PI * cB[l3], 2) * (2 * l3 + 1) / (4 * Math.PI);
+      var pw = Math.pow(NK2 * 2 * Math.PI * cB[l3], 2) * (2 * l3 + 1) / (4 * Math.PI);
       var D = l3 >= 2 ? (l3 - 1) * l3 * (l3 + 1) * (l3 + 2) : 0;
       var sp = D ? pw * 16 / D : 0;
       spec[l3] = { l: l3, f: pw, s: sp };
@@ -1908,7 +2205,7 @@
     var fK = 0, sK = 0, sKL = 0;
     for (var l4 = 0; l4 <= LB; l4++) {
       if (l4 <= LMAX) { fK += spec[l4].f; sK += spec[l4].s; }
-      if (l4 <= S.L) sKL += spec[l4].s;
+      if (S.mode === 'one' ? l4 === S.L : l4 <= S.L) sKL += spec[l4].s;
     }
     MOD = { Phi: Phi, PhiT: PhiT, PhiG: PhiG, spec: spec, fT: fT, sT: sT,
             fKept: fK / fT, sKept: sK / sT, sKeptL: sKL / sT, LB: LB };
@@ -2032,12 +2329,16 @@
       + frow('memory strain power retained at ℓ ≤ 8', (100 * MOD.sKept).toFixed(4) + ' %')
       + frow('flux power retained at ℓ ≤ 8', (100 * MOD.fKept).toFixed(4) + ' %')
       + '<p class="w8-foot-note"><b>How the two are measured.</b> Flux power per multipole is '
-      + '<span class="mono">&Sigma;<sub>m</sub> F<sub>&#8467;m</sub>&sup2;</span>. Memory-strain power is '
-      + '<span class="mono">&int;&Delta;C<sub>AB</sub>&Delta;C<sup>AB</sup></span> per multipole, which works '
-      + 'out to <span class="mono">16 &Sigma;<sub>m</sub>F<sub>&#8467;m</sub>&sup2; / '
+      + '<span class="mono">&Sigma;<sub>m</sub> F<sub>&#8467;m</sub>&sup2;</span>. Memory-strain power per '
+      + 'multipole is the two polarization components of the permanent shift, '
+      + '<span class="mono">&int;(&Delta;C<sub>+</sub>&sup2; + &Delta;C<sub>&times;</sub>&sup2;) = '
+      + '&frac12;&int;&Delta;C<sub>AB</sub>&Delta;C<sup>AB</sup></span>, which works out to '
+      + '<span class="mono">16 &Sigma;<sub>m</sub>F<sub>&#8467;m</sub>&sup2; / '
       + '[(&#8467;&minus;1)&#8467;(&#8467;+1)(&#8467;+2)]</span> &mdash; the strain itself, not the potential, '
-      + 'because the strain is what a detector reads. Both are exact closed forms for a single beam; '
-      + 'the beam coefficients come from 160-node Gauss&ndash;Legendre out to '
+      + 'because the strain is what a detector reads. (The full contraction '
+      + '<span class="mono">&int;&Delta;C<sub>AB</sub>&Delta;C<sup>AB</sup></span> is exactly twice that; every '
+      + 'share and every percentage on this page is the same either way.) Both are exact closed forms for a '
+      + 'single beam of unit energy; the beam coefficients come from 160-node Gauss&ndash;Legendre out to '
       + '<span class="mono">&#8467; = 44</span> so that the &ldquo;retained&rdquo; percentages have something '
       + 'honest to be a fraction of.</p>';
   }
@@ -2161,15 +2462,21 @@
         frow('largest |&Delta;C| on the grid', gmax.toExponential(4))
       + frow('|&Delta;C| on the beam axis', axisAmp.toExponential(2))
       + frow('|&Delta;C| at the antipode', antiAmp.toExponential(2))
-      + frow('memory strain power captured by ℓ ≤ ' + S.L, (100 * MOD.sKeptL).toFixed(4) + ' %')
+      + frow('memory strain power captured by ' + (S.mode === 'one' ? 'ℓ = ' + S.L + ' alone' : 'ℓ ≤ ' + S.L),
+             (100 * MOD.sKeptL).toFixed(4) + ' %')
       + '<p class="w8-foot-note"><b>Gauge.</b> <span class="mono">&Phi;</span> is fixed by the constraint only '
       + 'up to its <span class="mono">&#8467; = 0</span> and <span class="mono">1</span> parts, which are an '
-      + 'ordinary spacetime translation and produce no strain. The colour map adds exactly the translation that '
-      + 'makes <span class="mono">&Phi;</span> vanish at the beam and at its antipode &mdash; the convention the '
-      + 'quoted Green&rsquo;s function is written in. <b>The rings are gauge-independent</b>: they are the '
-      + 'trace-free second derivative, which annihilates that freedom, so moving the slider changes them only '
-      + 'through the truncation. <b>Drawing.</b> The rings share one magnification, printed nowhere because it '
-      + 'is a drawing choice; their <em>relative</em> sizes and their orientations are the computed answer.</p>';
+      + 'ordinary spacetime translation and produce no strain. The colour map adds the translation that makes '
+      + 'the truncated <span class="mono">&Phi;</span> vanish at the beam and at its antipode. That is a '
+      + 'convenient choice which depends on where you aimed, and it is not something the quoted kernel imposes: '
+      + 'the kernel vanishes at angular separations <span class="mono">0</span> and <span class="mono">&pi;</span>, '
+      + 'which forces the convolution to vanish at those points only for a point beam &mdash; a beam of finite '
+      + 'width samples nonzero kernel values, and the two conventions meet only as '
+      + '<span class="mono">&kappa; &rarr; &infin;</span>. <b>The rings are gauge-independent whatever you '
+      + 'choose</b>: they are the trace-free second derivative, which annihilates that freedom, so the sliders '
+      + 'change them only through the truncation. <b>Drawing.</b> The rings share one magnification, printed '
+      + 'nowhere because it is a drawing choice; their <em>relative</em> sizes and their orientations are the '
+      + 'computed answer.</p>';
   }
 
   /* ---------- the kernel cross-check table ---------- */
@@ -2213,8 +2520,34 @@
       });
     })(ins[i8]);
   }
-  if (window.ResizeObserver && mapC) new ResizeObserver(function () { if (MOD) renderMap(); }).observe(mapC);
-  else window.addEventListener('resize', function () { if (MOD) renderMap(); });
+  var mbs8 = root.querySelectorAll('[data-w8-mode]');
+  for (var m8 = 0; m8 < mbs8.length; m8++) {
+    (function (b) {
+      b.addEventListener('click', function () {
+        S.mode = b.getAttribute('data-w8-mode');
+        for (var j = 0; j < mbs8.length; j++) {
+          var on = mbs8[j] === b;
+          mbs8[j].classList.toggle('is-on', on);
+          mbs8[j].setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+        render();
+      });
+    })(mbs8[m8]);
+  }
+  var roMap = null, onWinResize8 = null;
+  if (window.ResizeObserver && mapC) {
+    roMap = new ResizeObserver(function () {
+      if (!root.isConnected) { roMap.disconnect(); detachTheme(); return; }
+      if (MOD) renderMap();
+    });
+    roMap.observe(mapC);
+  } else {
+    onWinResize8 = function () {
+      if (!root.isConnected) { window.removeEventListener('resize', onWinResize8); detachTheme(); return; }
+      if (MOD) renderMap();
+    };
+    window.addEventListener('resize', onWinResize8);
+  }
   render();
 })();
 </script>
@@ -2270,8 +2603,11 @@
         <div class="w9-part-h"><span class="w9-dot" data-s="keep"></span>
           <span class="w9-part-t">A damped resonance</span>
           <label class="w9-sw"><input type="checkbox" data-w9-c="C" checked><span>add it</span></label></div>
-        <div class="w9-part-eq">\[ iC\!\left[\frac{1}{\omega-\omega_1+i\Gamma}+\frac{1}{\omega+\omega_1+i\Gamma}\right]
+        <div class="w9-part-eq" data-w9-branch="below">\[ iC\!\left[\frac{1}{\omega-\omega_1+i\Gamma}+\frac{1}{\omega+\omega_1+i\Gamma}\right]
           \;\longleftrightarrow\; 2C\,e^{-\Gamma t}\cos(\omega_1 t)\,\theta(t) \]</div>
+        <div class="w9-part-eq" data-w9-branch="above" hidden>\[ iC\!\left[\frac{1}{\omega-\omega_1-i\Gamma}+\frac{1}{\omega+\omega_1-i\Gamma}\right]
+          \;\longleftrightarrow\; -\,2C\,e^{+\Gamma t}\cos(\omega_1 t)\,\theta(-t) \]</div>
+        <div class="w9-branch-note" data-w9-branchnote></div>
         <label class="w9-knob"><span>weight C<b data-w9-o="C">0.60</b></span>
           <input type="range" data-w9-i="C" min="0" max="1.5" value="0.6" step="0.01"></label>
         <label class="w9-knob"><span>frequency &omega;<sub>1</sub><b data-w9-o="w1">2.20</b></span>
@@ -2288,12 +2624,12 @@
         <div class="chart-head">
           <div><div class="chart-title">Where the poles are</div>
             <div class="chart-sub">The complex frequency plane. Marker shape says which part;
-              colour says whether that part lets a late-time limit exist.</div></div>
+              colour says whether that part keeps the response both retarded and settling.</div></div>
           <span class="w9-ptag" data-kind="exact">Exact formula</span>
         </div>
         <div class="w9-legend">
-          <span class="w9-lg"><i data-s="keep"></i>compatible with a late-time limit</span>
-          <span class="w9-lg"><i data-s="die"></i>destroys it</span>
+          <span class="w9-lg"><i data-s="keep"></i>retarded, and settles</span>
+          <span class="w9-lg"><i data-s="die"></i>breaks one of the two hypotheses</span>
         </div>
         <div class="w9-chart-wrap"><svg class="w9-poles" viewBox="0 0 700 300" role="img"
           aria-label="Poles of the assembled response function in the complex frequency plane."></svg></div>
@@ -2322,7 +2658,14 @@
       is the thing it was supposed to equal. The soft factor is a statement about a pole; the
       memory is a statement about a limit; they agree when, and only when, the rest of the
       response settles down.</p>
-    <p>In stations 5 and 8 the hypotheses held, and were checked. It is worth knowing that
+    <p>The last switch breaks something else, and the two are worth keeping apart. Lifting the
+      damped pair above the real axis does <em>not</em> stop the response settling: that term is
+      exactly zero for every positive time, so the late limit still exists and still equals
+      <span class="mono">A</span>. What it destroys is causality &mdash; the whole response moves
+      to before the kick. Whether a singularity sits <em>on</em> the real axis decides whether
+      anything settles; which side of it a singularity sits decides whether the answer arrives
+      after the question.</p>
+    <p>In stations 5 and 8 both hypotheses held, and were checked. It is worth knowing that
       they were doing work.</p>
   </div>
 </section>
@@ -2339,6 +2682,8 @@
 #w9 .w9-part-t { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink); }
 #w9 .w9-part-x { font-family: var(--sans); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-left: auto; }
 #w9 .w9-part-eq { overflow-x: auto; font-size: .82em; margin: -.4rem 0 -.2rem; }
+#w9 .w9-branch-note { font-family: var(--sans); font-size: 11.5px; line-height: 1.45; color: var(--ink-3); margin: .15rem 0 0; }
+#w9 .w9-branch-note b { color: var(--ink-2); font-weight: 600; }
 #w9 .w9-sw { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--sans); font-size: 12px; color: var(--ink-2); cursor: pointer; margin-left: auto; }
 #w9 .w9-sw input { accent-color: var(--accent); width: 14px; height: 14px; }
 #w9 .w9-sw-wide { margin-left: 0; margin-top: .15rem; }
@@ -2389,14 +2734,43 @@
 (function () {
   var root = document.getElementById('w9');
   if (!root) return;
-  var CACHE = {};
-  function tok(n) { if (CACHE[n]) return CACHE[n]; var v = getComputedStyle(root).getPropertyValue(n).trim(); return (CACHE[n] = v || '#888888'); }
-  function reload() { CACHE = {}; render(); }
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mq.addEventListener) mq.addEventListener('change', reload); else if (mq.addListener) mq.addListener(reload);
+  /* palette: token names only; a token the host page has not defined is reported, not
+     replaced by an invented colour. */
+  var CACHE = {}, INHERIT = null;
+  function tok(n) {
+    if (CACHE[n]) return CACHE[n];
+    var v = getComputedStyle(root).getPropertyValue(n).trim();
+    if (!v) {
+      if (!root.hasAttribute('data-token-error')) root.setAttribute('data-token-error', n);
+      if (window.console && console.warn) console.warn('frag-gw / w9: palette token ' + n
+        + ' is not defined by the host page; falling back to the inherited text colour.');
+      if (INHERIT === null) INHERIT = getComputedStyle(root).color;
+      v = INHERIT;
+    }
+    return (CACHE[n] = v);
   }
-  if (window.MutationObserver) new MutationObserver(reload).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  var mqTheme = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var moTheme = null;
+  function detachTheme() {
+    if (moTheme) { moTheme.disconnect(); moTheme = null; }
+    if (mqTheme) {
+      if (mqTheme.removeEventListener) mqTheme.removeEventListener('change', reload);
+      else if (mqTheme.removeListener) mqTheme.removeListener(reload);
+      mqTheme = null;
+    }
+  }
+  function reload() {
+    if (!root.isConnected) { detachTheme(); return; }   // a replaced fragment leaks nothing
+    CACHE = {}; INHERIT = null; render();
+  }
+  if (mqTheme) {
+    if (mqTheme.addEventListener) mqTheme.addEventListener('change', reload);
+    else if (mqTheme.addListener) mqTheme.addListener(reload);
+  }
+  if (window.MutationObserver) {
+    moTheme = new MutationObserver(reload);
+    moTheme.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 
   var S = { A: 1, B: 0.35, w0: 1.6, C: 0.6, w1: 2.2, G: 0.45, onB: false, onC: true, flip: false };
   var NS = 'http://www.w3.org/2000/svg';
@@ -2460,15 +2834,17 @@
       }
       svgP.appendChild(g2);
     }
-    marker('circle', X(0), Y(-0.16), '--keep', 'iA / (ω + i0)', 'just below zero');
-    if (S.onB) {
+    if (S.A !== 0) marker('circle', X(0), Y(-0.16), '--keep', 'iA / (ω + i0)', 'just below zero');
+    else           marker('circle', X(0), Y(-0.16), '--die', 'A = 0', 'no pole here at all');
+    if (S.onB && S.B !== 0) {
       marker('square', X(S.w0), Y(0), '--die', null, null);
-      marker('square', X(-S.w0), Y(0), '--die', 'on the axis', null);
+      marker('square', X(-S.w0), Y(0), '--die', 'on the axis', 'rings for ever');
     }
-    if (S.onC) {
+    if (S.onC && S.C !== 0) {
       var yy = S.flip ? S.G : -S.G, ctk = S.flip ? '--die' : '--keep';
       marker('triangle', X(S.w1), Y(yy), ctk, null, null);
-      marker('triangle', X(-S.w1), Y(yy), ctk, S.flip ? 'above the axis' : 'damped', null);
+      marker('triangle', X(-S.w1), Y(yy), ctk, S.flip ? 'above the axis' : 'damped',
+             S.flip ? 'answers before the kick' : null);
     }
   }
 
@@ -2517,31 +2893,69 @@
   }
 
   function renderVerdict() {
-    var h1ok = true;                                   // one simple pole at zero, retarded
-    var h2ok = !(S.onB && S.B > 0) && !(S.onC && S.C > 0 && S.flip);
-    var settled = h1ok && h2ok;
-    // late value, honestly: the envelope of the last stretch of the curve
+    /* Two independent things are being tested here, and the page used to run them together.
+       (a) DOES THE LATE-TIME LIMIT EXIST?  Only an undamped singularity ON the real axis can
+           destroy it. The damped pair decays for t > 0 whichever half-plane it sits in: moved
+           above the axis its exact inverse transform is −2C e^{+Γt} cos(ω₁t) θ(−t), which is
+           identically zero for every t > 0. So lim f(t) = A still exists and still equals
+           −iω f̃(ω)|_{ω→0}.
+       (b) IS THE RESPONSE RETARDED?  That is what the half-plane decides. A pole above the
+           real axis puts the whole of that term at t < 0: the system answers before it is
+           hit. Nothing about the late-time limit is wrong; the physics is.  */
+    var hasPole   = S.A !== 0;
+    var onAxis    = S.onB && S.B !== 0;                 // an undamped pole on the real axis
+    var advanced  = S.onC && S.C !== 0 && S.flip;       // a pole above the real axis
+    var lateLimit = !onAxis;
+    var causal    = !advanced;
+    var late = f(34), diff = Math.abs(late - S.A);
+    // if the limit is gone, say by how much the curve is still moving at the end
     var vmin = Infinity, vmax = -Infinity;
     for (var i = 0; i <= 400; i++) { var v = f(24 + 10 * i / 400); if (v < vmin) vmin = v; if (v > vmax) vmax = v; }
     var swing = vmax - vmin;
-    var lateTxt = settled ? f(34).toFixed(9) : 'no limit — it swings by ' + swing.toFixed(3) + ' over the last ten units';
-    var acaus = S.onC && S.C > 0 && S.flip;
+    var lateTxt = lateLimit ? late.toFixed(9)
+                            : 'no limit — it swings by ' + swing.toFixed(3) + ' over the last ten units';
+    var state, title;
+    if (!lateLimit) {
+      state = 'no late-time limit';
+      title = 'The response rings for ever. The residue is unchanged; the thing it was equal to is gone.';
+    } else if (!causal) {
+      state = 'settles, but answers early';
+      title = 'The limit still exists and still equals A — but the whole response now sits before the kick, '
+            + 'so it is no longer a retarded response to anything.';
+    } else if (!hasPole) {
+      state = 'the limit exists';
+      title = 'f(t) settles at zero — which is the residue, there being no zero-frequency pole to leave a step.';
+    } else {
+      state = 'the limit exists';
+      title = 'f(t) settles, and it settles on the residue.';
+    }
     elV.innerHTML =
-      '<div class="w9-vhead"><span class="w9-vstate" data-ok="' + (settled ? 1 : 0) + '">'
-      + (settled ? 'the limit exists' : 'no late-time limit') + '</span>'
-      + '<span class="w9-vtitle">' + (settled
-          ? 'f(t) settles, and it settles on the residue.'
-          : (acaus ? 'The response now happens before the kick, and there is nothing left to settle.'
-                   : 'The response rings forever. The residue is unchanged; the thing it was equal to is gone.'))
-      + '</span></div>'
-      + hyp(h1ok, 'One simple pole at ω = 0, approached from below.')
-      + hyp(!(S.onB && S.B > 0), 'No other singularity sits on the real axis.')
-      + hyp(!acaus, 'Every other singularity sits strictly below the real axis.')
+      '<div class="w9-vhead"><span class="w9-vstate" data-ok="' + (lateLimit && causal ? 1 : 0) + '">'
+      + state + '</span><span class="w9-vtitle">' + title + '</span></div>'
+      + hyp(hasPole, hasPole
+            ? 'A simple pole at ω = 0, approached from below, with residue A ≠ 0 — this is the step.'
+            : 'The zero-frequency term has vanished: A = 0, so there is neither a pole nor a step.')
+      + hyp(lateLimit, 'No other singularity sits on the real axis — this is what makes the late-time limit exist.')
+      + hyp(causal, 'Every other singularity sits strictly below the real axis — this is what makes the response retarded.')
       + '<div class="w9-nums">'
       + num('the residue: −iω f̃(ω) as ω → 0', S.A.toFixed(9))
       + num('f(t) at t = 34', lateTxt)
-      + num('difference', settled ? Math.abs(f(34) - S.A).toExponential(2) : '—')
+      + num('difference', lateLimit ? diff.toExponential(2) : '—')
+      + num('support of the response', causal ? 'entirely at t > 0 (retarded)' : 'entirely at t < 0 (advanced)')
       + '</div>';
+    // keep the printed closed form and the branch actually evaluated in step
+    var eqBelow = root.querySelector('[data-w9-branch="below"]');
+    var eqAbove = root.querySelector('[data-w9-branch="above"]');
+    var note = root.querySelector('[data-w9-branchnote]');
+    if (eqBelow) eqBelow.hidden = !!S.flip;
+    if (eqAbove) eqAbove.hidden = !S.flip;
+    if (note) note.innerHTML = S.flip
+      ? '<b>Poles above the axis.</b> Closing the contour the other way sends this term to '
+        + '<span class="mono">t &lt; 0</span> and flips its sign. It is zero for every '
+        + '<span class="mono">t &gt; 0</span>, so it changes nothing about the late-time limit — '
+        + 'what it destroys is causality.'
+      : '<b>Poles below the axis.</b> The term is supported on <span class="mono">t &gt; 0</span> and '
+        + 'decays, so it is invisible both to causality and to the late-time limit.';
   }
   function hyp(ok, txt) { return '<div class="w9-hyp" data-ok="' + (ok ? 1 : 0) + '"><em>' + (ok ? 'holds' : 'broken') + '</em><span>' + txt + '</span></div>'; }
   function num(k, v) { return '<div class="w9-num"><span>' + k + '</span><b>' + v + '</b></div>'; }
@@ -2617,11 +3031,17 @@
       <div class="w10-rung-d">3 + 1</div>
       <div class="w10-rung-b">
         <div class="w10-rung-t">Charges and gravitational waves in flat spacetime <span class="w10-here">you are here</span></div>
-        <p>The setting the triangle was found in. Soft theorems, BMS supertranslations,
-          and the memory effect, connected as above. Everything on this page is either a
-          closed form, a controlled numerical solve of a displayed equation, or a labelled
-          quotation from the lecture notes.</p>
+        <p>The setting the triangle was found in: soft theorems, BMS supertranslations and
+          the memory effect, connected as above, out of established literature.</p>
         <div class="w10-tags"><span class="w10-tag" data-st="known">Established literature</span></div>
+        <details class="w10-scope"><summary>what that rests on, here</summary>
+          <p>Every moving quantity on this page is a closed form, a controlled numerical solve
+            of an equation displayed beside it, or a labelled quotation &mdash; with one
+            deliberate exception, the number&#8209;free schematic that opens station&nbsp;1,
+            which carries the schematic tag. The Ward identity joining the symmetry corner to
+            the soft corner is reported from the lecture notes with its line number; this page
+            does not derive it.</p>
+        </details>
       </div>
     </div>
 
@@ -2629,16 +3049,31 @@
       <div class="w10-rung-d">1 + 1</div>
       <div class="w10-rung-b">
         <div class="w10-rung-t">A lattice of spins</div>
-        <p>Replace null infinity with the two ends of a chain and the radiation field with
-          the chain&rsquo;s own excitations. The soft-index identity &mdash; the lattice
-          statement standing where the soft theorem stands here &mdash; is proved, for every
-          compact symmetry group and on any finite lattice. The memory side is being computed
-          now: ground states and the phase diagram are done and tested, the kink-memory
-          numerics are mid-run, and nothing is claimed about them here.</p>
+        <p>Replace null infinity with the two ends of a chain and the radiation field with the
+          chain&rsquo;s own excitations: on a finite lattice carrying a compact <b>Lie</b>
+          symmetry and a displayed adjoint&#8209;covariant current, the soft&#8209;index
+          identity &mdash; the lattice statement standing where the soft theorem stands here
+          &mdash; is proved, root direction by root direction, while the memory side is
+          mid&#8209;run and nothing is claimed about it.</p>
         <div class="w10-tags">
-          <span class="w10-tag" data-st="proved">Proved — soft-index identity, every compact G</span>
+          <span class="w10-tag" data-st="proved">Proved — soft-index identity, compact Lie G, root sectors</span>
           <span class="w10-tag" data-st="wip">In progress — kink memory</span>
         </div>
+        <details class="w10-scope"><summary>the scope, as recorded in the claims file</summary>
+          <p>The hypotheses are a finite graph or finite periodic lattice, a
+            finite&#8209;dimensional on&#8209;site unitary representation of a compact
+            <em>Lie</em> group, and a displayed complex&#8209;linear adjoint&#8209;covariant
+            current map. The conclusion &mdash; a normalised Ward index equal to exactly one
+            &mdash; is stated for each represented root of the semisimple Lie algebra and each
+            occupied positive coroot&#8209;weight sector. What the row explicitly does
+            <em>not</em> cover: central&#8209;torus directions, which have no root row; finite
+            groups, which have no Lie&#8209;current row; and an arbitrary graph, which supplies
+            no canonical direction or zero mode. On the memory side the ground states and the
+            phase diagram are computed and tested; the kink&#8209;memory numerics are still
+            running, and nothing is claimed about them here.</p>
+          <p class="w10-scope-src">claims/CLAIMS.md, row <span class="mono">S-IDX-fin-G</span>
+            (status proved).</p>
+        </details>
       </div>
     </div>
 
@@ -2646,24 +3081,52 @@
       <div class="w10-rung-d">0 + 1</div>
       <div class="w10-rung-b">
         <div class="w10-rung-t">A pair of black-hole boundary clocks</div>
-        <p>Two boundaries of a nearly-AdS<sub>2</sub> throat, in a thermal state &mdash; the
-          setting where the ruler really is thermal, because the clock and the thing it
-          measures are the same degree of freedom. Here the answers split. A calibrated
-          <em>relational</em> susceptibility does reproduce the DC soft residue at order
-          1/C, and the numerics agree with the closed form to 0.011 per cent. An
-          <em>absolute</em> late-time plateau is simply not there. And the butterfly shift,
-          the obvious candidate for a memory in this system, has no plateau at all: it is a
-          transient time delay, and calling it memory would be wrong.</p>
+        <p>Two boundaries of a nearly&#8209;AdS<sub>2</sub> throat in a thermal state, where the
+          clock and the thing it measures are the same degree of freedom: in the Schwarzian
+          description of an energy&#8209;balanced, synchronised pulse the answers split three
+          ways &mdash; a calibrated <em>relational</em> susceptibility does reproduce the DC
+          soft residue at leading order in 1/C, the corresponding <em>absolute</em> observable
+          has no late plateau at all, and the butterfly frame shift turns out to be a transient
+          delay rather than a memory.</p>
         <div class="w10-tags">
-          <span class="w10-tag" data-st="proved">Proved — relational susceptibility = DC residue</span>
+          <span class="w10-tag" data-st="proved">Proved — relational susceptibility = DC residue, balanced scope</span>
           <span class="w10-tag" data-st="refuted">No — absolute plateau; butterfly shift is not memory</span>
         </div>
+        <details class="w10-scope"><summary>the three scopes, as recorded in the claims file</summary>
+          <p><b>The susceptibility.</b> At leading one&#8209;soft/tree order in 1/C, for a
+            compact energy&#8209;balanced boundary power pulse of fixed width and finite first
+            moment with a single synchronisation event, the large&#8209;C&#8209;first calibrated
+            susceptibility equals, at that order, the &omega;&nbsp;&rarr;&nbsp;0 DC residue of
+            the same invariant bilocal soft attachment. Neither a uniform finite&#8209;C
+            late&#8209;time bound nor practical permanence is claimed, and exact
+            finite&#8209;amplitude equality to a single&#8209;soft vertex is excluded. The
+            campaign&rsquo;s adjudicated numerical statement is narrower than a headline: on the
+            two energy&#8209;balanced rows the extrapolated DC residue agrees with the
+            independently normalised soft vertex to 0.011&nbsp;per cent or better.</p>
+          <p><b>No absolute plateau.</b> For every &Delta;&nbsp;&gt;&nbsp;0, a compact
+            energy&#8209;balanced pulse whose post&#8209;pulse relative M&ouml;bius matrix lies
+            in a nonsingular future chart gives a synchronised same&#8209;energy absolute
+            correlator difference that decays exponentially, so this allowed absolute observable
+            has no nonzero late plateau in the large&#8209;C&#8209;first window &mdash; even
+            where its calibrated ratio approaches a nonzero susceptibility. The generalisation
+            to all profiles beyond the balanced sector is on hold, not proved.</p>
+          <p><b>The butterfly shift.</b> For the pure Shenker&ndash;Stanford horizon translation
+            in the energy&#8209;balanced, synchronised Schwarzian future chart, the calibrated
+            two&#8209;sided delay has zero plateau and decays exponentially in the
+            large&#8209;C&#8209;first late window: the celebrated frame shift is a transient
+            relational time delay, not stationary&#8209;subtracted memory.</p>
+          <p class="w10-scope-src">claims/CLAIMS.md, rows <span class="mono">JT-B-susc</span>,
+            <span class="mono">JT-noplat-abs</span>, <span class="mono">JT-bfly-decay</span>
+            &mdash; all proved in the Schwarzian&#8209;EFT, energy&#8209;balanced scope; the
+            all&#8209;profiles extension of the second is on hold.</p>
+        </details>
       </div>
     </div>
 
-    <p class="w10-ladder-f">Those are the claims as they stand in the repository, with their
-      scopes. Two of them are refusals. That is what a ladder looks like when it is being
-      climbed honestly rather than advertised.</p>
+    <p class="w10-ladder-f">Those are the claims as they stand in the repository, compressed to
+      one sentence each, with their full recorded scopes one click away. Two of the three lower
+      results are refusals. That is what a ladder looks like when it is being climbed honestly
+      rather than advertised.</p>
   </div>
 </section>
 
@@ -2696,7 +3159,9 @@
 #w10 .w10-ladder { margin: 2rem 0 .5rem; border-top: 2px solid var(--ink); padding-top: 1.2rem; }
 #w10 .w10-ladder-h p { font-family: var(--sans); font-size: 13.5px; line-height: 1.6; color: var(--ink-2); margin: .45rem 0 1.1rem; max-width: 42rem; }
 #w10 .w10-rung { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--rule); }
-#w10 .w10-rung.is-here { background: var(--surface-2); padding-left: .9rem; padding-right: .9rem; margin-inline: -.9rem; }
+/* the tinted "you are here" band stays inside its container: a negative inline margin here
+   pushed the document past the viewport at 390 px */
+#w10 .w10-rung.is-here { background: var(--surface-2); padding: 1rem .9rem; }
 #w10 .w10-rung-d { font-family: var(--mono); font-size: 15px; color: var(--accent-text); padding-top: .15rem; }
 #w10 .w10-rung-t { font-family: var(--serif); font-size: 1.06rem; font-weight: 600; color: var(--ink); display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
 #w10 .w10-here { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--accent-text); border: 1px solid var(--accent); padding: .1rem .35rem; }
@@ -2707,6 +3172,15 @@
 #w10 .w10-tag[data-st="wip"]     { border-color: var(--st-sketch);     color: var(--st-sketch); }
 #w10 .w10-tag[data-st="refuted"] { border-color: var(--st-refuted);    color: var(--st-refuted); }
 #w10 .w10-tag[data-st="known"]   { border-color: var(--st-conjecture); color: var(--st-conjecture); }
+#w10 .w10-scope { margin-top: .7rem; border-top: 1px dotted var(--rule); }
+#w10 .w10-scope > summary { cursor: pointer; list-style: none; padding: .5rem 0 .1rem; font-family: var(--sans); font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: .45rem; }
+#w10 .w10-scope > summary::-webkit-details-marker { display: none; }
+#w10 .w10-scope > summary::before { content: "+"; font-family: var(--mono); color: var(--accent-text); }
+#w10 .w10-scope[open] > summary::before { content: "\2212"; }
+#w10 .w10-scope > summary:hover { color: var(--ink-2); }
+#w10 .w10-scope p { font-family: var(--sans); font-size: 12.5px; line-height: 1.6; color: var(--ink-3); margin: .5rem 0 0; max-width: 40rem; }
+#w10 .w10-scope p b { color: var(--ink-2); font-weight: 600; }
+#w10 .w10-scope-src { font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); margin-top: .6rem !important; padding-top: .45rem; border-top: 1px dotted var(--rule); }
 #w10 .w10-ladder-f { font-family: var(--sans); font-size: 13px; line-height: 1.6; color: var(--ink-2); margin-top: 1.1rem; padding-top: .9rem; border-top: 1px solid var(--rule); max-width: 42rem; }
 @media (max-width: 560px) { #w10 .w10-rung { grid-template-columns: 1fr; gap: .25rem; } }
 </style>
