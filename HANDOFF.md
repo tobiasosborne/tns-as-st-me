@@ -2,7 +2,7 @@
 
 # HANDOFF — live state
 
-Updated: 2026-09-03, session 12 (WHY prologue build in flight).
+Updated: 2026-09-03, session 12 (WHY prologue built, critiqued, repaired, published).
 Read order gate: CLAUDE.md → **PRD.md (the process constitution — where it
 conflicts with older habits recorded here or anywhere, PRD WINS)** →
 HANDOFF_MPS_SOFT_THEOREM.md → this file → paper/skeleton.md.
@@ -35,16 +35,41 @@ repair → publish).
   NOT RUN there); it works from Opus agents. Two runner bugs (headers-sent
   crash; W5 anchor string) are being fixed by the EM repair lane.
 - `docs/outreach/critic-frag-em-r1.md` (codex, 14 FATAL + 14 BUGS) →
-  Opus repair r1 IN PROGRESS (tns-as).
+  Opus repair r1 of `frag-em.html`: 27 applied / 1 partial / 0 rejected
+  (W4 exact peak-ring interaction, W2 causal-front labels, verbatim TeX
+  block in a <pre>); harness 52/0.
+- `auditions/ir-triangle-prologue.html` (Opus integrator): masthead +
+  ladder rail + shared styles + both fragments byte-identical (36 blocks),
+  core hoisted, MathJax 3.2.2 + three 0.160.1 pinned (three is dead weight:
+  neither fragment references THREE), Google Fonts stylesheet (ruled
+  compliant by codex). Integrator harness 84/0.
+- `docs/outreach/critic-prologue-r1.md` (codex, "publishable after one
+  focused repair round": 4 FATAL at the trust-test screens — provenance
+  drawer stale numbers, W10 map missing EM stations, universal existence
+  claims, "Exact formula" badge meaning) → Opus repair r1: 4/4 FATAL, 4
+  bugs, all four improvements incl. W5 protagonist detector + two-trace
+  oscilloscope; block identity PASS; harness 89/0. Fragments mirrored.
+- **PUBLISHED (private artifact, own URL):**
+  https://claude.ai/code/artifact/a1a886b1-5ed5-41a7-a2d7-9ec17f71c7ac
+  (507 KB; Part II button links to the Proof Atlas artifact). Republish:
+  same file path from this session, or pass the URL as `url`.
+
+**Open after this session:** tns-i8p format decision still OPEN (TJO);
+tns-04l (core retardedTime absolute tolerance → W6 route three NOT
+COMPUTED at r ≥ 1e4); rail corner-marks vs W10 link-map say different
+things and nothing on the page says so; W10 single highlight colour;
+three.js load is dead weight (drop or use for W4 r2); lower rungs of the
+dimensional ladder (1D spin chain from the campaign's own results, 2D
+toric-code corner, 0+1 SYK/JT) are unbuilt — next build per TJO steer.
 - Lane briefs: BRIEF-em-core.md, BRIEF-frag-gw-qa.md, BRIEF-builder-em.md,
   BRIEF-frag-em-qa.md, BRIEF-integrator.md (ready to launch).
 
-**Resume order if interrupted:** (1) if NOTES-frag-em.md lacks a "Repair
-round r1" section, relaunch the EM repair (prompt = BRIEF-frag-em-qa.md
-report + the rules in this section); (2) Opus integrator per
-BRIEF-integrator.md → `auditions/ir-triangle-prologue.html`; (3) codex
-critic on the assembled page (BRIEF-audition-critic.md pattern, physics
-first); (4) Opus repair; (5) publish as a NEW artifact; commit + push.
+**Build pipeline used (reusable for the lower rungs):** codex physics
+core + node tests → Opus builder (design) → codex critique → Opus repair
+(verify-before-apply) → Opus integrator → codex critique of the whole →
+Opus repair → TJO reads → publish. Briefs: BRIEF-em-core.md,
+BRIEF-builder-em.md, BRIEF-frag-*-qa.md, BRIEF-integrator.md,
+BRIEF-prologue-critic.md.
 
 **Ops:** detached codex lanes via scratchpad `codex/launch.sh <name>`
 (setsid nohup; prompt file on stdin); liveness by `pgrep -f "launch.sh
