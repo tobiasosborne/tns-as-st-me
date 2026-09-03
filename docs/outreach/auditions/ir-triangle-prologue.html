@@ -37,6 +37,14 @@
   from docs/outreach/auditions/prologue/qa-harness.html, which is the environment
   both fragments were repaired and QA'd against. The chrome (top bar, rail,
   provenance) is this page's own; the prologue is not part of the Proof Atlas.
+
+  REPAIR ROUND r1 (docs/outreach/critic-prologue-r1.md). Every in-station change
+  was made in the owning fragment first and copied here, so the fragments and
+  this file agree block by block; the provenance drawer, which is assembly-owned,
+  was corrected here only. A check script asserts after every edit that each of
+  the 36 station blocks is byte-identical to its fragment source and occurs
+  exactly once, and that the hoisted core still hashes to em-core.js. See
+  NOTES-prologue.md, "Repair round r1".
 -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1170,8 +1178,9 @@ window.MathJax = {
         these labels.</p>
       <dl class="mh-tags">
         <div><dt><span class="ptag" data-kind="exact">Exact formula</span></dt>
-          <dd>The closed form is displayed, and it is the expression the page actually
-            evaluates. No fitting, no interpolation.</dd></div>
+          <dd>The displayed closed form is the expression the page actually evaluates.
+            There is no fitting; any finite sampling or display resampling is stated in the
+            figure caption.</dd></div>
         <div><dt><span class="ptag" data-kind="numeric">Controlled numerical solve</span></dt>
           <dd>The displayed equation is solved numerically. The method is named
             (quadrature rule, harmonic truncation, extrapolation order) and the residual
@@ -1315,10 +1324,13 @@ window.MathJax = {
   <div class="body">
     <p>Both endings above are consistent with everything an undergraduate course tells
       you about gravitational waves. Deciding between them is not a matter of taste, and
-      it is not a small technical footnote: the answer is <b>yes, something stays
-      different</b>, the permanent offset is fixed by the energy that flew past, and
-      following that fact carefully is what connects three fields that had no idea they
-      were the same one.</p>
+      it is not a small technical footnote. For a burst with a nonzero memory component
+      the answer is <b>yes, something stays different</b> &mdash; and for the null&#8209;energy
+      burst solved from station&nbsp;5 onwards, the constraint fixes that component from the
+      angular flux. Not every waveform has one: a wave whose news integrates to zero leaves
+      the ring where it found it. Which of the two endings above you get is therefore a
+      question with an answer, and following that answer carefully is what connects three
+      fields that had no idea they were the same one.</p>
 
     <p>So: a wave goes by, things wobble, the wobble stops. Whether anything
       <b>remains</b> different is the whole subject.</p>
@@ -2420,13 +2432,15 @@ window.MathJax = {
     <p>So the classical calculation hands us a number, \(\vec S(\hat n)\), that controls the whole
       low&#8209;frequency end of the radiation and depends on nothing but the momenta going in and out.
       A number of that description already exists in quantum field theory, and it is older. Here is
-      Weinberg&rsquo;s soft photon theorem as the lecture notes write it. The source lines are reproduced
-      first, exactly as they stand in the TeX, and the same equation is set below them with the
-      paper&rsquo;s five abbreviations written out; nothing else is changed.</p>
+      Weinberg&rsquo;s soft photon theorem as the lecture notes write it, set with the paper&rsquo;s five
+      abbreviations written out and nothing else changed. The TeX source is reproduced character for
+      character too, one click away, so that the two can be compared without taking the setting on
+      trust.</p>
   </div>
 
-  <div class="eq w3-quoted">
-    <div class="eq-label">The source, verbatim <span class="w3-ptag" data-kind="quoted">Quoted</span></div>
+  <div class="eq w3-quoted w3-srcblock">
+    <details class="w3-srcd">
+    <summary>Inspect the source &mdash; lines 1075&ndash;1083, character for character<span class="w3-ptag" data-kind="quoted">Quoted</span></summary>
     <div class="w3-srcwrap"><pre class="w3-src mathjax_ignore tex2jax_ignore">1075  The soft photon theorem states that any $\cs$-matrix element with an additional soft ($q^\mu\to0$) photon is equal to the original matrix element multiplied by the soft factor plus corrections of order $q^0$:
 1076  \begin{equation}\label{mft}
 1077  \begin{split} 
@@ -2445,6 +2459,7 @@ window.MathJax = {
       <span class="mono">\cs</span> is <span class="mono">\mathcal{S}</span> (line 228),
       <span class="mono">\co</span> is <span class="mono">\mathcal{O}</span> (line 229) and
       <span class="mono">\ve</span> is <span class="mono">\varepsilon</span> (line 60).</div>
+    </details>
   </div>
 
   <div class="eq w3-quoted">
@@ -2588,6 +2603,15 @@ window.MathJax = {
 #w3 .w3-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
 #w3 .w3-cav { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); margin: 0; max-width: 42rem; }
 #w3 .w3-state { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); border-left: 3px solid var(--st-hold); background: var(--surface); padding: .5rem .7rem; max-width: 42rem; }
+/* The verbatim TeX is audit evidence, not reading matter: it stays in the DOM, and in the
+   reading path it is one click deep so that the forward journey is not nine lines of source. */
+#w3 .w3-srcblock { padding-block: .1rem; }
+#w3 .w3-srcd > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding: .15rem 0 .35rem; }
+#w3 .w3-srcd > summary::-webkit-details-marker { display: none; }
+#w3 .w3-srcd > summary::before { content: "+"; font-family: var(--mono); font-size: 13px; color: var(--accent-text); }
+#w3 .w3-srcd[open] > summary::before { content: "\2212"; }
+#w3 .w3-srcd > summary:hover { color: var(--ink-2); }
+#w3 .w3-srcd > summary .w3-ptag { margin-left: auto; }
 #w3 .w3-srcwrap { overflow-x: auto; border: 1px solid var(--rule-2); background: var(--surface-2); }
 #w3 .w3-src { font-family: var(--mono); font-size: 11.5px; line-height: 1.55; color: var(--ink-2); white-space: pre; padding: .6rem .75rem; display: block; margin: 0; }
 #w3 .w3-nums { display: grid; gap: 0; }
@@ -4055,13 +4079,13 @@ window.MathJax = {
   <!-- ============================ the bench ============================ -->
   <div class="w5-bench">
     <div class="w5-canvas-wrap">
-      <canvas class="w5-canvas" aria-label="Three-dimensional firing range: a source at the centre, an expanding pulse, and detectors at various angles and distances. The ledger table below carries the same information as text."></canvas>
+      <canvas class="w5-canvas" tabindex="0" aria-label="Three-dimensional firing range: a source at the centre, an expanding pulse, and detectors at various angles and distances. Click a detector to follow it; arrow keys step from one to the next. The ledger table below carries the same information as text."></canvas>
       <div class="w5-hud">
         <div class="w5-hud-row"><span class="w5-hud-k">t</span><span class="w5-hud-v" data-w5-t>0.00</span></div>
         <div class="w5-hud-row"><span class="w5-hud-k">shell</span><span class="w5-hud-v" data-w5-shell>0.00</span></div>
         <div class="w5-hud-row" data-w5-hud-extra><span class="w5-hud-k">reached</span><span class="w5-hud-v" data-w5-reached>0 / 0</span></div>
       </div>
-      <div class="w5-hint" data-w5-hint>drag to orbit &middot; click empty space to aim there</div>
+      <div class="w5-hint" data-w5-hint>drag to orbit &middot; click a detector to follow it &middot; click empty space to aim there</div>
       <div class="w5-nogl" data-w5-nogl hidden></div>
     </div>
 
@@ -4110,6 +4134,22 @@ window.MathJax = {
             <button class="btn w5-sp" data-w5-lobe="on" aria-pressed="false">on, opposite side</button>
           </span></label>
         <div class="w5-budget w5-knob-wide" data-w5-budget aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="w5-scope">
+      <div class="chart-head">
+        <div>
+          <div class="chart-title" data-w5-sc-title>One detector at a time</div>
+          <div class="chart-sub" data-w5-sc-sub>Click a detector in the range, or a row in the ledger below, to follow it. With the range focused, &larr; and &rarr; step from one to the next and Escape lets it go.</div>
+        </div>
+        <span class="w5-ptag" data-kind="numeric" data-w5-sc-tag>Controlled numerical solve</span>
+      </div>
+      <div class="w5-scope-body" data-w5-sc-body hidden>
+        <div class="w5-scope-wrap"><svg class="w5-scope-svg" viewBox="0 0 760 320" role="img"
+          data-w5-sc-svg aria-label="Two traces for the followed detector: what it feels moment by moment, and the running integral of that, against the permanent value the closed form predicts."></svg></div>
+        <div class="w5-scope-nums" data-w5-sc-nums></div>
+        <p class="w5-scope-note" data-w5-sc-note></p>
       </div>
     </div>
 
@@ -4176,6 +4216,9 @@ window.MathJax = {
 #w5 .w5-hud-k { font-family: var(--sans); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); min-width: 4rem; }
 #w5 .w5-hud-v { font-family: var(--mono); font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 #w5 .w5-hint { position: absolute; bottom: .55rem; left: .75rem; right: .75rem; font-family: var(--sans); font-size: 11px; color: var(--ink-3); pointer-events: none; }
+/* on a phone the hint wraps to two lines and would sit on top of the detectors, so it
+   drops out of the overlay and takes its own strip under the canvas */
+@media (max-width: 560px) { #w5 .w5-hint { position: static; padding: .45rem .75rem .55rem; } }
 #w5 .w5-nogl { padding: 1.1rem; font-family: var(--sans); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
 
 #w5 .w5-ctl { padding: .85rem 1rem 1rem; border-bottom: 1px solid var(--rule); display: grid; gap: .9rem; }
@@ -4191,8 +4234,10 @@ window.MathJax = {
 
 #w5 .w5-knobs { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .75rem 1.1rem; }
 #w5 .w5-knob { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
-#w5 .w5-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
-#w5 .w5-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+/* Not a flex row: a subscript inside the label became a flex item of its own and drifted
+   into the middle of the line. The label is ordinary inline text and the value floats right. */
+#w5 .w5-knob > span { display: block; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w5 .w5-knob > span b { float: right; margin-left: .5rem; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
 #w5 .w5-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
 #w5 .w5-knob-wide { grid-column: 1 / -1; }
 #w5 .w5-knob-wide > span { display: block; margin-bottom: .15rem; }
@@ -4202,6 +4247,36 @@ window.MathJax = {
 #w5 .w5-budget-i { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); min-width: 0; }
 #w5 .w5-budget-i b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
 #w5 .w5-budget-i.is-fixed b { color: var(--accent-text); }
+
+/* The oscilloscope. Nothing here is a new physical quantity: the upper lane is the field the
+   detector feels, sample by sample, out of the same cumulative table that drives the animated
+   arrow, and the lower lane is that table's running integral against the closed-form endpoint.
+   The station's two data colours keep their page-wide meaning - --die for the radiative signal
+   passing through, --keep for what is retained. */
+#w5 .w5-scope { border-bottom: 1px solid var(--rule); }
+#w5 .w5-scope .chart-head { display: flex; align-items: flex-start; gap: .75rem; flex-wrap: wrap; padding: .85rem 1rem .55rem; }
+#w5 .w5-scope .chart-head > div:first-child { flex: 1 1 12rem; min-width: 0; }
+#w5 .w5-scope-body { border-top: 1px solid var(--rule); }
+#w5 .w5-scope-wrap { overflow-x: auto; padding: .5rem .5rem .2rem; }
+#w5 .w5-scope-svg { display: block; width: 100%; min-width: 20rem; height: auto; }
+#w5 .w5-scope-svg .sc-ax { stroke: var(--rule-2); stroke-width: 1; }
+#w5 .w5-scope-svg .sc-grid { stroke: var(--rule); stroke-width: 1; }
+#w5 .w5-scope-svg .sc-zero { stroke: var(--rule-2); stroke-width: 1; stroke-dasharray: 3 3; }
+#w5 .w5-scope-svg .sc-field { fill: none; stroke: var(--die); stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
+#w5 .w5-scope-svg .sc-cum { fill: none; stroke: var(--keep); stroke-width: 2.1; stroke-linejoin: round; stroke-linecap: round; }
+#w5 .w5-scope-svg .sc-rule { stroke: var(--ink-3); stroke-width: 1.3; stroke-dasharray: 7 4; }
+#w5 .w5-scope-svg .sc-live { fill: var(--accent-tint); }
+#w5 .w5-scope-svg .sc-now { stroke: var(--accent); stroke-width: 1.5; }
+#w5 .w5-scope-svg .sc-lab { font-family: var(--sans); font-size: 11.5px; fill: var(--ink-3); }
+#w5 .w5-scope-svg .sc-lab.is-field { fill: var(--die); font-weight: 600; }
+#w5 .w5-scope-svg .sc-lab.is-cum { fill: var(--keep); font-weight: 600; }
+#w5 .w5-scope-svg .sc-tick { font-family: var(--mono); font-size: 10px; fill: var(--ink-3); }
+#w5 .w5-scope-nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .2rem .9rem; padding: .35rem 1rem .1rem; }
+#w5 .w5-scope-i { display: flex; justify-content: space-between; gap: .6rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); padding: .16rem 0; border-bottom: 1px dotted var(--rule); min-width: 0; }
+#w5 .w5-scope-i b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#w5 .w5-scope-note { font-family: var(--sans); font-size: 12px; line-height: 1.55; color: var(--ink-3); margin: 0; padding: .55rem 1rem .9rem; }
+#w5 .w5-scope-note b { color: var(--ink-2); font-weight: 600; }
+#w5 .w5-canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
 #w5 .w5-ledger .chart-head { display: flex; align-items: flex-start; gap: .75rem; flex-wrap: wrap; padding: .85rem 1rem .55rem; }
 #w5 .w5-ledger .chart-head > div:first-child { flex: 1 1 12rem; min-width: 0; }
@@ -4214,6 +4289,12 @@ window.MathJax = {
 #w5 .w5-table thead th:first-child, #w5 .w5-table tbody td:first-child { text-align: left; }
 #w5 .w5-table tbody td { font-family: var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
 #w5 .w5-table tbody tr:hover td { background: var(--accent-tint); color: var(--ink); }
+#w5 .w5-table tbody tr { cursor: pointer; }
+#w5 .w5-table tbody tr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+/* the followed detector, and the moment its own front is going past it */
+#w5 .w5-table tbody tr.is-sel td { background: var(--accent-tint); color: var(--ink); box-shadow: inset 3px 0 0 0 var(--accent); }
+#w5 .w5-table tbody tr.is-live td { background: var(--surface-2); }
+#w5 .w5-table tbody tr.is-sel.is-live td { background: var(--accent-tint); box-shadow: inset 3px 0 0 0 var(--die); }
 #w5 .w5-table tbody td.num-key { color: var(--ink); }
 #w5 .w5-table .w5-bar { display: block; height: 7px; border-radius: 0 4px 4px 0; background: var(--keep); min-width: 1px; }
 #w5 .w5-table .w5-barcell { width: 8.5rem; }
@@ -4371,10 +4452,12 @@ window.MathJax = {
       var h = (b - a) / N, i, k;
       var T = new Float64Array(N + 1), J = new Float64Array(N + 1), X = new Float64Array(N + 1);
       var fv = new Float64Array(N + 1), gv = new Float64Array(N + 1), jc = new Float64Array(N + 1);
+      var Ev = new Float64Array(N + 1);
       for (i = 0; i <= N; i++) {
         var tp = a + i * h;
         jc[i] = 1 - cth * betaS(tp);
         fv[i] = f(tp);                              // E_perp(t) times dt/dt'
+        Ev[i] = fv[i] / jc[i];                      // E_perp(t) itself, at detector time T[i]
         T[i] = tp + R - posS(tp) * cth;             // leading-1/R retarded map, monotone in t'
       }
       for (k = 2; k <= N; k += 2) J[k] = J[k - 2] + h * (fv[k - 2] + 4 * fv[k - 1] + fv[k]) / 3;
@@ -4382,7 +4465,7 @@ window.MathJax = {
       for (i = 0; i <= N; i++) gv[i] = J[i] * jc[i];   // integrand of int J dt, in t'
       for (k = 2; k <= N; k += 2) X[k] = X[k - 2] + h * (gv[k - 2] + 4 * gv[k - 1] + gv[k]) / 3;
       for (k = 1; k <= N; k += 2) X[k] = X[k - 1] + h * (5 * gv[k - 1] + 8 * gv[k] - gv[k + 1]) / 12;
-      return { t: T, J: J, X: X, N: N };
+      return { t: T, J: J, X: X, E: Ev, N: N };
     }
     function tables(cth, R) {
       var Sp = spanQ(), f = integrand(cth, R), N = 512;
@@ -4579,7 +4662,7 @@ window.MathJax = {
             emAz: 35, emEl: 22, emB: 0.6, emT: 0.6, prof: 'one',
             gwAz: -25, gwEl: 30, gwK: 12, gwA: 0.9, lobe: 'off' };
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var SOL = null, hotIdx = -1;
+  var SOL = null, hotIdx = -1, selIdx = -1;
 
   /* ---------------- GW transient: ramp (permanent) + exactly odd ringing (zero integral) --- */
   var SIGR = 1.0, LAMR = 2.6, SIGW = 1.7;
@@ -4588,6 +4671,48 @@ window.MathJax = {
          + S.gwA * Math.sin(2 * Math.PI * u / LAMR) * Math.exp(-u * u / (2 * SIGW * SIGW));
   }
   function gwNews(u) { var h = 1e-3; return (gwProfile(u + h) - gwProfile(u - h)) / (2 * h); }
+
+  /* ---------------- reading arrival off the tables the station already has ----------------
+     Nothing below computes a new physical quantity. fracTimes walks the cumulative impulse
+     table that already drives the animated arrow and reports the detector times at which
+     the detector has taken up 0.1 %, 5 %, 95 % and 99.9 % of the kick it ends with. Those
+     are the moments the picture and the ledger flash: the front arriving, and the record
+     settling. */
+  function fracTimes(tb) {
+    var N = tb.N, e = Math.abs(tb.J[N]);
+    if (!(e > 0)) return { t5: tb.t[N], t95: tb.t[N], tA: tb.t[0], tB: tb.t[N] };
+    var q, v, t5 = tb.t[N], t95 = tb.t[N], tA = tb.t[0], tB = tb.t[N];
+    var got5 = false, got95 = false, gotA = false;
+    for (q = 0; q <= N; q++) {
+      v = Math.abs(tb.J[q]);
+      if (!gotA && v >= 0.001 * e) { tA = tb.t[q]; gotA = true; }
+      if (!got5 && v >= 0.05 * e) { t5 = tb.t[q]; got5 = true; }
+      if (!got95 && v >= 0.95 * e) { t95 = tb.t[q]; got95 = true; }
+      if (v >= 0.999 * e) { tB = tb.t[q]; break; }
+    }
+    return { t5: t5, t95: t95, tA: tA, tB: tB };
+  }
+  // linear read-off of one of the tables at a detector time; the tables are dense enough
+  // that this is a drawing convenience, and every printed number comes from the table itself
+  function interp(tb, arr, t) {
+    var N = tb.N;
+    if (t <= tb.t[0]) return arr[0];
+    if (t >= tb.t[N]) return arr[N];
+    var lo = 0, hi = N;
+    while (hi - lo > 1) { var m = (lo + hi) >> 1; if (tb.t[m] > t) hi = m; else lo = m; }
+    var f = (t - tb.t[lo]) / ((tb.t[hi] - tb.t[lo]) || 1);
+    return arr[lo] + f * (arr[hi] - arr[lo]);
+  }
+  function rowOf(i) {
+    if (!SOL || i < 0) return null;
+    for (var k = 0; k < SOL.rows.length; k++) if (SOL.rows[k].i === i) return SOL.rows[k];
+    return null;
+  }
+  function isLive(r) {
+    if (!r || !SOL) return false;
+    if (SOL.kind === 'em') return S.t >= r.t5 && S.t <= r.t95;
+    return S.t >= r.R + SOL.u5 && S.t <= r.R + SOL.u95;
+  }
 
   /* ---------------- solves ---------------- */
   function solveEM() {
@@ -4603,9 +4728,12 @@ window.MathJax = {
       animPanels = Math.max(animPanels, tab.N);
       maxAbs = Math.max(maxAbs, Math.abs(closed));
       var p = sub(d, mul(det.n, cth)), pl = len(p);
-      rows.push({ i: i, n: det.n, R: R, cth: cth, closed: closed, num: num.v,
+      var row = { i: i, n: det.n, R: R, cth: cth, closed: closed, num: num.v,
                   diff: Math.abs(num.v - closed), pHat: pl > 1e-9 ? mul(p, 1 / pl) : [0, 0, 0],
-                  tab: tab });
+                  tab: tab };
+      var win = fracTimes(tab);
+      row.t5 = win.t5; row.t95 = win.t95; row.tA = win.tA; row.tB = win.tB;
+      rows.push(row);
     }
     var NF = 129, flu = new Float64Array(NF), fmax = 0, peak = 0;
     for (var k = 0; k < NF; k++) { flu[k] = EM.fluence(-1 + 2 * k / (NF - 1)); if (flu[k] > fmax) { fmax = flu[k]; peak = -1 + 2 * k / (NF - 1); } }
@@ -4675,6 +4803,18 @@ window.MathJax = {
       var ha = GW.hess(Phi, d, fa[0], fa[1]), hb = GW.hess(Phi, mul(d, -1), fb[0], fb[1]);
       axisNull = { axis: Math.hypot(ha[0], ha[1]), anti: Math.hypot(hb[0], hb[1]) };
     }
+    /* The same arrival read-off in the gravitational mode, from the displayed profile: the
+       retarded offsets at which a ring has taken up 5 % of its permanent shift and last falls
+       short of 95 % of it. And the integral of the news over the whole record - the one number
+       the constraint actually fixes - by composite Simpson on the same displayed profile, so
+       that turning the ringing up can be watched leaving it alone. */
+    var u5 = -12, u95 = 12, kq;
+    for (kq = 0; kq <= 2400; kq++) { var uu = -12 + 24 * kq / 2400; if (gwProfile(uu) >= 0.05) { u5 = uu; break; } }
+    for (kq = 2400; kq >= 0; kq--) { var uv = -12 + 24 * kq / 2400; if (gwProfile(uv) < 0.95) { u95 = uv; break; } }
+    var NI = 4096, hI = 32 / NI, newsInt = gwNews(-16) + gwNews(16);
+    for (kq = 1; kq < NI; kq++) newsInt += gwNews(-16 + kq * hI) * (kq % 2 ? 4 : 2);
+    newsInt *= hI / 3;
+
     var kp = GW.kept(beams);
     // total energy actually fired, recomputed from the solve rather than asserted:
     // int F dOmega = sqrt(4 pi) F_00
@@ -4694,7 +4834,8 @@ window.MathJax = {
     }
     for (var j2 = 0; j2 < NS; j2++) shells[j2].w /= (wmax || 1);
     SOL = { kind: 'gw', rows: rows, Phi: Phi, beams: beams, maxH: maxH || 1, patPeak: patPeak || 1,
-            axisNull: axisNull, kept: kp, rich: rich, dir: d, shells: shells, energy: energy };
+            axisNull: axisNull, kept: kp, rich: rich, dir: d, shells: shells, energy: energy,
+            u5: u5, u95: u95, newsInt: newsInt };
     S.t0 = -6; S.tmax = RMAX + 9;
   }
   function fluxAt(n) {
@@ -4702,7 +4843,7 @@ window.MathJax = {
     for (var j = 0; j < SOL.beams.length; j++) { var b = SOL.beams[j]; s += b.w * Math.exp(b.k * (dot(n, b.n) - 1)); }
     return s / SOL.patPeak;
   }
-  function resolve() { if (S.mode === 'em') solveEM(); else solveGW(); renderLedger(); }
+  function resolve() { if (S.mode === 'em') solveEM(); else solveGW(); renderLedger(); buildScope(); }
 
   /* ---------------- camera ---------------- */
   var W = 0, H = 0, DPR = 1;
@@ -4816,7 +4957,8 @@ window.MathJax = {
     items.sort(function (a, b) { return b.p.z - a.p.z; });
     for (var k = 0; k < items.length; k++) {
       var it = items[k], r2 = it.r, g0 = proj(C, it.base);
-      var isHot = r2.i === hotIdx;
+      var isSel = r2.i === selIdx, isHot = isSel || r2.i === hotIdx;
+      var live = isLive(r2);
       if (g0) {
         ctx.strokeStyle = rgba('--ink-3', 0.5); ctx.lineWidth = 1;
         ctx.beginPath(); ctx.arc(g0.x, g0.y, 3, 0, 6.2832); ctx.stroke();
@@ -4824,11 +4966,26 @@ window.MathJax = {
           ctx.strokeStyle = rgba('--ink-3', 0.42);
           ctx.beginPath(); ctx.moveTo(g0.x, g0.y); ctx.lineTo(it.p.x, it.p.y); ctx.stroke();
         }
+        /* the followed detector keeps a ghost of where it was before anything arrived */
+        if (isSel) {
+          ctx.save(); ctx.setLineDash([3, 3]);
+          ctx.strokeStyle = rgba('--ink-3', 0.9); ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.arc(g0.x, g0.y, 7, 0, 6.2832); ctx.stroke(); ctx.restore();
+          ctx.font = '9px ' + tok('--sans'); ctx.textAlign = 'center';
+          ctx.fillStyle = rgba('--ink-3', 0.95);
+          ctx.fillText('before', g0.x, g0.y + 19);
+        }
       }
       var moved = Math.abs(it.J) > 1e-14;
       if (isHot) {
-        ctx.strokeStyle = rgba('--accent', 0.9); ctx.lineWidth = 1.6;
-        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, 11, 0, 6.2832); ctx.stroke();
+        ctx.strokeStyle = rgba('--accent', 0.9); ctx.lineWidth = isSel ? 2.2 : 1.6;
+        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, isSel ? 13 : 11, 0, 6.2832); ctx.stroke();
+      }
+      /* the front is going past this detector right now - the interval between 5 % and 95 %
+         of the impulse it ends with, read off the cumulative table */
+      if (isHot && live) {
+        ctx.strokeStyle = rgba('--die', 0.9); ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, isSel ? 19 : 16, 0, 6.2832); ctx.stroke();
       }
       ctx.fillStyle = moved ? rgba('--keep', 1) : rgba('--ink-3', 0.85);
       ctx.beginPath(); ctx.arc(it.p.x, it.p.y, 4.4, 0, 6.2832); ctx.fill();
@@ -4844,8 +5001,8 @@ window.MathJax = {
           ctx.closePath(); ctx.fillStyle = rgba('--keep', 0.95); ctx.fill();
         }
       }
-      ctx.font = '10px ' + tok('--mono'); ctx.textAlign = 'left';
-      ctx.fillStyle = rgba('--ink-3', 0.9);
+      ctx.font = (isSel ? '600 11px ' : '10px ') + tok('--mono'); ctx.textAlign = 'left';
+      ctx.fillStyle = isSel ? rgba('--accent', 1) : rgba('--ink-3', 0.9);
       ctx.fillText(String(r2.i + 1), it.p.x + 8, it.p.y - 7);
     }
     var sp = proj(C, mul(SOL.dir, EM.posS(S.t)));   // the closed-form trajectory, unclamped
@@ -4868,9 +5025,14 @@ window.MathJax = {
     for (var k = 0; k < items.length; k++) {
       var it = items[k], r2 = it.r, u = S.t - r2.R, g = gwProfile(u);
       var hp = r2.hp * g * gain, hx = r2.hx * g * gain, touched = u > -3.2;
-      if (r2.i === hotIdx) {
-        ctx.strokeStyle = rgba('--accent', 0.85); ctx.lineWidth = 1.6;
-        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, RR * it.p.s * 1.5, 0, 6.2832); ctx.stroke();
+      var isSel = r2.i === selIdx, isHot = isSel || r2.i === hotIdx, live = isLive(r2);
+      if (isHot) {
+        ctx.strokeStyle = rgba('--accent', 0.85); ctx.lineWidth = isSel ? 2.2 : 1.6;
+        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, RR * it.p.s * (isSel ? 1.75 : 1.5), 0, 6.2832); ctx.stroke();
+      }
+      if (isHot && live) {
+        ctx.strokeStyle = rgba('--die', 0.9); ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(it.p.x, it.p.y, RR * it.p.s * (isSel ? 2.35 : 2.05), 0, 6.2832); ctx.stroke();
       }
       ctx.beginPath(); var st1 = false;
       for (var s = 0; s <= NPT; s++) {
@@ -4891,8 +5053,13 @@ window.MathJax = {
         ctx.moveTo(q2.x + rad, q2.y); ctx.arc(q2.x, q2.y, rad, 0, 6.2832);
       }
       ctx.fill();
-      ctx.font = '10px ' + tok('--mono'); ctx.textAlign = 'left';
-      ctx.fillStyle = rgba('--ink-3', 0.9);
+      if (isSel) {
+        ctx.font = '9px ' + tok('--sans'); ctx.textAlign = 'center';
+        ctx.fillStyle = rgba('--ink-3', 0.95);
+        ctx.fillText('dashed: where it started', it.p.x, it.p.y + RR * it.p.s * 1.75 + 14);
+      }
+      ctx.font = (isSel ? '600 11px ' : '10px ') + tok('--mono'); ctx.textAlign = 'left';
+      ctx.fillStyle = isSel ? rgba('--accent', 1) : rgba('--ink-3', 0.9);
       ctx.fillText(String(r2.i + 1), it.p.x + RR * it.p.s + 6, it.p.y - RR * it.p.s * 0.6);
     }
     var sp = proj(C, [0, 0, 0]);
@@ -4924,6 +5091,8 @@ window.MathJax = {
       for (var j = 0; j < SOL.rows.length; j++) if (S.t - SOL.rows[j].R > 0) n++;
       elReached.textContent = n + ' / ' + SOL.rows.length;
     }
+    syncRowStates();
+    updateScopeNow();
   }
 
   /* ---------------- ledger ---------------- */
@@ -4932,6 +5101,7 @@ window.MathJax = {
          + (Math.atan2(n[1], n[0]) / DEG).toFixed(0) + '°';
   }
   function ex(v, d) { return v === 0 ? '0' : v.toExponential(d === undefined ? 6 : d); }
+  function ex2(v, d) { return ex(v, d); }
   function frow(k, v) { return '<div class="w5-foot-row"><span>' + k + '</span><b>' + v + '</b></div>'; }
 
   function renderLedger() {
@@ -5069,10 +5239,216 @@ window.MathJax = {
     for (var i = 0; i < trs.length; i++) {
       (function (tr) {
         var id = +tr.getAttribute('data-i');
+        tr.setAttribute('tabindex', '0');
         tr.addEventListener('mouseenter', function () { hotIdx = id; draw(); });
         tr.addEventListener('mouseleave', function () { hotIdx = -1; draw(); });
+        tr.addEventListener('click', function () { selectDet(id); });
+        tr.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectDet(id); }
+          else if (e.key === 'Escape') { e.preventDefault(); selectDet(-1); }
+        });
       })(trs[i]);
     }
+    syncRowStates();
+  }
+
+  /* ================================================================
+     The oscilloscope for the followed detector.
+     Two lanes, one picture. NOTHING here is a new physical quantity: in the electromagnetic
+     mode both lanes are columns of the cumulative Simpson table that already drives the
+     animated arrow - the upper lane is E_perp at the detector, the lower is its running
+     integral - and the dashed rule is the closed form printed in the ledger, so the moment
+     the curve meets the rule is the two-route agreement happening on screen. In the
+     gravitational mode the lanes are the displayed profile and its news; what the constraint
+     fixes is the endpoint the rule marks, and the printed integral of the news is the check
+     that turning the ringing up does not move it.
+     ================================================================ */
+  var scSvg = root.querySelector('[data-w5-sc-svg]');
+  var scBody = root.querySelector('[data-w5-sc-body]');
+  var scTitle = root.querySelector('[data-w5-sc-title]');
+  var scSub = root.querySelector('[data-w5-sc-sub]');
+  var scNums = root.querySelector('[data-w5-sc-nums]');
+  var scNote = root.querySelector('[data-w5-sc-note]');
+  var scTag = root.querySelector('[data-w5-sc-tag]');
+  var scMap = null, scNow = null;
+  var SC_IDLE = 'Click a detector in the range, or a row in the ledger below, to follow it. '
+              + 'With the range focused, ← and → step from one to the next and Escape lets it go.';
+  function sci(k, v) { return '<div class="w5-scope-i"><span>' + k + '</span><b>' + v + '</b></div>'; }
+  function txt(x, y, cls, anchor, t) {
+    return '<text class="' + cls + '" x="' + x + '" y="' + y + '" text-anchor="' + anchor + '">' + t + '</text>';
+  }
+  function buildScope() {
+    if (!scSvg || !scBody) return;
+    var r = rowOf(selIdx);
+    if (!r) {
+      scBody.hidden = true; scMap = null; scNow = null;
+      if (scTitle) scTitle.textContent = 'One detector at a time';
+      if (scSub) scSub.textContent = SC_IDLE;
+      if (scTag) scTag.hidden = true;
+      return;
+    }
+    scBody.hidden = false;
+    if (scTag) scTag.hidden = false;
+    var em = SOL.kind === 'em';
+    var W = 760, L = 66, RG = 14, aT = 34, aB = 148, bT = 190, bB = 292;
+    var x0, x1, fieldAt, cumAt, ruleVal, fName, cName, N = 480;
+    if (em) {
+      var span = Math.max(1e-9, r.tB - r.tA);
+      x0 = r.tA - 0.35 * span; x1 = r.tB + 0.8 * span;
+      fieldAt = function (t) { return interp(r.tab, r.tab.E, t); };
+      cumAt = function (t) { return interp(r.tab, r.tab.J, t); };
+      ruleVal = r.closed;
+      fName = 'what it feels: E⊥ at the detector';
+      cName = 'what it keeps: ∫ E⊥ dt so far';
+    } else {
+      x0 = r.R - 6.5; x1 = r.R + 9.5;
+      fieldAt = function (t) { return r.C11 * gwNews(t - r.R); };
+      cumAt = function (t) { return r.C11 * gwProfile(t - r.R); };
+      ruleVal = r.C11;
+      fName = 'what it feels: the news r ∂ᵤh₊';
+      cName = 'what it keeps: r h₊ so far';
+    }
+    var i, xs = new Float64Array(N + 1), fa = new Float64Array(N + 1), ca = new Float64Array(N + 1);
+    var fLo = Infinity, fHi = -Infinity, cLo = Infinity, cHi = -Infinity;
+    for (i = 0; i <= N; i++) {
+      var t = x0 + (x1 - x0) * i / N;
+      xs[i] = t;
+      var a1 = fieldAt(t), b1 = cumAt(t);
+      fa[i] = a1; ca[i] = b1;
+      if (a1 < fLo) fLo = a1; if (a1 > fHi) fHi = a1;
+      if (b1 < cLo) cLo = b1; if (b1 > cHi) cHi = b1;
+    }
+    cLo = Math.min(cLo, ruleVal, 0); cHi = Math.max(cHi, ruleVal, 0);
+    fLo = Math.min(fLo, 0); fHi = Math.max(fHi, 0);
+    function pad(lo, hi) {
+      var m = hi - lo;
+      if (!(m > 0)) m = Math.max(1e-30, Math.abs(hi) || 1);
+      return [lo - 0.14 * m, hi + 0.14 * m];
+    }
+    var fp = pad(fLo, fHi), cp = pad(cLo, cHi);
+    var px = function (t) { return L + (W - L - RG) * (t - x0) / ((x1 - x0) || 1); };
+    var pyA = function (v) { return aB - (aB - aT) * (v - fp[0]) / ((fp[1] - fp[0]) || 1); };
+    var pyB = function (v) { return bB - (bB - bT) * (v - cp[0]) / ((cp[1] - cp[0]) || 1); };
+    var d1 = '', d2 = '';
+    for (i = 0; i <= N; i++) {
+      d1 += (i ? 'L' : 'M') + px(xs[i]).toFixed(2) + ' ' + pyA(fa[i]).toFixed(2);
+      d2 += (i ? 'L' : 'M') + px(xs[i]).toFixed(2) + ' ' + pyB(ca[i]).toFixed(2);
+    }
+    var t5 = em ? r.t5 : r.R + SOL.u5, t95 = em ? r.t95 : r.R + SOL.u95;
+    var sx = Math.max(L, px(t5)), ex = Math.min(W - RG, px(t95));
+    var h = '';
+    if (ex > sx) h += '<rect class="sc-live" x="' + sx.toFixed(1) + '" y="' + aT + '" width="'
+                    + (ex - sx).toFixed(1) + '" height="' + (bB - aT) + '"/>';
+    h += '<line class="sc-zero" x1="' + L + '" y1="' + pyA(0).toFixed(1) + '" x2="' + (W - RG) + '" y2="' + pyA(0).toFixed(1) + '"/>';
+    h += '<line class="sc-zero" x1="' + L + '" y1="' + pyB(0).toFixed(1) + '" x2="' + (W - RG) + '" y2="' + pyB(0).toFixed(1) + '"/>';
+    h += '<path class="sc-field" d="' + d1 + '"/>';
+    h += '<path class="sc-cum" d="' + d2 + '"/>';
+    /* over the traces, so that the curve is seen arriving at it rather than hiding it */
+    h += '<line class="sc-rule" x1="' + L + '" y1="' + pyB(ruleVal).toFixed(1) + '" x2="' + (W - RG) + '" y2="' + pyB(ruleVal).toFixed(1) + '"/>';
+    h += '<line class="sc-ax" x1="' + L + '" y1="' + aT + '" x2="' + L + '" y2="' + aB + '"/>';
+    h += '<line class="sc-ax" x1="' + L + '" y1="' + bT + '" x2="' + L + '" y2="' + bB + '"/>';
+    h += '<line class="sc-ax" x1="' + L + '" y1="' + bB + '" x2="' + (W - RG) + '" y2="' + bB + '"/>';
+    h += txt(L + 4, aT - 9, 'sc-lab is-field', 'start', fName);
+    h += txt(L + 4, bT - 9, 'sc-lab is-cum', 'start', cName);
+    h += txt(L - 6, aT + 4, 'sc-tick', 'end', fp[1].toExponential(1));
+    h += txt(L - 6, aB, 'sc-tick', 'end', fp[0].toExponential(1));
+    h += txt(L - 6, bT + 4, 'sc-tick', 'end', cp[1].toExponential(1));
+    h += txt(L - 6, bB, 'sc-tick', 'end', cp[0].toExponential(1));
+    h += txt(W - RG - 6, pyB(ruleVal) - 8, 'sc-lab', 'end',
+             em ? 'closed form, endpoints only' : 'the endpoint the constraint fixes');
+    if (ex > sx + 40) h += txt((sx + ex) / 2, aT - 9, 'sc-lab', 'middle', 'the front is going past');
+    h += txt(L, bB + 16, 'sc-tick', 'start', x0.toFixed(1));
+    h += txt(W - RG, bB + 16, 'sc-tick', 'end', x1.toFixed(1));
+    h += txt((L + W - RG) / 2, bB + 17, 'sc-lab', 'middle', 'detector time t');
+    h += '<line class="sc-now" data-w5-sc-now x1="' + L + '" y1="' + aT + '" x2="' + L + '" y2="' + bB + '"/>';
+    scSvg.innerHTML = h;
+    scNow = scSvg.querySelector('[data-w5-sc-now]');
+    scMap = { x0: x0, x1: x1, px: px, top: aT, bot: bB };
+    updateScopeNow();
+
+    if (scTitle) scTitle.textContent = (em ? 'Test charge ' : 'Ring ') + (r.i + 1)
+      + ' — at ' + ang(r.n) + ', ' + (em ? 'R' : 'r') + ' = ' + r.R.toFixed(2);
+    if (scSub) scSub.textContent = em
+      ? 'The upper lane is the field this one detector feels; the lower lane is the running integral of exactly that lane, and the dashed rule is the closed form, which knows only the two velocities.'
+      : 'The upper lane is the news passing this one ring; the lower lane is the strain it has built up, and the dashed rule is the permanent shift the constraint fixes from the angular flux.';
+    if (scTag) scTag.textContent = em ? 'Controlled numerical solve' : 'Exact formula';
+    if (scNums) {
+      scNums.innerHTML = em
+        ? sci('Δv — closed form', ex2(r.closed, 9))
+          + sci('Δv — integrated', ex2(r.num, 9))
+          + sci('|difference|', ex2(r.diff, 2))
+          + sci('this trace: Simpson panels', String(r.tab.N))
+          + sci('this trace: endpoint residual', ex2(r.tab.res, 2))
+          + sci('5 % → 95 % of the kick, between t =', r.t5.toFixed(2) + ' and ' + r.t95.toFixed(2))
+        : sci('r Δh₊', r.C11.toExponential(4))
+          + sci('r Δhₓ', r.C12.toExponential(4))
+          + sci('permanent |Δh|', r.amp.toExponential(3))
+          + sci('∫N du over the record', SOL.newsInt.toFixed(12))
+          + sci('angle off the beam', (Math.acos(Math.max(-1, Math.min(1, dot(r.n, SOL.dir)))) / DEG).toFixed(0) + '°')
+          + sci('settles between t =', (r.R + SOL.u5).toFixed(2) + ' and ' + (r.R + SOL.u95).toFixed(2));
+    }
+    if (scNote) {
+      scNote.innerHTML = em
+        ? '<b>Why the permanent number survives.</b> The upper lane goes up, comes back and ends at zero: '
+          + 'nothing is left of the field itself. The lower lane is its running integral, and that does not come '
+          + 'back — it walks up to the dashed rule and stays. The rule is the closed form evaluated from the '
+          + 'velocity before and the velocity after, and nothing else; the curve reaching it is the two routes '
+          + 'meeting, to the residual printed above. Change the pulse duration or take the overshoot path and the '
+          + 'upper lane changes completely while the rule does not move. The shaded band is the interval in which '
+          + 'the lower lane goes from 5 % to 95 % of its final value, read off the same table.'
+        : '<b>Why the permanent number survives.</b> The upper lane is the news, and it integrates to the '
+          + 'endpoint of the lower lane — nothing else about the wave enters. The ringing term starts and '
+          + 'ends at zero, so it moves the upper lane a great deal and contributes nothing to the endpoint: turn '
+          + 'the ringing slider and watch the trace ring while the dashed rule stays put. The integral of the news '
+          + 'over the whole record is printed above; the profile is normalised so that it is 1, and that '
+          + 'normalisation is the only thing the constraint fixes. The shaded band is the interval in which the '
+          + 'ring goes from 5 % to 95 % of its permanent shift.';
+    }
+  }
+  function updateScopeNow() {
+    if (!scMap || !scNow) return;
+    var inside = S.t >= scMap.x0 && S.t <= scMap.x1;
+    var x = scMap.px(Math.max(scMap.x0, Math.min(scMap.x1, S.t))).toFixed(1);
+    scNow.setAttribute('x1', x); scNow.setAttribute('x2', x);
+    scNow.setAttribute('opacity', inside ? '1' : '0.25');
+  }
+  /* the followed row, and the rows whose own front is going past right now */
+  var liveKey = '';
+  function syncRowStates() {
+    if (!elTbody || !SOL) return;
+    var trs = elTbody.querySelectorAll('tr'), i, key = selIdx + '|';
+    for (i = 0; i < trs.length; i++) key += isLive(rowOf(+trs[i].getAttribute('data-i'))) ? '1' : '0';
+    if (key === liveKey) return;
+    liveKey = key;
+    for (i = 0; i < trs.length; i++) {
+      var id = +trs[i].getAttribute('data-i');
+      trs[i].classList.toggle('is-sel', id === selIdx);
+      trs[i].classList.toggle('is-live', isLive(rowOf(id)));
+    }
+  }
+  function selectDet(i) {
+    selIdx = (i < 0 || i === selIdx) ? -1 : i;
+    liveKey = '';
+    buildScope(); syncRowStates(); draw();
+    if (elHint) elHint.textContent = selIdx >= 0
+      ? ('following detector ' + (selIdx + 1) + ' · ← → step · Escape lets go')
+      : 'drag to orbit · click a detector to follow it · click empty space to aim there';
+  }
+  function stepDet(d) {
+    var base = selIdx < 0 ? (d > 0 ? -1 : 0) : selIdx;
+    selIdx = -1;                       // so selectDet does not read the step as a toggle
+    selectDet(((base + d) % NDET + NDET) % NDET);
+  }
+  function pickDetector(px2, py2) {
+    if (!SOL || !ctx) return -1;
+    var C = cam(), best = -1, bd = 26;
+    for (var i = 0; i < SOL.rows.length; i++) {
+      var r = SOL.rows[i], p = proj(C, mul(r.n, r.R));
+      if (!p) continue;
+      var d = Math.hypot(p.x - px2, p.y - py2);
+      if (d < bd) { bd = d; best = r.i; }
+    }
+    return best;
   }
 
   /* ---------------- controls ---------------- */
@@ -5164,7 +5540,21 @@ window.MathJax = {
       drag.x = e.clientX; drag.y = e.clientY;
       draw();
     });
-    cv.addEventListener('pointerup', function (e) { if (drag && drag.moved < 5) aimAt(e); drag = null; });
+    cv.addEventListener('pointerup', function (e) {
+      if (drag && drag.moved < 5) {
+        var rc = cv.getBoundingClientRect();
+        var hit = pickDetector(e.clientX - rc.left, e.clientY - rc.top);
+        if (hit >= 0) { selectDet(hit); if (cv.focus) cv.focus(); } else aimAt(e);
+      }
+      drag = null;
+    });
+    cv.addEventListener('keydown', function (e) {
+      var k = e.key;
+      if (k === 'Escape') { e.preventDefault(); selectDet(-1); }
+      else if (k === 'ArrowRight' || k === 'ArrowDown') { e.preventDefault(); stepDet(1); }
+      else if (k === 'ArrowLeft' || k === 'ArrowUp') { e.preventDefault(); stepDet(-1); }
+      else if (k === 'Enter' || k === ' ') { e.preventDefault(); if (selIdx < 0) stepDet(1); else selectDet(-1); }
+    });
     cv.addEventListener('pointercancel', function () { drag = null; });
     cv.addEventListener('wheel', function (e) {
       e.preventDefault();
@@ -5281,7 +5671,14 @@ window.MathJax = {
       the source charge and the test particle&rsquo;s \(q_{\text{test}}/m_{\text{test}}\) are stripped out,
       so to get a velocity kick in ordinary units you multiply back by \(q\,q_{\text{test}}/m_{\text{test}}\)
       and divide by \(r\). This is the leading transverse radiation-order integral and nothing else; it is
-      <b>not</b> the finite&#8209;window integral of the full electric field, which also contains the drift.</div>
+      <b>not</b> the finite&#8209;window integral of the full electric field, which also contains the drift.
+      <b>One vector, three names.</b> \(\vec{\mathcal N}\) is the same transverse endpoint vector that
+      station&nbsp;3 and station&nbsp;4 call \(\vec S\); station&nbsp;7 calls it \(\vec{\mathcal M}\)
+      to follow the notation of the constraint it quotes. So \(\vec{\mathcal N}\equiv\vec S\equiv\vec{\mathcal M}\)
+      on this page &mdash; each station keeps the letter its own source uses, and the closed forms displayed
+      at all three are the same expression. The one relation that is <em>not</em> an identity of names is the
+      projection printed at station&nbsp;3, \(\vec S\cdot\vec\varepsilon=-S_{\rm cl}\), which carries a
+      genuine sign.</div>
   </div>
 
   <div class="body">
@@ -7208,8 +7605,8 @@ window.MathJax = {
     <div class="w9-parts">
       <div class="w9-part is-locked">
         <div class="w9-part-h"><span class="w9-dot" data-s="keep"></span>
-          <span class="w9-part-t">A simple pole at zero</span>
-          <span class="w9-part-x">always on</span></div>
+          <span class="w9-part-t">The zero-frequency term</span>
+          <span class="w9-part-x">coefficient A</span></div>
         <div class="w9-part-eq">\[ \frac{iA}{\omega+i0}\;\longleftrightarrow\;A\,\theta(t) \]</div>
         <label class="w9-knob"><span>residue A<b data-w9-o="A">1.00</b></span>
           <input type="range" data-w9-i="A" min="-2" max="2" value="1" step="0.05"></label>
@@ -7300,7 +7697,11 @@ window.MathJax = {
 
 <style data-station="w9">
 #w9 .w9-bench { margin: 1.6rem 0 1.5rem; display: grid; gap: 1.1rem; }
-#w9 .w9-parts { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+/* One card per row. The three formulas want about 371 px and the auto-fit track gave them
+   about 356 px at 1300 px, so every card opened with a cut-off right edge; the reader met
+   an equation that looked truncated before discovering the scroller. The scroller stays for
+   genuinely narrow screens. */
+#w9 .w9-parts { display: grid; gap: .8rem; grid-template-columns: minmax(0, 1fr); }
 #w9 .w9-part { border: 1px solid var(--rule); background: var(--surface); padding: .8rem .9rem .9rem; display: flex; flex-direction: column; gap: .45rem; min-width: 0; }
 #w9 .w9-part.is-locked { border-color: var(--accent); }
 #w9 .w9-part-h { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
@@ -7317,8 +7718,9 @@ window.MathJax = {
 #w9 .w9-sw-wide { margin-left: 0; margin-top: .15rem; }
 #w9 .w9-sw-wide b { color: var(--ink); }
 #w9 .w9-knob { display: flex; flex-direction: column; gap: .2rem; }
-#w9 .w9-knob > span { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
-#w9 .w9-knob > span b { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
+/* see the note in station 5: a subscript in a flex label becomes its own flex item */
+#w9 .w9-knob > span { display: block; font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); }
+#w9 .w9-knob > span b { float: right; margin-left: .5rem; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink); font-variant-numeric: tabular-nums; }
 #w9 .w9-knob input[type="range"] { width: 100%; accent-color: var(--accent); }
 
 #w9 .w9-figs { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); }
@@ -7627,13 +8029,14 @@ window.MathJax = {
 
   <div class="body">
     <p class="lede">Here is the picture the whole page was assembling. Three corners, three
-      edges. Every one of them is something you have now watched happen, except one, which
-      is reported rather than derived and is labelled as such.</p>
-    <p>Click a corner or an edge.</p>
+      edges. Every panel points back to what this page actually earned. Station&nbsp;7 exhibits
+      the conservation&#8209;law content of the symmetry corner; the symmetry&ndash;soft Ward
+      identity is reported from the source rather than derived here.</p>
+    <p>Click a corner or an edge. The stations it lights up are the ones that showed it.</p>
   </div>
 
   <div class="w10-map">
-    <svg class="w10-svg" viewBox="0 0 700 400" role="img"
+    <svg class="w10-svg" viewBox="-16 0 732 400" role="img"
          aria-label="The infrared triangle: three corners — soft theorems, asymptotic symmetries, memory — joined by three edges. The panel underneath describes whichever element is selected."></svg>
     <div class="w10-panel" data-w10-panel aria-live="polite"></div>
   </div>
@@ -7783,9 +8186,11 @@ window.MathJax = {
 #w10 .w10-pb + .w10-pb { margin-top: .6rem; }
 #w10 .w10-pq { margin: .75rem 0 .2rem; padding-left: 1rem; border-left: 2px solid var(--rule-2); font-family: var(--serif); font-style: italic; font-size: 14.5px; line-height: 1.55; color: var(--ink); }
 #w10 .w10-psrc { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); margin-top: .4rem; }
-#w10 .w10-pw { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .7rem; }
-#w10 .w10-pw a { font-family: var(--sans); font-size: 12px; text-decoration: none; border: 1px solid var(--rule-2); padding: .2rem .5rem; color: var(--ink-2); }
-#w10 .w10-pw a:hover { border-color: var(--accent); color: var(--accent-text); background: var(--accent-tint); }
+#w10 .w10-pw { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem; align-items: center; padding-top: .7rem; border-top: 1px dotted var(--rule); }
+#w10 .w10-pwl { font-family: var(--sans); font-size: 10.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+/* lit in the same accent the selected node box or edge has taken in the drawing above */
+#w10 .w10-pw a { font-family: var(--sans); font-size: 12px; text-decoration: none; border: 1px solid var(--accent); background: var(--accent-tint); padding: .2rem .5rem; color: var(--accent-text); }
+#w10 .w10-pw a:hover, #w10 .w10-pw a:focus-visible { background: var(--accent); color: var(--surface); border-color: var(--accent); }
 
 #w10 .w10-ladder { margin: 2rem 0 .5rem; border-top: 2px solid var(--ink); padding-top: 1.2rem; }
 #w10 .w10-ladder-h p { font-family: var(--sans); font-size: 13.5px; line-height: 1.6; color: var(--ink-2); margin: .45rem 0 1.1rem; max-width: 42rem; }
@@ -7829,30 +8234,31 @@ window.MathJax = {
 
   var CONTENT = {
     S: { kind: 'Corner', title: 'Soft theorems',
-      body: ['Take any scattering amplitude and add one massless particle whose energy you send to zero. The amplitude does not go to a generic limit: it develops a pole, and the coefficient of that pole is fixed entirely by the momenta and charges of the particles that were already there. Nothing about the interaction enters.',
-             'On this page the classical version of that coefficient is what station 5&rsquo;s closed-form column computes, one detector at a time.'],
-      where: [['w5', 'Station 5 — the range']] },
+      body: ['In QED, take a scattering amplitude, add one outgoing photon and send its energy to zero. The amplitude does not go to a generic limit: it develops a pole, and the coefficient of that pole is fixed entirely by the momenta and charges of the particles that were already there. Nothing about the interaction enters. That is the statement station 3 quotes from the lecture notes, line by line; the analogous statements for other massless species are not what is displayed on this page.',
+             'The classical coefficient behind it is built up in three steps here. Station 3 extracts it from one kick as the plateau of the spectrum and prints it beside Weinberg&rsquo;s bracket; station 4 paints the whole angular pattern of a many-particle event on the sphere, ring by ring, with its exact forward zero; and station 5&rsquo;s closed-form column evaluates the same coefficient one detector at a time. Station 2 is where the object it describes first becomes visible at all.'],
+      where: [['w2', 'Station 2 — the shell that carries it'], ['w3', 'Station 3 — the pole, and its coefficient'], ['w4', 'Station 4 — the pattern on the sphere'], ['w5', 'Station 5 — detector by detector']] },
     A: { kind: 'Corner', title: 'Asymptotic symmetries',
       body: ['Far from everything, a gauge theory or a theory of gravity has more exact symmetry than the Poincaré group. There is one conserved charge for every direction on the sphere at infinity — infinitely many conservation laws where you expected ten.',
-             'This page does not derive them. Station 7 exhibits the electromagnetic version as a ledger that balances angle by angle.'],
-      where: [] },
+             'This page does not derive them. Station 7 exhibits the electromagnetic version as a ledger that balances angle by angle, and it is the only station that does.'],
+      where: [['w7', 'Station 7 — one conservation law per angle']] },
     M: { kind: 'Corner', title: 'The memory effect',
-      body: ['After radiation has passed, free detectors do not return to where they started. The permanent offset is fixed by the energy that went past, direction by direction, through the constraint quoted at station 5.',
-             'This is the corner you can actually build an instrument for, and the corner this page spends the most time in: stations 1, 5 and 8.'],
-      where: [['w1', 'Station 1 — the question'], ['w5', 'Station 5 — the range'], ['w8', 'Station 8 — multipole by multipole']] },
+      body: ['After a burst with a nonzero memory component, free detectors can fail to return to where they started. The permanent offset is fixed by the energy that went past, direction by direction, through the constraint quoted at station 5. A waveform whose news integrates to zero leaves nothing behind, and the constraint is what decides which is which.',
+             'This is the corner you can actually build an instrument for, and the corner this page spends the most time in: station 5 fires at a range of detectors, station 6 computes the electromagnetic offset twice by different routes, and station 8 takes the gravitational one apart harmonic by harmonic. Station 1 only poses the question, with a hand-drawn waveform and no numbers.'],
+      where: [['w5', 'Station 5 — the range'], ['w6', 'Station 6 — the offset, twice'], ['w8', 'Station 8 — multipole by multipole'], ['w1', 'Station 1 — the question (schematic setup)']] },
     SM: { kind: 'Edge', title: 'Soft theorem ⟷ memory: a Fourier transform',
-      body: ['A pole at zero frequency is a step in time. That is the entire edge, and it is the one this page can show you rather than assert: station 5 computes the same number twice, once as a residue that knows only the endpoints and once as an integral over the whole history, and prints the disagreement.',
+      body: ['A pole at zero frequency is a step in time. That is the entire edge, and it is the one this page can show you rather than assert. Station 6 is the identity on its own: the same number by quadrature of the whole time history and by the ω → 0 closed form, printed to twelve figures with their difference. Station 5 does it again, fifteen times over, once per detector.',
              'Station 9 is where the hypotheses live. The edge holds when the rest of the response settles; break that and the residue survives while the limit does not.'],
-      where: [['w5', 'Station 5 — two routes, one number'], ['w9', 'Station 9 — the hypotheses']] },
+      where: [['w6', 'Station 6 — two routes, one number'], ['w5', 'Station 5 — the same, per detector'], ['w9', 'Station 9 — the hypotheses']] },
     AM: { kind: 'Edge', title: 'Symmetry ⟷ memory: the shift is the symmetry',
       body: ['The geometry before the burst and the geometry after are both flat, and they are related by one of the asymptotic symmetries. The permanent shift a ring of masses records is that symmetry transformation, made visible. The function Φ solved for at stations 5 and 8 is exactly the supertranslation relating the two vacua.',
-             'This is why the memory effect is not just a curiosity: it is the only corner of the triangle you can put in a detector.'],
-      where: [['w8', 'Station 8 — the map of Φ']] },
+             'The electromagnetic version of the same statement is station 7&rsquo;s ledger: the change in the Coulombic profile at each angle is the sphere divergence of the memory vector at that angle. That is a local identity at null infinity, and the station is explicit that the conservation law <em>across</em> null infinity needs the antipodal identification as well.'],
+      where: [['w7', 'Station 7 — the constraint, angle by angle'], ['w8', 'Station 8 — the map of Φ']] },
     AS: { kind: 'Edge', title: 'Symmetry ⟷ soft theorem: a Ward identity',
-      body: ['Every symmetry has a Ward identity relating amplitudes of symmetry-related states. For these asymptotic symmetries, that Ward identity <em>is</em> the soft theorem. This page reports that result; it does not derive it, and it should not be read as having shown it.'],
+      body: ['Every symmetry has a Ward identity relating amplitudes of symmetry-related states. For these asymptotic symmetries, that Ward identity <em>is</em> the soft theorem. This page reports that result; it does not derive it, and it should not be read as having shown it.',
+             'What it does exhibit is the conservation law the identity would be the quantum statement of: station 7 balances it angle by angle for the kicked charge.'],
       quote: 'The standard soft photon formula reduces to the Ward identity following from invariance under large gauge symmetries, or equivalently, the matrix element of the charge conservation law. This establishes the central result connecting the soft photon theorem to the large gauge symmetry of electromagnetism.',
       src: 'soft_Arxiv_update.tex:1064 — quoted, reported, not derived here',
-      where: [] }
+      where: [['w7', 'Station 7 — the conservation law, exhibited']] }
   };
 
   var groups = {};
@@ -7902,11 +8308,15 @@ window.MathJax = {
     for (var i = 0; i < c.body.length; i++) html += '<p class="w10-pb">' + c.body[i] + '</p>';
     if (c.quote) html += '<div class="w10-pq">&ldquo;' + c.quote + '&rdquo;</div><div class="w10-psrc">' + c.src + '</div>';
     if (c.where && c.where.length) {
-      html += '<div class="w10-pw">';
-      for (var j = 0; j < c.where.length; j++) html += '<a href="#' + c.where[j][0] + '">' + c.where[j][1] + '</a>';
+      /* The index is illuminated: the chips carry the same accent border and tint that the
+         selected node box or edge has just taken in the drawing, so the element you clicked
+         and the stations that showed it read as one object. */
+      html += '<div class="w10-pw"><span class="w10-pwl">' + (c.kind === 'Edge' ? 'this edge is shown at' : 'this corner is shown at') + '</span>';
+      for (var j = 0; j < c.where.length; j++) html += '<a class="w10-chip" href="#' + c.where[j][0] + '">' + c.where[j][1] + '</a>';
       html += '</div>';
     }
     panel.innerHTML = html;
+    panel.setAttribute('data-w10-on', key);
   }
   select('M');
 })();
@@ -8071,7 +8481,7 @@ window.MathJax = {
         <tr><td class="k">W4</td><td><span class="mono">spherePattern</span> vs the sum over two explicit orthonormal polarizations</td><td class="n">5.33e&#8209;15</td></tr>
         <tr><td class="k">W6</td><td>memory by quadrature vs the closed form, relative</td><td class="n">1.21e&#8209;16</td></tr>
         <tr><td class="k">W6</td><td>the same, at 1 / 2 / 4 panels</td><td class="n">2.72e&#8209;9 / 2.88e&#8209;12 / 0</td></tr>
-        <tr><td class="k">W6</td><td>finite&#8209;r route: (relative difference) &times; r at r = 10&sup2;&hellip;10&#8309;</td><td class="n">0.004854 / 0.004853 / 0.004853 / 0.004850</td></tr>
+        <tr><td class="k">W6</td><td>finite&#8209;r route: (full&#8209;vector relative difference) &times; r at r = 10&sup2;&hellip;10&#8309;</td><td class="n">0.005001 / 0.005000 / 0.005000 / 0.004999</td></tr>
         <tr><td class="k">W7</td><td>closed&#8209;form ledger vs the five&#8209;point sphere divergence, h = 1e&#8209;4</td><td class="n">2.17e&#8209;12</td></tr>
         <tr><td class="k">W7</td><td>|n&#770;_past + n&#770;_future|</td><td class="n">0</td></tr>
       </tbody>
@@ -8079,10 +8489,12 @@ window.MathJax = {
     <p>The W2 residual measures the drawing, not the physics: it is the RK4 streamline&rsquo;s
       discretisation, and halving the arclength step divides it by about four over five
       halvings (2.914e&#8209;3, 5.139e&#8209;4, 1.217e&#8209;4 at the shipped step, 3.367e&#8209;5,
-      7.258e&#8209;6, 2.049e&#8209;6). The W3 gap of 2.5e&#8209;8 is not quadrature error either:
-      it does not move when the panel count is raised eightfold, and it falls in exact
-      proportion to &omega;. It is the first physical correction in &omega;&tau;, and the
-      figure caption says so.</p>
+      7.258e&#8209;6, 2.049e&#8209;6). The W3 gap is physical rather than quadrature error &mdash;
+      it does not move when the panel count is raised eightfold. At the opening settings it is
+      2.52e&#8209;8, 2.52e&#8209;10, 2.52e&#8209;12 at &omega; = 10&#8315;&sup2;, 10&#8315;&sup3;,
+      10&#8315;&#8308;; it therefore falls as &omega;&sup2;, and the leading correction is
+      O((&omega;&tau;)&sup2;) with coefficient 3.106e&#8209;2. It has to be even in &omega;,
+      because the time&#8209;domain pulse is real, and the figure caption says so.</p>
 
     <h3>The gravitational and frame stations &mdash; independent checks</h3>
     <div class="prov-wrap"><table class="prov-tab">
@@ -8118,17 +8530,20 @@ window.MathJax = {
     <h3>QA of this assembled page</h3>
     <p>Driven with Playwright chromium 1.62.1 against this exact file, served inside the
       same minimal document skeleton an artifact is published in, and instrumented the way
-      <span class="mono">prologue/qa-harness.html</span> instruments a fragment.
-      <b>PASS 84, FAIL 0, WARN 0.</b></p>
+      <span class="mono">prologue/qa-harness.html</span> instruments a fragment. Assembly run:
+      <b>PASS 84, FAIL 0, WARN 0</b>; repair round r1, re-run after every change:
+      <b>PASS 89, FAIL 0, WARN 0.</b></p>
     <div class="prov-wrap"><table class="prov-tab">
       <thead><tr><th>Lane</th><th>What it checks</th><th>Rows</th></tr></thead>
       <tbody>
         <tr><td class="k">matrix</td><td>light and dark &times; 390, 768 and 1300&nbsp;px: runtime errors, <span class="mono">console.error</span>, horizontal scroll, elements escaping the viewport without a scroller of their own, duplicate ids, in&#8209;page anchors, globals created, missing palette tokens, theme stamping, libraries</td><td class="n">60</td></tr>
         <tr><td class="k">rail</td><td>every rail link lands on its station; the current&#8209;station highlight follows; the spine fill is monotone; the scroll meter runs 0 to 1; the theme control cycles; station&nbsp;10&rsquo;s map builds only links that resolve</td><td class="n">7</td></tr>
+        <tr><td class="k">station 10</td><td>every corner and edge builds links; all of them resolve; between them they reach <span class="mono">#w1</span>&hellip;<span class="mono">#w9</span>; the triangle&rsquo;s <span class="mono">viewBox</span> contains both lower corner boxes</td><td class="n">8</td></tr>
+        <tr><td class="k">station 5</td><td>fired in both modes to a full 15&#8209;detector ledger; a detector followed from the ledger and from the keyboard, and released with <span class="mono">Escape</span>; the oscilloscope draws both traces in both modes with no blank or non&#8209;finite readout; the arrival highlight reaches the ledger while the shot is scrubbed</td><td class="n">12</td></tr>
         <tr><td class="k">drawer</td><td>at 390&nbsp;px the station panel opens from the bar and closes on <span class="mono">Escape</span>, in both themes</td><td class="n">4</td></tr>
         <tr><td class="k">interaction</td><td>every range, number field, select, checkbox and button in every station driven to its ends and back (44 ranges, 4 number fields, 5 selects, 4 checkboxes, 32 buttons), a rotate&#8209;drag and two wheel&#8209;zooms on the celestial sphere, a drag inside the station&#8209;2 canvas, station&nbsp;5 fired in both modes to a full 15&#8209;detector ledger; then no new blank readout, no <span class="mono">NaN</span>, no page error, no sideways scroll</td><td class="n">5</td></tr>
         <tr><td class="k">fallback</td><td>three.js and WebGL blocked; the whole CDN blocked so MathJax is absent too; an unstamped root under each system colour scheme; <span class="mono">prefers-reduced-motion: reduce</span></td><td class="n">7</td></tr>
-        <tr><td class="k">file</td><td>size, 477&nbsp;771 bytes</td><td class="n">1</td></tr>
+        <tr><td class="k">file</td><td>size, 507&nbsp;081 bytes</td><td class="n">1</td></tr>
       </tbody>
     </table></div>
     <p>Four readouts are blank at rest and stay blank: the &ldquo;gain over the row above&rdquo;

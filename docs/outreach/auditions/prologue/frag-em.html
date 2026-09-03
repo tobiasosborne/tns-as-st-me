@@ -1777,13 +1777,15 @@
     <p>So the classical calculation hands us a number, \(\vec S(\hat n)\), that controls the whole
       low&#8209;frequency end of the radiation and depends on nothing but the momenta going in and out.
       A number of that description already exists in quantum field theory, and it is older. Here is
-      Weinberg&rsquo;s soft photon theorem as the lecture notes write it. The source lines are reproduced
-      first, exactly as they stand in the TeX, and the same equation is set below them with the
-      paper&rsquo;s five abbreviations written out; nothing else is changed.</p>
+      Weinberg&rsquo;s soft photon theorem as the lecture notes write it, set with the paper&rsquo;s five
+      abbreviations written out and nothing else changed. The TeX source is reproduced character for
+      character too, one click away, so that the two can be compared without taking the setting on
+      trust.</p>
   </div>
 
-  <div class="eq w3-quoted">
-    <div class="eq-label">The source, verbatim <span class="w3-ptag" data-kind="quoted">Quoted</span></div>
+  <div class="eq w3-quoted w3-srcblock">
+    <details class="w3-srcd">
+    <summary>Inspect the source &mdash; lines 1075&ndash;1083, character for character<span class="w3-ptag" data-kind="quoted">Quoted</span></summary>
     <div class="w3-srcwrap"><pre class="w3-src mathjax_ignore tex2jax_ignore">1075  The soft photon theorem states that any $\cs$-matrix element with an additional soft ($q^\mu\to0$) photon is equal to the original matrix element multiplied by the soft factor plus corrections of order $q^0$:
 1076  \begin{equation}\label{mft}
 1077  \begin{split} 
@@ -1802,6 +1804,7 @@
       <span class="mono">\cs</span> is <span class="mono">\mathcal{S}</span> (line 228),
       <span class="mono">\co</span> is <span class="mono">\mathcal{O}</span> (line 229) and
       <span class="mono">\ve</span> is <span class="mono">\varepsilon</span> (line 60).</div>
+    </details>
   </div>
 
   <div class="eq w3-quoted">
@@ -1945,6 +1948,15 @@
 #w3 .w3-read-h { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
 #w3 .w3-cav { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-3); margin: 0; max-width: 42rem; }
 #w3 .w3-state { font-family: var(--sans); font-size: 12.5px; line-height: 1.55; color: var(--ink-2); border-left: 3px solid var(--st-hold); background: var(--surface); padding: .5rem .7rem; max-width: 42rem; }
+/* The verbatim TeX is audit evidence, not reading matter: it stays in the DOM, and in the
+   reading path it is one click deep so that the forward journey is not nine lines of source. */
+#w3 .w3-srcblock { padding-block: .1rem; }
+#w3 .w3-srcd > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding: .15rem 0 .35rem; }
+#w3 .w3-srcd > summary::-webkit-details-marker { display: none; }
+#w3 .w3-srcd > summary::before { content: "+"; font-family: var(--mono); font-size: 13px; color: var(--accent-text); }
+#w3 .w3-srcd[open] > summary::before { content: "\2212"; }
+#w3 .w3-srcd > summary:hover { color: var(--ink-2); }
+#w3 .w3-srcd > summary .w3-ptag { margin-left: auto; }
 #w3 .w3-srcwrap { overflow-x: auto; border: 1px solid var(--rule-2); background: var(--surface-2); }
 #w3 .w3-src { font-family: var(--mono); font-size: 11.5px; line-height: 1.55; color: var(--ink-2); white-space: pre; padding: .6rem .75rem; display: block; margin: 0; }
 #w3 .w3-nums { display: grid; gap: 0; }
@@ -3303,7 +3315,14 @@
       the source charge and the test particle&rsquo;s \(q_{\text{test}}/m_{\text{test}}\) are stripped out,
       so to get a velocity kick in ordinary units you multiply back by \(q\,q_{\text{test}}/m_{\text{test}}\)
       and divide by \(r\). This is the leading transverse radiation-order integral and nothing else; it is
-      <b>not</b> the finite&#8209;window integral of the full electric field, which also contains the drift.</div>
+      <b>not</b> the finite&#8209;window integral of the full electric field, which also contains the drift.
+      <b>One vector, three names.</b> \(\vec{\mathcal N}\) is the same transverse endpoint vector that
+      station&nbsp;3 and station&nbsp;4 call \(\vec S\); station&nbsp;7 calls it \(\vec{\mathcal M}\)
+      to follow the notation of the constraint it quotes. So \(\vec{\mathcal N}\equiv\vec S\equiv\vec{\mathcal M}\)
+      on this page &mdash; each station keeps the letter its own source uses, and the closed forms displayed
+      at all three are the same expression. The one relation that is <em>not</em> an identity of names is the
+      projection printed at station&nbsp;3, \(\vec S\cdot\vec\varepsilon=-S_{\rm cl}\), which carries a
+      genuine sign.</div>
   </div>
 
   <div class="body">
